@@ -1,7 +1,8 @@
 {
   "name": "universal-data-tool",
   "version": "0.1.0",
-  "private": true,
+  "license": "MIT",
+  "main": "components/UniversalDataViewer",
   "dependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -9,11 +10,14 @@
   },
   "scripts": {
     "start": "PORT=6001 react-scripts start",
-    "build": "react-scripts build",
+    "build": "npm run build:babel && cp ./package.json ./dist/package.json",
+    "build:babel": "NODE_ENV=production babel ./src --out-dir=./dist",
+    "build:app": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6002 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "gh-pages": "npm run build-storybook && gh-pages -d storybook-static"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -31,6 +35,8 @@
     ]
   },
   "devDependencies": {
+    "@babel/cli": "^7.5.0",
+    "@babel/core": "^7.5.4",
     "@material-ui/core": "^4.2.0",
     "@material-ui/icons": "^4.2.1",
     "@material-ui/lab": "^4.0.0-alpha.19",
@@ -43,7 +49,7 @@
     "material-survey": "^1.0.26",
     "react-image-annotate": "^0.1.16",
     "react-markdown": "^4.1.0",
-    "react-nlp-annotate": "^0.1.14",
+    "react-nlp-annotate": "^0.1.18",
     "spelling": "^2.0.1"
   }
 }
