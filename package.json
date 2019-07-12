@@ -13,8 +13,8 @@
     "build": "npm run build:babel && cp ./package.json ./dist/package.json",
     "build:babel": "NODE_ENV=production babel ./src --out-dir=./dist",
     "build:app": "react-scripts build",
+    "dist": "npm run build && cd dist && npm publish",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6002 -s public",
     "build-storybook": "build-storybook -s public",
     "gh-pages": "npm run build-storybook && gh-pages -d storybook-static"
