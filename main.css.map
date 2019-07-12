@@ -1,0 +1,1 @@
+{"version":3,"file":"main.css","sources":["webpack:///theme.css"],"sourcesContent":["@import url(\"https://rsms.me/inter/inter.css\");\n\nhtml,\nbody {\n  margin: 0;\n  padding: 0;\n  border-spacing: 0;\n}\n"],"mappings":";AAEA;;AAEA;AACA;AACA;AACA;;","sourceRoot":""}
