@@ -4,7 +4,6 @@ import SampleContainer from "../SampleContainer"
 import NLPAnnotator from "react-nlp-annotate/components/NLPAnnotator"
 
 const simpleSequenceToEntitySequence = simpleSeq => {
-  console.log(simpleSeq)
   const entSeq = []
   let charsPassed = 0
   for (const seq of simpleSeq) {
@@ -28,7 +27,7 @@ const entitySequenceToSimpleSeq = (doc, entSeq) => {
   entSeq.sort((a, b) => a.start - b.start)
   let nextEntity = 0
   for (let i = 0; i < doc.length; i++) {
-    if (entSeq[nextEntity].start === i) {
+    if ((entSeq[nextEntity] || {}).start === i) {
       simpleSeq.push({
         text: entSeq[nextEntity].text,
         label: entSeq[nextEntity].label

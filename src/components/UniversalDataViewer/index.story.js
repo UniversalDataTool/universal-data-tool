@@ -32,6 +32,14 @@ storiesOf("UniversalDataViewer", module).add("Basic", () => (
           document:
             "This strainer makes a great hat, I'll wear it while I serve spaghetti!"
         }
+      ],
+      taskOutput: [
+        {
+          entities: [
+            { label: "hat", text: "strainer", start: 5, end: 13 },
+            { label: "food", text: "spaghetti", start: 59, end: 68 }
+          ]
+        }
       ]
     }}
   />
