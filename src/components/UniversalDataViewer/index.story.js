@@ -9,6 +9,7 @@ import UniversalDataViewer from "./"
 
 storiesOf("UniversalDataViewer", module).add("Basic", () => (
   <UniversalDataViewer
+    hideHeader
     oha={{
       interface: {
         type: "text_entity_recognition",
