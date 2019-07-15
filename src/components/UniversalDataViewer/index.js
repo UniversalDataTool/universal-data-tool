@@ -7,7 +7,7 @@ export const UniversalDataViewer = ({
   oha,
   hideHeader,
   hideDescription,
-  onSaveTaskOutput
+  onSaveTaskOutputItem
 }) => {
   // TODO type check w/ superstruct against oha
   const containerProps = useMemo(
@@ -24,7 +24,7 @@ export const UniversalDataViewer = ({
         <DataEntry
           containerProps={containerProps}
           {...oha}
-          onSaveTaskOutput={onSaveTaskOutput}
+          onSaveTaskOutputItem={onSaveTaskOutputItem}
         />
       )
     case "text_classification":
@@ -32,7 +32,7 @@ export const UniversalDataViewer = ({
         <TextClassification
           containerProps={containerProps}
           {...oha}
-          onSaveTaskOutput={onSaveTaskOutput}
+          onSaveTaskOutputItem={onSaveTaskOutputItem}
         />
       )
     case "text_entity_recognition":
@@ -40,7 +40,7 @@ export const UniversalDataViewer = ({
         <TextEntityRecognition
           containerProps={containerProps}
           {...oha}
-          onSaveTaskOutput={onSaveTaskOutput}
+          onSaveTaskOutputItem={onSaveTaskOutputItem}
         />
       )
     default:

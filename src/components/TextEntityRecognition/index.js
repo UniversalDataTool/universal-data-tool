@@ -73,7 +73,7 @@ export const TextEntityRecognition = props => {
         labels={props.interface.labels}
         initialSequence={initialSequence}
         onFinish={result => {
-          props.onSaveTaskOutput(currentSampleIndex, {
+          props.onSaveTaskOutputItem(currentSampleIndex, {
             entities: simpleSequenceToEntitySequence(result)
           })
         }}

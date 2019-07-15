@@ -9,7 +9,7 @@ import TextEntityRecognition from "./"
 
 storiesOf("TextEntityRecognition", module).add("Basic", () => (
   <TextEntityRecognition
-    onSaveTaskOutput={action("onSaveTaskOutput")}
+    onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
     interface={{
       type: "text_entity_recognition",
       description: "Label words or phrases as food or hat.",

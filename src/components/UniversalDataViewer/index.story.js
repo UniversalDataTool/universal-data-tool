@@ -9,6 +9,7 @@ import UniversalDataViewer from "./"
 
 storiesOf("UniversalDataViewer", module).add("Basic", () => (
   <UniversalDataViewer
+    onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
     hideHeader
     oha={{
       interface: {

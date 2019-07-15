@@ -25,7 +25,7 @@ export const DataEntry = props => {
         }
         completeText="Save"
         onFinish={answers => {
-          props.onSaveTaskOutput(currentSampleIndex, answers)
+          props.onSaveTaskOutputItem(currentSampleIndex, answers)
         }}
       />
     </SampleContainer>

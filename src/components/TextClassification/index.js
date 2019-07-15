@@ -29,7 +29,7 @@ export const TextClassification = props => {
         document={props.taskData[currentSampleIndex].document}
         initialLabels={initialLabels}
         onFinish={result => {
-          props.onSaveTaskOutput(currentSampleIndex, result)
+          props.onSaveTaskOutputItem(currentSampleIndex, result)
         }}
       />
     </SampleContainer>

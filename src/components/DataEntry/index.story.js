@@ -9,7 +9,7 @@ import DataEntry from "./"
 
 storiesOf("DataEntry", module).add("Basic", () => (
   <DataEntry
-    onSaveTaskOutput={action("onSaveTaskOutput")}
+    onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
     interface={{
       type: "data_entry",
       description: "Some task description",

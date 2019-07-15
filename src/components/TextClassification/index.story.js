@@ -9,7 +9,7 @@ import TextClassification from "./"
 
 storiesOf("TextClassification", module).add("Basic", () => (
   <TextClassification
-    onSaveTaskOutput={action("onSaveTaskOutput")}
+    onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
     interface={{
       type: "data_entry",
       description: "Classify the person name into the correct house.",
