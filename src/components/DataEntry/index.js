@@ -23,6 +23,11 @@ export const DataEntry = props => {
           props.taskData[currentSampleIndex].surveyjs ||
           props.interface.surveyjs
         }
+        defaultAnswers={
+          props.taskOutput && props.taskOutput[currentSampleIndex]
+            ? props.taskOutput[currentSampleIndex]
+            : undefined
+        }
         completeText="Save"
         onFinish={answers => {
           props.onSaveTaskOutputItem(currentSampleIndex, answers)
