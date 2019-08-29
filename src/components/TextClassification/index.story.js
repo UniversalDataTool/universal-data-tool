@@ -9,6 +9,7 @@ import TextClassification from "./"
 
 storiesOf("TextClassification", module).add("Basic", () => (
   <TextClassification
+    containerProps={{ requireCompleteToPressNext: true }}
     onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
     interface={{
       type: "data_entry",

@@ -7,15 +7,19 @@ export const UniversalDataViewer = ({
   oha,
   hideHeader,
   hideDescription,
+  datasetName,
+  requireCompleteToPressNext,
   onSaveTaskOutputItem
 }) => {
   // TODO type check w/ superstruct against oha
   const containerProps = useMemo(
     () => ({
       hideHeader,
-      hideDescription
+      hideDescription,
+      datasetName,
+      requireCompleteToPressNext
     }),
-    [hideHeader, hideDescription]
+    [hideHeader, hideDescription, requireCompleteToPressNext, datasetName]
   )
 
   switch (oha.interface.type) {

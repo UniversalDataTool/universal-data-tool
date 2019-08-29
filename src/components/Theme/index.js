@@ -6,13 +6,13 @@ import "./theme.css"
 
 const useStyles = makeStyles({
   container: {
-    fontFamily: '"Inter UI", sans-serif'
+    fontFamily: '"Inter", sans-serif'
   }
 })
 
 const theme = createMuiTheme({
   typography: {
-    fontFamily: '"Inter UI", "Roboto", sans-serif'
+    fontFamily: '"Inter", "Roboto", sans-serif'
   },
   overrides: {
     MuiButton: {

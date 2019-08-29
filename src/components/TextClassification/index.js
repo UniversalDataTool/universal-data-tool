@@ -15,6 +15,7 @@ export const TextClassification = props => {
       {...props.containerProps}
       currentSampleIndex={currentSampleIndex}
       totalSamples={props.taskData.length}
+      taskOutput={props.taskOutput}
       description={
         getTaskDescription(props.taskData[currentSampleIndex]) ||
         props.interface.description
