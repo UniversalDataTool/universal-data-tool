@@ -121,3 +121,32 @@ storiesOf("DataEntry", module)
       taskOutput={[{ group_letter: "A", feedback: "some feedback here" }]}
     />
   ))
+  .add("PDF Url", () => (
+    <DataEntry
+      onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
+      interface={{
+        type: "data_entry",
+        description: "Some task description",
+        surveyjs: {
+          pages: [
+            {
+              name: "page1",
+              elements: [
+                {
+                  type: "text",
+                  name: "title",
+                  title: "Name of Article"
+                }
+              ]
+            }
+          ]
+        }
+      }}
+      taskData={[
+        {
+          pdfUrl: "https://arxiv.org/pdf/1608.04481v1.pdf"
+        }
+      ]}
+      taskOutput={[{ group_letter: "A", feedback: "some feedback here" }]}
+    />
+  ))
