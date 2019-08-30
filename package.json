@@ -41,7 +41,7 @@
     "@storybook/addons": "^5.1.9",
     "@storybook/react": "^5.1.9",
     "chroma-js": "^2.0.4",
-    "material-survey": "^1.0.31",
+    "material-survey": "^1.0.32",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-image-annotate": "^0.1.16",
