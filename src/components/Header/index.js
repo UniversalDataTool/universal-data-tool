@@ -30,7 +30,10 @@ const useStyles = makeStyles({
   }
 })
 
-export default ({ additionalButtons = [] }) => {
+export default ({
+  additionalButtons = [],
+  title = "Universal Data Tool - Welcome!"
+}) => {
   const c = useStyles()
   const [drawerOpen, changeDrawerOpen] = useState(false)
 
@@ -45,7 +48,7 @@ export default ({ additionalButtons = [] }) => {
             <MenuIcon />
           </IconButton>
           <Typography className={c.title} variant="h6" noWrap>
-            Universal Data Tool - Welcome!
+            {title}
           </Typography>
           <div className={c.grow} />
           {additionalButtons}
