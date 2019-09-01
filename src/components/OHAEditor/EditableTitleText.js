@@ -31,21 +31,26 @@ export default ({ value, onChange }) => {
   }, [editing, newValue])
 
   useEffect(() => {
-    let timeout = setTimeout(
-      () => {
-        onChange(newValue)
-        changeEditing({ editing: false })
-      },
-      value === newValue ? SAVE_WAIT * 5 : SAVE_WAIT
-    )
+    if (editing) {
+      let timeout = setTimeout(
+        () => {
+          onChange(newValue)
+          changeEditing({ editing: false })
+        },
+        value === newValue ? SAVE_WAIT * 5 : SAVE_WAIT
+      )
 
-    return () => {
-      if (timeout) clearTimeout(timeout)
+      return () => {
+        if (timeout) clearTimeout(timeout)
+      }
+    } else {
+      return () => {}
     }
   }, [editing, newValue])
 
   return editing ? (
     <TextField
+      autoFocus
       className={c.textField}
       InputProps={{
         inputProps: { style: { color: "#fff" } }
@@ -61,7 +66,9 @@ export default ({ value, onChange }) => {
   ) : (
     <span
       onClick={() => {
-        changeEditing({ editing: true, newValue: value })
+        if (onChange) {
+          changeEditing({ editing: true, newValue: value })
+        }
       }}
     >
       {value}

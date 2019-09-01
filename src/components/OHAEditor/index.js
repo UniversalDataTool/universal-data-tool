@@ -36,16 +36,19 @@ const useStyles = makeStyles({
 export default ({
   datasetName = "Universal Data Tool",
   oha,
+  content,
   fileName = "unnamed",
   onChangeFileName,
-  onChangeOHA,
+  onChangeContent = () => null,
+  onChangeOHA = () => null,
   initialMode = "json"
 }) => {
   const c = useStyles()
   const [mode, changeMode] = useState(initialMode)
-  const [jsonText, changeJSONText] = useState(defaultOHAObject)
+  const [jsonText, changeJSONText] = useState(content || defaultOHAObject)
 
   useEffect(() => {
+    onChangeContent(jsonText)
     try {
       // schema validation etc.
       onChangeOHA(JSON.parse(jsonText))
@@ -62,9 +65,9 @@ export default ({
           </>
         }
         additionalButtons={[
-          <IconButton disabled className={c.headerButton}>
-            <SaveIcon className={c.saveIcon} />
-          </IconButton>,
+          // <IconButton disabled className={c.headerButton}>
+          //   <SaveIcon className={c.saveIcon} />
+          // </IconButton>,
           mode === "json" ? (
             <Button
               onClick={() => changeMode("sample")}
@@ -89,12 +92,22 @@ export default ({
           <AceEditor
             theme="github"
             mode="javascript"
+            width="100%"
             value={jsonText}
             editorProps={{ $blockScrolling: Infinity }}
             onChange={t => changeJSONText(t)}
           />
         ) : (
-          <UniversalDataViewer oha={oha} />
+          <UniversalDataViewer
+            onSaveTaskOutputItem={(index, output) => {
+              const newOHA = { ...oha }
+              if (!newOHA.taskOutput)
+                newOHA.taskOutput = newOHA.taskData.map(td => null)
+              newOHA.taskOutput[index] = output
+              changeJSONText(JSON.stringify(newOHA, null, "  "))
+            }}
+            oha={oha}
+          />
         )}
       </div>
     </div>

@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState } from "react"
+import React, { useState, useMemo } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Grid from "@material-ui/core/Grid"
 import Header from "../Header"
@@ -11,6 +11,7 @@ import * as colors from "@material-ui/core/colors"
 import VideoIcon from "@material-ui/icons/OndemandVideo"
 import FileIcon from "@material-ui/icons/InsertDriveFile"
 import TemplateIcon from "@material-ui/icons/Description"
+import { useDropzone } from "react-dropzone"
 
 const useStyles = makeStyles({
   title: {},
@@ -57,8 +58,14 @@ const useStyles = makeStyles({
   headerButton: { color: "#fff" }
 })
 
-export default () => {
+export default ({ onFileDrop }) => {
   const c = useStyles()
+  const onDrop = useMemo(() => {
+    return acceptedFiles => {
+      onFileDrop(acceptedFiles[0])
+    }
+  }, [onFileDrop])
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
   return (
     <div>
@@ -86,10 +93,11 @@ export default () => {
         </Grid>
         <Grid item xs={12}>
           <div className={c.content}>
-            <Button className={c.bigButton}>
+            <Button {...getRootProps()} className={c.bigButton}>
               <div className={c.bigButtonContent}>
-                <div>Open File</div>
+                <div>{!isDragActive ? "Open File" : "Drop File Here"}</div>
                 <FileIcon className={c.bigIcon} />
+                <input {...getInputProps()} />
               </div>
             </Button>
             <Button className={c.bigButton}>

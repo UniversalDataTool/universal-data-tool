@@ -5,6 +5,7 @@ import TextClassification from "../TextClassification"
 import TextEntityRecognition from "../TextEntityRecognition"
 import DataEntry from "../DataEntry"
 import EmptySampleContainer from "../EmptySampleContainer"
+import BadOHA from "../BadOHA"
 
 export const UniversalDataViewer = ({
   oha,
@@ -24,6 +25,15 @@ export const UniversalDataViewer = ({
     }),
     [hideHeader, hideDescription, requireCompleteToPressNext, datasetName]
   )
+
+  if (!oha) {
+    return (
+      <BadOHA
+        title="Null OHA"
+        description="Your OHA file isn't defined for some reason."
+      />
+    )
+  }
 
   if (!oha.taskData || oha.taskData.length === 0) {
     return <EmptySampleContainer />

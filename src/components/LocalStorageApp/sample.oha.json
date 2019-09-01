@@ -1,0 +1,20 @@
+{
+  "interface": {
+    "type": "data_entry",
+    "description": "# Markdown description here",
+    "surveyjs": {
+      "questions": [
+        {
+          "type": "text",
+          "name": "document_title",
+          "title": "Title of Document"
+        }
+      ]
+    }
+  },
+  "taskData": [
+    {
+      "pdfUrl": "https://arxiv.org/pdf/1906.01969.pdf"
+    }
+  ]
+}

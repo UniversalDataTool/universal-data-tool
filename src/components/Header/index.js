@@ -1,11 +1,12 @@
 // @flow
 
-import React, { useState } from "react"
+import React, { useState, createContext, useContext } from "react"
 import AppBar from "@material-ui/core/AppBar"
 import Toolbar from "@material-ui/core/Toolbar"
 import IconButton from "@material-ui/core/IconButton"
 import MenuIcon from "@material-ui/icons/Menu"
 import CodeIcon from "@material-ui/icons/Code"
+import HomeIcon from "@material-ui/icons/Home"
 import Typography from "@material-ui/core/Typography"
 import Drawer from "@material-ui/core/Drawer"
 import Button from "@material-ui/core/Button"
@@ -30,12 +31,15 @@ const useStyles = makeStyles({
   }
 })
 
+export const HeaderContext = createContext({ recentItems: [] })
+
 export default ({
   additionalButtons = [],
   title = "Universal Data Tool - Welcome!"
 }) => {
   const c = useStyles()
   const [drawerOpen, changeDrawerOpen] = useState(false)
+  const { recentItems } = useContext(HeaderContext)
 
   return (
     <>
@@ -62,13 +66,11 @@ export default ({
       </AppBar>
       <Drawer open={drawerOpen} onClose={() => changeDrawerOpen(false)}>
         <List className={c.list}>
-          <ListSubheader>Recent Files</ListSubheader>
-          <ListItem>
-            <ListItemText
-              style={{ textAlign: "center", color: colors.grey[500] }}
-            >
-              No Recent Items
-            </ListItemText>
+          <ListItem button>
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText>Home</ListItemText>
           </ListItem>
           <ListItem button>
             <ListItemIcon>
@@ -76,6 +78,22 @@ export default ({
             </ListItemIcon>
             <ListItemText>Open New File</ListItemText>
           </ListItem>
+          <ListSubheader>Recent Files</ListSubheader>
+          {recentItems.length === 0 ? (
+            <ListItem>
+              <ListItemText
+                style={{ textAlign: "center", color: colors.grey[500] }}
+              >
+                No Recent Items
+              </ListItemText>
+            </ListItem>
+          ) : (
+            recentItems.map(ri => (
+              <ListItem key={ri.name}>
+                <ListItemText>{ri.name}</ListItemText>
+              </ListItem>
+            ))
+          )}
           <ListSubheader>Create From Template</ListSubheader>
           {templates.map(template => (
             <ListItem button>
