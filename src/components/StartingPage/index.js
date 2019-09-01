@@ -8,6 +8,9 @@ import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
 import templates from "./templates"
 import * as colors from "@material-ui/core/colors"
+import VideoIcon from "@material-ui/icons/OndemandVideo"
+import FileIcon from "@material-ui/icons/InsertDriveFile"
+import TemplateIcon from "@material-ui/icons/Description"
 
 const useStyles = makeStyles({
   title: {},
@@ -26,10 +29,24 @@ const useStyles = makeStyles({
   },
   bigButton: {
     width: 240,
-    height: 200,
     fontSize: 24,
     margin: 20,
     border: `1px dashed ${colors.grey[500]}`
+  },
+  bigButtonContent: {
+    display: "flex",
+    lineHeight: 1.5,
+    height: 160,
+    paddingTop: 20,
+    paddingBottom: 20,
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  bigIcon: {
+    margin: 20,
+    width: 64,
+    height: 64
   },
   grow: { flexGrow: 1 },
   content: {
@@ -69,8 +86,24 @@ export default () => {
         </Grid>
         <Grid item xs={12}>
           <div className={c.content}>
-            <Button className={c.bigButton}>Open File</Button>
-            <Button className={c.bigButton}>Create from Template</Button>
+            <Button className={c.bigButton}>
+              <div className={c.bigButtonContent}>
+                <div>Open File</div>
+                <FileIcon className={c.bigIcon} />
+              </div>
+            </Button>
+            <Button className={c.bigButton}>
+              <div className={c.bigButtonContent}>
+                <div>Create from Template</div>
+                <TemplateIcon className={c.bigIcon} />
+              </div>
+            </Button>
+            <Button className={c.bigButton}>
+              <div className={c.bigButtonContent}>
+                <div>Watch Tutorials</div>
+                <VideoIcon className={c.bigIcon} />
+              </div>
+            </Button>
           </div>
         </Grid>
       </Grid>

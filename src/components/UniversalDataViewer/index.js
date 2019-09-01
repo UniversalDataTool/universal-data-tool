@@ -1,7 +1,10 @@
+// @flow
+
 import React, { useMemo } from "react"
 import TextClassification from "../TextClassification"
 import TextEntityRecognition from "../TextEntityRecognition"
 import DataEntry from "../DataEntry"
+import EmptySampleContainer from "../EmptySampleContainer"
 
 export const UniversalDataViewer = ({
   oha,
@@ -21,6 +24,10 @@ export const UniversalDataViewer = ({
     }),
     [hideHeader, hideDescription, requireCompleteToPressNext, datasetName]
   )
+
+  if (!oha.taskData || oha.taskData.length === 0) {
+    return <EmptySampleContainer />
+  }
 
   switch (oha.interface.type) {
     case "data_entry":

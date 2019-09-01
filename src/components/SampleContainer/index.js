@@ -91,10 +91,8 @@ const useStyles = makeStyles(theme => ({
 
 export const SampleContainer = ({
   hideDescription: defaultHideDescription = false,
-  datasetName = "Universal Data Tool",
   lastSampleExitText,
   requireCompleteToPressNext = false,
-  additionalButtons = [],
   taskData,
   minContentHeight,
   currentSampleIndex,
@@ -112,32 +110,6 @@ export const SampleContainer = ({
   return (
     <>
       <Grid container>
-        <AppBar position="static">
-          <Toolbar>
-            <Typography className={c.title} variant="h6" noWrap>
-              {datasetName}
-            </Typography>
-            <div className={c.grow} />
-            {totalSamples > 0 && (
-              <Button
-                variant="outlined"
-                size="medium"
-                className={c.allSamplesButton}
-                onClick={() => changeSampleDrawerOpen(true)}
-              >
-                <ScatterPlotIcon className={c.sampleIcon} />
-                {totalSamples} Samples
-              </Button>
-            )}
-            {additionalButtons}
-            <IconButton
-              href="https://github.com/openhumanannotation/universal-data-tool"
-              className={c.menuButton}
-            >
-              <GithubIcon />
-            </IconButton>
-          </Toolbar>
-        </AppBar>
         {!hideDescription && (
           <Grid item xs={12} sm={12} md={6}>
             <div className={c.sectionHeader}>
@@ -161,6 +133,10 @@ export const SampleContainer = ({
                 text="show description"
               />
             )}
+            <LinkButton
+              onClick={() => changeSampleDrawerOpen(true)}
+              text="view all"
+            />
           </div>
           <div style={{ minHeight: minContentHeight }} className={c.content}>
             {children}

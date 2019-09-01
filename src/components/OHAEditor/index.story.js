@@ -7,11 +7,15 @@ import { action } from "@storybook/addon-actions"
 
 import OHAEditor from "./"
 
-const Controller = ({ initialOHA }) => {
-  const [oha, changeOHA] = useState(initialOHA)
-  return <OHAEditor oha={oha} onChangeOHA={changeOHA} />
+const Controller = props => {
+  const [oha, changeOHA] = useState(props.initialOHA)
+  return <OHAEditor oha={oha} onChangeOHA={changeOHA} {...props} />
 }
 
 storiesOf("OHAEditor", module).add("Basic", () => (
-  <Controller initialOHA={{}} />
+  <Controller
+    initialOHA={{}}
+    onChangeFileName={action("onChangeFileName")}
+    onChangeOHA={action("onChangeOHA")}
+  />
 ))
