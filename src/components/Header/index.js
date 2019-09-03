@@ -39,7 +39,12 @@ export default ({
 }) => {
   const c = useStyles()
   const [drawerOpen, changeDrawerOpen] = useState(false)
-  const { recentItems } = useContext(HeaderContext)
+  const {
+    recentItems,
+    onClickTemplate,
+    onClickHome,
+    onClickOpenFile
+  } = useContext(HeaderContext)
 
   return (
     <>
@@ -66,17 +71,17 @@ export default ({
       </AppBar>
       <Drawer open={drawerOpen} onClose={() => changeDrawerOpen(false)}>
         <List className={c.list}>
-          <ListItem button>
+          <ListItem onClick={onClickHome} button>
             <ListItemIcon>
               <HomeIcon />
             </ListItemIcon>
             <ListItemText>Home</ListItemText>
           </ListItem>
-          <ListItem button>
+          <ListItem onClick={onClickOpenFile} button>
             <ListItemIcon>
               <FileIcon />
             </ListItemIcon>
-            <ListItemText>Open New File</ListItemText>
+            <ListItemText>Open File</ListItemText>
           </ListItem>
           <ListSubheader>Recent Files</ListSubheader>
           {recentItems.length === 0 ? (
@@ -96,7 +101,11 @@ export default ({
           )}
           <ListSubheader>Create From Template</ListSubheader>
           {templates.map(template => (
-            <ListItem button>
+            <ListItem
+              key={template.name}
+              button
+              onClick={() => onClickTemplate(template)}
+            >
               <ListItemIcon>
                 <template.Icon />
               </ListItemIcon>

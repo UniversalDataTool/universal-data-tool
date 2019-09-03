@@ -12,6 +12,7 @@ import VideoIcon from "@material-ui/icons/OndemandVideo"
 import FileIcon from "@material-ui/icons/InsertDriveFile"
 import TemplateIcon from "@material-ui/icons/Description"
 import { useDropzone } from "react-dropzone"
+import CreateFromTemplateDialog from "../CreateFromTemplateDialog"
 
 const useStyles = makeStyles({
   title: {},
@@ -58,8 +59,12 @@ const useStyles = makeStyles({
   headerButton: { color: "#fff" }
 })
 
-export default ({ onFileDrop }) => {
+export default ({ onFileDrop, onOpenTemplate }) => {
   const c = useStyles()
+  const [
+    createFromTemplateDialogOpen,
+    changeCreateFromTemplateDialogOpen
+  ] = useState(false)
   const onDrop = useMemo(() => {
     return acceptedFiles => {
       onFileDrop(acceptedFiles[0])
@@ -69,6 +74,11 @@ export default ({ onFileDrop }) => {
 
   return (
     <div>
+      <CreateFromTemplateDialog
+        open={createFromTemplateDialogOpen}
+        onSelect={template => onOpenTemplate(template)}
+        onClose={() => changeCreateFromTemplateDialogOpen(false)}
+      />
       <Header
         additionalButtons={[
           <Button
@@ -100,7 +110,12 @@ export default ({ onFileDrop }) => {
                 <input {...getInputProps()} />
               </div>
             </Button>
-            <Button className={c.bigButton}>
+            <Button
+              onClick={() => {
+                changeCreateFromTemplateDialogOpen(true)
+              }}
+              className={c.bigButton}
+            >
               <div className={c.bigButtonContent}>
                 <div>Create from Template</div>
                 <TemplateIcon className={c.bigIcon} />
