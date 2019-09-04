@@ -10749,10 +10749,10 @@ react-hotkeys@2.0.0-pre4:
   dependencies:
     prop-types "^15.6.1"
 
-react-image-annotate@^0.1.24:
-  version "0.1.24"
-  resolved "https://registry.yarnpkg.com/react-image-annotate/-/react-image-annotate-0.1.24.tgz#7a13211dbfab13f3c6591d1805ff20d9a867cd29"
-  integrity sha512-2GH1PPEZd8kUAx8aWdCPe/iVvS97kKJfrKmNvVIKNevbO2JbFSadSexprpuANk74mP22HgW/lMYSQpsoFVqBAw==
+react-image-annotate@^0.1.25:
+  version "0.1.25"
+  resolved "https://registry.yarnpkg.com/react-image-annotate/-/react-image-annotate-0.1.25.tgz#d404313366a8f7d9728d8ba34de9f796ddfd8116"
+  integrity sha512-ufk7fLpWpllujP3FpQxL/ZQZkliJqoxIF3/BTQSzM4g/uPsfRm5o+07BDK/20KkDG9pLEPtijE9rsJdkQrqcCA==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.12"
     "@fortawesome/free-solid-svg-icons" "^5.6.3"
