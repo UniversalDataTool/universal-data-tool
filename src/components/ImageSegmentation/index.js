@@ -2,7 +2,7 @@
 
 import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
-import Annotator from "react-image-annotate/Annotator"
+import Annotator from "react-image-annotate"
 
 const useStyles = makeStyles({})
 
@@ -18,8 +18,6 @@ export default ({ interface: iface, taskData = [] }) => {
           name: "Image 1"
         }
       ]}
-    >
-      asd
-    </Annotator>
+    />
   )
 }

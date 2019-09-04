@@ -39,12 +39,13 @@ export default ({
 }) => {
   const c = useStyles()
   const [drawerOpen, changeDrawerOpen] = useState(false)
-  const {
+  let {
     recentItems,
     onClickTemplate,
     onClickHome,
     onClickOpenFile
   } = useContext(HeaderContext)
+  if (!recentItems) recentItems = []
 
   return (
     <>
@@ -94,7 +95,7 @@ export default ({
             </ListItem>
           ) : (
             recentItems.map(ri => (
-              <ListItem key={ri.name}>
+              <ListItem key={ri.name} button onClick={() => {}}>
                 <ListItemText>{ri.name}</ListItemText>
               </ListItem>
             ))

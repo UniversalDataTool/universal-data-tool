@@ -5,7 +5,10 @@ export default function getTaskDescription(taskDataItem) {
   if (pdfUrl)
     return (
       `[PDF Link](${pdfUrl})` +
-      `<object data="${pdfUrl}" type="application/pdf" width="100%" height="600px"></object>`
+      `<object data="${pdfUrl.replace(
+        "http://",
+        "https://"
+      )}" type="application/pdf" width="100%" height="600px"></object>`
     )
   if (url) return `Use this [Link](${url})`
   return null
