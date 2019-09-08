@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e30f916b31c0af182c9575c62cd35389",
+    "revision": "6aa55dfcfc5587921b2c7242fd989988",
     "url": "/universal-data-tool/index.html"
   },
   {
-    "revision": "c3cb78b3c4d14f76443c",
+    "revision": "adf3ec8662d14c3078f1",
     "url": "/universal-data-tool/static/css/main.bf259f8e.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/universal-data-tool/static/js/2.c65f417d.chunk.js"
   },
   {
-    "revision": "c3cb78b3c4d14f76443c",
-    "url": "/universal-data-tool/static/js/main.9412b2fd.chunk.js"
+    "revision": "adf3ec8662d14c3078f1",
+    "url": "/universal-data-tool/static/js/main.eeaea4da.chunk.js"
   },
   {
     "revision": "a4f626a1d455828f4213",
