@@ -41,19 +41,23 @@ export default ({
   onChangeFileName,
   onChangeContent = () => null,
   onChangeOHA = () => null,
+  onFileDrop,
   initialMode = "json"
 }) => {
   const c = useStyles()
   const [mode, changeMode] = useState(initialMode)
   const [jsonText, changeJSONText] = useState(content || defaultOHAObject)
 
-  useEffect(() => {
-    onChangeContent(jsonText)
-    try {
-      // schema validation etc.
-      onChangeOHA(JSON.parse(jsonText))
-    } catch (e) {}
-  }, [jsonText])
+  useEffect(
+    () => {
+      onChangeContent(jsonText)
+      try {
+        // schema validation etc.
+        onChangeOHA(JSON.parse(jsonText))
+      } catch (e) {}
+    },
+    [jsonText]
+  )
 
   return (
     <div>

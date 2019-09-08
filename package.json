@@ -3,6 +3,7 @@
   "version": "0.1.9",
   "license": "MIT",
   "main": "components/UniversalDataViewer",
+  "homepage": "https://openhumanannotation.github.io/universal-data-tool/",
   "scripts": {
     "start": "PORT=6001 react-scripts start",
     "build": "npm run build:babel && cp ./package.json ./dist/package.json",
@@ -12,7 +13,7 @@
     "test": "react-scripts test",
     "storybook": "start-storybook -p 6002 -s public",
     "build-storybook": "build-storybook -s public",
-    "gh-pages": "npm run build-storybook && gh-pages -d storybook-static"
+    "gh-pages": "npm run build:app && gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -40,10 +41,11 @@
     "@storybook/addons": "^5.1.9",
     "@storybook/react": "^5.1.9",
     "chroma-js": "^2.0.4",
+    "gh-pages": "^2.1.1",
     "material-survey": "^1.0.32",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-image-annotate": "^0.1.25",
+    "react-image-annotate": "^0.1.26",
     "react-markdown": "^4.1.0",
     "react-nlp-annotate": "^0.1.18",
     "react-scripts": "3.0.1",
@@ -51,7 +53,6 @@
   },
   "dependencies": {
     "@material-ui/styles": "^4.3.3",
-    "@rehooks/local-storage": "^1.6.0",
     "brace": "^0.11.1",
     "react-ace": "^7.0.4",
     "react-dropzone": "^10.1.8",

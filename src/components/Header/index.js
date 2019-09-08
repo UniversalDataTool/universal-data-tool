@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState, createContext, useContext } from "react"
+import React, { useState, createContext, useContext, useCallback } from "react"
 import AppBar from "@material-ui/core/AppBar"
 import Toolbar from "@material-ui/core/Toolbar"
 import IconButton from "@material-ui/core/IconButton"
@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography"
 import Drawer from "@material-ui/core/Drawer"
 import Button from "@material-ui/core/Button"
 import FileIcon from "@material-ui/icons/InsertDriveFile"
+import NoteAddIcon from "@material-ui/icons/NoteAdd"
 import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
 import ListItemText from "@material-ui/core/ListItemText"
@@ -19,6 +20,7 @@ import ListSubheader from "@material-ui/core/ListSubheader"
 import * as colors from "@material-ui/core/colors"
 import GithubIcon from "./GithubIcon"
 import templates from "../StartingPage/templates"
+import { useDropzone } from "react-dropzone"
 import { makeStyles } from "@material-ui/core/styles"
 
 const useStyles = makeStyles({
@@ -43,9 +45,16 @@ export default ({
     recentItems,
     onClickTemplate,
     onClickHome,
-    onClickOpenFile
+    onOpenFile,
+    onOpenRecentItem
   } = useContext(HeaderContext)
   if (!recentItems) recentItems = []
+
+  const onDrop = useCallback(acceptedFiles => {
+    onOpenFile(acceptedFiles[0])
+  }, [])
+
+  const { getRootProps, getInputProps } = useDropzone({ onDrop })
 
   return (
     <>
@@ -78,11 +87,12 @@ export default ({
             </ListItemIcon>
             <ListItemText>Home</ListItemText>
           </ListItem>
-          <ListItem onClick={onClickOpenFile} button>
+          <ListItem {...getRootProps()} button>
             <ListItemIcon>
-              <FileIcon />
+              <NoteAddIcon />
             </ListItemIcon>
             <ListItemText>Open File</ListItemText>
+            <input {...getInputProps()} />
           </ListItem>
           <ListSubheader>Recent Files</ListSubheader>
           {recentItems.length === 0 ? (
@@ -95,8 +105,17 @@ export default ({
             </ListItem>
           ) : (
             recentItems.map(ri => (
-              <ListItem key={ri.name} button onClick={() => {}}>
-                <ListItemText>{ri.name}</ListItemText>
+              <ListItem
+                key={ri.fileName}
+                button
+                onClick={() => {
+                  onOpenRecentItem(ri)
+                }}
+              >
+                <ListItemIcon>
+                  <FileIcon />
+                </ListItemIcon>
+                <ListItemText>{ri.fileName}</ListItemText>
               </ListItem>
             ))
           )}
@@ -114,12 +133,12 @@ export default ({
             </ListItem>
           ))}
           <ListSubheader>Explore More</ListSubheader>
-          <ListItem button>
+          {/* <ListItem button>
             <ListItemIcon>
               <CodeIcon />
             </ListItemIcon>
             <ListItemText>Integrate</ListItemText>
-          </ListItem>
+          </ListItem> */}
           <ListItem
             button
             onClick={() => {
