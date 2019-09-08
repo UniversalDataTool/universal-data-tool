@@ -3,7 +3,7 @@
   "version": "0.1.9",
   "license": "MIT",
   "main": "components/UniversalDataViewer",
-  "homepage": "https://openhumanannotation.github.io/universal-data-tool/",
+  "homepage": "https://universaldatatool.com",
   "scripts": {
     "start": "PORT=6001 react-scripts start",
     "build": "npm run build:babel && cp ./package.json ./dist/package.json",
