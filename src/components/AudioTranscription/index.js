@@ -25,7 +25,9 @@ export default props => {
         type="transcribe"
         audio={props.taskData[currentSampleIndex].audioUrl}
         phraseBank={props.phraseBank}
-        initialTranscriptionText={props.taskOutput[currentSampleIndex]}
+        initialTranscriptionText={
+          (props.taskOutput || [])[currentSampleIndex] || ""
+        }
         onFinish={result => {
           props.onSaveTaskOutputItem(currentSampleIndex, result)
         }}
