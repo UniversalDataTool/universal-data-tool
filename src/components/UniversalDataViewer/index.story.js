@@ -103,3 +103,72 @@ storiesOf("UniversalDataViewer", module)
       }}
     />
   ))
+  .add("Composite", () => (
+    <UniversalDataViewer
+      onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
+      hideHeader
+      oha={{
+        interface: {
+          type: "composite",
+          fields: [
+            {
+              type: "data_entry",
+              description: "",
+              surveyjs: {
+                pages: [
+                  {
+                    name: "page1",
+                    elements: [
+                      {
+                        type: "radiogroup",
+                        name: "group_letter",
+                        title: "Group Letter",
+                        choices: [
+                          {
+                            value: "A",
+                            text: "A"
+                          },
+                          {
+                            value: "B",
+                            text: "B"
+                          },
+                          {
+                            value: "C",
+                            text: "C"
+                          }
+                        ]
+                      },
+                      {
+                        type: "text",
+                        name: "feedback",
+                        title: "Feedback"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        taskData: [
+          {
+            description: "Cucumber"
+          },
+          {
+            description: "Hat"
+          },
+          {
+            description: "Something"
+          }
+        ],
+        taskOutput: [
+          {
+            group_letter: "A",
+            feedback: "this is some feedback"
+          },
+          null,
+          null
+        ]
+      }}
+    />
+  ))

@@ -6,6 +6,7 @@ import TextEntityRecognition from "../TextEntityRecognition"
 import ImageSegmentation from "../ImageSegmentation"
 import DataEntry from "../DataEntry"
 import EmptySampleContainer from "../EmptySampleContainer"
+import Composite from "../Composite"
 import BadOHA from "../BadOHA"
 
 export const UniversalDataViewer = ({
@@ -68,6 +69,14 @@ export const UniversalDataViewer = ({
     case "image_segmentation":
       return (
         <ImageSegmentation
+          containerProps={containerProps}
+          {...oha}
+          onSaveTaskOutputItem={onSaveTaskOutputItem}
+        />
+      )
+    case "composite":
+      return (
+        <Composite
           containerProps={containerProps}
           {...oha}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
