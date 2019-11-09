@@ -103,6 +103,24 @@ storiesOf("UniversalDataViewer", module)
       }}
     />
   ))
+  .add("Audio Transcription", () => (
+    <UniversalDataViewer
+      onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
+      hideHeader
+      oha={{
+        interface: {
+          type: "audio_transcription",
+          description: ""
+        },
+        taskData: [
+          {
+            audioUrl: "https://html5tutorial.info/media/vincent.mp3"
+          }
+        ],
+        taskOutput: ["starry starry night"]
+      }}
+    />
+  ))
   .add("Composite", () => (
     <UniversalDataViewer
       onSaveTaskOutputItem={action("onSaveTaskOutputItem")}

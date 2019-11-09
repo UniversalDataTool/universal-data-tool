@@ -1,6 +1,8 @@
 # Universal Data Tool
 
-The Universal Data Tool is a UI implementation to view and edit any data defined by the [open human annotation standard](https://github.com/OpenHumanAnnotation/open-human-annotation-task-format).
+Try it out at [universaldatatool.com](https://universaldatatool.com).
+
+The Universal Data Tool is a User Interface for editing and annotating Images (Computer Vision, Bounding Boxes, Segmentation), Text (Named Entity Recognition, Classification) or general purpose data entry. to view and edit any data defined by the [open human annotation standard](https://github.com/OpenHumanAnnotation/open-human-annotation-task-format).
 
 <!-- [Check out the demo here.](#) -->
 

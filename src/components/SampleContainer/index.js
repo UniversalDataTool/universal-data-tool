@@ -126,7 +126,7 @@ export const SampleContainer = ({
         )}
         <Grid item xs={12} sm={12} md={hideDescription ? 12 : 6}>
           <div className={c.sectionHeader}>
-            Sample {totalSamples > 1 ? currentSampleIndex + 1 : ""}
+            Sample {currentSampleIndex + 1}/{totalSamples}
             {hideDescription && (
               <LinkButton
                 onClick={() => changeHideDescription(false)}

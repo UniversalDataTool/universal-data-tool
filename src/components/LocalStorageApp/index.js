@@ -4,9 +4,9 @@ import { HeaderContext } from "../Header"
 import StartingPage from "../StartingPage"
 import OHAEditor from "../OHAEditor"
 import { makeStyles } from "@material-ui/core/styles"
-import { useLocalStorage } from "@rehooks/local-storage"
 import ErrorToasts from "../ErrorToasts"
 import useErrors from "../../utils/use-errors.js"
+import useLocalStorage from "../../utils/use-local-storage.js"
 
 const useStyles = makeStyles({
   empty: {
@@ -23,11 +23,11 @@ export default () => {
   const [currentFile, changeCurrentFile] = useState()
   const [oha, changeOHA] = useState()
   const [errors, addError] = useErrors()
-  const [recentItems, changeRecentItems] = useLocalStorage("recentItems", [])
+  let [recentItems, changeRecentItems] = useLocalStorage("recentItems", [])
+  if (!recentItems) recentItems = []
 
   const onCreateTemplate = useMemo(
     () => template => {
-      console.log({ template })
       changeCurrentFile({
         fileName: "unnamed",
         content: JSON.stringify(template.oha, null, "  "),
@@ -40,6 +40,16 @@ export default () => {
     },
     []
   )
+
+  const openRecentItem = useMemo(() => item => {
+    changeCurrentFile(item)
+    try {
+      changeOHA(JSON.parse(item.content))
+    } catch (e) {
+      addError("Couldn't parse content into JSON")
+    }
+    changePageName("edit")
+  })
 
   const onClickHome = useMemo(
     () => () => {
@@ -79,7 +89,13 @@ export default () => {
   return (
     <>
       <HeaderContext.Provider
-        value={{ recentItems, onClickTemplate: onCreateTemplate, onClickHome }}
+        value={{
+          recentItems,
+          onClickTemplate: onCreateTemplate,
+          onClickHome,
+          onOpenFile: handleOpenFile,
+          onOpenRecentItem: openRecentItem
+        }}
       >
         {pageName === "welcome" ? (
           <StartingPage
@@ -95,7 +111,15 @@ export default () => {
               changeCurrentFile({ ...currentFile, fileName: newName })
             }}
             onChangeContent={newContent => {
-              changeCurrentFile({ ...currentFile, content: newContent })
+              const newFile = { ...currentFile, content: newContent }
+              changeCurrentFile(newFile)
+              if (recentItems.map(item => item.id).includes(newFile.id)) {
+                changeRecentItems(
+                  recentItems.map(ri => (ri.id === newFile.id ? newFile : ri))
+                )
+              } else {
+                changeRecentItems([newFile].concat(recentItems).slice(0, 3))
+              }
             }}
             onChangeOHA={changeOHA}
           />

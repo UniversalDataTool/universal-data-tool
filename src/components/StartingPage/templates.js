@@ -3,6 +3,7 @@
 import RemoveRedEye from "@material-ui/icons/RemoveRedEye"
 import TextFormat from "@material-ui/icons/TextFormat"
 import Edit from "@material-ui/icons/Edit"
+import Audiotrack from "@material-ui/icons/Audiotrack"
 
 export default [
   {
@@ -83,6 +84,21 @@ export default [
         {
           document:
             "This strainer makes a great hat, I'll wear it while I serve spaghetti!"
+        }
+      ]
+    }
+  },
+  {
+    name: "Audio Transcription",
+    Icon: Audiotrack,
+    oha: {
+      interface: {
+        type: "audio_transcription",
+        description: "# Markdown description here"
+      },
+      taskData: [
+        {
+          audioUrl: "https://html5tutorial.info/media/vincent.mp3"
         }
       ]
     }

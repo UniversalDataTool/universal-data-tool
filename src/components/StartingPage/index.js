@@ -65,11 +65,14 @@ export default ({ onFileDrop, onOpenTemplate }) => {
     createFromTemplateDialogOpen,
     changeCreateFromTemplateDialogOpen
   ] = useState(false)
-  const onDrop = useMemo(() => {
-    return acceptedFiles => {
-      onFileDrop(acceptedFiles[0])
-    }
-  }, [onFileDrop])
+  const onDrop = useMemo(
+    () => {
+      return acceptedFiles => {
+        onFileDrop(acceptedFiles[0])
+      }
+    },
+    [onFileDrop]
+  )
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
   return (
@@ -121,12 +124,12 @@ export default ({ onFileDrop, onOpenTemplate }) => {
                 <TemplateIcon className={c.bigIcon} />
               </div>
             </Button>
-            <Button className={c.bigButton}>
+            {/* <Button className={c.bigButton}>
               <div className={c.bigButtonContent}>
                 <div>Watch Tutorials</div>
                 <VideoIcon className={c.bigIcon} />
               </div>
-            </Button>
+            </Button> */}
           </div>
         </Grid>
       </Grid>

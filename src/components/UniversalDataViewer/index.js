@@ -4,6 +4,7 @@ import React, { useMemo } from "react"
 import TextClassification from "../TextClassification"
 import TextEntityRecognition from "../TextEntityRecognition"
 import ImageSegmentation from "../ImageSegmentation"
+import AudioTranscription from "../AudioTranscription"
 import DataEntry from "../DataEntry"
 import EmptySampleContainer from "../EmptySampleContainer"
 import Composite from "../Composite"
@@ -77,6 +78,14 @@ export const UniversalDataViewer = ({
     case "composite":
       return (
         <Composite
+          containerProps={containerProps}
+          {...oha}
+          onSaveTaskOutputItem={onSaveTaskOutputItem}
+        />
+      )
+    case "audio_transcription":
+      return (
+        <AudioTranscription
           containerProps={containerProps}
           {...oha}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
