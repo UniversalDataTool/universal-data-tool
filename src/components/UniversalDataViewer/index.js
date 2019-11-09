@@ -80,6 +80,7 @@ export const UniversalDataViewer = ({
         <Composite
           containerProps={containerProps}
           {...oha}
+          oha={oha}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
         />
       )

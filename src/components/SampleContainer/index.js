@@ -71,7 +71,9 @@ const useStyles = makeStyles(theme => ({
   description: {
     padding: 10,
     "& img": {
-      maxWidth: "calc(100% - 200px)",
+      maxWidth: "calc(100% - 16px)",
+      marginLeft: 8,
+      marginRight: 8,
       maxHeight: 600
     }
   },
@@ -133,10 +135,12 @@ export const SampleContainer = ({
                 text="show description"
               />
             )}
-            <LinkButton
-              onClick={() => changeSampleDrawerOpen(true)}
-              text="view all"
-            />
+            {totalSamples > 1 && (
+              <LinkButton
+                onClick={() => changeSampleDrawerOpen(true)}
+                text="view all"
+              />
+            )}
           </div>
           <div style={{ minHeight: minContentHeight }} className={c.content}>
             {children}

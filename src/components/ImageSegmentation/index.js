@@ -3,6 +3,7 @@
 import React, { useState } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Annotator from "react-image-annotate"
+import isEqual from "lodash/isEqual"
 
 const useStyles = makeStyles({})
 
@@ -109,8 +110,8 @@ const convertToRIAImageFmt = ({ taskDatum: td, index: i, output }) => {
       regions: !output
         ? undefined
         : Array.isArray(output)
-          ? output.map(convertToRIARegionFmt)
-          : [convertToRIARegionFmt(output)]
+        ? output.map(convertToRIARegionFmt)
+        : [convertToRIARegionFmt(output)]
     }
   }
   throw new Error(`Task Datum not supported "${JSON.stringify(td)}"`)
@@ -123,7 +124,12 @@ const regionTypeToTool = {
   point: "create-point"
 }
 
-export default ({ interface: iface, taskData = [], taskOutput = [] }) => {
+export default ({
+  interface: iface,
+  taskData = [],
+  taskOutput = [],
+  onSaveTaskOutputItem
+}) => {
   const c = useStyles()
   const [selectedIndex, changeSelectedIndex] = useState(0)
 
@@ -155,7 +161,16 @@ export default ({ interface: iface, taskData = [], taskOutput = [] }) => {
         })
       )}
       onExit={output => {
-        console.log(output)
+        const regionMat = output.images
+          .map(img => img.regions)
+          .map(riaRegions => riaRegions.map(convertFromRIARegionFmt))
+        for (let i = 0; i < regionMat.length; i++) {
+          if (iface.multipleRegions) {
+            onSaveTaskOutputItem(i, regionMat[i])
+          } else {
+            onSaveTaskOutputItem(i, regionMat[i][0])
+          }
+        }
       }}
     />
   )

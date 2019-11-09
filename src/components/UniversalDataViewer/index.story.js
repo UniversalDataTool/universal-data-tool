@@ -130,59 +130,54 @@ storiesOf("UniversalDataViewer", module)
           type: "composite",
           fields: [
             {
-              type: "data_entry",
-              description: "",
-              surveyjs: {
-                pages: [
-                  {
-                    name: "page1",
-                    elements: [
-                      {
-                        type: "radiogroup",
-                        name: "group_letter",
-                        title: "Group Letter",
-                        choices: [
-                          {
-                            value: "A",
-                            text: "A"
-                          },
-                          {
-                            value: "B",
-                            text: "B"
-                          },
-                          {
-                            value: "C",
-                            text: "C"
-                          }
-                        ]
-                      },
-                      {
-                        type: "text",
-                        name: "feedback",
-                        title: "Feedback"
-                      }
-                    ]
-                  }
-                ]
+              fieldName: "Field1",
+              interface: {
+                type: "data_entry",
+                surveyjs: {
+                  pages: [
+                    {
+                      name: "page1",
+                      elements: [
+                        {
+                          type: "text",
+                          name: "question1",
+                          title: "First Interface Question"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              fieldName: "Field2",
+              interface: {
+                type: "image_segmentation",
+                availableLabels: ["valid", "invalid"],
+                regionTypesAllowed: ["bounding-box"]
               }
             }
           ]
         },
         taskData: [
           {
-            description: "Cucumber"
+            imageUrl:
+              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/eng_diagram1.png"
           },
           {
-            description: "Hat"
+            imageUrl:
+              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/eng_diagram2.png"
           },
           {
-            description: "Something"
+            imageUrl:
+              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/eng_diagram3.png"
           }
         ],
         taskOutput: [
           {
-            group_letter: "A",
-            feedback: "this is some feedback"
+            Field1: {
+              question1: "Included output"
+            }
           },
           null,
           null
