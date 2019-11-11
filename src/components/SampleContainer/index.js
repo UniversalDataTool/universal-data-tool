@@ -94,6 +94,7 @@ const useStyles = makeStyles(theme => ({
 export const SampleContainer = ({
   hideDescription: defaultHideDescription = false,
   lastSampleExitText,
+  onExit,
   requireCompleteToPressNext = false,
   taskData,
   minContentHeight,
@@ -140,6 +141,9 @@ export const SampleContainer = ({
                 onClick={() => changeSampleDrawerOpen(true)}
                 text="view all"
               />
+            )}
+            {onExit && (
+              <LinkButton onClick={() => onExit()} text="exit without saving" />
             )}
           </div>
           <div style={{ minHeight: minContentHeight }} className={c.content}>

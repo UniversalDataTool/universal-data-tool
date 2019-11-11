@@ -102,7 +102,6 @@ const convertFromRIARegionFmt = riaRegion => {
 }
 
 const convertToRIAImageFmt = ({ taskDatum: td, index: i, output }) => {
-  console.log({ output })
   if ((td || {}).imageUrl) {
     return {
       src: td.imageUrl,
@@ -128,6 +127,7 @@ export default ({
   interface: iface,
   taskData = [],
   taskOutput = [],
+  containerProps: { onExit } = {},
   onSaveTaskOutputItem
 }) => {
   const c = useStyles()
@@ -161,9 +161,9 @@ export default ({
         })
       )}
       onExit={output => {
-        const regionMat = output.images
+        const regionMat = (output.images || [])
           .map(img => img.regions)
-          .map(riaRegions => riaRegions.map(convertFromRIARegionFmt))
+          .map(riaRegions => (riaRegions || []).map(convertFromRIARegionFmt))
         for (let i = 0; i < regionMat.length; i++) {
           if (iface.multipleRegions) {
             onSaveTaskOutputItem(i, regionMat[i])
@@ -171,6 +171,7 @@ export default ({
             onSaveTaskOutputItem(i, regionMat[i][0])
           }
         }
+        if (onExit) onExit()
       }}
     />
   )

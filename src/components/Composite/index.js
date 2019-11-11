@@ -36,10 +36,16 @@ export const Composite = props => {
   if (selectedField) {
     return (
       <UniversalDataViewer
-        hideHeader
+        onExit={() => changeSelectedField(null)}
         oha={{
           interface: selectedField.interface,
-          taskOutput: [props.taskOutput[selectedField.index]],
+          taskOutput: [
+            props.taskOutput
+              ? (props.taskOutput[selectedField.index] || {})[
+                  selectedField.fieldName
+                ]
+              : null
+          ],
           taskData: [props.taskData[selectedField.index]]
         }}
         onSaveTaskOutputItem={(indexZero, output) => {

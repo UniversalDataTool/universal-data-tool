@@ -12,6 +12,7 @@ import BadOHA from "../BadOHA"
 
 export const UniversalDataViewer = ({
   oha,
+  onExit,
   hideHeader,
   hideDescription,
   datasetName,
@@ -24,9 +25,16 @@ export const UniversalDataViewer = ({
       hideHeader,
       hideDescription,
       datasetName,
-      requireCompleteToPressNext
+      requireCompleteToPressNext,
+      onExit
     }),
-    [hideHeader, hideDescription, requireCompleteToPressNext, datasetName]
+    [
+      hideHeader,
+      hideDescription,
+      requireCompleteToPressNext,
+      datasetName,
+      onExit
+    ]
   )
 
   if (!oha) {
@@ -72,6 +80,7 @@ export const UniversalDataViewer = ({
         <ImageSegmentation
           containerProps={containerProps}
           {...oha}
+          onExit={onExit}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
         />
       )
