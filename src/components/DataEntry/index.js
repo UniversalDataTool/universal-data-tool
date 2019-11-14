@@ -5,6 +5,7 @@ import SampleContainer from "../SampleContainer"
 
 export const DataEntry = props => {
   const [currentSampleIndex, changeCurrentSampleIndex] = useState(0)
+  console.log({ props })
   return (
     <SampleContainer
       {...props.containerProps}

@@ -41,16 +41,16 @@ export const Composite = props => {
           interface: selectedField.interface,
           taskOutput: [
             props.taskOutput
-              ? (props.taskOutput[selectedField.index] || {})[
+              ? (props.taskOutput[currentSampleIndex] || {})[
                   selectedField.fieldName
                 ]
               : null
           ],
-          taskData: [props.taskData[selectedField.index]]
+          taskData: [props.taskData[currentSampleIndex]]
         }}
         onSaveTaskOutputItem={(indexZero, output) => {
           props.onSaveTaskOutputItem(currentSampleIndex, {
-            ...(props.taskOutput ? props.taskOutput[selectedField.index] : {}),
+            ...(props.taskOutput ? props.taskOutput[currentSampleIndex] : {}),
             [selectedField.fieldName]: output
           })
           changeSelectedField(null)

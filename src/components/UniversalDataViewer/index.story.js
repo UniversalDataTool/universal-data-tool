@@ -194,30 +194,42 @@ storiesOf("UniversalDataViewer", module)
           type: "composite",
           fields: [
             {
-              fieldName: "Field1",
+              fieldName: "textfield",
               interface: {
                 type: "data_entry",
                 surveyjs: {
-                  pages: [
+                  questions: [
                     {
-                      name: "page1",
-                      elements: [
-                        {
-                          type: "text",
-                          name: "question1",
-                          title: "First Interface Question"
-                        }
-                      ]
+                      name: "value",
+                      type: "text",
+                      title: "What is the value of textfield?"
                     }
                   ]
                 }
               }
             },
             {
-              fieldName: "Field2",
+              fieldName: "labelfield",
+              interface: {
+                type: "data_entry",
+                surveyjs: {
+                  questions: [
+                    {
+                      name: "value",
+                      type: "radiogroup",
+                      title: "Which of the following is the labelfield?",
+                      choices: ["Example Option 1", "Example Option 2"]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              fieldName: "interest",
               interface: {
                 type: "image_segmentation",
-                availableLabels: ["valid", "invalid"],
+                description:
+                  'Completely surround the "interest" with a bounding box.',
                 regionTypesAllowed: ["bounding-box"]
               }
             }
@@ -225,18 +237,15 @@ storiesOf("UniversalDataViewer", module)
         },
         taskData: [
           {
+            customId: "images/img1.jpg",
             imageUrl:
-              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/eng_diagram1.png"
-          },
-          {
-            imageUrl:
-              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/eng_diagram2.png"
-          },
-          {
-            imageUrl:
-              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/eng_diagram3.png"
+              "http://localhost:3702/app/api/download/63d525ea-cad4-495b-8c5d-eb44173a4238"
           }
-        ]
+        ],
+        examples: null,
+        delivery: {
+          targetAccuracy: 0.93
+        }
       }}
     />
   ))
