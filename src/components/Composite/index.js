@@ -50,7 +50,7 @@ export const Composite = props => {
         }}
         onSaveTaskOutputItem={(indexZero, output) => {
           props.onSaveTaskOutputItem(currentSampleIndex, {
-            ...props.taskOutput[selectedField.index],
+            ...(props.taskOutput ? props.taskOutput[selectedField.index] : {}),
             [selectedField.fieldName]: output
           })
           changeSelectedField(null)
@@ -89,7 +89,9 @@ export const Composite = props => {
           <Box flexGrow={1} />
           <Checkbox
             checked={Boolean(
-              props.taskOutput[currentSampleIndex][field.fieldName]
+              (props.taskOutput
+                ? props.taskOutput[currentSampleIndex] || {}
+                : {})[field.fieldName]
             )}
           />
           <KeyboardArrowRightIcon />

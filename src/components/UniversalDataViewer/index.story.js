@@ -185,3 +185,58 @@ storiesOf("UniversalDataViewer", module)
       }}
     />
   ))
+  .add("Composite No Output", () => (
+    <UniversalDataViewer
+      onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
+      hideHeader
+      oha={{
+        interface: {
+          type: "composite",
+          fields: [
+            {
+              fieldName: "Field1",
+              interface: {
+                type: "data_entry",
+                surveyjs: {
+                  pages: [
+                    {
+                      name: "page1",
+                      elements: [
+                        {
+                          type: "text",
+                          name: "question1",
+                          title: "First Interface Question"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              fieldName: "Field2",
+              interface: {
+                type: "image_segmentation",
+                availableLabels: ["valid", "invalid"],
+                regionTypesAllowed: ["bounding-box"]
+              }
+            }
+          ]
+        },
+        taskData: [
+          {
+            imageUrl:
+              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/eng_diagram1.png"
+          },
+          {
+            imageUrl:
+              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/eng_diagram2.png"
+          },
+          {
+            imageUrl:
+              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/eng_diagram3.png"
+          }
+        ]
+      }}
+    />
+  ))
