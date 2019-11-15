@@ -1367,16 +1367,6 @@
   resolved "https://registry.yarnpkg.com/@material-ui/icons/-/icons-4.5.1.tgz#6963bad139e938702ece85ca43067688018f04f8"
   integrity sha512-YZ/BgJbXX4a0gOuKWb30mBaHaoXRqPanlePam83JQPZ/y4kl+3aW0Wv9tlR70hB5EGAkEJGW5m4ktJwMgxQAeA==
 
-"@material-ui/lab@^4.0.0-alpha.25", "@material-ui/lab@^4.0.0-alpha.31":
-  version "4.0.0-alpha.32"
-  resolved "https://registry.yarnpkg.com/@material-ui/lab/-/lab-4.0.0-alpha.32.tgz#be339034db5ae0e75a83076e9e2ff93d52725a55"
-  integrity sha512-ONh2WLp8E11Gsl/HaLQ1CLfZadtuyt2cbEKDCAJ9G267zCrKzrc5T9Ij7UH5Z2jwmP9aDjpp8PoA1+zUSlGknw==
-  dependencies:
-    "@babel/runtime" "^7.4.4"
-    "@material-ui/utils" "^4.5.2"
-    clsx "^1.0.4"
-    prop-types "^15.7.2"
-
 "@material-ui/styles@^4.3.3", "@material-ui/styles@^4.6.0":
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/@material-ui/styles/-/styles-4.6.0.tgz#15679fab6dcbe0cc2416f01a22966f3ea26607c5"
@@ -3658,7 +3648,7 @@ clone-deep@^2.0.1:
     kind-of "^6.0.0"
     shallow-clone "^1.0.0"
 
-clsx@^1.0.2, clsx@^1.0.4:
+clsx@^1.0.2:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.0.4.tgz#0c0171f6d5cb2fe83848463c15fcc26b4df8c2ec"
   integrity sha512-1mQ557MIZTrL/140j+JVdRM6e31/OA4vTYxXgqIIZlndyfjHpyawKZia1Im05Vp9BWmImkcNrNtFYQMyFcgJDg==
@@ -10395,16 +10385,15 @@ react-hotkeys@2.0.0-pre4:
     prop-types "^15.6.1"
 
 react-image-annotate@^0.1.33:
-  version "0.1.33"
-  resolved "https://registry.yarnpkg.com/react-image-annotate/-/react-image-annotate-0.1.33.tgz#c54b74d0469720518bbdead81b95475ea0cb8058"
-  integrity sha512-Oi3+MoHVrTcvIDCcL6omsrXg2MqBy9ZB5NxhWOW2rS7M+8LCnbvvhn2/BR0uoY+ZgMsFvptP8QFXGmba67zgsQ==
+  version "0.1.34"
+  resolved "https://registry.yarnpkg.com/react-image-annotate/-/react-image-annotate-0.1.34.tgz#ecb930344dc958d9118a8b7a82c7a171d72c7980"
+  integrity sha512-8pdlUGRzeINE3cweOxULxr4/OyGxHyPli1zrwwZf2jL6fDGaQxiywg2KmLKE1ZrTW6bcuyOcoUoDhfJ8xmMsCQ==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.12"
     "@fortawesome/free-solid-svg-icons" "^5.6.3"
     "@fortawesome/react-fontawesome" "^0.1.3"
     "@material-ui/core" "^4.6.0"
     "@material-ui/icons" "^4.5.1"
-    "@material-ui/lab" "^4.0.0-alpha.31"
     get-image-data "^3.0.1"
     material-survey "^1.0.34"
     moment "^2.23.0"
@@ -12519,17 +12508,6 @@ unist-util-visit@^1.1.0, unist-util-visit@^1.3.0:
   integrity sha512-AvGNk7Bb//EmJZyhtRUnNMEpId/AZ5Ph/KUpTI09WHQuDZHKovQ1oEv3mfmKpWKtoMzyMC4GLBm1Zy5k12fjIw==
   dependencies:
     unist-util-visit-parents "^2.0.0"
-
-universal-data-tool@^0.1.8:
-  version "0.1.18"
-  resolved "https://registry.yarnpkg.com/universal-data-tool/-/universal-data-tool-0.1.18.tgz#ff6765cc5568190c8fe14b3ee42526c9150a8816"
-  integrity sha512-a+u7KXNuIGF3t95GIgveMAe06X5/e+YEp6K7qjOg8LHg4g9WuS66AdTKAHfV+Svbv0sfbegJKBiN013lYLqg4w==
-  dependencies:
-    "@material-ui/styles" "^4.3.3"
-    brace "^0.11.1"
-    react-ace "^7.0.4"
-    react-dropzone "^10.1.8"
-    universal-data-tool "^0.1.8"
 
 universalify@^0.1.0:
   version "0.1.2"
