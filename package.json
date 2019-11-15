@@ -45,7 +45,7 @@
     "material-survey": "^1.0.32",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-image-annotate": "^0.1.30",
+    "react-image-annotate": "^0.1.33",
     "react-markdown": "^4.1.0",
     "react-nlp-annotate": "^0.1.18",
     "react-scripts": "3.0.1",
