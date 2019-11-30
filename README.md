@@ -6,6 +6,10 @@ The Universal Data Tool is a User Interface for editing and annotating Images (C
 
 <!-- [Check out the demo here.](#) -->
 
+## Sponsors
+
+[![wao.ai sponsorship image](https://s3.amazonaws.com/asset.workaround.online/sponsorship-banner-1.png)](https://wao.ai)
+
 ## Features
 
 - Integrate into any web-based application.
