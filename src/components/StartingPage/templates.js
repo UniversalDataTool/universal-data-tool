@@ -4,6 +4,7 @@ import RemoveRedEye from "@material-ui/icons/RemoveRedEye"
 import TextFormat from "@material-ui/icons/TextFormat"
 import Edit from "@material-ui/icons/Edit"
 import Audiotrack from "@material-ui/icons/Audiotrack"
+import Category from "@material-ui/icons/Category"
 
 export default [
   {
@@ -99,6 +100,51 @@ export default [
       taskData: [
         {
           audioUrl: "https://html5tutorial.info/media/vincent.mp3"
+        }
+      ]
+    }
+  },
+  {
+    name: "Composite",
+    Icon: Category,
+    oha: {
+      description: "# Markdown description here",
+      interface: {
+        type: "composite",
+        fields: [
+          {
+            fieldName: "textInfo",
+            interface: {
+              type: "data_entry",
+              surveyjs: {
+                questions: [
+                  {
+                    type: "text",
+                    name: "group_letter",
+                    title: "Letter of Group"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            fieldName: "segmentation",
+            interface: {
+              type: "image_segmentation",
+              availableLabels: ["group text"],
+              regionTypesAllowed: ["bounding-box"]
+            }
+          }
+        ]
+      },
+      taskData: [
+        {
+          imageUrl:
+            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg"
+        },
+        {
+          imageUrl:
+            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg"
         }
       ]
     }
