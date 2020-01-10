@@ -25,8 +25,6 @@ The Universal Data Tool is a User Interface for editing and annotating Images (C
 - Easy to use
 - Easy to integrate
 
-To do this, we make sacrifices in design consistency and library size.
-
 ## Libraries
 
 The Universal Data Tool is always looking for the best libraries to provide the
