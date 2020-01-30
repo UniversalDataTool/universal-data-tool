@@ -48,16 +48,13 @@ export default ({
   const [mode, changeMode] = useState(initialMode)
   const [jsonText, changeJSONText] = useState(content || defaultOHAObject)
 
-  useEffect(
-    () => {
-      onChangeContent(jsonText)
-      try {
-        // schema validation etc.
-        onChangeOHA(JSON.parse(jsonText))
-      } catch (e) {}
-    },
-    [jsonText]
-  )
+  useEffect(() => {
+    onChangeContent(jsonText)
+    try {
+      // schema validation etc.
+      onChangeOHA(JSON.parse(jsonText))
+    } catch (e) {}
+  }, [jsonText])
 
   return (
     <div>
@@ -90,6 +87,7 @@ export default ({
             </Button>
           )
         ]}
+        tabs={["Settings", "Samples", "Label"]}
       />
       <div>
         {mode === "json" ? (
