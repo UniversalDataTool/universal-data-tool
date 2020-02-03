@@ -22,22 +22,33 @@ import GithubIcon from "./GithubIcon"
 import templates from "../StartingPage/templates"
 import { useDropzone } from "react-dropzone"
 import { makeStyles } from "@material-ui/core/styles"
+import Tabs from "@material-ui/core/Tabs"
+import Tab from "@material-ui/core/Tab"
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   headerButton: {
     color: "#fff"
   },
   grow: { flexGrow: 1 },
   list: {
     width: 300
+  },
+  tab: {
+    color: "#fff",
+    height: "100%"
+  },
+  fullHeightTab: {
+    ...theme.mixins.toolbar
   }
-})
+}))
 
 export const HeaderContext = createContext({ recentItems: [] })
 
 export default ({
   additionalButtons = [],
-  title = "Universal Data Tool - Welcome!"
+  title = "Universal Data Tool - Welcome!",
+  currentTab,
+  tabs = []
 }) => {
   const c = useStyles()
   const [drawerOpen, changeDrawerOpen] = useState(false)
@@ -71,6 +82,19 @@ export default ({
           </Typography>
           <div className={c.grow} />
           {additionalButtons}
+          {tabs.length > 0 && (
+            <Tabs value={currentTab}>
+              {tabs.map(t => (
+                <Tab
+                  key={t}
+                  classes={{ root: c.fullHeightTab }}
+                  className={c.tab}
+                  label={t}
+                  value={t}
+                />
+              ))}
+            </Tabs>
+          )}
           <IconButton
             href="https://github.com/openhumanannotation/universal-data-tool"
             className={c.headerButton}
