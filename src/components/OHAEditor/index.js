@@ -17,6 +17,7 @@ import SaveIcon from "@material-ui/icons/Save"
 import defaultOHAObject from "./default-oha-object"
 import UniversalDataViewer from "../UniversalDataViewer"
 import EditableTitleText from "./EditableTitleText.js"
+import SampleDataTable from "../SampleDataTable"
 
 import "brace/mode/javascript"
 import "brace/theme/github"
@@ -42,7 +43,7 @@ export default ({
   onChangeContent = () => null,
   onChangeOHA = () => null,
   onFileDrop,
-  initialMode = "json"
+  initialMode = "samples"
 }) => {
   const c = useStyles()
   const [mode, changeMode] = useState(initialMode)
@@ -65,32 +66,12 @@ export default ({
             <EditableTitleText onChange={onChangeFileName} value={fileName} />
           </>
         }
-        additionalButtons={[
-          // <IconButton disabled className={c.headerButton}>
-          //   <SaveIcon className={c.saveIcon} />
-          // </IconButton>,
-          mode === "json" ? (
-            <Button
-              onClick={() => changeMode("sample")}
-              className={c.headerButton}
-            >
-              Switch to Sample Editor
-              <NextIcon />
-            </Button>
-          ) : (
-            <Button
-              onClick={() => changeMode("json")}
-              className={c.headerButton}
-            >
-              Switch to JSON Editor
-              <EditIcon className={c.editIcon} />
-            </Button>
-          )
-        ]}
+        onChangeTab={tab => changeMode(tab.toLowerCase())}
+        currentTab={mode}
         tabs={["Settings", "Samples", "Label"]}
       />
       <div>
-        {mode === "json" ? (
+        {mode === "json" && (
           <AceEditor
             theme="github"
             mode="javascript"
@@ -99,7 +80,16 @@ export default ({
             editorProps={{ $blockScrolling: Infinity }}
             onChange={t => changeJSONText(t)}
           />
-        ) : (
+        )}
+        {mode === "samples" && (
+          <SampleDataTable
+            oha={oha}
+            openSample={() => {
+              changeMode("label")
+            }}
+          />
+        )}
+        {mode === "label" && (
           <UniversalDataViewer
             onSaveTaskOutputItem={(index, output) => {
               const newOHA = { ...oha }

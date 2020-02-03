@@ -14,7 +14,29 @@ const Controller = props => {
 
 storiesOf("OHAEditor", module).add("Basic", () => (
   <Controller
-    initialOHA={{}}
+    initialOHA={{
+      interface: {
+        type: "image_segmentation",
+        availableLabels: ["valid", "invalid"],
+        regionTypesAllowed: [
+          "bounding-box",
+          "polygon",
+          "full-segmentation",
+          "point",
+          "pixel-mask"
+        ]
+      },
+      taskData: [
+        {
+          imageUrl:
+            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg"
+        },
+        {
+          imageUrl:
+            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg"
+        }
+      ]
+    }}
     onChangeFileName={action("onChangeFileName")}
     onChangeOHA={action("onChangeOHA")}
   />

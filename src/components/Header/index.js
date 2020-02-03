@@ -6,6 +6,9 @@ import Toolbar from "@material-ui/core/Toolbar"
 import IconButton from "@material-ui/core/IconButton"
 import MenuIcon from "@material-ui/icons/Menu"
 import CodeIcon from "@material-ui/icons/Code"
+import SettingsIcon from "@material-ui/icons/Settings"
+import StorageIcon from "@material-ui/icons/Storage"
+import BorderColorIcon from "@material-ui/icons/BorderColor"
 import HomeIcon from "@material-ui/icons/Home"
 import Typography from "@material-ui/core/Typography"
 import Drawer from "@material-ui/core/Drawer"
@@ -44,10 +47,22 @@ const useStyles = makeStyles(theme => ({
 
 export const HeaderContext = createContext({ recentItems: [] })
 
+const getIcon = (t: string) => {
+  switch (t) {
+    case "Settings":
+      return <SettingsIcon />
+    case "Label":
+      return <BorderColorIcon />
+    case "Samples":
+      return <StorageIcon />
+  }
+}
+
 export default ({
   additionalButtons = [],
   title = "Universal Data Tool - Welcome!",
   currentTab,
+  onChangeTab,
   tabs = []
 }) => {
   const c = useStyles()
@@ -83,14 +98,18 @@ export default ({
           <div className={c.grow} />
           {additionalButtons}
           {tabs.length > 0 && (
-            <Tabs value={currentTab}>
+            <Tabs
+              onChange={(e, newTab) => onChangeTab(newTab.toLowerCase())}
+              value={currentTab}
+            >
               {tabs.map(t => (
                 <Tab
                   key={t}
                   classes={{ root: c.fullHeightTab }}
                   className={c.tab}
+                  icon={getIcon(t)}
                   label={t}
-                  value={t}
+                  value={t.toLowerCase()}
                 />
               ))}
             </Tabs>
