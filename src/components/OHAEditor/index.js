@@ -47,7 +47,11 @@ export default ({
 }) => {
   const c = useStyles()
   const [mode, changeMode] = useState(initialMode)
-  const [jsonText, changeJSONText] = useState(content || defaultOHAObject)
+  const [singleSampleOHA, changeSingleSampleOHA] = useState()
+  const [sampleInputEditor, changeSampleInputEditor] = useState({})
+  const [jsonText, changeJSONText] = useState(
+    content || oha || defaultOHAObject
+  )
 
   useEffect(() => {
     onChangeContent(jsonText)
@@ -84,21 +88,31 @@ export default ({
         {mode === "samples" && (
           <SampleDataTable
             oha={oha}
-            openSample={() => {
+            openSampleLabelEditor={sampleIndex => {
+              changeSingleSampleOHA({
+                ...oha,
+                taskData: [oha.taskData[sampleIndex]],
+                taskOutput: [(oha.taskOutput || [])[sampleIndex]],
+                sampleIndex
+              })
               changeMode("label")
+            }}
+            openSampleInputEditor={sampleIndex => {
+              changeSampleInputEditor({ open: true, sampleIndex })
             }}
           />
         )}
         {mode === "label" && (
           <UniversalDataViewer
-            onSaveTaskOutputItem={(index, output) => {
+            datasetName={`Sample ${singleSampleOHA.sampleIndex}`}
+            onSaveTaskOutputItem={(relativeIndex, output) => {
               const newOHA = { ...oha }
               if (!newOHA.taskOutput)
                 newOHA.taskOutput = newOHA.taskData.map(td => null)
-              newOHA.taskOutput[index] = output
+              newOHA.taskOutput[singleSampleOHA.sampleIndex] = output
               changeJSONText(JSON.stringify(newOHA, null, "  "))
             }}
-            oha={oha}
+            oha={singleSampleOHA}
           />
         )}
       </div>

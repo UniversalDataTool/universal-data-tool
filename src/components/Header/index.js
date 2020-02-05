@@ -38,7 +38,8 @@ const useStyles = makeStyles(theme => ({
   },
   tab: {
     color: "#fff",
-    height: "100%"
+    height: "100%",
+    "& .icon": {}
   },
   fullHeightTab: {
     ...theme.mixins.toolbar
@@ -50,11 +51,11 @@ export const HeaderContext = createContext({ recentItems: [] })
 const getIcon = (t: string) => {
   switch (t) {
     case "Settings":
-      return <SettingsIcon />
+      return <SettingsIcon className="icon" />
     case "Label":
-      return <BorderColorIcon />
+      return <BorderColorIcon className="icon" />
     case "Samples":
-      return <StorageIcon />
+      return <StorageIcon className="icon" />
   }
 }
 

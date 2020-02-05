@@ -101,11 +101,11 @@ const convertFromRIARegionFmt = riaRegion => {
   throw new Error(`Unsupported riaRegion "${JSON.stringify(riaRegion)}"`)
 }
 
-const convertToRIAImageFmt = ({ taskDatum: td, index: i, output }) => {
+const convertToRIAImageFmt = ({ title, taskDatum: td, index: i, output }) => {
   if ((td || {}).imageUrl) {
     return {
       src: td.imageUrl,
-      name: `Sample ${i + 1}`,
+      name: title || `Sample ${i}`,
       regions: !output
         ? undefined
         : Array.isArray(output)
@@ -127,7 +127,7 @@ export default ({
   interface: iface,
   taskData = [],
   taskOutput = [],
-  containerProps: { onExit } = {},
+  containerProps: { onExit, datasetName } = {},
   onSaveTaskOutputItem
 }) => {
   const c = useStyles()
@@ -155,6 +155,7 @@ export default ({
       )}
       images={taskData.map((taskDatum, index) =>
         convertToRIAImageFmt({
+          title: datasetName,
           taskDatum,
           output: taskOutput[index],
           index

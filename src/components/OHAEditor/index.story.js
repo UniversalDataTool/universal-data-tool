@@ -9,7 +9,16 @@ import OHAEditor from "./"
 
 const Controller = props => {
   const [oha, changeOHA] = useState(props.initialOHA)
-  return <OHAEditor oha={oha} onChangeOHA={changeOHA} {...props} />
+  return (
+    <OHAEditor
+      oha={oha}
+      onChangeOHA={(...props) => {
+        changeOHA(...props)
+        action("onChangeOHA")(...props)
+      }}
+      {...props}
+    />
+  )
 }
 
 storiesOf("OHAEditor", module).add("Basic", () => (
@@ -35,9 +44,17 @@ storiesOf("OHAEditor", module).add("Basic", () => (
           imageUrl:
             "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg"
         }
+      ],
+      taskOutput: [
+        {
+          regionType: "bounding-box",
+          centerX: 0.5,
+          centerY: 0.5,
+          width: 0.25,
+          height: 0.25
+        }
       ]
     }}
     onChangeFileName={action("onChangeFileName")}
-    onChangeOHA={action("onChangeOHA")}
   />
 ))
