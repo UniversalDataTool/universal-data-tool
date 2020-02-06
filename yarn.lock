@@ -10616,10 +10616,10 @@ react-monaco-editor@^0.25.1:
     monaco-editor "^0.16.0"
     prop-types "^15.7.2"
 
-react-nlp-annotate@^0.1.18:
-  version "0.1.19"
-  resolved "https://registry.yarnpkg.com/react-nlp-annotate/-/react-nlp-annotate-0.1.19.tgz#88518d1f5de51387662f1d2cfaaefc9843455b03"
-  integrity sha512-sgW277yR7/HUeEmWZ968OQ22sSgTEJSvOGjo3MWhmD4SEC56pi9Ju6W5SQkGBKSu6XjlVyEJRcoOYdHuEzE/1g==
+react-nlp-annotate@^0.1.21:
+  version "0.1.21"
+  resolved "https://registry.yarnpkg.com/react-nlp-annotate/-/react-nlp-annotate-0.1.21.tgz#d10e1d50be7a22627dc412de10cbee647df42b4c"
+  integrity sha512-RPNi3dtjh4l6faBi85zMZE2Vr7EIaPzzj3XY6zNOX8qH0lAF2LJQB1e1JAREB6QsNDSmNBE2h6FX0Ka9Ee3XqA==
 
 react-popper-tooltip@^2.8.3:
   version "2.10.0"

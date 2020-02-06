@@ -45,7 +45,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-markdown": "^4.1.0",
-    "react-nlp-annotate": "^0.1.18",
+    "react-nlp-annotate": "^0.1.21",
     "react-scripts": "3.0.1",
     "spelling": "^2.0.1"
   },
