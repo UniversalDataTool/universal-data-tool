@@ -5,7 +5,7 @@ import SimpleDialog from "../SimpleDialog"
 
 export default ({ open, onClose }) => {
   return (
-    <SimpleDialog open={open} onClose={onClose}>
+    <SimpleDialog title="Paste Image Urls" open={open} onClose={onClose}>
       asd
     </SimpleDialog>
   )

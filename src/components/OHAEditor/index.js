@@ -18,6 +18,7 @@ import defaultOHAObject from "./default-oha-object"
 import UniversalDataViewer from "../UniversalDataViewer"
 import EditableTitleText from "./EditableTitleText.js"
 import SampleDataTable from "../SampleDataTable"
+import InterfacePage from "../InterfacePage"
 
 import "brace/mode/javascript"
 import "brace/theme/github"
@@ -83,6 +84,23 @@ export default ({
             value={jsonText}
             editorProps={{ $blockScrolling: Infinity }}
             onChange={t => changeJSONText(t)}
+          />
+        )}
+        {mode === "settings" && (
+          <InterfacePage
+            oha={oha}
+            onChange={iface => {
+              changeJSONText(
+                JSON.stringify(
+                  {
+                    ...oha,
+                    interface: iface
+                  },
+                  null,
+                  "  "
+                )
+              )
+            }}
           />
         )}
         {mode === "samples" && (
