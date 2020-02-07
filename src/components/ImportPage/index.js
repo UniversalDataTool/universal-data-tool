@@ -5,7 +5,7 @@ import MuiButton from "@material-ui/core/Button"
 import { styled } from "@material-ui/core/styles"
 import AssignmentReturnedIcon from "@material-ui/icons/AssignmentReturned"
 import * as colors from "@material-ui/core/colors"
-import PasteImageUrlsDialog from "../PasteImageUrlsDialog"
+import PasteUrlsDialog from "../PasteUrlsDialog"
 
 const ButtonBase = styled(MuiButton)({
   width: 240,
@@ -36,7 +36,7 @@ const Button = ({ Icon, children, dialog }) => {
   )
 }
 
-export default () => {
+export default ({ oha, onChangeOHA }) => {
   const [selectedDialog, changeDialog] = useState()
   const closeDialog = () => changeDialog(null)
   return (
@@ -47,11 +47,21 @@ export default () => {
           Icon={AssignmentReturnedIcon}
           variant="outlined"
         >
-          Paste Image URLs
+          Paste URLs
         </Button>
-        <PasteImageUrlsDialog
+        <PasteUrlsDialog
           open={selectedDialog === "paste-image-urls"}
           onClose={closeDialog}
+          onAddSamples={samples => {
+            onChangeOHA(
+              {
+                ...oha,
+                taskData: (oha.taskData || []).concat(samples)
+              },
+              true
+            )
+            closeDialog()
+          }}
         />
       </div>
     </SelectDialogContext.Provider>

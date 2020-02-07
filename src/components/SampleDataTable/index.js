@@ -57,8 +57,19 @@ const ExpandedRow = ({ data }) => {
   )
 }
 
-export default ({ oha, openSampleInputEditor, openSampleLabelEditor }) => {
-  const [currentTab, changeTab] = useState("grid")
+export default ({
+  oha,
+  openSampleInputEditor,
+  openSampleLabelEditor,
+  onChangeOHA
+}) => {
+  const [currentTab, changeTabState] = useState(
+    window.localStorage.lastSampleTab || "grid"
+  )
+  const changeTab = tab => {
+    changeTabState(tab)
+    window.localStorage.lastSampleTab = tab
+  }
   const columns = useMemo(() => {
     if (!oha.taskData) return []
     const columns = [
@@ -125,7 +136,17 @@ export default ({ oha, openSampleInputEditor, openSampleLabelEditor }) => {
         <Tab icon={<TableChartIcon />} label="Table" value="table" />
       </Tabs>
       <Box paddingTop={2} />
-      {currentTab === "import" && <ImportPage />}
+      {currentTab === "import" && (
+        <ImportPage
+          onChangeOHA={(newOHA, shouldViewChange) => {
+            onChangeOHA(newOHA)
+            if (shouldViewChange) {
+              changeTab("grid")
+            }
+          }}
+          oha={oha}
+        />
+      )}
       {currentTab === "grid" && (
         <SampleGrid
           count={(oha.taskData || []).length}

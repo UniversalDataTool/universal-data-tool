@@ -118,6 +118,9 @@ export default ({
             openSampleInputEditor={sampleIndex => {
               changeSampleInputEditor({ open: true, sampleIndex })
             }}
+            onChangeOHA={newOHA => {
+              changeJSONText(JSON.stringify(newOHA, null, "  "))
+            }}
           />
         )}
         {mode === "label" && (
