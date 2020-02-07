@@ -6,6 +6,9 @@ import Toolbar from "@material-ui/core/Toolbar"
 import IconButton from "@material-ui/core/IconButton"
 import MenuIcon from "@material-ui/icons/Menu"
 import CodeIcon from "@material-ui/icons/Code"
+import SettingsIcon from "@material-ui/icons/Settings"
+import StorageIcon from "@material-ui/icons/Storage"
+import BorderColorIcon from "@material-ui/icons/BorderColor"
 import HomeIcon from "@material-ui/icons/Home"
 import Typography from "@material-ui/core/Typography"
 import Drawer from "@material-ui/core/Drawer"
@@ -22,22 +25,46 @@ import GithubIcon from "./GithubIcon"
 import templates from "../StartingPage/templates"
 import { useDropzone } from "react-dropzone"
 import { makeStyles } from "@material-ui/core/styles"
+import Tabs from "@material-ui/core/Tabs"
+import Tab from "@material-ui/core/Tab"
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   headerButton: {
     color: "#fff"
   },
   grow: { flexGrow: 1 },
   list: {
     width: 300
+  },
+  tab: {
+    color: "#fff",
+    height: "100%",
+    "& .icon": {}
+  },
+  fullHeightTab: {
+    ...theme.mixins.toolbar
   }
-})
+}))
 
 export const HeaderContext = createContext({ recentItems: [] })
 
+const getIcon = (t: string) => {
+  switch (t) {
+    case "Settings":
+      return <SettingsIcon className="icon" />
+    case "Label":
+      return <BorderColorIcon className="icon" />
+    case "Samples":
+      return <StorageIcon className="icon" />
+  }
+}
+
 export default ({
   additionalButtons = [],
-  title = "Universal Data Tool - Welcome!"
+  title = "Universal Data Tool - Welcome!",
+  currentTab,
+  onChangeTab,
+  tabs = []
 }) => {
   const c = useStyles()
   const [drawerOpen, changeDrawerOpen] = useState(false)
@@ -71,6 +98,23 @@ export default ({
           </Typography>
           <div className={c.grow} />
           {additionalButtons}
+          {tabs.length > 0 && (
+            <Tabs
+              onChange={(e, newTab) => onChangeTab(newTab.toLowerCase())}
+              value={currentTab}
+            >
+              {tabs.map(t => (
+                <Tab
+                  key={t}
+                  classes={{ root: c.fullHeightTab }}
+                  className={c.tab}
+                  icon={getIcon(t)}
+                  label={t}
+                  value={t.toLowerCase()}
+                />
+              ))}
+            </Tabs>
+          )}
           <IconButton
             href="https://github.com/openhumanannotation/universal-data-tool"
             className={c.headerButton}

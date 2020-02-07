@@ -1,6 +1,6 @@
 {
   "name": "universal-data-tool",
-  "version": "0.1.21",
+  "version": "0.2.0",
   "license": "MIT",
   "main": "components/UniversalDataViewer",
   "homepage": "https://universaldatatool.com",
@@ -9,7 +9,7 @@
     "build": "npm run build:babel && cp ./package.json ./dist/package.json",
     "build:babel": "NODE_ENV=production babel ./src --out-dir=./dist",
     "build:app": "react-scripts build",
-    "dist": "npm run build && cd dist && npm publish",
+    "release": "npm run build && cd dist && npm publish",
     "test": "react-scripts test",
     "storybook": "start-storybook -p 6002 -s public",
     "build-storybook": "build-storybook -s public",
@@ -45,7 +45,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-markdown": "^4.1.0",
-    "react-nlp-annotate": "^0.1.18",
+    "react-nlp-annotate": "^0.1.21",
     "react-scripts": "3.0.1",
     "spelling": "^2.0.1"
   },
@@ -53,8 +53,10 @@
     "@material-ui/styles": "^4.3.3",
     "brace": "^0.11.1",
     "react-ace": "^7.0.4",
+    "react-data-table-component": "^6.2.2",
     "react-dropzone": "^10.1.8",
     "react-image-annotate": "^0.1.33",
-    "react-select": "^3.0.8"
+    "react-select": "^3.0.8",
+    "styled-components": "^5.0.0"
   }
 }

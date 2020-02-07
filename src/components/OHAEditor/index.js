@@ -17,6 +17,7 @@ import SaveIcon from "@material-ui/icons/Save"
 import defaultOHAObject from "./default-oha-object"
 import UniversalDataViewer from "../UniversalDataViewer"
 import EditableTitleText from "./EditableTitleText.js"
+import SampleDataTable from "../SampleDataTable"
 
 import "brace/mode/javascript"
 import "brace/theme/github"
@@ -42,22 +43,23 @@ export default ({
   onChangeContent = () => null,
   onChangeOHA = () => null,
   onFileDrop,
-  initialMode = "json"
+  initialMode = "samples"
 }) => {
   const c = useStyles()
   const [mode, changeMode] = useState(initialMode)
-  const [jsonText, changeJSONText] = useState(content || defaultOHAObject)
-
-  useEffect(
-    () => {
-      onChangeContent(jsonText)
-      try {
-        // schema validation etc.
-        onChangeOHA(JSON.parse(jsonText))
-      } catch (e) {}
-    },
-    [jsonText]
+  const [singleSampleOHA, changeSingleSampleOHA] = useState()
+  const [sampleInputEditor, changeSampleInputEditor] = useState({})
+  const [jsonText, changeJSONText] = useState(
+    content || oha || defaultOHAObject
   )
+
+  useEffect(() => {
+    onChangeContent(jsonText)
+    try {
+      // schema validation etc.
+      onChangeOHA(JSON.parse(jsonText))
+    } catch (e) {}
+  }, [jsonText])
 
   return (
     <div>
@@ -68,31 +70,12 @@ export default ({
             <EditableTitleText onChange={onChangeFileName} value={fileName} />
           </>
         }
-        additionalButtons={[
-          // <IconButton disabled className={c.headerButton}>
-          //   <SaveIcon className={c.saveIcon} />
-          // </IconButton>,
-          mode === "json" ? (
-            <Button
-              onClick={() => changeMode("sample")}
-              className={c.headerButton}
-            >
-              Switch to Sample Editor
-              <NextIcon />
-            </Button>
-          ) : (
-            <Button
-              onClick={() => changeMode("json")}
-              className={c.headerButton}
-            >
-              Switch to JSON Editor
-              <EditIcon className={c.editIcon} />
-            </Button>
-          )
-        ]}
+        onChangeTab={tab => changeMode(tab.toLowerCase())}
+        currentTab={mode}
+        tabs={["Settings", "Samples", "Label"]}
       />
       <div>
-        {mode === "json" ? (
+        {mode === "json" && (
           <AceEditor
             theme="github"
             mode="javascript"
@@ -101,16 +84,35 @@ export default ({
             editorProps={{ $blockScrolling: Infinity }}
             onChange={t => changeJSONText(t)}
           />
-        ) : (
+        )}
+        {mode === "samples" && (
+          <SampleDataTable
+            oha={oha}
+            openSampleLabelEditor={sampleIndex => {
+              changeSingleSampleOHA({
+                ...oha,
+                taskData: [oha.taskData[sampleIndex]],
+                taskOutput: [(oha.taskOutput || [])[sampleIndex]],
+                sampleIndex
+              })
+              changeMode("label")
+            }}
+            openSampleInputEditor={sampleIndex => {
+              changeSampleInputEditor({ open: true, sampleIndex })
+            }}
+          />
+        )}
+        {mode === "label" && (
           <UniversalDataViewer
-            onSaveTaskOutputItem={(index, output) => {
+            datasetName={`Sample ${singleSampleOHA.sampleIndex}`}
+            onSaveTaskOutputItem={(relativeIndex, output) => {
               const newOHA = { ...oha }
               if (!newOHA.taskOutput)
                 newOHA.taskOutput = newOHA.taskData.map(td => null)
-              newOHA.taskOutput[index] = output
+              newOHA.taskOutput[singleSampleOHA.sampleIndex] = output
               changeJSONText(JSON.stringify(newOHA, null, "  "))
             }}
-            oha={oha}
+            oha={singleSampleOHA}
           />
         )}
       </div>
