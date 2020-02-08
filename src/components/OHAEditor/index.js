@@ -44,7 +44,7 @@ export default ({
   onChangeContent = () => null,
   onChangeOHA = () => null,
   onFileDrop,
-  initialMode = "samples"
+  initialMode = "settings" //= "samples"
 }) => {
   const c = useStyles()
   const [mode, changeMode] = useState(initialMode)
