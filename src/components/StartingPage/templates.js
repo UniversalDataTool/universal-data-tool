@@ -17,9 +17,9 @@ export default [
         regionTypesAllowed: [
           "bounding-box",
           "polygon",
-          "full-segmentation",
-          "point",
-          "pixel-mask"
+          // "full-segmentation",
+          "point"
+          // "pixel-mask"
         ]
       },
       taskData: [

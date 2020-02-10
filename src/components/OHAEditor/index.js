@@ -45,14 +45,14 @@ export default ({
   onChangeContent = () => null,
   onChangeOHA = () => null,
   onFileDrop,
-  initialMode = "samples"
+  initialMode = "settings" //= "samples"
 }) => {
   const c = useStyles()
   const [mode, changeMode] = useState(initialMode)
   const [singleSampleOHA, changeSingleSampleOHA] = useState()
   const [sampleInputEditor, changeSampleInputEditor] = useState({})
   const [jsonText, changeJSONText] = useState(
-    content || oha || defaultOHAObject
+    JSON.stringify(content || oha || defaultOHAObject, null, "  ")
   )
 
   useEffect(() => {
@@ -82,13 +82,14 @@ export default ({
             theme="github"
             mode="javascript"
             width="100%"
-            value={jsonText}
+            value={jsonText || ""}
             editorProps={{ $blockScrolling: Infinity }}
             onChange={t => changeJSONText(t)}
           />
         )}
         {mode === "settings" && (
           <InterfacePage
+            onClickEditJSON={() => changeMode("json")}
             oha={oha}
             onChange={iface => {
               changeJSONText(
