@@ -7,14 +7,7 @@ import Button from "@material-ui/core/Button"
 import Box from "@material-ui/core/Box"
 import * as colors from "@material-ui/core/colors"
 import ConfigureImageSegmentation from "../ConfigureImageSegmentation"
-
-const Container = styled("div")({
-  margin: 16,
-  padding: 16,
-  border: "1px solid #ccc",
-  borderRadius: 4,
-  boxShadow: "0px 2px 2px rgba(0,0,0,0.1)"
-})
+import PaperContainer from "../PaperContainer"
 
 const NoOptions = styled("div")({
   fontSize: 18,
@@ -42,7 +35,7 @@ const TypeButton = styled(Button)({
   }
 })
 
-const Heading = styled("div")({
+export const Heading = styled("div")({
   fontWeight: "bold",
   textTransform: "uppercase",
   fontSize: 12,
@@ -72,7 +65,7 @@ export const ConfigureInterface = ({
   onClickEditJSON
 }) => {
   return (
-    <Container>
+    <PaperContainer>
       <Heading>Type</Heading>
       <SelectType
         currentlySelected={iface.type}
@@ -98,13 +91,7 @@ export const ConfigureInterface = ({
       {iface.type === "text_classification" && (
         <NoOptions>GUI Configuration Not Available</NoOptions>
       )}
-      <Heading>Advanced</Heading>
-      <Box padding={2}>
-        <Button onClick={onClickEditJSON} variant="outlined">
-          Edit JSON
-        </Button>
-      </Box>
-    </Container>
+    </PaperContainer>
   )
 }
 

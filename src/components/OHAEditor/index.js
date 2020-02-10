@@ -20,6 +20,8 @@ import EditableTitleText from "./EditableTitleText.js"
 import SampleDataTable from "../SampleDataTable"
 import InterfacePage from "../InterfacePage"
 import EditSampleDialog from "../EditSampleDialog"
+import SampleGrid from "../SampleGrid"
+import PaperContainer from "../PaperContainer"
 
 import "brace/mode/javascript"
 import "brace/theme/github"
@@ -125,7 +127,7 @@ export default ({
             }}
           />
         )}
-        {mode === "label" && (
+        {mode === "label" && singleSampleOHA ? (
           <UniversalDataViewer
             datasetName={`Sample ${singleSampleOHA.sampleIndex}`}
             onSaveTaskOutputItem={(relativeIndex, output) => {
@@ -134,18 +136,39 @@ export default ({
                 newOHA.taskOutput = newOHA.taskData.map(td => null)
               newOHA.taskOutput[singleSampleOHA.sampleIndex] = output
               changeJSONText(JSON.stringify(newOHA, null, "  "))
+              changeSingleSampleOHA(null)
             }}
             oha={singleSampleOHA}
           />
+        ) : (
+          mode === "label" && (
+            <PaperContainer>
+              <SampleGrid
+                count={(oha.taskData || []).length}
+                completed={oha.taskOutput.map(Boolean)}
+                onClick={sampleIndex => {
+                  changeSingleSampleOHA({
+                    ...oha,
+                    taskData: [oha.taskData[sampleIndex]],
+                    taskOutput: [(oha.taskOutput || [])[sampleIndex]],
+                    sampleIndex
+                  })
+                }}
+              />
+            </PaperContainer>
+          )
         )}
       </div>
       <EditSampleDialog
         {...sampleInputEditor}
         sampleInput={
-          sampleInputEditor.sampleIndex
+          sampleInputEditor.sampleIndex !== undefined
             ? oha.taskData[sampleInputEditor.sampleIndex]
             : null
         }
+        onClose={() => {
+          changeSampleInputEditor({ open: false })
+        }}
         onChange={newInput => {
           const newOHA = { ...oha, taskData: [...oha.taskData] }
           newOHA.taskData[sampleInputEditor.sampleIndex] = newInput

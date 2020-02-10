@@ -43,6 +43,8 @@ const form = {
 export default ({ iface, onChange }) => {
   const defaultAnswers = useMemo(
     () => ({
+      multipleRegions: Boolean(iface.multipleRegions),
+      multipleRegionLabels: Boolean(iface.multipleRegionLabels),
       regionTypesAllowed: iface.regionTypesAllowed,
       availableLabels:
         iface.availableLabels.map(a =>

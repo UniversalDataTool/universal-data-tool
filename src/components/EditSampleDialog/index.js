@@ -12,14 +12,15 @@ export default ({ open, sampleIndex, sampleInput, onChange, onClose }) => {
     const newText = JSON.stringify(sampleInput, null, "  ")
     if (newText !== text) {
       changeText(newText)
+      changeError(null)
     }
-  }, [sampleInput])
+  }, [sampleIndex])
 
   return (
     <SimpleDialog
       open={open}
       onClose={onClose}
-      title={`Sample ${sampleIndex} Input Data`}
+      title={`taskData[${sampleIndex}]`}
     >
       <AceEditor
         theme="github"
@@ -29,9 +30,9 @@ export default ({ open, sampleIndex, sampleInput, onChange, onClose }) => {
         editorProps={{ $blockScrolling: Infinity }}
         onChange={t => {
           changeText(t)
+          changeError(null)
           try {
-            onChange(JSON.parse(text))
-            changeError(null)
+            onChange(JSON.parse(t))
           } catch (e) {
             changeError(e.toString())
           }
