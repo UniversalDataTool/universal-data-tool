@@ -9,6 +9,7 @@
     "build": "npm run build:babel && cp ./package.json ./dist/package.json",
     "build:babel": "NODE_ENV=production babel ./src --out-dir=./dist",
     "build:app": "react-scripts build",
+    "build:desktop": "REACT_APP_DESKTOP=true react-scripts build",
     "release": "npm run build && cd dist && npm publish",
     "test": "react-scripts test",
     "storybook": "start-storybook -p 6002 -s public",

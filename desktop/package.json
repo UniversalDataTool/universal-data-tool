@@ -1,0 +1,14 @@
+{
+  "name": "universal-data-tool-desktop",
+  "version": "0.0.0",
+  "description": "Label images, text and more. Desktop Application for the Universal Data Tool.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/openhumanannotation/universal-data-tool-desktop",
+  "keywords": [],
+  "dependencies": {
+    "electron": "^8.0.0"
+  }
+}

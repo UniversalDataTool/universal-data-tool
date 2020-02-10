@@ -59,20 +59,17 @@ const useStyles = makeStyles({
   headerButton: { color: "#fff" }
 })
 
-export default ({ onFileDrop, onOpenTemplate }) => {
+export default ({ onFileDrop, onOpenTemplate, showDownloadLink = true }) => {
   const c = useStyles()
   const [
     createFromTemplateDialogOpen,
     changeCreateFromTemplateDialogOpen
   ] = useState(false)
-  const onDrop = useMemo(
-    () => {
-      return acceptedFiles => {
-        onFileDrop(acceptedFiles[0])
-      }
-    },
-    [onFileDrop]
-  )
+  const onDrop = useMemo(() => {
+    return acceptedFiles => {
+      onFileDrop(acceptedFiles[0])
+    }
+  }, [onFileDrop])
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
   return (
@@ -84,13 +81,15 @@ export default ({ onFileDrop, onOpenTemplate }) => {
       />
       <Header
         additionalButtons={[
-          <Button
-            href="https://github.com/OpenHumanAnnotation/universal-data-tool/releases"
-            className={c.headerButton}
-          >
-            Download Universal Data Tool
-          </Button>
-        ]}
+          showDownloadLink && (
+            <Button
+              href="https://github.com/OpenHumanAnnotation/universal-data-tool/releases"
+              className={c.headerButton}
+            >
+              Download Universal Data Tool
+            </Button>
+          )
+        ].filter(Boolean)}
       />
       <Grid container>
         <Grid item xs={12}>
