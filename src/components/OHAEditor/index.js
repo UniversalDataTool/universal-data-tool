@@ -19,6 +19,7 @@ import UniversalDataViewer from "../UniversalDataViewer"
 import EditableTitleText from "./EditableTitleText.js"
 import SampleDataTable from "../SampleDataTable"
 import InterfacePage from "../InterfacePage"
+import EditSampleDialog from "../EditSampleDialog"
 
 import "brace/mode/javascript"
 import "brace/theme/github"
@@ -137,6 +138,19 @@ export default ({
           />
         )}
       </div>
+      <EditSampleDialog
+        {...sampleInputEditor}
+        sampleInput={
+          sampleInputEditor.sampleIndex
+            ? oha.taskData[sampleInputEditor.sampleIndex]
+            : null
+        }
+        onChange={newInput => {
+          const newOHA = { ...oha, taskData: [...oha.taskData] }
+          newOHA.taskData[sampleInputEditor.sampleIndex] = newInput
+          changeJSONText(JSON.stringify(newOHA, null, "  "))
+        }}
+      />
     </div>
   )
 }
