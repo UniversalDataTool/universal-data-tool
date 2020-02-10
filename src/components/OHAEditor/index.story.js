@@ -27,13 +27,7 @@ storiesOf("OHAEditor", module).add("Basic", () => (
       interface: {
         type: "image_segmentation",
         availableLabels: ["valid", "invalid"],
-        regionTypesAllowed: [
-          "bounding-box",
-          "polygon",
-          "full-segmentation",
-          "point",
-          "pixel-mask"
-        ]
+        regionTypesAllowed: ["bounding-box", "polygon", "point"]
       },
       taskData: [
         {
