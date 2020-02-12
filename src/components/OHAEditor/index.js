@@ -57,7 +57,7 @@ export default ({
   const [jsonText, changeJSONText] = useState(
     JSON.stringify(content || oha || defaultOHAObject, null, "  ")
   )
-  const { remote, ipcRenderer } = useElectron()
+  const { remote, ipcRenderer } = useElectron() || {}
 
   useEffect(() => {
     if (!ipcRenderer) return
