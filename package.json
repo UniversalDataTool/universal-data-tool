@@ -7,12 +7,12 @@
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
     "start": "PORT=6001 react-scripts start",
-    "build": "npm run build:babel && cp ./package.json ./dist/package.json",
-    "build:babel": "NODE_ENV=production babel ./src --out-dir=./dist",
-    "build:app": "react-scripts build",
-    "build:desktop": "REACT_APP_DESKTOP=true PUBLIC_URL=./ react-scripts build && electron-builder --mac --windows --linux",
+    "build": "npm run build:babel && cp ./package.json ./lib/package.json",
+    "build:babel": "NODE_ENV=production babel ./src --out-dir=./lib",
+    "build:web": "react-scripts build",
+    "build:desktop": "REACT_APP_DESKTOP=true PUBLIC_URL=./ react-scripts build && electron-builder --linux --mac --windows",
     "start:desktop": "electron ./desktop",
-    "release:lib": "npm run build && cd dist && npm publish",
+    "release:lib": "npm run build && cd lib && npm publish",
     "release:desktop": "electron-builder --mac --windows --linux --publish always",
     "release": "npm run release:lib && npm run release:desktop",
     "test": "react-scripts test",
@@ -65,5 +65,22 @@
     "react-image-annotate": "^0.1.34",
     "react-select": "^3.0.8",
     "styled-components": "^5.0.0"
+  },
+  "build": {
+    "appId": "com.universaldatatool",
+    "productName": "Universal Data Tool",
+    "mac": {
+      "category": "public.app-category.developer-tools"
+    },
+    "dmg": {
+      "icon": false
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Development"
+    },
+    "extends": null
   }
 }
