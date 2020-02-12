@@ -1,0 +1,17 @@
+name: Build/Release
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    # Helpful reference https://github.com/samuelmeuli/mini-diary/blob/master/.github/workflows/release.yml
+    - name: Electron Builder Action
+      uses: samuelmeuli/action-electron-builder@v1.3.0
+      with:
+        github_token: ${{ secrets.github_token }}
+        release: ${{ startsWith(github.ref, 'refs/tags/v') }}
