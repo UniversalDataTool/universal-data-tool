@@ -8,7 +8,9 @@
   },
   "repository": "https://github.com/openhumanannotation/universal-data-tool-desktop",
   "keywords": [],
-  "dependencies": {
-    "electron": "^8.0.0"
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "^8.0.0",
+    "electron-builder": "^22.3.2"
   }
 }

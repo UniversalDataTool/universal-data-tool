@@ -3,14 +3,14 @@ import Theme from "./components/Theme"
 import LocalStorageApp from "./components/LocalStorageApp"
 import DesktopApp from "./components/DesktopApp"
 import { ToastProvider } from "./components/Toasts"
+import useElectron from "./utils/use-electron.js"
 
-const DESKTOP = process.env.REACT_APP_DESKTOP === "true"
-
-function App() {
+export const App = () => {
+  const electron = useElectron()
   return (
     <Theme>
       <ToastProvider>
-        {DESKTOP ? <LocalStorageApp /> : <DesktopApp />}
+        {Boolean(electron) ? <DesktopApp /> : <LocalStorageApp />}
       </ToastProvider>
     </Theme>
   )

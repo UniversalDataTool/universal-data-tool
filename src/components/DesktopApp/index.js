@@ -84,13 +84,16 @@ export default () => {
     const onSaveFile = async (e, data) => {
       let filePath = currentFile.filePath
       if (!currentFile.filePath) {
-        const { cancelled, filePaths } = await remote.dialog.showSaveDialog()
-        if (cancelled || filePaths.length === 0) {
+        const {
+          cancelled,
+          filePath: newFilePath
+        } = await remote.dialog.showSaveDialog()
+        filePath = newFilePath
+        if (cancelled || !filePath) {
           addError("Could not save")
           return
         }
-        changeCurrentFile({ ...currentFile, filePath: filePaths[0] })
-        filePath = filePaths[0]
+        changeCurrentFile({ ...currentFile, filePath })
       }
       await remote
         .require("fs")

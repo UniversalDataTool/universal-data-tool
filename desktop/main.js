@@ -4,6 +4,7 @@ const path = require("path")
 const menuTemplate = require("./menu-template")
 
 function createWindow() {
+  console.log("Creating window...")
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 1200,
@@ -19,7 +20,7 @@ function createWindow() {
 
   // and load the index.html of the app.
   mainWindow.loadURL("http://localhost:6001")
-  // mainWindow.loadFile("index.html")
+  // mainWindow.loadFile(`${__dirname}/../build/index.html`)
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
