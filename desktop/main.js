@@ -20,7 +20,7 @@ function createWindow() {
 
   // and load the index.html of the app.
   // mainWindow.loadURL("http://localhost:6001")
-  mainWindow.loadFile(`${__dirname}/../build/index.html`)
+  mainWindow.loadFile(`${process.cwd()}/build/index.html`)
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
