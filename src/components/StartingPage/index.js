@@ -70,7 +70,7 @@ export default ({ onFileDrop, onOpenTemplate, showDownloadLink = true }) => {
       onFileDrop(acceptedFiles[0])
     }
   }, [onFileDrop])
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+  let { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
   return (
     <div>

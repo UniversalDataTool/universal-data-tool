@@ -47,7 +47,7 @@ export default ({ iface, onChange }) => {
       multipleRegionLabels: Boolean(iface.multipleRegionLabels),
       regionTypesAllowed: iface.regionTypesAllowed,
       availableLabels:
-        iface.availableLabels.map(a =>
+        (iface.availableLabels || []).map(a =>
           typeof a === "string" ? { id: a, description: a } : a
         ) || []
     }),

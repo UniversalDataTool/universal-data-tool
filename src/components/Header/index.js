@@ -73,7 +73,8 @@ export default ({
     onClickTemplate,
     onClickHome,
     onOpenFile,
-    onOpenRecentItem
+    onOpenRecentItem,
+    isDesktop
   } = useContext(HeaderContext)
   if (!recentItems) recentItems = []
 
@@ -87,12 +88,14 @@ export default ({
     <>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            onClick={() => changeDrawerOpen(true)}
-            className={c.headerButton}
-          >
-            <MenuIcon />
-          </IconButton>
+          {!isDesktop && (
+            <IconButton
+              onClick={() => changeDrawerOpen(true)}
+              className={c.headerButton}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
           <Typography className={c.title} variant="h6" noWrap>
             {title}
           </Typography>

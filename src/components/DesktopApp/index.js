@@ -1,12 +1,15 @@
 // @flow
-import React, { useState, useMemo } from "react"
+import React, { useState, useMemo, useEffect } from "react"
 import { HeaderContext } from "../Header"
 import StartingPage from "../StartingPage"
 import OHAEditor from "../OHAEditor"
 import { makeStyles } from "@material-ui/core/styles"
 import ErrorToasts from "../ErrorToasts"
+import Toasts, { useToasts } from "../Toasts"
 import useErrors from "../../utils/use-errors.js"
 import useLocalStorage from "../../utils/use-local-storage.js"
+import useElectron from "../../utils/use-electron.js"
+import templates from "../StartingPage/templates"
 
 const useStyles = makeStyles({
   empty: {
@@ -24,13 +27,15 @@ export default () => {
   const [oha, changeOHA] = useState()
   const [errors, addError] = useErrors()
   let [recentItems, changeRecentItems] = useLocalStorage("recentItems", [])
+  const { addToast } = useToasts()
   if (!recentItems) recentItems = []
+  const { remote, ipcRenderer } = useElectron()
 
   const onCreateTemplate = useMemo(
     () => template => {
       changeCurrentFile({
         fileName: "unnamed",
-        content: JSON.stringify(template.oha, null, "  "),
+        content: template.oha,
         id: Math.random()
           .toString()
           .split(".")[1]
@@ -40,6 +45,75 @@ export default () => {
     },
     []
   )
+
+  useEffect(() => {
+    const onOpenWelcomePage = () => changePageName("welcome")
+    const onOpenSettingsPage = () => changePageName("edit")
+    const onOpenSamplesPage = () => changePageName("edit")
+    const onOpenLabelPage = () => changePageName("edit")
+    const onNewFile = (e, data) => {
+      if (data.templateName) {
+        onCreateTemplate(
+          templates.find(template => template.name === data.templateName)
+        )
+      } else {
+        changeCurrentFile({
+          fileName: "unnamed",
+          content: {},
+          id: Math.random()
+            .toString()
+            .split(".")[1]
+        })
+        changeOHA({})
+        changePageName("edit")
+      }
+    }
+    const onOpenFile = (e, data) => {
+      try {
+        const oha = JSON.parse(data.content)
+        changeCurrentFile({
+          ...data,
+          content: oha
+        })
+        changeOHA(oha)
+        changePageName("edit")
+      } catch (e) {
+        addError(e.toString())
+      }
+    }
+    const onSaveFile = async (e, data) => {
+      let filePath = currentFile.filePath
+      if (!currentFile.filePath) {
+        const { cancelled, filePaths } = await remote.dialog.showSaveDialog()
+        if (cancelled || filePaths.length === 0) {
+          addError("Could not save")
+          return
+        }
+        changeCurrentFile({ ...currentFile, filePath: filePaths[0] })
+        filePath = filePaths[0]
+      }
+      await remote
+        .require("fs")
+        .promises.writeFile(filePath, JSON.stringify(oha, null, "  "))
+      addToast("File Saved!")
+    }
+    ipcRenderer.on("open-welcome-page", onOpenWelcomePage)
+    ipcRenderer.on("open-settings-page", onOpenSettingsPage)
+    ipcRenderer.on("open-samples-page", onOpenSamplesPage)
+    ipcRenderer.on("open-label-page", onOpenLabelPage)
+    ipcRenderer.on("new-file", onNewFile)
+    ipcRenderer.on("open-file", onOpenFile)
+    ipcRenderer.on("save-file", onSaveFile)
+    return () => {
+      ipcRenderer.removeListener("open-welcome-page", onOpenWelcomePage)
+      ipcRenderer.removeListener("open-settings-page", onOpenWelcomePage)
+      ipcRenderer.removeListener("open-samples-page", onOpenWelcomePage)
+      ipcRenderer.removeListener("open-label-page", onOpenWelcomePage)
+      ipcRenderer.removeListener("new-file", onNewFile)
+      ipcRenderer.removeListener("open-file", onOpenFile)
+      ipcRenderer.removeListener("save-file", onSaveFile)
+    }
+  }, [currentFile])
 
   const openRecentItem = useMemo(() => item => {
     changeCurrentFile(item)
@@ -51,16 +125,11 @@ export default () => {
     changePageName("edit")
   })
 
-  const onClickHome = useMemo(
-    () => () => {
-      changePageName("welcome")
-    },
-    []
-  )
+  const onClickHome = useMemo(() => () => changePageName("welcome"), [])
 
   const handleOpenFile = useMemo(
     () => file => {
-      const fileName = file.name
+      const { name: fileName, path: filePath } = file
       const reader = new FileReader()
       reader.onload = e => {
         const content = e.target.result
@@ -69,10 +138,9 @@ export default () => {
           // TODO validate OHA and prompt to open anyway if invalid
           changeCurrentFile({
             fileName,
-            content,
-            id: Math.random()
-              .toString()
-              .split(".")[1]
+            filePath,
+            content: oha,
+            id: filePath
           })
           changeOHA(oha)
           changePageName("edit")
@@ -93,8 +161,8 @@ export default () => {
           recentItems,
           onClickTemplate: onCreateTemplate,
           onClickHome,
-          onOpenFile: handleOpenFile,
-          onOpenRecentItem: openRecentItem
+          onOpenRecentItem: openRecentItem,
+          isDesktop: true
         }}
       >
         {pageName === "welcome" ? (
@@ -129,6 +197,7 @@ export default () => {
         )}
       </HeaderContext.Provider>
       <ErrorToasts errors={errors} />
+      <Toasts />
     </>
   )
 }

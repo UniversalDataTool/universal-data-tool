@@ -22,6 +22,7 @@ import InterfacePage from "../InterfacePage"
 import EditSampleDialog from "../EditSampleDialog"
 import SampleGrid from "../SampleGrid"
 import PaperContainer from "../PaperContainer"
+import useElectron from "../../utils/use-electron"
 
 import "brace/mode/javascript"
 import "brace/theme/github"
@@ -56,6 +57,22 @@ export default ({
   const [jsonText, changeJSONText] = useState(
     JSON.stringify(content || oha || defaultOHAObject, null, "  ")
   )
+  const { remote, ipcRenderer } = useElectron()
+
+  useEffect(() => {
+    if (!ipcRenderer) return
+    const onOpenSettingsPage = () => changeMode("settings")
+    const onOpenSamplesPage = () => changeMode("samples")
+    const onOpenLabelPage = () => changeMode("label")
+    ipcRenderer.on("open-settings-page", onOpenSettingsPage)
+    ipcRenderer.on("open-samples-page", onOpenSamplesPage)
+    ipcRenderer.on("open-label-page", onOpenLabelPage)
+    return () => {
+      ipcRenderer.removeListener("open-settings-page", onOpenSettingsPage)
+      ipcRenderer.removeListener("open-samples-page", onOpenSamplesPage)
+      ipcRenderer.removeListener("open-label-page", onOpenLabelPage)
+    }
+  }, [])
 
   useEffect(() => {
     onChangeContent(jsonText)
@@ -69,10 +86,7 @@ export default ({
     <div>
       <Header
         title={
-          <>
-            {(mode === "json" ? "JSON Editor" : "Sample Editor") + " - "}
-            <EditableTitleText onChange={onChangeFileName} value={fileName} />
-          </>
+          <EditableTitleText onChange={onChangeFileName} value={fileName} />
         }
         onChangeTab={tab => changeMode(tab.toLowerCase())}
         currentTab={mode}
@@ -145,7 +159,7 @@ export default ({
             <PaperContainer>
               <SampleGrid
                 count={(oha.taskData || []).length}
-                completed={oha.taskOutput.map(Boolean)}
+                completed={(oha.taskOutput || []).map(Boolean)}
                 onClick={sampleIndex => {
                   changeSingleSampleOHA({
                     ...oha,
