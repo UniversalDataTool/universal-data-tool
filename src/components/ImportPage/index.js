@@ -4,6 +4,7 @@ import React, { useState, useContext, createContext } from "react"
 import MuiButton from "@material-ui/core/Button"
 import { styled } from "@material-ui/core/styles"
 import AssignmentReturnedIcon from "@material-ui/icons/AssignmentReturned"
+import CreateNewFolderIcon from "@material-ui/icons/CreateNewFolder"
 import * as colors from "@material-ui/core/colors"
 import PasteUrlsDialog from "../PasteUrlsDialog"
 
@@ -12,6 +13,7 @@ const ButtonBase = styled(MuiButton)({
   height: 140,
   display: "inline-flex",
   flexDirection: "column",
+  margin: 8,
   "& .icon": {
     width: 48,
     height: 48,
@@ -21,7 +23,11 @@ const ButtonBase = styled(MuiButton)({
 
 const SelectDialogContext = createContext()
 
-const Button = ({ Icon, children, dialog }) => {
+const Button = ({ isDesktop, ...props }) => (
+  <StyledButton disabled={isDesktop} variant="outlined" {...props} />
+)
+
+const StyledButton = ({ Icon, children, dialog }) => {
   return (
     <SelectDialogContext.Consumer>
       {({ changeDialog }) => (
@@ -48,6 +54,13 @@ export default ({ oha, onChangeOHA }) => {
           variant="outlined"
         >
           Paste URLs
+        </Button>
+        <Button
+          dialog="upload-directory"
+          Icon={CreateNewFolderIcon}
+          variant="outlined"
+        >
+          Files from Directory
         </Button>
         <PasteUrlsDialog
           open={selectedDialog === "paste-image-urls"}
