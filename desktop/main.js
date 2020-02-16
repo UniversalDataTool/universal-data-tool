@@ -10,7 +10,8 @@ function createWindow() {
     width: 1200,
     height: 800,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      webSecurity: false
       // preload: path.join(__dirname, "preload.js")
     }
   })
@@ -19,8 +20,8 @@ function createWindow() {
   Menu.setApplicationMenu(menu)
 
   // and load the index.html of the app.
-  // mainWindow.loadURL("http://localhost:6001")
-  mainWindow.loadFile(`${process.cwd()}/build/index.html`)
+  mainWindow.loadURL("http://localhost:6001")
+  // mainWindow.loadFile(`${process.cwd()}/build/index.html`)
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()

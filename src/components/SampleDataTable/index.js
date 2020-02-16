@@ -16,6 +16,7 @@ import TableChartIcon from "@material-ui/icons/TableChart"
 import Box from "@material-ui/core/Box"
 import ImportIcon from "@material-ui/icons/Publish"
 import ImportPage from "../ImportPage"
+import useIsDesktop from "../../utils/use-is-desktop.js"
 
 const Container = styled("div")({
   padding: 16
@@ -63,6 +64,7 @@ export default ({
   openSampleLabelEditor,
   onChangeOHA
 }) => {
+  const isDesktop = useIsDesktop()
   const [currentTab, changeTabState] = useState(
     window.localStorage.lastSampleTab || "grid"
   )
@@ -138,6 +140,7 @@ export default ({
       <Box paddingTop={2} />
       {currentTab === "import" && (
         <ImportPage
+          isDesktop={isDesktop}
           onChangeOHA={(newOHA, shouldViewChange) => {
             onChangeOHA(newOHA)
             if (shouldViewChange) {
