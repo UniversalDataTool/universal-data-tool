@@ -1,12 +1,21 @@
 // @flow
 
 import RemoveRedEye from "@material-ui/icons/RemoveRedEye"
+import CropFree from "@material-ui/icons/CropFree"
 import TextFormat from "@material-ui/icons/TextFormat"
 import Edit from "@material-ui/icons/Edit"
 import Audiotrack from "@material-ui/icons/Audiotrack"
 import Category from "@material-ui/icons/Category"
 
 export default [
+  {
+    name: "Empty",
+    Icon: CropFree,
+    oha: {
+      interface: {},
+      taskData: []
+    }
+  },
   {
     name: "Computer Vision",
     Icon: RemoveRedEye,

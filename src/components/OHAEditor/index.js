@@ -23,6 +23,7 @@ import EditSampleDialog from "../EditSampleDialog"
 import SampleGrid from "../SampleGrid"
 import PaperContainer from "../PaperContainer"
 import useElectron from "../../utils/use-electron"
+import download from "downloadjs"
 
 import "brace/mode/javascript"
 import "brace/theme/github"
@@ -106,6 +107,12 @@ export default ({
         {mode === "settings" && (
           <InterfacePage
             onClickEditJSON={() => changeMode("json")}
+            onClickDownloadJSON={() => {
+              download(
+                jsonText,
+                fileName.includes(".") ? fileName : fileName + ".udt.json"
+              )
+            }}
             oha={oha}
             onChange={iface => {
               changeJSONText(

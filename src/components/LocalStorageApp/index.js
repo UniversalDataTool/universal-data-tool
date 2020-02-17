@@ -69,7 +69,7 @@ export default () => {
           // TODO validate OHA and prompt to open anyway if invalid
           changeCurrentFile({
             fileName,
-            content,
+            content: oha,
             id: Math.random()
               .toString()
               .split(".")[1]
