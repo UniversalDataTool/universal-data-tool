@@ -20,8 +20,11 @@ function createWindow() {
   Menu.setApplicationMenu(menu)
 
   // and load the index.html of the app.
-  mainWindow.loadURL("http://localhost:6001")
-  // mainWindow.loadFile(`${process.cwd()}/build/index.html`)
+  if (process.env.USE_DEV_SERVER) {
+    mainWindow.loadURL("http://localhost:6001")
+  } else {
+    mainWindow.loadFile(`${process.cwd()}/build/index.html`)
+  }
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()

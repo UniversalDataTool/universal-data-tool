@@ -11,7 +11,7 @@
     "build:babel": "cross-env NODE_ENV=production babel ./src --out-dir=./lib && cp ./package.json ./lib/package.json",
     "build:web": "react-scripts build",
     "build:desktop": "cross-env REACT_APP_DESKTOP=true PUBLIC_URL=./ react-scripts build && electron-builder build",
-    "start:desktop": "electron ./desktop",
+    "start:desktop": "USE_DEV_SERVER=yes electron ./desktop",
     "release:lib": "npm run build && cd lib && npm publish",
     "release:desktop": "npm run build:desktop && electron-builder --mac --windows --linux --publish always",
     "release": "npm run release:desktop",

@@ -5,6 +5,7 @@ import DataTable from "react-data-table-component"
 import Button from "@material-ui/core/Button"
 import IconButton from "@material-ui/core/IconButton"
 import EditIcon from "@material-ui/icons/Edit"
+import DeleteIcon from "@material-ui/icons/Delete"
 import BorderColorIcon from "@material-ui/icons/BorderColor"
 import { styled } from "@material-ui/core/styles"
 import Grid from "@material-ui/core/Grid"
@@ -62,6 +63,7 @@ export default ({
   oha,
   openSampleInputEditor,
   openSampleLabelEditor,
+  deleteSample,
   onChangeOHA
 }) => {
   const isDesktop = useIsDesktop()
@@ -116,6 +118,15 @@ export default ({
           onClick={() => openSampleLabelEditor(row.index)}
         >
           <BorderColorIcon style={{ width: 20, height: 20 }} />
+        </IconButton>
+      )
+    })
+    columns.push({
+      name: "Delete",
+      button: true,
+      cell: row => (
+        <IconButton raised primary onClick={() => deleteSample(row.index)}>
+          <DeleteIcon style={{ width: 20, height: 20 }} />
         </IconButton>
       )
     })

@@ -30,7 +30,7 @@ export default () => {
     () => template => {
       changeCurrentFile({
         fileName: "unnamed",
-        content: JSON.stringify(template.oha, null, "  "),
+        content: template.oha,
         id: Math.random()
           .toString()
           .split(".")[1]

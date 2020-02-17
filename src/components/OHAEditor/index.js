@@ -136,6 +136,27 @@ export default ({
             openSampleInputEditor={sampleIndex => {
               changeSampleInputEditor({ open: true, sampleIndex })
             }}
+            deleteSample={sampleIndex => {
+              const newTaskData = [...oha.taskData]
+              const newTaskOutput = oha.taskOutput
+                ? [...oha.taskOutput]
+                : undefined
+              newTaskData.splice(sampleIndex, 1)
+              if (newTaskOutput) {
+                newTaskOutput.splice(sampleIndex, 1)
+              }
+              changeJSONText(
+                JSON.stringify(
+                  {
+                    ...oha,
+                    taskData: newTaskData,
+                    taskOutput: newTaskOutput
+                  },
+                  null,
+                  "  "
+                )
+              )
+            }}
             onChangeOHA={newOHA => {
               changeJSONText(JSON.stringify(newOHA, null, "  "))
             }}
