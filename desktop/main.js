@@ -2,6 +2,7 @@
 const { app, BrowserWindow, Menu } = require("electron")
 const path = require("path")
 const menuTemplate = require("./menu-template")
+const { format: formatUrl } = require("url")
 
 function createWindow() {
   console.log("Creating window...")
@@ -23,7 +24,13 @@ function createWindow() {
   if (process.env.USE_DEV_SERVER) {
     mainWindow.loadURL("http://localhost:6001")
   } else {
-    mainWindow.loadFile(`${process.cwd()}/build/index.html`)
+    mainWindow.loadURL(
+      formatUrl({
+        pathname: path.join(__dirname, "../build", "index.html"),
+        protocol: "file",
+        slashes: true
+      })
+    )
   }
 
   // Open the DevTools.
