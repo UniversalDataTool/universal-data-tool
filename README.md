@@ -2,7 +2,7 @@
 
 Try it out at [universaldatatool.com](https://universaldatatool.com) or [download it here](https://github.com/UniversalDataTool/universal-data-tool/releases).
 
-The Universal Data Tool is a User Interface for editing and annotating Images (Computer Vision, Bounding Boxes, Segmentation), Text (Named Entity Recognition, Classification) or general purpose data entry. to view and edit any data defined by the [open human annotation standard](https://github.com/OpenHumanAnnotation/open-human-annotation-task-format).
+The Universal Data Tool is a User Interface for editing and annotating Images (Computer Vision, Bounding Boxes, Segmentation), Text (Named Entity Recognition, Classification) or general purpose data entry. to view and edit any data defined in the extensible the [.udt.json standard](https://github.com/UniversalDataTool/udt-format).
 
 <!-- [Check out the demo here.](#) -->
 
@@ -19,7 +19,7 @@ The Universal Data Tool is a User Interface for editing and annotating Images (C
 
 ## Principles
 
-- Correctness of implementation of the Open Human Annotation standard.
+- Correctness of implementation of the .udt.json standard.
 - Implement entirety of the Open Human Annotation standard.
 - Rely on external libraries which specialize in each type of annotation to enable the best tools to be used
 - Easy to use
