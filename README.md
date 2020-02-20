@@ -4,6 +4,8 @@ Try it out at [universaldatatool.com](https://universaldatatool.com) or [downloa
 
 The Universal Data Tool is a User Interface for editing and annotating Images (Computer Vision, Bounding Boxes, Segmentation), Text (Named Entity Recognition, Classification) or general purpose data entry. to view and edit any data defined in the extensible the [.udt.json standard](https://github.com/UniversalDataTool/udt-format).
 
+![Universal Data Tool Hand Screenshot](https://user-images.githubusercontent.com/1910070/74979283-54ee7880-53fc-11ea-90d6-4d5932c529f5.png)
+
 <!-- [Check out the demo here.](#) -->
 
 ## Sponsors
