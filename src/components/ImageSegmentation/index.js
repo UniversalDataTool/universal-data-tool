@@ -32,6 +32,7 @@ const convertToRIARegionFmt = region => {
       return {
         id: rid(),
         cls: region.classification,
+        tags: region.labels,
         color: region.color || getRandomColor(),
         type: "box",
         x: region.centerX - region.width / 2,
@@ -44,6 +45,7 @@ const convertToRIARegionFmt = region => {
       return {
         id: rid(),
         type: "point",
+        tags: region.labels,
         cls: region.classification,
         color: region.color || getRandomColor(),
         x: region.x,
@@ -54,6 +56,7 @@ const convertToRIARegionFmt = region => {
       return {
         id: rid(),
         type: "polygon",
+        tags: region.labels,
         cls: region.classification,
         color: region.color || getRandomColor(),
         open: false,
@@ -68,6 +71,7 @@ const convertToRIARegionFmt = region => {
 }
 
 const convertFromRIARegionFmt = riaRegion => {
+  console.log({ riaRegion })
   switch (riaRegion.type) {
     case "point": {
       return {
@@ -75,6 +79,7 @@ const convertFromRIARegionFmt = riaRegion => {
         x: riaRegion.x,
         y: riaRegion.y,
         classification: riaRegion.cls,
+        labels: riaRegion.tags,
         color: riaRegion.color
       }
     }
@@ -86,6 +91,7 @@ const convertFromRIARegionFmt = riaRegion => {
         width: riaRegion.w,
         height: riaRegion.h,
         classification: riaRegion.cls,
+        labels: riaRegion.tags,
         color: riaRegion.color
       }
     }
@@ -93,6 +99,7 @@ const convertFromRIARegionFmt = riaRegion => {
       return {
         regionType: "polygon",
         classification: riaRegion.cls,
+        labels: riaRegion.tags,
         color: riaRegion.color,
         points: riaRegion.points.map(([x, y]) => ({ x, y }))
       }
@@ -135,7 +142,7 @@ export default ({
 
   const { regionTypesAllowed = ["bounding-box"] } = iface
 
-  const isClassification = Boolean(iface.multipleRegionLabels)
+  const isClassification = !Boolean(iface.multipleRegionLabels)
 
   const labelProps = isClassification
     ? {
@@ -145,35 +152,42 @@ export default ({
         regionTagList: iface.availableLabels
       }
 
+  const multipleRegions =
+    iface.multipleRegions || iface.multipleRegions === undefined
+
   return (
-    <Annotator
-      selectedImage={taskData[selectedIndex].src}
-      taskDescription={iface.description}
-      {...labelProps}
-      enabledTools={["select"].concat(
-        regionTypesAllowed.map(rt => regionTypeToTool[rt]).filter(Boolean)
-      )}
-      images={taskData.map((taskDatum, index) =>
-        convertToRIAImageFmt({
-          title: datasetName,
-          taskDatum,
-          output: taskOutput[index],
-          index
-        })
-      )}
-      onExit={output => {
-        const regionMat = (output.images || [])
-          .map(img => img.regions)
-          .map(riaRegions => (riaRegions || []).map(convertFromRIARegionFmt))
-        for (let i = 0; i < regionMat.length; i++) {
-          if (iface.multipleRegions) {
-            onSaveTaskOutputItem(i, regionMat[i])
-          } else {
-            onSaveTaskOutputItem(i, regionMat[i][0])
+    <div style={{ height: "calc(100vh - 70px)" }}>
+      <Annotator
+        selectedImage={taskData[selectedIndex].src}
+        taskDescription={iface.description}
+        {...labelProps}
+        enabledTools={["select"].concat(
+          regionTypesAllowed.map(rt => regionTypeToTool[rt]).filter(Boolean)
+        )}
+        images={taskData.map((taskDatum, index) =>
+          convertToRIAImageFmt({
+            title: datasetName,
+            taskDatum,
+            output: taskOutput[index],
+            index
+          })
+        )}
+        onExit={output => {
+          const regionMat = (output.images || [])
+            .map(img => img.regions)
+            .map(riaRegions => (riaRegions || []).map(convertFromRIARegionFmt))
+
+          console.log({ regionMat })
+          for (let i = 0; i < regionMat.length; i++) {
+            if (multipleRegions) {
+              onSaveTaskOutputItem(i, regionMat[i])
+            } else {
+              onSaveTaskOutputItem(i, regionMat[i][0])
+            }
           }
-        }
-        if (onExit) onExit()
-      }}
-    />
+          if (onExit) onExit()
+        }}
+      />
+    </div>
   )
 }
