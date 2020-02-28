@@ -1,47 +1,48 @@
-import React, { useMemo } from "react"
+import React from "react"
 import Survey from "material-survey/components/Survey"
 
 const form = {
   questions: [
     {
         name: "transcriptionType",
-        title: "Region Types Allowed",
-        description: "What types of regions can be drawn on the image.",
+        title: "Transcription Type",
         type: "dropdown",
-        choices: ["simple", "proper"]
+        choices: [
+            "simple",
+            "proper"
+        ]
     },
     {
         name: "phraseBank",
-        title: "Region Types Allowed",
-        description: "What types of regions can be drawn on the image.",
-        hasOther: true,
-        type: "checkbox",
-        choices: [
-            "bounding-box",
-            "polygon",
-            "point"
-        ],
+        title: "Phrase Bank",
+        description: "URL of single-column CSV or TXT file with allowed phrases",
+        type: "text",
     },
     {
         name: "onlyUseWordsInPhraseBank",
-        title: "Region Types Allowed",
-        description: "What types of regions can be drawn on the image.",
-        type: "dropdown",
-        choices: ["bounding-box", "polygon", "point"]
+        title: "Only Use Words In Phrase Bank",
+        type: "boolean",
     },
+    {
+        name: "languange",
+        title: "Language",
+        type: "dropdown",
+        choices: [
+            "en",
+            "es",
+            "tr",
+            "gb"
+        ]
+    },
+    {
+        name: "description",
+        title: "Description",
+        type: "multiline-text"
+    }
   ]
 }
 
-export default ({ iface, onChange }) => {
-    // const defaultAnswers = useMemo(
-    //     () =>({
-    //         transcriptionType: '',
-    //         phraseBank: '',
-    //         onlyUseWordsInPhraseBank: ''
-    //     }),
-    //     []
-    // )
-    
+export default ({ iface, onChange }) => {    
     return(
         <Survey
             noActions
