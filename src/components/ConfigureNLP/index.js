@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import React from "react"
 import Survey from "material-survey/components/Survey"
 
 const form = {
