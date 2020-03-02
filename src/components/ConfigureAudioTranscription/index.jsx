@@ -233,7 +233,11 @@ export default ({ iface, onChange }) => {
             noActions
             variant="flat"
             onQuestionChange={(questionId, newValue, answers) =>{
-                onChange({...iface, [questionId]: newValue})
+                if(newValue.value){
+                    onChange({...iface, [questionId]: newValue.value})
+                }else{
+                    onChange({...iface, [questionId]: newValue})
+                }
             }}
             form={form}
         />
