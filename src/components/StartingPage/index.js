@@ -86,7 +86,7 @@ export default ({ onFileDrop, onOpenTemplate, showDownloadLink = true }) => {
               href="https://github.com/OpenHumanAnnotation/universal-data-tool/releases"
               className={c.headerButton}
             >
-              Download Universal Data Tool
+              Download
             </Button>
           )
         ].filter(Boolean)}
