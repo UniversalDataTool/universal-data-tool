@@ -12,6 +12,29 @@ const form = {
         name: "overlapAllowed",
         title: "Overlap Allowed",
         type: "boolean"
+    },
+    {   
+        name: "labels",
+        title: "Labels",
+        type: "matrixdynamic",
+        hasOther: true,
+        columns: [
+            {
+                cellType: "text",
+                name: "id",
+                title: "ID"
+            },
+            {
+                cellType: "text",
+                name: "displayName",
+                title: "Display Name"
+            },
+            {
+                cellType: "text",
+                name: "description",
+                title: "Description"
+            },
+        ],
     }
   ]
 }
