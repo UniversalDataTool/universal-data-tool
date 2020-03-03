@@ -68,7 +68,7 @@ export const ConfigureInterface = ({
 }) => {
   return (
     <PaperContainer>
-      <Heading>Type on</Heading>
+      <Heading>Type</Heading>
       <SelectType
         currentlySelected={iface.type}
         onChange={type => {
