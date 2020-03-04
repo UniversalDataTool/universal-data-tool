@@ -115,8 +115,7 @@ export default ({
     oha.taskData.length > 0
   ) {
     percentComplete =
-      oha.taskOutput.reduce((acc, a) => (a ? acc + 1 : 0), 0) /
-      oha.taskData.length
+      oha.taskOutput.filter(Boolean).length / oha.taskData.length
   }
 
   return (
