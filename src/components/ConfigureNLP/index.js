@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useMemo} from "react"
 import Survey from "material-survey/components/Survey"
 
 const form = {
@@ -39,7 +39,22 @@ const form = {
   ]
 }
 
-export default ({ iface, onChange }) => {    
+export default ({ iface, onChange }) => {
+    const defaultAnswers = useMemo(
+        () =>({
+            description: iface.description,
+            overlapAllowed: Boolean(
+                iface.overlapAllowed || iface.overlapAllowed === undefined
+            ),
+            labels: (iface.labels || []).map(column =>
+                typeof column === "string" ? {
+                    id: column,
+                    displayName: column,
+                    description: column
+                } : column
+            )
+        }),
+    )
     return(
         <Survey
             noActions
@@ -48,6 +63,7 @@ export default ({ iface, onChange }) => {
                 onChange({...iface, [questionId]: newValue})
             }}
             form={form}
+            defaultAnswers={defaultAnswers}
         />
     )
 }
