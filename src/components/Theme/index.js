@@ -1,9 +1,9 @@
 import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme"
-import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider"
-import ThemeProvider from "@material-ui/styles/ThemeProvider"
+import { ThemeProvider } from "@material-ui/core/styles"
 import "./theme.css"
+import * as colors from "@material-ui/core/colors"
 
 const useStyles = makeStyles({
   container: {
@@ -12,14 +12,14 @@ const useStyles = makeStyles({
 })
 
 const theme = createMuiTheme({
-  typography: {
-    fontFamily: '"Inter", "Roboto", sans-serif'
+  palette: {
+    primary: colors.blue,
+    secondary: colors.blue
   },
-  overrides: {
-    MuiButton: {
-      root: {
-        textTransform: "none"
-      }
+  typography: {
+    fontFamily: '"Inter", "Roboto", sans-serif',
+    button: {
+      textTransform: "none"
     }
   }
 })
@@ -27,10 +27,8 @@ const theme = createMuiTheme({
 export default ({ children }: any) => {
   const classes = useStyles()
   return (
-    <MuiThemeProvider theme={theme}>
-      <ThemeProvider theme={theme}>
-        <div className={classes.container}>{children}</div>
-      </ThemeProvider>
-    </MuiThemeProvider>
+    <ThemeProvider theme={theme}>
+      <div className={classes.container}>{children}</div>
+    </ThemeProvider>
   )
 }

@@ -71,7 +71,6 @@ const convertToRIARegionFmt = region => {
 }
 
 const convertFromRIARegionFmt = riaRegion => {
-  console.log({ riaRegion })
   switch (riaRegion.type) {
     case "point": {
       return {
@@ -177,7 +176,6 @@ export default ({
             .map(img => img.regions)
             .map(riaRegions => (riaRegions || []).map(convertFromRIARegionFmt))
 
-          console.log({ regionMat })
           for (let i = 0; i < regionMat.length; i++) {
             if (multipleRegions) {
               onSaveTaskOutputItem(i, regionMat[i])

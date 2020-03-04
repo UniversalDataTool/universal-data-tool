@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useReducer } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 
 import Grid from "@material-ui/core/Grid"
@@ -22,8 +22,11 @@ import InterfacePage from "../InterfacePage"
 import EditSampleDialog from "../EditSampleDialog"
 import SampleGrid from "../SampleGrid"
 import PaperContainer from "../PaperContainer"
+import Stats from "../Stats"
 import useElectron from "../../utils/use-electron"
 import download from "downloadjs"
+import moment from "moment"
+import duration from "duration"
 
 import "brace/mode/javascript"
 import "brace/theme/github"
@@ -37,6 +40,12 @@ const useStyles = makeStyles({
   },
   editIcon: {
     marginLeft: 4
+  },
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    width: "100vw",
+    height: "100vh"
   }
 })
 
@@ -59,6 +68,21 @@ export default ({
     JSON.stringify(content || oha || defaultOHAObject, null, "  ")
   )
   const { remote, ipcRenderer } = useElectron() || {}
+
+  const [{ timeToCompleteSample }, changeSampleTimeToComplete] = useReducer(
+    (state, newTimeToComplete) => {
+      const newSamplesInWindow = state.samplesInWindow
+        .slice(-10)
+        .concat([newTimeToComplete])
+      return {
+        timeToCompleteSample:
+          newSamplesInWindow.reduce((acc, a) => acc + a, 0) /
+          newSamplesInWindow.length,
+        samplesInWindow: newSamplesInWindow
+      }
+    },
+    { timeToCompleteSample: 0, samplesInWindow: [] }
+  )
 
   useEffect(() => {
     if (!ipcRenderer) return
@@ -83,8 +107,20 @@ export default ({
     } catch (e) {}
   }, [jsonText])
 
+  let percentComplete = 0
+  if (
+    oha.taskOutput &&
+    oha.taskOutput.length > 0 &&
+    oha.taskData &&
+    oha.taskData.length > 0
+  ) {
+    percentComplete =
+      oha.taskOutput.reduce((acc, a) => (a ? acc + 1 : 0), 0) /
+      oha.taskData.length
+  }
+
   return (
-    <div>
+    <div className={c.container}>
       <Header
         title={
           <EditableTitleText onChange={onChangeFileName} value={fileName} />
@@ -93,7 +129,7 @@ export default ({
         currentTab={mode}
         tabs={["Settings", "Samples", "Label"]}
       />
-      <div>
+      <div style={{ overflowY: "scroll" }}>
         {mode === "json" && (
           <AceEditor
             theme="github"
@@ -136,7 +172,8 @@ export default ({
                 ...oha,
                 taskData: [oha.taskData[sampleIndex]],
                 taskOutput: [(oha.taskOutput || [])[sampleIndex]],
-                sampleIndex
+                sampleIndex,
+                annotationStartTime: Date.now()
               })
               changeMode("label")
             }}
@@ -179,12 +216,42 @@ export default ({
               newOHA.taskOutput[singleSampleOHA.sampleIndex] = output
               changeJSONText(JSON.stringify(newOHA, null, "  "))
               changeSingleSampleOHA(null)
+              if (singleSampleOHA.startTime) {
+                changeSampleTimeToComplete(
+                  Date.now() - singleSampleOHA.startTime
+                )
+              }
             }}
             oha={singleSampleOHA}
           />
         ) : (
           mode === "label" && (
             <PaperContainer>
+              <Stats
+                stats={[
+                  {
+                    name: "Percent Complete",
+                    value: Math.floor(percentComplete * 100) + "%"
+                  },
+                  {
+                    name: "Time per Sample",
+                    value: duration(
+                      new Date(Date.now() - timeToCompleteSample)
+                    ).toString(1, 1)
+                  },
+                  {
+                    name: "Estimated Remaining",
+                    value: duration(
+                      new Date(
+                        Date.now() -
+                          timeToCompleteSample *
+                            (1 - percentComplete) *
+                            (oha.taskData || []).length
+                      )
+                    ).toString(1, 2)
+                  }
+                ]}
+              />
               <SampleGrid
                 count={(oha.taskData || []).length}
                 completed={(oha.taskOutput || []).map(Boolean)}
@@ -193,7 +260,8 @@ export default ({
                     ...oha,
                     taskData: [oha.taskData[sampleIndex]],
                     taskOutput: [(oha.taskOutput || [])[sampleIndex]],
-                    sampleIndex
+                    sampleIndex,
+                    startTime: Date.now()
                   })
                 }}
               />
