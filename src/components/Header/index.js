@@ -46,7 +46,10 @@ const useStyles = makeStyles(theme => ({
     "& .icon": {}
   },
   fullHeightTab: {
-    ...theme.mixins.toolbar
+    ...theme.mixins.toolbar,
+    [theme.breakpoints.down("sm")]: {
+      minWidth: 20
+    }
   },
   tabWrapper: {
     display: "flex",

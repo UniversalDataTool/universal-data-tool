@@ -122,7 +122,10 @@ export default ({
     <div className={c.container}>
       <Header
         title={
-          <EditableTitleText onChange={onChangeFileName} value={fileName} />
+          <EditableTitleText
+            onChange={onChangeFileName}
+            value={fileName || ""}
+          />
         }
         onChangeTab={tab => changeMode(tab.toLowerCase())}
         currentTab={mode}

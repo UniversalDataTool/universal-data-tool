@@ -44,7 +44,11 @@ export default () => {
   const openRecentItem = useMemo(() => item => {
     changeCurrentFile(item)
     try {
-      changeOHA(JSON.parse(item.content))
+      changeOHA(
+        typeof item.content === "string"
+          ? JSON.parse(item.content)
+          : item.content
+      )
     } catch (e) {
       addError("Couldn't parse content into JSON")
     }
@@ -90,6 +94,7 @@ export default () => {
     <>
       <HeaderContext.Provider
         value={{
+          title: currentFile ? currentFile.fileName : "unnamed",
           recentItems,
           onClickTemplate: onCreateTemplate,
           onClickHome,
@@ -101,6 +106,8 @@ export default () => {
           <StartingPage
             onFileDrop={handleOpenFile}
             onOpenTemplate={onCreateTemplate}
+            recentItems={recentItems}
+            onOpenRecentItem={openRecentItem}
           />
         ) : pageName === "edit" && currentFile ? (
           <OHAEditor
@@ -113,6 +120,7 @@ export default () => {
             onChangeContent={newContent => {
               const newFile = { ...currentFile, content: newContent }
               changeCurrentFile(newFile)
+              if (newFile.fileName === "unnamed") return
               if (recentItems.map(item => item.id).includes(newFile.id)) {
                 changeRecentItems(
                   recentItems.map(ri => (ri.id === newFile.id ? newFile : ri))

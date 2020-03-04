@@ -173,6 +173,8 @@ export default () => {
             showDownloadLink={false}
             onFileDrop={handleOpenFile}
             onOpenTemplate={onCreateTemplate}
+            recentItems={recentItems}
+            onOpenRecentItem={openRecentItem}
           />
         ) : pageName === "edit" && currentFile ? (
           <OHAEditor

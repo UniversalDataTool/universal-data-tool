@@ -83,7 +83,13 @@ const Actionless = styled("div")({
   paddingTop: 16
 })
 
-export default ({ onFileDrop, onOpenTemplate, showDownloadLink = true }) => {
+export default ({
+  onFileDrop,
+  onOpenTemplate,
+  showDownloadLink = true,
+  recentItems = [],
+  onOpenRecentItem
+}) => {
   const c = useStyles()
   const [
     createFromTemplateDialogOpen,
@@ -145,7 +151,15 @@ export default ({ onFileDrop, onOpenTemplate, showDownloadLink = true }) => {
               </ActionList>
               <ActionList>
                 <ActionTitle>Recent</ActionTitle>
-                <Actionless>No Recent Files</Actionless>
+                {recentItems.length === 0 ? (
+                  <Actionless>No Recent Files</Actionless>
+                ) : (
+                  recentItems.map(ri => (
+                    <Action onClick={() => onOpenRecentItem(ri)}>
+                      {ri.fileName}
+                    </Action>
+                  ))
+                )}
               </ActionList>
               <ActionList>
                 <ActionTitle>Help</ActionTitle>
