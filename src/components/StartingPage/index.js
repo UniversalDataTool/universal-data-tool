@@ -16,48 +16,6 @@ import CreateFromTemplateDialog from "../CreateFromTemplateDialog"
 import { styled } from "@material-ui/core/styles"
 
 const useStyles = makeStyles({
-  title: {},
-  contentTitle: {
-    paddingTop: 50,
-    paddingLeft: 20,
-    paddingRight: 20,
-    textAlign: "center"
-  },
-  contentSubtitle: {
-    textAlign: "center",
-    wordWrap: "normal",
-    paddingLeft: 40,
-    paddingRight: 40,
-    padding: 30
-  },
-  bigButton: {
-    width: 240,
-    fontSize: 24,
-    margin: 20,
-    border: `1px dashed ${colors.grey[500]}`
-  },
-  bigButtonContent: {
-    display: "flex",
-    lineHeight: 1.5,
-    height: 160,
-    paddingTop: 20,
-    paddingBottom: 20,
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  bigIcon: {
-    margin: 20,
-    width: 64,
-    height: 64
-  },
-  grow: { flexGrow: 1 },
-  content: {
-    display: "flex",
-    justifyContent: "center",
-    flexWrap: "wrap"
-  },
-  headerButton: { color: "#fff" },
   container: {
     display: "flex",
     flexDirection: "column",
@@ -99,7 +57,8 @@ const Subtitle = styled("div")({
   color: colors.grey[500]
 })
 const ActionList = styled("div")({ marginTop: 48 })
-const Action = styled("div")({
+const Action = styled("a")({
+  display: "block",
   color: colors.blue[500],
   marginTop: 4,
   cursor: "pointer"
@@ -177,8 +136,11 @@ export default ({ onFileDrop, onOpenTemplate, showDownloadLink = true }) => {
                 >
                   Start from Template
                 </Action>
-                <Action>Open File</Action>
-                <Action>Open Folder</Action>
+                <Action {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  Open File
+                </Action>
+                {/* <Action>Open Folder</Action> */}
               </ActionList>
               <ActionList>
                 <ActionTitle>Recent</ActionTitle>
@@ -186,10 +148,16 @@ export default ({ onFileDrop, onOpenTemplate, showDownloadLink = true }) => {
               </ActionList>
               <ActionList>
                 <ActionTitle>Help</ActionTitle>
-                <Action>Downloading and Installing UDT</Action>
-                <Action>Labeling Images</Action>
-                <Action>Custom Data Entry</Action>
-                <Action>Github Repository</Action>
+                <Action href="https://github.com/UniversalDataTool/universal-data-tool/releases">
+                  Downloading and Installing UDT
+                </Action>
+                <Action href="https://dev.to/seveibar/make-bounding-boxes-for-artificial-intelligence-with-udt-1kai">
+                  Labeling Images
+                </Action>
+                {/* <Action>Custom Data Entry</Action> */}
+                <Action href="https://github.com/UniversalDataTool/universal-data-tool">
+                  Github Repository
+                </Action>
               </ActionList>
             </Grid>
             <Grid xs={6} item>
