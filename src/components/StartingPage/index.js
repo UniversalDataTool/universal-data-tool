@@ -61,7 +61,8 @@ const Action = styled("a")({
   display: "block",
   color: colors.blue[500],
   marginTop: 4,
-  cursor: "pointer"
+  cursor: "pointer",
+  textDecoration: "none"
 })
 const ActionTitle = styled("div")({
   // fontWeight: "bold",
