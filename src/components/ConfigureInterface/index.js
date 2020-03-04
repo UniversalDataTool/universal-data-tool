@@ -8,7 +8,8 @@ import Box from "@material-ui/core/Box"
 import * as colors from "@material-ui/core/colors"
 import ConfigureImageSegmentation from "../ConfigureImageSegmentation"
 import PaperContainer from "../PaperContainer"
-import ConfigureAudioTranscription from "../ConfigureAudioTranscription"
+import ConfigureAudioTranscription from '../ConfigureAudioTranscription'
+import ConfigureNLP from "../ConfigureNLP"
 
 const NoOptions = styled("div")({
   fontSize: 18,
@@ -89,8 +90,11 @@ export const ConfigureInterface = ({
       {iface.type === "audio_transcription" && (
         <ConfigureAudioTranscription iface={iface} onChange={onChange} />
       )}
-      {iface.type === "text_classification" && (
-        <NoOptions>GUI Configuration Not Available</NoOptions>
+      {iface.type === "text_entity_recognition" && (
+        <ConfigureNLP
+          iface={iface}
+          onChange={onChange}
+        />          
       )}
     </PaperContainer>
   )
