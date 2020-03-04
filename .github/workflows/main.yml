@@ -1,6 +1,10 @@
 name: Build/Release
 
-on: ["push"]
+# on: [push]
+on:
+  push:
+    tags:
+      - "*"
 
 jobs:
   build:
@@ -21,7 +25,7 @@ jobs:
       # Helpful reference https://github.com/samuelmeuli/mini-diary/blob/master/.github/workflows/release.yml
       - name: Electron Builder Action
         uses: samuelmeuli/action-electron-builder@v1.3.0
-        if: startsWith(github.ref, 'v0.')
+        # if: contains(github.ref, "v0.")
         with:
           github_token: ${{ secrets.github_token }}
           mac_certs: ${{ secrets.mac_certs }}
