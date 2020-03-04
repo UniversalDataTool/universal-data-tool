@@ -9,6 +9,7 @@ import DialogActions from "@material-ui/core/DialogActions"
 import { makeStyles } from "@material-ui/core/styles"
 import templates from "../StartingPage/templates"
 import { grey } from "@material-ui/core/colors"
+import SimpleDialog from "../SimpleDialog"
 
 const useStyles = makeStyles({
   bigButton: {
@@ -27,23 +28,17 @@ const useStyles = makeStyles({
 export default ({ open, onClose, onSelect }) => {
   const c = useStyles()
   return (
-    <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Create from Template</DialogTitle>
-      <DialogContent>
-        {templates.map(template => (
-          <Button onClick={() => onSelect(template)} className={c.bigButton}>
+    <SimpleDialog title="Create from Template" open={open} onClose={onClose}>
+      {templates.map(template => (
+        <Button onClick={() => onSelect(template)} className={c.bigButton}>
+          <div>
+            <div>{template.name}</div>
             <div>
-              <div>{template.name}</div>
-              <div>
-                <template.Icon className={c.bigIcon} />
-              </div>
+              <template.Icon className={c.bigIcon} />
             </div>
-          </Button>
-        ))}
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={() => onClose()}>Close</Button>
-      </DialogActions>
-    </Dialog>
+          </div>
+        </Button>
+      ))}
+    </SimpleDialog>
   )
 }

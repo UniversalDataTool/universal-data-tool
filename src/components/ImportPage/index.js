@@ -5,11 +5,13 @@ import MuiButton from "@material-ui/core/Button"
 import { styled } from "@material-ui/core/styles"
 import AssignmentReturnedIcon from "@material-ui/icons/AssignmentReturned"
 import CreateNewFolderIcon from "@material-ui/icons/CreateNewFolder"
+import PetsIcon from "@material-ui/icons/Pets"
 import * as colors from "@material-ui/core/colors"
 import PasteUrlsDialog from "../PasteUrlsDialog"
 import useIsDesktop from "../../utils/use-is-desktop"
 import useElectron from "../../utils/use-electron"
 import classnames from "classnames"
+import catImages from "./cat-images.js"
 
 const ButtonBase = styled(MuiButton)({
   width: 240,
@@ -105,21 +107,23 @@ export default ({ oha, onChangeOHA, isDesktop }) => {
           .filter(fn => fn.includes("."))
           .map(fileName => path.join(dirPath, fileName))
 
-        console.log({
-          importedFilePaths,
-          oha: {
-            ...oha,
-            taskData: (oha.taskData || []).concat(
-              importedFilePaths.map(convertToTaskDataObject).filter(Boolean)
-            )
-          }
-        })
-
         onChangeOHA(
           {
             ...oha,
             taskData: (oha.taskData || []).concat(
               importedFilePaths.map(convertToTaskDataObject).filter(Boolean)
+            )
+          },
+          true
+        )
+        return
+      }
+      case "import-cats": {
+        onChangeOHA(
+          {
+            ...oha,
+            taskData: (oha.taskData || []).concat(
+              catImages.map(imageUrl => ({ imageUrl }))
             )
           },
           true
@@ -148,6 +152,9 @@ export default ({ oha, onChangeOHA, isDesktop }) => {
           Icon={CreateNewFolderIcon}
         >
           Files from Directory
+        </Button>
+        <Button isDesktop={isDesktop} dialog="import-cats" Icon={PetsIcon}>
+          Import Cat Images
         </Button>
         <PasteUrlsDialog
           open={selectedDialog === "paste-image-urls"}

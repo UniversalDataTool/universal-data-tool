@@ -9,7 +9,7 @@ import * as colors from "@material-ui/core/colors"
 import ConfigureImageSegmentation from "../ConfigureImageSegmentation"
 import PaperContainer from "../PaperContainer"
 import ConfigureAudioTranscription from '../ConfigureAudioTranscription'
-import ConfigureNLP from "../ConfigureNLP";
+import ConfigureNLP from "../ConfigureNLP"
 
 const NoOptions = styled("div")({
   fontSize: 18,
@@ -68,7 +68,7 @@ export const ConfigureInterface = ({
 }) => {
   return (
     <PaperContainer>
-      <Heading>Type</Heading>
+      {/* <Heading>Type</Heading> */}
       <SelectType
         currentlySelected={iface.type}
         onChange={type => {
@@ -88,10 +88,7 @@ export const ConfigureInterface = ({
         <NoOptions>GUI Configuration Not Available</NoOptions>
       )}
       {iface.type === "audio_transcription" && (
-        <ConfigureAudioTranscription
-          iface={iface}
-          onChange={onChange}
-        />
+        <ConfigureAudioTranscription iface={iface} onChange={onChange} />
       )}
       {iface.type === "text_entity_recognition" && (
         <ConfigureNLP

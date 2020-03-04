@@ -27,22 +27,39 @@ import { useDropzone } from "react-dropzone"
 import { makeStyles } from "@material-ui/core/styles"
 import Tabs from "@material-ui/core/Tabs"
 import Tab from "@material-ui/core/Tab"
+import { IconContext } from "react-icons"
+import { GoMarkGithub } from "react-icons/go"
+import useMediaQuery from "@material-ui/core/useMediaQuery"
 
 const useStyles = makeStyles(theme => ({
   headerButton: {
-    color: "#fff"
+    marginLeft: 16,
+    color: "#888"
   },
   grow: { flexGrow: 1 },
   list: {
     width: 300
   },
   tab: {
-    color: "#fff",
-    height: "100%",
+    color: "#000",
+    // height: "100%",
     "& .icon": {}
   },
   fullHeightTab: {
     ...theme.mixins.toolbar
+  },
+  tabWrapper: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    textTransform: "none",
+    color: "#000",
+    "&&& svg": {
+      marginBottom: 0,
+      marginRight: 8,
+      width: 18,
+      height: 18
+    }
   }
 }))
 
@@ -84,10 +101,12 @@ export default ({
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop })
 
+  const isSmall = useMediaQuery("(max-width: 800px)")
+
   return (
     <>
-      <AppBar position="static">
-        <Toolbar>
+      <AppBar color="transparent" position="static">
+        <Toolbar variant="dense">
           {!isDesktop && (
             <IconButton
               onClick={() => changeDrawerOpen(true)}
@@ -96,9 +115,7 @@ export default ({
               <MenuIcon />
             </IconButton>
           )}
-          <Typography className={c.title} variant="h6" noWrap>
-            {title}
-          </Typography>
+          {title}
           <div className={c.grow} />
           {additionalButtons}
           {tabs.length > 0 && (
@@ -109,21 +126,23 @@ export default ({
               {tabs.map(t => (
                 <Tab
                   key={t}
-                  classes={{ root: c.fullHeightTab }}
+                  classes={{ root: c.fullHeightTab, wrapper: c.tabWrapper }}
                   className={c.tab}
                   icon={getIcon(t)}
-                  label={t}
+                  label={isSmall ? "" : t}
                   value={t.toLowerCase()}
                 />
               ))}
             </Tabs>
           )}
-          <IconButton
-            href="https://github.com/openhumanannotation/universal-data-tool"
-            className={c.headerButton}
-          >
-            <GithubIcon />
-          </IconButton>
+          {!isSmall && (
+            <IconButton
+              href="https://github.com/openhumanannotation/universal-data-tool"
+              className={c.headerButton}
+            >
+              <GithubIcon />
+            </IconButton>
+          )}
         </Toolbar>
       </AppBar>
       <Drawer open={drawerOpen} onClose={() => changeDrawerOpen(false)}>
@@ -194,7 +213,7 @@ export default ({
             }}
           >
             <ListItemIcon>
-              <GithubIcon />
+              <GoMarkGithub />
             </ListItemIcon>
             <ListItemText>Github</ListItemText>
           </ListItem>

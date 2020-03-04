@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles"
 
 const useStyles = makeStyles({
   textField: {
-    color: "#fff"
+    marginLeft: 8
   }
 })
 
@@ -48,12 +48,15 @@ export default ({ value, onChange }) => {
     }
   }, [editing, newValue])
 
-  return editing ? (
+  return (
     <TextField
-      autoFocus
       className={c.textField}
+      label="File Name"
+      variant="outlined"
+      size="small"
       InputProps={{
-        inputProps: { style: { color: "#fff" } }
+        inputProps: { style: { color: "#000" } },
+        disableUnderline: true
       }}
       onChange={e => {
         changeEditing({
@@ -63,15 +66,5 @@ export default ({ value, onChange }) => {
       }}
       value={newValue}
     />
-  ) : (
-    <span
-      onClick={() => {
-        if (onChange) {
-          changeEditing({ editing: true, newValue: value })
-        }
-      }}
-    >
-      {value}
-    </span>
   )
 }
