@@ -147,6 +147,7 @@ export default ({
                   <input {...getInputProps()} />
                   Open File
                 </Action>
+                <Action>Open Collaborative Session</Action>
                 {/* <Action>Open Folder</Action> */}
               </ActionList>
               <ActionList>
@@ -172,6 +173,9 @@ export default ({
                 {/* <Action>Custom Data Entry</Action> */}
                 <Action href="https://github.com/UniversalDataTool/universal-data-tool">
                   Github Repository
+                </Action>
+                <Action href="#">
+                  How to Collaborate in Real-Time with UDT
                 </Action>
               </ActionList>
             </Grid>
