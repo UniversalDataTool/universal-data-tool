@@ -1,0 +1,148 @@
+// @flow
+
+import React, { useState, useMemo, useRef } from "react"
+import { createPortal } from "react-dom"
+import IconButton from "@material-ui/core/IconButton"
+import PeopleIcon from "@material-ui/icons/People"
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward"
+import { styled } from "@material-ui/core/styles"
+import * as colors from "@material-ui/core/colors"
+import Button from "@material-ui/core/Button"
+import TextField from "@material-ui/core/TextField"
+import InputAdornment from "@material-ui/core/InputAdornment"
+import AddBoxTwoTone from "@material-ui/icons/AddBoxTwoTone"
+import ExitToAppIcon from "@material-ui/icons/ExitToApp"
+
+const Container = styled("div")({ position: "relative" })
+const WIDTH = 300
+const borderColor = colors.grey[500]
+const popupBoxBeforeAndAfter = {
+  bottom: "100%",
+  left: "25%",
+  border: "solid transparent",
+  content: '" "',
+  height: 0,
+  width: 0,
+  position: "absolute",
+  pointerEvents: "none"
+}
+const PopupBox = styled("div")({
+  position: "absolute",
+  top: 45,
+  padding: 16,
+  boxSizing: "border-box",
+  borderRadius: 4,
+  left: -WIDTH / 4 + 22,
+  backgroundColor: "#fff",
+  border: `1px solid ${borderColor}`,
+  width: WIDTH,
+  minHeight: 200,
+  boxShadow: "0px 3px 12px rgba(0,0,0,0.3)",
+  "&:before": {
+    ...popupBoxBeforeAndAfter,
+    borderColor: "rgba(0,0,0, 0)",
+    borderBottomColor: borderColor,
+    borderWidth: 12,
+    marginLeft: -12
+  },
+  "&:after": {
+    ...popupBoxBeforeAndAfter,
+    borderColor: "rgba(255,255,255, 0)",
+    borderBottomColor: "#fff",
+    borderWidth: 10,
+    marginLeft: -10
+  },
+  "& h1": {
+    fontSize: 18,
+    marginTop: 0,
+    color: colors.blue[800]
+  },
+  "& h2": {
+    fontSize: 14,
+    color: colors.grey[800]
+  },
+  opacity: 1,
+  transition: "opacity 200ms linear, transform 200ms ease",
+  "&.hidden": {
+    opacity: 0,
+    transform: "translate(0, 10px)",
+    pointerEvents: "none"
+  }
+})
+
+const CreateNewButton = styled(Button)({
+  marginTop: 16,
+  justifyContent: "flex-start",
+  "& .icon": {
+    marginRight: 8,
+    opacity: 0.7,
+    color: colors.blue[500]
+  }
+})
+const ExitButton = styled(Button)({
+  marginTop: 16,
+  justifyContent: "flex-start",
+  "& .icon": {
+    marginRight: 8,
+    opacity: 0.7,
+    color: colors.red[500]
+  }
+})
+
+export default ({
+  inSession = false,
+  onJoinSession,
+  onCreateSession,
+  onLeaveSession
+}) => {
+  const [mouseOver, changeMouseOver] = useState(false)
+  const [sessionUrl, changeSessionUrl] = useState("")
+  return (
+    <Container
+      onMouseEnter={() => changeMouseOver(true)}
+      onMouseLeave={() => changeMouseOver(false)}
+    >
+      <IconButton style={{ color: inSession ? colors.blue[500] : undefined }}>
+        <PeopleIcon />
+      </IconButton>
+      <PopupBox className={mouseOver ? "" : "hidden"}>
+        <h1>Collaborate</h1>
+        {!inSession ? (
+          <>
+            <h2>Join a Session</h2>
+            <TextField
+              variant="outlined"
+              label="URL to Session"
+              value={sessionUrl}
+              onChange={e => changeSessionUrl(e.target.value)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      color="primary"
+                      onClick={() => onJoinSession(sessionUrl)}
+                      disabled={!sessionUrl}
+                    >
+                      <ArrowForwardIcon />
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
+            />
+            <CreateNewButton fullWidth onClick={onCreateSession}>
+              <AddBoxTwoTone className="icon" />
+              Create New Session
+            </CreateNewButton>
+          </>
+        ) : (
+          <>
+            <ExitButton fullWidth onClick={onLeaveSession}>
+              <ExitToAppIcon className="icon" />
+              Leave Session
+            </ExitButton>
+          </>
+        )}
+      </PopupBox>
+    </Container>
+  )
+}
