@@ -17,7 +17,7 @@ import SaveIcon from "@material-ui/icons/Save"
 import defaultOHAObject from "./default-oha-object"
 import UniversalDataViewer from "../UniversalDataViewer"
 import EditableTitleText from "./EditableTitleText.js"
-import SampleDataTable from "../SampleDataTable"
+import SamplesView from "../SamplesView"
 import InterfacePage from "../InterfacePage"
 import EditSampleDialog from "../EditSampleDialog"
 import SampleGrid from "../SampleGrid"
@@ -55,7 +55,6 @@ export default ({
   content,
   fileName = "unnamed",
   onChangeFileName,
-  onChangeContent = () => null,
   onChangeOHA = () => null,
   onFileDrop,
   initialMode = "settings" //= "samples"
@@ -100,7 +99,6 @@ export default ({
   }, [])
 
   useEffect(() => {
-    onChangeContent(jsonText)
     try {
       // schema validation etc.
       onChangeOHA(JSON.parse(jsonText))
@@ -167,7 +165,7 @@ export default ({
           />
         )}
         {mode === "samples" && (
-          <SampleDataTable
+          <SamplesView
             oha={oha}
             openSampleLabelEditor={sampleIndex => {
               changeSingleSampleOHA({

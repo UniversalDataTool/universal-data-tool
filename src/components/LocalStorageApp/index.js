@@ -1,5 +1,5 @@
 // @flow
-import React, { useState, useMemo } from "react"
+import React, { useState, useMemo, useEffect } from "react"
 import { HeaderContext } from "../Header"
 import StartingPage from "../StartingPage"
 import OHAEditor from "../OHAEditor"
@@ -21,7 +21,6 @@ export default () => {
   const c = useStyles()
   const [pageName, changePageName] = useState("welcome")
   const [currentFile, changeCurrentFile] = useState()
-  const [oha, changeOHA] = useState()
   const [errors, addError] = useErrors()
   let [recentItems, changeRecentItems] = useLocalStorage("recentItems", [])
   if (!recentItems) recentItems = []
@@ -35,7 +34,6 @@ export default () => {
           .toString()
           .split(".")[1]
       })
-      changeOHA(template.oha)
       changePageName("edit")
     },
     []
@@ -43,15 +41,6 @@ export default () => {
 
   const openRecentItem = useMemo(() => item => {
     changeCurrentFile(item)
-    try {
-      changeOHA(
-        typeof item.content === "string"
-          ? JSON.parse(item.content)
-          : item.content
-      )
-    } catch (e) {
-      addError("Couldn't parse content into JSON")
-    }
     changePageName("edit")
   })
 
@@ -78,7 +67,6 @@ export default () => {
               .toString()
               .split(".")[1]
           })
-          changeOHA(oha)
           changePageName("edit")
         } catch (e) {
           console.log(e.toString())
@@ -89,6 +77,18 @@ export default () => {
     },
     []
   )
+
+  useEffect(() => {
+    if (!currentFile) return
+    if (!currentFile.fileName || currentFile.fileName === "unnamed") return
+    if (recentItems.map(item => item.id).includes(currentFile.id)) {
+      changeRecentItems(
+        recentItems.map(ri => (ri.id === currentFile.id ? currentFile : ri))
+      )
+    } else {
+      changeRecentItems([currentFile].concat(recentItems).slice(0, 3))
+    }
+  }, [currentFile])
 
   return (
     <>
@@ -113,23 +113,14 @@ export default () => {
           <OHAEditor
             key={currentFile.id}
             {...currentFile}
-            oha={oha}
+            oha={currentFile.content}
             onChangeFileName={newName => {
               changeCurrentFile({ ...currentFile, fileName: newName })
             }}
-            onChangeContent={newContent => {
-              const newFile = { ...currentFile, content: newContent }
+            onChangeOHA={newOHA => {
+              const newFile = { ...currentFile, content: newOHA }
               changeCurrentFile(newFile)
-              if (newFile.fileName === "unnamed") return
-              if (recentItems.map(item => item.id).includes(newFile.id)) {
-                changeRecentItems(
-                  recentItems.map(ri => (ri.id === newFile.id ? newFile : ri))
-                )
-              } else {
-                changeRecentItems([newFile].concat(recentItems).slice(0, 3))
-              }
             }}
-            onChangeOHA={changeOHA}
           />
         ) : (
           <div className={c.empty}>Unknown Page "{pageName}"</div>
