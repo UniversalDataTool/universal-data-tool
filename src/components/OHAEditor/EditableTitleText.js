@@ -14,7 +14,8 @@ const SAVE_WAIT = 2000
 export default ({ value, onChange }) => {
   const c = useStyles()
   const [{ editing, newValue }, changeEditing] = useState({
-    editing: false
+    editing: false,
+    newValue: value || ""
   })
 
   useEffect(() => {
