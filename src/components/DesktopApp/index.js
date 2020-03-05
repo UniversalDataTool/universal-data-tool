@@ -26,7 +26,7 @@ export default () => {
   const [currentFile, changeCurrentFile] = useState()
   const [oha, changeOHA] = useState()
   const [errors, addError] = useErrors()
-  let [recentItems, changeRecentItems] = useLocalStorage("recentItems", [])
+  let [recentItems, changeRecentItems] = [[], () => null] // useLocalStorage("recentItems", [])
   const { addToast } = useToasts()
   if (!recentItems) recentItems = []
   const { remote, ipcRenderer } = useElectron()
