@@ -50,8 +50,7 @@ export default (file, changeFile) => {
   useEffect(() => {
     if (!file || file.mode !== "server") return
 
-    // Check Server for Latest Patches and Change State
-    let interval = setInterval(async () => {
+    const checkForLatestPatch = async () => {
       const {
         patch,
         hashOfLatestState,
@@ -60,6 +59,7 @@ export default (file, changeFile) => {
       } = await getJSON(
         `/api/session/${file.sessionId}/diffs?since=${file.lastSyncedVersion}`
       )
+      if (!timeout) return
       for (const { userName, op, path } of changeLog) {
         if (path.startsWith("/interface")) {
           addToast(`${userName} changed the project settings`, "warning")
@@ -76,11 +76,11 @@ export default (file, changeFile) => {
         }
       }
       if (patch.length > 0) {
-        // Apply update (note: this violates immutability, but prevents rerenders
-        // so should be kept)
         let patchFailed = false,
           patchResult
         try {
+          // Apply update (note: this violates immutability, but prevents rerenders
+          // so should be kept)
           patchResult = jsonpatch.applyPatch(file.content, patch, false, true)
           file.content = patchResult.newDocument
         } catch (e) {
@@ -114,10 +114,15 @@ export default (file, changeFile) => {
           })
         }
       }
-    }, 500)
+      if (!timeout) return
+      timeout = setTimeout(checkForLatestPatch, 500)
+    }
+
+    let timeout = setTimeout(checkForLatestPatch, 500)
 
     return () => {
-      clearInterval(interval)
+      clearTimeout(timeout)
+      timeout = null
     }
   }, [file])
 
