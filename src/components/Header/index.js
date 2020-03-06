@@ -99,7 +99,10 @@ export default ({
     inSession,
     onJoinSession,
     onCreateSession,
-    onLeaveSession
+    onLeaveSession,
+    sessionBoxOpen,
+    changeSessionBoxOpen,
+    fileOpen
   } = useContext(HeaderContext)
   if (!recentItems) recentItems = []
 
@@ -125,6 +128,9 @@ export default ({
           )}
           {title}
           <CollaborateButton
+            sessionBoxOpen={sessionBoxOpen}
+            changeSessionBoxOpen={changeSessionBoxOpen}
+            fileOpen={fileOpen}
             inSession={inSession}
             onCreateSession={onCreateSession}
             onLeaveSession={onLeaveSession}

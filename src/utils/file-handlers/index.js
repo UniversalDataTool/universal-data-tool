@@ -1,11 +1,6 @@
 // @flow
-// import { createContext, useContext } from "react"
-//
-// export const FileHandlerContext = createContext()
-//
-// export default () => useContext(FileHandlerContext)
 
-import { useState, useMemo, useCallback } from "react"
+import { useState, useMemo, useCallback, useEffect } from "react"
 import useServer, {
   getLatestState,
   convertToCollaborativeFile
@@ -13,8 +8,9 @@ import useServer, {
 import useFilesystem from "./use-filesystem"
 import useLocalStorage from "./use-local-storage"
 import moment from "moment"
+import cloneDeep from "lodash/cloneDeep"
 
-export default (mode: "local-storage" | "filesystem" | "server") => {
+export default () => {
   const [file, changeFile] = useState()
 
   useFilesystem(file, changeFile)
@@ -51,26 +47,48 @@ export default (mode: "local-storage" | "filesystem" | "server") => {
     async url => {
       const sessionId = url.match(/[\?&]s=([a-zA-Z0-9]+)/)[1]
       if (!sessionId) return
-      const state = await getLatestState(sessionId)
+      const { state, version } = await getLatestState(sessionId)
       if (!state) return
+      window.history.replaceState({}, window.document.title, `/?s=${sessionId}`)
       changeFile({
         url,
         sessionId,
         mode: "server",
         id: sessionId,
         content: state,
-        lastSync: moment.utc()
+        lastSyncedState: cloneDeep(state),
+        lastSyncedVersion: version
       })
     },
     [changeFile]
   )
 
-  const makeCollaborative = useCallback(async () => {
-    changeFile(await convertToCollaborativeFile(file))
-  }, [changeFile])
+  useEffect(() => {
+    if (!file) return
+    if (file.mode === "server") return
+    window.history.replaceState({}, window.document.title, `/`)
+  }, [file && file.mode])
 
-  return useMemo(
-    () => ({ file, changeFile, openFile, openUrl, makeCollaborative }),
-    [file, changeFile, openFile, makeCollaborative]
-  )
+  useEffect(() => {
+    if (window.location.search.match(/[\?&]s=([a-zA-Z0-9]+)/)) {
+      openUrl(window.location.href)
+    }
+  }, [])
+
+  const makeSession = useCallback(async () => {
+    const newFile = await convertToCollaborativeFile(file)
+    changeFile(newFile)
+    window.history.replaceState(
+      {},
+      window.document.title,
+      `/?s=${newFile.sessionId}`
+    )
+  }, [file, changeFile])
+
+  return useMemo(() => ({ file, changeFile, openFile, openUrl, makeSession }), [
+    file,
+    changeFile,
+    openFile,
+    makeSession
+  ])
 }

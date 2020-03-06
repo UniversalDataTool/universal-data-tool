@@ -88,7 +88,8 @@ export default ({
   onOpenTemplate,
   showDownloadLink = true,
   recentItems = [],
-  onOpenRecentItem
+  onOpenRecentItem,
+  onClickOpenSession
 }) => {
   const c = useStyles()
   const [
@@ -100,6 +101,7 @@ export default ({
       onFileDrop(acceptedFiles[0])
     }
   }, [onFileDrop])
+
   let { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
   return (
@@ -147,7 +149,11 @@ export default ({
                   <input {...getInputProps()} />
                   Open File
                 </Action>
-                <Action>Open Collaborative Session</Action>
+                {onClickOpenSession && (
+                  <Action onClick={onClickOpenSession}>
+                    Open Collaborative Session
+                  </Action>
+                )}
                 {/* <Action>Open Folder</Action> */}
               </ActionList>
               <ActionList>

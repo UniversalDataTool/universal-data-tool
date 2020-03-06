@@ -28,6 +28,7 @@ import download from "downloadjs"
 import moment from "moment"
 import duration from "duration"
 import useTimeToCompleteSample from "../../utils/use-time-to-complete-sample.js"
+import TextField from "@material-ui/core/TextField"
 
 import "brace/mode/javascript"
 import "brace/theme/github"
@@ -54,6 +55,8 @@ export default ({
   datasetName = "Universal Data Tool",
   oha,
   content,
+  inSession,
+  url,
   fileName = "unnamed",
   onChangeFileName,
   onChangeOHA = () => null,
@@ -116,11 +119,20 @@ export default ({
     <div className={c.container}>
       <Header
         title={
-          <EditableTitleText
-            label="File Name"
-            onChange={onChangeFileName}
-            value={fileName || ""}
-          />
+          inSession ? (
+            <TextField
+              label="Share Link"
+              value={url}
+              variant="outlined"
+              size="small"
+            />
+          ) : (
+            <EditableTitleText
+              label="File Name"
+              onChange={onChangeFileName}
+              value={fileName || ""}
+            />
+          )
         }
         onChangeTab={tab => changeMode(tab.toLowerCase())}
         currentTab={mode}

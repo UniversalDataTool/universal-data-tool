@@ -1,6 +1,7 @@
 // @flow
 
 import React, { useState, useMemo, useRef } from "react"
+import { useLocalStorage } from "react-use"
 import { createPortal } from "react-dom"
 import IconButton from "@material-ui/core/IconButton"
 import PeopleIcon from "@material-ui/icons/People"
@@ -73,10 +74,10 @@ const PopupBox = styled("div")({
 const CreateNewButton = styled(Button)({
   marginTop: 16,
   justifyContent: "flex-start",
+  color: colors.blue[500],
   "& .icon": {
     marginRight: 8,
-    opacity: 0.7,
-    color: colors.blue[500]
+    opacity: 0.7
   }
 })
 const ExitButton = styled(Button)({
@@ -90,22 +91,25 @@ const ExitButton = styled(Button)({
 })
 
 export default ({
+  fileOpen = false,
   inSession = false,
   onJoinSession,
   onCreateSession,
-  onLeaveSession
+  onLeaveSession,
+  sessionBoxOpen,
+  changeSessionBoxOpen
 }) => {
-  const [mouseOver, changeMouseOver] = useState(false)
   const [sessionUrl, changeSessionUrl] = useState("")
+  const [userName, changeUserName] = useLocalStorage("userName", "anonymous")
   return (
     <Container
-      onMouseEnter={() => changeMouseOver(true)}
-      onMouseLeave={() => changeMouseOver(false)}
+      onMouseEnter={() => changeSessionBoxOpen(true)}
+      onMouseLeave={() => changeSessionBoxOpen(false)}
     >
       <IconButton style={{ color: inSession ? colors.blue[500] : undefined }}>
         <PeopleIcon />
       </IconButton>
-      <PopupBox className={mouseOver ? "" : "hidden"}>
+      <PopupBox className={sessionBoxOpen ? "" : "hidden"}>
         <h1>Collaborate</h1>
         {!inSession ? (
           <>
@@ -129,13 +133,24 @@ export default ({
                 )
               }}
             />
-            <CreateNewButton fullWidth onClick={onCreateSession}>
+            <CreateNewButton
+              fullWidth
+              onClick={onCreateSession}
+              disabled={!fileOpen}
+            >
               <AddBoxTwoTone className="icon" />
               Create New Session
             </CreateNewButton>
           </>
         ) : (
           <>
+            <TextField
+              style={{ marginTop: 12 }}
+              variant="outlined"
+              label="User Name"
+              value={userName}
+              onChange={e => changeUserName(e.target.value)}
+            />
             <ExitButton fullWidth onClick={onLeaveSession}>
               <ExitToAppIcon className="icon" />
               Leave Session

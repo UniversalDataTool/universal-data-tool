@@ -21,19 +21,29 @@ const useStyles = makeStyles({
 export default () => {
   const c = useStyles()
   const [pageName, changePageName] = useState("welcome")
-  const { file, changeFile, openFile } = useFileHandler("local-storage")
+  const { file, changeFile, openFile, openUrl, makeSession } = useFileHandler()
   const [errors, addError] = useErrors()
   let [recentItems, changeRecentItems] = useLocalStorage("recentItems", [])
   if (!recentItems) recentItems = []
+
+  useEffect(() => {
+    if (file && file.mode === "server") {
+      changePageName("edit")
+    }
+  }, [file && file.mode])
+
+  const randomId = () =>
+    Math.random()
+      .toString()
+      .split(".")[1]
 
   const onCreateTemplate = useMemo(
     () => template => {
       changeFile({
         fileName: "unnamed",
         content: template.oha,
-        id: Math.random()
-          .toString()
-          .split(".")[1]
+        id: randomId(),
+        mode: "local-storage"
       })
       changePageName("edit")
     },
@@ -63,6 +73,9 @@ export default () => {
     }
   }, [file])
 
+  const inSession = file && file.mode === "server"
+  const [sessionBoxOpen, changeSessionBoxOpen] = useState(false)
+
   return (
     <>
       <HeaderContext.Provider
@@ -76,7 +89,23 @@ export default () => {
           onClickTemplate: onCreateTemplate,
           onClickHome,
           onOpenFile: openFile,
-          onOpenRecentItem: openRecentItem
+          onOpenRecentItem: openRecentItem,
+          inSession,
+          sessionBoxOpen,
+          changeSessionBoxOpen,
+          onJoinSession: async sessionName => {
+            await openUrl(sessionName)
+            changePageName("edit")
+          },
+          onLeaveSession: () =>
+            changeFile({
+              ...file,
+              mode: "local-storage",
+              id: randomId(),
+              fileName: "unnamed"
+            }),
+          onCreateSession: makeSession,
+          fileOpen: Boolean(file)
         }}
       >
         {pageName === "welcome" ? (
@@ -85,11 +114,13 @@ export default () => {
             onOpenTemplate={onCreateTemplate}
             recentItems={recentItems}
             onOpenRecentItem={openRecentItem}
+            onClickOpenSession={() => changeSessionBoxOpen(true)}
           />
         ) : pageName === "edit" && file ? (
           <OHAEditor
             key={file.id}
             {...file}
+            inSession={inSession}
             oha={file.content}
             onChangeFileName={newName => {
               changeFile({ ...file, fileName: newName })

@@ -5,7 +5,7 @@ import StartingPage from "../StartingPage"
 import OHAEditor from "../OHAEditor"
 import { makeStyles } from "@material-ui/core/styles"
 import ErrorToasts from "../ErrorToasts"
-import Toasts, { useToasts } from "../Toasts"
+import { useToasts } from "../Toasts"
 import useErrors from "../../utils/use-errors.js"
 import useLocalStorage from "../../utils/use-local-storage.js"
 import useElectron from "../../utils/use-electron.js"
@@ -202,7 +202,6 @@ export default () => {
         )}
       </HeaderContext.Provider>
       <ErrorToasts errors={errors} />
-      <Toasts />
     </>
   )
 }
