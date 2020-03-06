@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState, useMemo, useRef } from "react"
+import React, { useState, useMemo, useRef, useEffect } from "react"
 import { useLocalStorage } from "react-use"
 import { createPortal } from "react-dom"
 import IconButton from "@material-ui/core/IconButton"
@@ -13,6 +13,7 @@ import TextField from "@material-ui/core/TextField"
 import InputAdornment from "@material-ui/core/InputAdornment"
 import AddBoxTwoTone from "@material-ui/icons/AddBoxTwoTone"
 import ExitToAppIcon from "@material-ui/icons/ExitToApp"
+import CircularProgress from "@material-ui/core/CircularProgress"
 
 const Container = styled("div")({ position: "relative" })
 const WIDTH = 300
@@ -99,8 +100,18 @@ export default ({
   sessionBoxOpen,
   changeSessionBoxOpen
 }) => {
+  const [loadingSession, changeLoadingSession] = useState(false)
   const [sessionUrl, changeSessionUrl] = useState("")
   const [userName, changeUserName] = useLocalStorage("userName", "anonymous")
+
+  useEffect(() => {
+    if (loadingSession) {
+      setTimeout(() => {
+        changeLoadingSession(false)
+      }, 2000)
+    }
+  }, [loadingSession])
+
   return (
     <Container
       onMouseEnter={() => changeSessionBoxOpen(true)}
@@ -135,10 +146,17 @@ export default ({
             />
             <CreateNewButton
               fullWidth
-              onClick={onCreateSession}
-              disabled={!fileOpen}
+              onClick={() => {
+                onCreateSession()
+                changeLoadingSession(true)
+              }}
+              disabled={!fileOpen || loadingSession}
             >
-              <AddBoxTwoTone className="icon" />
+              {loadingSession ? (
+                <CircularProgress className="icon" size={24} />
+              ) : (
+                <AddBoxTwoTone className="icon" />
+              )}
               Create New Session
             </CreateNewButton>
           </>
