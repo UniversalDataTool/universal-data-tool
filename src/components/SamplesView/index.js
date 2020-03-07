@@ -178,6 +178,9 @@ export default ({
           dense
           columns={columns}
           data={data}
+          pagination
+          paginationPerPage={10}
+          paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
         />
       )}
     </Container>

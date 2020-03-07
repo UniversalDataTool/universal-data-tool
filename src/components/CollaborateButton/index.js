@@ -108,7 +108,7 @@ export default ({
     if (loadingSession) {
       setTimeout(() => {
         changeLoadingSession(false)
-      }, 2000)
+      }, 10000)
     }
   }, [loadingSession])
 

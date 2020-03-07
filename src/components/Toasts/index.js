@@ -34,7 +34,9 @@ const useStyles = makeStyles({
     "&.warning": {
       backgroundColor: colors.orange[700]
     },
-    "&.error": {}
+    "&.error": {
+      backgroundColor: colors.red[700]
+    }
   }
 })
 

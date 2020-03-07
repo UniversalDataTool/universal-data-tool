@@ -51,14 +51,23 @@ export default (file, changeFile) => {
     if (!file || file.mode !== "server") return
 
     const checkForLatestPatch = async () => {
-      const {
-        patch,
-        hashOfLatestState,
-        latestVersion,
-        changeLog
-      } = await getJSON(
-        `/api/session/${file.sessionId}/diffs?since=${file.lastSyncedVersion}`
-      )
+      let patch, hashOfLatestState, latestVersion, changeLog
+      try {
+        ;({
+          patch,
+          hashOfLatestState,
+          latestVersion,
+          changeLog
+        } = await getJSON(
+          `/api/session/${file.sessionId}/diffs?since=${file.lastSyncedVersion}`
+        ))
+      } catch (e) {
+        addToast(
+          "There was an issue connecting to the server. Refresh to retry.",
+          "error"
+        )
+        return
+      }
       if (!timeout) return
       for (const { userName, op, path } of changeLog) {
         if (path.startsWith("/interface")) {
@@ -136,6 +145,7 @@ export default (file, changeFile) => {
       try {
         userName = JSON.parse(window.localStorage.userName)
       } catch (e) {}
+      console.log("sending ash")
       const { hashOfLatestState, latestVersion } = await patchJSON(
         `/api/session/${file.sessionId}`,
         { patch, userName }
