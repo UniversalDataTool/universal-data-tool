@@ -201,6 +201,16 @@ export default ({
               const newOHA = { ...oha }
               if (!newOHA.taskOutput)
                 newOHA.taskOutput = newOHA.taskData.map(td => null)
+              if (
+                newOHA.taskOutput.length < newOHA.taskData.length ||
+                newOHA.taskOutput.includes(undefined)
+              ) {
+                newOHA.taskOutput = newOHA.taskData.map((td, tdi) =>
+                  newOHA.taskOutput[tdi] === undefined
+                    ? null
+                    : newOHA.taskOutput[tdi]
+                )
+              }
               newOHA.taskOutput[singleSampleOHA.sampleIndex] = output
               onChangeOHA(newOHA)
               changeSingleSampleOHA(null)
