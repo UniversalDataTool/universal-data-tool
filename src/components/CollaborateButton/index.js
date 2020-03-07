@@ -15,7 +15,7 @@ import AddBoxTwoTone from "@material-ui/icons/AddBoxTwoTone"
 import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import CircularProgress from "@material-ui/core/CircularProgress"
 
-const Container = styled("div")({ position: "relative" })
+const Container = styled("div")({ position: "relative", marginLeft: 8 })
 const WIDTH = 300
 const borderColor = colors.grey[500]
 const popupBoxBeforeAndAfter = {

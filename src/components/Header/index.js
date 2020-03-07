@@ -31,6 +31,7 @@ import { IconContext } from "react-icons"
 import { GoMarkGithub } from "react-icons/go"
 import useMediaQuery from "@material-ui/core/useMediaQuery"
 import CollaborateButton from "../CollaborateButton"
+import DownloadButton from "../DownloadButton"
 
 const useStyles = makeStyles(theme => ({
   headerButton: {
@@ -136,6 +137,7 @@ export default ({
             onLeaveSession={onLeaveSession}
             onJoinSession={onJoinSession}
           />
+          {!isDesktop && <DownloadButton />}
           <div className={c.grow} />
           {additionalButtons}
           {tabs.length > 0 && (
