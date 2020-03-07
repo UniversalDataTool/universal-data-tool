@@ -103,7 +103,8 @@ export default ({
     onLeaveSession,
     sessionBoxOpen,
     changeSessionBoxOpen,
-    fileOpen
+    fileOpen,
+    onDownload
   } = useContext(HeaderContext)
   if (!recentItems) recentItems = []
 
@@ -137,7 +138,7 @@ export default ({
             onLeaveSession={onLeaveSession}
             onJoinSession={onJoinSession}
           />
-          {!isDesktop && <DownloadButton />}
+          {!isDesktop && fileOpen && <DownloadButton onDownload={onDownload} />}
           <div className={c.grow} />
           {additionalButtons}
           {tabs.length > 0 && (

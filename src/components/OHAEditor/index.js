@@ -24,7 +24,6 @@ import SampleGrid from "../SampleGrid"
 import PaperContainer from "../PaperContainer"
 import Stats from "../Stats"
 import useElectron from "../../utils/use-electron"
-import download from "downloadjs"
 import moment from "moment"
 import duration from "duration"
 import useTimeToCompleteSample from "../../utils/use-time-to-complete-sample.js"
@@ -152,12 +151,6 @@ export default ({
         {mode === "settings" && (
           <InterfacePage
             onClickEditJSON={() => changeMode("json")}
-            onClickDownloadJSON={() => {
-              download(
-                jsonText,
-                fileName.includes(".") ? fileName : fileName + ".udt.json"
-              )
-            }}
             oha={oha}
             onChange={iface => {
               onChangeOHA({

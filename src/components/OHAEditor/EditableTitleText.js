@@ -56,8 +56,7 @@ export default ({ value, onChange }) => {
       variant="outlined"
       size="small"
       InputProps={{
-        inputProps: { style: { color: "#000" } },
-        disableUnderline: true
+        inputProps: { style: { color: "#000" } }
       }}
       onChange={e => {
         changeEditing({

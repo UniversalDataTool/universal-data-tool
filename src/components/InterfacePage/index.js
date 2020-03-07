@@ -13,7 +13,7 @@ const Button = styled(MuiButton)({
   margin: 8
 })
 
-export default ({ oha, onChange, onClickEditJSON, onClickDownloadJSON }) => {
+export default ({ oha, onChange, onClickEditJSON }) => {
   const { interface: iface } = oha
   const isDesktop = useIsDesktop()
   return (
@@ -29,11 +29,6 @@ export default ({ oha, onChange, onClickEditJSON, onClickDownloadJSON }) => {
           <Button onClick={onClickEditJSON} variant="outlined">
             Edit JSON
           </Button>
-          {!isDesktop && (
-            <Button onClick={onClickDownloadJSON} variant="outlined">
-              Download JSON
-            </Button>
-          )}
         </Box>
       </PaperContainer>
     </div>

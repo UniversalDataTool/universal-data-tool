@@ -1,5 +1,5 @@
 // @flow
-import React, { useState, useMemo, useEffect } from "react"
+import React, { useState, useMemo, useEffect, useCallback } from "react"
 import { HeaderContext } from "../Header"
 import StartingPage from "../StartingPage"
 import OHAEditor from "../OHAEditor"
@@ -8,6 +8,8 @@ import ErrorToasts from "../ErrorToasts"
 import useErrors from "../../utils/use-errors.js"
 import useLocalStorage from "../../utils/use-local-storage.js"
 import useFileHandler from "../../utils/file-handlers"
+import download from "in-browser-download"
+import toUDTCSV from "../../utils/to-udt-csv.js"
 
 const useStyles = makeStyles({
   empty: {
@@ -20,46 +22,43 @@ const useStyles = makeStyles({
 
 export default () => {
   const c = useStyles()
-  const [pageName, changePageName] = useState("welcome")
   const { file, changeFile, openFile, openUrl, makeSession } = useFileHandler()
   const [errors, addError] = useErrors()
   let [recentItems, changeRecentItems] = useLocalStorage("recentItems", [])
   if (!recentItems) recentItems = []
-
-  useEffect(() => {
-    if (file && file.mode === "server") {
-      changePageName("edit")
-    }
-  }, [file && file.mode])
 
   const randomId = () =>
     Math.random()
       .toString()
       .split(".")[1]
 
-  const onCreateTemplate = useMemo(
-    () => template => {
-      changeFile({
-        fileName: "unnamed",
-        content: template.oha,
-        id: randomId(),
-        mode: "local-storage"
-      })
-      changePageName("edit")
-    },
-    []
-  )
+  const onCreateTemplate = useCallback(template => {
+    changeFile({
+      fileName: "unnamed",
+      content: template.oha,
+      id: randomId(),
+      mode: "local-storage"
+    })
+  }, [])
 
-  const openRecentItem = useMemo(() => item => {
+  const openRecentItem = useCallback(item => {
     changeFile(item)
-    changePageName("edit")
-  })
+  }, [])
 
-  const onClickHome = useMemo(
-    () => () => {
-      changePageName("welcome")
+  const onClickHome = useMemo(() => {
+    changeFile(null)
+  }, [])
+
+  const onDownload = useCallback(
+    format => {
+      const outputName = (file.sessionId || file.fileName) + ".udt." + format
+      if (format === "json") {
+        download(JSON.stringify(file.content), outputName)
+      } else if (format === "csv") {
+        download(toUDTCSV(file.content), outputName)
+      }
     },
-    []
+    [file]
   )
 
   useEffect(() => {
@@ -95,7 +94,6 @@ export default () => {
           changeSessionBoxOpen,
           onJoinSession: async sessionName => {
             await openUrl(sessionName)
-            changePageName("edit")
           },
           onLeaveSession: () =>
             changeFile({
@@ -105,10 +103,11 @@ export default () => {
               fileName: "unnamed"
             }),
           onCreateSession: makeSession,
-          fileOpen: Boolean(file)
+          fileOpen: Boolean(file),
+          onDownload
         }}
       >
-        {pageName === "welcome" ? (
+        {!file ? (
           <StartingPage
             onFileDrop={openFile}
             onOpenTemplate={onCreateTemplate}
@@ -116,7 +115,7 @@ export default () => {
             onOpenRecentItem={openRecentItem}
             onClickOpenSession={() => changeSessionBoxOpen(true)}
           />
-        ) : pageName === "edit" && file ? (
+        ) : (
           <OHAEditor
             key={file.id}
             {...file}
@@ -130,8 +129,6 @@ export default () => {
               changeFile(newFile)
             }}
           />
-        ) : (
-          <div className={c.empty}>Unknown Page "{pageName}"</div>
         )}
       </HeaderContext.Provider>
       <ErrorToasts errors={errors} />

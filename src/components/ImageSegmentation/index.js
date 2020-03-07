@@ -145,12 +145,12 @@ export default ({
 
   const labelProps = isClassification
     ? {
-        regionClsList: iface.availableLabels.map(l =>
+        regionClsList: (iface.availableLabels || []).map(l =>
           typeof l === "string" ? l : l.id
         )
       }
     : {
-        regionTagList: iface.availableLabels.map(l =>
+        regionTagList: (iface.availableLabels || []).map(l =>
           typeof l === "string" ? l : l.id
         )
       }

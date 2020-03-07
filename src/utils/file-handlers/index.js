@@ -7,11 +7,14 @@ import useServer, {
 } from "./use-server"
 import useFilesystem from "./use-filesystem"
 import useLocalStorage from "./use-local-storage"
+import { useToasts } from "../../components/Toasts"
 import moment from "moment"
 import cloneDeep from "lodash/cloneDeep"
+import fromUDTCSV from "../from-udt-csv.js"
 
 export default () => {
   const [file, changeFile] = useState()
+  const { addToast } = useToasts()
 
   useFilesystem(file, changeFile)
   useLocalStorage(file, changeFile)
@@ -24,7 +27,12 @@ export default () => {
       reader.onload = e => {
         const content = e.target.result
         try {
-          const oha = JSON.parse(content)
+          let oha
+          if (fileName.endsWith("csv")) {
+            oha = fromUDTCSV(content)
+          } else {
+            oha = JSON.parse(content)
+          }
           // TODO validate OHA and prompt to open anyway if invalid
           changeFile({
             fileName,
@@ -35,6 +43,7 @@ export default () => {
           })
         } catch (e) {
           console.log(e.toString())
+          addToast("Couldn't read file, see console for details", "error")
           // addError(`Could not read file "${fsFile.name}"`)
         }
       }
@@ -49,7 +58,11 @@ export default () => {
       if (!sessionId) return
       const { state, version } = await getLatestState(sessionId)
       if (!state) return
-      window.history.replaceState({}, window.document.title, `/?s=${sessionId}`)
+      window.history.replaceState(
+        {},
+        window.document.title,
+        `/?s=${encodeURIComponent(sessionId)}`
+      )
       changeFile({
         url,
         sessionId,
@@ -81,7 +94,7 @@ export default () => {
     window.history.replaceState(
       {},
       window.document.title,
-      `/?s=${newFile.sessionId}`
+      `/?s=${encodeURIComponent(newFile.sessionId)}`
     )
   }, [file, changeFile])
 

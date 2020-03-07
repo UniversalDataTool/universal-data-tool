@@ -24,13 +24,14 @@ const SampleDiv = styled("div")({
   borderRadius: 3,
   cursor: "pointer",
   userSelect: "none",
-  transition: "box-shadow 200ms ease",
+  transition: "box-shadow 200ms ease, transform 200ms ease",
   "&.completed": {
     backgroundColor: colors.blue[500],
     color: "#fff"
   },
   "&.selected": {
-    boxShadow: `0px 0px 2px 1px ${colors.blue[400]}`
+    boxShadow: `0px 0px 2px 1px ${colors.blue[400]}`,
+    transform: "scale(1.05,1.05)"
   }
 })
 
@@ -110,18 +111,20 @@ export default ({ count, completed = [], onClick }) => {
       onMouseUp={checkAndNullifySelectRange}
       onMouseEnter={checkAndNullifySelectRange}
     >
-      {range(sampleOffset, sampleOffset + samplesPerPage).map(i => (
-        <Sample
-          onClick={onClickMemo}
-          key={i}
-          index={i}
-          completed={completed[i]}
-          selected={selectRange && i >= selectRange[0] && i < selectRange[1]}
-          onMouseDown={startSelectRange}
-          onMouseEnter={moveSelectRange}
-          onMouseUp={endSelectRange}
-        />
-      ))}
+      {range(sampleOffset, Math.min(count, sampleOffset + samplesPerPage)).map(
+        i => (
+          <Sample
+            onClick={onClickMemo}
+            key={i}
+            index={i}
+            completed={completed[i]}
+            selected={selectRange && i >= selectRange[0] && i < selectRange[1]}
+            onMouseDown={startSelectRange}
+            onMouseEnter={moveSelectRange}
+            onMouseUp={endSelectRange}
+          />
+        )
+      )}
       <TablePagination
         rowsPerPageOptions={[100, 250, 500, 1000, 2000, 10000]}
         component="div"
