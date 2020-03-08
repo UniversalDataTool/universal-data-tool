@@ -1,5 +1,5 @@
 // @flow
-import React, { useState, useMemo } from "react"
+import React, { useState, useMemo, useEffect, useCallback } from "react"
 import { HeaderContext } from "../Header"
 import StartingPage from "../StartingPage"
 import OHAEditor from "../OHAEditor"
@@ -7,6 +7,9 @@ import { makeStyles } from "@material-ui/core/styles"
 import ErrorToasts from "../ErrorToasts"
 import useErrors from "../../utils/use-errors.js"
 import useLocalStorage from "../../utils/use-local-storage.js"
+import useFileHandler from "../../utils/file-handlers"
+import download from "in-browser-download"
+import toUDTCSV from "../../utils/to-udt-csv.js"
 
 const useStyles = makeStyles({
   empty: {
@@ -19,112 +22,113 @@ const useStyles = makeStyles({
 
 export default () => {
   const c = useStyles()
-  const [pageName, changePageName] = useState("welcome")
-  const [currentFile, changeCurrentFile] = useState()
-  const [oha, changeOHA] = useState()
+  const { file, changeFile, openFile, openUrl, makeSession } = useFileHandler()
   const [errors, addError] = useErrors()
   let [recentItems, changeRecentItems] = useLocalStorage("recentItems", [])
   if (!recentItems) recentItems = []
 
-  const onCreateTemplate = useMemo(
-    () => template => {
-      changeCurrentFile({
-        fileName: "unnamed",
-        content: template.oha,
-        id: Math.random()
-          .toString()
-          .split(".")[1]
-      })
-      changeOHA(template.oha)
-      changePageName("edit")
-    },
-    []
-  )
+  const randomId = () =>
+    Math.random()
+      .toString()
+      .split(".")[1]
 
-  const openRecentItem = useMemo(() => item => {
-    changeCurrentFile(item)
-    try {
-      changeOHA(JSON.parse(item.content))
-    } catch (e) {
-      addError("Couldn't parse content into JSON")
-    }
-    changePageName("edit")
-  })
+  const onCreateTemplate = useCallback(template => {
+    changeFile({
+      fileName: "unnamed",
+      content: template.oha,
+      id: randomId(),
+      mode: "local-storage"
+    })
+  }, [])
 
-  const onClickHome = useMemo(
-    () => () => {
-      changePageName("welcome")
-    },
-    []
-  )
+  const openRecentItem = useCallback(item => {
+    changeFile(item)
+  }, [])
 
-  const handleOpenFile = useMemo(
-    () => file => {
-      const fileName = file.name
-      const reader = new FileReader()
-      reader.onload = e => {
-        const content = e.target.result
-        try {
-          const oha = JSON.parse(content)
-          // TODO validate OHA and prompt to open anyway if invalid
-          changeCurrentFile({
-            fileName,
-            content: oha,
-            id: Math.random()
-              .toString()
-              .split(".")[1]
-          })
-          changeOHA(oha)
-          changePageName("edit")
-        } catch (e) {
-          console.log(e.toString())
-          addError(`Could not read file "${file.name}"`)
-        }
+  const onClickHome = useMemo(() => {
+    changeFile(null)
+  }, [])
+
+  const onDownload = useCallback(
+    format => {
+      const outputName = (file.sessionId || file.fileName) + ".udt." + format
+      if (format === "json") {
+        download(JSON.stringify(file.content), outputName)
+      } else if (format === "csv") {
+        download(toUDTCSV(file.content), outputName)
       }
-      reader.readAsText(file)
     },
-    []
+    [file]
   )
+
+  useEffect(() => {
+    if (!file) return
+    if (!file.fileName || file.fileName === "unnamed") return
+    if (file.mode !== "local-storage") return
+    if (recentItems.map(item => item.id).includes(file.id)) {
+      changeRecentItems(recentItems.map(ri => (ri.id === file.id ? file : ri)))
+    } else {
+      changeRecentItems([file].concat(recentItems).slice(0, 3))
+    }
+  }, [file])
+
+  const inSession = file && file.mode === "server"
+  const [sessionBoxOpen, changeSessionBoxOpen] = useState(false)
 
   return (
     <>
       <HeaderContext.Provider
         value={{
+          title: file
+            ? file.mode === "local-storage"
+              ? file.fileName
+              : file.url
+            : "unnamed",
           recentItems,
           onClickTemplate: onCreateTemplate,
           onClickHome,
-          onOpenFile: handleOpenFile,
-          onOpenRecentItem: openRecentItem
+          onOpenFile: openFile,
+          onOpenRecentItem: openRecentItem,
+          inSession,
+          sessionBoxOpen,
+          changeSessionBoxOpen,
+          onJoinSession: async sessionName => {
+            await openUrl(sessionName)
+          },
+          onLeaveSession: () =>
+            changeFile({
+              ...file,
+              mode: "local-storage",
+              id: randomId(),
+              fileName: "unnamed"
+            }),
+          onCreateSession: makeSession,
+          fileOpen: Boolean(file),
+          onDownload
         }}
       >
-        {pageName === "welcome" ? (
+        {!file ? (
           <StartingPage
-            onFileDrop={handleOpenFile}
+            onFileDrop={openFile}
             onOpenTemplate={onCreateTemplate}
-          />
-        ) : pageName === "edit" && currentFile ? (
-          <OHAEditor
-            key={currentFile.id}
-            {...currentFile}
-            oha={oha}
-            onChangeFileName={newName => {
-              changeCurrentFile({ ...currentFile, fileName: newName })
-            }}
-            onChangeContent={newContent => {
-              const newFile = { ...currentFile, content: newContent }
-              changeCurrentFile(newFile)
-              if (recentItems.map(item => item.id).includes(newFile.id)) {
-                changeRecentItems(
-                  recentItems.map(ri => (ri.id === newFile.id ? newFile : ri))
-                )
-              } else {
-                changeRecentItems([newFile].concat(recentItems).slice(0, 3))
-              }
-            }}
-            onChangeOHA={changeOHA}
+            recentItems={recentItems}
+            onOpenRecentItem={openRecentItem}
+            onClickOpenSession={() => changeSessionBoxOpen(true)}
           />
         ) : (
-          <div className={c.empty}>Unknown Page "{pageName}"</div>
+          <OHAEditor
+            key={file.id}
+            {...file}
+            inSession={inSession}
+            oha={file.content}
+            onChangeFileName={newName => {
+              changeFile({ ...file, fileName: newName })
+            }}
+            onChangeOHA={newOHA => {
+              const newFile = { ...file, content: newOHA }
+              changeFile(newFile)
+            }}
+          />
         )}
       </HeaderContext.Provider>
       <ErrorToasts errors={errors} />

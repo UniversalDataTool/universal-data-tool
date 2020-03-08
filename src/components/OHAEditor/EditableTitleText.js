@@ -14,7 +14,8 @@ const SAVE_WAIT = 2000
 export default ({ value, onChange }) => {
   const c = useStyles()
   const [{ editing, newValue }, changeEditing] = useState({
-    editing: false
+    editing: false,
+    newValue: value || ""
   })
 
   useEffect(() => {
@@ -55,8 +56,7 @@ export default ({ value, onChange }) => {
       variant="outlined"
       size="small"
       InputProps={{
-        inputProps: { style: { color: "#000" } },
-        disableUnderline: true
+        inputProps: { style: { color: "#000" } }
       }}
       onChange={e => {
         changeEditing({

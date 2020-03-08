@@ -5,7 +5,7 @@ import StartingPage from "../StartingPage"
 import OHAEditor from "../OHAEditor"
 import { makeStyles } from "@material-ui/core/styles"
 import ErrorToasts from "../ErrorToasts"
-import Toasts, { useToasts } from "../Toasts"
+import { useToasts } from "../Toasts"
 import useErrors from "../../utils/use-errors.js"
 import useLocalStorage from "../../utils/use-local-storage.js"
 import useElectron from "../../utils/use-electron.js"
@@ -26,7 +26,7 @@ export default () => {
   const [currentFile, changeCurrentFile] = useState()
   const [oha, changeOHA] = useState()
   const [errors, addError] = useErrors()
-  let [recentItems, changeRecentItems] = useLocalStorage("recentItems", [])
+  let [recentItems, changeRecentItems] = [[], () => null] // useLocalStorage("recentItems", [])
   const { addToast } = useToasts()
   if (!recentItems) recentItems = []
   const { remote, ipcRenderer } = useElectron()
@@ -173,6 +173,8 @@ export default () => {
             showDownloadLink={false}
             onFileDrop={handleOpenFile}
             onOpenTemplate={onCreateTemplate}
+            recentItems={recentItems}
+            onOpenRecentItem={openRecentItem}
           />
         ) : pageName === "edit" && currentFile ? (
           <OHAEditor
@@ -200,7 +202,6 @@ export default () => {
         )}
       </HeaderContext.Provider>
       <ErrorToasts errors={errors} />
-      <Toasts />
     </>
   )
 }

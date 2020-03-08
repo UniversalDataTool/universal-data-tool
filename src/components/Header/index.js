@@ -30,6 +30,8 @@ import Tab from "@material-ui/core/Tab"
 import { IconContext } from "react-icons"
 import { GoMarkGithub } from "react-icons/go"
 import useMediaQuery from "@material-ui/core/useMediaQuery"
+import CollaborateButton from "../CollaborateButton"
+import DownloadButton from "../DownloadButton"
 
 const useStyles = makeStyles(theme => ({
   headerButton: {
@@ -46,7 +48,10 @@ const useStyles = makeStyles(theme => ({
     "& .icon": {}
   },
   fullHeightTab: {
-    ...theme.mixins.toolbar
+    ...theme.mixins.toolbar,
+    [theme.breakpoints.down("sm")]: {
+      minWidth: 20
+    }
   },
   tabWrapper: {
     display: "flex",
@@ -91,7 +96,15 @@ export default ({
     onClickHome,
     onOpenFile,
     onOpenRecentItem,
-    isDesktop
+    isDesktop,
+    inSession,
+    onJoinSession,
+    onCreateSession,
+    onLeaveSession,
+    sessionBoxOpen,
+    changeSessionBoxOpen,
+    fileOpen,
+    onDownload
   } = useContext(HeaderContext)
   if (!recentItems) recentItems = []
 
@@ -116,6 +129,16 @@ export default ({
             </IconButton>
           )}
           {title}
+          <CollaborateButton
+            sessionBoxOpen={sessionBoxOpen}
+            changeSessionBoxOpen={changeSessionBoxOpen}
+            fileOpen={fileOpen}
+            inSession={inSession}
+            onCreateSession={onCreateSession}
+            onLeaveSession={onLeaveSession}
+            onJoinSession={onJoinSession}
+          />
+          {!isDesktop && fileOpen && <DownloadButton onDownload={onDownload} />}
           <div className={c.grow} />
           {additionalButtons}
           {tabs.length > 0 && (

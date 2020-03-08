@@ -83,7 +83,14 @@ const Actionless = styled("div")({
   paddingTop: 16
 })
 
-export default ({ onFileDrop, onOpenTemplate, showDownloadLink = true }) => {
+export default ({
+  onFileDrop,
+  onOpenTemplate,
+  showDownloadLink = true,
+  recentItems = [],
+  onOpenRecentItem,
+  onClickOpenSession
+}) => {
   const c = useStyles()
   const [
     createFromTemplateDialogOpen,
@@ -94,6 +101,7 @@ export default ({ onFileDrop, onOpenTemplate, showDownloadLink = true }) => {
       onFileDrop(acceptedFiles[0])
     }
   }, [onFileDrop])
+
   let { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
   return (
@@ -141,11 +149,24 @@ export default ({ onFileDrop, onOpenTemplate, showDownloadLink = true }) => {
                   <input {...getInputProps()} />
                   Open File
                 </Action>
+                {onClickOpenSession && (
+                  <Action onClick={onClickOpenSession}>
+                    Open Collaborative Session
+                  </Action>
+                )}
                 {/* <Action>Open Folder</Action> */}
               </ActionList>
               <ActionList>
                 <ActionTitle>Recent</ActionTitle>
-                <Actionless>No Recent Files</Actionless>
+                {recentItems.length === 0 ? (
+                  <Actionless>No Recent Files</Actionless>
+                ) : (
+                  recentItems.map(ri => (
+                    <Action onClick={() => onOpenRecentItem(ri)}>
+                      {ri.fileName}
+                    </Action>
+                  ))
+                )}
               </ActionList>
               <ActionList>
                 <ActionTitle>Help</ActionTitle>
@@ -158,6 +179,9 @@ export default ({ onFileDrop, onOpenTemplate, showDownloadLink = true }) => {
                 {/* <Action>Custom Data Entry</Action> */}
                 <Action href="https://github.com/UniversalDataTool/universal-data-tool">
                   Github Repository
+                </Action>
+                <Action href="#">
+                  How to Collaborate in Real-Time with UDT
                 </Action>
               </ActionList>
             </Grid>

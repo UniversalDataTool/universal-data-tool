@@ -17,16 +17,17 @@ import SaveIcon from "@material-ui/icons/Save"
 import defaultOHAObject from "./default-oha-object"
 import UniversalDataViewer from "../UniversalDataViewer"
 import EditableTitleText from "./EditableTitleText.js"
-import SampleDataTable from "../SampleDataTable"
+import SamplesView from "../SamplesView"
 import InterfacePage from "../InterfacePage"
 import EditSampleDialog from "../EditSampleDialog"
 import SampleGrid from "../SampleGrid"
 import PaperContainer from "../PaperContainer"
 import Stats from "../Stats"
 import useElectron from "../../utils/use-electron"
-import download from "downloadjs"
 import moment from "moment"
 import duration from "duration"
+import useTimeToCompleteSample from "../../utils/use-time-to-complete-sample.js"
+import TextField from "@material-ui/core/TextField"
 
 import "brace/mode/javascript"
 import "brace/theme/github"
@@ -53,9 +54,10 @@ export default ({
   datasetName = "Universal Data Tool",
   oha,
   content,
+  inSession,
+  url,
   fileName = "unnamed",
   onChangeFileName,
-  onChangeContent = () => null,
   onChangeOHA = () => null,
   onFileDrop,
   initialMode = "settings" //= "samples"
@@ -64,25 +66,13 @@ export default ({
   const [mode, changeMode] = useState(initialMode)
   const [singleSampleOHA, changeSingleSampleOHA] = useState()
   const [sampleInputEditor, changeSampleInputEditor] = useState({})
-  const [jsonText, changeJSONText] = useState(
-    JSON.stringify(content || oha || defaultOHAObject, null, "  ")
-  )
+  const [jsonText, changeJSONText] = useState()
   const { remote, ipcRenderer } = useElectron() || {}
 
-  const [{ timeToCompleteSample }, changeSampleTimeToComplete] = useReducer(
-    (state, newTimeToComplete) => {
-      const newSamplesInWindow = state.samplesInWindow
-        .slice(-10)
-        .concat([newTimeToComplete])
-      return {
-        timeToCompleteSample:
-          newSamplesInWindow.reduce((acc, a) => acc + a, 0) /
-          newSamplesInWindow.length,
-        samplesInWindow: newSamplesInWindow
-      }
-    },
-    { timeToCompleteSample: 0, samplesInWindow: [] }
-  )
+  const [
+    timeToCompleteSample,
+    changeSampleTimeToComplete
+  ] = useTimeToCompleteSample()
 
   useEffect(() => {
     if (!ipcRenderer) return
@@ -100,9 +90,15 @@ export default ({
   }, [])
 
   useEffect(() => {
-    onChangeContent(jsonText)
+    if (mode === "json") {
+      changeJSONText(JSON.stringify(oha, null, "  "))
+    }
+  }, [mode])
+
+  useEffect(() => {
+    if (!jsonText || mode !== "json") return
     try {
-      // schema validation etc.
+      // TODO schema validation etc.
       onChangeOHA(JSON.parse(jsonText))
     } catch (e) {}
   }, [jsonText])
@@ -122,7 +118,20 @@ export default ({
     <div className={c.container}>
       <Header
         title={
-          <EditableTitleText onChange={onChangeFileName} value={fileName} />
+          inSession ? (
+            <TextField
+              label="Share Link"
+              value={url}
+              variant="outlined"
+              size="small"
+            />
+          ) : (
+            <EditableTitleText
+              label="File Name"
+              onChange={onChangeFileName}
+              value={fileName || ""}
+            />
+          )
         }
         onChangeTab={tab => changeMode(tab.toLowerCase())}
         currentTab={mode}
@@ -142,29 +151,17 @@ export default ({
         {mode === "settings" && (
           <InterfacePage
             onClickEditJSON={() => changeMode("json")}
-            onClickDownloadJSON={() => {
-              download(
-                jsonText,
-                fileName.includes(".") ? fileName : fileName + ".udt.json"
-              )
-            }}
             oha={oha}
             onChange={iface => {
-              changeJSONText(
-                JSON.stringify(
-                  {
-                    ...oha,
-                    interface: iface
-                  },
-                  null,
-                  "  "
-                )
-              )
+              onChangeOHA({
+                ...oha,
+                interface: iface
+              })
             }}
           />
         )}
         {mode === "samples" && (
-          <SampleDataTable
+          <SamplesView
             oha={oha}
             openSampleLabelEditor={sampleIndex => {
               changeSingleSampleOHA({
@@ -188,21 +185,13 @@ export default ({
               if (newTaskOutput) {
                 newTaskOutput.splice(sampleIndex, 1)
               }
-              changeJSONText(
-                JSON.stringify(
-                  {
-                    ...oha,
-                    taskData: newTaskData,
-                    taskOutput: newTaskOutput
-                  },
-                  null,
-                  "  "
-                )
-              )
+              onChangeOHA({
+                ...oha,
+                taskData: newTaskData,
+                taskOutput: newTaskOutput
+              })
             }}
-            onChangeOHA={newOHA => {
-              changeJSONText(JSON.stringify(newOHA, null, "  "))
-            }}
+            onChangeOHA={onChangeOHA}
           />
         )}
         {mode === "label" && singleSampleOHA ? (
@@ -212,8 +201,18 @@ export default ({
               const newOHA = { ...oha }
               if (!newOHA.taskOutput)
                 newOHA.taskOutput = newOHA.taskData.map(td => null)
+              if (
+                newOHA.taskOutput.length < newOHA.taskData.length ||
+                newOHA.taskOutput.includes(undefined)
+              ) {
+                newOHA.taskOutput = newOHA.taskData.map((td, tdi) =>
+                  newOHA.taskOutput[tdi] === undefined
+                    ? null
+                    : newOHA.taskOutput[tdi]
+                )
+              }
               newOHA.taskOutput[singleSampleOHA.sampleIndex] = output
-              changeJSONText(JSON.stringify(newOHA, null, "  "))
+              onChangeOHA(newOHA)
               changeSingleSampleOHA(null)
               if (singleSampleOHA.startTime) {
                 changeSampleTimeToComplete(
@@ -281,7 +280,7 @@ export default ({
         onChange={newInput => {
           const newOHA = { ...oha, taskData: [...oha.taskData] }
           newOHA.taskData[sampleInputEditor.sampleIndex] = newInput
-          changeJSONText(JSON.stringify(newOHA, null, "  "))
+          onChangeOHA(newOHA)
         }}
       />
     </div>
