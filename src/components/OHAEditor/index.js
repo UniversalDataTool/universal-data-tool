@@ -28,6 +28,7 @@ import moment from "moment"
 import duration from "duration"
 import useTimeToCompleteSample from "../../utils/use-time-to-complete-sample.js"
 import TextField from "@material-ui/core/TextField"
+import { useToasts } from "../Toasts"
 
 import "brace/mode/javascript"
 import "brace/theme/github"
@@ -63,6 +64,7 @@ export default ({
   initialMode = "settings" //= "samples"
 }) => {
   const c = useStyles()
+  const { addToast } = useToasts()
   const [mode, changeMode] = useState(initialMode)
   const [singleSampleOHA, changeSingleSampleOHA] = useState()
   const [sampleInputEditor, changeSampleInputEditor] = useState({})
@@ -152,7 +154,21 @@ export default ({
           <InterfacePage
             onClickEditJSON={() => changeMode("json")}
             oha={oha}
+            onClearLabelData={() => {
+              onChangeOHA({ ...oha, taskOutput: undefined })
+            }}
             onChange={iface => {
+              if (
+                iface.type !== oha.interface.type &&
+                oha.interface.type !== "empty" &&
+                oha.taskOutput &&
+                oha.taskOutput.some(Boolean)
+              ) {
+                addToast(
+                  "Warning: Changing label types can cause label data issues. You might want to clear all label data.",
+                  "error"
+                )
+              }
               onChangeOHA({
                 ...oha,
                 interface: iface
