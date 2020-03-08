@@ -21,8 +21,9 @@ The Universal Data Tool is a web/desktop app for editing and annotating images, 
 
 ![Audio Transcription](https://user-images.githubusercontent.com/1910070/76154268-80818c00-60a7-11ea-97de-529fd06d3901.png)
 
-
 ![Download Formats](https://user-images.githubusercontent.com/1910070/76154066-06033d00-60a4-11ea-9bbd-69a62780769f.png)
+
+![Data Entry](https://user-images.githubusercontent.com/1910070/76157343-9a39c800-60d5-11ea-8dd6-a67c516fcf63.png)
 
 ![Named Entity Recognition](https://user-images.githubusercontent.com/1910070/76154279-a73fc280-60a7-11ea-8965-5de23ad733d6.png)
 
