@@ -12,6 +12,9 @@ The Universal Data Tool is a User Interface for editing and annotating Images (C
 * Download/Upload as easy-to-use CSV or JSON
 * Support for Images, PDFs, Text, Audio Transcription and many other formats
 * Can be easily integrated into a React application
+* Annotate images with classifications, tags, bounding boxes, polygons and points
+* Annotate NLP datasets with Named Entity Recognition (NER), classification and Part of Speech (PoS) tagging.
+
 
 ![Download Formats](https://user-images.githubusercontent.com/1910070/76154066-06033d00-60a4-11ea-9bbd-69a62780769f.png)
 
@@ -25,17 +28,10 @@ The Universal Data Tool is a User Interface for editing and annotating Images (C
 
 [![wao.ai sponsorship image](https://s3.amazonaws.com/asset.workaround.online/sponsorship-banner-1.png)](https://wao.ai)
 
-## Features
-
-- Integrate into any web-based application.
-- Annotate images with classifications, tags, bounding boxes, polygons, points and more
-- Annotate NLP datasets with Named Entity Recognition (NER), classification and Part of Speech (PoS) tagging.
-- Perform data entry
-
 ## Principles
 
 - Correctness of implementation of the .udt.json standard.
-- Implement entirety of the Open Human Annotation standard.
+- Implement entirety of the `.udt.json` and `.udt.csv` standards
 - Rely on external libraries which specialize in each type of annotation to enable the best tools to be used
 - Easy to use
 - Easy to integrate
