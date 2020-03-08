@@ -2,11 +2,24 @@
 
 Try it out at [universaldatatool.com](https://universaldatatool.com) or [download it here](https://github.com/UniversalDataTool/universal-data-tool/releases).
 
-The Universal Data Tool is a User Interface for editing and annotating Images (Computer Vision, Bounding Boxes, Segmentation), Text (Named Entity Recognition, Classification) or general purpose data entry. to view and edit any data defined in the extensible the [.udt.json standard](https://github.com/UniversalDataTool/udt-format).
+The Universal Data Tool is a User Interface for editing and annotating Images (Computer Vision, Bounding Boxes, Segmentation), Text (Named Entity Recognition, Classification) or general purpose data entry. to view and edit any data defined in the extensible the [.udt.json and .udt.csv standard](https://github.com/UniversalDataTool/udt-format).
 
-![Universal Data Tool Cat Screenshot](https://user-images.githubusercontent.com/1910070/75850482-6a2cb500-5db5-11ea-852c-7256463cece8.png)
+## Features
+* Usable on [web](https://universaldatatool.com) or as desktop application
+* Collaborate with others in real time
+* Configure your project with an easy-to-use GUI
+* Scales to tens of thousands of data points per dataset
+* Download/Upload as easy-to-use CSV or JSON
+* Support for Images, PDFs, Text, Audio Transcription and many other formats
+* Can be easily integrated into a React application
 
-<!-- [Check out the demo here.](#) -->
+![Download Formats](https://user-images.githubusercontent.com/1910070/76154066-06033d00-60a4-11ea-9bbd-69a62780769f.png)
+
+
+![Collaboration Screenshot](https://user-images.githubusercontent.com/1910070/76154071-10bdd200-60a4-11ea-8afd-a12f6d77a140.png)
+
+
+![Collaboration Demo](https://user-images.githubusercontent.com/1910070/76154158-b02f9480-60a5-11ea-9fb5-ec62c9385a51.gif)
 
 ## Sponsors
 
