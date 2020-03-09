@@ -10,6 +10,7 @@ import ConfigureImageSegmentation from "../ConfigureImageSegmentation"
 import PaperContainer from "../PaperContainer"
 import ConfigureAudioTranscription from "../ConfigureAudioTranscription"
 import ConfigureNLP from "../ConfigureNLP"
+import ConfigureDataEntry from "../ConfigureDataEntry"
 
 const NoOptions = styled("div")({
   fontSize: 18,
@@ -53,7 +54,11 @@ const SelectType = ({ currentlySelected, onChange }) => {
       key={t.oha.interface.type || "empty"}
       className={currentlySelected === t.oha.interface.type ? "selected" : ""}
       variant="outlined"
-      onClick={() => onChange(t.oha.interface.type)}
+      onClick={() => {
+        if (currentlySelected !== t.oha.interface.type) {
+          onChange(t.oha.interface.type)
+        }
+      }}
     >
       <t.Icon className="icon" />
       {t.name}
@@ -68,10 +73,10 @@ export const ConfigureInterface = ({
 }) => {
   return (
     <PaperContainer>
-      {/* <Heading>Type</Heading> */}
       <SelectType
         currentlySelected={iface.type}
         onChange={type => {
+          console.log("s1")
           onChange({ ...iface, type })
         }}
       />
@@ -85,7 +90,7 @@ export const ConfigureInterface = ({
         <NoOptions>GUI Configuration Not Available</NoOptions>
       )}
       {iface.type === "data_entry" && (
-        <NoOptions>GUI Configuration Not Available</NoOptions>
+        <ConfigureDataEntry iface={iface} onChange={onChange} />
       )}
       {iface.type === "audio_transcription" && (
         <ConfigureAudioTranscription iface={iface} onChange={onChange} />

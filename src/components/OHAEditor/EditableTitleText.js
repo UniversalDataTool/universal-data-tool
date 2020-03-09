@@ -19,6 +19,7 @@ export default ({ value, onChange }) => {
   })
 
   useEffect(() => {
+    if (!editing) return
     let listener = e => {
       if (e.key === "Enter") {
         onChange(newValue)
@@ -64,7 +65,7 @@ export default ({ value, onChange }) => {
           newValue: e.target.value
         })
       }}
-      value={newValue}
+      value={newValue || ""}
     />
   )
 }

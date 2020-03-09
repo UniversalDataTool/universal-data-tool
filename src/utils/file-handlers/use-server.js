@@ -21,7 +21,7 @@ const hash = o => objectHash(JSON.parse(JSON.stringify(o)))
 
 export const getLatestState = async sessionId => {
   try {
-    const res = await getJSON(`/api/session/${sessionId}`)
+    const res = await getJSON(`/api/session/${encodeURIComponent(sessionId)}`)
     return {
       state: res.udt_json,
       version: res.version
@@ -59,7 +59,9 @@ export default (file, changeFile) => {
           latestVersion,
           changeLog
         } = await getJSON(
-          `/api/session/${file.sessionId}/diffs?since=${file.lastSyncedVersion}`
+          `/api/session/${encodeURIComponent(file.sessionId)}/diffs?since=${
+            file.lastSyncedVersion
+          }`
         ))
       } catch (e) {
         addToast(
@@ -73,11 +75,12 @@ export default (file, changeFile) => {
         if (path.startsWith("/interface")) {
           addToast(`${userName} changed the project settings`, "warning")
         } else if (path.startsWith("/taskOutput")) {
-          addToast(
-            `${userName} labeled sample ${
-              path.match(/\/taskOutput\/([^\/]+)/)[1]
-            }`
-          )
+          const sampleMatch = path.match(/\/taskOutput\/([^\/]+)/)
+          if (sampleMatch) {
+            addToast(`${userName} labeled sample ${sampleMatch[1]}`)
+          } else {
+            addToast(`${userName} changed many samples`, "warning")
+          }
         } else if (path.startsWith("/taskData")) {
           addToast(`${userName} changed the sample data`, "warning")
         } else {
@@ -145,9 +148,9 @@ export default (file, changeFile) => {
       try {
         userName = JSON.parse(window.localStorage.userName)
       } catch (e) {}
-      console.log("sending ash")
+
       const { hashOfLatestState, latestVersion } = await patchJSON(
-        `/api/session/${file.sessionId}`,
+        `/api/session/${encodeURIComponent(file.sessionId)}`,
         { patch, userName }
       )
       if (hash(file.content) !== hashOfLatestState) {

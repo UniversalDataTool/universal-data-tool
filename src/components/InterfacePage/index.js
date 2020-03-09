@@ -13,7 +13,7 @@ const Button = styled(MuiButton)({
   margin: 8
 })
 
-export default ({ oha, onChange, onClickEditJSON }) => {
+export default ({ oha, onChange, onClickEditJSON, onClearLabelData }) => {
   const { interface: iface } = oha
   const isDesktop = useIsDesktop()
   return (
@@ -28,6 +28,20 @@ export default ({ oha, onChange, onClickEditJSON }) => {
         <Box padding={2}>
           <Button onClick={onClickEditJSON} variant="outlined">
             Edit JSON
+          </Button>
+          <Button
+            onClick={() => {
+              if (
+                window.confirm(
+                  "Are you sure you want to delete all your label data? Click OK to delete."
+                )
+              ) {
+                onClearLabelData()
+              }
+            }}
+            variant="outlined"
+          >
+            Clear All Labels
           </Button>
         </Box>
       </PaperContainer>

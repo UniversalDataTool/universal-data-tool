@@ -54,7 +54,7 @@ export default () => {
 
   const openUrl = useCallback(
     async url => {
-      const sessionId = url.match(/[\?&]s=([a-zA-Z0-9]+)/)[1]
+      const sessionId = decodeURIComponent(url.match(/[\?&]s=([^&]+)/)[1])
       if (!sessionId) return
       const { state, version } = await getLatestState(sessionId)
       if (!state) return
