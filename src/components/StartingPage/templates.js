@@ -6,6 +6,7 @@ import TextFormat from "@material-ui/icons/TextFormat"
 import Edit from "@material-ui/icons/Edit"
 import Audiotrack from "@material-ui/icons/Audiotrack"
 import Category from "@material-ui/icons/Category"
+import ThreeDRotation from '@material-ui/icons/ThreeDRotation';
 
 export default [
   {
@@ -157,5 +158,15 @@ export default [
         }
       ]
     }
-  }
+  },
+  {
+    name: "3D Bounding Box",
+    Icon: ThreeDRotation,
+    oha: {
+      interface: {
+        type: "3d_bounding_box",
+        description: "3D Bounding Box"
+      }
+    }
+  },
 ]
