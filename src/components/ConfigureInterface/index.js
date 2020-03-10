@@ -11,6 +11,7 @@ import PaperContainer from "../PaperContainer"
 import ConfigureAudioTranscription from "../ConfigureAudioTranscription"
 import ConfigureNLP from "../ConfigureNLP"
 import ConfigureDataEntry from "../ConfigureDataEntry"
+import Configure3D from "../Configure3D"
 
 const NoOptions = styled("div")({
   fontSize: 18,
@@ -76,7 +77,6 @@ export const ConfigureInterface = ({
       <SelectType
         currentlySelected={iface.type}
         onChange={type => {
-          console.log("s1")
           onChange({ ...iface, type })
         }}
       />
@@ -98,6 +98,10 @@ export const ConfigureInterface = ({
       {iface.type === "text_entity_recognition" && (
         <ConfigureNLP iface={iface} onChange={onChange} />
       )}
+      {iface.type === "3d_bounding_box" && (
+          <Configure3D iface={iface} onChange={onChange} />
+        )
+      }
     </PaperContainer>
   )
 }
