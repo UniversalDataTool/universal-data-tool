@@ -6,6 +6,7 @@ import Edit from "@material-ui/icons/Edit"
 import OndemandVideo from "@material-ui/icons/OndemandVideo"
 import Audiotrack from "@material-ui/icons/Audiotrack"
 import Help from "@material-ui/icons/Help"
+import ThreeDRotation from '@material-ui/icons/ThreeDRotation';
 
 export default ({ type, ...props }) => {
   switch (type) {
@@ -18,6 +19,8 @@ export default ({ type, ...props }) => {
       return <Edit {...props} />
     case "text_entity_recognition":
       return <TextFormat {...props} />
+    case "3d_bounding_box":
+      return <ThreeDRotation {...props} />
     default:
       return <Help {...props} />
   }
