@@ -30,7 +30,11 @@ export default ({ open, onClose, onSelect }) => {
   return (
     <SimpleDialog title="Create from Template" open={open} onClose={onClose}>
       {templates.map(template => (
-        <Button onClick={() => onSelect(template)} className={c.bigButton}>
+        <Button
+          key={template.name}
+          onClick={() => onSelect(template)}
+          className={c.bigButton}
+        >
           <div>
             <div>{template.name}</div>
             <div>
