@@ -14,6 +14,7 @@ import InputAdornment from "@material-ui/core/InputAdornment"
 import AddBoxTwoTone from "@material-ui/icons/AddBoxTwoTone"
 import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import CircularProgress from "@material-ui/core/CircularProgress"
+import usePosthog from "../../utils/use-posthog"
 
 const Container = styled("div")({ position: "relative", marginLeft: 8 })
 const WIDTH = 300
@@ -103,6 +104,7 @@ export default ({
   const [loadingSession, changeLoadingSession] = useState(false)
   const [sessionUrl, changeSessionUrl] = useState("")
   const [userName, changeUserName] = useLocalStorage("userName", "anonymous")
+  const posthog = usePosthog()
 
   useEffect(() => {
     if (loadingSession) {
@@ -135,7 +137,10 @@ export default ({
                   <InputAdornment position="end">
                     <IconButton
                       color="primary"
-                      onClick={() => onJoinSession(sessionUrl)}
+                      onClick={() => {
+                        posthog.capture("join_collaborative_session")
+                        onJoinSession(sessionUrl)
+                      }}
                       disabled={!sessionUrl}
                     >
                       <ArrowForwardIcon />
@@ -147,6 +152,7 @@ export default ({
             <CreateNewButton
               fullWidth
               onClick={() => {
+                posthog.capture("create_collaborative_session")
                 onCreateSession()
                 changeLoadingSession(true)
               }}
