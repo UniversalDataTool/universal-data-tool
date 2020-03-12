@@ -68,6 +68,7 @@
     "in-browser-download": "^2.0.0",
     "jac-format": "^1.0.7",
     "moment": "^2.24.0",
+    "posthog-js": "^1.0.4",
     "react-ace": "^7.0.4",
     "react-data-table-component": "^6.2.2",
     "react-dropzone": "^10.1.8",

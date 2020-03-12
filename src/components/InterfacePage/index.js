@@ -2,6 +2,8 @@
 
 import React from "react"
 import ConfigureInterface, { Heading } from "../ConfigureInterface"
+import { useUpdate } from "react-use"
+import usePosthog from "../../utils/use-posthog"
 import PaperContainer from "../PaperContainer"
 import Box from "@material-ui/core/Box"
 import Paper from "@material-ui/core/Paper"
@@ -15,7 +17,10 @@ const Button = styled(MuiButton)({
 
 export default ({ oha, onChange, onClickEditJSON, onClearLabelData }) => {
   const { interface: iface } = oha
+  const posthog = usePosthog()
+  const forceUpdate = useUpdate()
   const isDesktop = useIsDesktop()
+
   return (
     <div>
       <ConfigureInterface
@@ -42,6 +47,21 @@ export default ({ oha, onChange, onClickEditJSON, onClearLabelData }) => {
             variant="outlined"
           >
             Clear All Labels
+          </Button>
+          <Button
+            onClick={onClickEditJSON}
+            variant="outlined"
+            onClick={() => {
+              if (posthog.has_opted_out_captureing()) {
+                posthog.opt_in_captureing()
+              } else {
+                posthog.opt_out_captureing()
+              }
+              forceUpdate()
+            }}
+          >
+            {posthog.has_opted_out_captureing() ? "Enable" : "Disable"}{" "}
+            Telemetry
           </Button>
         </Box>
       </PaperContainer>

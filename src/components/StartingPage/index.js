@@ -14,6 +14,7 @@ import TemplateIcon from "@material-ui/icons/Description"
 import { useDropzone } from "react-dropzone"
 import CreateFromTemplateDialog from "../CreateFromTemplateDialog"
 import { styled } from "@material-ui/core/styles"
+import usePosthog from "../../utils/use-posthog"
 
 const useStyles = makeStyles({
   container: {
@@ -92,6 +93,7 @@ export default ({
   onClickOpenSession
 }) => {
   const c = useStyles()
+  const posthog = usePosthog()
   const [
     createFromTemplateDialogOpen,
     changeCreateFromTemplateDialogOpen
