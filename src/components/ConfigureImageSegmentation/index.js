@@ -2,6 +2,7 @@
 import React, { useMemo } from "react"
 import Survey from "material-survey/components/Survey"
 import { styled } from "@material-ui/core/styles"
+import { setIn } from "seamless-immutable"
 
 const form = {
   questions: [
@@ -61,7 +62,7 @@ export default ({ iface, onChange }) => {
       variant="flat"
       defaultAnswers={defaultAnswers}
       onQuestionChange={(questionId, newValue, answers) => {
-        onChange({ ...iface, [questionId]: newValue })
+        onChange(setIn(iface, [questionId], newValue ))
       }}
       form={form}
     />

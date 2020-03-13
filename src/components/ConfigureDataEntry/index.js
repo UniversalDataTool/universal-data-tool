@@ -12,7 +12,7 @@ import CancelIcon from "@material-ui/icons/Cancel"
 import TextField from "@material-ui/core/TextField"
 import Survey from "material-survey/components/Survey"
 import Grid from "@material-ui/core/Grid"
-import setIn from "lodash/fp/set"
+import { setIn } from "seamless-immutable"
 
 const ButtonsContainer = styled("div")({
   textAlign: "right"
@@ -78,9 +78,9 @@ export default ({ iface, onChange }) => {
                 onChange={e => {
                   onChange(
                     setIn(
+                      iface,
                       ["surveyjs", "questions", i, "name"],
-                      e.target.value,
-                      iface
+                      e.target.value
                     )
                   )
                 }}
@@ -93,9 +93,9 @@ export default ({ iface, onChange }) => {
                 onChange={e => {
                   onChange(
                     setIn(
+                      iface,
                       ["surveyjs", "questions", i, "title"],
-                      e.target.value,
-                      iface
+                      e.target.value
                     )
                   )
                 }}
@@ -117,9 +117,9 @@ export default ({ iface, onChange }) => {
                     onChange={e => {
                       onChange(
                         setIn(
+                          iface,
                           ["surveyjs", "questions", i, "choices"],
-                          e.target.value.split("\n"),
-                          iface
+                          e.target.value.split("\n")
                         )
                       )
                     }}
@@ -143,9 +143,9 @@ export default ({ iface, onChange }) => {
               onClick={() => {
                 onChange(
                   setIn(
+                    iface,
                     ["surveyjs", "questions"],
-                    [...questions.slice(0, i), ...questions.slice(i + 1)],
-                    iface
+                    [...questions.slice(0, i), ...questions.slice(i + 1)]
                   )
                 )
               }}
@@ -169,18 +169,17 @@ export default ({ iface, onChange }) => {
         <MenuItem
           onClick={() => {
             changeMenuOpen(false)
-            onChange({
-              ...iface,
-              surveyjs: {
-                questions: questions.concat([
+            onChange(setIn(
+              iface,
+              ["surveyjs", "questions"],
+              iface.surveyjs.questions.concat([
                   {
                     name: "input" + questions.length,
                     type: "text",
                     title: "New Text Input"
                   }
-                ])
-              }
-            })
+              ])
+            ))
           }}
         >
           Text Input
@@ -188,19 +187,19 @@ export default ({ iface, onChange }) => {
         <MenuItem
           onClick={() => {
             changeMenuOpen(false)
-            onChange({
-              ...iface,
-              surveyjs: {
-                questions: questions.concat([
+            onChange(
+              setIn(iface, 
+                ["surveyjs", "questions"],
+                (iface.surveyjs.questions || []).concat(
                   {
                     name: "input" + questions.length,
                     type: "radiogroup",
                     title: "New Exclusive Choice Input",
                     choices: ["Yes", "Maybe", "No"]
                   }
-                ])
-              }
-            })
+                )
+              )
+            )
           }}
         >
           Exclusive Choice
@@ -208,19 +207,20 @@ export default ({ iface, onChange }) => {
         <MenuItem
           onClick={() => {
             changeMenuOpen(false)
-            onChange({
-              ...iface,
-              surveyjs: {
-                questions: questions.concat([
+            onChange(
+              setIn(
+                iface,
+                ["surveyjs", "questions"],
+                (iface.surveyjs.questions || []).concat(
                   {
                     name: "input" + questions.length,
                     type: "checkbox",
                     title: "New Checkbox Input",
                     choices: ["A", "B", "C"]
                   }
-                ])
-              }
-            })
+                )
+              )
+            )
           }}
         >
           Checkboxes
@@ -228,18 +228,19 @@ export default ({ iface, onChange }) => {
         <MenuItem
           onClick={() => {
             changeMenuOpen(false)
-            onChange({
-              ...iface,
-              surveyjs: {
-                questions: questions.concat([
+            onChange(
+              setIn(
+                iface,
+                ["surveyjs", "questions"],
+                iface.surveyjs.questions.concat(
                   {
                     name: "input" + questions.length,
                     type: "boolean",
                     title: "New Boolean Input"
                   }
-                ])
-              }
-            })
+                )
+              )
+            )
           }}
         >
           Boolean
@@ -247,19 +248,20 @@ export default ({ iface, onChange }) => {
         <MenuItem
           onClick={() => {
             changeMenuOpen(false)
-            onChange({
-              ...iface,
-              surveyjs: {
-                questions: questions.concat([
+            onChange(
+              setIn(
+                iface,
+                ["surveyjs", "questions"],
+                (iface.questions || []).concat(
                   {
                     name: "input" + questions.length,
                     type: "dropdown",
                     title: "New Dropdown Input",
                     choices: ["A", "B", "C"]
                   }
-                ])
-              }
-            })
+                )
+              )
+            )
           }}
         >
           Dropdown / Autocomplete
@@ -267,10 +269,11 @@ export default ({ iface, onChange }) => {
         <MenuItem
           onClick={() => {
             changeMenuOpen(false)
-            onChange({
-              ...iface,
-              surveyjs: {
-                questions: questions.concat([
+            onChange(
+              setIn(
+                iface,
+                ["surveyjs", "questions"],
+                iface.surveyjs.questions.concat([
                   {
                     name: "input" + questions.length,
                     type: "multiple-dropdown",
@@ -278,8 +281,8 @@ export default ({ iface, onChange }) => {
                     choices: ["A", "B", "C"]
                   }
                 ])
-              }
-            })
+              )
+            )
           }}
         >
           Multiple Item Dropdown / Autocomplete

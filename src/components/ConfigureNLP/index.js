@@ -1,5 +1,6 @@
 import React, {useMemo} from "react"
 import Survey from "material-survey/components/Survey"
+import { setIn } from "seamless-immutable"
 
 const form = {
   questions: [
@@ -60,7 +61,7 @@ export default ({ iface, onChange }) => {
             noActions
             variant="flat"
             onQuestionChange={(questionId, newValue, answers) =>{
-                onChange({...iface, [questionId]: newValue})
+                onChange(setIn(iface, [questionId], newValue))
             }}
             form={form}
             defaultAnswers={defaultAnswers}

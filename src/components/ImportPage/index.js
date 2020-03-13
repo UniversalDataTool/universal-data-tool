@@ -12,6 +12,7 @@ import useIsDesktop from "../../utils/use-is-desktop"
 import useElectron from "../../utils/use-electron"
 import classnames from "classnames"
 import catImages from "./cat-images.js"
+import { setIn } from "seamless-immutable"
 
 const ButtonBase = styled(MuiButton)({
   width: 240,
@@ -108,24 +109,18 @@ export default ({ oha, onChangeOHA, isDesktop }) => {
           .map(fileName => path.join(dirPath, fileName))
 
         onChangeOHA(
-          {
-            ...oha,
-            taskData: (oha.taskData || []).concat(
-              importedFilePaths.map(convertToTaskDataObject).filter(Boolean)
-            )
-          },
+          setIn(oha, ["taskData"], (oha.taskData || []).concat(
+            importedFilePaths.map(convertToTaskDataObject).filter(Boolean)
+          )),
           true
         )
         return
       }
       case "import-cats": {
         onChangeOHA(
-          {
-            ...oha,
-            taskData: (oha.taskData || []).concat(
-              catImages.map(imageUrl => ({ imageUrl }))
-            )
-          },
+          setIn(oha, ["taskData"], (oha.taskData || []).concat(
+            catImages.map(imageUrl => ({ imageUrl }))
+          )),
           true
         )
       }
@@ -161,10 +156,7 @@ export default ({ oha, onChangeOHA, isDesktop }) => {
           onClose={closeDialog}
           onAddSamples={samples => {
             onChangeOHA(
-              {
-                ...oha,
-                taskData: (oha.taskData || []).concat(samples)
-              },
+              setIn(oha, ["taskData"], (oha.taskData || []).concat(samples)),
               true
             )
             closeDialog()

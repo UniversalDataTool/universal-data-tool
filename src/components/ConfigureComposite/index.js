@@ -8,7 +8,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import Button from "@material-ui/core/Button"
 import Box from "@material-ui/core/Box"
 import TextField from "@material-ui/core/TextField"
-import setIn from "lodash/fp/set"
+import { setIn } from "seamless-immutable"
 
 const Fields = styled("div")({})
 const StyledExpansionPanel = styled(ExpansionPanel)({
@@ -76,17 +76,21 @@ export default ({ iface, onChange }) => {
         ))}
         <StyledButton
           onClick={() => {
-            onChange({
-              ...iface,
-              fields: [
-                ...(iface.fields || []),
-                {
-                  fieldOrder: (iface.fields || []).length,
-                  fieldName: "New Field",
-                  interface: { type: "empty" }
-                }
-              ]
-            })
+            onChange(
+              setIn(
+                iface,
+                ["fields"], 
+                (iface.fields || []).concat(
+                  {
+                    fieldOrder: (iface.fields || []).length,
+                    fieldName: "New Field",
+                    interface: {
+                      type: "empty"
+                    }
+                  }
+                )
+              )
+            )
           }}
         >
           Add New Field

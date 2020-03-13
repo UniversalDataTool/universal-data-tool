@@ -10,6 +10,7 @@ import useLocalStorage from "../../utils/use-local-storage.js"
 import useFileHandler from "../../utils/file-handlers"
 import download from "in-browser-download"
 import toUDTCSV from "../../utils/to-udt-csv.js"
+import { setIn } from "seamless-immutable"
 
 const useStyles = makeStyles({
   empty: {
@@ -60,6 +61,14 @@ export default () => {
     },
     [file]
   )
+
+  // TODO REMOVE
+  useEffect(() => {
+    if (!file || !file.content) return
+    if (file.content && !file.content.asMutable) {
+      console.error("YOU'RE NOT USING AN IMMUTABLE OBJECT, WHAT HAVE YOU DONE!!!")
+    }
+  }, [ file && file.content ])
 
   useEffect(() => {
     if (!file) return
@@ -122,11 +131,10 @@ export default () => {
             inSession={inSession}
             oha={file.content}
             onChangeFileName={newName => {
-              changeFile({ ...file, fileName: newName })
+              changeFile(setIn(file, ["fileName"], newName))
             }}
             onChangeOHA={newOHA => {
-              const newFile = { ...file, content: newOHA }
-              changeFile(newFile)
+              changeFile(setIn(file, ["content"], newOHA))
             }}
           />
         )}

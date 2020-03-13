@@ -13,6 +13,7 @@ import ConfigureNLP from "../ConfigureNLP"
 import ConfigureDataEntry from "../ConfigureDataEntry"
 import ConfigureComposite from "../ConfigureComposite"
 import Configure3D from "../Configure3D"
+import { setIn } from "seamless-immutable"
 
 const NoOptions = styled("div")({
   fontSize: 18,
@@ -78,7 +79,7 @@ export const ConfigureInterface = ({
       <SelectType
         currentlySelected={iface.type}
         onChange={type => {
-          onChange({ ...iface, type })
+          onChange(setIn(iface, ["type"], type))
         }}
       />
       <Heading>Options</Heading>

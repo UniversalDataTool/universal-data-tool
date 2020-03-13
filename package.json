@@ -75,6 +75,7 @@
     "react-icons": "^3.9.0",
     "react-image-annotate": "^0.1.39",
     "react-select": "^3.0.8",
+    "seamless-immutable": "^7.1.4",
     "styled-components": "^5.0.0",
     "use-event-callback": "^0.1.0"
   },
