@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState, useMemo } from "react"
+import React, { useState, useMemo, useEffect } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Grid from "@material-ui/core/Grid"
 import Header from "../Header"
@@ -14,6 +14,9 @@ import TemplateIcon from "@material-ui/icons/Description"
 import { useDropzone } from "react-dropzone"
 import CreateFromTemplateDialog from "../CreateFromTemplateDialog"
 import { styled } from "@material-ui/core/styles"
+import usePosthog from "../../utils/use-posthog"
+import packageInfo from "../../../package.json"
+import useIsDesktop from "../../utils/use-is-desktop"
 
 const useStyles = makeStyles({
   container: {
@@ -92,6 +95,23 @@ export default ({
   onClickOpenSession
 }) => {
   const c = useStyles()
+  const posthog = usePosthog()
+
+  const isDesktop = useIsDesktop()
+  const [newVersionAvailable, changeNewVersionAvailable] = useState(false)
+  useEffect(() => {
+    // if (!isDesktop) return
+    async function checkNewVersion() {
+      const newPackage = await fetch(
+        "https://raw.githubusercontent.com/UniversalDataTool/universal-data-tool/master/package.json"
+      ).then(r => r.json())
+      if (newPackage.version !== packageInfo.version) {
+        changeNewVersionAvailable(true)
+      }
+    }
+    checkNewVersion()
+  }, [])
+
   const [
     createFromTemplateDialogOpen,
     changeCreateFromTemplateDialogOpen
@@ -108,13 +128,28 @@ export default ({
     <div className={c.container}>
       <CreateFromTemplateDialog
         open={createFromTemplateDialogOpen}
-        onSelect={template => onOpenTemplate(template)}
+        onSelect={template => {
+          posthog.capture("template_clicked", {
+            clicked_template: template.name
+          })
+          onOpenTemplate(template)
+        }}
         onClose={() => changeCreateFromTemplateDialogOpen(false)}
       />
       <Header
         additionalButtons={[
+          newVersionAvailable && (
+            <Button
+              key="download-latest"
+              className={c.headerButton}
+              href="https://github.com/OpenHumanAnnotation/universal-data-tool/releases"
+            >
+              Out of date! Download New Version
+            </Button>
+          ),
           showDownloadLink && (
             <Button
+              key="download"
               href="https://github.com/OpenHumanAnnotation/universal-data-tool/releases"
               className={c.headerButton}
             >
@@ -134,9 +169,12 @@ export default ({
               <ActionList>
                 <ActionTitle>Start</ActionTitle>
                 <Action
-                  onClick={() =>
+                  onClick={() => {
+                    posthog.capture("template_clicked", {
+                      clicked_template: "empty"
+                    })
                     onOpenTemplate(templates.find(t => t.name === "Empty"))
-                  }
+                  }}
                 >
                   New File
                 </Action>
@@ -161,8 +199,8 @@ export default ({
                 {recentItems.length === 0 ? (
                   <Actionless>No Recent Files</Actionless>
                 ) : (
-                  recentItems.map(ri => (
-                    <Action onClick={() => onOpenRecentItem(ri)}>
+                  recentItems.map((ri, i) => (
+                    <Action key={i} onClick={() => onOpenRecentItem(ri)}>
                       {ri.fileName}
                     </Action>
                   ))

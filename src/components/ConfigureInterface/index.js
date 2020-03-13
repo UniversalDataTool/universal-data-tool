@@ -11,6 +11,7 @@ import PaperContainer from "../PaperContainer"
 import ConfigureAudioTranscription from "../ConfigureAudioTranscription"
 import ConfigureNLP from "../ConfigureNLP"
 import ConfigureDataEntry from "../ConfigureDataEntry"
+import ConfigureComposite from "../ConfigureComposite"
 import Configure3D from "../Configure3D"
 
 const NoOptions = styled("div")({
@@ -87,7 +88,7 @@ export const ConfigureInterface = ({
         <ConfigureImageSegmentation iface={iface} onChange={onChange} />
       )}
       {iface.type === "composite" && (
-        <NoOptions>GUI Configuration Not Available</NoOptions>
+        <ConfigureComposite iface={iface} onChange={onChange} />
       )}
       {iface.type === "data_entry" && (
         <ConfigureDataEntry iface={iface} onChange={onChange} />
@@ -99,9 +100,8 @@ export const ConfigureInterface = ({
         <ConfigureNLP iface={iface} onChange={onChange} />
       )}
       {iface.type === "3d_bounding_box" && (
-          <Configure3D iface={iface} onChange={onChange} />
-        )
-      }
+        <Configure3D iface={iface} onChange={onChange} />
+      )}
     </PaperContainer>
   )
 }
