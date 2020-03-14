@@ -99,11 +99,7 @@ export default ({
       name: "Edit",
       button: true,
       cell: row => (
-        <IconButton
-          raised
-          primary
-          onClick={() => openSampleInputEditor(row.index)}
-        >
+        <IconButton raised onClick={() => openSampleInputEditor(row.index)}>
           <EditIcon style={{ width: 20, height: 20 }} />
         </IconButton>
       )
@@ -112,11 +108,7 @@ export default ({
       name: "Label",
       button: true,
       cell: row => (
-        <IconButton
-          raised
-          primary
-          onClick={() => openSampleLabelEditor(row.index)}
-        >
+        <IconButton raised onClick={() => openSampleLabelEditor(row.index)}>
           <BorderColorIcon style={{ width: 20, height: 20 }} />
         </IconButton>
       )
