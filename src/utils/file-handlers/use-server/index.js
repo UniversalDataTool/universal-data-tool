@@ -151,7 +151,6 @@ export default (file, changeFile) => {
     async function sendPatchIfChanges() {
       const patch = rfc6902.createPatch(file.lastSyncedState, file.content)
       if (patch.length === 0) return
-      console.log("trying to send patch", patch)
       let userName = "anonymous"
       try {
         userName = JSON.parse(window.localStorage.userName)
@@ -174,6 +173,14 @@ export default (file, changeFile) => {
             lastSyncedState: latest,
             lastSyncedVersion: version
           })
+        )
+      } else {
+        changeFile(
+          setIn(
+            setIn(file, ["lastSyncedVersion"], latestVersion),
+            ["lastSyncedState"],
+            file.content
+          )
         )
       }
     }

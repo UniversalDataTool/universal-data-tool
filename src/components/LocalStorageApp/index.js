@@ -11,6 +11,7 @@ import useFileHandler from "../../utils/file-handlers"
 import download from "in-browser-download"
 import toUDTCSV from "../../utils/to-udt-csv.js"
 import { setIn } from "seamless-immutable"
+import useEventCallback from "use-event-callback"
 
 const useStyles = makeStyles({
   empty: {
@@ -42,33 +43,27 @@ export default () => {
     })
   }, [])
 
-  const openRecentItem = useCallback(item => {
-    changeFile(item)
-  }, [])
-
-  const onClickHome = useMemo(() => {
-    changeFile(null)
-  }, [])
-
-  const onDownload = useCallback(
-    format => {
-      const outputName = (file.sessionId || file.fileName) + ".udt." + format
-      if (format === "json") {
-        download(JSON.stringify(file.content), outputName)
-      } else if (format === "csv") {
-        download(toUDTCSV(file.content), outputName)
-      }
-    },
-    [file]
-  )
+  const openRecentItem = useEventCallback(item => changeFile(item))
+  const onClickHome = useEventCallback(() => changeFile(null))
+  const onDownload = useEventCallback(format => {
+    if (!file) return
+    const outputName = (file.sessionId || file.fileName) + ".udt." + format
+    if (format === "json") {
+      download(JSON.stringify(file.content), outputName)
+    } else if (format === "csv") {
+      download(toUDTCSV(file.content), outputName)
+    }
+  })
 
   // TODO REMOVE
   useEffect(() => {
     if (!file || !file.content) return
     if (file.content && !file.content.asMutable) {
-      console.error("YOU'RE NOT USING AN IMMUTABLE OBJECT, WHAT HAVE YOU DONE!!!")
+      console.error(
+        "YOU'RE NOT USING AN IMMUTABLE OBJECT, WHAT HAVE YOU DONE!!!"
+      )
     }
-  }, [ file && file.content ])
+  }, [file && file.content])
 
   useEffect(() => {
     if (!file) return
@@ -83,6 +78,19 @@ export default () => {
 
   const inSession = file && file.mode === "server"
   const [sessionBoxOpen, changeSessionBoxOpen] = useState(false)
+
+  const onJoinSession = useCallback(async sessionName => {
+    await openUrl(sessionName)
+  }, [])
+
+  const onLeaveSession = useEventCallback(() =>
+    changeFile({
+      ...file,
+      mode: "local-storage",
+      id: randomId(),
+      fileName: "unnamed"
+    })
+  )
 
   return (
     <>
@@ -101,16 +109,8 @@ export default () => {
           inSession,
           sessionBoxOpen,
           changeSessionBoxOpen,
-          onJoinSession: async sessionName => {
-            await openUrl(sessionName)
-          },
-          onLeaveSession: () =>
-            changeFile({
-              ...file,
-              mode: "local-storage",
-              id: randomId(),
-              fileName: "unnamed"
-            }),
+          onJoinSession,
+          onLeaveSession,
           onCreateSession: makeSession,
           fileOpen: Boolean(file),
           onDownload

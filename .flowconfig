@@ -1,5 +1,11 @@
+[ignore]
+
 [include]
-./src/**/*.js
+
+[libs]
+
+[lints]
 
 [options]
-emoji=true
+
+[strict]
