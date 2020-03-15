@@ -37,6 +37,10 @@ export default ({ open, onClose, onAddSamples }) => {
                     case "pdf": {
                       return { pdfUrl: s }
                     }
+                    case "mp3":
+                    case "wav": {
+                      return { audioUrl: s }
+                    }
                     default: {
                       // TODO throw error or toast
                       console.error("extension not recognized")
