@@ -37,6 +37,18 @@ The Universal Data Tool is a web/desktop app for editing and annotating images, 
 
 [![wao.ai sponsorship image](https://s3.amazonaws.com/asset.workaround.online/sponsorship-banner-1.png)](https://wao.ai)
 
+## Installation
+
+### Web App
+
+Just visit [universaldatatool.com](https://universaldatatool.com)!
+
+*Trying to run the web app locally? Run `npm install` then `npm run start` after cloning this repository to start the web server*
+
+### Desktop Application
+
+Download the latest release from the [releases page](https://github.com/UniversalDataTool/universal-data-tool/releases) and run the executable you downloaded.
+
 ## Principles
 
 - Correctness of implementation of the .udt.json standard.
