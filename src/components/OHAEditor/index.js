@@ -29,6 +29,8 @@ import duration from "duration"
 import useTimeToCompleteSample from "../../utils/use-time-to-complete-sample.js"
 import TextField from "@material-ui/core/TextField"
 import { useToasts } from "../Toasts"
+import { setIn, without } from "seamless-immutable"
+import useEventCallback from "use-event-callback"
 
 import "brace/mode/javascript"
 import "brace/theme/github"
@@ -50,6 +52,8 @@ const useStyles = makeStyles({
     height: "100vh"
   }
 })
+
+const headerTabs = ["Settings", "Samples", "Label"]
 
 export default ({
   datasetName = "Universal Data Tool",
@@ -105,6 +109,8 @@ export default ({
     } catch (e) {}
   }, [jsonText])
 
+  const onChangeTab = useEventCallback(tab => changeMode(tab.toLowerCase()))
+
   let percentComplete = 0
   if (
     oha.taskOutput &&
@@ -135,9 +141,9 @@ export default ({
             />
           )
         }
-        onChangeTab={tab => changeMode(tab.toLowerCase())}
+        onChangeTab={onChangeTab}
         currentTab={mode}
-        tabs={["Settings", "Samples", "Label"]}
+        tabs={headerTabs}
       />
       <div style={{ overflowY: "scroll" }}>
         {mode === "json" && (
@@ -155,7 +161,7 @@ export default ({
             onClickEditJSON={() => changeMode("json")}
             oha={oha}
             onClearLabelData={() => {
-              onChangeOHA({ ...oha, taskOutput: undefined })
+              onChangeOHA(without(oha, "taskOutput"))
             }}
             onChange={iface => {
               if (
@@ -214,20 +220,33 @@ export default ({
           <UniversalDataViewer
             datasetName={`Sample ${singleSampleOHA.sampleIndex}`}
             onSaveTaskOutputItem={(relativeIndex, output) => {
-              const newOHA = { ...oha }
-              if (!newOHA.taskOutput)
-                newOHA.taskOutput = newOHA.taskData.map(td => null)
+              let newOHA = oha
+              if (!newOHA.taskOutput) {
+                newOHA = setIn(
+                  newOHA,
+                  ["taskOutput"],
+                  (newOHA.taskData || []).map(td => null)
+                )
+              }
               if (
                 newOHA.taskOutput.length < newOHA.taskData.length ||
                 newOHA.taskOutput.includes(undefined)
               ) {
-                newOHA.taskOutput = newOHA.taskData.map((td, tdi) =>
-                  newOHA.taskOutput[tdi] === undefined
-                    ? null
-                    : newOHA.taskOutput[tdi]
+                newOHA = setIn(
+                  newOHA,
+                  ["taskOutput"],
+                  newOHA.taskData.map((td, tdi) =>
+                    newOHA.taskOutput[tdi] === undefined
+                      ? null
+                      : newOHA.taskOutput[tdi]
+                  )
                 )
               }
-              newOHA.taskOutput[singleSampleOHA.sampleIndex] = output
+              newOHA = setIn(
+                newOHA,
+                ["taskOutput", singleSampleOHA.sampleIndex],
+                output
+              )
               onChangeOHA(newOHA)
               changeSingleSampleOHA(null)
               if (singleSampleOHA.startTime) {
@@ -294,9 +313,9 @@ export default ({
           changeSampleInputEditor({ open: false })
         }}
         onChange={newInput => {
-          const newOHA = { ...oha, taskData: [...oha.taskData] }
-          newOHA.taskData[sampleInputEditor.sampleIndex] = newInput
-          onChangeOHA(newOHA)
+          onChangeOHA(
+            setIn(oha, ["taskData", sampleInputEditor.sampleIndex], newInput)
+          )
         }}
       />
     </div>

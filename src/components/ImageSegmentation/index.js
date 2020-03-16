@@ -1,9 +1,10 @@
 // @flow
 
-import React, { useState } from "react"
+import React, { useState, useEffect, useMemo } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Annotator from "react-image-annotate"
 import isEqual from "lodash/isEqual"
+import useEventCallback from "use-event-callback"
 
 const useStyles = makeStyles({})
 
@@ -129,11 +130,13 @@ const regionTypeToTool = {
   point: "create-point"
 }
 
+const [emptyObj, emptyArr] = [{}, []]
+
 export default ({
   interface: iface,
-  taskData = [],
-  taskOutput = [],
-  containerProps: { onExit, datasetName } = {},
+  taskData = emptyArr,
+  taskOutput = emptyObj,
+  containerProps = emptyObj,
   onSaveTaskOutputItem
 }) => {
   const c = useStyles()
@@ -143,20 +146,60 @@ export default ({
 
   const isClassification = !Boolean(iface.multipleRegionLabels)
 
-  const labelProps = isClassification
-    ? {
-        regionClsList: (iface.availableLabels || []).map(l =>
-          typeof l === "string" ? l : l.id
-        )
-      }
-    : {
-        regionTagList: (iface.availableLabels || []).map(l =>
-          typeof l === "string" ? l : l.id
-        )
-      }
+  const labelProps = useMemo(
+    () =>
+      isClassification
+        ? {
+            regionClsList: (iface.availableLabels || []).map(l =>
+              typeof l === "string" ? l : l.id
+            )
+          }
+        : {
+            regionTagList: (iface.availableLabels || []).map(l =>
+              typeof l === "string" ? l : l.id
+            )
+          },
+    [isClassification]
+  )
 
   const multipleRegions =
     iface.multipleRegions || iface.multipleRegions === undefined
+
+  const onExit = useEventCallback(output => {
+    const regionMat = (output.images || [])
+      .map(img => img.regions)
+      .map(riaRegions => (riaRegions || []).map(convertFromRIARegionFmt))
+
+    for (let i = 0; i < regionMat.length; i++) {
+      if (multipleRegions) {
+        onSaveTaskOutputItem(i, regionMat[i])
+      } else {
+        onSaveTaskOutputItem(i, regionMat[i][0])
+      }
+    }
+    if (containerProps.onExit) containerProps.onExit()
+  })
+
+  const images = useMemo(
+    () =>
+      taskData.map((taskDatum, index) =>
+        convertToRIAImageFmt({
+          title: containerProps.datasetName,
+          taskDatum,
+          output: taskOutput[index],
+          index
+        })
+      ),
+    [taskData]
+  )
+
+  const enabledTools = useMemo(
+    () =>
+      ["select"].concat(
+        regionTypesAllowed.map(rt => regionTypeToTool[rt]).filter(Boolean)
+      ),
+    [regionTypesAllowed]
+  )
 
   return (
     <div style={{ height: "calc(100vh - 70px)" }}>
@@ -164,31 +207,9 @@ export default ({
         selectedImage={taskData[selectedIndex].src}
         taskDescription={iface.description}
         {...labelProps}
-        enabledTools={["select"].concat(
-          regionTypesAllowed.map(rt => regionTypeToTool[rt]).filter(Boolean)
-        )}
-        images={taskData.map((taskDatum, index) =>
-          convertToRIAImageFmt({
-            title: datasetName,
-            taskDatum,
-            output: taskOutput[index],
-            index
-          })
-        )}
-        onExit={output => {
-          const regionMat = (output.images || [])
-            .map(img => img.regions)
-            .map(riaRegions => (riaRegions || []).map(convertFromRIARegionFmt))
-
-          for (let i = 0; i < regionMat.length; i++) {
-            if (multipleRegions) {
-              onSaveTaskOutputItem(i, regionMat[i])
-            } else {
-              onSaveTaskOutputItem(i, regionMat[i][0])
-            }
-          }
-          if (onExit) onExit()
-        }}
+        enabledTools={enabledTools}
+        images={images}
+        onExit={onExit}
       />
     </div>
   )

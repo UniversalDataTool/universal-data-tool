@@ -3,11 +3,13 @@
 import { useState, useEffect } from "react"
 import bent from "bent"
 import moment from "moment"
-import * as jsonpatch from "fast-json-patch"
+import * as rfc6902 from "rfc6902"
 import objectHash from "object-hash"
 import cloneDeep from "lodash/cloneDeep"
 import isEqual from "lodash/isEqual"
-import { useToasts } from "../../components/Toasts"
+import { useToasts } from "../../../components/Toasts"
+import makeImmutable, { setIn } from "seamless-immutable"
+import applySeamlessPatch from "./apply-seamless-patch"
 
 const serverUrl = window.localStorage.useLocalCollaborationServer
   ? "http://localhost:3000"
@@ -89,16 +91,17 @@ export default (file, changeFile) => {
       }
       if (patch.length > 0) {
         let patchFailed = false,
-          patchResult
-        try {
-          // Apply update (note: this violates immutability, but prevents rerenders
-          // so should be kept)
-          patchResult = jsonpatch.applyPatch(file.content, patch, false, true)
-          file.content = patchResult.newDocument
-        } catch (e) {
-          patchFailed = true
-        }
-        if (patchFailed || hash(file.content) !== hashOfLatestState) {
+          newFileContent
+        // try {
+        // Apply update (note: this violates immutability, but prevents rerenders
+        // so should be kept)
+        newFileContent = applySeamlessPatch(file.content, patch)
+        // patchResult = jsonpatch.applyPatch(file.content, patch, false, true)
+        // file.content = patchResult.newDocument
+        // } catch (e) {
+        //   patchFailed = true
+        // }
+        if (patchFailed || hash(newFileContent) !== hashOfLatestState) {
           if (!patchFailed) {
             console.log(
               "when getting diffs, hashes were not equal! getting latest version from server..."
@@ -111,19 +114,23 @@ export default (file, changeFile) => {
           const { state: latest, version } = await getLatestState(
             file.sessionId
           )
-          changeFile({
-            ...file,
-            content: latest,
-            lastSyncedState: cloneDeep(latest),
-            lastSyncedVersion: version
-          })
+          changeFile(
+            makeImmutable({
+              ...file,
+              content: latest,
+              lastSyncedState: latest,
+              lastSyncedVersion: version
+            })
+          )
         } else {
-          changeFile({
-            ...file,
-            content: file.content,
-            lastSyncedState: cloneDeep(file.content),
-            lastSyncedVersion: latestVersion
-          })
+          changeFile(
+            makeImmutable({
+              ...file,
+              content: newFileContent,
+              lastSyncedState: newFileContent,
+              lastSyncedVersion: latestVersion
+            })
+          )
         }
       }
       if (!timeout) return
@@ -142,7 +149,7 @@ export default (file, changeFile) => {
   useEffect(() => {
     if (!file || file.mode !== "server") return
     async function sendPatchIfChanges() {
-      const patch = jsonpatch.compare(file.lastSyncedState, file.content)
+      const patch = rfc6902.createPatch(file.lastSyncedState, file.content)
       if (patch.length === 0) return
       let userName = "anonymous"
       try {
@@ -153,24 +160,28 @@ export default (file, changeFile) => {
         `/api/session/${encodeURIComponent(file.sessionId)}`,
         { patch, userName }
       )
+
       if (hash(file.content) !== hashOfLatestState) {
         console.log(
           "after patch, hashes were not equal! getting latest version from server..."
         )
         const { state: latest, version } = await getLatestState(file.sessionId)
-        changeFile({
-          ...file,
-          content: latest,
-          lastSyncedState: latest,
-          lastSyncedVersion: version
-        })
+        changeFile(
+          makeImmutable({
+            ...file,
+            content: latest,
+            lastSyncedState: latest,
+            lastSyncedVersion: version
+          })
+        )
       } else {
-        changeFile({
-          ...file,
-          content: file.content,
-          lastSyncedState: cloneDeep(file.content),
-          lastSyncedVersion: latestVersion
-        })
+        changeFile(
+          setIn(
+            setIn(file, ["lastSyncedVersion"], latestVersion),
+            ["lastSyncedState"],
+            file.content
+          )
+        )
       }
     }
     sendPatchIfChanges()
