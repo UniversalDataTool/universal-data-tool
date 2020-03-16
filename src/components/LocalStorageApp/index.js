@@ -55,16 +55,6 @@ export default () => {
     }
   })
 
-  // TODO REMOVE
-  useEffect(() => {
-    if (!file || !file.content) return
-    if (file.content && !file.content.asMutable) {
-      console.error(
-        "YOU'RE NOT USING AN IMMUTABLE OBJECT, WHAT HAVE YOU DONE!!!"
-      )
-    }
-  }, [file && file.content])
-
   useEffect(() => {
     if (!file) return
     if (!file.fileName || file.fileName === "unnamed") return

@@ -5,14 +5,17 @@ import MuiButton from "@material-ui/core/Button"
 import { styled } from "@material-ui/core/styles"
 import AssignmentReturnedIcon from "@material-ui/icons/AssignmentReturned"
 import CreateNewFolderIcon from "@material-ui/icons/CreateNewFolder"
+import TextFieldsIcon from "@material-ui/icons/TextFields"
 import PetsIcon from "@material-ui/icons/Pets"
 import * as colors from "@material-ui/core/colors"
 import PasteUrlsDialog from "../PasteUrlsDialog"
+import ImportTextSnippetsDialog from "../ImportTextSnippetsDialog"
 import useIsDesktop from "../../utils/use-is-desktop"
 import useElectron from "../../utils/use-electron"
 import classnames from "classnames"
 import catImages from "./cat-images.js"
 import { setIn } from "seamless-immutable"
+import useEventCallback from "use-event-callback"
 
 const ButtonBase = styled(MuiButton)({
   width: 240,
@@ -109,20 +112,29 @@ export default ({ oha, onChangeOHA, isDesktop }) => {
           .map(fileName => path.join(dirPath, fileName))
 
         onChangeOHA(
-          setIn(oha, ["taskData"], (oha.taskData || []).concat(
-            importedFilePaths.map(convertToTaskDataObject).filter(Boolean)
-          )),
+          setIn(
+            oha,
+            ["taskData"],
+            (oha.taskData || []).concat(
+              importedFilePaths.map(convertToTaskDataObject).filter(Boolean)
+            )
+          ),
           true
         )
         return
       }
       case "import-cats": {
         onChangeOHA(
-          setIn(oha, ["taskData"], (oha.taskData || []).concat(
-            catImages.map(imageUrl => ({ imageUrl }))
-          )),
+          setIn(
+            oha,
+            ["taskData"],
+            (oha.taskData || []).concat(
+              catImages.map(imageUrl => ({ imageUrl }))
+            )
+          ),
           true
         )
+        return
       }
       default: {
         return changeDialog(dialog)
@@ -130,6 +142,13 @@ export default ({ oha, onChangeOHA, isDesktop }) => {
     }
   }
   const closeDialog = () => changeDialog(null)
+  const onAddSamples = useEventCallback(samples => {
+    onChangeOHA(
+      setIn(oha, ["taskData"], (oha.taskData || []).concat(samples)),
+      true
+    )
+    closeDialog()
+  })
   return (
     <SelectDialogContext.Provider value={{ onChangeDialog }}>
       <div>
@@ -148,19 +167,21 @@ export default ({ oha, onChangeOHA, isDesktop }) => {
         >
           Files from Directory
         </Button>
+        <Button dialog="import-text-snippets" Icon={TextFieldsIcon}>
+          Import Text Snippets
+        </Button>
         <Button isDesktop={isDesktop} dialog="import-cats" Icon={PetsIcon}>
           Import Cat Images
         </Button>
+        <ImportTextSnippetsDialog
+          open={selectedDialog === "import-text-snippets"}
+          onClose={closeDialog}
+          onAddSamples={onAddSamples}
+        />
         <PasteUrlsDialog
           open={selectedDialog === "paste-image-urls"}
           onClose={closeDialog}
-          onAddSamples={samples => {
-            onChangeOHA(
-              setIn(oha, ["taskData"], (oha.taskData || []).concat(samples)),
-              true
-            )
-            closeDialog()
-          }}
+          onAddSamples={onAddSamples}
         />
       </div>
     </SelectDialogContext.Provider>

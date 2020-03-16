@@ -90,7 +90,7 @@ const HeaderToolbar = ({
             <MenuIcon />
           </IconButton>
         )}
-        {title}
+        {fileOpen ? title : "Universal Data Tool"}
         <CollaborateButton
           sessionBoxOpen={sessionBoxOpen}
           changeSessionBoxOpen={changeSessionBoxOpen}

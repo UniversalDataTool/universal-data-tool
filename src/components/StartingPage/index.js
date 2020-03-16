@@ -17,6 +17,7 @@ import { styled } from "@material-ui/core/styles"
 import usePosthog from "../../utils/use-posthog"
 import packageInfo from "../../../package.json"
 import useIsDesktop from "../../utils/use-is-desktop"
+import useEventCallback from "use-event-callback"
 
 const useStyles = makeStyles({
   container: {
@@ -116,11 +117,9 @@ export default ({
     createFromTemplateDialogOpen,
     changeCreateFromTemplateDialogOpen
   ] = useState(false)
-  const onDrop = useMemo(() => {
-    return acceptedFiles => {
-      onFileDrop(acceptedFiles[0])
-    }
-  }, [onFileDrop])
+  const onDrop = useEventCallback(acceptedFiles => {
+    onFileDrop(acceptedFiles[0])
+  })
 
   let { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 

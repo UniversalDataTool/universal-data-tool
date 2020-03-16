@@ -68,7 +68,9 @@ export default ({
 }) => {
   const isDesktop = useIsDesktop()
   const [currentTab, changeTabState] = useState(
-    window.localStorage.lastSampleTab || "grid"
+    (oha.taskData || []).length === 0
+      ? "import"
+      : window.localStorage.lastSampleTab || "grid"
   )
   const changeTab = tab => {
     changeTabState(tab)
