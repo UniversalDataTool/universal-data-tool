@@ -21,6 +21,11 @@ export default obj => {
     (a, b) => a.split(".").length - b.split(".").length
   )
 
+  if (sampleKeys.some(k => k.includes("output.keyframes"))) {
+    sampleKeys = sampleKeys.filter(k => k.includes("output.keyframes"))
+    sampleKeys.push("output.keyframes")
+  }
+
   const options = {
     rows: [
       "interface",
