@@ -65,7 +65,9 @@ export default ({
   onChangeFileName,
   onChangeOHA = () => null,
   onFileDrop,
-  initialMode = "settings" //= "samples"
+  initialMode = "settings", //= "samples"
+  authConfig,
+  user
 }) => {
   const c = useStyles()
   const { addToast } = useToasts()
@@ -106,7 +108,7 @@ export default ({
     try {
       // TODO schema validation etc.
       onChangeOHA(JSON.parse(jsonText))
-    } catch (e) {}
+    } catch (e) { }
   }, [jsonText])
 
   const onChangeTab = useEventCallback(tab => changeMode(tab.toLowerCase()))
@@ -134,12 +136,12 @@ export default ({
               size="small"
             />
           ) : (
-            <EditableTitleText
-              label="File Name"
-              onChange={onChangeFileName}
-              value={fileName || ""}
-            />
-          )
+              <EditableTitleText
+                label="File Name"
+                onChange={onChangeFileName}
+                value={fileName || ""}
+              />
+            )
         }
         onChangeTab={onChangeTab}
         currentTab={mode}
@@ -214,6 +216,8 @@ export default ({
               })
             }}
             onChangeOHA={onChangeOHA}
+            authConfig={authConfig}
+            user={user}
           />
         )}
         {mode === "label" && singleSampleOHA ? (
@@ -258,49 +262,49 @@ export default ({
             oha={singleSampleOHA}
           />
         ) : (
-          mode === "label" && (
-            <PaperContainer>
-              <Stats
-                stats={[
-                  {
-                    name: "Percent Complete",
-                    value: Math.floor(percentComplete * 100) + "%"
-                  },
-                  {
-                    name: "Time per Sample",
-                    value: duration(
-                      new Date(Date.now() - timeToCompleteSample)
-                    ).toString(1, 1)
-                  },
-                  {
-                    name: "Estimated Remaining",
-                    value: duration(
-                      new Date(
-                        Date.now() -
+            mode === "label" && (
+              <PaperContainer>
+                <Stats
+                  stats={[
+                    {
+                      name: "Percent Complete",
+                      value: Math.floor(percentComplete * 100) + "%"
+                    },
+                    {
+                      name: "Time per Sample",
+                      value: duration(
+                        new Date(Date.now() - timeToCompleteSample)
+                      ).toString(1, 1)
+                    },
+                    {
+                      name: "Estimated Remaining",
+                      value: duration(
+                        new Date(
+                          Date.now() -
                           timeToCompleteSample *
-                            (1 - percentComplete) *
-                            (oha.taskData || []).length
-                      )
-                    ).toString(1, 2)
-                  }
-                ]}
-              />
-              <SampleGrid
-                count={(oha.taskData || []).length}
-                completed={(oha.taskOutput || []).map(Boolean)}
-                onClick={sampleIndex => {
-                  changeSingleSampleOHA({
-                    ...oha,
-                    taskData: [oha.taskData[sampleIndex]],
-                    taskOutput: [(oha.taskOutput || [])[sampleIndex]],
-                    sampleIndex,
-                    startTime: Date.now()
-                  })
-                }}
-              />
-            </PaperContainer>
-          )
-        )}
+                          (1 - percentComplete) *
+                          (oha.taskData || []).length
+                        )
+                      ).toString(1, 2)
+                    }
+                  ]}
+                />
+                <SampleGrid
+                  count={(oha.taskData || []).length}
+                  completed={(oha.taskOutput || []).map(Boolean)}
+                  onClick={sampleIndex => {
+                    changeSingleSampleOHA({
+                      ...oha,
+                      taskData: [oha.taskData[sampleIndex]],
+                      taskOutput: [(oha.taskOutput || [])[sampleIndex]],
+                      sampleIndex,
+                      startTime: Date.now()
+                    })
+                  }}
+                />
+              </PaperContainer>
+            )
+          )}
       </div>
       <EditSampleDialog
         {...sampleInputEditor}

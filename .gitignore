@@ -27,3 +27,5 @@ dist
 
 desktop/node_modules
 lib
+
+src/components/LocalStorageApp/myAWSconfig.js

@@ -13,6 +13,7 @@ import FileIcon from "@material-ui/icons/InsertDriveFile"
 import TemplateIcon from "@material-ui/icons/Description"
 import { useDropzone } from "react-dropzone"
 import CreateFromTemplateDialog from "../CreateFromTemplateDialog"
+import AddAuthFromTemplateDialog from "../AddAuthFromTemplateDialog"
 import { styled } from "@material-ui/core/styles"
 import usePosthog from "../../utils/use-posthog"
 import packageInfo from "../../../package.json"
@@ -93,7 +94,10 @@ export default ({
   showDownloadLink = true,
   recentItems = [],
   onOpenRecentItem,
-  onClickOpenSession
+  onClickOpenSession,
+  onAuthConfigured,
+  user,
+  logoutUser
 }) => {
   const c = useStyles()
   const posthog = usePosthog()
@@ -117,6 +121,10 @@ export default ({
     createFromTemplateDialogOpen,
     changeCreateFromTemplateDialogOpen
   ] = useState(false)
+  const [
+    addAuthFromDialogOpen,
+    changeAddAuthFromDialogOpen
+  ] = useState(false)
   const onDrop = useEventCallback(acceptedFiles => {
     onFileDrop(acceptedFiles[0])
   })
@@ -134,6 +142,13 @@ export default ({
           onOpenTemplate(template)
         }}
         onClose={() => changeCreateFromTemplateDialogOpen(false)}
+      />
+      <AddAuthFromTemplateDialog
+        open={addAuthFromDialogOpen}
+        onSelect={template => onOpenTemplate(template)}
+        onClose={() => changeAddAuthFromDialogOpen(false)}
+        onFinish={(anwsers) => console.log(anwsers)}
+        onAuthConfigured={(config) => { console.log(config); onAuthConfigured(config) }}
       />
       <Header
         additionalButtons={[
@@ -156,6 +171,8 @@ export default ({
             </Button>
           )
         ].filter(Boolean)}
+        user={user}
+        logoutUser={logoutUser}
       />
       <ContentContainer>
         <Content>
@@ -191,6 +208,9 @@ export default ({
                     Open Collaborative Session
                   </Action>
                 )}
+                <Action onClick={() => changeAddAuthFromDialogOpen(true)}>
+                  Add Authentification
+                </Action>
                 {/* <Action>Open Folder</Action> */}
               </ActionList>
               <ActionList>
@@ -198,12 +218,12 @@ export default ({
                 {recentItems.length === 0 ? (
                   <Actionless>No Recent Files</Actionless>
                 ) : (
-                  recentItems.map((ri, i) => (
-                    <Action key={i} onClick={() => onOpenRecentItem(ri)}>
-                      {ri.fileName}
-                    </Action>
-                  ))
-                )}
+                    recentItems.map((ri, i) => (
+                      <Action key={i} onClick={() => onOpenRecentItem(ri)}>
+                        {ri.fileName}
+                      </Action>
+                    ))
+                  )}
               </ActionList>
               <ActionList>
                 <ActionTitle>Help</ActionTitle>

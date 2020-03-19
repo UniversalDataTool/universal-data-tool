@@ -10,6 +10,9 @@ import useLocalStorage from "../../utils/use-local-storage.js"
 import useFileHandler from "../../utils/file-handlers"
 import download from "in-browser-download"
 import toUDTCSV from "../../utils/to-udt-csv.js"
+import Amplify, { Auth } from 'aws-amplify';
+import config from "../LocalStorageApp/myAWSconfig"
+import isEmpty from "../../utils/isEmpty"
 import { setIn } from "seamless-immutable"
 import useEventCallback from "use-event-callback"
 
@@ -68,6 +71,40 @@ export default () => {
 
   const inSession = file && file.mode === "server"
   const [sessionBoxOpen, changeSessionBoxOpen] = useState(false)
+  const [authConfig, changeAuthConfig] = useState(null)
+  const [user, changeUser] = useState(null)
+
+  const logoutUser = () => {
+    Auth.signOut().then(() => {
+      changeUser(null)
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+
+  useEffect(() => {
+    if (isEmpty(user) && isEmpty(authConfig)) {
+      try {
+        Amplify.configure(config)
+
+        console.log('ok')
+
+        Auth.currentAuthenticatedUser()
+          .then((tryUser) => {
+            console.log(tryUser)
+            changeUser(tryUser)
+            changeAuthConfig(config)
+          })
+          .catch((err) => {
+            changeAuthConfig(config)
+          })
+      } catch (err) {
+        changeAuthConfig(null)
+      }
+    }
+  }, [])
+
+
 
   const onJoinSession = useCallback(async sessionName => {
     await openUrl(sessionName)
@@ -103,7 +140,11 @@ export default () => {
           onLeaveSession,
           onCreateSession: makeSession,
           fileOpen: Boolean(file),
-          onDownload
+          onDownload,
+          authConfig,
+          onUserChange: (userToSet) => changeUser(userToSet),
+          user: user,
+          logoutUser: logoutUser
         }}
       >
         {!file ? (
@@ -113,20 +154,26 @@ export default () => {
             recentItems={recentItems}
             onOpenRecentItem={openRecentItem}
             onClickOpenSession={() => changeSessionBoxOpen(true)}
+            onAuthConfigured={(config) => changeAuthConfig(config)}
+            user={user}
+            logoutUser={logoutUser}
           />
         ) : (
-          <OHAEditor
-            key={file.id}
-            {...file}
-            inSession={inSession}
-            oha={file.content}
-            onChangeFileName={newName => {
-              changeFile(setIn(file, ["fileName"], newName))
-            }}
-            onChangeOHA={newOHA => {
-              changeFile(setIn(file, ["content"], newOHA))
-            }}
-          />
+            <OHAEditor
+              key={file.id}
+              {...file}
+              inSession={inSession}
+              oha={file.content}
+              onChangeFileName={newName => {
+                changeFile(setIn(file, ["fileName"], newName))
+              }}
+              onChangeOHA={newOHA => {
+                changeFile(setIn(file, ["content"], newOHA))
+              }}
+              authConfig
+              user={user}
+            />
+          )}
         )}
       </HeaderContext.Provider>
       <ErrorToasts errors={errors} />

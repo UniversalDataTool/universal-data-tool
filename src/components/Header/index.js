@@ -2,6 +2,9 @@
 
 import React, { useState, createContext, useContext, useCallback } from "react"
 import useMediaQuery from "@material-ui/core/useMediaQuery"
+import CollaborateButton from "../CollaborateButton"
+import DownloadButton from "../DownloadButton"
+import LoginDrawer from "../LoginDrawer"
 
 import HeaderToolbar from "../HeaderToolbar"
 import HeaderDrawer from "../HeaderDrawer"
@@ -20,7 +23,11 @@ export const HeaderContext = createContext({
   sessionBoxOpen: false,
   changeSessionBoxOpen: () => null,
   fileOpen: false,
-  onDownload: () => null
+  onDownload: () => null,
+  authConfig: null,
+  onUserChange: () => null,
+  user: null,
+  logoutUser: () => null
 })
 
 const emptyArray = []
@@ -30,9 +37,10 @@ export default ({
   title = "Universal Data Tool",
   currentTab,
   onChangeTab,
-  tabs = emptyArray
+  tabs = emptyArray,
 }) => {
   const [drawerOpen, changeDrawerOpen] = useState(false)
+  const [loginDrawerOpen, changeLoginDrawerOpen] = useState(false)
   let headerContext = useContext(HeaderContext)
   if (!headerContext.recentItems) headerContext.recentItems = []
 
@@ -52,6 +60,7 @@ export default ({
         onOpenDrawer={onOpenDrawer}
         isSmall={isSmall}
         {...headerContext}
+        changeLoginDrawerOpen={changeLoginDrawerOpen}
       />
       <HeaderDrawer
         drawerOpen={drawerOpen}
@@ -62,6 +71,12 @@ export default ({
         onClickTemplate={headerContext.onClickTemplate}
         onOpenRecentItem={headerContext.onOpenRecentItem}
       />
+      <LoginDrawer
+        authConfig={headerContext.authConfig}
+        loginDrawerOpen={loginDrawerOpen}
+        onClose={() => changeLoginDrawerOpen(false)}
+        onUserChange={headerContext.onUserChange}
+        logoutUser={headerContext.logoutUser} />
     </>
   )
 }

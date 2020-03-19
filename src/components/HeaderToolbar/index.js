@@ -17,6 +17,7 @@ import Button from "@material-ui/core/Button"
 import GithubIcon from "../Header/GithubIcon"
 import * as colors from "@material-ui/core/colors"
 import IconButton from "@material-ui/core/IconButton"
+import isEmpty from "../../utils/isEmpty"
 
 const useStyles = makeStyles(theme => ({
   headerButton: {
@@ -79,7 +80,11 @@ const HeaderToolbar = ({
   onLeaveSession,
   onJoinSession,
   onDownload,
-  isSmall
+  isSmall,
+  authConfig,
+  user,
+  changeLoginDrawerOpen,
+  logoutUser
 }) => {
   const c = useStyles()
   return (
@@ -119,6 +124,20 @@ const HeaderToolbar = ({
               />
             ))}
           </Tabs>
+        )}
+        {!isEmpty(authConfig) && isEmpty(user) && (
+          < Button onClick={() => { changeLoginDrawerOpen(true) }}
+            className={c.headerButton}
+          >
+            Login
+            </Button>
+        )}
+        {!isEmpty(authConfig) && !isEmpty(user) && (
+          <Button onClick={logoutUser}
+            className={c.headerButton}
+          >
+            Logout
+            </Button>
         )}
         {!isSmall && (
           <IconButton

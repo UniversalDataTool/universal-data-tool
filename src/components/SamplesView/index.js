@@ -45,6 +45,7 @@ const ExpandedRow = ({ data }) => {
     <ExpandedRowContainer>
       <Grid spacing={2} container>
         <Grid item xs={6}>
+          
           <ExpandedRowTitle>taskData[{data.index}]:</ExpandedRowTitle>
           <ExpandedRowCode>{JSON.stringify(input, null, "  ")}</ExpandedRowCode>
         </Grid>
@@ -64,7 +65,9 @@ export default ({
   openSampleInputEditor,
   openSampleLabelEditor,
   deleteSample,
-  onChangeOHA
+  onChangeOHA,
+  authConfig,
+  user
 }) => {
   const isDesktop = useIsDesktop()
   const [currentTab, changeTabState] = useState(
@@ -153,6 +156,8 @@ export default ({
             }
           }}
           oha={oha}
+          authConfig={authConfig}
+          user={user}
         />
       )}
       {currentTab === "grid" && (
@@ -164,6 +169,8 @@ export default ({
           }}
         />
       )}
+      {console.log(data)}
+      {console.log(columns)}
       {currentTab === "table" && (
         <DataTable
           title="Samples"
