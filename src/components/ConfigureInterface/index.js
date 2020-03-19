@@ -13,6 +13,7 @@ import ConfigureNLP from "../ConfigureNLP"
 import ConfigureDataEntry from "../ConfigureDataEntry"
 import ConfigureComposite from "../ConfigureComposite"
 import Configure3D from "../Configure3D"
+import ConfigureVideoSegmentation from "../ConfigureVideoSegmentation"
 import { setIn } from "seamless-immutable"
 
 const NoOptions = styled("div")({
@@ -99,6 +100,9 @@ export const ConfigureInterface = ({
       )}
       {iface.type === "text_entity_recognition" && (
         <ConfigureNLP iface={iface} onChange={onChange} />
+      )}
+      {iface.type === "video_segmentation" && (
+        <ConfigureVideoSegmentation iface={iface} onChange={onChange} />
       )}
       {iface.type === "3d_bounding_box" && (
         <Configure3D iface={iface} onChange={onChange} />

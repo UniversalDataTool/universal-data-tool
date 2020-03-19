@@ -6,7 +6,8 @@ import TextFormat from "@material-ui/icons/TextFormat"
 import Edit from "@material-ui/icons/Edit"
 import Audiotrack from "@material-ui/icons/Audiotrack"
 import Category from "@material-ui/icons/Category"
-import ThreeDRotation from '@material-ui/icons/ThreeDRotation';
+import ThreeDRotation from "@material-ui/icons/ThreeDRotation"
+import OndemandVideoIcon from "@material-ui/icons/OndemandVideo"
 
 export default [
   {
@@ -40,6 +41,23 @@ export default [
         {
           imageUrl:
             "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg"
+        }
+      ]
+    }
+  },
+  {
+    name: "Video Segmentation",
+    Icon: OndemandVideoIcon,
+    oha: {
+      interface: {
+        type: "video_segmentation",
+        availableLabels: ["valid", "invalid"],
+        regionTypesAllowed: ["bounding-box", "polygon", "point"]
+      },
+      taskData: [
+        {
+          videoUrl:
+            "https://s3.amazonaws.com/asset.workaround.online/SampleVideo_1280x720_1mb.mp4"
         }
       ]
     }
@@ -168,5 +186,5 @@ export default [
         description: "3D Bounding Box"
       }
     }
-  },
+  }
 ]
