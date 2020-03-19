@@ -203,19 +203,15 @@ export default ({ oha, onChangeOHA, isDesktop, authConfig, user }) => {
         >
           Files from Directory
         </Button>
-        <Button isDesktop={isDesktop} dialog="import-cats" Icon={PetsIcon}
-          authConfig={authConfig} signedInOnly={false} user={user}>
-          Import Cat Images
-        </Button>
-        <Button isDesktop={isDesktop} dialog="import-from-s3" Icon={S3Icon} authConfiguredOnly={true}
-          authConfig={authConfig} signedInOnly={true} user={user}>
-          Import from S3
-        </Button>
         <Button dialog="import-text-snippets" Icon={TextFieldsIcon}>
           Import Text Snippets
         </Button>
         <Button isDesktop={isDesktop} dialog="import-cats" Icon={PetsIcon}>
           Import Cat Images
+        </Button>
+        <Button isDesktop={isDesktop} dialog="import-from-s3" Icon={S3Icon} authConfiguredOnly={true}
+          authConfig={authConfig} signedInOnly={true} user={user}>
+          Import from S3
         </Button>
         <ImportTextSnippetsDialog
           open={selectedDialog === "import-text-snippets"}
