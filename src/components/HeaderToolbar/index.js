@@ -83,7 +83,7 @@ const HeaderToolbar = ({
 }) => {
   const c = useStyles()
   return (
-    <AppBar color="transparent" position="static">
+    <AppBar color="white" position="static">
       <Toolbar variant="dense">
         {!isDesktop && (
           <IconButton onClick={onOpenDrawer} className={c.headerButton}>
