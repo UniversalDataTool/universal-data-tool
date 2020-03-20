@@ -47,11 +47,11 @@ export default ({
         tabs={tabs}
         currentTab={currentTab}
         onChangeTab={onChangeTab}
-        title={title}
         additionalButtons={additionalButtons}
         onOpenDrawer={onOpenDrawer}
         isSmall={isSmall}
         {...headerContext}
+        title={title}
       />
       <HeaderDrawer
         drawerOpen={drawerOpen}

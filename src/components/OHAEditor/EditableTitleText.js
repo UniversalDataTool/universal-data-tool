@@ -19,6 +19,10 @@ export default ({ value, onChange }) => {
   })
 
   useEffect(() => {
+    changeEditing({ editing, newValue: value })
+  }, [value])
+
+  useEffect(() => {
     if (!editing) return
     let listener = e => {
       if (e.key === "Enter") {
@@ -33,6 +37,7 @@ export default ({ value, onChange }) => {
   }, [editing, newValue])
 
   useEffect(() => {
+    if (!newValue) return
     if (editing) {
       let timeout = setTimeout(
         () => {
@@ -42,9 +47,7 @@ export default ({ value, onChange }) => {
         value === newValue ? SAVE_WAIT * 5 : SAVE_WAIT
       )
 
-      return () => {
-        if (timeout) clearTimeout(timeout)
-      }
+      return () => clearTimeout(timeout)
     } else {
       return () => {}
     }
@@ -58,6 +61,16 @@ export default ({ value, onChange }) => {
       size="small"
       InputProps={{
         inputProps: { style: { color: "#000" } }
+      }}
+      onKeyDown={e => {
+        if (e.key === "Enter") {
+          e.preventDefault()
+          e.stopPropagation()
+          e.target.blur()
+        }
+      }}
+      onKeyPress={e => {
+        e.stopPropagation()
       }}
       onChange={e => {
         changeEditing({

@@ -136,6 +136,13 @@ export default ({
           ) : (
             <EditableTitleText
               label="File Name"
+              onKeyPress={e => {
+                console.log("hello ", e.key)
+                if (e.key === "Enter") {
+                  e.preventDefault()
+                  e.target.blur()
+                }
+              }}
               onChange={onChangeFileName}
               value={fileName || ""}
             />
