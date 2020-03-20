@@ -184,17 +184,6 @@ export default () => {
             onChangeFileName={newName => {
               changeCurrentFile({ ...currentFile, fileName: newName })
             }}
-            onChangeContent={newContent => {
-              const newFile = { ...currentFile, content: newContent }
-              changeCurrentFile(newFile)
-              if (recentItems.map(item => item.id).includes(newFile.id)) {
-                changeRecentItems(
-                  recentItems.map(ri => (ri.id === newFile.id ? newFile : ri))
-                )
-              } else {
-                changeRecentItems([newFile].concat(recentItems).slice(0, 3))
-              }
-            }}
             onChangeOHA={changeOHA}
           />
         ) : (
