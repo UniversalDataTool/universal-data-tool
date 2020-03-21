@@ -22,26 +22,31 @@ const useStyles = makeStyles({
   }
 })
 
+const randomId = () =>
+  Math.random()
+    .toString()
+    .split(".")[1]
+
 export default () => {
   const c = useStyles()
-  const { file, changeFile, openFile, openUrl, makeSession } = useFileHandler()
+  const {
+    file,
+    changeFile,
+    openFile,
+    openUrl,
+    makeSession,
+    recentItems
+  } = useFileHandler()
   const [errors, addError] = useErrors()
-  let [recentItems, changeRecentItems] = useLocalStorage("recentItems", [])
-  if (!recentItems) recentItems = []
 
-  const randomId = () =>
-    Math.random()
-      .toString()
-      .split(".")[1]
-
-  const onCreateTemplate = useCallback(template => {
+  const onCreateTemplate = useEventCallback(template => {
     changeFile({
       fileName: "unnamed",
       content: template.oha,
       id: randomId(),
       mode: "local-storage"
     })
-  }, [])
+  })
 
   const openRecentItem = useEventCallback(item => changeFile(item))
   const onClickHome = useEventCallback(() => changeFile(null))
@@ -54,17 +59,6 @@ export default () => {
       download(toUDTCSV(file.content), outputName)
     }
   })
-
-  useEffect(() => {
-    if (!file) return
-    if (!file.fileName || file.fileName === "unnamed") return
-    if (file.mode !== "local-storage") return
-    if (recentItems.map(item => item.id).includes(file.id)) {
-      changeRecentItems(recentItems.map(ri => (ri.id === file.id ? file : ri)))
-    } else {
-      changeRecentItems([file].concat(recentItems).slice(0, 3))
-    }
-  }, [file])
 
   const inSession = file && file.mode === "server"
   const [sessionBoxOpen, changeSessionBoxOpen] = useState(false)
