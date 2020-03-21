@@ -84,6 +84,21 @@ module.exports = [
           currentWindow.webContents.send("save-file")
         }
       },
+      {
+        role: "save",
+        accelerator: "CommandOrControl+Shift+S",
+        label: "Save As",
+        click: (menuItem, currentWindow) => {
+          currentWindow.webContents.send("save-file-as")
+        }
+      },
+      {
+        role: "export",
+        label: "Export CSV",
+        click: (menuItem, currentWindow) => {
+          currentWindow.webContents.send("export-to-csv")
+        }
+      },
       { type: "separator" },
       {
         role: "quit"
@@ -97,24 +112,6 @@ module.exports = [
         label: "Welcome Page",
         click: (menuItem, currentWindow) => {
           currentWindow.webContents.send("open-welcome-page")
-        }
-      },
-      {
-        label: "Settings",
-        click: (menuItem, currentWindow) => {
-          currentWindow.webContents.send("open-settings-page")
-        }
-      },
-      {
-        label: "Samples",
-        click: (menuItem, currentWindow) => {
-          currentWindow.webContents.send("open-samples-page")
-        }
-      },
-      {
-        label: "Label",
-        click: (menuItem, currentWindow) => {
-          currentWindow.webContents.send("open-label-page")
         }
       }
     ]

@@ -18,8 +18,8 @@ export default () => {
   const [file, changeFile] = useState()
   const { addToast } = useToasts()
 
-  useFilesystem(file, changeFile)
-  useLocalStorage(file, changeFile)
+  const { saveFile } = useFilesystem(file, changeFile)
+  const { recentItems } = useLocalStorage(file, changeFile)
   useServer(file, changeFile)
 
   // Telemetry
@@ -97,10 +97,16 @@ export default () => {
     )
   })
 
-  return useMemo(() => ({ file, changeFile, openFile, openUrl, makeSession }), [
-    file,
-    changeFile,
-    openFile,
-    makeSession
-  ])
+  return useMemo(
+    () => ({
+      file,
+      changeFile,
+      openFile,
+      openUrl,
+      makeSession,
+      saveFile,
+      recentItems
+    }),
+    [file, changeFile, openFile, makeSession, recentItems]
+  )
 }

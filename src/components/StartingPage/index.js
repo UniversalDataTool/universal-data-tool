@@ -23,7 +23,8 @@ const useStyles = makeStyles({
   container: {
     display: "flex",
     flexDirection: "column",
-    minHeight: "100vh"
+    backgroundColor: colors.grey[900],
+    height: "100vh"
   }
 })
 
@@ -31,21 +32,20 @@ const ContentContainer = styled("div")(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   flexGrow: 1,
-  backgroundColor: colors.grey[900],
   color: "#fff",
+  overflowY: "scroll",
   padding: 100,
   [theme.breakpoints.down("sm")]: {
     padding: 50
-  },
-  paddingBottom: 20
+  }
 }))
-const Content = styled("div")({
-  display: "inline-flex",
+const Content = styled("div")(({ theme }) => ({
+  display: "flex",
   flexDirection: "column",
   width: "calc(100% - 32px)",
   marginLeft: 16,
   maxWidth: 1000
-})
+}))
 
 const Title = styled("div")({
   marginTop: 20,
@@ -86,6 +86,7 @@ const Actionless = styled("div")({
   color: colors.grey[600],
   paddingTop: 16
 })
+const BottomSpacer = styled("div")({ height: 100 })
 
 export default ({
   onFileDrop,
@@ -217,9 +218,9 @@ export default ({
                 <Action href="https://github.com/UniversalDataTool/universal-data-tool">
                   Github Repository
                 </Action>
-                <Action href="#">
+                {/* <Action href="#">
                   How to Collaborate in Real-Time with UDT
-                </Action>
+                </Action> */}
               </ActionList>
             </Grid>
             <Grid xs={6} item>
@@ -255,6 +256,9 @@ export default ({
                   to see how the UDT could work for your data.
                 </ActionText>
               </ActionList>
+            </Grid>
+            <Grid xs={12} item>
+              <BottomSpacer />
             </Grid>
           </Grid>
         </Content>
