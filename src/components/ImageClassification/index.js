@@ -25,9 +25,8 @@ const brightColors = [
 ]
 
 const letters = "abcdefghijklmnopqrstuvwxyz1234567890".split("")
-const getRandomColor = s => {
-  if (typeof s === "object") s = s.id
-  const hashInt = s
+const getRandomColor = label => {
+  const hashInt = label.id
     .split("")
     .reduce((acc, v, i) => acc + (letters.indexOf(v) + 1), 0)
   return brightColors[hashInt % brightColors.length]
@@ -87,6 +86,7 @@ const CheckButton = styled(Button)({
 const [emptyObj, emptyArr] = [{}, []]
 
 export default ({
+  sampleIndex: globalSampleIndex,
   interface: iface,
   taskData = emptyArr,
   taskOutput = emptyObj,
@@ -95,14 +95,20 @@ export default ({
 }) => {
   const [sampleIndex, changeSampleIndex] = useState(0)
   const [enlargedLabel, changeEnlargedLabel] = useState(null)
-  const [currentOutput, changeCurrentOutput] = useState([])
+  const [currentOutput, changeCurrentOutput] = useState(emptyArr)
+  const labels = useMemo(
+    () =>
+      iface.availableLabels.map(l =>
+        typeof l === "string" ? { id: l, description: l } : l
+      ),
+    [iface.availableLabels]
+  )
 
   const onDone = useEventCallback(newOutput => {
     if (containerProps.onExit) containerProps.onExit()
   })
   const onNext = useEventCallback(newOutput => {
     onSaveTaskOutputItem(sampleIndex, newOutput || currentOutput)
-
     if (sampleIndex !== taskData.length - 1) {
       changeSampleIndex(sampleIndex + 1)
     } else {
@@ -127,15 +133,16 @@ export default ({
   const onClickLabel = useEventCallback(label => {
     changeEnlargedLabel(label)
     let newOutput
-    if (currentOutput.includes(label)) {
-      newOutput = without(currentOutput, label)
+    if ((currentOutput || []).includes(label.id)) {
+      newOutput = without(currentOutput, label.id)
     } else {
       if (iface.allowMultiple) {
-        newOutput = currentOutput.concat([label])
+        newOutput = currentOutput.concat([label.id])
       } else {
-        newOutput = [label]
+        newOutput = [label.id]
       }
     }
+
     changeCurrentOutput(newOutput)
     if (!iface.allowMultiple && newOutput.length > 0) {
       onNext(newOutput)
@@ -147,7 +154,7 @@ export default ({
     if (!newOutput) newOutput = []
     if (typeof newOutput === "string") newOutput = [newOutput]
     changeCurrentOutput(newOutput)
-  }, [sampleIndex])
+  }, [sampleIndex, globalSampleIndex])
 
   const [hotkeyMap, labelKeyMap] = useMemo(() => {
     const hotkeyMap = {
@@ -158,18 +165,17 @@ export default ({
       leftarrow: onPrev
     }
     const labelKeyMap = {}
-    for (let label of iface.availableLabels) {
-      if (typeof label === "object") label = label.id
-      const nextAvailableLetter = label
+    for (let label of labels) {
+      const nextAvailableLetter = label.id
         .split("")
         .filter(l => letters.includes(l))
         .find(l => !hotkeyMap[l.toLowerCase()])
       if (!nextAvailableLetter) continue
       hotkeyMap[nextAvailableLetter] = () => onClickLabel(label)
-      labelKeyMap[label] = nextAvailableLetter
+      labelKeyMap[label.id] = nextAvailableLetter
     }
     return [hotkeyMap, labelKeyMap]
-  }, [iface.availableLabels])
+  }, [labels])
 
   useEffect(() => {
     const onKeyDown = e => {
@@ -184,8 +190,6 @@ export default ({
     }
   }, [hotkeyMap])
 
-  const labels = iface.availableLabels
-
   return (
     <Container>
       <ImageContainer>
@@ -195,13 +199,17 @@ export default ({
         <NavItem>
           <NavButton onClick={onPrev}>Prev (backspace)</NavButton>
         </NavItem>
-        {taskData.length > 0 && (
+        {taskData.length > 1 ? (
           <NavItem>
             <span>
               ({sampleIndex + 1}/{taskData.length})
             </span>
           </NavItem>
-        )}
+        ) : globalSampleIndex !== undefined ? (
+          <NavItem>
+            <span>[{globalSampleIndex}]</span>
+          </NavItem>
+        ) : null}
         <NavItem>
           <NavButton onClick={onNext}>Next (space)</NavButton>
         </NavItem>
@@ -212,7 +220,7 @@ export default ({
       <ButtonsContainer>
         {labels.map(label => (
           <CheckButton
-            key={label}
+            key={label.id}
             onClick={() => onClickLabel(label)}
             style={{
               backgroundColor: getRandomColor(label),
@@ -221,10 +229,10 @@ export default ({
           >
             <Checkbox
               style={{ color: "#fff" }}
-              checked={currentOutput.includes(label)}
+              checked={currentOutput.includes(label.id)}
             />
-            {label}
-            {labelKeyMap[label] ? ` (${labelKeyMap[label]})` : ""}
+            {label.id}
+            {labelKeyMap[label.id] ? ` (${labelKeyMap[label.id]})` : ""}
           </CheckButton>
         ))}
       </ButtonsContainer>

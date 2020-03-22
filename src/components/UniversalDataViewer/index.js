@@ -59,6 +59,7 @@ export const UniversalDataViewer = ({
           containerProps={containerProps}
           {...oha}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
+          onExit={onExit}
         />
       )
     case "text_classification":
@@ -67,6 +68,7 @@ export const UniversalDataViewer = ({
           containerProps={containerProps}
           {...oha}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
+          onExit={onExit}
         />
       )
     case "text_entity_recognition":
@@ -75,6 +77,7 @@ export const UniversalDataViewer = ({
           containerProps={containerProps}
           {...oha}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
+          onExit={onExit}
         />
       )
     case "image_segmentation":
@@ -111,6 +114,7 @@ export const UniversalDataViewer = ({
           {...oha}
           oha={oha}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
+          onExit={onExit}
         />
       )
     case "audio_transcription":
@@ -119,6 +123,7 @@ export const UniversalDataViewer = ({
           containerProps={containerProps}
           {...oha}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
+          onExit={onExit}
         />
       )
     default:
