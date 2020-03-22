@@ -4,6 +4,7 @@ import React, { useMemo } from "react"
 import TextClassification from "../TextClassification"
 import TextEntityRecognition from "../TextEntityRecognition"
 import ImageSegmentation from "../ImageSegmentation"
+import ImageClassification from "../ImageClassification"
 import VideoSegmentation from "../VideoSegmentation"
 import AudioTranscription from "../AudioTranscription"
 import DataEntry from "../DataEntry"
@@ -79,6 +80,15 @@ export const UniversalDataViewer = ({
     case "image_segmentation":
       return (
         <ImageSegmentation
+          containerProps={containerProps}
+          {...oha}
+          onExit={onExit}
+          onSaveTaskOutputItem={onSaveTaskOutputItem}
+        />
+      )
+    case "image_classification":
+      return (
+        <ImageClassification
           containerProps={containerProps}
           {...oha}
           onExit={onExit}

@@ -6,8 +6,13 @@ import useElectron from "../use-electron.js"
 import { useToasts } from "../../components/Toasts"
 import templates from "../../components/StartingPage/templates.js"
 import { setIn } from "seamless-immutable"
+import useIsDesktop from "../use-is-desktop"
+
+const webReturn = { saveFile: () => null }
 
 export default (file, changeFile) => {
+  const isDesktop = useIsDesktop()
+  if (!isDesktop) return webReturn
   const { addToast } = useToasts()
   const { remote, ipcRenderer } = useElectron()
   const saveFile = useEventCallback(({ saveAs = false } = {}) => {

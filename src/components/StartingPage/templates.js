@@ -1,6 +1,7 @@
 // @flow
 
-import RemoveRedEye from "@material-ui/icons/RemoveRedEye"
+import ImageSearch from "@material-ui/icons/ImageSearch"
+import Image from "@material-ui/icons/Image"
 import CropFree from "@material-ui/icons/CropFree"
 import TextFormat from "@material-ui/icons/TextFormat"
 import Edit from "@material-ui/icons/Edit"
@@ -19,8 +20,8 @@ export default [
     }
   },
   {
-    name: "Computer Vision",
-    Icon: RemoveRedEye,
+    name: "Image Segmentation",
+    Icon: ImageSearch,
     oha: {
       interface: {
         type: "image_segmentation",
@@ -32,6 +33,26 @@ export default [
           "point"
           // "pixel-mask"
         ]
+      },
+      taskData: [
+        {
+          imageUrl:
+            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg"
+        },
+        {
+          imageUrl:
+            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg"
+        }
+      ]
+    }
+  },
+  {
+    name: "Image Classification",
+    Icon: Image,
+    oha: {
+      interface: {
+        type: "image_classification",
+        availableLabels: ["valid", "invalid"]
       },
       taskData: [
         {
