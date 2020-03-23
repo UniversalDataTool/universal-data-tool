@@ -247,6 +247,9 @@ export default ({
                 ["taskOutput", singleSampleOHA.sampleIndex],
                 output
               )
+              changeSingleSampleOHA(
+                setIn(singleSampleOHA, ["taskOutput", relativeIndex], output)
+              )
               onChangeOHA(newOHA)
             }}
             onExit={(nextAction = "nothing") => {

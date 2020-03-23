@@ -9,6 +9,7 @@ import InterfaceIcon from "../InterfaceIcon"
 import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight"
 import Checkbox from "@material-ui/core/Checkbox"
 import Box from "@material-ui/core/Box"
+import NextIcon from "@material-ui/icons/KeyboardArrowRight"
 
 const Title = styled("div")({
   fontSize: 18,
@@ -32,11 +33,11 @@ export const Composite = props => {
     interface: { fields }
   } = props
   const [selectedField, changeSelectedField] = useState()
+  const [taskOutput, changeTaskOutput] = useState(props.taskOutput)
 
   if (selectedField) {
     return (
       <UniversalDataViewer
-        onExit={() => changeSelectedField(null)}
         oha={{
           interface: selectedField.interface,
           taskOutput: [
@@ -58,6 +59,8 @@ export const Composite = props => {
       />
     )
   }
+
+  console.log("taskOutput", props.taskOutput)
 
   return (
     <SampleContainer
@@ -97,6 +100,19 @@ export const Composite = props => {
           <KeyboardArrowRightIcon />
         </StyledButton>
       ))}
+      <StyledButton
+        onClick={() => props.containerProps.onExit("go-to-next")}
+        fullWidth
+        variant="outlined"
+      >
+        <KeyboardArrowRightIcon
+          style={{ color: colors.grey[500], marginRight: 16 }}
+        />
+        Next
+        <Box flexGrow={1} />
+        <Box height="42px" />
+        <KeyboardArrowRightIcon />
+      </StyledButton>
     </SampleContainer>
   )
 }

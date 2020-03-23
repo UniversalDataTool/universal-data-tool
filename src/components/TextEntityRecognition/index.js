@@ -77,6 +77,8 @@ export const TextEntityRecognition = props => {
           props.onSaveTaskOutputItem(currentSampleIndex, {
             entities: simpleSequenceToEntitySequence(result)
           })
+          if (props.containerProps.onExit)
+            props.containerProps.onExit("go-to-next")
         }}
       />
     </SampleContainer>

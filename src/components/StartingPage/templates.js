@@ -9,6 +9,7 @@ import Audiotrack from "@material-ui/icons/Audiotrack"
 import Category from "@material-ui/icons/Category"
 import ThreeDRotation from "@material-ui/icons/ThreeDRotation"
 import OndemandVideoIcon from "@material-ui/icons/OndemandVideo"
+import ContactSupport from "@material-ui/icons/ContactSupport"
 
 export default [
   {
@@ -111,7 +112,7 @@ export default [
     }
   },
   {
-    name: "Natural Language",
+    name: "Named Entity Recognition",
     Icon: TextFormat,
     oha: {
       interface: {
@@ -134,6 +135,31 @@ export default [
         {
           document:
             "This strainer makes a great hat, I'll wear it while I serve spaghetti!"
+        },
+        {
+          document: "Why are all these dumpings covered in butter?!"
+        }
+      ]
+    }
+  },
+  {
+    name: "Text Classification",
+    Icon: ContactSupport,
+    oha: {
+      interface: {
+        type: "text_classification",
+        labels: ["positive_sentiment", "negative_sentiment"]
+      },
+      taskData: [
+        {
+          document: "Wow this is terrible. I hated it."
+        },
+        {
+          document: "This has made me so happy. I love this."
+        },
+        {
+          document:
+            "At first I wasn't sure. Then I thought, oh it's not very good."
         }
       ]
     }

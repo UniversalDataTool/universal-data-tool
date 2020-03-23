@@ -8,6 +8,7 @@ import Box from "@material-ui/core/Box"
 import * as colors from "@material-ui/core/colors"
 import ConfigureImageSegmentation from "../ConfigureImageSegmentation"
 import ConfigureImageClassification from "../ConfigureImageClassification"
+import ConfigureTextClassification from "../ConfigureTextClassification"
 import PaperContainer from "../PaperContainer"
 import ConfigureAudioTranscription from "../ConfigureAudioTranscription"
 import ConfigureNLP from "../ConfigureNLP"
@@ -104,6 +105,9 @@ export const ConfigureInterface = ({
       )}
       {iface.type === "text_entity_recognition" && (
         <ConfigureNLP iface={iface} onChange={onChange} />
+      )}
+      {iface.type === "text_classification" && (
+        <ConfigureTextClassification iface={iface} onChange={onChange} />
       )}
       {iface.type === "video_segmentation" && (
         <ConfigureVideoSegmentation iface={iface} onChange={onChange} />
