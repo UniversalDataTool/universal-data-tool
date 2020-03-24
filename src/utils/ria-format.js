@@ -131,3 +131,13 @@ export const convertToRIAImageFmt = ({
   }
   throw new Error(`Task Datum not supported "${JSON.stringify(td)}"`)
 }
+
+export const convertToRIAKeyframes = keyframes => {
+  const newKeyframes = {}
+  for (const key in keyframes) {
+    newKeyframes[key] = {
+      regions: keyframes[key].regions.map(convertToRIARegionFmt)
+    }
+  }
+  return newKeyframes
+}
