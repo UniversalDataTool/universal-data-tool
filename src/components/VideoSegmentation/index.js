@@ -56,7 +56,13 @@ export default ({
     iface.multipleRegions || iface.multipleRegions === undefined
 
   const onExit = useEventCallback(output => {
-    onSaveTaskOutputItem(0, { keyframes: output.keyframes })
+    const newKeyframes = {}
+    for (const key in output.keyframes) {
+      newKeyframes[key] = {
+        regions: output.keyframes[key].regions.map(convertFromRIARegionFmt)
+      }
+    }
+    onSaveTaskOutputItem(0, { keyframes: newKeyframes })
     if (containerProps.onExit) containerProps.onExit()
   })
 

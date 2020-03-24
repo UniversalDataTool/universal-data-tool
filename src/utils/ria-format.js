@@ -1,5 +1,7 @@
 // @flow
 
+// RIA = React Image Annotate
+
 export function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
@@ -106,15 +108,25 @@ export const convertToRIAImageFmt = ({
   index: i,
   output
 }) => {
-  if ((td || {}).imageUrl) {
+  td = td || {}
+  const regions = !output
+    ? undefined
+    : Array.isArray(output)
+    ? output.map(convertToRIARegionFmt)
+    : [convertToRIARegionFmt(output)]
+
+  if (td.imageUrl) {
     return {
       src: td.imageUrl,
       name: title || `Sample ${i}`,
-      regions: !output
-        ? undefined
-        : Array.isArray(output)
-        ? output.map(convertToRIARegionFmt)
-        : [convertToRIARegionFmt(output)]
+      regions
+    }
+  } else if (td.videoUrl && td.videoFrameAt !== undefined) {
+    return {
+      src: td.videoUrl,
+      frameTime: td.videoFrameAt,
+      name: title || `Sample ${i}`,
+      regions
     }
   }
   throw new Error(`Task Datum not supported "${JSON.stringify(td)}"`)

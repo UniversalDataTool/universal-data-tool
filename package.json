@@ -73,7 +73,7 @@
     "react-data-table-component": "^6.2.2",
     "react-dropzone": "^10.1.8",
     "react-icons": "^3.9.0",
-    "react-image-annotate": "^0.2.1",
+    "react-image-annotate": "^0.2.2",
     "react-select": "^3.0.8",
     "rfc6902": "^3.0.4",
     "seamless-immutable": "^7.1.4",
