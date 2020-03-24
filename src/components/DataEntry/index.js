@@ -18,7 +18,7 @@ export const DataEntry = props => {
       onChangeSample={sampleIndex => changeCurrentSampleIndex(sampleIndex)}
     >
       <Survey
-        key={currentSampleIndex}
+        key={(props.sampleIndex || 0) + currentSampleIndex}
         variant="flat"
         form={
           props.taskData[currentSampleIndex].surveyjs ||
@@ -29,9 +29,11 @@ export const DataEntry = props => {
             ? props.taskOutput[currentSampleIndex]
             : undefined
         }
-        completeText="Save"
+        completeText="Save & Next"
         onFinish={answers => {
           props.onSaveTaskOutputItem(currentSampleIndex, answers)
+          if (props.containerProps.onExit)
+            props.containerProps.onExit("go-to-next")
         }}
       />
     </SampleContainer>
