@@ -227,6 +227,7 @@ export default ({ oha, onChangeOHA, isDesktop, authConfig, user }) => {
           authConfig={authConfig}
           open={selectedDialog === "import-from-s3"}
           onClose={closeDialog}
+          user={user}
           onAddSamples={samples => {
             onChangeOHA(
               {

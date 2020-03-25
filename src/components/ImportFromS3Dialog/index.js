@@ -15,8 +15,8 @@ const TextArea = styled("textarea")({
 })
 
 const ExpandedRow = ({ data }) => {
-  const { rowImages, rowAnnotations, ...notImportant } = data
-  const expandedImageColumns = [{ name: 'Images', selector: 'image', sortable: true }]
+  const { rowData, rowAnnotations, ...notImportant } = data
+  const expandedDataColumns = [{ name: 'Data', selector: 'data', sortable: true }]
   const expandedAnnotationsColumns = [{ name: 'Annotations', selector: 'annotation' }]
 
   return (
@@ -36,9 +36,9 @@ const ExpandedRow = ({ data }) => {
         style={{ boxSizing: "border-box", paddingLeft: '10px', paddingRight: '10px' }}
         dense
         noHeader
-        columns={expandedImageColumns}
-        data={rowImages}
-        noDataComponent={'Make sure the project has "images" folder'}
+        columns={expandedDataColumns}
+        data={rowData}
+        noDataComponent={'Make sure the project has "data" folder'}
       //pagination={dataForTable.length > 10}
       //paginationPerPage={10}
       //paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
@@ -47,32 +47,18 @@ const ExpandedRow = ({ data }) => {
   )
 }
 
-export default ({ open, onClose, onAddSamples, authConfig }) => {
+export default ({ open, onClose, onAddSamples, authConfig, user }) => {
   Amplify.configure(authConfig)
   const [content, changeContent] = useState("")
   const [s3Content, changeS3Content] = useState(null)
-  const [currentDirectory, changeCurrentDirectory] = useState("/")
   const [dataForTable, changeDataForTable] = useState(null)
 
-
-  if (s3Content === null && !isEmpty(authConfig)) {
-    Storage.list('', { level: 'private' })
-      .then(result => {
-        changeS3Content(result)
-        console.log(result)
-        changeDataForTable(
-          result.filter((obj) => {
-            return obj.key.endsWith('/');
-          }).map((obj) => {
-            return ({ folder: obj.key.split('/')[0] })
-          })
-        )
-      })
-      .catch(err => console.log(err))
-  }
-
   useEffect(() => {
-    if (s3Content === null && !isEmpty(authConfig)) {
+    if (isEmpty(user)) {
+      changeS3Content(null)
+    }
+    else if (!isEmpty(authConfig)) {
+      console.log('fetching S3')
       Storage.list('', { level: 'private' })
         .then(result => {
           changeS3Content(result)
@@ -81,24 +67,23 @@ export default ({ open, onClose, onAddSamples, authConfig }) => {
               return (obj.key.endsWith('/') & obj.key.split('/').length === 2)
             }).map((obj) => {
               const folder = obj.key.split('/')[0]
-              const rowImagesContent = result.filter((obj) => {
-                return (obj.key.startsWith(`${folder}/images/`) & !obj.key.endsWith('/'))
+              const rowDataContent = result.filter((obj) => {
+                return (obj.key.startsWith(`${folder}/data/`) & !obj.key.endsWith('/'))
               }).map((obj) => {
                 return (
-                  { image: obj.key.split('/images/')[1] }
+                  { data: obj.key.split('/data/')[1] }
                 )
               })
               const rowAnnotationsContent = result.filter((obj) => {
                 return (obj.key.startsWith(`${folder}/annotations/`) & !obj.key.endsWith('/'))
               }).map((obj) => {
-                console.log(obj)
                 return (
                   { annotation: obj.key.split('/annotations/')[1] }
                 )
               })
               return ({
                 folder: folder,
-                rowImages: rowImagesContent,
+                rowData: rowDataContent,
                 rowAnnotations: rowAnnotationsContent
               })
             })
@@ -106,10 +91,10 @@ export default ({ open, onClose, onAddSamples, authConfig }) => {
         })
         .catch(err => console.log(err))
     }
-  }, [])
+  }, [user])
 
   useEffect(() => {
-    console.log(dataForTable)
+
   }, [dataForTable])
 
   const columns = [{ name: 'Projects', selector: 'folder', sortable: true }]
