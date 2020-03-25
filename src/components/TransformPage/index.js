@@ -19,6 +19,10 @@ import { setIn } from "seamless-immutable"
 import useEventCallback from "use-event-callback"
 import OndemandVideoIcon from "@material-ui/icons/OndemandVideo"
 import TransformVideoKeyframesDialog from "../TransformVideoKeyframesDialog"
+import DownloadURLsDialog from "../DownloadURLsDialog"
+import GetAppIcon from "@material-ui/icons/GetApp"
+import CollectionsIcon from "@material-ui/icons/Collections"
+import TransformVideoFramesToImagesDialog from "../TransformVideoFramesToImagesDialog"
 
 const ButtonBase = styled(MuiButton)({
   width: 240,
@@ -50,15 +54,8 @@ const DesktopOnlyText = styled("div")({
 
 const SelectDialogContext = createContext()
 
-const Button = ({
-  Icon1,
-  Icon2,
-  desktopOnly,
-  isDesktop,
-  children,
-  dialog,
-  disabled = false
-}) => {
+const Button = ({ Icon1, Icon2, desktopOnly, children, dialog, disabled }) => {
+  const isDesktop = useIsDesktop()
   disabled =
     disabled === undefined ? (desktopOnly ? !isDesktop : false) : disabled
   return (
@@ -97,7 +94,7 @@ const Button = ({
   )
 }
 
-export default ({ oha, onChangeOHA, isDesktop }) => {
+export default ({ oha, onChangeOHA }) => {
   const [selectedDialog, changeDialog] = useState()
   const electron = useElectron()
   const onChangeDialog = async dialog => {
@@ -114,13 +111,23 @@ export default ({ oha, onChangeOHA, isDesktop }) => {
     <SelectDialogContext.Provider value={{ onChangeDialog }}>
       <div>
         <Button
-          isDesktop={isDesktop}
           disabled={oha.interface.type !== "video_segmentation"}
           dialog="convert-keyframes-to-samples"
           Icon1={OndemandVideoIcon}
-          Icon2={ImageIcon}
+          Icon2={CollectionsIcon}
         >
           Convert Video Keyframes to Samples
+        </Button>
+        <Button desktopOnly dialog="download-urls" Icon1={GetAppIcon}>
+          Download URLs
+        </Button>
+        <Button
+          desktopOnly
+          dialog="convert-video-frames-to-images"
+          Icon1={OndemandVideoIcon}
+          Icon2={ImageIcon}
+        >
+          Convert Video Frames to Images
         </Button>
         <TransformVideoKeyframesDialog
           open={selectedDialog === "convert-keyframes-to-samples"}
@@ -131,6 +138,20 @@ export default ({ oha, onChangeOHA, isDesktop }) => {
             closeDialog()
           }}
         />
+        <DownloadURLsDialog
+          open={selectedDialog === "download-urls"}
+          onClose={closeDialog}
+          oha={oha}
+          desktopOnly
+          onChangeOHA={onChangeOHA}
+        ></DownloadURLsDialog>
+        <TransformVideoFramesToImagesDialog
+          open={selectedDialog === "convert-video-frames-to-images"}
+          onClose={closeDialog}
+          oha={oha}
+          desktopOnly
+          onChangeOHA={onChangeOHA}
+        ></TransformVideoFramesToImagesDialog>
       </div>
     </SelectDialogContext.Provider>
   )
