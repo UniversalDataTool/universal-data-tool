@@ -10,6 +10,11 @@ export const TextClassification = props => {
       ? [props.taskOutput[currentSampleIndex].label] ||
         props.taskOutput[currentSampleIndex].labels
       : undefined
+  let labels = props.interface.labels
+    .map(l =>
+      typeof l === "string" ? { id: l, description: l, displayName: l } : l
+    )
+    .map(l => (!l.displayName ? { ...l, displayName: l.id } : l))
   return (
     <SampleContainer
       {...props.containerProps}
@@ -23,14 +28,18 @@ export const TextClassification = props => {
       onChangeSample={sampleIndex => changeCurrentSampleIndex(sampleIndex)}
     >
       <NLPAnnotator
-        key={currentSampleIndex}
+        key={(props.sampleIndex || 0) + currentSampleIndex}
         type="label-document"
-        labels={props.interface.labels}
+        labels={labels}
         multipleLabels={props.interface.multiple}
         document={props.taskData[currentSampleIndex].document}
         initialLabels={initialLabels}
         onFinish={result => {
+          if (typeof result === "string") result = { label: result }
+          else result = { labels: result }
           props.onSaveTaskOutputItem(currentSampleIndex, result)
+          if (props.containerProps.onExit)
+            props.containerProps.onExit("go-to-next")
         }}
       />
     </SampleContainer>

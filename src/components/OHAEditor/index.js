@@ -251,13 +251,45 @@ export default ({
                 ["taskOutput", singleSampleOHA.sampleIndex],
                 output
               )
+              changeSingleSampleOHA(
+                setIn(singleSampleOHA, ["taskOutput", relativeIndex], output)
+              )
               onChangeOHA(newOHA)
-              changeSingleSampleOHA(null)
+            }}
+            onExit={(nextAction = "nothing") => {
               if (singleSampleOHA.startTime) {
                 changeSampleTimeToComplete(
                   Date.now() - singleSampleOHA.startTime
                 )
               }
+              const { sampleIndex } = singleSampleOHA
+              switch (nextAction) {
+                case "go-to-next":
+                  if (sampleIndex !== oha.taskData.length - 1) {
+                    changeSingleSampleOHA({
+                      ...oha,
+                      taskData: [oha.taskData[sampleIndex + 1]],
+                      taskOutput: [(oha.taskOutput || [])[sampleIndex + 1]],
+                      sampleIndex: sampleIndex + 1,
+                      startTime: Date.now()
+                    })
+                    return
+                  }
+                  break
+                case "go-to-previous":
+                  if (sampleIndex !== 0) {
+                    changeSingleSampleOHA({
+                      ...oha,
+                      taskData: [oha.taskData[sampleIndex - 1]],
+                      taskOutput: [(oha.taskOutput || [])[sampleIndex - 1]],
+                      sampleIndex: sampleIndex - 1,
+                      startTime: Date.now()
+                    })
+                    return
+                  }
+                  break
+              }
+              changeSingleSampleOHA(null)
             }}
             oha={singleSampleOHA}
           />

@@ -8,8 +8,7 @@ import useEventCallback from "use-event-callback"
 import {
   rid,
   convertFromRIARegionFmt,
-  convertToRIARegionFmt,
-  convertToRIAImageFmt
+  convertToRIARegionFmt
 } from "../../utils/ria-format.js"
 
 const useStyles = makeStyles({})
@@ -57,32 +56,9 @@ export default ({
     iface.multipleRegions || iface.multipleRegions === undefined
 
   const onExit = useEventCallback(output => {
-    const regionMat = (output.images || [])
-      .map(img => img.regions)
-      .map(riaRegions => (riaRegions || []).map(convertFromRIARegionFmt))
-
-    for (let i = 0; i < regionMat.length; i++) {
-      if (multipleRegions) {
-        onSaveTaskOutputItem(i, regionMat[i])
-      } else {
-        onSaveTaskOutputItem(i, regionMat[i][0])
-      }
-    }
+    onSaveTaskOutputItem(0, { keyframes: output.keyframes })
     if (containerProps.onExit) containerProps.onExit()
   })
-
-  const images = useMemo(
-    () =>
-      taskData.map((taskDatum, index) =>
-        convertToRIAImageFmt({
-          title: containerProps.datasetName,
-          taskDatum,
-          output: taskOutput[index],
-          index
-        })
-      ),
-    [taskData]
-  )
 
   const enabledTools = useMemo(
     () =>
@@ -92,14 +68,24 @@ export default ({
     [regionTypesAllowed]
   )
 
+  // TODO fix by adding some way of going to the "next" video
+  if (taskData.length > 1) {
+    return "Video segmentation is currently limited to only a single video per selection"
+  }
+
+  if (taskData.length === 0) return "taskData[0] with videoUrl is required"
+  if (!taskData[0].videoUrl) return "taskData[0] must have videoUrl"
+
   return (
     <div style={{ height: "calc(100vh - 70px)" }}>
       <Annotator
-        selectedImage={taskData[selectedIndex].src}
         taskDescription={iface.description}
         {...labelProps}
         enabledTools={enabledTools}
-        images={images}
+        keyframes={((taskOutput || [])[0] || {}).keyframes}
+        videoName={taskData[0].customId || ""}
+        videoTime={0}
+        videoSrc={taskData[0].videoUrl}
         onExit={onExit}
       />
     </div>

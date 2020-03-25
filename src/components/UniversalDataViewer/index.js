@@ -4,6 +4,8 @@ import React, { useMemo } from "react"
 import TextClassification from "../TextClassification"
 import TextEntityRecognition from "../TextEntityRecognition"
 import ImageSegmentation from "../ImageSegmentation"
+import ImageClassification from "../ImageClassification"
+import VideoSegmentation from "../VideoSegmentation"
 import AudioTranscription from "../AudioTranscription"
 import DataEntry from "../DataEntry"
 import EmptySampleContainer from "../EmptySampleContainer"
@@ -57,6 +59,7 @@ export const UniversalDataViewer = ({
           containerProps={containerProps}
           {...oha}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
+          onExit={onExit}
         />
       )
     case "text_classification":
@@ -65,6 +68,7 @@ export const UniversalDataViewer = ({
           containerProps={containerProps}
           {...oha}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
+          onExit={onExit}
         />
       )
     case "text_entity_recognition":
@@ -73,11 +77,30 @@ export const UniversalDataViewer = ({
           containerProps={containerProps}
           {...oha}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
+          onExit={onExit}
         />
       )
     case "image_segmentation":
       return (
         <ImageSegmentation
+          containerProps={containerProps}
+          {...oha}
+          onExit={onExit}
+          onSaveTaskOutputItem={onSaveTaskOutputItem}
+        />
+      )
+    case "image_classification":
+      return (
+        <ImageClassification
+          containerProps={containerProps}
+          {...oha}
+          onExit={onExit}
+          onSaveTaskOutputItem={onSaveTaskOutputItem}
+        />
+      )
+    case "video_segmentation":
+      return (
+        <VideoSegmentation
           containerProps={containerProps}
           {...oha}
           onExit={onExit}
@@ -91,6 +114,7 @@ export const UniversalDataViewer = ({
           {...oha}
           oha={oha}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
+          onExit={onExit}
         />
       )
     case "audio_transcription":
@@ -99,6 +123,7 @@ export const UniversalDataViewer = ({
           containerProps={containerProps}
           {...oha}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
+          onExit={onExit}
         />
       )
     default:

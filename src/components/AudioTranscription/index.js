@@ -21,7 +21,7 @@ export default props => {
       onChangeSample={sampleIndex => changeCurrentSampleIndex(sampleIndex)}
     >
       <NLPAnnotator
-        key={currentSampleIndex}
+        key={(props.sampleIndex || 0) + currentSampleIndex}
         type="transcribe"
         audio={props.taskData[currentSampleIndex].audioUrl}
         phraseBank={props.phraseBank}
@@ -30,6 +30,8 @@ export default props => {
         }
         onFinish={result => {
           props.onSaveTaskOutputItem(currentSampleIndex, result)
+          if (props.containerProps.onExit)
+            props.containerProps.onExit("go-to-next")
         }}
       />
     </SampleContainer>

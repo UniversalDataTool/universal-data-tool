@@ -1,12 +1,15 @@
 // @flow
 
-import RemoveRedEye from "@material-ui/icons/RemoveRedEye"
+import ImageSearch from "@material-ui/icons/ImageSearch"
+import Image from "@material-ui/icons/Image"
 import CropFree from "@material-ui/icons/CropFree"
 import TextFormat from "@material-ui/icons/TextFormat"
 import Edit from "@material-ui/icons/Edit"
 import Audiotrack from "@material-ui/icons/Audiotrack"
 import Category from "@material-ui/icons/Category"
-import ThreeDRotation from '@material-ui/icons/ThreeDRotation';
+import ThreeDRotation from "@material-ui/icons/ThreeDRotation"
+import OndemandVideoIcon from "@material-ui/icons/OndemandVideo"
+import ContactSupport from "@material-ui/icons/ContactSupport"
 
 export default [
   {
@@ -18,8 +21,8 @@ export default [
     }
   },
   {
-    name: "Computer Vision",
-    Icon: RemoveRedEye,
+    name: "Image Segmentation",
+    Icon: ImageSearch,
     oha: {
       interface: {
         type: "image_segmentation",
@@ -40,6 +43,43 @@ export default [
         {
           imageUrl:
             "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg"
+        }
+      ]
+    }
+  },
+  {
+    name: "Image Classification",
+    Icon: Image,
+    oha: {
+      interface: {
+        type: "image_classification",
+        availableLabels: ["valid", "invalid"]
+      },
+      taskData: [
+        {
+          imageUrl:
+            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg"
+        },
+        {
+          imageUrl:
+            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg"
+        }
+      ]
+    }
+  },
+  {
+    name: "Video Segmentation",
+    Icon: OndemandVideoIcon,
+    oha: {
+      interface: {
+        type: "video_segmentation",
+        availableLabels: ["valid", "invalid"],
+        regionTypesAllowed: ["bounding-box", "polygon", "point"]
+      },
+      taskData: [
+        {
+          videoUrl:
+            "https://s3.amazonaws.com/asset.workaround.online/SampleVideo_1280x720_1mb.mp4"
         }
       ]
     }
@@ -72,7 +112,7 @@ export default [
     }
   },
   {
-    name: "Natural Language",
+    name: "Named Entity Recognition",
     Icon: TextFormat,
     oha: {
       interface: {
@@ -95,6 +135,31 @@ export default [
         {
           document:
             "This strainer makes a great hat, I'll wear it while I serve spaghetti!"
+        },
+        {
+          document: "Why are all these dumpings covered in butter?!"
+        }
+      ]
+    }
+  },
+  {
+    name: "Text Classification",
+    Icon: ContactSupport,
+    oha: {
+      interface: {
+        type: "text_classification",
+        labels: ["positive_sentiment", "negative_sentiment"]
+      },
+      taskData: [
+        {
+          document: "Wow this is terrible. I hated it."
+        },
+        {
+          document: "This has made me so happy. I love this."
+        },
+        {
+          document:
+            "At first I wasn't sure. Then I thought, oh it's not very good."
         }
       ]
     }
@@ -168,5 +233,5 @@ export default [
         description: "3D Bounding Box"
       }
     }
-  },
+  }
 ]

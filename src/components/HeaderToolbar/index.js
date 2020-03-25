@@ -88,7 +88,7 @@ const HeaderToolbar = ({
 }) => {
   const c = useStyles()
   return (
-    <AppBar color="transparent" position="static">
+    <AppBar color="white" position="static">
       <Toolbar variant="dense">
         {!isDesktop && (
           <IconButton onClick={onOpenDrawer} className={c.headerButton}>
@@ -96,15 +96,17 @@ const HeaderToolbar = ({
           </IconButton>
         )}
         {fileOpen ? title : "Universal Data Tool"}
-        <CollaborateButton
-          sessionBoxOpen={sessionBoxOpen}
-          changeSessionBoxOpen={changeSessionBoxOpen}
-          fileOpen={fileOpen}
-          inSession={inSession}
-          onCreateSession={onCreateSession}
-          onLeaveSession={onLeaveSession}
-          onJoinSession={onJoinSession}
-        />
+        {!isDesktop && (
+          <CollaborateButton
+            sessionBoxOpen={sessionBoxOpen}
+            changeSessionBoxOpen={changeSessionBoxOpen}
+            fileOpen={fileOpen}
+            inSession={inSession}
+            onCreateSession={onCreateSession}
+            onLeaveSession={onLeaveSession}
+            onJoinSession={onJoinSession}
+          />
+        )}
         {!isDesktop && fileOpen && <DownloadButton onDownload={onDownload} />}
         <div className={c.grow} />
         {additionalButtons}
