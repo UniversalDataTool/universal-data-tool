@@ -136,6 +136,41 @@ module.exports = [
     ]
   },
   {
+    label: "Edit",
+    submenu: [
+      {
+        role: "copy",
+        label: "Copy",
+        accelerator: "CommandOrControl+C",
+        selector: "copy:"
+      },
+      {
+        role: "paste",
+        label: "Paste",
+        accelerator: "CommandOrControl+V",
+        selector: "paste:"
+      },
+      {
+        role: "selectAll",
+        label: "Select All",
+        accelerator: "CommandOrControl+A",
+        selector: "selectAll:"
+      },
+      {
+        role: "cut",
+        label: "Cut",
+        accelerator: "CommandOrControl+X",
+        selector: "cut:"
+      },
+      {
+        role: "undo",
+        label: "Undo",
+        accelerator: "CommandOrControl+Z",
+        selector: "undo:"
+      },
+    ]
+  },
+  {
     label: "Navigate",
     submenu: [
       {
