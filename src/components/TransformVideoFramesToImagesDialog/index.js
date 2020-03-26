@@ -62,6 +62,7 @@ export default ({ open, onChangeOHA, onClose, oha }) => {
                   continue
                 }
                 transformsPerformed++
+
                 const videoPath = td.videoUrl.replace(/^file:\/\//, "")
                 const imageOutputPath =
                   videoPath + "__frameat__" + td.videoFrameAt + ".jpg"
