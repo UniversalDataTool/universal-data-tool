@@ -52,7 +52,6 @@ export default ({ open, onClose, onAddSamples }) => {
     }, [])
 
     const googlePickerActionCallback = (data) =>{
-        console.log("googlePickerActionCallback", {data})
         if (data.action === window.google.picker.Action.PICKED) {
             // const fileId = data.docs[0].id
             setUserSelectedItemsFromDrive(data.docs.map(googleDriveDocument => ({url: googleDriveDocument.url, mimeType: googleDriveDocument.mimeType, name: googleDriveDocument.name, id: googleDriveDocument.id})))
@@ -61,7 +60,6 @@ export default ({ open, onClose, onAddSamples }) => {
     }
 
     const createPicker = () =>{
-        console.log({ pickerApiLoaded, oauthToken })
         if(pickerApiLoaded && oauthToken){
             const view = new window.google.picker.View(window.google.picker.ViewId.Docs)
             
@@ -73,7 +71,6 @@ export default ({ open, onClose, onAddSamples }) => {
                 "video/mp4",
                 "video/mpeg"
             )
-            console.log('createPicker')
             const picker = new window.google.picker.PickerBuilder()
                 .enableFeature(window.google.picker.Feature.NAV_HIDDEN)
                 .enableFeature(window.google.picker.Feature.MULTISELECT_ENABLED)
@@ -94,17 +91,13 @@ export default ({ open, onClose, onAddSamples }) => {
     }, [pickerApiLoaded, oauthToken])
 
     const handleAuthenticationResponse = (authenticationResponse) =>{
-        console.log({authenticationResponse})
         if(authenticationResponse && !authenticationResponse.error){
             setOAuthToken(authenticationResponse.access_token)
             createPicker()
-        }else{
-            console.log(authenticationResponse)
         }
     }
 
     const onAuthApiLoad = () =>{
-        console.log("onAuthApiLoad")
         window.gapi.auth.authorize(
             {
               'client_id': credentials.web.client_id,
@@ -116,13 +109,11 @@ export default ({ open, onClose, onAddSamples }) => {
     }
     
     const onPickerApiLoad = () =>{
-        console.log('onPickerApiLoad')
         setPickerApiLoaded(true)
         createPicker()
     }
 
     const onLoadPicker = () =>{
-        console.log("loading picking...", {googleScriptLoaded})
         if(googleScriptLoaded === true){
             window.gapi.load('auth', {callback: onAuthApiLoad})
             window.gapi.load('picker', {'callback': onPickerApiLoad})
@@ -130,7 +121,6 @@ export default ({ open, onClose, onAddSamples }) => {
     }
     
     const onAddSamplesClicked = () => {
-        console.log("onMakeFilesPublicAndImport", userSelectedItemsFromDrive)
         const samples = []
         for (const item of userSelectedItemsFromDrive) {
             if (item.mimeType.includes("image/")) {
