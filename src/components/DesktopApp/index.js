@@ -74,9 +74,9 @@ export default () => {
         filters: [{ name: ".udt.csv", extensions: ["udt.csv"] }]
       })
       filePath =
-        !filePath || filePath.endsWith(".json")
+        !filePath || filePath.endsWith(".csv")
           ? filePath
-          : `${filePath}.udt.json`
+          : `${filePath}.udt.csv`
 
       await remote
         .require("fs")
