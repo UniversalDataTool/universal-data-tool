@@ -51,7 +51,6 @@ export default ({ open, onClose, onAddSamples }) => {
 
     const googlePickerActionCallback = (data) =>{
         if (data.action === window.google.picker.Action.PICKED) {
-            // const fileId = data.docs[0].id
             setUserSelectedItemsFromDrive(data.docs.map(googleDriveDocument => ({url: googleDriveDocument.url, mimeType: googleDriveDocument.mimeType, name: googleDriveDocument.name, id: googleDriveDocument.id})))
             setIsPickerOpen(false)
         }else if(data.action === "cancel"){
