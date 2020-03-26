@@ -68,10 +68,9 @@ module.exports = [
             .then(({ cancelled, filePaths }) => {
               if (cancelled || filePaths.length === 0) return
               currentWindow.webContents.send("open-file", {
-                fileName: path.basename(filePaths[0]),
-                filePath: filePaths[0],
-                content: fs.readFileSync(filePaths[0]).toString(),
-                id: filePaths[0]
+                name: path.basename(filePaths[0]),
+                path: filePaths[0],
+                content: fs.readFileSync(filePaths[0]).toString()
               })
             })
         }

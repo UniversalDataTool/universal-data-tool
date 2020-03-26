@@ -91,14 +91,6 @@ export default ({
       ),
     [regionTypesAllowed]
   )
-  console.log({
-    selectedImage: taskData[selectedIndex].imageUrl,
-    taskDescription: iface.description,
-    ...labelProps,
-    enabledTools: enabledTools,
-    images,
-    onExit
-  })
 
   return (
     <div style={{ height: "calc(100vh - 70px)" }}>

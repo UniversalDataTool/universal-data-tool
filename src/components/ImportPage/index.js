@@ -86,6 +86,9 @@ const convertToTaskDataObject = fp => {
   if (["pdf"].includes(ext)) {
     return { pdfUrl: `file://${fp}` }
   }
+  if (["mp4", "webm", "mkv"].includes(ext)) {
+    return { videoUrl: `file://${fp}` }
+  }
   return null
 }
 

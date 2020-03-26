@@ -82,16 +82,20 @@ export default () => {
         .require("fs")
         .promises.writeFile(filePath, toUDTCSV(file.content))
     }
+    const onOpenFileFromToolbar = (e, file) => (
+      console.log(file), openFile(file)
+    )
+
     ipcRenderer.on("open-welcome-page", onOpenWelcomePage)
     ipcRenderer.on("new-file", onNewFile)
-    ipcRenderer.on("open-file", openFile)
+    ipcRenderer.on("open-file", onOpenFileFromToolbar)
     ipcRenderer.on("save-file", saveFile)
     ipcRenderer.on("save-file-as", saveFileAs)
     ipcRenderer.on("export-to-csv", exportToCSV)
     return () => {
       ipcRenderer.removeListener("open-welcome-page", onOpenWelcomePage)
       ipcRenderer.removeListener("new-file", onNewFile)
-      ipcRenderer.removeListener("open-file", openFile)
+      ipcRenderer.removeListener("open-file", onOpenFileFromToolbar)
       ipcRenderer.removeListener("save-file", saveFile)
       ipcRenderer.removeListener("save-file-as", saveFileAs)
       ipcRenderer.removeListener("export-to-csv", exportToCSV)
