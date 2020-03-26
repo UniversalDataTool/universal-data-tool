@@ -27,8 +27,6 @@ const credentials = {
 
 const scope = 'https://www.googleapis.com/auth/drive.readonly'
 
-// [ ] If picker is cancelled, dialog is broken (need to call onClose)
-
 export default ({ open, onClose, onAddSamples }) => {
     const [googleScriptLoaded, setGoogleScriptLoaded] = useState(false)
     const [pickerApiLoaded, setPickerApiLoaded] = useState(false)
@@ -56,7 +54,9 @@ export default ({ open, onClose, onAddSamples }) => {
             // const fileId = data.docs[0].id
             setUserSelectedItemsFromDrive(data.docs.map(googleDriveDocument => ({url: googleDriveDocument.url, mimeType: googleDriveDocument.mimeType, name: googleDriveDocument.name, id: googleDriveDocument.id})))
             setIsPickerOpen(false)
-      }
+        }else if(data.action === "cancel"){
+            onClose()
+        }
     }
 
     const createPicker = () =>{
