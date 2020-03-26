@@ -52,6 +52,7 @@ export default ({ open, onChangeOHA, onClose, oha }) => {
             const shell = remote.require("any-shell-escape")
             const { exec } = remote.require("child_process")
             const newTaskData = [...oha.taskData]
+            let transformsPerformed = 0
 
             for (let i = 0; i < oha.taskData.length; i++) {
               const td = oha.taskData[i]
@@ -60,6 +61,8 @@ export default ({ open, onChangeOHA, onClose, oha }) => {
                   errors += `Sample ${i} has a url to a video, videos must be downloaded before extracting frames.`
                   continue
                 }
+                transformsPerformed++
+
                 const videoPath = td.videoUrl.replace(/^file:\/\//, "")
                 const imageOutputPath =
                   videoPath + "__frameat__" + td.videoFrameAt + ".jpg"
@@ -90,6 +93,11 @@ export default ({ open, onChangeOHA, onClose, oha }) => {
                 }
               }
               changeProgress((i / oha.taskData.length) * 100)
+            }
+
+            if (transformsPerformed === 0) {
+              errors +=
+                "No transforms were performed, do all of your video samples have frames specified? You may need to convert the keyframes to samples."
             }
 
             onChangeOHA(setIn(oha, ["taskData"], newTaskData))
