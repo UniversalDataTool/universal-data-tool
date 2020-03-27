@@ -27,7 +27,7 @@ const emptyArray = []
 
 export default ({
   additionalButtons = emptyArray,
-  title = "Universal Data Tool",
+  title,
   currentTab,
   onChangeTab,
   tabs = emptyArray

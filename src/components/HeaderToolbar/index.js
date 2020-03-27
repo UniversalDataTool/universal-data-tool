@@ -17,6 +17,7 @@ import Button from "@material-ui/core/Button"
 import GithubIcon from "../Header/GithubIcon"
 import * as colors from "@material-ui/core/colors"
 import IconButton from "@material-ui/core/IconButton"
+import packageJSON from "../../../package.json"
 
 const useStyles = makeStyles(theme => ({
   headerButton: {
@@ -90,7 +91,7 @@ const HeaderToolbar = ({
             <MenuIcon />
           </IconButton>
         )}
-        {fileOpen ? title : "Universal Data Tool"}
+        {fileOpen ? title : "Universal Data Tool v" + packageJSON.version}
         {!isDesktop && (
           <CollaborateButton
             sessionBoxOpen={sessionBoxOpen}
