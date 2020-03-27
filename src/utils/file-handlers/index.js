@@ -27,9 +27,8 @@ export default () => {
 
   const openFile = useEventCallback(fsFile => {
     const { name: fileName, path: filePath } = fsFile
-    const reader = new FileReader()
-    reader.onload = e => {
-      const content = e.target.result
+
+    function handleLoadedFile(content) {
       try {
         let oha
         if (fileName.endsWith("csv")) {
@@ -51,7 +50,17 @@ export default () => {
         // addError(`Could not read file "${fsFile.name}"`)
       }
     }
-    reader.readAsText(fsFile)
+
+    if (fsFile.content) {
+      handleLoadedFile(fsFile.content)
+    } else {
+      const reader = new FileReader()
+      reader.onload = e => {
+        const content = e.target.result
+        handleLoadedFile(content)
+      }
+      reader.readAsText(fsFile)
+    }
   })
 
   const openUrl = useEventCallback(async url => {

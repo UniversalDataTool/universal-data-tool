@@ -16,6 +16,8 @@ import classnames from "classnames"
 import catImages from "./cat-images.js"
 import { setIn } from "seamless-immutable"
 import useEventCallback from "use-event-callback"
+import ImportFromGoogleDriveDialog from "../ImportFromGoogleDriveDialog"
+import { FaGoogleDrive }  from "react-icons/fa"
 
 const ButtonBase = styled(MuiButton)({
   width: 240,
@@ -85,6 +87,9 @@ const convertToTaskDataObject = fp => {
   }
   if (["pdf"].includes(ext)) {
     return { pdfUrl: `file://${fp}` }
+  }
+  if (["mp4", "webm", "mkv"].includes(ext)) {
+    return { videoUrl: `file://${fp}` }
   }
   return null
 }
@@ -173,6 +178,13 @@ export default ({ oha, onChangeOHA, isDesktop }) => {
         <Button isDesktop={isDesktop} dialog="import-cats" Icon={PetsIcon}>
           Import Cat Images
         </Button>
+        <Button
+          isDesktop={isDesktop}
+          dialog="google-drive-file-picker"
+          Icon={FaGoogleDrive}
+        >
+          Import from Google Drive
+        </Button>
         <ImportTextSnippetsDialog
           open={selectedDialog === "import-text-snippets"}
           onClose={closeDialog}
@@ -180,6 +192,11 @@ export default ({ oha, onChangeOHA, isDesktop }) => {
         />
         <PasteUrlsDialog
           open={selectedDialog === "paste-image-urls"}
+          onClose={closeDialog}
+          onAddSamples={onAddSamples}
+        />
+        <ImportFromGoogleDriveDialog
+          open={selectedDialog === "google-drive-file-picker"}
           onClose={closeDialog}
           onAddSamples={onAddSamples}
         />

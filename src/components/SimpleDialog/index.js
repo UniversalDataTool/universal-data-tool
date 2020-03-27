@@ -69,7 +69,7 @@ export default ({
             <span style={{ color: grey[700], fontWeight: 500 }}>Close</span>
           </Button>
           {actions.map((action, i) => (
-            <Button key={i} onClick={action.onClick}>
+            <Button disabled={action.disabled} key={i} onClick={action.onClick}>
               <span
                 style={{ color: redOn ? red[700] : blue[700], fontWeight: 500 }}
               >
