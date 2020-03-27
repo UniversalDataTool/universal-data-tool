@@ -5,15 +5,16 @@ Try it out at [universaldatatool.com](https://universaldatatool.com) or [downloa
 The Universal Data Tool is a web/desktop app for editing and annotating images, text, audio, documents and to view and edit any data defined in the extensible the [.udt.json and .udt.csv standard](https://github.com/UniversalDataTool/udt-format).
 
 ## Features
-* Usable on [web](https://universaldatatool.com) or as desktop application
+* Usable on [web](https://universaldatatool.com) or as [Windows,Mac or Linux desktop application](https://github.com/UniversalDataTool/universal-data-tool/wiki/Installation)
 * Collaborate with others in real time
 * Configure your project with an easy-to-use GUI
 * Scales to tens of thousands of data points per dataset
 * Download/upload as easy-to-use CSV or JSON
-* Support for Images, PDFs, Text, Audio Transcription and many other formats
+* Support for Images, Videos, PDFs, Text, Audio Transcription and many other formats
 * Can be easily integrated into a React application
-* Annotate images with classifications, tags, bounding boxes, polygons and points
+* Annotate images or videos with classifications, tags, bounding boxes, polygons and points
 * Annotate NLP datasets with Named Entity Recognition (NER), classification and Part of Speech (PoS) tagging.
+* Easily load into pandas or [use with fast.ai](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-Fast.ai)
 
 
 ![Universal Data Tool Computer Vision Cat](https://user-images.githubusercontent.com/1910070/75850482-6a2cb500-5db5-11ea-852c-7256463cece8.png)

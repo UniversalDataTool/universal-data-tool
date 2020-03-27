@@ -48,6 +48,7 @@ export default ({ open, onClose, onAddSamples }) => {
                     }
                   }
                 })
+                .filter(Boolean)
             )
           }
         }

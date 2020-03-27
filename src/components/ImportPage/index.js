@@ -19,6 +19,8 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 import isEmpty from "../../utils/isEmpty"
 import { setIn } from "seamless-immutable"
 import useEventCallback from "use-event-callback"
+import ImportFromGoogleDriveDialog from "../ImportFromGoogleDriveDialog"
+import { FaGoogleDrive } from "react-icons/fa"
 
 const ButtonBase = styled(MuiButton)({
   width: 240,
@@ -98,6 +100,9 @@ const convertToTaskDataObject = fp => {
   }
   if (["pdf"].includes(ext)) {
     return { pdfUrl: `file://${fp}` }
+  }
+  if (["mp4", "webm", "mkv"].includes(ext)) {
+    return { videoUrl: `file://${fp}` }
   }
   return null
 }
@@ -212,6 +217,13 @@ export default ({ oha, onChangeOHA, isDesktop, authConfig, user }) => {
         <Button isDesktop={isDesktop} dialog="import-from-s3" Icon={S3Icon} authConfiguredOnly={true}
           authConfig={authConfig} signedInOnly={true} user={user}>
           Import from S3
+          </Button>
+        <Button
+          isDesktop={isDesktop}
+          dialog="google-drive-file-picker"
+          Icon={FaGoogleDrive}
+        >
+          Import from Google Drive
         </Button>
         <ImportTextSnippetsDialog
           open={selectedDialog === "import-text-snippets"}
@@ -239,7 +251,12 @@ export default ({ oha, onChangeOHA, isDesktop, authConfig, user }) => {
             closeDialog()
           }}
         />
+        <ImportFromGoogleDriveDialog
+          open={selectedDialog === "google-drive-file-picker"}
+          onClose={closeDialog}
+          onAddSamples={onAddSamples}
+        />
       </div>
-    </SelectDialogContext.Provider>
+    </SelectDialogContext.Provider >
   )
 }

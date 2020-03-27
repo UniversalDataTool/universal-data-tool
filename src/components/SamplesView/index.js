@@ -13,10 +13,12 @@ import SampleGrid from "../SampleGrid"
 import Tabs from "@material-ui/core/Tabs"
 import Tab from "@material-ui/core/Tab"
 import AppsIcon from "@material-ui/icons/Apps"
+import SlideshowIcon from "@material-ui/icons/Slideshow"
 import TableChartIcon from "@material-ui/icons/TableChart"
 import Box from "@material-ui/core/Box"
 import ImportIcon from "@material-ui/icons/Publish"
 import ImportPage from "../ImportPage"
+import TransformPage from "../TransformPage"
 import useIsDesktop from "../../utils/use-is-desktop.js"
 
 const Container = styled("div")({
@@ -142,6 +144,7 @@ export default ({
     <Container>
       <Tabs value={currentTab} onChange={(e, newTab) => changeTab(newTab)}>
         <Tab icon={<ImportIcon />} label="Import" value="import" />
+        <Tab icon={<SlideshowIcon />} label="Transform" value="transform" />
         <Tab icon={<AppsIcon />} label="Grid" value="grid" />
         <Tab icon={<TableChartIcon />} label="Table" value="table" />
       </Tabs>
@@ -158,6 +161,18 @@ export default ({
           oha={oha}
           authConfig={authConfig}
           user={user}
+        />
+      )}
+      {currentTab === "transform" && (
+        <TransformPage
+          isDesktop={isDesktop}
+          oha={oha}
+          onChangeOHA={(oha, shouldViewChange) => {
+            onChangeOHA(oha)
+            if (shouldViewChange) {
+              changeTab("grid")
+            }
+          }}
         />
       )}
       {currentTab === "grid" && (

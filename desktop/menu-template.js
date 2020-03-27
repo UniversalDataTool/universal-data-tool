@@ -68,13 +68,42 @@ module.exports = [
             .then(({ cancelled, filePaths }) => {
               if (cancelled || filePaths.length === 0) return
               currentWindow.webContents.send("open-file", {
-                fileName: path.basename(filePaths[0]),
-                filePath: filePaths[0],
-                content: fs.readFileSync(filePaths[0]).toString(),
-                id: filePaths[0]
+                name: path.basename(filePaths[0]),
+                path: filePaths[0],
+                content: fs.readFileSync(filePaths[0]).toString()
               })
             })
         }
+      },
+      {
+        role: "copy",
+        label: "Copy",
+        accelerator: "CommandOrControl+C",
+        selector: "copy:"
+      },
+      {
+        role: "paste",
+        label: "Paste",
+        accelerator: "CommandOrControl+V",
+        selector: "paste:"
+      },
+      {
+        role: "selectAll",
+        label: "Select All",
+        accelerator: "CommandOrControl+A",
+        selector: "selectAll:"
+      },
+      {
+        role: "cut",
+        label: "Cut",
+        accelerator: "CommandOrControl+X",
+        selector: "cut:"
+      },
+      {
+        role: "undo",
+        label: "Undo",
+        accelerator: "CommandOrControl+Z",
+        selector: "undo:"
       },
       {
         role: "save",
@@ -103,6 +132,41 @@ module.exports = [
       {
         role: "quit"
       }
+    ]
+  },
+  {
+    label: "Edit",
+    submenu: [
+      {
+        role: "copy",
+        label: "Copy",
+        accelerator: "CommandOrControl+C",
+        selector: "copy:"
+      },
+      {
+        role: "paste",
+        label: "Paste",
+        accelerator: "CommandOrControl+V",
+        selector: "paste:"
+      },
+      {
+        role: "selectAll",
+        label: "Select All",
+        accelerator: "CommandOrControl+A",
+        selector: "selectAll:"
+      },
+      {
+        role: "cut",
+        label: "Cut",
+        accelerator: "CommandOrControl+X",
+        selector: "cut:"
+      },
+      {
+        role: "undo",
+        label: "Undo",
+        accelerator: "CommandOrControl+Z",
+        selector: "undo:"
+      },
     ]
   },
   {
