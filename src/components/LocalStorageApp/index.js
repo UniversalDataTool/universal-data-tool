@@ -11,6 +11,7 @@ import useFileHandler from "../../utils/file-handlers"
 import download from "in-browser-download"
 import toUDTCSV from "../../utils/to-udt-csv.js"
 import { setIn } from "seamless-immutable"
+import ErrorBoundary from "../ErrorBoundary"
 import useEventCallback from "use-event-callback"
 
 const useStyles = makeStyles({
@@ -109,18 +110,20 @@ export default () => {
             onClickOpenSession={() => changeSessionBoxOpen(true)}
           />
         ) : (
-          <OHAEditor
-            key={file.id}
-            {...file}
-            inSession={inSession}
-            oha={file.content}
-            onChangeFileName={newName => {
-              changeFile(setIn(file, ["fileName"], newName))
-            }}
-            onChangeOHA={newOHA => {
-              changeFile(setIn(file, ["content"], newOHA))
-            }}
-          />
+          <ErrorBoundary>
+            <OHAEditor
+              key={file.id}
+              {...file}
+              inSession={inSession}
+              oha={file.content}
+              onChangeFileName={newName => {
+                changeFile(setIn(file, ["fileName"], newName))
+              }}
+              onChangeOHA={newOHA => {
+                changeFile(setIn(file, ["content"], newOHA))
+              }}
+            />
+          </ErrorBoundary>
         )}
       </HeaderContext.Provider>
       <ErrorToasts errors={errors} />

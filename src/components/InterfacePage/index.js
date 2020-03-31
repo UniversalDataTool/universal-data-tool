@@ -21,6 +21,9 @@ export default ({ oha, onChange, onClickEditJSON, onClearLabelData }) => {
   const forceUpdate = useUpdate()
   const isDesktop = useIsDesktop()
 
+  if (iface.type === "image_segmentation")
+    throw new Error("Image segmentation isn't valid sorry")
+
   return (
     <div>
       <ConfigureInterface
