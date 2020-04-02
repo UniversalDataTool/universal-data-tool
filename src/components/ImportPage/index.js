@@ -17,7 +17,8 @@ import catImages from "./cat-images.js"
 import { setIn } from "seamless-immutable"
 import useEventCallback from "use-event-callback"
 import ImportFromGoogleDriveDialog from "../ImportFromGoogleDriveDialog"
-import { FaGoogleDrive }  from "react-icons/fa"
+import ImportToyDataset from "../ImportToyDatasetDialog"
+import { FaGoogleDrive } from "react-icons/fa"
 
 const ButtonBase = styled(MuiButton)({
   width: 240,
@@ -175,8 +176,12 @@ export default ({ oha, onChangeOHA, isDesktop }) => {
         <Button dialog="import-text-snippets" Icon={TextFieldsIcon}>
           Import Text Snippets
         </Button>
-        <Button isDesktop={isDesktop} dialog="import-cats" Icon={PetsIcon}>
-          Import Cat Images
+        <Button
+          isDesktop={isDesktop}
+          dialog="import-toy-dataset"
+          Icon={PetsIcon}
+        >
+          Import Toy Dataset
         </Button>
         <Button
           isDesktop={isDesktop}
@@ -197,6 +202,11 @@ export default ({ oha, onChangeOHA, isDesktop }) => {
         />
         <ImportFromGoogleDriveDialog
           open={selectedDialog === "google-drive-file-picker"}
+          onClose={closeDialog}
+          onAddSamples={onAddSamples}
+        />
+        <ImportToyDataset
+          open={selectedDialog === "import-toy-dataset"}
           onClose={closeDialog}
           onAddSamples={onAddSamples}
         />
