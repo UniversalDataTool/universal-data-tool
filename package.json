@@ -19,7 +19,8 @@
     "test": "react-scripts test",
     "storybook": "start-storybook -p 6002 -s public",
     "build-storybook": "build-storybook -s public",
-    "gh-pages": "npm run build:web && cp ./CNAME ./build/CNAME && gh-pages -d build"
+    "gh-pages": "npm run build:web && cp ./CNAME ./build/CNAME && gh-pages -d build",
+    "prettier": "prettier --write \"src/**/*.js\""
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -75,6 +76,7 @@
     "js-md5": "^0.7.3",
     "moment": "^2.24.0",
     "posthog-js": "^1.0.4",
+    "prettier": "^2.0.2",
     "react-ace": "^7.0.4",
     "react-data-table-component": "^6.2.2",
     "react-dropzone": "^10.1.8",
