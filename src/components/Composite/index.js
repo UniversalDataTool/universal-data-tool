@@ -18,19 +18,19 @@ const Title = styled("div")({
   borderBottom: `1px solid ${colors.grey[300]}`,
   paddingBottom: 8,
   marginBottom: 8,
-  paddingLeft: 8
+  paddingLeft: 8,
 })
 const StyledButton = styled(Button)({
   display: "flex",
   textAlign: "left",
   justifyContent: "flex-start",
-  marginTop: 8
+  marginTop: 8,
 })
 
-export const Composite = props => {
+export const Composite = (props) => {
   const [currentSampleIndex, changeCurrentSampleIndex] = useState(0)
   const {
-    interface: { fields }
+    interface: { fields },
   } = props
   const [selectedField, changeSelectedField] = useState()
   const [taskOutput, changeTaskOutput] = useState(props.taskOutput)
@@ -45,14 +45,14 @@ export const Composite = props => {
               ? (props.taskOutput[currentSampleIndex] || {})[
                   selectedField.fieldName
                 ]
-              : null
+              : null,
           ],
-          taskData: [props.taskData[currentSampleIndex]]
+          taskData: [props.taskData[currentSampleIndex]],
         }}
         onSaveTaskOutputItem={(indexZero, output) => {
           props.onSaveTaskOutputItem(currentSampleIndex, {
             ...(props.taskOutput ? props.taskOutput[currentSampleIndex] : {}),
-            [selectedField.fieldName]: output
+            [selectedField.fieldName]: output,
           })
           changeSelectedField(null)
         }}
@@ -72,7 +72,7 @@ export const Composite = props => {
         getTaskDescription(props.taskData[currentSampleIndex]) ||
         props.interface.description
       }
-      onChangeSample={sampleIndex => changeCurrentSampleIndex(sampleIndex)}
+      onChangeSample={(sampleIndex) => changeCurrentSampleIndex(sampleIndex)}
     >
       <Title>Fields</Title>
       {fields.map((field, index) => (

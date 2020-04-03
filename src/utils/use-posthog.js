@@ -7,7 +7,7 @@ export default () => {
   if (!window.posthogInitialized) {
     posthog.init("dSrx1PbFd02XsxlLd7qNbeTxKZwwao2sclVmapyYlT4", {
       api_host: "https://posthog.universaldatatool.com",
-      autocapture: false
+      autocapture: false,
     })
     const domain = isDesktop ? "desktop" : window.location.origin
     posthog.capture("domain", { domain })

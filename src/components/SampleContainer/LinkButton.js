@@ -5,13 +5,13 @@ import { makeStyles } from "@material-ui/core/styles"
 const useStyles = makeStyles({
   linkButtonContainer: {
     marginLeft: 8,
-    marginRight: 8
+    marginRight: 8,
   },
   linkButton: {
     textTransform: "none",
     cursor: "pointer",
-    textDecoration: "underline"
-  }
+    textDecoration: "underline",
+  },
 })
 
 export default ({ onClick, text }: { onClick: Function, text: string }) => {

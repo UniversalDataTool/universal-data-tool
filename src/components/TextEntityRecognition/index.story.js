@@ -18,28 +18,28 @@ storiesOf("TextEntityRecognition", module).add("Basic", () => (
         {
           id: "food",
           displayName: "Food",
-          description: "Edible item."
+          description: "Edible item.",
         },
         {
           id: "hat",
           displayName: "Hat",
-          description: "Something worn on the head."
-        }
-      ]
+          description: "Something worn on the head.",
+        },
+      ],
     }}
     taskData={[
       {
         document:
-          "This strainer makes a great hat, I'll wear it while I serve spaghetti!"
-      }
+          "This strainer makes a great hat, I'll wear it while I serve spaghetti!",
+      },
     ]}
     taskOutput={[
       {
         entities: [
           { text: "strainer", label: "hat", start: 5, end: 13 },
-          { text: "spaghetti", label: "food", start: 60, end: 69 }
-        ]
-      }
+          { text: "spaghetti", label: "food", start: 60, end: 69 },
+        ],
+      },
     ]}
   />
 ))

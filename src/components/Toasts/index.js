@@ -4,7 +4,7 @@ import React, {
   useContext,
   useState,
   useEffect,
-  useReducer
+  useReducer,
 } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import * as colors from "@material-ui/core/colors"
@@ -21,7 +21,7 @@ const useStyles = makeStyles({
     left: 0,
     right: 0,
     alignItems: "flex-start",
-    pointerEvents: "none"
+    pointerEvents: "none",
   },
   msgBox: {
     display: "flex",
@@ -32,12 +32,12 @@ const useStyles = makeStyles({
     marginBottom: 4,
     boxShadow: "0px 3px 8px rgba(0,0,0,0.5)",
     "&.warning": {
-      backgroundColor: colors.orange[700]
+      backgroundColor: colors.orange[700],
     },
     "&.error": {
-      backgroundColor: colors.red[700]
-    }
-  }
+      backgroundColor: colors.red[700],
+    },
+  },
 })
 
 const REFRESH_INTERVAL = 100
@@ -62,22 +62,20 @@ export const ToastProvider = ({ children }) => {
 
       return state.concat([
         {
-          id: Math.random()
-            .toString()
-            .split(".")[1],
+          id: Math.random().toString().split(".")[1],
           message: action.message,
           type: action.messageType,
           life: fullLife,
-          fullLife
-        }
+          fullLife,
+        },
       ])
     } else if (action.type === "tick") {
       return state
-        .map(msg => ({
+        .map((msg) => ({
           ...msg,
-          life: msg.life - REFRESH_INTERVAL
+          life: msg.life - REFRESH_INTERVAL,
         }))
-        .filter(msg => msg.life > 0)
+        .filter((msg) => msg.life > 0)
     }
     return state
   }, [])
@@ -100,7 +98,7 @@ export const ToastProvider = ({ children }) => {
         {children}
       </ToastContext.Provider>
       <div className={c.root}>
-        {toasts.map(msg => (
+        {toasts.map((msg) => (
           <Collapse key={msg.id} in={msg.life < msg.fullLife}>
             <Fade in={msg.life > 600}>
               <div className={classNames(c.msgBox, msg.type)}>

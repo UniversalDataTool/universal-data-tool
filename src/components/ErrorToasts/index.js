@@ -14,22 +14,22 @@ const useStyles = makeStyles({
     left: 0,
     right: 0,
     alignItems: "center",
-    pointerEvents: "none"
+    pointerEvents: "none",
   },
   errorBox: {
     display: "flex",
     backgroundColor: red[700],
     color: "#fff",
     padding: 4,
-    marginBottom: 4
-  }
+    marginBottom: 4,
+  },
 })
 
 export default ({ errors }) => {
   const c = useStyles()
   return (
     <div className={c.root}>
-      {errors.map(err => (
+      {errors.map((err) => (
         <Collapse key={err.id} in={err.life < 5000}>
           <Fade in={err.life > 500}>
             <div className={c.errorBox}>{err.message}</div>

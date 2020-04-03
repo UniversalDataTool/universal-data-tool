@@ -6,7 +6,7 @@ import Edit from "@material-ui/icons/Edit"
 import OndemandVideo from "@material-ui/icons/OndemandVideo"
 import Audiotrack from "@material-ui/icons/Audiotrack"
 import Help from "@material-ui/icons/Help"
-import ThreeDRotation from '@material-ui/icons/ThreeDRotation';
+import ThreeDRotation from "@material-ui/icons/ThreeDRotation"
 
 export default ({ type, ...props }) => {
   switch (type) {

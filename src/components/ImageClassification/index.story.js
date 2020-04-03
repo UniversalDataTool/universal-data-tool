@@ -15,19 +15,19 @@ storiesOf("ImageClassification", module)
         interface: {
           type: "image_segmentation",
           description: "# Title\n\nLowercase",
-          availableLabels: ["valid", "invalid"]
+          availableLabels: ["valid", "invalid"],
         },
         taskData: [
           {
             imageUrl:
-              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg"
+              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
           },
           {
             imageUrl:
-              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg"
-          }
+              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg",
+          },
         ],
-        taskOutput: ["valid", null]
+        taskOutput: ["valid", null],
       }}
     />
   ))
@@ -39,19 +39,19 @@ storiesOf("ImageClassification", module)
           type: "image_segmentation",
           description: "# Title\n\nLowercase",
           availableLabels: ["valid", "invalid"],
-          allowMultiple: true
+          allowMultiple: true,
         },
         taskData: [
           {
             imageUrl:
-              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg"
+              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
           },
           {
             imageUrl:
-              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg"
-          }
+              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg",
+          },
         ],
-        taskOutput: ["valid", null]
+        taskOutput: ["valid", null],
       }}
     />
   ))

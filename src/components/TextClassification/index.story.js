@@ -19,14 +19,14 @@ storiesOf("TextClassification", module)
           {
             id: "gryffindor",
             displayName: "Gryffindor",
-            description: "Daring, strong nerve and chivalry."
+            description: "Daring, strong nerve and chivalry.",
           },
           {
             id: "slytherin",
             displayName: "Slytherin",
-            description: "Cunning and ambitious. Possibly dark wizard."
-          }
-        ]
+            description: "Cunning and ambitious. Possibly dark wizard.",
+          },
+        ],
       }}
       taskData={[{ document: "Harry" }, { document: "Malfoy" }]}
       taskOutput={[{ label: "gryffindor" }, null]}
@@ -44,14 +44,14 @@ storiesOf("TextClassification", module)
           {
             id: "gryffindor",
             displayName: "Gryffindor",
-            description: "Daring, strong nerve and chivalry."
+            description: "Daring, strong nerve and chivalry.",
           },
           {
             id: "slytherin",
             displayName: "Slytherin",
-            description: "Cunning and ambitious. Possibly dark wizard."
-          }
-        ]
+            description: "Cunning and ambitious. Possibly dark wizard.",
+          },
+        ],
       }}
       taskData={[{ document: "Harry" }, { document: "Malfoy" }]}
       taskOutput={[{ label: "gryffindor" }, null]}

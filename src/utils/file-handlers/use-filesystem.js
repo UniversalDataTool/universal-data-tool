@@ -22,9 +22,9 @@ export default (file, changeFile) => {
       if (!file.filePath || saveAs) {
         const {
           cancelled,
-          filePath: newFilePath
+          filePath: newFilePath,
         } = await remote.dialog.showSaveDialog({
-          filters: [{ name: ".udt.json", extensions: ["udt.json"] }]
+          filters: [{ name: ".udt.json", extensions: ["udt.json"] }],
         })
         filePath =
           !newFilePath || newFilePath.endsWith(".json")
@@ -37,7 +37,7 @@ export default (file, changeFile) => {
         changeFile({
           ...file,
           filePath,
-          fileName: filePath.split("/").slice(-1)[0]
+          fileName: filePath.split("/").slice(-1)[0],
         })
       }
       await remote
@@ -60,7 +60,7 @@ export default (file, changeFile) => {
             .slice(0, -1)
             .concat([
               file.fileName +
-                (file.fileName.endsWith(".json") ? "" : ".oha.json")
+                (file.fileName.endsWith(".json") ? "" : ".oha.json"),
             ])
             .join("/")
         )

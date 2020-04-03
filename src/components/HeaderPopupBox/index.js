@@ -14,7 +14,7 @@ const popupBoxBeforeAndAfter = {
   height: 0,
   width: 0,
   position: "absolute",
-  pointerEvents: "none"
+  pointerEvents: "none",
 }
 const PopupBox = styled("div")({
   position: "absolute",
@@ -33,31 +33,31 @@ const PopupBox = styled("div")({
     borderColor: "rgba(0,0,0, 0)",
     borderBottomColor: borderColor,
     borderWidth: 12,
-    marginLeft: -12
+    marginLeft: -12,
   },
   "&:after": {
     ...popupBoxBeforeAndAfter,
     borderColor: "rgba(255,255,255, 0)",
     borderBottomColor: "#fff",
     borderWidth: 10,
-    marginLeft: -10
+    marginLeft: -10,
   },
   "& h1": {
     fontSize: 18,
     marginTop: 0,
-    color: colors.blue[800]
+    color: colors.blue[800],
   },
   "& h2": {
     fontSize: 14,
-    color: colors.grey[800]
+    color: colors.grey[800],
   },
   opacity: 1,
   transition: "opacity 200ms linear, transform 200ms ease",
   "&.hidden": {
     opacity: 0,
     transform: "translate(0, 10px)",
-    pointerEvents: "none"
-  }
+    pointerEvents: "none",
+  },
 })
 
 export default ({ open, children }) => {

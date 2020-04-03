@@ -19,20 +19,20 @@ storiesOf("ImportPage", module)
             "bounding-box",
             "polygon",
             // "full-segmentation",
-            "point"
+            "point",
             // "pixel-mask"
-          ]
+          ],
         },
         taskData: [
           {
             imageUrl:
-              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg"
+              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
           },
           {
             imageUrl:
-              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg"
-          }
-        ]
+              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg",
+          },
+        ],
       }}
       onChangeOHA={action("onChangeOHA")}
     />
@@ -48,20 +48,20 @@ storiesOf("ImportPage", module)
             "bounding-box",
             "polygon",
             // "full-segmentation",
-            "point"
+            "point",
             // "pixel-mask"
-          ]
+          ],
         },
         taskData: [
           {
             imageUrl:
-              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg"
+              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
           },
           {
             imageUrl:
-              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg"
-          }
-        ]
+              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg",
+          },
+        ],
       }}
       onChangeOHA={action("onChangeOHA")}
     />

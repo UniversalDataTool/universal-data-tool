@@ -19,14 +19,14 @@ const getJSON = bent("json", "GET", serverUrl)
 const postJSON = bent("json", "POST", serverUrl)
 const patchJSON = bent("json", "PATCH", serverUrl)
 
-const hash = o => objectHash(JSON.parse(JSON.stringify(o)))
+const hash = (o) => objectHash(JSON.parse(JSON.stringify(o)))
 
-export const getLatestState = async sessionId => {
+export const getLatestState = async (sessionId) => {
   try {
     const res = await getJSON(`/api/session/${encodeURIComponent(sessionId)}`)
     return {
       state: res.udt_json,
-      version: res.version
+      version: res.version,
     }
   } catch (e) {
     console.log(`error getting session "${sessionId}"`)
@@ -34,7 +34,7 @@ export const getLatestState = async sessionId => {
   }
 }
 
-export const convertToCollaborativeFile = async file => {
+export const convertToCollaborativeFile = async (file) => {
   const response = await postJSON("/api/session", { udt: file.content })
   return {
     id: response.short_id,
@@ -43,7 +43,7 @@ export const convertToCollaborativeFile = async file => {
     content: file.content,
     lastSyncedVersion: response.version,
     lastSyncedState: cloneDeep(file.content),
-    mode: "server"
+    mode: "server",
   }
 }
 
@@ -59,7 +59,7 @@ export default (file, changeFile) => {
           patch,
           hashOfLatestState,
           latestVersion,
-          changeLog
+          changeLog,
         } = await getJSON(
           `/api/session/${encodeURIComponent(file.sessionId)}/diffs?since=${
             file.lastSyncedVersion
@@ -119,7 +119,7 @@ export default (file, changeFile) => {
               ...file,
               content: latest,
               lastSyncedState: latest,
-              lastSyncedVersion: version
+              lastSyncedVersion: version,
             })
           )
         } else {
@@ -128,7 +128,7 @@ export default (file, changeFile) => {
               ...file,
               content: newFileContent,
               lastSyncedState: newFileContent,
-              lastSyncedVersion: latestVersion
+              lastSyncedVersion: latestVersion,
             })
           )
         }
@@ -156,7 +156,10 @@ export default (file, changeFile) => {
         userName = JSON.parse(window.localStorage.userName)
       } catch (e) {}
 
-      const { hashOfLatestState, latestVersion } = await patchJSON(
+      const {
+        hashOfLatestState,
+        latestVersion,
+      } = await patchJSON(
         `/api/session/${encodeURIComponent(file.sessionId)}`,
         { patch, userName }
       )
@@ -171,7 +174,7 @@ export default (file, changeFile) => {
             ...file,
             content: latest,
             lastSyncedState: latest,
-            lastSyncedVersion: version
+            lastSyncedVersion: version,
           })
         )
       } else {

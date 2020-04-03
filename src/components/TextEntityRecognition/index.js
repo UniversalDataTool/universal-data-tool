@@ -3,7 +3,7 @@ import getTaskDescription from "../../utils/get-task-description.js"
 import SampleContainer from "../SampleContainer"
 import NLPAnnotator from "react-nlp-annotate/components/NLPAnnotator"
 
-const simpleSequenceToEntitySequence = simpleSeq => {
+const simpleSequenceToEntitySequence = (simpleSeq) => {
   const entSeq = []
   let charsPassed = 0
   for (const seq of simpleSeq) {
@@ -12,7 +12,7 @@ const simpleSequenceToEntitySequence = simpleSeq => {
         text: seq.text,
         label: seq.label,
         start: charsPassed,
-        end: charsPassed + seq.text.length
+        end: charsPassed + seq.text.length,
       })
     }
     charsPassed += seq.text.length
@@ -30,7 +30,7 @@ const entitySequenceToSimpleSeq = (doc, entSeq) => {
     if ((entSeq[nextEntity] || {}).start === i) {
       simpleSeq.push({
         text: entSeq[nextEntity].text,
-        label: entSeq[nextEntity].label
+        label: entSeq[nextEntity].label,
       })
       i = entSeq[nextEntity].end
       nextEntity += 1
@@ -45,7 +45,7 @@ const entitySequenceToSimpleSeq = (doc, entSeq) => {
   return simpleSeq
 }
 
-export const TextEntityRecognition = props => {
+export const TextEntityRecognition = (props) => {
   const [currentSampleIndex, changeCurrentSampleIndex] = useState(0)
   const initialSequence =
     props.taskOutput && props.taskOutput[currentSampleIndex]
@@ -65,7 +65,7 @@ export const TextEntityRecognition = props => {
         getTaskDescription(props.taskData[currentSampleIndex]) ||
         props.interface.description
       }
-      onChangeSample={sampleIndex => changeCurrentSampleIndex(sampleIndex)}
+      onChangeSample={(sampleIndex) => changeCurrentSampleIndex(sampleIndex)}
     >
       <NLPAnnotator
         key={currentSampleIndex}
@@ -73,9 +73,9 @@ export const TextEntityRecognition = props => {
         document={props.taskData[currentSampleIndex].document}
         labels={props.interface.labels}
         initialSequence={initialSequence}
-        onFinish={result => {
+        onFinish={(result) => {
           props.onSaveTaskOutputItem(currentSampleIndex, {
-            entities: simpleSequenceToEntitySequence(result)
+            entities: simpleSequenceToEntitySequence(result),
           })
           if (props.containerProps.onExit)
             props.containerProps.onExit("go-to-next")
