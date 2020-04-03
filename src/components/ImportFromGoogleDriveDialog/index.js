@@ -22,7 +22,7 @@ const credentials = {
       "294393711342-h5aqqt3pvn8othepvsmi16iakdhi7m6j.apps.googleusercontent.com",
     app_id: process.env.REACT_APP_GOOGLE_DRIVE_APP_ID || "294393711342",
     developer_key:
-      process.env.REACT_APP_DEVELOPER_KEY ||
+      process.env.REACT_APP_GOOGLE_DRIVE_DEVELOPER_KEY ||
       "AIzaSyCoNoDnfzDBSXpt84Q75LU9UMTzvyLkRhg",
   },
 }

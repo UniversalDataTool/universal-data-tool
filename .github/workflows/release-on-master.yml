@@ -33,3 +33,6 @@ jobs:
           npx gh-pages -d build -u "github-actions-bot <support+actions@github.com>"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REACT_APP_GOOGLE_DRIVE_APP_ID: ${{ secrets.REACT_APP_GOOGLE_DRIVE_APP_ID }}
+          REACT_APP_GOOGLE_DRIVE_CLIENT_ID: ${{ secrets.REACT_APP_GOOGLE_DRIVE_CLIENT_ID }}
+          REACT_APP_GOOGLE_DRIVE_DEVELOPER_KEY: ${{ secrets.REACT_APP_GOOGLE_DRIVE_DEVELOPER_KEY }}
