@@ -1,5 +1,11 @@
 # Universal Data Tool
 
+![Master Branch](https://github.com/UniversalDataTool/universal-data-tool/workflows/Test/badge.svg)
+[![npm version](https://badge.fury.io/js/universal-data-tool.svg)](https://badge.fury.io/js/universal-data-tool)
+[![GitHub license](https://img.shields.io/github/license/UniversalDataTool/universal-data-tool)](https://github.com/UniversalDataTool/universal-data-tool/blob/master/LICENSE)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/UniversalDataTool/universal-data-tool)
+![Platform Support Web/Win/Linux/Mac](https://img.shields.io/badge/platforms-Web%20Windows%20Linux%20Mac-blueviolet)
+
 Try it out at [universaldatatool.com](https://universaldatatool.com) or [download it here](https://github.com/UniversalDataTool/universal-data-tool/releases).
 
 The Universal Data Tool is a web/desktop app for editing and annotating images, text, audio, documents and to view and edit any data defined in the extensible the [.udt.json and .udt.csv standard](https://github.com/UniversalDataTool/udt-format).
