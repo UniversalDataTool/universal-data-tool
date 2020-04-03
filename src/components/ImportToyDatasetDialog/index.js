@@ -13,7 +13,7 @@ import TableRow from "@material-ui/core/TableRow"
 
 const datasets = [
   { name: "Elon Musk Tweets", type: "text", size: 2800 },
-  { name: "Cats", type: "image", size: 320 },
+  { name: "Cats", type: "image", size: 360 },
   { name: "VR Hand Pinching", type: "image", size: 20517 },
   { name: "AI Generated Faces", type: "image", size: 1999 },
   { name: "Text to Speech Audio", type: "audio", size: 200 },

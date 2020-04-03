@@ -13,7 +13,6 @@ import ImportTextSnippetsDialog from "../ImportTextSnippetsDialog"
 import useIsDesktop from "../../utils/use-is-desktop"
 import useElectron from "../../utils/use-electron"
 import classnames from "classnames"
-import catImages from "./cat-images.js"
 import { setIn } from "seamless-immutable"
 import useEventCallback from "use-event-callback"
 import ImportFromGoogleDriveDialog from "../ImportFromGoogleDriveDialog"
@@ -26,7 +25,7 @@ const ButtonBase = styled(MuiButton)({
   display: "inline-flex",
   flexDirection: "column",
   "&.disabled": {
-    backgroundColor: colors.grey[200]
+    backgroundColor: colors.grey[200],
   },
   margin: 8,
   "& .icon": {
@@ -34,9 +33,9 @@ const ButtonBase = styled(MuiButton)({
     height: 48,
     color: colors.grey[600],
     "&.disabled": {
-      color: colors.grey[400]
-    }
-  }
+      color: colors.grey[400],
+    },
+  },
 })
 
 const DesktopOnlyText = styled("div")({
@@ -44,8 +43,8 @@ const DesktopOnlyText = styled("div")({
   fontWeight: "bold",
   color: colors.grey[600],
   "&.disabled": {
-    color: colors.grey[500]
-  }
+    color: colors.grey[500],
+  },
 })
 
 const SelectDialogContext = createContext()
@@ -78,11 +77,8 @@ const Button = ({ Icon, desktopOnly, isDesktop, children, dialog }) => {
   )
 }
 
-const convertToTaskDataObject = fp => {
-  const ext = fp
-    .split(".")
-    .slice(-1)[0]
-    .toLowerCase()
+const convertToTaskDataObject = (fp) => {
+  const ext = fp.split(".").slice(-1)[0].toLowerCase()
   if (["png", "jpg", "jpeg"].includes(ext)) {
     return { imageUrl: `file://${fp}` }
   }
@@ -98,24 +94,24 @@ const convertToTaskDataObject = fp => {
 export default ({ oha, onChangeOHA, isDesktop }) => {
   const [selectedDialog, changeDialog] = useState()
   const electron = useElectron()
-  const onChangeDialog = async dialog => {
+  const onChangeDialog = async (dialog) => {
     switch (dialog) {
       case "upload-directory": {
         if (!electron) return
         const {
           canceled,
-          filePaths: dirPaths
+          filePaths: dirPaths,
         } = await electron.remote.dialog.showOpenDialog({
           title: "Select Directory to Import Files",
-          properties: ["openDirectory"]
+          properties: ["openDirectory"],
         })
         if (canceled) return
         const dirPath = dirPaths[0]
         const fs = electron.remote.require("fs")
         const path = electron.remote.require("path")
         const importedFilePaths = (await fs.promises.readdir(dirPath))
-          .filter(fn => fn.includes("."))
-          .map(fileName => path.join(dirPath, fileName))
+          .filter((fn) => fn.includes("."))
+          .map((fileName) => path.join(dirPath, fileName))
 
         onChangeOHA(
           setIn(
@@ -129,26 +125,13 @@ export default ({ oha, onChangeOHA, isDesktop }) => {
         )
         return
       }
-      case "import-cats": {
-        onChangeOHA(
-          setIn(
-            oha,
-            ["taskData"],
-            (oha.taskData || []).concat(
-              catImages.map(imageUrl => ({ imageUrl }))
-            )
-          ),
-          true
-        )
-        return
-      }
       default: {
         return changeDialog(dialog)
       }
     }
   }
   const closeDialog = () => changeDialog(null)
-  const onAddSamples = useEventCallback(samples => {
+  const onAddSamples = useEventCallback((samples) => {
     onChangeOHA(
       setIn(oha, ["taskData"], (oha.taskData || []).concat(samples)),
       true
