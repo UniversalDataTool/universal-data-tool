@@ -10,7 +10,7 @@ import useLocalStorage from "../../utils/use-local-storage.js"
 import useFileHandler from "../../utils/file-handlers"
 import download from "in-browser-download"
 import toUDTCSV from "../../utils/to-udt-csv.js"
-import Amplify, { Auth } from 'aws-amplify';
+import Amplify, { Auth } from "aws-amplify"
 import config from "../LocalStorageApp/myAWSconfig"
 import isEmpty from "../../utils/isEmpty"
 import { setIn } from "seamless-immutable"
@@ -67,11 +67,13 @@ export default () => {
   const [user, changeUser] = useState(null)
 
   const logoutUser = () => {
-    Auth.signOut().then(() => {
-      changeUser(null)
-    }).catch(err => {
-      console.log(err)
-    })
+    Auth.signOut()
+      .then(() => {
+        changeUser(null)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   useEffect(() => {
@@ -79,7 +81,7 @@ export default () => {
       try {
         Amplify.configure(config)
 
-        console.log('ok')
+        console.log("ok")
 
         Auth.currentAuthenticatedUser()
           .then((tryUser) => {
@@ -95,8 +97,6 @@ export default () => {
       }
     }
   }, [])
-
-
 
   const onJoinSession = useCallback(async (sessionName) => {
     await openUrl(sessionName)
@@ -136,7 +136,7 @@ export default () => {
           authConfig,
           onUserChange: (userToSet) => changeUser(userToSet),
           user: user,
-          logoutUser: logoutUser
+          logoutUser: logoutUser,
         }}
       >
         {!file ? (
@@ -151,29 +151,29 @@ export default () => {
             logoutUser={logoutUser}
           />
         ) : (
-            <ErrorBoundary>
-              <OHAEditor
-                key={file.id}
-                {...file}
-                inSession={inSession}
-                oha={file.content}
-                onChangeFileName={newName => {
-                  changeFile(setIn(file, ["fileName"], newName))
-                }}
-                onChangeOHA={newOHA => {
-                  changeFile(setIn(file, ["content"], newOHA))
-                }}
-                authConfig
-                user={user}
-                onChangeFileName={(newName) => {
-                  changeFile(setIn(file, ["fileName"], newName))
-                }}
-                onChangeOHA={(newOHA) => {
-                  changeFile(setIn(file, ["content"], newOHA))
-                }}
-              />
-            </ErrorBoundary>
-          )}
+          <ErrorBoundary>
+            <OHAEditor
+              key={file.id}
+              {...file}
+              inSession={inSession}
+              oha={file.content}
+              onChangeFileName={(newName) => {
+                changeFile(setIn(file, ["fileName"], newName))
+              }}
+              onChangeOHA={(newOHA) => {
+                changeFile(setIn(file, ["content"], newOHA))
+              }}
+              authConfig
+              user={user}
+              onChangeFileName={(newName) => {
+                changeFile(setIn(file, ["fileName"], newName))
+              }}
+              onChangeOHA={(newOHA) => {
+                changeFile(setIn(file, ["content"], newOHA))
+              }}
+            />
+          </ErrorBoundary>
+        )}
       </HeaderContext.Provider>
       <ErrorToasts errors={errors} />
     </>

@@ -14,7 +14,7 @@ import isEmpty from "../../utils/isEmpty"
 import Survey from "material-survey/components/Survey"
 import ErrorToasts from "../ErrorToasts"
 import useErrors from "../../utils/use-errors.js"
-import Amplify, { Auth } from 'aws-amplify';
+import Amplify, { Auth } from "aws-amplify"
 
 const useStyles = makeStyles({
   bigButton: {
@@ -22,16 +22,16 @@ const useStyles = makeStyles({
     width: 150,
     height: 120,
     border: "1px solid #ccc",
-    margin: 10
+    margin: 10,
   },
   bigIcon: {
     width: 48,
-    height: 48
+    height: 48,
   },
   cognitoIcon: {
     width: 48,
-    height: 48
-  }
+    height: 48,
+  },
 })
 
 const forms = {
@@ -42,31 +42,31 @@ const forms = {
         title: "Amazon Cognito Identity Pool ID",
         placeholder: "XX-XXXX-X:XXXXXXXX-XXXX-1234-abcd-1234567890ab",
         type: "text",
-        isRequired: true
+        isRequired: true,
       },
       {
         name: "region",
         title: "AWS Region",
         placeholder: "XX-XXXX-X",
         type: "text",
-        isRequired: true
+        isRequired: true,
       },
       {
         name: "userPoolId",
         title: "Amazon Cognito User Pool ID",
         placeholder: "XX-XXXX-X_12ab34cd9",
         type: "text",
-        isRequired: true
+        isRequired: true,
       },
       {
         name: "userPoolWebClientId",
         title: "Amazon Cognito Web Client ID",
         placeholder: "26-char alphanumeric string",
         type: "text",
-        isRequired: true
-      }
-    ]
-  }
+        isRequired: true,
+      },
+    ],
+  },
 }
 
 export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
@@ -85,8 +85,8 @@ export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
           userPoolId: answers.userPoolId,
           userPoolWebClientId: answers.userPoolWebClientId,
           mandatorySignIn: true,
-          authenticationFlowType: 'USER_PASSWORD_AUTH',
-        }
+          authenticationFlowType: "USER_PASSWORD_AUTH",
+        },
       }
       try {
         Amplify.configure(config)
@@ -107,34 +107,37 @@ export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
 
   return (
     <>
-      <SimpleDialog title={dialogTitle}
+      <SimpleDialog
+        title={dialogTitle}
         open={open}
         onClose={() => {
           onClose()
         }}
         onFinish={onFinish}
       >
-        {isEmpty(authProvider) && authTemplates.map(template => (
-          <Button onClick={() => {
-            setAuthProvider(template.provider);
-            setDialogTitle(`Add Authentification for ${template.name}`)
-          }}
-            className={c.bigButton}
-          >
-            <div>
-              <div>{template.name}</div>
+        {isEmpty(authProvider) &&
+          authTemplates.map((template) => (
+            <Button
+              onClick={() => {
+                setAuthProvider(template.provider)
+                setDialogTitle(`Add Authentification for ${template.name}`)
+              }}
+              className={c.bigButton}
+            >
               <div>
-                <template.Icon className={c.cognitoIcon} />
+                <div>{template.name}</div>
+                <div>
+                  <template.Icon className={c.cognitoIcon} />
+                </div>
               </div>
-            </div>
-          </Button>
-        ))}
+            </Button>
+          ))}
 
         {!isEmpty(authProvider) && forms[authProvider] && (
           <Survey
             variant="flat"
             form={forms[authProvider]}
-            onFinish={answers => {
+            onFinish={(answers) => {
               answers["provider"] = authProvider
               validateAuthProvider(answers)
             }}
@@ -142,8 +145,6 @@ export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
         )}
         <ErrorToasts errors={errors} />
       </SimpleDialog>
-
     </>
-
   )
 }

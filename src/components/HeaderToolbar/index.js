@@ -85,7 +85,7 @@ const HeaderToolbar = ({
   authConfig,
   user,
   changeLoginDrawerOpen,
-  logoutUser
+  logoutUser,
 }) => {
   const c = useStyles()
   return (
@@ -129,16 +129,17 @@ const HeaderToolbar = ({
           </Tabs>
         )}
         {!isEmpty(authConfig) && isEmpty(user) && (
-          < Button onClick={() => { changeLoginDrawerOpen(true) }}
+          <Button
+            onClick={() => {
+              changeLoginDrawerOpen(true)
+            }}
             className={c.headerButton}
           >
             Login
           </Button>
         )}
         {!isEmpty(authConfig) && !isEmpty(user) && (
-          <Button onClick={logoutUser}
-            className={c.headerButton}
-          >
+          <Button onClick={logoutUser} className={c.headerButton}>
             Logout
           </Button>
         )}

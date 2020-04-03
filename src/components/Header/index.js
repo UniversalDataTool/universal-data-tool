@@ -27,7 +27,7 @@ export const HeaderContext = createContext({
   authConfig: null,
   onUserChange: () => null,
   user: null,
-  logoutUser: () => null
+  logoutUser: () => null,
 })
 
 const emptyArray = []
@@ -76,7 +76,8 @@ export default ({
         loginDrawerOpen={loginDrawerOpen}
         onClose={() => changeLoginDrawerOpen(false)}
         onUserChange={headerContext.onUserChange}
-        logoutUser={headerContext.logoutUser} />
+        logoutUser={headerContext.logoutUser}
+      />
     </>
   )
 }

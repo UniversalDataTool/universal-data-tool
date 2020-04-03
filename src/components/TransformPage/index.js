@@ -78,8 +78,8 @@ const Button = ({ Icon1, Icon2, desktopOnly, children, dialog, disabled }) => {
                   <Icon2 className={classnames("icon", { disabled })} />
                 </>
               ) : (
-                  <Icon1 className={classnames("icon", { disabled })} />
-                )}
+                <Icon1 className={classnames("icon", { disabled })} />
+              )}
               <div>{children}</div>
               {desktopOnly && (
                 <DesktopOnlyText className={classnames({ disabled })}>

@@ -157,10 +157,10 @@ export default ({ open, onClose, onAddSamples }) => {
       title="Import from Google Drive"
       actions={[
         userSelectedItemsFromDrive &&
-        userSelectedItemsFromDrive.length > 0 && {
-          text: `Add ${userSelectedItemsFromDrive.length} Samples`,
-          onClick: onAddSamplesClicked,
-        },
+          userSelectedItemsFromDrive.length > 0 && {
+            text: `Add ${userSelectedItemsFromDrive.length} Samples`,
+            onClick: onAddSamplesClicked,
+          },
       ].filter(Boolean)}
     >
       <Button variant="outlined" onClick={onLoadPicker}>
