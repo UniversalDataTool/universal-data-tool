@@ -29,4 +29,4 @@ jobs:
         run: npm run build:web
       - name: Publish github pages
         run: |
-          npx gh-pages -d -u "github-actions-bot <support+actions@github.com>"
+          npx gh-pages -d build -u "github-actions-bot <support+actions@github.com>"
