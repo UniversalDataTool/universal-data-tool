@@ -23,14 +23,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
-      # We need to build for web after semantic release so that it uses the
-      # correct package.json when importing from inside src
-      - name: Build
-        run: npm run build:web
       - name: Publish github pages
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/UniversalDataTool/universal-data-tool.git
-          npx gh-pages -d build -u "github-actions-bot <support+actions@github.com>"
+          npm run gh-pages -- -u "github-actions-bot <support+actions@github.com>"
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN }}
           REACT_APP_GOOGLE_DRIVE_APP_ID: ${{ secrets.REACT_APP_GOOGLE_DRIVE_APP_ID }}
