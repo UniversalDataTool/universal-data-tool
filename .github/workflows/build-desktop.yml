@@ -2,8 +2,8 @@ name: Build Desktop Application
 
 on:
   push:
-    tags:
-      - "*"
+    tags-ignore:
+      - "*-no-desktop"
 
 jobs:
   build:
