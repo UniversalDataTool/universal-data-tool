@@ -5,6 +5,7 @@ on:
       - master
 jobs:
   release:
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
     name: Release
     runs-on: ubuntu-18.04
     steps:
@@ -16,12 +17,15 @@ jobs:
           node-version: 12
       - name: Install dependencies
         run: npm install
-      - name: Build
-        run: npm run build:web
+      # TODO run build:package and prepare npm package for release
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
+      # We need to build for web after semantic release so that it uses the
+      # correct package.json when importing from inside src
+      - name: Build
+        run: npm run build:web
       - name: Publish github pages
         run: npm run gh-pages
