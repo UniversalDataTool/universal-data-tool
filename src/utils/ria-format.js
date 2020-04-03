@@ -109,8 +109,8 @@ export const convertToRIAImageFmt = ({
   const regions = !output
     ? undefined
     : Array.isArray(output)
-      ? output.map(convertToRIARegionFmt)
-      : [convertToRIARegionFmt(output)]
+    ? output.map(convertToRIARegionFmt)
+    : [convertToRIARegionFmt(output)]
 
   if (td.imageUrl) {
     return {

@@ -41,15 +41,15 @@ export default ({
     () =>
       isClassification
         ? {
-          regionClsList: (iface.availableLabels || []).map((l) =>
-            typeof l === "string" ? l : l.id
-          ),
-        }
+            regionClsList: (iface.availableLabels || []).map((l) =>
+              typeof l === "string" ? l : l.id
+            ),
+          }
         : {
-          regionTagList: (iface.availableLabels || []).map((l) =>
-            typeof l === "string" ? l : l.id
-          ),
-        },
+            regionTagList: (iface.availableLabels || []).map((l) =>
+              typeof l === "string" ? l : l.id
+            ),
+          },
     [isClassification]
   )
 
