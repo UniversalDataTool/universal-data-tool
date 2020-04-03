@@ -84,7 +84,8 @@
     "rfc6902": "^3.0.4",
     "seamless-immutable": "^7.1.4",
     "styled-components": "^5.0.0",
-    "use-event-callback": "^0.1.0"
+    "use-event-callback": "^0.1.0",
+    "ytdl-core": "^2.0.1"
   },
   "build": {
     "appId": "com.universaldatatool",

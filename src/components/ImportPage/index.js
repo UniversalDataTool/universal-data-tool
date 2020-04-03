@@ -17,7 +17,8 @@ import catImages from "./cat-images.js"
 import { setIn } from "seamless-immutable"
 import useEventCallback from "use-event-callback"
 import ImportFromGoogleDriveDialog from "../ImportFromGoogleDriveDialog"
-import { FaGoogleDrive }  from "react-icons/fa"
+import { FaGoogleDrive, FaYoutube }  from "react-icons/fa"
+import ImportFromYoutubeUrls from "../ImportFromYoutubeUrls";
 
 const ButtonBase = styled(MuiButton)({
   width: 240,
@@ -185,6 +186,14 @@ export default ({ oha, onChangeOHA, isDesktop }) => {
         >
           Import from Google Drive
         </Button>
+        <Button
+          isDesktop={isDesktop}
+          dialog="youtube-urls"
+          Icon={FaYoutube}
+          desktopOnly
+        >
+          Import from Youtube URLs
+        </Button>
         <ImportTextSnippetsDialog
           open={selectedDialog === "import-text-snippets"}
           onClose={closeDialog}
@@ -197,6 +206,11 @@ export default ({ oha, onChangeOHA, isDesktop }) => {
         />
         <ImportFromGoogleDriveDialog
           open={selectedDialog === "google-drive-file-picker"}
+          onClose={closeDialog}
+          onAddSamples={onAddSamples}
+        />
+        <ImportFromYoutubeUrls
+          open={selectedDialog === "youtube-urls"}
           onClose={closeDialog}
           onAddSamples={onAddSamples}
         />
