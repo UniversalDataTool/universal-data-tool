@@ -20,7 +20,7 @@ jobs:
       # TODO run build:package and prepare npm package for release
       - name: Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
       # We need to build for web after semantic release so that it uses the
