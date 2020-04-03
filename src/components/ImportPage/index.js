@@ -17,7 +17,8 @@ import { setIn } from "seamless-immutable"
 import useEventCallback from "use-event-callback"
 import ImportFromGoogleDriveDialog from "../ImportFromGoogleDriveDialog"
 import ImportToyDataset from "../ImportToyDatasetDialog"
-import { FaGoogleDrive } from "react-icons/fa"
+import ImportFromYoutubeUrls from "../ImportFromYoutubeUrls"
+import { FaGoogleDrive, FaYoutube } from "react-icons/fa"
 
 const ButtonBase = styled(MuiButton)({
   width: 240,
@@ -173,6 +174,14 @@ export default ({ oha, onChangeOHA, isDesktop }) => {
         >
           Import from Google Drive
         </Button>
+        <Button
+          isDesktop={isDesktop}
+          dialog="youtube-urls"
+          Icon={FaYoutube}
+          desktopOnly
+        >
+          Import from Youtube URLs
+        </Button>
         <ImportTextSnippetsDialog
           open={selectedDialog === "import-text-snippets"}
           onClose={closeDialog}
@@ -190,6 +199,11 @@ export default ({ oha, onChangeOHA, isDesktop }) => {
         />
         <ImportToyDataset
           open={selectedDialog === "import-toy-dataset"}
+          onClose={closeDialog}
+          onAddSamples={onAddSamples}
+        />
+        <ImportFromYoutubeUrls
+          open={selectedDialog === "youtube-urls"}
           onClose={closeDialog}
           onAddSamples={onAddSamples}
         />
