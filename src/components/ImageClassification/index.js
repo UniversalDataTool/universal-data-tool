@@ -21,11 +21,11 @@ const brightColors = [
   colors.indigo[600],
   colors.blue[600],
   colors.cyan[600],
-  colors.purple[600]
+  colors.purple[600],
 ]
 
 const letters = "abcdefghijklmnopqrstuvwxyz1234567890".split("")
-const getRandomColor = label => {
+const getRandomColor = (label) => {
   const hashInt = label.id
     .split("")
     .reduce((acc, v, i) => acc + (letters.indexOf(v) + 1), 0)
@@ -35,7 +35,7 @@ const getRandomColor = label => {
 const Container = styled("div")({ maxWidth: "100vw" })
 
 const ImageContainer = styled("div")({
-  maxHeight: "50vh"
+  maxHeight: "50vh",
 })
 
 const Image = styled("img")({
@@ -43,13 +43,13 @@ const Image = styled("img")({
   width: "100%",
   height: "100%",
   maxHeight: "50vh",
-  objectFit: "contain"
+  objectFit: "contain",
 })
 
 const Nav = styled("div")({
   display: "flex",
   justifyContent: "center",
-  marginTop: 4
+  marginTop: 4,
 })
 const NavItem = styled("div")({
   backgroundColor: "#000",
@@ -58,21 +58,21 @@ const NavItem = styled("div")({
   alignItems: "center",
   justifyContent: "center",
   "& > span": {
-    padding: 16
-  }
+    padding: 16,
+  },
 })
 const NavButton = styled(Button)({
   color: "#fff",
   padding: 8,
   paddingLeft: 16,
-  paddingRight: 16
+  paddingRight: 16,
 })
 
 const ButtonsContainer = styled("div")({
   paddingLeft: 50,
   paddingRight: 50,
   marginTop: 8,
-  textAlign: "center"
+  textAlign: "center",
 })
 
 const CheckButton = styled(Button)({
@@ -80,7 +80,7 @@ const CheckButton = styled(Button)({
   color: "#fff",
   fontSize: 18,
   paddingRight: 16,
-  transition: "transform 50ms ease"
+  transition: "transform 50ms ease",
 })
 
 const [emptyObj, emptyArr] = [{}, []]
@@ -91,23 +91,23 @@ export default ({
   taskData = emptyArr,
   taskOutput = emptyObj,
   containerProps = emptyObj,
-  onSaveTaskOutputItem
+  onSaveTaskOutputItem,
 }) => {
   const [sampleIndex, changeSampleIndex] = useState(0)
   const [enlargedLabel, changeEnlargedLabel] = useState(null)
   const [currentOutput, changeCurrentOutput] = useState(emptyArr)
   const labels = useMemo(
     () =>
-      iface.availableLabels.map(l =>
+      iface.availableLabels.map((l) =>
         typeof l === "string" ? { id: l, description: l } : l
       ),
     [iface.availableLabels]
   )
 
-  const onDone = useEventCallback(newOutput => {
+  const onDone = useEventCallback((newOutput) => {
     if (containerProps.onExit) containerProps.onExit()
   })
-  const onNext = useEventCallback(newOutput => {
+  const onNext = useEventCallback((newOutput) => {
     onSaveTaskOutputItem(sampleIndex, newOutput || currentOutput)
     if (sampleIndex !== taskData.length - 1) {
       changeSampleIndex(sampleIndex + 1)
@@ -130,7 +130,7 @@ export default ({
     return () => clearTimeout(timeout)
   }, [enlargedLabel])
 
-  const onClickLabel = useEventCallback(label => {
+  const onClickLabel = useEventCallback((label) => {
     changeEnlargedLabel(label)
     let newOutput
     if ((currentOutput || []).includes(label.id)) {
@@ -162,14 +162,14 @@ export default ({
       backspace: onPrev,
       enter: onDone,
       rightarrow: onNext,
-      leftarrow: onPrev
+      leftarrow: onPrev,
     }
     const labelKeyMap = {}
     for (let label of labels) {
       const nextAvailableLetter = label.id
         .split("")
-        .filter(l => letters.includes(l))
-        .find(l => !hotkeyMap[l.toLowerCase()])
+        .filter((l) => letters.includes(l))
+        .find((l) => !hotkeyMap[l.toLowerCase()])
       if (!nextAvailableLetter) continue
       hotkeyMap[nextAvailableLetter] = () => onClickLabel(label)
       labelKeyMap[label.id] = nextAvailableLetter
@@ -178,7 +178,7 @@ export default ({
   }, [labels])
 
   useEffect(() => {
-    const onKeyDown = e => {
+    const onKeyDown = (e) => {
       const key = e.key.toLowerCase()
       if (hotkeyMap[key]) {
         hotkeyMap[key]()
@@ -218,13 +218,13 @@ export default ({
         </NavItem>
       </Nav>
       <ButtonsContainer>
-        {labels.map(label => (
+        {labels.map((label) => (
           <CheckButton
             key={label.id}
             onClick={() => onClickLabel(label)}
             style={{
               backgroundColor: getRandomColor(label),
-              transform: enlargedLabel === label ? "scale(1.1,1.1)" : undefined
+              transform: enlargedLabel === label ? "scale(1.1,1.1)" : undefined,
             }}
           >
             <Checkbox

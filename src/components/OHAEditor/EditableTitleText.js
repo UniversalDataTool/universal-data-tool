@@ -5,8 +5,8 @@ import { makeStyles } from "@material-ui/core/styles"
 
 const useStyles = makeStyles({
   textField: {
-    marginLeft: 8
-  }
+    marginLeft: 8,
+  },
 })
 
 const SAVE_WAIT = 2000
@@ -15,7 +15,7 @@ export default ({ value, onChange }) => {
   const c = useStyles()
   const [{ editing, newValue }, changeEditing] = useState({
     editing: false,
-    newValue: value || ""
+    newValue: value || "",
   })
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export default ({ value, onChange }) => {
 
   useEffect(() => {
     if (!editing) return
-    let listener = e => {
+    let listener = (e) => {
       if (e.key === "Enter") {
         onChange(newValue)
         changeEditing({ editing: false })
@@ -60,22 +60,22 @@ export default ({ value, onChange }) => {
       variant="outlined"
       size="small"
       InputProps={{
-        inputProps: { style: { color: "#000" } }
+        inputProps: { style: { color: "#000" } },
       }}
-      onKeyDown={e => {
+      onKeyDown={(e) => {
         if (e.key === "Enter") {
           e.preventDefault()
           e.stopPropagation()
           e.target.blur()
         }
       }}
-      onKeyPress={e => {
+      onKeyPress={(e) => {
         e.stopPropagation()
       }}
-      onChange={e => {
+      onChange={(e) => {
         changeEditing({
           editing: true,
-          newValue: e.target.value
+          newValue: e.target.value,
         })
       }}
       value={newValue || ""}

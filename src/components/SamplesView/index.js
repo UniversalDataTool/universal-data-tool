@@ -22,7 +22,7 @@ import TransformPage from "../TransformPage"
 import useIsDesktop from "../../utils/use-is-desktop.js"
 
 const Container = styled("div")({
-  padding: 16
+  padding: 16,
 })
 
 const ExpandedRowContainer = styled("div")({
@@ -32,11 +32,11 @@ const ExpandedRowContainer = styled("div")({
   borderRadius: 4,
   borderTopLeftRadius: 0,
   borderTopRightRadius: 0,
-  boxShadow: "inset 0 3px 3px rgba(0,0,0,0.2)"
+  boxShadow: "inset 0 3px 3px rgba(0,0,0,0.2)",
 })
 const ExpandedRowTitle = styled("div")({
   fontSize: 11,
-  fontWeight: "bold"
+  fontWeight: "bold",
 })
 const ExpandedRowCode = styled("pre")({ whiteSpace: "pre-wrap", fontSize: 11 })
 
@@ -47,7 +47,7 @@ const ExpandedRow = ({ data }) => {
     <ExpandedRowContainer>
       <Grid spacing={2} container>
         <Grid item xs={6}>
-          
+
           <ExpandedRowTitle>taskData[{data.index}]:</ExpandedRowTitle>
           <ExpandedRowCode>{JSON.stringify(input, null, "  ")}</ExpandedRowCode>
         </Grid>
@@ -77,7 +77,7 @@ export default ({
       ? "import"
       : window.localStorage.lastSampleTab || "grid"
   )
-  const changeTab = tab => {
+  const changeTab = (tab) => {
     changeTabState(tab)
     window.localStorage.lastSampleTab = tab
   }
@@ -87,8 +87,8 @@ export default ({
       {
         name: "Index",
         selector: "index",
-        sortable: true
-      }
+        sortable: true,
+      },
     ]
     const knownKeys = new Set()
     for (const td of oha.taskData) {
@@ -96,7 +96,7 @@ export default ({
         if (!knownKeys.has(key)) {
           columns.push({
             name: key,
-            selector: key
+            selector: key,
           })
           knownKeys.add(key)
         }
@@ -105,29 +105,29 @@ export default ({
     columns.push({
       name: "Edit",
       button: true,
-      cell: row => (
+      cell: (row) => (
         <IconButton raised onClick={() => openSampleInputEditor(row.index)}>
           <EditIcon style={{ width: 20, height: 20 }} />
         </IconButton>
-      )
+      ),
     })
     columns.push({
       name: "Label",
       button: true,
-      cell: row => (
+      cell: (row) => (
         <IconButton raised onClick={() => openSampleLabelEditor(row.index)}>
           <BorderColorIcon style={{ width: 20, height: 20 }} />
         </IconButton>
-      )
+      ),
     })
     columns.push({
       name: "Delete",
       button: true,
-      cell: row => (
+      cell: (row) => (
         <IconButton raised primary onClick={() => deleteSample(row.index)}>
           <DeleteIcon style={{ width: 20, height: 20 }} />
         </IconButton>
-      )
+      ),
     })
     return columns
   }, [oha.taskData, oha.taskOutput])
@@ -137,7 +137,7 @@ export default ({
     return oha.taskData.map((td, i) => ({
       ...td,
       _output: oha.taskOutput && oha.taskOutput[i] ? oha.taskOutput[i] : {},
-      index: i
+      index: i,
     }))
   }, [oha.taskData, oha.taskOutput])
   return (
@@ -179,7 +179,7 @@ export default ({
         <SampleGrid
           count={(oha.taskData || []).length}
           completed={(oha.taskOutput || []).map(Boolean)}
-          onClick={sampleIndex => {
+          onClick={(sampleIndex) => {
             openSampleLabelEditor(sampleIndex)
           }}
         />

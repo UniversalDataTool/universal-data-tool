@@ -10,7 +10,7 @@ export default () => {
         timeToCompleteSample:
           newSamplesInWindow.reduce((acc, a) => acc + a, 0) /
           newSamplesInWindow.length,
-        samplesInWindow: newSamplesInWindow
+        samplesInWindow: newSamplesInWindow,
       }
     },
     { timeToCompleteSample: 0, samplesInWindow: [] }

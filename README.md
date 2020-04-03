@@ -1,24 +1,28 @@
 # Universal Data Tool
 
+[![GitHub version](https://badge.fury.io/gh/UniversalDataTool%2Funiversal-data-tool.svg)](https://badge.fury.io/gh/UniversalDataTool%2Funiversal-data-tool)
+![Master Branch](https://github.com/UniversalDataTool/universal-data-tool/workflows/Test/badge.svg)
+[![npm version](https://badge.fury.io/js/universal-data-tool.svg)](https://badge.fury.io/js/universal-data-tool)
+[![GitHub license](https://img.shields.io/github/license/UniversalDataTool/universal-data-tool)](https://github.com/UniversalDataTool/universal-data-tool/blob/master/LICENSE)
+[![Platform Support Web/Win/Linux/Mac](https://img.shields.io/badge/platforms-Web%20Windows%20Linux%20Mac-blueviolet)](https://github.com/UniversalDataTool/universal-data-tool/releases)
+
 Try it out at [universaldatatool.com](https://universaldatatool.com) or [download it here](https://github.com/UniversalDataTool/universal-data-tool/releases).
 
 The Universal Data Tool is a web/desktop app for editing and annotating images, text, audio, documents and to view and edit any data defined in the extensible the [.udt.json and .udt.csv standard](https://github.com/UniversalDataTool/udt-format).
 
 ## Features
-* Usable on [web](https://universaldatatool.com) or as [Windows,Mac or Linux desktop application](https://github.com/UniversalDataTool/universal-data-tool/wiki/Installation)
-* Collaborate with others in real time
-* Configure your project with an easy-to-use GUI
-* Scales to tens of thousands of data points per dataset
-* Download/upload as easy-to-use CSV or JSON
-* Support for Images, Videos, PDFs, Text, Audio Transcription and many other formats
-* Can be easily integrated into a React application
-* Annotate images or videos with classifications, tags, bounding boxes, polygons and points
-* Annotate NLP datasets with Named Entity Recognition (NER), classification and Part of Speech (PoS) tagging.
-* Easily load into pandas or [use with fast.ai](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-Fast.ai)
 
+- Usable on [web](https://universaldatatool.com) or as [Windows,Mac or Linux desktop application](https://github.com/UniversalDataTool/universal-data-tool/wiki/Installation)
+- Collaborate with others in real time
+- Configure your project with an easy-to-use GUI
+- Download/upload as easy-to-use CSV or JSON
+- Support for Images, Videos, PDFs, Text, Audio Transcription and many other formats
+- Can be [easily integrated into a React application](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-React)
+- Annotate images or videos with classifications, tags, bounding boxes, polygons and points
+- Annotate NLP datasets with Named Entity Recognition (NER), classification and Part of Speech (PoS) tagging.
+- Easily [load into pandas](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-Pandas) or [use with fast.ai](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-Fast.ai)
 
 ![Universal Data Tool Computer Vision Cat](https://user-images.githubusercontent.com/1910070/75850482-6a2cb500-5db5-11ea-852c-7256463cece8.png)
-
 
 ![Audio Transcription](https://user-images.githubusercontent.com/1910070/76154268-80818c00-60a7-11ea-97de-529fd06d3901.png)
 
@@ -28,9 +32,7 @@ The Universal Data Tool is a web/desktop app for editing and annotating images, 
 
 ![Named Entity Recognition](https://user-images.githubusercontent.com/1910070/76154279-a73fc280-60a7-11ea-8965-5de23ad733d6.png)
 
-
 ![Collaboration Screenshot](https://user-images.githubusercontent.com/1910070/76154071-10bdd200-60a4-11ea-8afd-a12f6d77a140.png)
-
 
 ![Collaboration Demo](https://user-images.githubusercontent.com/1910070/76154158-b02f9480-60a5-11ea-9fb5-ec62c9385a51.gif)
 
@@ -44,7 +46,7 @@ The Universal Data Tool is a web/desktop app for editing and annotating images, 
 
 Just visit [universaldatatool.com](https://universaldatatool.com)!
 
-*Trying to run the web app locally? Run `npm install` then `npm run start` after cloning this repository to start the web server*
+_Trying to run the web app locally? Run `npm install` then `npm run start` after cloning this repository to start the web server_
 
 ### Desktop Application
 

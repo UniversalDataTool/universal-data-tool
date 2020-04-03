@@ -5,7 +5,7 @@ import getTaskDescription from "../../utils/get-task-description.js"
 import SampleContainer from "../SampleContainer"
 import NLPAnnotator from "react-nlp-annotate/components/NLPAnnotator"
 
-export default props => {
+export default (props) => {
   const [currentSampleIndex, changeCurrentSampleIndex] = useState(0)
 
   return (
@@ -18,7 +18,7 @@ export default props => {
         getTaskDescription(props.taskData[currentSampleIndex]) ||
         props.interface.description
       }
-      onChangeSample={sampleIndex => changeCurrentSampleIndex(sampleIndex)}
+      onChangeSample={(sampleIndex) => changeCurrentSampleIndex(sampleIndex)}
     >
       <NLPAnnotator
         key={(props.sampleIndex || 0) + currentSampleIndex}
@@ -28,7 +28,7 @@ export default props => {
         initialTranscriptionText={
           (props.taskOutput || [])[currentSampleIndex] || ""
         }
-        onFinish={result => {
+        onFinish={(result) => {
           props.onSaveTaskOutputItem(currentSampleIndex, result)
           if (props.containerProps.onExit)
             props.containerProps.onExit("go-to-next")

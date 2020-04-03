@@ -13,16 +13,16 @@ import { setIn, without } from "seamless-immutable"
 const ErrorBox = styled("pre")({
   color: "red",
   whiteSpace: "prewrap",
-  fontSize: 11
+  fontSize: 11,
 })
 
-const getFfmpegTimeCode = ms => {
+const getFfmpegTimeCode = (ms) => {
   const cs = Math.floor(ms / 10) % 100
   const ss = Math.floor(ms / 1000) % 60
   const mn = Math.floor(ms / 1000 / 60) % 60
   const hr = Math.floor(ms / 1000 / 60 / 60)
   return [hr, ":", mn, ":", ss, ".", cs]
-    .map(n => (typeof n === "number" ? n.toString().padStart(2, "0") : n))
+    .map((n) => (typeof n === "number" ? n.toString().padStart(2, "0") : n))
     .join("")
 }
 
@@ -75,11 +75,11 @@ export default ({ open, onChangeOHA, onClose, oha }) => {
                   videoPath,
                   "-frames:v",
                   1,
-                  imageOutputPath
+                  imageOutputPath,
                 ])
                 console.log("running:", ffmpegCommand)
                 await new Promise((resolve, reject) => {
-                  exec(ffmpegCommand, { timeout: 5000 }, err => {
+                  exec(ffmpegCommand, { timeout: 5000 }, (err) => {
                     if (err) return reject(err)
                     resolve()
                   })
@@ -89,7 +89,7 @@ export default ({ open, onChangeOHA, onClose, oha }) => {
                     without(oha.taskData[i], "videoUrl"),
                     "videoFrameAt"
                   ),
-                  imageUrl: `file://${imageOutputPath}`
+                  imageUrl: `file://${imageOutputPath}`,
                 }
               }
               changeProgress((i / oha.taskData.length) * 100)
@@ -104,8 +104,8 @@ export default ({ open, onChangeOHA, onClose, oha }) => {
 
             changeErrors(errors)
             changeProgress(100)
-          }
-        }
+          },
+        },
       ]}
     >
       This transformation will convert samples that reference a video frame into

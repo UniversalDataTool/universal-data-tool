@@ -4,7 +4,7 @@ import { useEffect } from "react"
 import usePosthog from "../../utils/use-posthog"
 const posthog = usePosthog()
 
-export default udt => {
+export default (udt) => {
   useEffect(() => {
     if (!udt || !udt.interface) return
     posthog.capture("interface_type", { interface_type: udt.interface.type })
@@ -13,7 +13,7 @@ export default udt => {
   useEffect(() => {
     if (!udt || !udt.taskData) return
     posthog.capture("dataset_size", {
-      dataset_size: (udt.taskData || []).length
+      dataset_size: (udt.taskData || []).length,
     })
   }, [udt && (udt.taskData || []).length])
   useEffect(() => {
@@ -22,10 +22,10 @@ export default udt => {
     posthog.capture("sample_completion", {
       dataset_size: (udt.taskData || []).length,
       samples_completed: numCompleted,
-      percent_completed: numCompleted / (udt.taskData || []).length
+      percent_completed: numCompleted / (udt.taskData || []).length,
     })
   }, [
     udt && (udt.taskData || []).length,
-    udt && udt.taskOutput && udt.taskOutput.filter(Boolean).length
+    udt && udt.taskOutput && udt.taskOutput.filter(Boolean).length,
   ])
 }

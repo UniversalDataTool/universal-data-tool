@@ -3,7 +3,7 @@
 import { useState, useMemo, useCallback, useEffect } from "react"
 import useServer, {
   getLatestState,
-  convertToCollaborativeFile
+  convertToCollaborativeFile,
 } from "./use-server"
 import useFilesystem from "./use-filesystem"
 import useLocalStorage from "./use-local-storage"
@@ -25,7 +25,7 @@ export default () => {
   // Telemetry
   useFileTelemetry(file && file.content)
 
-  const openFile = useEventCallback(fsFile => {
+  const openFile = useEventCallback((fsFile) => {
     const { name: fileName, path: filePath } = fsFile
 
     function handleLoadedFile(content) {
@@ -42,7 +42,7 @@ export default () => {
           filePath,
           mode: filePath ? "filesystem" : "local-storage",
           content: oha,
-          id: filePath
+          id: filePath,
         })
       } catch (e) {
         console.log(e.toString())
@@ -55,7 +55,7 @@ export default () => {
       handleLoadedFile(fsFile.content)
     } else {
       const reader = new FileReader()
-      reader.onload = e => {
+      reader.onload = (e) => {
         const content = e.target.result
         handleLoadedFile(content)
       }
@@ -63,7 +63,7 @@ export default () => {
     }
   })
 
-  const openUrl = useEventCallback(async url => {
+  const openUrl = useEventCallback(async (url) => {
     const sessionId = decodeURIComponent(url.match(/[\?&]s=([^&]+)/)[1])
     if (!sessionId) return
     const { state, version } = await getLatestState(sessionId)
@@ -80,7 +80,7 @@ export default () => {
       id: sessionId,
       content: state,
       lastSyncedState: cloneDeep(state),
-      lastSyncedVersion: version
+      lastSyncedVersion: version,
     })
   })
 
@@ -114,7 +114,7 @@ export default () => {
       openUrl,
       makeSession,
       saveFile,
-      recentItems
+      recentItems,
     }),
     [file, changeFile, openFile, makeSession, recentItems]
   )

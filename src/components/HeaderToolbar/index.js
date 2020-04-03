@@ -20,24 +20,24 @@ import IconButton from "@material-ui/core/IconButton"
 import isEmpty from "../../utils/isEmpty"
 import packageJSON from "../../../package.json"
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   headerButton: {
     marginLeft: 16,
-    color: "#888"
+    color: "#888",
   },
   grow: { flexGrow: 1 },
   list: {
-    width: 300
+    width: 300,
   },
   tab: {
     color: "#000",
-    "& .icon": {}
+    "& .icon": {},
   },
   fullHeightTab: {
     ...theme.mixins.toolbar,
     [theme.breakpoints.down("sm")]: {
-      minWidth: 20
-    }
+      minWidth: 20,
+    },
   },
   tabWrapper: {
     display: "flex",
@@ -49,9 +49,9 @@ const useStyles = makeStyles(theme => ({
       marginBottom: 0,
       marginRight: 8,
       width: 18,
-      height: 18
-    }
-  }
+      height: 18,
+    },
+  },
 }))
 
 const getIcon = (t: string) => {
@@ -116,7 +116,7 @@ const HeaderToolbar = ({
             onChange={(e, newTab) => onChangeTab(newTab.toLowerCase())}
             value={currentTab}
           >
-            {tabs.map(t => (
+            {tabs.map((t) => (
               <Tab
                 key={t}
                 classes={{ root: c.fullHeightTab, wrapper: c.tabWrapper }}

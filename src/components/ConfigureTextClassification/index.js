@@ -10,7 +10,7 @@ const form = {
     {
       name: "multiple",
       title: "Allow Multiple Classifications",
-      type: "boolean"
+      type: "boolean",
     },
     {
       name: "labels",
@@ -23,11 +23,11 @@ const form = {
         {
           cellType: "text",
           name: "description",
-          title: "Description (optional)"
-        }
-      ]
-    }
-  ]
+          title: "Description (optional)",
+        },
+      ],
+    },
+  ],
 }
 
 export default ({ iface, onChange }) => {
@@ -35,9 +35,9 @@ export default ({ iface, onChange }) => {
     () => ({
       multiple: false,
       labels:
-        (iface.labels || []).map(a =>
+        (iface.labels || []).map((a) =>
           typeof a === "string" ? { id: a, displayName: a, description: a } : a
-        ) || []
+        ) || [],
     }),
     []
   )

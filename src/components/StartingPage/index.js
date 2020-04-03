@@ -25,8 +25,8 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     backgroundColor: colors.grey[900],
-    height: "100vh"
-  }
+    height: "100vh",
+  },
 })
 
 const ContentContainer = styled("div")(({ theme }) => ({
@@ -37,29 +37,29 @@ const ContentContainer = styled("div")(({ theme }) => ({
   overflowY: "scroll",
   padding: 100,
   [theme.breakpoints.down("sm")]: {
-    padding: 50
-  }
+    padding: 50,
+  },
 }))
 const Content = styled("div")(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   width: "calc(100% - 32px)",
   marginLeft: 16,
-  maxWidth: 1000
+  maxWidth: 1000,
 }))
 
 const Title = styled("div")({
   marginTop: 20,
   fontSize: 36,
   fontWeight: 600,
-  color: colors.grey[300]
+  color: colors.grey[300],
 })
 
 const Subtitle = styled("div")({
   fontSize: 18,
   // fontWeight: "bold",
   marginTop: 8,
-  color: colors.grey[500]
+  color: colors.grey[500],
 })
 const ActionList = styled("div")({ marginTop: 48 })
 const Action = styled("a")({
@@ -67,25 +67,25 @@ const Action = styled("a")({
   color: colors.blue[500],
   marginTop: 4,
   cursor: "pointer",
-  textDecoration: "none"
+  textDecoration: "none",
 })
 const ActionTitle = styled("div")({
   // fontWeight: "bold",
   fontSize: 24,
   marginBottom: 8,
-  color: colors.grey[500]
+  color: colors.grey[500],
 })
 const ActionText = styled("div")({
   color: colors.grey[300],
   "& a": {
     cursor: "pointer",
     color: colors.blue[500],
-    textDecoration: "none"
-  }
+    textDecoration: "none",
+  },
 })
 const Actionless = styled("div")({
   color: colors.grey[600],
-  paddingTop: 16
+  paddingTop: 16,
 })
 const BottomSpacer = styled("div")({ height: 100 })
 
@@ -110,7 +110,7 @@ export default ({
     async function checkNewVersion() {
       const newPackage = await fetch(
         "https://raw.githubusercontent.com/UniversalDataTool/universal-data-tool/master/package.json"
-      ).then(r => r.json())
+      ).then((r) => r.json())
       if (newPackage.version !== packageInfo.version) {
         changeNewVersionAvailable(true)
       }
@@ -120,13 +120,13 @@ export default ({
 
   const [
     createFromTemplateDialogOpen,
-    changeCreateFromTemplateDialogOpen
+    changeCreateFromTemplateDialogOpen,
   ] = useState(false)
   const [
     addAuthFromDialogOpen,
     changeAddAuthFromDialogOpen
   ] = useState(false)
-  const onDrop = useEventCallback(acceptedFiles => {
+  const onDrop = useEventCallback((acceptedFiles) => {
     onFileDrop(acceptedFiles[0])
   })
 
@@ -136,9 +136,9 @@ export default ({
     <div className={c.container}>
       <CreateFromTemplateDialog
         open={createFromTemplateDialogOpen}
-        onSelect={template => {
+        onSelect={(template) => {
           posthog.capture("template_clicked", {
-            clicked_template: template.name
+            clicked_template: template.name,
           })
           onOpenTemplate(template)
         }}
@@ -170,7 +170,7 @@ export default ({
             >
               Download
             </Button>
-          )
+          ),
         ].filter(Boolean)}
         user={user}
         logoutUser={logoutUser}
@@ -188,9 +188,9 @@ export default ({
                 <Action
                   onClick={() => {
                     posthog.capture("template_clicked", {
-                      clicked_template: "empty"
+                      clicked_template: "empty",
                     })
-                    onOpenTemplate(templates.find(t => t.name === "Empty"))
+                    onOpenTemplate(templates.find((t) => t.name === "Empty"))
                   }}
                 >
                   New File
@@ -259,7 +259,7 @@ export default ({
                   <br />
                   The UDT uses an{" "}
                   <a href="https://github.com/UniversalDataTool/udt-format">
-                    open-source data format (.udt.json)
+                    open-source data format (.udt.json / .udt.csv)
                   </a>{" "}
                   that can be easily read by programs as a ground-truth dataset
                   for machine learning algorithms.

@@ -10,7 +10,7 @@ import classNames from "classnames"
 import TablePagination from "@material-ui/core/TablePagination"
 
 const Container = styled("div")({
-  flexWrap: "wrap"
+  flexWrap: "wrap",
 })
 const SampleDiv = styled("div")({
   margin: 4,
@@ -27,12 +27,12 @@ const SampleDiv = styled("div")({
   transition: "box-shadow 200ms ease, transform 200ms ease",
   "&.completed": {
     backgroundColor: colors.blue[500],
-    color: "#fff"
+    color: "#fff",
   },
   "&.selected": {
     boxShadow: `0px 0px 2px 1px ${colors.blue[400]}`,
-    transform: "scale(1.05,1.05)"
-  }
+    transform: "scale(1.05,1.05)",
+  },
 })
 
 const Sample = memo(
@@ -43,7 +43,7 @@ const Sample = memo(
     selected,
     onMouseDown,
     onMouseUp,
-    onMouseEnter
+    onMouseEnter,
   }) => {
     return (
       <SampleDiv
@@ -57,7 +57,7 @@ const Sample = memo(
       </SampleDiv>
     )
   },
-  function(p, n) {
+  function (p, n) {
     return (
       p.index === n.index &&
       p.completed === n.completed &&
@@ -89,15 +89,15 @@ export default ({ count, completed = [], onClick }) => {
   }, null)
 
   const startSelectRange = useCallback(
-    index => changeSelectRange([index, index + 1]),
+    (index) => changeSelectRange([index, index + 1]),
     [changeSelectRange]
   )
-  const moveSelectRange = useCallback(index => changeSelectRange(index), [
-    changeSelectRange
+  const moveSelectRange = useCallback((index) => changeSelectRange(index), [
+    changeSelectRange,
   ])
   const endSelectRange = useCallback(() => {}, [changeSelectRange])
   const checkAndNullifySelectRange = useCallback(
-    e => {
+    (e) => {
       if (e.buttons !== 1) {
         changeSelectRange(null)
       }
@@ -112,7 +112,7 @@ export default ({ count, completed = [], onClick }) => {
       onMouseEnter={checkAndNullifySelectRange}
     >
       {range(sampleOffset, Math.min(count, sampleOffset + samplesPerPage)).map(
-        i => (
+        (i) => (
           <Sample
             onClick={onClickMemo}
             key={i}
@@ -135,7 +135,7 @@ export default ({ count, completed = [], onClick }) => {
         onChangePage={(e, newPage) =>
           changeSampleOffset(newPage * samplesPerPage)
         }
-        onChangeRowsPerPage={e => changeSamplesPerPage(+e.target.value)}
+        onChangeRowsPerPage={(e) => changeSamplesPerPage(+e.target.value)}
       />
     </Container>
   )

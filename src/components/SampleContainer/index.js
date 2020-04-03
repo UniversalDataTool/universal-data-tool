@@ -28,45 +28,45 @@ import ListSubheader from "@material-ui/core/ListSubheader"
 import LinkButton from "./LinkButton"
 import range from "lodash/range"
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   footer: {
     backgroundColor: "#fff",
-    marginTop: 40
+    marginTop: 40,
   },
   footerContent: {
     alignItems: "center",
     padding: 20,
     display: "flex",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   footerBorder: {
     borderTop: "1px solid #ccc",
     marginLeft: 20,
-    marginRight: 20
+    marginRight: 20,
   },
   footerCount: {
-    display: "inline-flex"
+    display: "inline-flex",
   },
   allSamplesButton: {
     color: "#fff",
     border: "1px solid rgba(255,255,255,0.5)",
     marginRight: 10,
-    paddingLeft: 8
+    paddingLeft: 8,
   },
   sampleIcon: {
-    marginRight: 8
+    marginRight: 8,
   },
   menuButton: {
     marginRight: 8,
-    color: "#fff"
+    color: "#fff",
   },
   grow: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   buttons: {
     "& > *": {
-      margin: 4
-    }
+      margin: 4,
+    },
   },
   description: {
     padding: 10,
@@ -74,8 +74,8 @@ const useStyles = makeStyles(theme => ({
       maxWidth: "calc(100% - 16px)",
       marginLeft: 8,
       marginRight: 8,
-      maxHeight: 600
-    }
+      maxHeight: 600,
+    },
   },
   sectionHeader: {
     fontWeight: 700,
@@ -83,12 +83,12 @@ const useStyles = makeStyles(theme => ({
     padding: 10,
     paddingTop: 16,
     textTransform: "uppercase",
-    color: colors.grey[600]
+    color: colors.grey[600],
   },
   content: {
-    padding: 10
+    padding: 10,
     // minHeight: "calc(100vh - 200px)"
-  }
+  },
 }))
 
 export const SampleContainer = ({
@@ -103,7 +103,7 @@ export const SampleContainer = ({
   onChangeSample,
   taskOutput = [],
   description,
-  children
+  children,
 }) => {
   const c = useStyles()
   const [hideDescription, changeHideDescription] = useState(
@@ -196,18 +196,19 @@ export const SampleContainer = ({
       >
         <List style={{ minWidth: 300 }}>
           <ListSubheader>Samples</ListSubheader>
-          {range(0, totalSamples).map(i => (
+          {range(0, totalSamples).map((i) => (
             <ListItem
               style={{
                 backgroundColor:
-                  i === currentSampleIndex ? colors.grey[200] : undefined
+                  i === currentSampleIndex ? colors.grey[200] : undefined,
               }}
               button
               onClick={() => onChangeSample(i)}
             >
               <ListItemIcon
                 style={{
-                  color: i === currentSampleIndex ? colors.blue[500] : undefined
+                  color:
+                    i === currentSampleIndex ? colors.blue[500] : undefined,
                 }}
               >
                 {taskOutput[i] ? <CheckCircle /> : <CircleIcon />}

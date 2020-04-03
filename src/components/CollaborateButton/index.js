@@ -27,7 +27,7 @@ const popupBoxBeforeAndAfter = {
   height: 0,
   width: 0,
   position: "absolute",
-  pointerEvents: "none"
+  pointerEvents: "none",
 }
 const PopupBox = styled("div")({
   position: "absolute",
@@ -46,31 +46,31 @@ const PopupBox = styled("div")({
     borderColor: "rgba(0,0,0, 0)",
     borderBottomColor: borderColor,
     borderWidth: 12,
-    marginLeft: -12
+    marginLeft: -12,
   },
   "&:after": {
     ...popupBoxBeforeAndAfter,
     borderColor: "rgba(255,255,255, 0)",
     borderBottomColor: "#fff",
     borderWidth: 10,
-    marginLeft: -10
+    marginLeft: -10,
   },
   "& h1": {
     fontSize: 18,
     marginTop: 0,
-    color: colors.blue[800]
+    color: colors.blue[800],
   },
   "& h2": {
     fontSize: 14,
-    color: colors.grey[800]
+    color: colors.grey[800],
   },
   opacity: 1,
   transition: "opacity 200ms linear, transform 200ms ease",
   "&.hidden": {
     opacity: 0,
     transform: "translate(0, 10px)",
-    pointerEvents: "none"
-  }
+    pointerEvents: "none",
+  },
 })
 
 const CreateNewButton = styled(Button)({
@@ -79,8 +79,8 @@ const CreateNewButton = styled(Button)({
   color: colors.blue[500],
   "& .icon": {
     marginRight: 8,
-    opacity: 0.7
-  }
+    opacity: 0.7,
+  },
 })
 const ExitButton = styled(Button)({
   marginTop: 16,
@@ -88,8 +88,8 @@ const ExitButton = styled(Button)({
   "& .icon": {
     marginRight: 8,
     opacity: 0.7,
-    color: colors.red[500]
-  }
+    color: colors.red[500],
+  },
 })
 
 export default ({
@@ -99,7 +99,7 @@ export default ({
   onCreateSession,
   onLeaveSession,
   sessionBoxOpen,
-  changeSessionBoxOpen
+  changeSessionBoxOpen,
 }) => {
   const [loadingSession, changeLoadingSession] = useState(false)
   const [sessionUrl, changeSessionUrl] = useState("")
@@ -131,7 +131,7 @@ export default ({
               variant="outlined"
               label="URL to Session"
               value={sessionUrl}
-              onChange={e => changeSessionUrl(e.target.value)}
+              onChange={(e) => changeSessionUrl(e.target.value)}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -146,7 +146,7 @@ export default ({
                       <ArrowForwardIcon />
                     </IconButton>
                   </InputAdornment>
-                )
+                ),
               }}
             />
             <CreateNewButton
@@ -173,7 +173,7 @@ export default ({
               variant="outlined"
               label="User Name"
               value={userName}
-              onChange={e => changeUserName(e.target.value)}
+              onChange={(e) => changeUserName(e.target.value)}
             />
             <ExitButton fullWidth onClick={onLeaveSession}>
               <ExitToAppIcon className="icon" />
