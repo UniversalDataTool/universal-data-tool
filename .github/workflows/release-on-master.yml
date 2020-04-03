@@ -28,4 +28,7 @@ jobs:
       - name: Build
         run: npm run build:web
       - name: Publish github pages
-        run: npm run gh-pages
+        run: |
+          git config --global user.name "github-action"
+          git config --global user.email "github-action@universaldatatool.com"
+          npm run gh-pages
