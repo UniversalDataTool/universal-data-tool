@@ -1,6 +1,6 @@
 name: Build Desktop Application
 
-on: push
+on: create
 
 jobs:
   build:
