@@ -20,7 +20,8 @@
     "storybook": "start-storybook -p 6002 -s public",
     "build-storybook": "build-storybook -s public",
     "gh-pages": "npm run build:web && cp ./CNAME ./build/CNAME && gh-pages -d build",
-    "prettier": "prettier --write \"src/**/*.js\""
+    "prettier": "prettier --write \"src/**/*.js\"",
+    "prettier:test": "prettier --check \"src/**/*.js\""
   },
   "eslintConfig": {
     "extends": "react-app"
