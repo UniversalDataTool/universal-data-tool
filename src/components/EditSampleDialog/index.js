@@ -28,7 +28,7 @@ export default ({ open, sampleIndex, sampleInput, onChange, onClose }) => {
         width="100%"
         value={text}
         editorProps={{ $blockScrolling: Infinity }}
-        onChange={t => {
+        onChange={(t) => {
           changeText(t)
           changeError(null)
           try {

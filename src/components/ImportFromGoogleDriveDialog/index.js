@@ -5,11 +5,11 @@ import { styled } from "@material-ui/core/styles"
 
 const ExplainText = styled("div")({
   marginTop: 8,
-  marginBottom: 8
+  marginBottom: 8,
 })
 const GoogleDriveScreenshot = styled("img")({
   width: "100%",
-  boxSizing: "border-box"
+  boxSizing: "border-box",
 })
 
 // Example for Google OAuth
@@ -23,8 +23,8 @@ const credentials = {
     app_id: process.env.REACT_APP_GOOGLE_DRIVE_APP_ID || "294393711342",
     developer_key:
       process.env.REACT_APP_DEVELOPER_KEY ||
-      "AIzaSyCoNoDnfzDBSXpt84Q75LU9UMTzvyLkRhg"
-  }
+      "AIzaSyCoNoDnfzDBSXpt84Q75LU9UMTzvyLkRhg",
+  },
 }
 
 const scope = "https://www.googleapis.com/auth/drive.readonly"
@@ -53,14 +53,14 @@ export default ({ open, onClose, onAddSamples }) => {
     }
   }, [])
 
-  const googlePickerActionCallback = data => {
+  const googlePickerActionCallback = (data) => {
     if (data.action === window.google.picker.Action.PICKED) {
       setUserSelectedItemsFromDrive(
-        data.docs.map(googleDriveDocument => ({
+        data.docs.map((googleDriveDocument) => ({
           url: googleDriveDocument.url,
           mimeType: googleDriveDocument.mimeType,
           name: googleDriveDocument.name,
-          id: googleDriveDocument.id
+          id: googleDriveDocument.id,
         }))
       )
       setIsPickerOpen(false)
@@ -102,7 +102,7 @@ export default ({ open, onClose, onAddSamples }) => {
     createPicker()
   }, [pickerApiLoaded, oauthToken])
 
-  const handleAuthenticationResponse = authenticationResponse => {
+  const handleAuthenticationResponse = (authenticationResponse) => {
     if (authenticationResponse && !authenticationResponse.error) {
       setOAuthToken(authenticationResponse.access_token)
       createPicker()
@@ -114,7 +114,7 @@ export default ({ open, onClose, onAddSamples }) => {
       {
         client_id: credentials.web.client_id,
         scope: scope,
-        immediate: false
+        immediate: false,
       },
       handleAuthenticationResponse
     )
@@ -159,8 +159,8 @@ export default ({ open, onClose, onAddSamples }) => {
         userSelectedItemsFromDrive &&
           userSelectedItemsFromDrive.length > 0 && {
             text: `Add ${userSelectedItemsFromDrive.length} Samples`,
-            onClick: onAddSamplesClicked
-          }
+            onClick: onAddSamplesClicked,
+          },
       ].filter(Boolean)}
     >
       <Button variant="outlined" onClick={onLoadPicker}>

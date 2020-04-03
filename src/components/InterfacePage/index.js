@@ -12,7 +12,7 @@ import { styled } from "@material-ui/core/styles"
 import useIsDesktop from "../../utils/use-is-desktop"
 
 const Button = styled(MuiButton)({
-  margin: 8
+  margin: 8,
 })
 
 export default ({ oha, onChange, onClickEditJSON, onClearLabelData }) => {

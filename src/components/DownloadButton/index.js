@@ -32,12 +32,12 @@ const StyledButton = styled(Button)({
     borderRadius: 4,
     width: 36,
     "&.blue": {
-      backgroundColor: colors.blue[700]
+      backgroundColor: colors.blue[700],
     },
     "&.green": {
-      backgroundColor: colors.green[700]
-    }
-  }
+      backgroundColor: colors.green[700],
+    },
+  },
 })
 
 export default ({ onDownload }) => {

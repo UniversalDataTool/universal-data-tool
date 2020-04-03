@@ -9,7 +9,7 @@ const form = {
     {
       name: "allowMultiple",
       title: "Allow multiple classifications per image?",
-      type: "boolean"
+      type: "boolean",
     },
     {
       name: "availableLabels",
@@ -21,11 +21,11 @@ const form = {
         {
           cellType: "text",
           name: "description",
-          title: "Description (optional)"
-        }
-      ]
-    }
-  ]
+          title: "Description (optional)",
+        },
+      ],
+    },
+  ],
 }
 
 export default ({ iface, onChange }) => {
@@ -33,9 +33,9 @@ export default ({ iface, onChange }) => {
     () => ({
       allowMultiple: false,
       availableLabels:
-        (iface.availableLabels || []).map(a =>
+        (iface.availableLabels || []).map((a) =>
           typeof a === "string" ? { id: a, description: a } : a
-        ) || []
+        ) || [],
     }),
     []
   )

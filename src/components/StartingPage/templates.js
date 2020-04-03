@@ -17,8 +17,8 @@ export default [
     Icon: CropFree,
     oha: {
       interface: {},
-      taskData: []
-    }
+      taskData: [],
+    },
   },
   {
     name: "Image Segmentation",
@@ -31,21 +31,21 @@ export default [
           "bounding-box",
           "polygon",
           // "full-segmentation",
-          "point"
+          "point",
           // "pixel-mask"
-        ]
+        ],
       },
       taskData: [
         {
           imageUrl:
-            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg"
+            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
         },
         {
           imageUrl:
-            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg"
-        }
-      ]
-    }
+            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg",
+        },
+      ],
+    },
   },
   {
     name: "Image Classification",
@@ -53,19 +53,19 @@ export default [
     oha: {
       interface: {
         type: "image_classification",
-        availableLabels: ["valid", "invalid"]
+        availableLabels: ["valid", "invalid"],
       },
       taskData: [
         {
           imageUrl:
-            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg"
+            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
         },
         {
           imageUrl:
-            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg"
-        }
-      ]
-    }
+            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg",
+        },
+      ],
+    },
   },
   {
     name: "Video Segmentation",
@@ -74,15 +74,15 @@ export default [
       interface: {
         type: "video_segmentation",
         availableLabels: ["valid", "invalid"],
-        regionTypesAllowed: ["bounding-box", "polygon", "point"]
+        regionTypesAllowed: ["bounding-box", "polygon", "point"],
       },
       taskData: [
         {
           videoUrl:
-            "https://s3.amazonaws.com/asset.workaround.online/SampleVideo_1280x720_1mb.mp4"
-        }
-      ]
-    }
+            "https://s3.amazonaws.com/asset.workaround.online/SampleVideo_1280x720_1mb.mp4",
+        },
+      ],
+    },
   },
   {
     name: "Data Entry",
@@ -96,20 +96,20 @@ export default [
             {
               type: "text",
               name: "document_title",
-              title: "Title of Document"
-            }
-          ]
-        }
+              title: "Title of Document",
+            },
+          ],
+        },
       },
       taskData: [
         {
-          pdfUrl: "https://arxiv.org/pdf/1906.01969.pdf"
+          pdfUrl: "https://arxiv.org/pdf/1906.01969.pdf",
         },
         {
-          pdfUrl: "https://arxiv.org/pdf/1908.07069.pdf"
-        }
-      ]
-    }
+          pdfUrl: "https://arxiv.org/pdf/1908.07069.pdf",
+        },
+      ],
+    },
   },
   {
     name: "Named Entity Recognition",
@@ -122,25 +122,25 @@ export default [
           {
             id: "food",
             displayName: "Food",
-            description: "Edible item."
+            description: "Edible item.",
           },
           {
             id: "hat",
             displayName: "Hat",
-            description: "Something worn on the head."
-          }
-        ]
+            description: "Something worn on the head.",
+          },
+        ],
       },
       taskData: [
         {
           document:
-            "This strainer makes a great hat, I'll wear it while I serve spaghetti!"
+            "This strainer makes a great hat, I'll wear it while I serve spaghetti!",
         },
         {
-          document: "Why are all these dumpings covered in butter?!"
-        }
-      ]
-    }
+          document: "Why are all these dumpings covered in butter?!",
+        },
+      ],
+    },
   },
   {
     name: "Text Classification",
@@ -148,21 +148,21 @@ export default [
     oha: {
       interface: {
         type: "text_classification",
-        labels: ["positive_sentiment", "negative_sentiment"]
+        labels: ["positive_sentiment", "negative_sentiment"],
       },
       taskData: [
         {
-          document: "Wow this is terrible. I hated it."
+          document: "Wow this is terrible. I hated it.",
         },
         {
-          document: "This has made me so happy. I love this."
+          document: "This has made me so happy. I love this.",
         },
         {
           document:
-            "At first I wasn't sure. Then I thought, oh it's not very good."
-        }
-      ]
-    }
+            "At first I wasn't sure. Then I thought, oh it's not very good.",
+        },
+      ],
+    },
   },
   {
     name: "Audio Transcription",
@@ -170,14 +170,14 @@ export default [
     oha: {
       interface: {
         type: "audio_transcription",
-        description: "# Markdown description here"
+        description: "# Markdown description here",
       },
       taskData: [
         {
-          audioUrl: "https://html5tutorial.info/media/vincent.mp3"
-        }
-      ]
-    }
+          audioUrl: "https://html5tutorial.info/media/vincent.mp3",
+        },
+      ],
+    },
   },
   {
     name: "Composite",
@@ -196,33 +196,33 @@ export default [
                   {
                     type: "text",
                     name: "group_letter",
-                    title: "Letter of Group"
-                  }
-                ]
-              }
-            }
+                    title: "Letter of Group",
+                  },
+                ],
+              },
+            },
           },
           {
             fieldName: "segmentation",
             interface: {
               type: "image_segmentation",
               availableLabels: ["group text"],
-              regionTypesAllowed: ["bounding-box"]
-            }
-          }
-        ]
+              regionTypesAllowed: ["bounding-box"],
+            },
+          },
+        ],
       },
       taskData: [
         {
           imageUrl:
-            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg"
+            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
         },
         {
           imageUrl:
-            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg"
-        }
-      ]
-    }
+            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg",
+        },
+      ],
+    },
   },
   {
     name: "3D Bounding Box",
@@ -230,8 +230,8 @@ export default [
     oha: {
       interface: {
         type: "3d_bounding_box",
-        description: "3D Bounding Box"
-      }
-    }
-  }
+        description: "3D Bounding Box",
+      },
+    },
+  },
 ]

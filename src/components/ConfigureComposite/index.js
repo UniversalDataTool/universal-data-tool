@@ -13,12 +13,12 @@ import { setIn } from "seamless-immutable"
 const Fields = styled("div")({})
 const StyledExpansionPanel = styled(ExpansionPanel)({
   marginTop: 16,
-  border: "2px solid #000"
+  border: "2px solid #000",
 })
 const StyledButton = styled(Button)({
   width: "100%",
   margin: 16,
-  marginLeft: 0
+  marginLeft: 0,
 })
 
 export default ({ iface, onChange }) => {
@@ -35,7 +35,7 @@ export default ({ iface, onChange }) => {
                 <TextField
                   label="Field Name"
                   value={f.fieldName}
-                  onChange={e => {
+                  onChange={(e) => {
                     onChange(
                       setIn(
                         ["fields", fieldIndex, "fieldName"],
@@ -47,14 +47,14 @@ export default ({ iface, onChange }) => {
                 />
                 <ConfigureInterface
                   iface={f.interface}
-                  onChange={newFieldInterface => {
+                  onChange={(newFieldInterface) => {
                     onChange({
                       ...iface,
-                      fields: iface.fields.map(field =>
+                      fields: iface.fields.map((field) =>
                         field.fieldName === f.fieldName
                           ? { ...f, interface: newFieldInterface }
                           : field
-                      )
+                      ),
                     })
                   }}
                 />
@@ -64,7 +64,7 @@ export default ({ iface, onChange }) => {
                       ...iface,
                       fields: iface.fields.filter(
                         ({ fieldName }) => fieldName !== f.fieldName
-                      )
+                      ),
                     })
                   }}
                 >
@@ -79,16 +79,14 @@ export default ({ iface, onChange }) => {
             onChange(
               setIn(
                 iface,
-                ["fields"], 
-                (iface.fields || []).concat(
-                  {
-                    fieldOrder: (iface.fields || []).length,
-                    fieldName: "New Field",
-                    interface: {
-                      type: "empty"
-                    }
-                  }
-                )
+                ["fields"],
+                (iface.fields || []).concat({
+                  fieldOrder: (iface.fields || []).length,
+                  fieldName: "New Field",
+                  interface: {
+                    type: "empty",
+                  },
+                })
               )
             )
           }}

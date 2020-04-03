@@ -11,17 +11,17 @@ const form = {
       title: "Region Types Allowed",
       description: "What types of regions can be drawn on the image.",
       type: "multiple-dropdown",
-      choices: ["bounding-box", "polygon", "point"]
+      choices: ["bounding-box", "polygon", "point"],
     },
     {
       name: "multipleRegions",
       title: "Can multiple regions be created?",
-      type: "boolean"
+      type: "boolean",
     },
     {
       name: "multipleRegionLabels",
       title: "Multiple Region Labels Allowed?",
-      type: "boolean"
+      type: "boolean",
     },
     {
       name: "availableLabels",
@@ -34,11 +34,11 @@ const form = {
         {
           cellType: "text",
           name: "description",
-          title: "Description (optional)"
-        }
-      ]
-    }
-  ]
+          title: "Description (optional)",
+        },
+      ],
+    },
+  ],
 }
 
 export default ({ iface, onChange }) => {
@@ -50,9 +50,9 @@ export default ({ iface, onChange }) => {
       multipleRegionLabels: Boolean(iface.multipleRegionLabels),
       regionTypesAllowed: iface.regionTypesAllowed,
       availableLabels:
-        (iface.availableLabels || []).map(a =>
+        (iface.availableLabels || []).map((a) =>
           typeof a === "string" ? { id: a, description: a } : a
-        ) || []
+        ) || [],
     }),
     []
   )

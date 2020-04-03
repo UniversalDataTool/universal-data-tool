@@ -37,20 +37,20 @@ import "brace/theme/github"
 
 const useStyles = makeStyles({
   headerButton: {
-    color: "#fff"
+    color: "#fff",
   },
   saveIcon: {
-    marginRight: 4
+    marginRight: 4,
   },
   editIcon: {
-    marginLeft: 4
+    marginLeft: 4,
   },
   container: {
     display: "flex",
     flexDirection: "column",
     width: "100vw",
-    height: "100vh"
-  }
+    height: "100vh",
+  },
 })
 
 const headerTabs = ["Settings", "Samples", "Label"]
@@ -65,7 +65,7 @@ export default ({
   onChangeFileName,
   onChangeOHA = () => null,
   onFileDrop,
-  initialMode = "settings" //= "samples"
+  initialMode = "settings", //= "samples"
 }) => {
   const c = useStyles()
   const { addToast } = useToasts()
@@ -77,7 +77,7 @@ export default ({
 
   const [
     timeToCompleteSample,
-    changeSampleTimeToComplete
+    changeSampleTimeToComplete,
   ] = useTimeToCompleteSample()
 
   useEffect(() => {
@@ -109,7 +109,7 @@ export default ({
     } catch (e) {}
   }, [jsonText])
 
-  const onChangeTab = useEventCallback(tab => changeMode(tab.toLowerCase()))
+  const onChangeTab = useEventCallback((tab) => changeMode(tab.toLowerCase()))
 
   let percentComplete = 0
   if (
@@ -153,7 +153,7 @@ export default ({
             width="100%"
             value={jsonText || ""}
             editorProps={{ $blockScrolling: Infinity }}
-            onChange={t => changeJSONText(t)}
+            onChange={(t) => changeJSONText(t)}
           />
         )}
         {mode === "settings" && (
@@ -163,7 +163,7 @@ export default ({
             onClearLabelData={() => {
               onChangeOHA(without(oha, "taskOutput"))
             }}
-            onChange={iface => {
+            onChange={(iface) => {
               if (
                 iface.type !== oha.interface.type &&
                 oha.interface.type !== "empty" &&
@@ -177,7 +177,7 @@ export default ({
               }
               onChangeOHA({
                 ...oha,
-                interface: iface
+                interface: iface,
               })
             }}
           />
@@ -185,20 +185,20 @@ export default ({
         {mode === "samples" && (
           <SamplesView
             oha={oha}
-            openSampleLabelEditor={sampleIndex => {
+            openSampleLabelEditor={(sampleIndex) => {
               changeSingleSampleOHA({
                 ...oha,
                 taskData: [oha.taskData[sampleIndex]],
                 taskOutput: [(oha.taskOutput || [])[sampleIndex]],
                 sampleIndex,
-                annotationStartTime: Date.now()
+                annotationStartTime: Date.now(),
               })
               changeMode("label")
             }}
-            openSampleInputEditor={sampleIndex => {
+            openSampleInputEditor={(sampleIndex) => {
               changeSampleInputEditor({ open: true, sampleIndex })
             }}
-            deleteSample={sampleIndex => {
+            deleteSample={(sampleIndex) => {
               const newTaskData = [...oha.taskData]
               const newTaskOutput = oha.taskOutput
                 ? [...oha.taskOutput]
@@ -210,7 +210,7 @@ export default ({
               onChangeOHA({
                 ...oha,
                 taskData: newTaskData,
-                taskOutput: newTaskOutput
+                taskOutput: newTaskOutput,
               })
             }}
             onChangeOHA={onChangeOHA}
@@ -225,7 +225,7 @@ export default ({
                 newOHA = setIn(
                   newOHA,
                   ["taskOutput"],
-                  (newOHA.taskData || []).map(td => null)
+                  (newOHA.taskData || []).map((td) => null)
                 )
               }
               if (
@@ -267,7 +267,7 @@ export default ({
                       taskData: [oha.taskData[sampleIndex + 1]],
                       taskOutput: [(oha.taskOutput || [])[sampleIndex + 1]],
                       sampleIndex: sampleIndex + 1,
-                      startTime: Date.now()
+                      startTime: Date.now(),
                     })
                     return
                   }
@@ -279,7 +279,7 @@ export default ({
                       taskData: [oha.taskData[sampleIndex - 1]],
                       taskOutput: [(oha.taskOutput || [])[sampleIndex - 1]],
                       sampleIndex: sampleIndex - 1,
-                      startTime: Date.now()
+                      startTime: Date.now(),
                     })
                     return
                   }
@@ -296,13 +296,13 @@ export default ({
                 stats={[
                   {
                     name: "Percent Complete",
-                    value: Math.floor(percentComplete * 100) + "%"
+                    value: Math.floor(percentComplete * 100) + "%",
                   },
                   {
                     name: "Time per Sample",
                     value: duration(
                       new Date(Date.now() - timeToCompleteSample)
-                    ).toString(1, 1)
+                    ).toString(1, 1),
                   },
                   {
                     name: "Estimated Remaining",
@@ -313,20 +313,20 @@ export default ({
                             (1 - percentComplete) *
                             (oha.taskData || []).length
                       )
-                    ).toString(1, 2)
-                  }
+                    ).toString(1, 2),
+                  },
                 ]}
               />
               <SampleGrid
                 count={(oha.taskData || []).length}
                 completed={(oha.taskOutput || []).map(Boolean)}
-                onClick={sampleIndex => {
+                onClick={(sampleIndex) => {
                   changeSingleSampleOHA({
                     ...oha,
                     taskData: [oha.taskData[sampleIndex]],
                     taskOutput: [(oha.taskOutput || [])[sampleIndex]],
                     sampleIndex,
-                    startTime: Date.now()
+                    startTime: Date.now(),
                   })
                 }}
               />
@@ -344,7 +344,7 @@ export default ({
         onClose={() => {
           changeSampleInputEditor({ open: false })
         }}
-        onChange={newInput => {
+        onChange={(newInput) => {
           onChangeOHA(
             setIn(oha, ["taskData", sampleInputEditor.sampleIndex], newInput)
           )

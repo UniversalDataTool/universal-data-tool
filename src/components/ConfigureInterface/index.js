@@ -24,14 +24,14 @@ const NoOptions = styled("div")({
   fontWeight: "bold",
   color: colors.grey[500],
   paddingTop: 30,
-  paddingBottom: 50
+  paddingBottom: 50,
 })
 
 const TypeButton = styled(Button)({
   margin: 8,
   "& .icon": {
     marginRight: 8,
-    color: "#888"
+    color: "#888",
   },
   alignItems: "center",
   justifyContent: "center",
@@ -39,9 +39,9 @@ const TypeButton = styled(Button)({
     backgroundColor: colors.blue[500],
     color: "#fff",
     "& .icon": {
-      color: "#fff"
-    }
-  }
+      color: "#fff",
+    },
+  },
 })
 
 export const Heading = styled("div")({
@@ -51,11 +51,11 @@ export const Heading = styled("div")({
   paddingLeft: 8,
   marginBottom: 8,
   marginTop: 16,
-  color: colors.grey[700]
+  color: colors.grey[700],
 })
 
 const SelectType = ({ currentlySelected, onChange }) => {
-  return templates.map(t => (
+  return templates.map((t) => (
     <TypeButton
       key={t.oha.interface.type || "empty"}
       className={currentlySelected === t.oha.interface.type ? "selected" : ""}
@@ -75,13 +75,13 @@ const SelectType = ({ currentlySelected, onChange }) => {
 export const ConfigureInterface = ({
   iface = {},
   onChange,
-  onClickEditJSON
+  onClickEditJSON,
 }) => {
   return (
     <PaperContainer>
       <SelectType
         currentlySelected={iface.type}
-        onChange={type => {
+        onChange={(type) => {
           onChange(setIn(iface, ["type"], type))
         }}
       />

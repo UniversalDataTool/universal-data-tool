@@ -30,7 +30,7 @@ const ButtonBase = styled(MuiButton)({
   display: "inline-flex",
   flexDirection: "column",
   "&.disabled": {
-    backgroundColor: colors.grey[200]
+    backgroundColor: colors.grey[200],
   },
   margin: 8,
   "& .icon": {
@@ -38,9 +38,9 @@ const ButtonBase = styled(MuiButton)({
     height: 36,
     color: colors.grey[600],
     "&.disabled": {
-      color: colors.grey[400]
-    }
-  }
+      color: colors.grey[400],
+    },
+  },
 })
 
 const DesktopOnlyText = styled("div")({
@@ -48,8 +48,8 @@ const DesktopOnlyText = styled("div")({
   fontWeight: "bold",
   color: colors.grey[600],
   "&.disabled": {
-    color: colors.grey[500]
-  }
+    color: colors.grey[500],
+  },
 })
 
 const SelectDialogContext = createContext()
@@ -97,7 +97,7 @@ const Button = ({ Icon1, Icon2, desktopOnly, children, dialog, disabled }) => {
 export default ({ oha, onChangeOHA }) => {
   const [selectedDialog, changeDialog] = useState()
   const electron = useElectron()
-  const onChangeDialog = async dialog => {
+  const onChangeDialog = async (dialog) => {
     switch (dialog) {
       case "convert-keyframes-to-samples": {
       }

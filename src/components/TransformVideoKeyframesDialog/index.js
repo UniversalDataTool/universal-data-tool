@@ -12,18 +12,18 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary"
 import immutable, { setIn } from "seamless-immutable"
 
 const Code = styled("pre")({
-  fontSize: 8
+  fontSize: 8,
 })
 
 const StyledExpansionPanel = styled(ExpansionPanel)({
   backgroundColor: colors.grey[100],
   border: `1px solid ${colors.grey[500]}`,
   marginTop: 16,
-  marginBottom: 16
+  marginBottom: 16,
 })
 
 const StyledExpansionPanelSummary = styled(ExpansionPanelSummary)({
-  fontWeight: "bold"
+  fontWeight: "bold",
 })
 
 export default ({ open, onChangeOHA, onClose, oha }) => {
@@ -44,24 +44,30 @@ export default ({ open, onChangeOHA, onClose, oha }) => {
                 if (!oha.taskOutput[index]) return []
                 if (!oha.taskOutput[index].keyframes) return []
                 const { keyframes } = oha.taskOutput[index]
-                return Object.keys(keyframes).map(kf => ({
+                return Object.keys(keyframes).map((kf) => ({
                   data: {
                     videoUrl: item.videoUrl,
-                    videoFrameAt: parseInt(kf)
+                    videoFrameAt: parseInt(kf),
                   },
-                  output: keyframes[kf].regions || []
+                  output: keyframes[kf].regions || [],
                 }))
               }
             })
 
             onChangeOHA(
               immutable(oha)
-                .setIn(["taskData"], samples.map(s => s.data))
-                .setIn(["taskOutput"], samples.map(s => s.output))
+                .setIn(
+                  ["taskData"],
+                  samples.map((s) => s.data)
+                )
+                .setIn(
+                  ["taskOutput"],
+                  samples.map((s) => s.output)
+                )
                 .setIn(["interface", "type"], "image_segmentation")
             )
-          }
-        }
+          },
+        },
       ]}
     >
       This operation will convert keyframes set on a video into individual image

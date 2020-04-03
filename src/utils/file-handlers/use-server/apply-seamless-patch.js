@@ -23,7 +23,7 @@ function withoutIn(obj, path) {
     const index = parseInt(key)
     return setIn(obj, parentPath, [
       ...parentObj.slice(0, index),
-      ...parentObj.slice(index + 1)
+      ...parentObj.slice(index + 1),
     ])
   } else {
     return setIn(obj, parentPath, without(parentObj, key))

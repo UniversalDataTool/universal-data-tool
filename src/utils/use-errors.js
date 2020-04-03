@@ -11,11 +11,11 @@ export default () => {
     let interval = setInterval(() => {
       changeErrors(
         errors
-          .map(err => ({
+          .map((err) => ({
             ...err,
-            life: err.life - REFRESH_INTERVAL
+            life: err.life - REFRESH_INTERVAL,
           }))
-          .filter(err => err.life > 0)
+          .filter((err) => err.life > 0)
       )
     }, REFRESH_INTERVAL)
     return () => clearInterval(interval)
@@ -25,12 +25,10 @@ export default () => {
     changeErrors(
       errors.concat([
         {
-          id: Math.random()
-            .toString()
-            .split(".")[1],
+          id: Math.random().toString().split(".")[1],
           message,
-          life: 5000
-        }
+          life: 5000,
+        },
       ])
     )
   }

@@ -16,12 +16,9 @@ export function getRandomColor() {
     .concat(l.toString(), "%)")
 }
 
-export const rid = () =>
-  Math.random()
-    .toString()
-    .split(".")[1]
+export const rid = () => Math.random().toString().split(".")[1]
 
-export const convertToRIARegionFmt = region => {
+export const convertToRIARegionFmt = (region) => {
   switch (region.regionType) {
     case "bounding-box": {
       return {
@@ -33,7 +30,7 @@ export const convertToRIARegionFmt = region => {
         x: region.centerX - region.width / 2,
         y: region.centerY - region.height / 2,
         w: region.width,
-        h: region.height
+        h: region.height,
       }
     }
     case "point": {
@@ -44,7 +41,7 @@ export const convertToRIARegionFmt = region => {
         cls: region.classification,
         color: region.color || getRandomColor(),
         x: region.x,
-        y: region.y
+        y: region.y,
       }
     }
     case "polygon": {
@@ -55,7 +52,7 @@ export const convertToRIARegionFmt = region => {
         cls: region.classification,
         color: region.color || getRandomColor(),
         open: false,
-        points: region.points.map(p => [p.x, p.y])
+        points: region.points.map((p) => [p.x, p.y]),
       }
     }
     case "line":
@@ -65,7 +62,7 @@ export const convertToRIARegionFmt = region => {
   }
 }
 
-export const convertFromRIARegionFmt = riaRegion => {
+export const convertFromRIARegionFmt = (riaRegion) => {
   switch (riaRegion.type) {
     case "point": {
       return {
@@ -74,7 +71,7 @@ export const convertFromRIARegionFmt = riaRegion => {
         y: riaRegion.y,
         classification: riaRegion.cls,
         labels: riaRegion.tags,
-        color: riaRegion.color
+        color: riaRegion.color,
       }
     }
     case "box": {
@@ -86,7 +83,7 @@ export const convertFromRIARegionFmt = riaRegion => {
         height: riaRegion.h,
         classification: riaRegion.cls,
         labels: riaRegion.tags,
-        color: riaRegion.color
+        color: riaRegion.color,
       }
     }
     case "polygon": {
@@ -95,7 +92,7 @@ export const convertFromRIARegionFmt = riaRegion => {
         classification: riaRegion.cls,
         labels: riaRegion.tags,
         color: riaRegion.color,
-        points: riaRegion.points.map(([x, y]) => ({ x, y }))
+        points: riaRegion.points.map(([x, y]) => ({ x, y })),
       }
     }
   }
@@ -106,7 +103,7 @@ export const convertToRIAImageFmt = ({
   title,
   taskDatum: td,
   index: i,
-  output
+  output,
 }) => {
   td = td || {}
   const regions = !output
@@ -119,24 +116,24 @@ export const convertToRIAImageFmt = ({
     return {
       src: td.imageUrl,
       name: title || `Sample ${i}`,
-      regions
+      regions,
     }
   } else if (td.videoUrl && td.videoFrameAt !== undefined) {
     return {
       src: td.videoUrl,
       frameTime: td.videoFrameAt,
       name: title || `Sample ${i}`,
-      regions
+      regions,
     }
   }
   throw new Error(`Task Datum not supported "${JSON.stringify(td)}"`)
 }
 
-export const convertToRIAKeyframes = keyframes => {
+export const convertToRIAKeyframes = (keyframes) => {
   const newKeyframes = {}
   for (const key in keyframes) {
     newKeyframes[key] = {
-      regions: keyframes[key].regions.map(convertToRIARegionFmt)
+      regions: keyframes[key].regions.map(convertToRIARegionFmt),
     }
   }
   return newKeyframes

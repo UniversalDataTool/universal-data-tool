@@ -9,7 +9,7 @@ import LaunchIcon from "@material-ui/icons/Launch"
 import * as Sentry from "@sentry/browser"
 
 Sentry.init({
-  dsn: "https://bc19fbac222243f08f0abaf6d66f2034@sentry.io/5182632"
+  dsn: "https://bc19fbac222243f08f0abaf6d66f2034@sentry.io/5182632",
 })
 
 const Container = styled("div")({
@@ -20,12 +20,12 @@ const Container = styled("div")({
   "& .title": {
     color: colors.grey[200],
     fontSize: 24,
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   "& .subtitle": {
     color: colors.grey[300],
     fontSize: 18,
-    marginTop: 8
+    marginTop: 8,
   },
   "& .info": {
     width: "100%",
@@ -35,17 +35,17 @@ const Container = styled("div")({
       width: "calc(100% - 64px)",
       boxSizing: "border-box",
       minHeight: 300,
-      fontSize: 12
-    }
-  }
+      fontSize: 12,
+    },
+  },
 })
 const Buttons = styled("div")({
-  padding: 8
+  padding: 8,
 })
 const StyledButton = styled(Button)({
   color: "#fff",
   borderColor: "rgba(255,255,255,0.5)",
-  margin: 8
+  margin: 8,
 })
 
 class ErrorBoundary extends React.Component {
@@ -58,13 +58,13 @@ class ErrorBoundary extends React.Component {
     // Update state so the next render will show the fallback UI.
     return {
       hasError: true,
-      errorDetails: JSON.stringify(detect()) + "\n\n" + error.stack
+      errorDetails: JSON.stringify(detect()) + "\n\n" + error.stack,
     }
   }
 
   componentDidCatch(error, errorInfo) {
     // You can also log the error to an error reporting service
-    Sentry.withScope(scope => {
+    Sentry.withScope((scope) => {
       scope.setExtras(errorInfo)
       const eventId = Sentry.captureException(error)
       this.setState({ eventId })

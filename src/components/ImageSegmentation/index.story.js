@@ -20,18 +20,18 @@ storiesOf("ImageSegmentation", module).add("Basic", () => (
           "polygon",
           "full-segmentation",
           "point",
-          "pixel-mask"
-        ]
+          "pixel-mask",
+        ],
       },
       taskData: [
         {
           imageUrl:
-            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg"
+            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
         },
         {
           imageUrl:
-            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg"
-        }
+            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg",
+        },
       ],
       taskOutput: [
         {
@@ -39,9 +39,9 @@ storiesOf("ImageSegmentation", module).add("Basic", () => (
           centerX: 0.5,
           centerY: 0.5,
           width: 0.25,
-          height: 0.25
-        }
-      ]
+          height: 0.25,
+        },
+      ],
     }}
   />
 ))

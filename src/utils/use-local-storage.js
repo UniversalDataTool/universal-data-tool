@@ -11,7 +11,7 @@ export default (key: string, defaultValue: Object) => {
     }
   })
 
-  const changeValue = newValue => {
+  const changeValue = (newValue) => {
     window.localStorage.setItem(key, JSON.stringify(newValue))
     changeState(newValue)
   }

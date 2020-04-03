@@ -7,21 +7,21 @@ import * as colors from "@material-ui/core/colors"
 
 const useStyles = makeStyles({
   container: {
-    fontFamily: '"Inter", sans-serif'
-  }
+    fontFamily: '"Inter", sans-serif',
+  },
 })
 
 const theme = createMuiTheme({
   palette: {
     primary: colors.blue,
-    secondary: colors.blue
+    secondary: colors.blue,
   },
   typography: {
     fontFamily: '"Inter", "Roboto", sans-serif',
     button: {
-      textTransform: "none"
-    }
-  }
+      textTransform: "none",
+    },
+  },
 })
 
 export default ({ children }: any) => {
