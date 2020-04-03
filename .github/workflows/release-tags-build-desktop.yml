@@ -1,4 +1,4 @@
-name: Build/Release For Tags
+name: Build Desktop Application
 
 # on: [push]
 on:
