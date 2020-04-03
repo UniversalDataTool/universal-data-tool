@@ -1,12 +1,10 @@
 name: Build Desktop Application
 
-on:
-  push:
-    tags-ignore:
-      - "*-no-desktop"
+on: push
 
 jobs:
   build:
+    if: "contains(github.ref, '/tags/v')"
     runs-on: ${{ matrix.os }}
 
     strategy:
