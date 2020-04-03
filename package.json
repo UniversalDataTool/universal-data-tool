@@ -58,11 +58,12 @@
     "react-dom": "^16.8.6",
     "react-markdown": "^4.1.0",
     "react-nlp-annotate": "^0.1.21",
-    "react-scripts": "^3.4.1",
     "spelling": "^2.0.1"
   },
   "dependencies": {
+    "react-scripts": "^3.4.1",
     "@material-ui/styles": "^4.9.0",
+    "@semantic-release/git": "^9.0.0",
     "@sentry/browser": "^5.15.4",
     "any-shell-escape": "^0.1.1",
     "bent": "^7.1.0",
