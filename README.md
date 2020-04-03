@@ -13,7 +13,7 @@ The Universal Data Tool is a web/desktop app for editing and annotating images, 
 * Can be easily integrated into a React application
 * Annotate images or videos with classifications, tags, bounding boxes, polygons and points
 * Annotate NLP datasets with Named Entity Recognition (NER), classification and Part of Speech (PoS) tagging.
-* Easily load into pandas or [use with fast.ai](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-Fast.ai)
+* Easily [load into pandas](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-Pandas) or [use with fast.ai](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-Fast.ai)
 
 
 ![Universal Data Tool Computer Vision Cat](https://user-images.githubusercontent.com/1910070/75850482-6a2cb500-5db5-11ea-852c-7256463cece8.png)
