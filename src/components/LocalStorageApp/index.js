@@ -11,6 +11,7 @@ import useFileHandler from "../../utils/file-handlers"
 import download from "in-browser-download"
 import toUDTCSV from "../../utils/to-udt-csv.js"
 import { setIn } from "seamless-immutable"
+import ErrorBoundary from "../ErrorBoundary"
 import useEventCallback from "use-event-callback"
 
 const useStyles = makeStyles({
@@ -18,14 +19,11 @@ const useStyles = makeStyles({
     textAlign: "center",
     padding: 100,
     color: "#666",
-    fontSize: 28
-  }
+    fontSize: 28,
+  },
 })
 
-const randomId = () =>
-  Math.random()
-    .toString()
-    .split(".")[1]
+const randomId = () => Math.random().toString().split(".")[1]
 
 export default () => {
   const c = useStyles()
@@ -35,22 +33,22 @@ export default () => {
     openFile,
     openUrl,
     makeSession,
-    recentItems
+    recentItems,
   } = useFileHandler()
   const [errors, addError] = useErrors()
 
-  const onCreateTemplate = useEventCallback(template => {
+  const onCreateTemplate = useEventCallback((template) => {
     changeFile({
       fileName: "unnamed",
       content: template.oha,
       id: randomId(),
-      mode: "local-storage"
+      mode: "local-storage",
     })
   })
 
-  const openRecentItem = useEventCallback(item => changeFile(item))
+  const openRecentItem = useEventCallback((item) => changeFile(item))
   const onClickHome = useEventCallback(() => changeFile(null))
-  const onDownload = useEventCallback(format => {
+  const onDownload = useEventCallback((format) => {
     if (!file) return
     const outputName = (file.sessionId || file.fileName) + ".udt." + format
     if (format === "json") {
@@ -63,7 +61,7 @@ export default () => {
   const inSession = file && file.mode === "server"
   const [sessionBoxOpen, changeSessionBoxOpen] = useState(false)
 
-  const onJoinSession = useCallback(async sessionName => {
+  const onJoinSession = useCallback(async (sessionName) => {
     await openUrl(sessionName)
   }, [])
 
@@ -72,7 +70,7 @@ export default () => {
       ...file,
       mode: "local-storage",
       id: randomId(),
-      fileName: "unnamed"
+      fileName: "unnamed",
     })
   )
 
@@ -97,7 +95,7 @@ export default () => {
           onLeaveSession,
           onCreateSession: makeSession,
           fileOpen: Boolean(file),
-          onDownload
+          onDownload,
         }}
       >
         {!file ? (
@@ -109,18 +107,20 @@ export default () => {
             onClickOpenSession={() => changeSessionBoxOpen(true)}
           />
         ) : (
-          <OHAEditor
-            key={file.id}
-            {...file}
-            inSession={inSession}
-            oha={file.content}
-            onChangeFileName={newName => {
-              changeFile(setIn(file, ["fileName"], newName))
-            }}
-            onChangeOHA={newOHA => {
-              changeFile(setIn(file, ["content"], newOHA))
-            }}
-          />
+          <ErrorBoundary>
+            <OHAEditor
+              key={file.id}
+              {...file}
+              inSession={inSession}
+              oha={file.content}
+              onChangeFileName={(newName) => {
+                changeFile(setIn(file, ["fileName"], newName))
+              }}
+              onChangeOHA={(newOHA) => {
+                changeFile(setIn(file, ["content"], newOHA))
+              }}
+            />
+          </ErrorBoundary>
         )}
       </HeaderContext.Provider>
       <ErrorToasts errors={errors} />

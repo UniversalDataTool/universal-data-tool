@@ -19,14 +19,14 @@ const StyledDialogTitle = styled(DialogTitle)({
   backgroundColor: grey[100],
   borderBottom: `1px solid ${grey[300]}`,
   paddingBottom: 12,
-  boxShadow: "0px 2px 3px rgba(0,0,0,0.05)"
+  boxShadow: "0px 2px 3px rgba(0,0,0,0.05)",
 })
 const StyledDialogContent = styled(DialogContent)({
-  paddingTop: 16
+  paddingTop: 16,
 })
 const StyledDialogActions = styled(DialogActions)({
   backgroundColor: grey[100],
-  borderTop: `1px solid ${grey[300]}`
+  borderTop: `1px solid ${grey[300]}`,
 })
 
 export default ({
@@ -37,7 +37,7 @@ export default ({
   onClose,
   red: redOn,
   noActionBar = false,
-  actions = []
+  actions = [],
 }) => {
   const [fullScreen, changeFullScreen] = useState(false)
   return (

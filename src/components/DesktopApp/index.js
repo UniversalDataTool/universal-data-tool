@@ -21,14 +21,11 @@ const useStyles = makeStyles({
     textAlign: "center",
     padding: 100,
     color: "#666",
-    fontSize: 28
-  }
+    fontSize: 28,
+  },
 })
 
-const randomId = () =>
-  Math.random()
-    .toString()
-    .split(".")[1]
+const randomId = () => Math.random().toString().split(".")[1]
 
 export default () => {
   const c = useStyles()
@@ -39,7 +36,7 @@ export default () => {
     openUrl,
     makeSession,
     saveFile,
-    recentItems
+    recentItems,
   } = useFileHandler()
 
   const [oha, changeOHA] = useState()
@@ -48,30 +45,30 @@ export default () => {
 
   const { remote, ipcRenderer } = useElectron()
 
-  const onCreateTemplate = useEventCallback(template => {
+  const onCreateTemplate = useEventCallback((template) => {
     changeFile({
       fileName: "unnamed",
       content: template.oha,
       id: randomId(),
-      mode: "filesystem"
+      mode: "filesystem",
     })
   })
 
-  const openRecentItem = useEventCallback(item => changeFile(item))
+  const openRecentItem = useEventCallback((item) => changeFile(item))
   const onClickHome = useEventCallback(() => changeFile(null))
 
   useEffect(() => {
     const onOpenWelcomePage = () => changeFile(null)
     const onNewFile = (arg0, { templateName } = {}) => {
       onCreateTemplate(
-        templates.find(t => t.name === templateName) || templates[0]
+        templates.find((t) => t.name === templateName) || templates[0]
       )
     }
     const saveFileAs = () => saveFile({ saveAs: true })
     const exportToCSV = async () => {
       if (!file) return
       let { cancelled, filePath } = await remote.dialog.showSaveDialog({
-        filters: [{ name: ".udt.csv", extensions: ["udt.csv"] }]
+        filters: [{ name: ".udt.csv", extensions: ["udt.csv"] }],
       })
       filePath =
         !filePath || filePath.endsWith(".csv")
@@ -113,7 +110,7 @@ export default () => {
           fileOpen: Boolean(file),
           onOpenRecentItem: openRecentItem,
           isDesktop: true,
-          onOpenFile: openFile
+          onOpenFile: openFile,
         }}
       >
         {!file ? (
@@ -129,10 +126,10 @@ export default () => {
             key={file.id}
             {...file}
             oha={file.content}
-            onChangeFileName={newName => {
+            onChangeFileName={(newName) => {
               changeFile(setIn(file, ["fileName"], newName))
             }}
-            onChangeOHA={newOHA => {
+            onChangeOHA={(newOHA) => {
               changeFile(setIn(file, ["content"], newOHA))
             }}
           />

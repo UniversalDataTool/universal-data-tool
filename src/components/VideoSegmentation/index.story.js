@@ -15,15 +15,15 @@ storiesOf("VideoSegmentation", module).add("Basic", () => (
         type: "image_segmentation",
         description: "# Title\n\nLowercase",
         availableLabels: ["valid", "invalid"],
-        regionTypesAllowed: ["bounding-box", "polygon", "point"]
+        regionTypesAllowed: ["bounding-box", "polygon", "point"],
       },
       taskData: [
         {
           videoUrl:
-            "https://s3.amazonaws.com/asset.workaround.online/SampleVideo_1280x720_1mb.mp4"
-        }
+            "https://s3.amazonaws.com/asset.workaround.online/SampleVideo_1280x720_1mb.mp4",
+        },
       ],
-      taskOutput: []
+      taskOutput: [],
     }}
   />
 ))

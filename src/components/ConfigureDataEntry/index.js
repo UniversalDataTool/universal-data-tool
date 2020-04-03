@@ -15,14 +15,14 @@ import Grid from "@material-ui/core/Grid"
 import { setIn } from "seamless-immutable"
 
 const ButtonsContainer = styled("div")({
-  textAlign: "right"
+  textAlign: "right",
 })
 const NoQuestions = styled("div")({
   fontSize: 18,
   color: colors.grey[500],
   fontWeight: "bold",
   textAlign: "center",
-  padding: 16
+  padding: 16,
 })
 
 const Question = styled("div")({
@@ -36,11 +36,11 @@ const Question = styled("div")({
   "& .quitButton": {
     position: "absolute",
     right: 4,
-    top: 4
+    top: 4,
   },
   "& > *": {
-    margin: 8
-  }
+    margin: 8,
+  },
 })
 const PreviewHeader = styled("div")({
   fontSize: 12,
@@ -48,15 +48,15 @@ const PreviewHeader = styled("div")({
   color: colors.grey[600],
   textTransform: "uppercase",
   margin: 16,
-  marginBottom: 32
+  marginBottom: 32,
 })
 
 const StyledButton = styled(Button)({
   position: "relative",
   "& .icon": {
     marginRight: 8,
-    opacity: 0.7
-  }
+    opacity: 0.7,
+  },
 })
 
 export default ({ iface, onChange }) => {
@@ -75,7 +75,7 @@ export default ({ iface, onChange }) => {
                 variant="outlined"
                 label="Name / Identifier"
                 value={q.name || ""}
-                onChange={e => {
+                onChange={(e) => {
                   onChange(
                     setIn(
                       iface,
@@ -90,7 +90,7 @@ export default ({ iface, onChange }) => {
                 variant="outlined"
                 label="Title / Instruction"
                 value={q.title || ""}
-                onChange={e => {
+                onChange={(e) => {
                   onChange(
                     setIn(
                       iface,
@@ -108,13 +108,13 @@ export default ({ iface, onChange }) => {
                     style={{
                       marginTop: 8,
                       paddingRight: 8,
-                      boxSizing: "border-box"
+                      boxSizing: "border-box",
                     }}
                     variant="outlined"
                     fullWidth
                     label="Choices (One per Line)"
                     defaultValue={q.choices.join("\n") || ""}
-                    onChange={e => {
+                    onChange={(e) => {
                       onChange(
                         setIn(
                           iface,
@@ -156,7 +156,7 @@ export default ({ iface, onChange }) => {
         ))
       )}
       <ButtonsContainer>
-        <StyledButton onClick={e => changeMenuOpen(true)} ref={anchorEl}>
+        <StyledButton onClick={(e) => changeMenuOpen(true)} ref={anchorEl}>
           <AddCircleIcon className="icon" />
           Add Input
         </StyledButton>
@@ -169,17 +169,19 @@ export default ({ iface, onChange }) => {
         <MenuItem
           onClick={() => {
             changeMenuOpen(false)
-            onChange(setIn(
-              iface,
-              ["surveyjs", "questions"],
-              iface.surveyjs.questions.concat([
+            onChange(
+              setIn(
+                iface,
+                ["surveyjs", "questions"],
+                iface.surveyjs.questions.concat([
                   {
                     name: "input" + questions.length,
                     type: "text",
-                    title: "New Text Input"
-                  }
-              ])
-            ))
+                    title: "New Text Input",
+                  },
+                ])
+              )
+            )
           }}
         >
           Text Input
@@ -188,16 +190,15 @@ export default ({ iface, onChange }) => {
           onClick={() => {
             changeMenuOpen(false)
             onChange(
-              setIn(iface, 
+              setIn(
+                iface,
                 ["surveyjs", "questions"],
-                (iface.surveyjs.questions || []).concat(
-                  {
-                    name: "input" + questions.length,
-                    type: "radiogroup",
-                    title: "New Exclusive Choice Input",
-                    choices: ["Yes", "Maybe", "No"]
-                  }
-                )
+                (iface.surveyjs.questions || []).concat({
+                  name: "input" + questions.length,
+                  type: "radiogroup",
+                  title: "New Exclusive Choice Input",
+                  choices: ["Yes", "Maybe", "No"],
+                })
               )
             )
           }}
@@ -211,14 +212,12 @@ export default ({ iface, onChange }) => {
               setIn(
                 iface,
                 ["surveyjs", "questions"],
-                (iface.surveyjs.questions || []).concat(
-                  {
-                    name: "input" + questions.length,
-                    type: "checkbox",
-                    title: "New Checkbox Input",
-                    choices: ["A", "B", "C"]
-                  }
-                )
+                (iface.surveyjs.questions || []).concat({
+                  name: "input" + questions.length,
+                  type: "checkbox",
+                  title: "New Checkbox Input",
+                  choices: ["A", "B", "C"],
+                })
               )
             )
           }}
@@ -232,13 +231,11 @@ export default ({ iface, onChange }) => {
               setIn(
                 iface,
                 ["surveyjs", "questions"],
-                iface.surveyjs.questions.concat(
-                  {
-                    name: "input" + questions.length,
-                    type: "boolean",
-                    title: "New Boolean Input"
-                  }
-                )
+                iface.surveyjs.questions.concat({
+                  name: "input" + questions.length,
+                  type: "boolean",
+                  title: "New Boolean Input",
+                })
               )
             )
           }}
@@ -252,14 +249,12 @@ export default ({ iface, onChange }) => {
               setIn(
                 iface,
                 ["surveyjs", "questions"],
-                (iface.questions || []).concat(
-                  {
-                    name: "input" + questions.length,
-                    type: "dropdown",
-                    title: "New Dropdown Input",
-                    choices: ["A", "B", "C"]
-                  }
-                )
+                (iface.questions || []).concat({
+                  name: "input" + questions.length,
+                  type: "dropdown",
+                  title: "New Dropdown Input",
+                  choices: ["A", "B", "C"],
+                })
               )
             )
           }}
@@ -278,8 +273,8 @@ export default ({ iface, onChange }) => {
                     name: "input" + questions.length,
                     type: "multiple-dropdown",
                     title: "New Multiple Dropdown Input",
-                    choices: ["A", "B", "C"]
-                  }
+                    choices: ["A", "B", "C"],
+                  },
                 ])
               )
             )

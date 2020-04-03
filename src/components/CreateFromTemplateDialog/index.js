@@ -17,19 +17,19 @@ const useStyles = makeStyles({
     width: 150,
     height: 120,
     border: "1px solid #ccc",
-    margin: 10
+    margin: 10,
   },
   bigIcon: {
     width: 48,
-    height: 48
-  }
+    height: 48,
+  },
 })
 
 export default ({ open, onClose, onSelect }) => {
   const c = useStyles()
   return (
     <SimpleDialog title="Create from Template" open={open} onClose={onClose}>
-      {templates.map(template => (
+      {templates.map((template) => (
         <Button
           key={template.name}
           onClick={() => onSelect(template)}

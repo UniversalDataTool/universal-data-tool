@@ -12,12 +12,12 @@ storiesOf("AudioTranscription", module).add("Basic", () => (
     onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
     interface={{
       type: "audio_transcription",
-      description: "This is an **audio transcription** description."
+      description: "This is an **audio transcription** description.",
     }}
     taskData={[
       {
-        audioUrl: "https://html5tutorial.info/media/vincent.mp3"
-      }
+        audioUrl: "https://html5tutorial.info/media/vincent.mp3",
+      },
     ]}
     taskOutput={["starry starry night"]}
   />

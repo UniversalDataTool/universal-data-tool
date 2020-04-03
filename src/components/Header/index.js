@@ -20,7 +20,7 @@ export const HeaderContext = createContext({
   sessionBoxOpen: false,
   changeSessionBoxOpen: () => null,
   fileOpen: false,
-  onDownload: () => null
+  onDownload: () => null,
 })
 
 const emptyArray = []
@@ -30,7 +30,7 @@ export default ({
   title,
   currentTab,
   onChangeTab,
-  tabs = emptyArray
+  tabs = emptyArray,
 }) => {
   const [drawerOpen, changeDrawerOpen] = useState(false)
   let headerContext = useContext(HeaderContext)

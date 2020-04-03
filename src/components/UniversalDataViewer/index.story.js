@@ -21,29 +21,29 @@ storiesOf("UniversalDataViewer", module)
             {
               id: "food",
               displayName: "Food",
-              description: "Edible item."
+              description: "Edible item.",
             },
             {
               id: "hat",
               displayName: "Hat",
-              description: "Something worn on the head."
-            }
-          ]
+              description: "Something worn on the head.",
+            },
+          ],
         },
         taskData: [
           {
             document:
-              "This strainer makes a great hat, I'll wear it while I serve spaghetti!"
-          }
+              "This strainer makes a great hat, I'll wear it while I serve spaghetti!",
+          },
         ],
         taskOutput: [
           {
             entities: [
               { label: "hat", text: "strainer", start: 5, end: 13 },
-              { label: "food", text: "spaghetti", start: 59, end: 68 }
-            ]
-          }
-        ]
+              { label: "food", text: "spaghetti", start: 59, end: 68 },
+            ],
+          },
+        ],
       }}
     />
   ))
@@ -67,39 +67,39 @@ storiesOf("UniversalDataViewer", module)
                     choices: [
                       {
                         value: "A",
-                        text: "A"
+                        text: "A",
                       },
                       {
                         value: "B",
-                        text: "B"
+                        text: "B",
                       },
                       {
                         value: "C",
-                        text: "C"
-                      }
-                    ]
+                        text: "C",
+                      },
+                    ],
                   },
                   {
                     type: "text",
                     name: "feedback",
-                    title: "Feedback"
-                  }
-                ]
-              }
-            ]
-          }
+                    title: "Feedback",
+                  },
+                ],
+              },
+            ],
+          },
         },
         taskData: [
           {
-            description: "Cucumber"
-          }
+            description: "Cucumber",
+          },
         ],
         taskOutput: [
           {
             group_letter: "A",
-            feedback: "this is some feedback"
-          }
-        ]
+            feedback: "this is some feedback",
+          },
+        ],
       }}
     />
   ))
@@ -110,14 +110,14 @@ storiesOf("UniversalDataViewer", module)
       oha={{
         interface: {
           type: "audio_transcription",
-          description: ""
+          description: "",
         },
         taskData: [
           {
-            audioUrl: "https://html5tutorial.info/media/vincent.mp3"
-          }
+            audioUrl: "https://html5tutorial.info/media/vincent.mp3",
+          },
         ],
-        taskOutput: ["starry starry night"]
+        taskOutput: ["starry starry night"],
       }}
     />
   ))
@@ -141,47 +141,47 @@ storiesOf("UniversalDataViewer", module)
                         {
                           type: "text",
                           name: "question1",
-                          title: "First Interface Question"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              }
+                          title: "First Interface Question",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              },
             },
             {
               fieldName: "Field2",
               interface: {
                 type: "image_segmentation",
                 availableLabels: ["valid", "invalid"],
-                regionTypesAllowed: ["bounding-box"]
-              }
-            }
-          ]
+                regionTypesAllowed: ["bounding-box"],
+              },
+            },
+          ],
         },
         taskData: [
           {
             imageUrl:
-              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/eng_diagram1.png"
+              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/eng_diagram1.png",
           },
           {
             imageUrl:
-              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/eng_diagram2.png"
+              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/eng_diagram2.png",
           },
           {
             imageUrl:
-              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/eng_diagram3.png"
-          }
+              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/eng_diagram3.png",
+          },
         ],
         taskOutput: [
           {
             Field1: {
-              question1: "Included output"
-            }
+              question1: "Included output",
+            },
           },
           null,
-          null
-        ]
+          null,
+        ],
       }}
     />
   ))
@@ -202,11 +202,11 @@ storiesOf("UniversalDataViewer", module)
                     {
                       name: "value",
                       type: "text",
-                      title: "What is the value of textfield?"
-                    }
-                  ]
-                }
-              }
+                      title: "What is the value of textfield?",
+                    },
+                  ],
+                },
+              },
             },
             {
               fieldName: "labelfield",
@@ -218,11 +218,11 @@ storiesOf("UniversalDataViewer", module)
                       name: "value",
                       type: "radiogroup",
                       title: "Which of the following is the labelfield?",
-                      choices: ["Example Option 1", "Example Option 2"]
-                    }
-                  ]
-                }
-              }
+                      choices: ["Example Option 1", "Example Option 2"],
+                    },
+                  ],
+                },
+              },
             },
             {
               fieldName: "interest",
@@ -230,22 +230,22 @@ storiesOf("UniversalDataViewer", module)
                 type: "image_segmentation",
                 description:
                   'Completely surround the "interest" with a bounding box.',
-                regionTypesAllowed: ["bounding-box"]
-              }
-            }
-          ]
+                regionTypesAllowed: ["bounding-box"],
+              },
+            },
+          ],
         },
         taskData: [
           {
             customId: "images/img1.jpg",
             imageUrl:
-              "http://localhost:3702/app/api/download/63d525ea-cad4-495b-8c5d-eb44173a4238"
-          }
+              "http://localhost:3702/app/api/download/63d525ea-cad4-495b-8c5d-eb44173a4238",
+          },
         ],
         examples: null,
         delivery: {
-          targetAccuracy: 0.93
-        }
+          targetAccuracy: 0.93,
+        },
       }}
     />
   ))

@@ -19,7 +19,7 @@ export const UniversalDataViewer = ({
   hideDescription,
   datasetName,
   requireCompleteToPressNext,
-  onSaveTaskOutputItem
+  onSaveTaskOutputItem,
 }) => {
   // TODO type check w/ superstruct against oha
   const containerProps = useMemo(
@@ -28,14 +28,14 @@ export const UniversalDataViewer = ({
       hideDescription,
       datasetName,
       requireCompleteToPressNext,
-      onExit
+      onExit,
     }),
     [
       hideHeader,
       hideDescription,
       requireCompleteToPressNext,
       datasetName,
-      onExit
+      onExit,
     ]
   )
 

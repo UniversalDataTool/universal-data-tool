@@ -5,7 +5,7 @@ import SimpleDialog from "../SimpleDialog"
 
 const TextArea = styled("textarea")({
   width: "100%",
-  minHeight: 300
+  minHeight: 300,
 })
 
 export default ({ open, onClose, onAddSamples }) => {
@@ -22,9 +22,9 @@ export default ({ open, onClose, onAddSamples }) => {
             onAddSamples(
               content
                 .split("\n")
-                .map(l => l.trim())
+                .map((l) => l.trim())
                 .filter(Boolean)
-                .map(s => {
+                .map((s) => {
                   const extension = s.split(".").slice(-1)[0]
                   switch (extension.toLowerCase()) {
                     case "png":
@@ -50,8 +50,8 @@ export default ({ open, onClose, onAddSamples }) => {
                 })
                 .filter(Boolean)
             )
-          }
-        }
+          },
+        },
       ]}
     >
       <TextArea

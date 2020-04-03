@@ -7,12 +7,12 @@ import { makeStyles } from "@material-ui/core/styles"
 const useStyles = makeStyles({
   root: {
     padding: 50,
-    textAlign: "center"
+    textAlign: "center",
   },
   title: {
-    margin: 50
+    margin: 50,
   },
-  explain: {}
+  explain: {},
 })
 
 export default ({ title, description, children }) => {

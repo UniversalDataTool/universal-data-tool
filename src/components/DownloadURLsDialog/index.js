@@ -13,7 +13,7 @@ import { setIn } from "seamless-immutable"
 const ErrorBox = styled("pre")({
   color: "red",
   whiteSpace: "prewrap",
-  fontSize: 11
+  fontSize: 11,
 })
 
 function downloadFile(urlToDownload, directoryPath, remote) {
@@ -28,9 +28,9 @@ function downloadFile(urlToDownload, directoryPath, remote) {
       urlToDownload,
       {
         directory: directoryPath,
-        filename: fileName
+        filename: fileName,
       },
-      err => {
+      (err) => {
         if (err) return reject(err)
         return resolve(downloadPath)
       }
@@ -55,11 +55,15 @@ export default ({ open, onChangeOHA, onClose, oha }) => {
             changeProgress(0)
             const {
               cancelled,
-              filePaths: [directoryPath] = [null]
+              filePaths: [directoryPath] = [null],
             } = await remote.dialog.showOpenDialog({
               title: "Directory to download files to",
               buttonLabel: "Download Files Here",
-              properties: ["createDirectory", "openDirectory", "promptToCreate"]
+              properties: [
+                "createDirectory",
+                "openDirectory",
+                "promptToCreate",
+              ],
             })
             if (cancelled || !directoryPath) {
               changeProgress(null)
@@ -86,7 +90,7 @@ export default ({ open, onChangeOHA, onClose, oha }) => {
                 )
                 newTaskData[i] = {
                   ...td,
-                  [urlKey]: `file://${pathToFile}`
+                  [urlKey]: `file://${pathToFile}`,
                 }
               } catch (e) {
                 errors += `Skipping sample, error downloading taskData[${i}] (${urlToDownload}): ${e.toString()} \n`
@@ -98,8 +102,8 @@ export default ({ open, onChangeOHA, onClose, oha }) => {
 
             changeErrors(errors)
             changeProgress(100)
-          }
-        }
+          },
+        },
       ]}
     >
       This transformation will download all the urls from your samples to your

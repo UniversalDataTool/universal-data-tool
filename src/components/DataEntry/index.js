@@ -3,7 +3,7 @@ import Survey from "material-survey/components/Survey"
 import getTaskDescription from "../../utils/get-task-description.js"
 import SampleContainer from "../SampleContainer"
 
-export const DataEntry = props => {
+export const DataEntry = (props) => {
   const [currentSampleIndex, changeCurrentSampleIndex] = useState(0)
   return (
     <SampleContainer
@@ -15,7 +15,7 @@ export const DataEntry = props => {
         getTaskDescription(props.taskData[currentSampleIndex]) ||
         props.interface.description
       }
-      onChangeSample={sampleIndex => changeCurrentSampleIndex(sampleIndex)}
+      onChangeSample={(sampleIndex) => changeCurrentSampleIndex(sampleIndex)}
     >
       <Survey
         key={(props.sampleIndex || 0) + currentSampleIndex}
@@ -30,7 +30,7 @@ export const DataEntry = props => {
             : undefined
         }
         completeText="Save & Next"
-        onFinish={answers => {
+        onFinish={(answers) => {
           props.onSaveTaskOutputItem(currentSampleIndex, answers)
           if (props.containerProps.onExit)
             props.containerProps.onExit("go-to-next")

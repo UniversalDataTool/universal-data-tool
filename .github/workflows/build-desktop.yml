@@ -1,6 +1,5 @@
-name: Build/Release
+name: Build Desktop Application
 
-# on: [push]
 on:
   push:
     tags:
@@ -8,6 +7,7 @@ on:
 
 jobs:
   build:
+    if: "contains(github.event.head_commit.message, 'chore(release)')"
     runs-on: ${{ matrix.os }}
 
     strategy:

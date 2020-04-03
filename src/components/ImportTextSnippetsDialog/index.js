@@ -9,14 +9,14 @@ import * as colors from "@material-ui/core/colors"
 
 const TextArea = styled("textarea")({
   width: "100%",
-  minHeight: 300
+  minHeight: 300,
 })
 
 const UploadHover = styled("div")({
   fontSize: 24,
   color: colors.grey[600],
   textAlign: "center",
-  padding: 48
+  padding: 48,
 })
 
 const emptyFunc = () => null
@@ -24,10 +24,10 @@ const emptyFunc = () => null
 const ImportTextSnippetsDialog = ({ open, onClose, onAddSamples }) => {
   const [content, changeContent] = useState("")
 
-  const onDrop = useEventCallback(acceptedFiles => {
+  const onDrop = useEventCallback((acceptedFiles) => {
     const { name: fileName } = acceptedFiles[0]
     const reader = new FileReader()
-    reader.onload = e => {
+    reader.onload = (e) => {
       const fileContent = e.target.result
       if (fileName.endsWith("csv") || fileName.endsWith("CSV")) {
         changeContent(fileContent.replace(",", "\n"))
@@ -51,12 +51,12 @@ const ImportTextSnippetsDialog = ({ open, onClose, onAddSamples }) => {
             onAddSamples(
               content
                 .split("\n")
-                .map(l => l.trim())
+                .map((l) => l.trim())
                 .filter(Boolean)
-                .map(s => ({ document: s }))
+                .map((s) => ({ document: s }))
             )
-          }
-        }
+          },
+        },
       ]}
     >
       <div {...getRootProps()} onClick={emptyFunc}>

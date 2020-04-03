@@ -7,7 +7,7 @@ import { action } from "@storybook/addon-actions"
 
 import OHAEditor from "./"
 
-const Controller = props => {
+const Controller = (props) => {
   const [oha, changeOHA] = useState(props.initialOHA)
   return (
     <OHAEditor
@@ -27,17 +27,17 @@ storiesOf("OHAEditor", module).add("Basic", () => (
       interface: {
         type: "image_segmentation",
         availableLabels: ["valid", "invalid"],
-        regionTypesAllowed: ["bounding-box", "polygon", "point"]
+        regionTypesAllowed: ["bounding-box", "polygon", "point"],
       },
       taskData: [
         {
           imageUrl:
-            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg"
+            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
         },
         {
           imageUrl:
-            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg"
-        }
+            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg",
+        },
       ],
       taskOutput: [
         {
@@ -45,9 +45,9 @@ storiesOf("OHAEditor", module).add("Basic", () => (
           centerX: 0.5,
           centerY: 0.5,
           width: 0.25,
-          height: 0.25
-        }
-      ]
+          height: 0.25,
+        },
+      ],
     }}
     onChangeFileName={action("onChangeFileName")}
   />

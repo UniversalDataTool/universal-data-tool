@@ -26,11 +26,11 @@ export default ({
   drawerOpen,
   onOpenFile,
   onOpenRecentItem,
-  onClickTemplate
+  onClickTemplate,
 }) => {
   const c = useStyles()
 
-  const onDrop = useCallback(acceptedFiles => {
+  const onDrop = useCallback((acceptedFiles) => {
     onOpenFile(acceptedFiles[0])
   }, [])
 
@@ -62,7 +62,7 @@ export default ({
             </ListItemText>
           </ListItem>
         ) : (
-          recentItems.map(ri => (
+          recentItems.map((ri) => (
             <ListItem
               key={ri.fileName}
               button
@@ -78,7 +78,7 @@ export default ({
           ))
         )}
         <ListSubheader>Create From Template</ListSubheader>
-        {templates.map(template => (
+        {templates.map((template) => (
           <ListItem
             key={template.name}
             button

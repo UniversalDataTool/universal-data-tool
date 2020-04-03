@@ -11,7 +11,7 @@ const Container = styled("div")({
   position: "relative",
   marginTop: 8,
   marginBottom: 8,
-  backgroundColor: colors.blue[50]
+  backgroundColor: colors.blue[50],
 })
 const Text = styled("div")({
   position: "absolute",
@@ -22,14 +22,14 @@ const Text = styled("div")({
   paddingTop: 4,
   fontSize: 18,
   textAlign: "center",
-  fontWeight: "bold"
+  fontWeight: "bold",
 })
 const Bar = styled("div")({
   position: "absolute",
   left: 0,
   bottom: 0,
   top: 0,
-  backgroundColor: colors.blue[300]
+  backgroundColor: colors.blue[300],
 })
 
 export default ({ progress }) => {

@@ -26,41 +26,41 @@ storiesOf("DataEntry", module)
                   choices: [
                     {
                       value: "A",
-                      text: "A"
+                      text: "A",
                     },
                     {
                       value: "B",
-                      text: "B"
+                      text: "B",
                     },
                     {
                       value: "C",
-                      text: "C"
-                    }
-                  ]
+                      text: "C",
+                    },
+                  ],
                 },
                 {
                   type: "text",
                   name: "feedback",
-                  title: "Feedback"
-                }
-              ]
-            }
-          ]
-        }
+                  title: "Feedback",
+                },
+              ],
+            },
+          ],
+        },
       }}
       taskData={[
         {
           imageUrl:
-            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg"
+            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
         },
         {
           imageUrl:
-            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg"
+            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg",
         },
         {
           imageUrl:
-            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image3.jpg"
-        }
+            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image3.jpg",
+        },
       ]}
     />
   ))
@@ -82,41 +82,41 @@ storiesOf("DataEntry", module)
                   choices: [
                     {
                       value: "A",
-                      text: "A"
+                      text: "A",
                     },
                     {
                       value: "B",
-                      text: "B"
+                      text: "B",
                     },
                     {
                       value: "C",
-                      text: "C"
-                    }
-                  ]
+                      text: "C",
+                    },
+                  ],
                 },
                 {
                   type: "text",
                   name: "feedback",
-                  title: "Feedback"
-                }
-              ]
-            }
-          ]
-        }
+                  title: "Feedback",
+                },
+              ],
+            },
+          ],
+        },
       }}
       taskData={[
         {
           imageUrl:
-            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg"
+            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
         },
         {
           imageUrl:
-            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg"
+            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg",
         },
         {
           imageUrl:
-            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image3.jpg"
-        }
+            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image3.jpg",
+        },
       ]}
       taskOutput={[{ group_letter: "A", feedback: "some feedback here" }]}
     />
@@ -135,17 +135,17 @@ storiesOf("DataEntry", module)
                 {
                   type: "text",
                   name: "title",
-                  title: "Name of Article"
-                }
-              ]
-            }
-          ]
-        }
+                  title: "Name of Article",
+                },
+              ],
+            },
+          ],
+        },
       }}
       taskData={[
         {
-          pdfUrl: "https://arxiv.org/pdf/1608.04481v1.pdf"
-        }
+          pdfUrl: "https://arxiv.org/pdf/1608.04481v1.pdf",
+        },
       ]}
       taskOutput={[{ group_letter: "A", feedback: "some feedback here" }]}
     />

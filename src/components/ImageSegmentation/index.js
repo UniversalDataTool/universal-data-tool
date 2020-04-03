@@ -9,7 +9,7 @@ import {
   rid,
   convertFromRIARegionFmt,
   convertToRIARegionFmt,
-  convertToRIAImageFmt
+  convertToRIAImageFmt,
 } from "../../utils/ria-format.js"
 
 const useStyles = makeStyles({})
@@ -18,7 +18,7 @@ const regionTypeToTool = {
   "bounding-box": "create-box",
   polygon: "create-polygon",
   "full-segmentation": "create-polygon",
-  point: "create-point"
+  point: "create-point",
 }
 
 const [emptyObj, emptyArr] = [{}, []]
@@ -28,7 +28,7 @@ export default ({
   taskData = emptyArr,
   taskOutput = emptyObj,
   containerProps = emptyObj,
-  onSaveTaskOutputItem
+  onSaveTaskOutputItem,
 }) => {
   const c = useStyles()
   const [selectedIndex, changeSelectedIndex] = useState(0)
@@ -41,25 +41,25 @@ export default ({
     () =>
       isClassification
         ? {
-            regionClsList: (iface.availableLabels || []).map(l =>
-              typeof l === "string" ? l : l.id
-            )
-          }
+          regionClsList: (iface.availableLabels || []).map((l) =>
+            typeof l === "string" ? l : l.id
+          ),
+        }
         : {
-            regionTagList: (iface.availableLabels || []).map(l =>
-              typeof l === "string" ? l : l.id
-            )
-          },
+          regionTagList: (iface.availableLabels || []).map((l) =>
+            typeof l === "string" ? l : l.id
+          ),
+        },
     [isClassification]
   )
 
   const multipleRegions =
     iface.multipleRegions || iface.multipleRegions === undefined
 
-  const onExit = useEventCallback(output => {
+  const onExit = useEventCallback((output) => {
     const regionMat = (output.images || [])
-      .map(img => img.regions)
-      .map(riaRegions => (riaRegions || []).map(convertFromRIARegionFmt))
+      .map((img) => img.regions)
+      .map((riaRegions) => (riaRegions || []).map(convertFromRIARegionFmt))
 
     for (let i = 0; i < regionMat.length; i++) {
       if (multipleRegions) {
@@ -78,7 +78,7 @@ export default ({
           title: containerProps.datasetName,
           taskDatum,
           output: taskOutput[index],
-          index
+          index,
         })
       ),
     [taskData]
@@ -87,7 +87,7 @@ export default ({
   const enabledTools = useMemo(
     () =>
       ["select"].concat(
-        regionTypesAllowed.map(rt => regionTypeToTool[rt]).filter(Boolean)
+        regionTypesAllowed.map((rt) => regionTypeToTool[rt]).filter(Boolean)
       ),
     [regionTypesAllowed]
   )
@@ -97,7 +97,7 @@ export default ({
     ...labelProps,
     enabledTools: enabledTools,
     images,
-    onExit
+    onExit,
   })
 
   return (
