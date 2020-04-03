@@ -12,4 +12,4 @@ jobs:
         with:
           node-version: 12
       - name: Run Prettier Test
-        run: npm run prettier:test
+        run: npx prettier --check "src/**/*.js"
