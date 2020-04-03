@@ -1,9 +1,6 @@
 name: Build Desktop Application
 
-on:
-  push:
-    branches:
-      - master
+on: push
 
 jobs:
   build:
