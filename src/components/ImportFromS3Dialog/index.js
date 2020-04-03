@@ -8,18 +8,6 @@ import Radio from "@material-ui/core/Radio"
 import Amplify, { Storage } from "aws-amplify"
 import isEmpty from "../../utils/isEmpty"
 
-/*
-Storage.get(`${folder}/data/${obj.key.split('/data/')[1]}`, { expires: 24 * 60 * 60, level: 'private' })
-                .then(result => {
-                  addImageUrl(result, folder, obj.key.split('/data/')[1])
-                  return result
-                })
-                .catch(err => {
-                  console.log('error getting link for s3 image', err)
-                  return null
-                })
-*/
-
 const TextArea = styled("textarea")({
   width: "100%",
   minHeight: 300,
@@ -49,9 +37,9 @@ const ExpandedRow = ({ data }) => {
         columns={expandedAnnotationsColumns}
         data={rowAnnotations}
         noDataComponent='Make sure the project has "annotations" folder'
-        //pagination={dataForTable.length > 10}
-        //paginationPerPage={10}
-        //paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
+        pagination={rowData.length > 10}
+        paginationPerPage={10}
+        paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
       />
       <DataTable
         style={{
@@ -64,9 +52,9 @@ const ExpandedRow = ({ data }) => {
         columns={expandedDataColumns}
         data={rowData}
         noDataComponent={'Make sure the project has "data" folder'}
-        //pagination={dataForTable.length > 10}
-        //paginationPerPage={10}
-        //paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
+        pagination={rowData.length > 10}
+        paginationPerPage={10}
+        paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
       />
     </>
   )
@@ -81,6 +69,7 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
   const [resolvedUrls, changeResolvedUrls] = useState({})
   const [toggleCleared, setToggleCleared] = useState(false)
   const [displayTable, setDisplayTable] = useState(false)
+  const [folderToFetch, setFolderToFetch] = useState("")
 
   let _dataForTable = {}
 
@@ -91,9 +80,32 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
     }))
   }
 
-  const handleRowSelected = () => {
-    setToggleCleared((prevState) => !prevState)
+  const handleAddSample = () => {
+    console.log("add sample")
+    Storage.get(`${folderToFetch}/data/data`, {
+      expires: 24 * 60 * 60,
+      level: "private",
+    })
+      .then((result) => {
+        console.log(result)
+        //addImageUrl(result, folder, obj.key.split('/data/')[1])
+        return result
+      })
+      .catch((err) => {
+        console.log("error getting link for s3 image", err)
+        return null
+      })
+  }
+
+  const handleRowSelected = (a) => {
+    //setToggleCleared((prevState) => !prevState)
     console.log("triggered")
+    console.log(a)
+    if (!isEmpty(a.selectedRows[0])) {
+      console.log(a.selectedRows[0].folder)
+      setFolderToFetch(a.selectedRows[0].folder)
+    }
+
     //setToggleCleared((prevState) => !prevState)
   }
 
@@ -159,7 +171,7 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
         {
           text: "Add Samples",
           onClick: () => {
-            console.log("adding samples")
+            handleAddSample()
           },
         },
       ]}
@@ -175,6 +187,7 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
           dense
           noHeader
           columns={columns}
+          onSelectedRowsChange={handleRowSelected}
           data={dataForTable}
           pagination={dataForTable.length > 10}
           paginationPerPage={10}
