@@ -61,6 +61,10 @@ Download the latest release from the [releases page](https://github.com/Universa
 - Easy to use
 - Easy to integrate
 
+## Contributing
+
+* Read [this guide to get started with development](https://github.com/UniversalDataTool/universal-data-tool/wiki/Setup-for-Development).
+
 ## Libraries
 
 The Universal Data Tool is always looking for the best libraries to provide the
