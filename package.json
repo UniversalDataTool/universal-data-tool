@@ -14,7 +14,7 @@
     "start:desktop:dev": "USE_DEV_SERVER=yes electron ./desktop",
     "start:desktop": "electron ./desktop",
     "release:lib": "npm run build && cd lib && npm publish",
-    "release:desktop": "npm run build:desktop && electron-builder --mac --windows --linux --publish always",
+    "release:desktop": "npm run build:desktop && cross-env EP_RELEASE=true electron-builder --linux --publish always",
     "release": "npm run release:desktop",
     "test": "react-scripts test",
     "storybook": "start-storybook -p 6002 -s public",
@@ -112,6 +112,10 @@
     "files": [
       "**/*",
       "build/"
-    ]
+    ],
+    "publish": {
+      "provider": "github",
+      "releaseType": "release"
+    }
   }
 }
