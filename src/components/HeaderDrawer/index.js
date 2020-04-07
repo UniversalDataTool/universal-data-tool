@@ -22,6 +22,7 @@ const useStyles = makeStyles({})
 
 export default ({
   recentItems,
+  changeRecentItems,
   onClickHome,
   onCloseDrawer,
   drawerOpen,
@@ -34,13 +35,10 @@ export default ({
     onOpenFile(acceptedFiles[0])
   }, [])
 
-  function onDeleteFile(index) {
-    recentItems.splice((index),1);
-    
+  function onDeleteFile(i) {
+    changeRecentItems( recentItems.filter(item => item.index == i));
     localStorage.removeItem('recentItems');
     localStorage.setItem('recentItems',JSON.stringify(recentItems));
-    
-    //window.location.reload(false);
   }
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop })

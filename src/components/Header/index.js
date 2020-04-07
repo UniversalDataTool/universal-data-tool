@@ -8,6 +8,7 @@ import HeaderDrawer from "../HeaderDrawer"
 
 export const HeaderContext = createContext({
   recentItems: [],
+  changeRecentItems: () => null,
   onClickTemplate: () => null,
   onClickHome: () => null,
   onOpenFile: () => null,
@@ -58,6 +59,7 @@ export default ({
         onCloseDrawer={onCloseDrawer}
         onClickHome={headerContext.onClickHome}
         recentItems={headerContext.recentItems}
+        changeRecentItems={headerContext.changeRecentItems}
         onOpenFile={headerContext.onOpenFile}
         onClickTemplate={headerContext.onClickTemplate}
         onOpenRecentItem={headerContext.onOpenRecentItem}

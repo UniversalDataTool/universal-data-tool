@@ -34,9 +34,9 @@ export default () => {
     openUrl,
     makeSession,
     recentItems,
+    changeRecentItems,
   } = useFileHandler()
   const [errors, addError] = useErrors()
-
   const onCreateTemplate = useEventCallback((template) => {
     changeFile({
       fileName: "unnamed",
@@ -84,6 +84,7 @@ export default () => {
               : file.url
             : "unnamed",
           recentItems,
+          changeRecentItems,
           onClickTemplate: onCreateTemplate,
           onClickHome,
           onOpenFile: openFile,
