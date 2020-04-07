@@ -12,6 +12,7 @@ import { GoMarkGithub } from "react-icons/go"
 import { makeStyles } from "@material-ui/core/styles"
 import HomeIcon from "@material-ui/icons/Home"
 import { IconContext } from "react-icons"
+import { FaTrashAlt } from "react-icons/fa"
 import templates from "../StartingPage/templates"
 import * as colors from "@material-ui/core/colors"
 import FileIcon from "@material-ui/icons/InsertDriveFile"
@@ -35,7 +36,7 @@ export default ({
   }, [])
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop })
-
+  
   return (
     <Drawer open={drawerOpen} onClose={onCloseDrawer}>
       <List className={c.list}>
@@ -62,18 +63,25 @@ export default ({
             </ListItemText>
           </ListItem>
         ) : (
-          recentItems.map((ri) => (
+          recentItems.map((ri, index) => (            
             <ListItem
               key={ri.fileName}
-              button
-              onClick={() => {
-                onOpenRecentItem(ri)
-              }}
+              button           
             >
-              <ListItemIcon>
-                <FileIcon />
+              <ListItemIcon
+                onClick={() => {
+                  onOpenRecentItem(ri)
+                }}
+              >
+              <FileIcon />
               </ListItemIcon>
-              <ListItemText>{ri.fileName}</ListItemText>
+              <ListItemText
+                onClick={() => {
+                  onOpenRecentItem(ri)
+                }}
+              >{ri.fileName}</ListItemText>
+              <ListItemIcon
+              ><FaTrashAlt /></ListItemIcon>
             </ListItem>
           ))
         )}
