@@ -36,6 +36,7 @@ export default () => {
     recentItems,
   } = useFileHandler()
   const [errors, addError] = useErrors()
+  const [selectedBrush, setSelectedBrush] = useState("complete")
 
   const onCreateTemplate = useEventCallback((template) => {
     changeFile({
@@ -96,6 +97,8 @@ export default () => {
           onCreateSession: makeSession,
           fileOpen: Boolean(file),
           onDownload,
+          onChangeSelectedBrush: setSelectedBrush,
+          selectedBrush,
         }}
       >
         {!file ? (
@@ -111,6 +114,7 @@ export default () => {
             <OHAEditor
               key={file.id}
               {...file}
+              selectedBrush={selectedBrush}
               inSession={inSession}
               oha={file.content}
               onChangeFileName={(newName) => {

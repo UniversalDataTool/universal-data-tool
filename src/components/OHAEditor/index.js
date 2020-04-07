@@ -66,6 +66,7 @@ export default ({
   onChangeOHA = () => null,
   onFileDrop,
   initialMode = "settings", //= "samples"
+  selectedBrush = "complete",
 }) => {
   const c = useStyles()
   const { addToast } = useToasts()
@@ -247,6 +248,20 @@ export default ({
                 ["taskOutput", singleSampleOHA.sampleIndex],
                 output
               )
+
+              if (
+                singleSampleOHA.taskData[0].brush !== selectedBrush &&
+                !(
+                  singleSampleOHA.taskData[0].brush === undefined &&
+                  selectedBrush === "complete"
+                )
+              ) {
+                newOHA = setIn(
+                  newOHA,
+                  ["taskData", singleSampleOHA.sampleIndex, "brush"],
+                  selectedBrush
+                )
+              }
               changeSingleSampleOHA(
                 setIn(singleSampleOHA, ["taskOutput", relativeIndex], output)
               )
@@ -319,6 +334,7 @@ export default ({
               />
               <SampleGrid
                 count={(oha.taskData || []).length}
+                taskData={oha.taskData || []}
                 completed={(oha.taskOutput || []).map(Boolean)}
                 onClick={(sampleIndex) => {
                   changeSingleSampleOHA({
