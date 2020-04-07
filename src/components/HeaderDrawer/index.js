@@ -36,7 +36,8 @@ export default ({
   }, [])
 
   function onDeleteFile(i) {
-    changeRecentItems( recentItems.filter(item => item.index == i));
+    console.log(i);
+    changeRecentItems( recentItems.filter(function(oneRecentFile){console.log(oneRecentFile.id);return oneRecentFile.id!==i}));
     localStorage.removeItem('recentItems');
     localStorage.setItem('recentItems',JSON.stringify(recentItems));
   }
@@ -87,7 +88,7 @@ export default ({
                 }}
               >{ri.fileName}</ListItemText>
               <ListItemIcon
-                onClick={() => {onDeleteFile(index)}}
+                onClick={() => {onDeleteFile(ri.id)}}
               ><FaTrashAlt /></ListItemIcon>
             </ListItem>
           ))
