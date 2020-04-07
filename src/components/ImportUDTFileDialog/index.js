@@ -17,11 +17,13 @@ const InfoText = styled("div")({
 
 const Error = styled("div")({
   color: colors.red[500],
+  whiteSpace: "pre-wrap",
+  marginBottom: 20,
 })
 
 const ImportUDTFileDialog = ({ open, onClose, onAddSamples }) => {
   const [error, changeError] = useState(null)
-  const [content, changeContent] = useState("")
+  const [content, setContent] = useState("")
 
   return (
     <SimpleDialog
@@ -36,12 +38,14 @@ const ImportUDTFileDialog = ({ open, onClose, onAddSamples }) => {
             let taskData, taskOutput
             try {
               ;[taskData, taskOutput] = JSON.parse(content).taskData
-            } catch (e) {
+            } catch (e1) {
               try {
                 const udt = fromUDTCSV(content)
-                ;[taskData, taskOutput] = udt
-              } catch (e) {
-                changeError(`JSON did not parse. CSV did not parse.`)
+                ;({ taskData, taskOutput } = udt)
+              } catch (e2) {
+                changeError(
+                  `JSON did not parse. CSV did not parse.\n\nJSON Error: ${e1.toString()}\nCSV Error: ${e2.toString()}`
+                )
                 return
               }
             }
@@ -88,7 +92,7 @@ const ImportUDTFileDialog = ({ open, onClose, onAddSamples }) => {
       <Error>{error}</Error>
       <TextAreaWithUpload
         content={content}
-        onChangeContent={changeContent}
+        onChangeContent={setContent}
         placeholder={
           "Paste CSV/JSON here. The file should be in the UDT JSON/CSV format.\n\nYou can also drag a json or csv file here (double click to open file dialog)"
         }
