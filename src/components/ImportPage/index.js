@@ -6,6 +6,7 @@ import { styled } from "@material-ui/core/styles"
 import AssignmentReturnedIcon from "@material-ui/icons/AssignmentReturned"
 import CreateNewFolderIcon from "@material-ui/icons/CreateNewFolder"
 import TextFieldsIcon from "@material-ui/icons/TextFields"
+import DescriptionIcon from "@material-ui/icons/Description"
 import PetsIcon from "@material-ui/icons/Pets"
 import * as colors from "@material-ui/core/colors"
 import PasteUrlsDialog from "../PasteUrlsDialog"
@@ -16,9 +17,18 @@ import classnames from "classnames"
 import { setIn } from "seamless-immutable"
 import useEventCallback from "use-event-callback"
 import ImportFromGoogleDriveDialog from "../ImportFromGoogleDriveDialog"
+import ImportUDTFileDialog from "../ImportUDTFileDialog"
 import ImportToyDataset from "../ImportToyDatasetDialog"
 import ImportFromYoutubeUrls from "../ImportFromYoutubeUrls"
 import { FaGoogleDrive, FaYoutube } from "react-icons/fa"
+
+const extendWithNull = (ar, len) => {
+  ar = [...ar]
+  while (ar.length < len) {
+    ar.push(null)
+  }
+  return ar
+}
 
 const ButtonBase = styled(MuiButton)({
   width: 240,
@@ -132,13 +142,26 @@ export default ({ oha, onChangeOHA, isDesktop }) => {
     }
   }
   const closeDialog = () => changeDialog(null)
-  const onAddSamples = useEventCallback((samples) => {
-    onChangeOHA(
-      setIn(oha, ["taskData"], (oha.taskData || []).concat(samples)),
-      true
-    )
-    closeDialog()
-  })
+  const onAddSamples = useEventCallback(
+    (appendedTaskData, appendedTaskOutput) => {
+      let newOHA = setIn(
+        oha,
+        ["taskData"],
+        (oha.taskData || []).concat(appendedTaskData)
+      )
+      if (appendedTaskOutput) {
+        newOHA = setIn(
+          newOHA,
+          ["taskOutput"],
+          extendWithNull(oha.taskOutput || [], oha.taskData.length).concat(
+            appendedTaskOutput
+          )
+        )
+      }
+      onChangeOHA(newOHA, true)
+      closeDialog()
+    }
+  )
   return (
     <SelectDialogContext.Provider value={{ onChangeDialog }}>
       <div>
@@ -182,6 +205,13 @@ export default ({ oha, onChangeOHA, isDesktop }) => {
         >
           Import from Youtube URLs
         </Button>
+        <Button
+          isDesktop={isDesktop}
+          dialog="import-csv-json"
+          Icon={DescriptionIcon}
+        >
+          Import from CSV / JSON
+        </Button>
         <ImportTextSnippetsDialog
           open={selectedDialog === "import-text-snippets"}
           onClose={closeDialog}
@@ -204,6 +234,11 @@ export default ({ oha, onChangeOHA, isDesktop }) => {
         />
         <ImportFromYoutubeUrls
           open={selectedDialog === "youtube-urls"}
+          onClose={closeDialog}
+          onAddSamples={onAddSamples}
+        />
+        <ImportUDTFileDialog
+          open={selectedDialog === "import-csv-json"}
           onClose={closeDialog}
           onAddSamples={onAddSamples}
         />
