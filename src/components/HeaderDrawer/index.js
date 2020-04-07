@@ -29,21 +29,19 @@ export default ({
   onOpenRecentItem,
   onClickTemplate,
 }) => {
-  const c = useStyles()
-  const [displayItem, setDisplayItem] = useState(recentItems);
+  const c = useStyles();
   const onDrop = useCallback((acceptedFiles) => {
     onOpenFile(acceptedFiles[0])
   }, [])
 
-  const onDeleteFile = useCallback((index) => {
+  function onDeleteFile(index) {
     recentItems.splice((index),1);
     
     localStorage.removeItem('recentItems');
     localStorage.setItem('recentItems',JSON.stringify(recentItems));
     
-    setDisplayItem(recentItems);
     //window.location.reload(false);
-  }, [])
+  }
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop })
   
@@ -64,7 +62,7 @@ export default ({
           <input {...getInputProps()} />
         </ListItem>
         <ListSubheader>Recent Files</ListSubheader>
-        {displayItem.length === 0 ? (
+        {recentItems.length === 0 ? (
           <ListItem>
             <ListItemText
               style={{ textAlign: "center", color: colors.grey[500] }}
@@ -73,7 +71,7 @@ export default ({
             </ListItemText>
           </ListItem>
         ) : (
-          displayItem.map((ri, index) => (            
+          recentItems.map((ri, index) => (            
             <ListItem
               key={ri.fileName}
               button           
