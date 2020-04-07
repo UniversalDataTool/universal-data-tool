@@ -35,7 +35,9 @@ export default ({
     onOpenFile(acceptedFiles[0])
   }, [])
 
-  const onDeleteFile = useCallback((index) => {},[])
+  const onDeleteFile = useCallback((index) => {
+    recentItems.splice((index),1);
+  },[])
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop })
   
