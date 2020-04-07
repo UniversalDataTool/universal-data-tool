@@ -37,6 +37,10 @@ export default ({
 
   const onDeleteFile = useCallback((index) => {
     recentItems.splice((index),1);
+    
+    localStorage.removeItem('recentItems');
+    localStorage.setItem('recentItems',JSON.stringify(recentItems));
+  
   },[])
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop })
