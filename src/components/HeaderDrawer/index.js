@@ -1,6 +1,6 @@
 //@flow weak
 
-import React, { useCallback } from "react"
+import React, { useCallback, useState } from "react"
 import Drawer from "@material-ui/core/Drawer"
 import { useDropzone } from "react-dropzone"
 import List from "@material-ui/core/List"
@@ -30,7 +30,7 @@ export default ({
   onClickTemplate,
 }) => {
   const c = useStyles()
-
+  const [displayItem, setDisplayItem] = useState(recentItems);
   const onDrop = useCallback((acceptedFiles) => {
     onOpenFile(acceptedFiles[0])
   }, [])
@@ -40,8 +40,10 @@ export default ({
     
     localStorage.removeItem('recentItems');
     localStorage.setItem('recentItems',JSON.stringify(recentItems));
-  
-  },[])
+    
+    setDisplayItem(recentItems);
+    //window.location.reload(false);
+  }, [])
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop })
   
@@ -62,7 +64,7 @@ export default ({
           <input {...getInputProps()} />
         </ListItem>
         <ListSubheader>Recent Files</ListSubheader>
-        {recentItems.length === 0 ? (
+        {displayItem.length === 0 ? (
           <ListItem>
             <ListItemText
               style={{ textAlign: "center", color: colors.grey[500] }}
@@ -71,7 +73,7 @@ export default ({
             </ListItemText>
           </ListItem>
         ) : (
-          recentItems.map((ri, index) => (            
+          displayItem.map((ri, index) => (            
             <ListItem
               key={ri.fileName}
               button           
