@@ -97,21 +97,33 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
       })
   }
 
-  const handleRowSelected = (a) => {
-    //setToggleCleared((prevState) => !prevState)
-    console.log("triggered")
-    console.log(a)
-    if (!isEmpty(a.selectedRows[0])) {
-      console.log(a.selectedRows[0].folder)
-      setFolderToFetch(a.selectedRows[0].folder)
+  const handleRowSelected = (whatsChanging) => {
+    if (!isEmpty(whatsChanging.selectedRows[0])) {
+      setFolderToFetch(whatsChanging.selectedRows[0].folder)
+      changeDataForTable((prevState) =>
+        prevState.map((row) => {
+          if (whatsChanging.selectedRows[0].id === row.id) {
+            row.isSelected = true
+          } else {
+            row.isSelected = false
+          }
+          return row
+        })
+      )
+    } else {
+      setFolderToFetch(null)
+      changeDataForTable((prevState) =>
+        prevState.map((row) => {
+          row.isSelected = false
+          return row
+        })
+      )
     }
-
-    //setToggleCleared((prevState) => !prevState)
   }
 
   useEffect(() => {
-    console.log(toggleCleared)
-  }, [toggleCleared])
+    //console.log(dataForTable)
+  }, [dataForTable])
 
   useEffect(() => {
     if (isEmpty(user)) {
@@ -154,6 +166,7 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
                 folder: folder,
                 rowData: rowDataContent,
                 rowAnnotations: rowAnnotationsContent,
+                isSelected: true,
               }
             })
           changeDataForTable(_dataForTable)
@@ -188,6 +201,7 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
           noHeader
           columns={columns}
           onSelectedRowsChange={handleRowSelected}
+          selectableRowSelected={(row) => row.isSelected}
           data={dataForTable}
           pagination={dataForTable.length > 10}
           paginationPerPage={10}
