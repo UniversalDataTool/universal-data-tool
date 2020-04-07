@@ -35,6 +35,8 @@ export default ({
     onOpenFile(acceptedFiles[0])
   }, [])
 
+  const onDeleteFile = useCallback((index) => {},[])
+
   const { getRootProps, getInputProps } = useDropzone({ onDrop })
   
   return (
@@ -81,6 +83,7 @@ export default ({
                 }}
               >{ri.fileName}</ListItemText>
               <ListItemIcon
+                onClick={() => {onDeleteFile(index)}}
               ><FaTrashAlt /></ListItemIcon>
             </ListItem>
           ))
