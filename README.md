@@ -16,7 +16,7 @@ The Universal Data Tool is a web/desktop app for editing and annotating images, 
 - Usable on [web](https://universaldatatool.com) or as [Windows,Mac or Linux desktop application](https://github.com/UniversalDataTool/universal-data-tool/wiki/Installation)
 - Collaborate with others in real time
 - Configure your project with an easy-to-use GUI
-- Download/upload as easy-to-use CSV or JSON
+- Download/upload as easy-to-use [CSV](https://github.com/UniversalDataTool/udt-format/blob/master/SAMPLE.udt.csv) or [JSON](https://github.com/UniversalDataTool/udt-format/blob/master/SAMPLE.udt.json)
 - Support for Images, Videos, PDFs, Text, Audio Transcription and many other formats
 - Can be [easily integrated into a React application](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-React)
 - Annotate images or videos with classifications, tags, bounding boxes, polygons and points
