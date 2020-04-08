@@ -97,22 +97,32 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
     }))
   }
 
-  const handleAddSample = () => {
-    console.log("add sample")
-    Storage.get(`${folderToFetch}/data/data`, {
-      expires: 24 * 60 * 60,
-      level: "private",
-    })
-      .then((result) => {
-        console.log(result)
-        //addImageUrl(result, folder, obj.key.split('/data/')[1])
-        return result
+  const handleAddSample =  () => {
+    Storage.list("", { level: "private" })
+      .then( (result) => {
+
+        result.forEach((element) => {
+          if(element.key.match(`(${folderToFetch}/data).*(\\.).*`)){
+            Storage.get(element.key, {
+              expires: 24 * 60 * 60,
+              level: "private",
+            })
+            .then((result) => {                
+              console.log(result);
+            })
+            .catch((err) => {
+              console.log("error getting link for s3 image", err)
+              return null
+            });
+          }
+        });
+
       })
       .catch((err) => {
         console.log("error getting link for s3 image", err)
         return null
       })
-  }
+    }
 
   const handleRowSelected = (whatsChanging) => {
     if (!isEmpty(whatsChanging.selectedRows[0])) {
@@ -139,7 +149,6 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
   }
 
   useEffect(() => {
-    //console.log(dataForTable)
   }, [dataForTable])
 
   useEffect(() => {

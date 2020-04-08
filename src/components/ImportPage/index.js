@@ -270,6 +270,7 @@ export default ({ oha, onChangeOHA, isDesktop, authConfig, user }) => {
           isDesktop={isDesktop}
           dialog="google-drive-file-picker"
           Icon={FaGoogleDrive}
+          onAddSamples={onAddSamples}
         >
           Import from Google Drive
         </Button>

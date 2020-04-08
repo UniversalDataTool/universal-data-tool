@@ -88,6 +88,7 @@ export default () => {
             console.log(tryUser)
             changeUser(tryUser)
             changeAuthConfig(config)
+
           })
           .catch((err) => {
             changeAuthConfig(config)
