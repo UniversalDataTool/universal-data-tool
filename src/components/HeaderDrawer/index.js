@@ -30,19 +30,21 @@ export default ({
   onOpenRecentItem,
   onClickTemplate,
 }) => {
-  const c = useStyles();
-  let classTrashCan = '';
-  
+  const c = useStyles()
+  let classTrashCan = ""
+
   const onDrop = useCallback((acceptedFiles) => {
     onOpenFile(acceptedFiles[0])
   }, [])
 
   function onDeleteFile(i) {
-    changeRecentItems(recentItems.filter(oneRecentFile => oneRecentFile.id!==i));
+    changeRecentItems(
+      recentItems.filter((oneRecentFile) => oneRecentFile.id !== i)
+    )
   }
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop })
-  
+
   return (
     <Drawer open={drawerOpen} onClose={onCloseDrawer}>
       <List className={c.list}>
@@ -69,26 +71,29 @@ export default ({
             </ListItemText>
           </ListItem>
         ) : (
-          recentItems.map((ri, index) => (            
-            <ListItem
-              key={ri.fileName}
-              button           
-            >
+          recentItems.map((ri, index) => (
+            <ListItem key={ri.fileName} button>
               <ListItemIcon
                 onClick={() => {
                   onOpenRecentItem(ri)
                 }}
               >
-              <FileIcon />
+                <FileIcon />
               </ListItemIcon>
               <ListItemText
                 onClick={() => {
                   onOpenRecentItem(ri)
                 }}
-              >{ri.fileName}</ListItemText>
-              <ListItemIcon 
-                onClick={() => {onDeleteFile(ri.id)}}
-              ><FaTrashAlt /></ListItemIcon>
+              >
+                {ri.fileName}
+              </ListItemText>
+              <ListItemIcon
+                onClick={() => {
+                  onDeleteFile(ri.id)
+                }}
+              >
+                <FaTrashAlt />
+              </ListItemIcon>
             </ListItem>
           ))
         )}

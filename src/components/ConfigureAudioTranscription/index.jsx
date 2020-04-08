@@ -77,7 +77,7 @@ const languages = [
   { value: "id", text: "Indonesian" },
   {
     value: "ia",
-    text: "Interlingua (International Auxiliary Language Association)"
+    text: "Interlingua (International Auxiliary Language Association)",
   },
   { value: "ie", text: "Interlingue" },
   { value: "iu", text: "Inuktitut" },
@@ -189,7 +189,7 @@ const languages = [
   { value: "yi", text: "Yiddish" },
   { value: "yo", text: "Yoruba" },
   { value: "za", text: "Zhuang, Chuang" },
-  { value: "zu", text: "Zulu" }
+  { value: "zu", text: "Zulu" },
 ]
 
 const form = {
@@ -198,32 +198,32 @@ const form = {
       name: "transcriptionType",
       title: "Transcription Type",
       type: "dropdown",
-      choices: ["simple", "proper"]
+      choices: ["simple", "proper"],
     },
     {
       name: "phraseBank",
       title: "Phrase Bank",
       description: "URL of single-column CSV or TXT file with allowed phrases",
-      type: "text"
+      type: "text",
     },
     {
       name: "onlyUseWordsInPhraseBank",
       title: "Only Use Words In Phrase Bank",
-      type: "boolean"
+      type: "boolean",
     },
     {
       name: "language",
       title: "Language",
       type: "dropdown",
       // https://gist.github.com/DimazzzZ/4e2a5a6c8c6f67900091#gistcomment-2858621
-      choices: languages
+      choices: languages,
     },
     {
       name: "description",
       title: "Description",
-      type: "multiline-text"
-    }
-  ]
+      type: "multiline-text",
+    },
+  ],
 }
 
 export default ({ iface, onChange }) => {
