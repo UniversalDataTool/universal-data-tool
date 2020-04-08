@@ -31,6 +31,7 @@ const popupBoxBeforeAndAfter = {
 }
 const PopupBox = styled("div")({
   position: "absolute",
+  zIndex: 10,
   top: 45,
   padding: 16,
   boxSizing: "border-box",

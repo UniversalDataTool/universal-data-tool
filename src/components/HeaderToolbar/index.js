@@ -18,6 +18,7 @@ import GithubIcon from "../Header/GithubIcon"
 import * as colors from "@material-ui/core/colors"
 import IconButton from "@material-ui/core/IconButton"
 import packageJSON from "../../../package.json"
+import BrushButton from "../BrushButton"
 
 const useStyles = makeStyles((theme) => ({
   headerButton: {
@@ -80,6 +81,8 @@ const HeaderToolbar = ({
   onLeaveSession,
   onJoinSession,
   onDownload,
+  selectedBrush,
+  onChangeSelectedBrush,
   isSmall,
 }) => {
   const c = useStyles()
@@ -101,6 +104,12 @@ const HeaderToolbar = ({
             onCreateSession={onCreateSession}
             onLeaveSession={onLeaveSession}
             onJoinSession={onJoinSession}
+          />
+        )}
+        {fileOpen && (
+          <BrushButton
+            selectedBrush={selectedBrush}
+            onChangeSelectedBrush={onChangeSelectedBrush}
           />
         )}
         {!isDesktop && fileOpen && <DownloadButton onDownload={onDownload} />}
