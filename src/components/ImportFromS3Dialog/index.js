@@ -100,7 +100,7 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
   const handleAddSample =  () => {
     Storage.list("", { level: "private" })
       .then( (result) => {
-
+        //var samples = []    
         result.forEach((element) => {
           if(element.key.match(`(${folderToFetch}/data).*(\\.).*`)){
             Storage.get(element.key, {
@@ -109,6 +109,7 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
             })
             .then((result) => {                
               console.log(result);
+              //samples.push({ imageUrl: `${result}` });
             })
             .catch((err) => {
               console.log("error getting link for s3 image", err)
@@ -116,7 +117,8 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
             });
           }
         });
-
+        //console.log('samples :'+samples);
+        //onAddSamples(samples);
       })
       .catch((err) => {
         console.log("error getting link for s3 image", err)
