@@ -21,6 +21,19 @@ const expandedAnnotationsColumns = [
 
 const columns = [{ name: "Projects", selector: "folder", sortable: true }]
 
+const customStyles = {
+  headCells: {
+    style: {
+      paddingLeft: '10px', // override the cell padding for head cells
+    },
+  },
+  cells: {
+    style: {
+      paddingLeft: '25px'
+    }
+  }
+}
+
 const ExpandedRow = ({ data }) => {
   const { rowData, rowAnnotations, ...notImportant } = data
 
@@ -29,10 +42,11 @@ const ExpandedRow = ({ data }) => {
       <DataTable
         style={{
           boxSizing: "border-box",
-          paddingLeft: "10px",
+          paddingLeft: "50px",
           paddingRight: "10px",
         }}
         dense
+        striped
         noHeader
         columns={expandedAnnotationsColumns}
         data={rowAnnotations}
@@ -40,14 +54,16 @@ const ExpandedRow = ({ data }) => {
         pagination={rowData.length > 10}
         paginationPerPage={10}
         paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
+        customStyles={customStyles}
       />
       <DataTable
         style={{
           boxSizing: "border-box",
-          paddingLeft: "10px",
+          paddingLeft: "50px",
           paddingRight: "10px",
         }}
         dense
+        striped
         noHeader
         columns={expandedDataColumns}
         data={rowData}
@@ -55,6 +71,7 @@ const ExpandedRow = ({ data }) => {
         pagination={rowData.length > 10}
         paginationPerPage={10}
         paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
+        customStyles={customStyles}
       />
     </>
   )
@@ -199,6 +216,7 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
           selectableRowsComponent={Radio}
           dense
           noHeader
+          noTableHead
           columns={columns}
           onSelectedRowsChange={handleRowSelected}
           selectableRowSelected={(row) => row.isSelected}
