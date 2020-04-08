@@ -31,15 +31,14 @@ export default ({
   onClickTemplate,
 }) => {
   const c = useStyles();
+  let classTrashCan = '';
+  
   const onDrop = useCallback((acceptedFiles) => {
     onOpenFile(acceptedFiles[0])
   }, [])
 
   function onDeleteFile(i) {
-    console.log(i);
-    changeRecentItems( recentItems.filter(function(oneRecentFile){console.log(oneRecentFile.id);return oneRecentFile.id!==i}));
-    localStorage.removeItem('recentItems');
-    localStorage.setItem('recentItems',JSON.stringify(recentItems));
+    changeRecentItems(recentItems.filter(oneRecentFile => oneRecentFile.id!==i));
   }
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop })
@@ -87,7 +86,7 @@ export default ({
                   onOpenRecentItem(ri)
                 }}
               >{ri.fileName}</ListItemText>
-              <ListItemIcon
+              <ListItemIcon 
                 onClick={() => {onDeleteFile(ri.id)}}
               ><FaTrashAlt /></ListItemIcon>
             </ListItem>
@@ -97,7 +96,6 @@ export default ({
         {templates.map((template) => (
           <ListItem
             key={template.name}
-            button
             onClick={() => onClickTemplate(template)}
           >
             <ListItemIcon>
