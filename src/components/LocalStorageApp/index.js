@@ -34,8 +34,10 @@ export default () => {
     openUrl,
     makeSession,
     recentItems,
+    changeRecentItems,
   } = useFileHandler()
   const [errors, addError] = useErrors()
+
   const [selectedBrush, setSelectedBrush] = useState("complete")
 
   const onCreateTemplate = useEventCallback((template) => {
@@ -85,6 +87,7 @@ export default () => {
               : file.url
             : "unnamed",
           recentItems,
+          changeRecentItems,
           onClickTemplate: onCreateTemplate,
           onClickHome,
           onOpenFile: openFile,

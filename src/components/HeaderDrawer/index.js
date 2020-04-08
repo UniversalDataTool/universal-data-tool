@@ -1,6 +1,6 @@
 //@flow weak
 
-import React, { useCallback } from "react"
+import React, { useCallback, useState } from "react"
 import Drawer from "@material-ui/core/Drawer"
 import { useDropzone } from "react-dropzone"
 import List from "@material-ui/core/List"
@@ -12,6 +12,7 @@ import { GoMarkGithub } from "react-icons/go"
 import { makeStyles } from "@material-ui/core/styles"
 import HomeIcon from "@material-ui/icons/Home"
 import { IconContext } from "react-icons"
+import { FaTrashAlt } from "react-icons/fa"
 import templates from "../StartingPage/templates"
 import * as colors from "@material-ui/core/colors"
 import FileIcon from "@material-ui/icons/InsertDriveFile"
@@ -21,6 +22,7 @@ const useStyles = makeStyles({})
 
 export default ({
   recentItems,
+  changeRecentItems,
   onClickHome,
   onCloseDrawer,
   drawerOpen,
@@ -29,10 +31,17 @@ export default ({
   onClickTemplate,
 }) => {
   const c = useStyles()
+  let classTrashCan = ""
 
   const onDrop = useCallback((acceptedFiles) => {
     onOpenFile(acceptedFiles[0])
   }, [])
+
+  function onDeleteFile(i) {
+    changeRecentItems(
+      recentItems.filter((oneRecentFile) => oneRecentFile.id !== i)
+    )
+  }
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop })
 
@@ -62,18 +71,29 @@ export default ({
             </ListItemText>
           </ListItem>
         ) : (
-          recentItems.map((ri) => (
-            <ListItem
-              key={ri.fileName}
-              button
-              onClick={() => {
-                onOpenRecentItem(ri)
-              }}
-            >
-              <ListItemIcon>
+          recentItems.map((ri, index) => (
+            <ListItem key={ri.fileName} button>
+              <ListItemIcon
+                onClick={() => {
+                  onOpenRecentItem(ri)
+                }}
+              >
                 <FileIcon />
               </ListItemIcon>
-              <ListItemText>{ri.fileName}</ListItemText>
+              <ListItemText
+                onClick={() => {
+                  onOpenRecentItem(ri)
+                }}
+              >
+                {ri.fileName}
+              </ListItemText>
+              <ListItemIcon
+                onClick={() => {
+                  onDeleteFile(ri.id)
+                }}
+              >
+                <FaTrashAlt />
+              </ListItemIcon>
             </ListItem>
           ))
         )}
@@ -81,7 +101,6 @@ export default ({
         {templates.map((template) => (
           <ListItem
             key={template.name}
-            button
             onClick={() => onClickTemplate(template)}
           >
             <ListItemIcon>

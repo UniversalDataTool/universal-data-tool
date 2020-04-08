@@ -5,6 +5,7 @@ import { useEffect } from "react"
 
 export default (file, changeFile) => {
   let [recentItems, changeRecentItems] = useLocalStorage("recentItems", [])
+
   if (!recentItems) recentItems = []
 
   useEffect(() => {
@@ -20,5 +21,5 @@ export default (file, changeFile) => {
     }
   }, [file])
 
-  return { recentItems }
+  return { recentItems, changeRecentItems }
 }
