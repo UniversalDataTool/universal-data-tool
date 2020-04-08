@@ -189,7 +189,6 @@ const ImportFromYoutubeUrls = ({ open, onClose, onAddSamples }) => {
                 cancelRef.current = cancel
               })
               
-              console.log(i)
               completedVideoTitlesArray.push(<CompletedVideoTitle key={i}>{youtubeVideoInfo.title}</CompletedVideoTitle>)
               setCompletedVideoTitles(completedVideoTitlesArray)
               
@@ -213,7 +212,7 @@ const ImportFromYoutubeUrls = ({ open, onClose, onAddSamples }) => {
       {isDownloading && <Progress unitProgress={unitProgress} completedVideoTitles={completedVideoTitles} overallProgress={overallProgress} />}
       {!isDownloading &&
         <React.Fragment>
-          <SelectVideoQuality>
+          <SelectVideoQuality> s
             <SelectVideoQualityHeader>Select Video Quality</SelectVideoQualityHeader>
             <Select defaultValue={qualityOptions[0]} options={qualityOptions} onChange={({value}) => setVideoQuality(value)} />
           </SelectVideoQuality>
