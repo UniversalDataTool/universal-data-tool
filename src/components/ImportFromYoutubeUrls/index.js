@@ -1,17 +1,12 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useRef } from "react"
 import { styled } from "@material-ui/core/styles"
 import SimpleDialog from "../SimpleDialog"
 import useElectron from "../../utils/use-electron"
-import path from "path"
-import ProgressBar from "../ProgressBar"
 import Select from "react-select"
 import downloadYoutubeVideo from "./download-youtube-video"
-
-const ProgressContainer = styled("div")({
-})
-const ProgressText = styled("div")({
-  whiteSpace: "pre-wrap"
-})
+import Progress from "./progress"
+import getYoutubeVideoInformation from './get-youtube-video-information';
+import splitURLsFromTextArea from './split-urls-from-text-area';
 
 const TextArea = styled("textarea")({
   width: "100%",
@@ -34,75 +29,26 @@ const ErrorText = styled("pre")({
   color: "#f00"
 })
 
-const TotalPercentageWrapper = styled("div")({
-  flexDirection: "row",
-  justifyContent: "space-between",
+const LoadingText = styled("h2")({
+  width: "100%",
+  height: "100%",
+  margin: "auto auto",
+  textAlign: "center"
 })
 
-
 const CompletedVideoTitle = styled("h3")({
-  textDecoration: "line-through"  
+  textDecoration: "line-through",
+  lineHeight: 0
 })
 
 const qualityOptions = [
-  { value: "lowest", label: "Lowest" },
-  { value: "highest", label: "Highest" },
-  { value: "highestaudio", label: "Highest Audio Only"},
-  { value: "lowestaudio", label: "Lowest Audio Only" },
   { value: "lowestvideo", label: "Lowest Video Only" },
+  { value: "lowest", label: "lowest" },
+  { value: "highest", label: "Highest" },
   { value: "highestvideo", label: "Highest Video Only" },
+  { value: "lowestaudio", label: "Lowest Audio Only" },
+  { value: "highestaudio", label: "Highest Audio Only"},
 ]
-
-const splitURLsFromTextArea = (stringURLs) =>{
-  const urlsHasHTTPS = []
-  const splittedURLsByNewLines = stringURLs.split("\n")
-  for (const url of splittedURLsByNewLines) {
-    if (url.includes("https://")) {
-      urlsHasHTTPS.push(url)
-    }
-  }
-  return urlsHasHTTPS
-}
-
-
-const getYoutubeVideoInformation = async (remote, splittedURLsArray, progressCallback = () => null) =>{
-  const ytdl = remote.require("ytdl-core")
-    const checkedVideos = []
-    if(splittedURLsArray.length > 0){
-        for(let i = 0;i < splittedURLsArray.length; i++){
-          const url = splittedURLsArray[i]
-            const video = await new Promise((resolve, reject) =>{
-                ytdl.getBasicInfo(url, (err, info) =>{
-                    if(info && !err){
-                        resolve({
-                            url,
-                            title: info.title,
-                        })
-                    }else{
-                        const errorText = `Error with video at "${url}"\n\n${err.toString()}`
-                        reject(new Error(errorText))
-                    }
-                })
-            })
-            checkedVideos.push(video)
-            progressCallback({progress: i / (splittedURLsArray.length - 1) * 100, text: "Inspecting Video Information..." })
-        }
-    }
-    return checkedVideos
-}
-
-const Progress = ({ unitProgress, overallProgress, completedVideoTitles }) =>{
-  return(
-    <ProgressContainer>
-      <ProgressBar progress={overallProgress} />
-      <ProgressBar progress={unitProgress.progress} />
-      
-      <h3>{unitProgress.title}</h3>
-      <ProgressText>{unitProgress.progressText}</ProgressText>
-      {(completedVideoTitles && completedVideoTitles.length > 0) ? completedVideoTitles : null}
-    </ProgressContainer>
-  )
-}
 
 const ImportFromYoutubeUrls = ({ open, onClose, onAddSamples }) => {
   const { remote } = useElectron() || {}
@@ -112,7 +58,7 @@ const ImportFromYoutubeUrls = ({ open, onClose, onAddSamples }) => {
   const [downloadPath, setDownloadPath] = useState(null)
   const [error, setError] = useState(null)
   
-  const [unitProgress, setUnitProgress] = useState({ progress: 0, title: "" })
+  const [unitProgress, setUnitProgress] = useState({ progress: 0})
   const [overallProgress, setOverallProgress] = useState(0)
   const [isDownloading, setIsDownloading] = useState(false)
   const [completedVideoTitles, setCompletedVideoTitles] = useState(null)
@@ -161,7 +107,7 @@ const ImportFromYoutubeUrls = ({ open, onClose, onAddSamples }) => {
             
             
             const youtubeVideoInfos = await getYoutubeVideoInformation(remote, urlsFromTextArea, ({progress, text}) => {
-              setUnitProgress({ progress, title: text })
+              setUnitProgress({ progress })
             }).catch(errorMessage => {
               console.error(errorMessage.stack)
               setError(errorMessage.toString())
@@ -183,18 +129,19 @@ const ImportFromYoutubeUrls = ({ open, onClose, onAddSamples }) => {
                   youtubeUrl: youtubeVideoInfo.url,
                   title: youtubeVideoInfo.title,
                   videoQuality,
+                  overallProgress: currentProgress => setOverallProgress(
+                    ((((completedVideoTitlesArray.length*100)+currentProgress)/(youtubeVideosCount*100))*100)
+                  ),
                   onProgress: ({ progress, text }) => setUnitProgress({ progress, title: youtubeVideoInfo.title, progressText: text }),
                   onComplete: filePath => resolve(filePath)
                 })
                 cancelRef.current = cancel
               })
               
-              completedVideoTitlesArray.push(<CompletedVideoTitle key={i}>{youtubeVideoInfo.title}</CompletedVideoTitle>)
+              completedVideoTitlesArray.push(<li key={i+youtubeVideoInfo.title}><CompletedVideoTitle>{youtubeVideoInfo.title}</CompletedVideoTitle></li>)
               setCompletedVideoTitles(completedVideoTitlesArray)
               
               completedVideoPaths.push(videoPath)
-              
-              setOverallProgress( i / (youtubeVideoInfos.length -1) * 100)
             }
             
             onAddSamples(completedVideoPaths.map(videoPath => ({
@@ -209,10 +156,10 @@ const ImportFromYoutubeUrls = ({ open, onClose, onAddSamples }) => {
       ]}
     >
       {error && <ErrorText>{error}</ErrorText>}
-      {isDownloading && <Progress unitProgress={unitProgress} completedVideoTitles={completedVideoTitles} overallProgress={overallProgress} />}
+      {(isDownloading && ((unitProgress && unitProgress.progress && unitProgress.progress > 0) || (completedVideoTitles && Array.isArray(completedVideoTitles) === true && completedVideoTitles.length > 0))) ? <Progress unitProgress={unitProgress} completedVideoTitles={completedVideoTitles} overallProgress={overallProgress} /> : <LoadingText>Information is Loading</LoadingText>}
       {!isDownloading &&
         <React.Fragment>
-          <SelectVideoQuality> s
+          <SelectVideoQuality>
             <SelectVideoQualityHeader>Select Video Quality</SelectVideoQualityHeader>
             <Select defaultValue={qualityOptions[0]} options={qualityOptions} onChange={({value}) => setVideoQuality(value)} />
           </SelectVideoQuality>
