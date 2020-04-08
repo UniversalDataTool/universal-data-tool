@@ -73,7 +73,7 @@
     "fast-json-patch": "^3.0.0-1",
     "ffmpeg-static": "^4.0.1",
     "in-browser-download": "^2.0.0",
-    "jac-format": "^1.0.7",
+    "jac-format": "^1.1.0",
     "js-md5": "^0.7.3",
     "moment": "^2.24.0",
     "posthog-js": "^1.0.4",
