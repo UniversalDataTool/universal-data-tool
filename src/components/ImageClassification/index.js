@@ -139,7 +139,7 @@ export default ({
       if (iface.allowMultiple) {
         newOutput = currentOutput.concat([label.id])
       } else {
-        newOutput = [label.id]
+        newOutput = label.id
       }
     }
 
