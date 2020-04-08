@@ -39,7 +39,7 @@ export default () => {
     recentItems,
   } = useFileHandler()
 
-  const [oha, changeOHA] = useState()
+  const [selectedBrush, setSelectedBrush] = useState("complete")
   const [errors, addError] = useErrors()
   const { addToast } = useToasts()
 
@@ -111,6 +111,8 @@ export default () => {
           onOpenRecentItem: openRecentItem,
           isDesktop: true,
           onOpenFile: openFile,
+          selectedBrush,
+          onChangeSelectedBrush: setSelectedBrush,
         }}
       >
         {!file ? (
@@ -125,6 +127,7 @@ export default () => {
           <OHAEditor
             key={file.id}
             {...file}
+            selectedBrush={selectedBrush}
             oha={file.content}
             onChangeFileName={(newName) => {
               changeFile(setIn(file, ["fileName"], newName))

@@ -1,6 +1,6 @@
 {
   "name": "universal-data-tool",
-  "version": "0.6.20",
+  "version": "0.8.0",
   "license": "MIT",
   "main": "desktop/main.js",
   "homepage": "https://universaldatatool.com",
@@ -61,7 +61,6 @@
     "spelling": "^2.0.1"
   },
   "dependencies": {
-    "react-scripts": "^3.4.1",
     "@material-ui/styles": "^4.9.0",
     "@semantic-release/git": "^9.0.0",
     "@sentry/browser": "^5.15.4",
@@ -84,9 +83,11 @@
     "react-dropzone": "^10.1.8",
     "react-icons": "^3.9.0",
     "react-image-annotate": "^0.2.4",
+    "react-scripts": "^3.4.1",
     "react-select": "^3.0.8",
     "rfc6902": "^3.0.4",
     "seamless-immutable": "^7.1.4",
+    "seed-random": "^2.2.0",
     "styled-components": "^5.0.0",
     "use-event-callback": "^0.1.0",
     "ytdl-core": "^2.0.1"
