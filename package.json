@@ -88,6 +88,7 @@
     "rfc6902": "^3.0.4",
     "seamless-immutable": "^7.1.4",
     "seed-random": "^2.2.0",
+    "seedrandom": "^3.0.5",
     "styled-components": "^5.0.0",
     "use-event-callback": "^0.1.0",
     "ytdl-core": "^2.0.1"
