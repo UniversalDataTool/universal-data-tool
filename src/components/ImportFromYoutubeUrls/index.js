@@ -189,9 +189,9 @@ const ImportFromYoutubeUrls = ({ open, onClose, onAddSamples }) => {
           completedVideoTitles={completedVideoTitles}
           overallProgress={overallProgress}
         />
-      ) : (
+      ) : isDownloading === true ? (
         <LoadingText>Information is Loading</LoadingText>
-      )}
+      ) : null}
       {!isDownloading && (
         <React.Fragment>
           <SelectVideoQuality>
