@@ -169,6 +169,7 @@ export default () => {
               onChangeOHA={(newOHA) => {
                 changeFile(setIn(file, ["content"], newOHA))
               }}
+              recentItems={recentItems}
             />
           </ErrorBoundary>
         )}

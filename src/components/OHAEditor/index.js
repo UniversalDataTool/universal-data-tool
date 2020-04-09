@@ -12,6 +12,7 @@ import Amplify, { Storage } from "aws-amplify"
 import Header from "../Header"
 import brace from "brace"
 import AceEditor from "react-ace"
+import isEmpty from "../../utils/isEmpty"
 import NextIcon from "@material-ui/icons/KeyboardArrowRight"
 import EditIcon from "@material-ui/icons/Edit"
 import SaveIcon from "@material-ui/icons/Save"
@@ -35,6 +36,7 @@ import useEventCallback from "use-event-callback"
 
 import "brace/mode/javascript"
 import "brace/theme/github"
+import useLocalStorage from "../../utils/file-handlers/use-local-storage.js"
 
 const useStyles = makeStyles({
   headerButton: {
@@ -69,7 +71,9 @@ export default ({
   initialMode = "settings", //= "samples"
   authConfig,
   user,
+  recentItems,
 }) => {
+  
   const c = useStyles()
   const { addToast } = useToasts()
   const [mode, changeMode] = useState(initialMode)
@@ -123,6 +127,13 @@ export default ({
   ) {
     percentComplete =
       oha.taskOutput.filter(Boolean).length / oha.taskData.length
+  }
+
+  async function fetchAnImage(element){
+    const response = await fetch(element.imageUrl);
+    const blob = await response.blob();
+    console.log("Image fetché :" + blob); 
+    return blob;
   }
 
   return (
@@ -255,7 +266,46 @@ export default ({
               changeSingleSampleOHA(
                 setIn(singleSampleOHA, ["taskOutput", relativeIndex], output)
               )
-              onChangeOHA(newOHA)
+              onChangeOHA(newOHA);
+              
+              if (!isEmpty(authConfig)) {            
+                let index;
+                console.log("Entrée dans la fonction");
+                for(let y=0;y<recentItems.length;y++){
+                  if(recentItems[y].fileName===fileName)
+                    index=y;
+                }
+                console.log("Index du fichier récupéré :"+index);
+                if(typeof index !== 'undefined'){
+                  var json = JSON.stringify(recentItems[index]);
+                  
+                  Storage.put(`${fileName}/annotations/annotations.json`,json,{
+                    level: "private",
+                  })
+                  .then(result => 
+                    console.log("Item récupéré et envoyer sur AWS :"+result))
+                  .catch(err => console.log(err));                  
+                  
+                  recentItems[index].content.taskData.forEach(async (element) => {
+                    try {
+                      const blob= await fetchAnImage(element);                      
+                      let imageName = element.imageUrl.match(`\\/([a-zA-Z0-9]*\\.([a-zA-Z0-9]*))\\?`);
+                      var pathToFile = `${fileName}/data/${imageName[1]}`;
+                      console.log("Récupération du nom de l'image :"+imageName[1]);
+                      console.log("Extension identifié :"+imageName[2]);
+                      console.log("Path identifié :"+pathToFile);
+                      Storage.put(pathToFile, blob, {
+                        level: "private",
+                        contentType: `image/${imageName[2]}`,
+                      })
+                      .then(result => console.log("image envoyée sur AWS"))
+                      .catch(err => console.log(err));                      
+                    } catch (err) {
+                      console.log(err)
+                    }
+                  }); 
+                }                             
+              }
             }}
             onExit={(nextAction = "nothing") => {
               if (singleSampleOHA.startTime) {
