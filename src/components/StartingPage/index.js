@@ -147,7 +147,6 @@ export default ({
         onClose={() => changeAddAuthFromDialogOpen(false)}
         onFinish={(anwsers) => console.log(anwsers)}
         onAuthConfigured={(config) => {
-          console.log(config)
           onAuthConfigured(config)
         }}
       />

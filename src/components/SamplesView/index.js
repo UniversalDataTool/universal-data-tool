@@ -183,8 +183,6 @@ export default ({
           }}
         />
       )}
-      {console.log(data)}
-      {console.log(columns)}
       {currentTab === "table" && (
         <DataTable
           title="Samples"

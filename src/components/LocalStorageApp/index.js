@@ -81,11 +81,8 @@ export default () => {
       try {
         Amplify.configure(config)
 
-        console.log("ok")
-
         Auth.currentAuthenticatedUser()
           .then((tryUser) => {
-            console.log(tryUser)
             changeUser(tryUser)
             changeAuthConfig(config)
 

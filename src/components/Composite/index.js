@@ -60,8 +60,6 @@ export const Composite = (props) => {
     )
   }
 
-  console.log("taskOutput", props.taskOutput)
-
   return (
     <SampleContainer
       {...props.containerProps}

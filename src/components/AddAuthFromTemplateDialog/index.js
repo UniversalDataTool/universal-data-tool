@@ -76,7 +76,6 @@ export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
   const [errors, addError] = useErrors()
 
   const validateAuthProvider = (answers) => {
-    console.log(answers)
     if (answers.provider === "AWS") {
       const config = {
         Auth: {

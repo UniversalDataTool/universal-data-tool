@@ -111,6 +111,10 @@ export default ({
     } catch (e) {}
   }, [jsonText])
 
+  useEffect(() => {
+    console.log(jsonText + "j'ai pris effet");
+  },[jsonText])
+
   const onChangeTab = useEventCallback((tab) => changeMode(tab.toLowerCase()))
 
   let percentComplete = 0

@@ -64,7 +64,6 @@ export default ({
     await Auth.signIn(username, password).then(
       (user) => {
         if (user.challengeName === "NEW_PASSWORD_REQUIRED") {
-          console.log(user.challengeParam)
           onRequireCompleteSignUp(user)
         } else {
           onUserChange(user)
