@@ -25,7 +25,10 @@ export default ({ open, onClose, onAddSamples }) => {
                 .map((l) => l.trim())
                 .filter(Boolean)
                 .map((s) => {
-                  const extension = s.split(".").slice(-1)[0]
+                  const extension = s
+                    .replace(/\?.*/g, "")
+                    .split(".")
+                    .slice(-1)[0]
                   switch (extension.toLowerCase()) {
                     case "png":
                     case "jpg":
