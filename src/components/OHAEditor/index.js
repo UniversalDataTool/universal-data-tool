@@ -8,6 +8,7 @@ import Button from "@material-ui/core/Button"
 import IconButton from "@material-ui/core/IconButton"
 import Typography from "@material-ui/core/Typography"
 import GithubIcon from "../Header/GithubIcon.js"
+import Amplify, { Storage } from "aws-amplify"
 import Header from "../Header"
 import brace from "brace"
 import AceEditor from "react-ace"
@@ -100,7 +101,7 @@ export default ({
   useEffect(() => {
     if (mode === "json") {
       changeJSONText(JSON.stringify(oha, null, "  "))
-    }
+    }   
   }, [mode])
 
   useEffect(() => {
@@ -110,10 +111,6 @@ export default ({
       onChangeOHA(JSON.parse(jsonText))
     } catch (e) {}
   }, [jsonText])
-
-  useEffect(() => {
-    console.log(jsonText + "j'ai pris effet");
-  },[jsonText])
 
   const onChangeTab = useEventCallback((tab) => changeMode(tab.toLowerCase()))
 
@@ -292,6 +289,8 @@ export default ({
                     return
                   }
                   break
+                default :
+                  break;
               }
               changeSingleSampleOHA(null)
             }}
