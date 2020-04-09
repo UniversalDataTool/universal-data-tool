@@ -22,7 +22,8 @@ function createWindow() {
 
   // and load the index.html of the app.
   if (process.env.USE_DEV_SERVER) {
-    mainWindow.loadURL("http://localhost:6001")
+    // USAGE: DEV_SERVER_URL=https://e2a6dfb7.ngrok.io npm run start:desktop:dev
+    mainWindow.loadURL(process.env.DEV_SERVER_URL || "http://localhost:6001")
   } else {
     mainWindow.loadURL(
       formatUrl({
