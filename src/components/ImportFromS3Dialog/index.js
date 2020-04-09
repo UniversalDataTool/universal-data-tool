@@ -99,26 +99,24 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
 
   const handleAddSample =  () => {
     Storage.list("", { level: "private" })
-      .then( (result) => {
-        //var samples = []    
-        result.forEach((element) => {
-          if(element.key.match(`(${folderToFetch}/data).*(\\.).*`)){
-            Storage.get(element.key, {
+      .then(async (result) => {
+        var samples = [] 
+        for (let i=0; i<result.length;i++){
+          if(result[i].key.match(`(${folderToFetch}/data).*(\\.).*`)){
+            await Storage.get(result[i].key, {
               expires: 24 * 60 * 60,
               level: "private",
             })
-            .then((result) => {                
-              console.log(result);
-              //samples.push({ imageUrl: `${result}` });
+            .then((result) => {
+              samples.push({ imageUrl: `${result}` });
             })
             .catch((err) => {
               console.log("error getting link for s3 image", err)
               return null
             });
           }
-        });
-        //console.log('samples :'+samples);
-        //onAddSamples(samples);
+        }
+        onAddSamples(samples);
       })
       .catch((err) => {
         console.log("error getting link for s3 image", err)
