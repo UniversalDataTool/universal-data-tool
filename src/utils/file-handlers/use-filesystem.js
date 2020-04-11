@@ -6,6 +6,7 @@ import useElectron from "../use-electron.js"
 import { useToasts } from "../../components/Toasts"
 import templates from "../../components/StartingPage/templates.js"
 import { setIn } from "seamless-immutable"
+import toUDTCSV from "../to-udt-csv.js"
 import useIsDesktop from "../use-is-desktop"
 
 const webReturn = { saveFile: () => null }
@@ -24,10 +25,15 @@ export default (file, changeFile) => {
           cancelled,
           filePath: newFilePath,
         } = await remote.dialog.showSaveDialog({
-          filters: [{ name: ".udt.json", extensions: ["udt.json"] }],
+          filters: [
+            { name: ".udt.json", extensions: ["udt.json"] },
+            { name: ".udt.csv", extensions: ["udt.csv"] },
+          ],
         })
         filePath =
-          !newFilePath || newFilePath.endsWith(".json")
+          !newFilePath ||
+          newFilePath.endsWith(".json") ||
+          newFilePath.endsWith(".csv")
             ? newFilePath
             : `${newFilePath}.udt.json`
         if (cancelled || !filePath) {
@@ -42,7 +48,12 @@ export default (file, changeFile) => {
       }
       await remote
         .require("fs")
-        .promises.writeFile(filePath, JSON.stringify(file.content, null, "  "))
+        .promises.writeFile(
+          filePath,
+          filePath.endsWith(".csv")
+            ? toUDTCSV(file.content)
+            : JSON.stringify(file.content, null, "  ")
+        )
       addToast("File Saved!")
     }
     saveFileAsync()
