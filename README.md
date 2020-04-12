@@ -87,6 +87,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://twitter.com/seveibar"><img src="https://avatars2.githubusercontent.com/u/1910070?v=4" width="100px;" alt=""/><br /><sub><b>Severin Ibarluzea</b></sub></a><br /><a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=seveibar" title="Code">💻</a> <a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=seveibar" title="Documentation">📖</a> <a href="https://github.com/UniversalDataTool/universal-data-tool/pulls?q=is%3Apr+reviewed-by%3Aseveibar" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="http://puskuruk.github.io"><img src="https://avatars2.githubusercontent.com/u/22892227?v=4" width="100px;" alt=""/><br /><sub><b>Puskuruk</b></sub></a><br /><a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=puskuruk" title="Code">💻</a> <a href="https://github.com/UniversalDataTool/universal-data-tool/pulls?q=is%3Apr+reviewed-by%3Apuskuruk" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://github.com/CedricJean"><img src="https://avatars1.githubusercontent.com/u/63243979?v=4" width="100px;" alt=""/><br /><sub><b>CedricJean</b></sub></a><br /><a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=CedricJean" title="Code">💻</a></td>
   </tr>
 </table>
 
