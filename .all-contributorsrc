@@ -20,6 +20,15 @@
         "doc",
         "review"
       ]
+    },
+    {
+      "login": "puskuruk",
+      "name": "Puskuruk",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/22892227?v=4",
+      "profile": "http://puskuruk.github.io",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
