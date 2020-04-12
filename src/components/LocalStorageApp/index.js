@@ -13,6 +13,7 @@ import toUDTCSV from "../../utils/to-udt-csv.js"
 import { setIn } from "seamless-immutable"
 import ErrorBoundary from "../ErrorBoundary"
 import useEventCallback from "use-event-callback"
+import usePreventNavigation from "../../utils/use-prevent-navigation"
 
 const useStyles = makeStyles({
   empty: {
@@ -36,6 +37,7 @@ export default () => {
     recentItems,
     changeRecentItems,
   } = useFileHandler()
+  usePreventNavigation(Boolean(file))
   const [errors, addError] = useErrors()
 
   const [selectedBrush, setSelectedBrush] = useState("complete")
