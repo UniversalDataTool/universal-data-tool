@@ -33,8 +33,8 @@ const ImportUDTFileDialog = ({ open, onClose, onAddSamples }) => {
       actions={[
         {
           text: "Add Samples",
-          disabled: Boolean(error),
           onClick: () => {
+            changeError(null)
             let taskData, taskOutput
             try {
               ;[taskData, taskOutput] = JSON.parse(content).taskData
@@ -43,6 +43,11 @@ const ImportUDTFileDialog = ({ open, onClose, onAddSamples }) => {
                 const udt = fromUDTCSV(content)
                 ;({ taskData, taskOutput } = udt)
               } catch (e2) {
+                console.log({
+                  message: "CSV/JSON Error Stacks",
+                  jsonError: e1.stack,
+                  csvError: e2.stack,
+                })
                 changeError(
                   `JSON did not parse. CSV did not parse.\n\nJSON Error: ${e1.toString()}\nCSV Error: ${e2.toString()}`
                 )

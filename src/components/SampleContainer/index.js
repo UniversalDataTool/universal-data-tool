@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { makeStyles } from "@material-ui/core"
 import Grid from "@material-ui/core/Grid"
 import Button from "@material-ui/core/Button"
@@ -92,7 +92,9 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export const SampleContainer = ({
-  hideDescription: defaultHideDescription = false,
+  hideDescription: defaultHideDescription = window.localStorage.getItem(
+    "hideDescription"
+  ) === '"true"',
   lastSampleExitText,
   onExit,
   requireCompleteToPressNext = false,
@@ -106,9 +108,17 @@ export const SampleContainer = ({
   children,
 }) => {
   const c = useStyles()
-  const [hideDescription, changeHideDescription] = useState(
+  const [hideDescription, changeHideDescriptionState] = useState(
     defaultHideDescription
   )
+  const changeHideDescription = (hide) => {
+    window.localStorage.setItem(
+      "hideDescription",
+      `"${hide ? "true" : "false"}"`
+    )
+    changeHideDescriptionState(hide)
+  }
+
   const [sampleDrawerOpen, changeSampleDrawerOpen] = useState(false)
   return (
     <>
