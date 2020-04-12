@@ -26,11 +26,7 @@ export default ({ content, onChangeContent, placeholder }) => {
     const reader = new FileReader()
     reader.onload = (e) => {
       const fileContent = e.target.result
-      if (fileName.endsWith("csv") || fileName.endsWith("CSV")) {
-        onChangeContent(fileContent.replace(",", "\n"))
-      } else {
-        onChangeContent(fileContent)
-      }
+      onChangeContent(fileContent)
     }
     reader.readAsText(acceptedFiles[0])
   })

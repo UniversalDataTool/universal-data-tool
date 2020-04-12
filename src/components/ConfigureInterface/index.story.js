@@ -9,7 +9,6 @@ import ConfigureInterface from "./"
 
 storiesOf("ConfigureInterface", module).add("Data Entry", () => {
   const [iface, changeIFace] = useState({ type: "data_entry" })
-  console.log({ iface })
   return (
     <ConfigureInterface
       iface={iface}

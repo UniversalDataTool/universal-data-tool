@@ -170,23 +170,12 @@ module.exports = [
     ],
   },
   {
-    label: "Navigate",
-    submenu: [
-      {
-        label: "Welcome Page",
-        click: (menuItem, currentWindow) => {
-          currentWindow.webContents.send("open-welcome-page")
-        },
-      },
-    ],
-  },
-  {
     label: "About",
     submenu: [
       {
         label: "Github",
         click: () => {
-          shell.openItem(
+          shell.openExternal(
             "https://github.com/openhumanannotation/universal-data-tool"
           )
         },
