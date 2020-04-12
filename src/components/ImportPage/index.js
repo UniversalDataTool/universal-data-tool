@@ -20,6 +20,7 @@ import ImportFromGoogleDriveDialog from "../ImportFromGoogleDriveDialog"
 import ImportUDTFileDialog from "../ImportUDTFileDialog"
 import ImportToyDataset from "../ImportToyDatasetDialog"
 import ImportFromYoutubeUrls from "../ImportFromYoutubeUrls"
+import ImportDoccanoDialog from "../ImportDoccanoDialog"
 import { FaGoogleDrive, FaYoutube } from "react-icons/fa"
 
 const extendWithNull = (ar, len) => {
@@ -212,6 +213,13 @@ export default ({ oha, onChangeOHA, isDesktop }) => {
         >
           Import from CSV / JSON
         </Button>
+        <Button
+          isDesktop={isDesktop}
+          dialog="import-doccano"
+          Icon={DescriptionIcon}
+        >
+          Import Doccano Samples
+        </Button>
         <ImportTextSnippetsDialog
           open={selectedDialog === "import-text-snippets"}
           onClose={closeDialog}
@@ -239,6 +247,11 @@ export default ({ oha, onChangeOHA, isDesktop }) => {
         />
         <ImportUDTFileDialog
           open={selectedDialog === "import-csv-json"}
+          onClose={closeDialog}
+          onAddSamples={onAddSamples}
+        />
+        <ImportDoccanoDialog
+          open={selectedDialog === "import-doccano"}
           onClose={closeDialog}
           onAddSamples={onAddSamples}
         />
