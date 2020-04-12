@@ -14,6 +14,7 @@ function preventNavigation(e) {
 export default (shouldPreventNavigation = true) => {
   useEffect(() => {
     if (!shouldPreventNavigation) return
+    if (window.location.origin.includes("localhost")) return
     window.addEventListener("beforeunload", preventNavigation)
     return () => {
       window.removeEventListener("beforeunload", preventNavigation)
