@@ -82,7 +82,7 @@
     "react-data-table-component": "^6.2.2",
     "react-dropzone": "^10.1.8",
     "react-icons": "^3.9.0",
-    "react-image-annotate": "^0.2.4",
+    "react-image-annotate": "^1.0.4",
     "react-scripts": "^3.4.1",
     "react-select": "^3.0.8",
     "rfc6902": "^3.0.4",

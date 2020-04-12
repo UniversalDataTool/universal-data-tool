@@ -1,3 +1,9 @@
+const idify = (s) =>
+  s
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, "_")
+    .replace(/_+/g, "_")
+
 export default ({
   youtubeUrl,
   title: videoTitle,
@@ -6,7 +12,7 @@ export default ({
   downloadPath,
   onProgress,
   onComplete,
-  overallProgress,
+  onChangeOverallProgress,
 }) => {
   let starttime = Date.now()
 
@@ -14,8 +20,8 @@ export default ({
   const path = remote.require("path")
 
   const videoName = videoQuality.includes("audio")
-    ? `${videoTitle + ".mp3"}`
-    : `${videoTitle + ".mp4"}`
+    ? `${idify(videoTitle) + ".mp3"}`
+    : `${idify(videoTitle) + ".mp4"}`
 
   const fullVideoPath = path.join(downloadPath, videoName)
   const writableVideoFile = remote
@@ -53,7 +59,7 @@ export default ({
       progress: percent * 100,
     })
 
-    overallProgress(percent * 100)
+    onChangeOverallProgress(percent * 100)
   })
 
   youtubeVideoWithOptions.on("end", () => onComplete(fullVideoPath))

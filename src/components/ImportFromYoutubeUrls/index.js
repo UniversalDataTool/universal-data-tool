@@ -42,9 +42,12 @@ const CompletedVideoTitle = styled("h3")({
 })
 
 const qualityOptions = [
+  { value: "136", label: "720p" },
+  { value: "135", label: "480p" },
   { value: "lowestvideo", label: "Lowest Video Only" },
-  { value: "lowest", label: "lowest" },
-  { value: "highest", label: "Highest" },
+  // TODO these did not seem to work in a local test (missing video)
+  // { value: "lowest", label: "lowest" },
+  // { value: "highest", label: "Highest" },
   { value: "highestvideo", label: "Highest Video Only" },
   { value: "lowestaudio", label: "Lowest Audio Only" },
   { value: "highestaudio", label: "Highest Audio Only" },
@@ -54,7 +57,7 @@ const ImportFromYoutubeUrls = ({ open, onClose, onAddSamples }) => {
   const { remote } = useElectron() || {}
 
   const [urlsFromTextArea, setUrlsFromTextArea] = useState([])
-  const [videoQuality, setVideoQuality] = useState("lowest")
+  const [videoQuality, setVideoQuality] = useState(qualityOptions[0].value)
   const [downloadPath, setDownloadPath] = useState(null)
   const [error, setError] = useState(null)
 
@@ -136,7 +139,7 @@ const ImportFromYoutubeUrls = ({ open, onClose, onAddSamples }) => {
                   youtubeUrl: youtubeVideoInfo.url,
                   title: youtubeVideoInfo.title,
                   videoQuality,
-                  overallProgress: (currentProgress) =>
+                  onChangeOverallProgress: (currentProgress) =>
                     setOverallProgress(
                       ((completedVideoTitlesArray.length * 100 +
                         currentProgress) /
