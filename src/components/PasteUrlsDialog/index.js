@@ -25,10 +25,13 @@ export default ({ open, onClose, onAddSamples }) => {
                 .map((l) => l.trim())
                 .filter(Boolean)
                 .map((s) => {
-                  const extension = s
+                  let extension = s
                     .replace(/\?.*/g, "")
                     .split(".")
                     .slice(-1)[0]
+                  if (s.includes("gstatic.com/images")) {
+                    extension = "jpg"
+                  }
                   switch (extension.toLowerCase()) {
                     case "png":
                     case "jpg":
