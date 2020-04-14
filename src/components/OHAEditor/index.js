@@ -292,7 +292,11 @@ export default ({
                 }
                 if(typeof index !== 'undefined'){
                   var json = JSON.stringify(recentItems[index]);
-                  
+
+                  Storage.put(`${fileName}/`,null,{
+                    level: "private", 
+                  }).catch(err => console.log(err)); 
+
                   Storage.put(`${fileName}/annotations/annotations.json`,json,{
                     level: "private", 
                   }).catch(err => console.log(err));                  

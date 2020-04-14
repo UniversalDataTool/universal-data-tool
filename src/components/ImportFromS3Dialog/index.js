@@ -159,6 +159,7 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
       console.log("fetching S3")
       Storage.list("", { level: "private" })
         .then((result) => {
+          console.log(result);
           changeS3Content(result)
           _dataForTable = result
             .filter((obj) => {
