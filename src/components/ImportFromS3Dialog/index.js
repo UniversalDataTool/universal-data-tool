@@ -96,28 +96,59 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
       [`${folder}-${imgName}`]: result,
     }))
   }
+  async function GetImageFromAFolderAWS(result){
+    var samples = [];
+    for (let i=0; i<result.length;i++){
+      if(result[i].key.match(`(${folderToFetch}/data).*(\\.).*`)){
+        await Storage.get(result[i].key, {
+          expires: 24 * 60 * 60*2000,
+          level: "private",
+        })
+        .then((result) => {
+          samples.push({ imageUrl: `${result}` });
+        })
+        .catch((err) => {
+          console.log("error getting link for s3 image", err)
+          return null
+        });
+      }
+    } 
+    return samples;
+  }
+
+  async function GetAnnotationFromAFolderAWS(result){
+    var annotation=null;
+    if(result.find(element => element.key===`${folderToFetch}/annotations/annotations.json`)){
+      await Storage.get(`${folderToFetch}/annotations/annotations.json`, {
+        expires: 24 * 60 * 60*2000,
+        level: "private",
+      })
+      .then(async (result) => {
+        await fetch(result).then(async (data) =>{
+          return await data.json().then(async (json) =>{
+            if(typeof json.content.taskOutput != "undefined"){
+              annotation=json.content.taskOutput;
+            }            
+          });
+        })
+      })
+      .catch((err) => {
+        console.log("error getting link for s3 image", err)
+        return null
+      });
+    }
+    return annotation;
+  }
 
   const handleAddSample =  () => {
     Storage.list("", { level: "private" })
       .then(async (result) => {
-        var samples = [] 
-        for (let i=0; i<result.length;i++){
-          if(result[i].key.match(`(${folderToFetch}/data).*(\\.).*`)){
-            console.log(result[i]);
-            await Storage.get(result[i].key, {
-              expires: 24 * 60 * 60*2000,
-              level: "private",
-            })
-            .then((result) => {
-              samples.push({ imageUrl: `${result}` });
-            })
-            .catch((err) => {
-              console.log("error getting link for s3 image", err)
-              return null
-            });
-          }
-        }
-        onAddSamples(samples);
+        var samples = await GetImageFromAFolderAWS(result); 
+        var annotation= await GetAnnotationFromAFolderAWS(result);
+        console.log("Sample :" +samples);
+        console.log("Annotation :" + annotation);
+        
+        //onAddSamples(samples,annotation);
       })
       .catch((err) => {
         console.log("error getting link for s3 image", err)
