@@ -52,16 +52,15 @@ export default ({ oha, onChange, onClickEditJSON, onClearLabelData }) => {
             onClick={onClickEditJSON}
             variant="outlined"
             onClick={() => {
-              if (posthog.has_opted_out_captureing()) {
-                posthog.opt_in_captureing()
+              if (posthog.has_opted_out_capturing()) {
+                posthog.opt_in_capturing()
               } else {
-                posthog.opt_out_captureing()
+                posthog.opt_out_capturing()
               }
               forceUpdate()
             }}
           >
-            {posthog.has_opted_out_captureing() ? "Enable" : "Disable"}{" "}
-            Telemetry
+            {posthog.has_opted_out_capturing() ? "Enable" : "Disable"} Telemetry
           </Button>
         </Box>
       </PaperContainer>

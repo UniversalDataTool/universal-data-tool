@@ -16,6 +16,7 @@ import isEmpty from "../../utils/isEmpty"
 import { setIn } from "seamless-immutable"
 import ErrorBoundary from "../ErrorBoundary"
 import useEventCallback from "use-event-callback"
+import usePreventNavigation from "../../utils/use-prevent-navigation"
 
 const useStyles = makeStyles({
   empty: {
@@ -37,8 +38,12 @@ export default () => {
     openUrl,
     makeSession,
     recentItems,
+    changeRecentItems,
   } = useFileHandler()
+  usePreventNavigation(Boolean(file))
   const [errors, addError] = useErrors()
+
+  const [selectedBrush, setSelectedBrush] = useState("complete")
 
   const onCreateTemplate = useEventCallback((template) => {
     changeFile({
@@ -119,6 +124,7 @@ export default () => {
               : file.url
             : "unnamed",
           recentItems,
+          changeRecentItems,
           onClickTemplate: onCreateTemplate,
           onClickHome,
           onOpenFile: openFile,
@@ -135,6 +141,8 @@ export default () => {
           onUserChange: (userToSet) => changeUser(userToSet),
           user: user,
           logoutUser: logoutUser,
+          onChangeSelectedBrush: setSelectedBrush,
+          selectedBrush,
         }}
       >
         {!file ? (
@@ -153,6 +161,7 @@ export default () => {
             <OHAEditor
               key={file.id}
               {...file}
+              selectedBrush={selectedBrush}
               inSession={inSession}
               oha={file.content}
               onChangeFileName={(newName) => {

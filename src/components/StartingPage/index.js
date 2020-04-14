@@ -112,7 +112,7 @@ export default ({
         "https://raw.githubusercontent.com/UniversalDataTool/universal-data-tool/master/package.json"
       ).then((r) => r.json())
       if (newPackage.version !== packageInfo.version) {
-        changeNewVersionAvailable(true)
+        changeNewVersionAvailable(newPackage.version)
       }
     }
     checkNewVersion()
@@ -158,10 +158,10 @@ export default ({
               className={c.headerButton}
               href="https://github.com/OpenHumanAnnotation/universal-data-tool/releases"
             >
-              Out of date! Download New Version
+              Download Version v{newVersionAvailable}
             </Button>
           ),
-          showDownloadLink && (
+          !newVersionAvailable && showDownloadLink && (
             <Button
               key="download"
               href="https://github.com/OpenHumanAnnotation/universal-data-tool/releases"

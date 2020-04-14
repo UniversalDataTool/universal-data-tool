@@ -5,6 +5,7 @@
 [![npm version](https://badge.fury.io/js/universal-data-tool.svg)](https://badge.fury.io/js/universal-data-tool)
 [![GitHub license](https://img.shields.io/github/license/UniversalDataTool/universal-data-tool)](https://github.com/UniversalDataTool/universal-data-tool/blob/master/LICENSE)
 [![Platform Support Web/Win/Linux/Mac](https://img.shields.io/badge/platforms-Web%20Windows%20Linux%20Mac-blueviolet)](https://github.com/UniversalDataTool/universal-data-tool/releases)
+[![Slack Image](https://img.shields.io/badge/slack-Universal%20Data%20Tool-blue.svg?logo=slack)](https://join.slack.com/t/universaldatatool/shared_invite/zt-d8teykwi-iOSOUfxugKR~M4AJN6VL3g)
 
 Try it out at [universaldatatool.com](https://universaldatatool.com) or [download it here](https://github.com/UniversalDataTool/universal-data-tool/releases).
 
@@ -15,10 +16,11 @@ The Universal Data Tool is a web/desktop app for editing and annotating images, 
 - Usable on [web](https://universaldatatool.com) or as [Windows,Mac or Linux desktop application](https://github.com/UniversalDataTool/universal-data-tool/wiki/Installation)
 - Collaborate with others in real time
 - Configure your project with an easy-to-use GUI
-- Download/upload as easy-to-use CSV or JSON
+- Download/upload as easy-to-use CSV ([sample.udt.csv](https://github.com/UniversalDataTool/udt-format/blob/master/SAMPLE.udt.csv)) or JSON ([sample.udt.json](https://github.com/UniversalDataTool/udt-format/blob/master/SAMPLE.udt.json))
 - Support for Images, Videos, PDFs, Text, Audio Transcription and many other formats
 - Can be [easily integrated into a React application](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-React)
 - Annotate images or videos with classifications, tags, bounding boxes, polygons and points
+- Import data from Google Drive, Youtube, CSV, Clipboard and more
 - Annotate NLP datasets with Named Entity Recognition (NER), classification and Part of Speech (PoS) tagging.
 - Easily [load into pandas](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-Pandas) or [use with fast.ai](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-Fast.ai)
 
@@ -59,6 +61,11 @@ Download the latest release from the [releases page](https://github.com/Universa
 - Rely on external libraries which specialize in each type of annotation to enable the best tools to be used
 - Easy to use
 - Easy to integrate
+
+## Contributing
+
+- (Optional) Say hi in the [Slack channel](https://join.slack.com/t/universaldatatool/shared_invite/zt-d8teykwi-iOSOUfxugKR~M4AJN6VL3g)!
+- Read [this guide to get started with development](https://github.com/UniversalDataTool/universal-data-tool/wiki/Setup-for-Development).
 
 ## Libraries
 

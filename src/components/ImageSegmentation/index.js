@@ -24,6 +24,7 @@ const regionTypeToTool = {
 const [emptyObj, emptyArr] = [{}, []]
 
 export default ({
+  sampleIndex: globalSampleIndex,
   interface: iface,
   taskData = emptyArr,
   taskOutput = emptyObj,
@@ -56,7 +57,7 @@ export default ({
   const multipleRegions =
     iface.multipleRegions || iface.multipleRegions === undefined
 
-  const onExit = useEventCallback((output) => {
+  const onExit = useEventCallback((output, nextAction) => {
     const regionMat = (output.images || [])
       .map((img) => img.regions)
       .map((riaRegions) => (riaRegions || []).map(convertFromRIARegionFmt))
@@ -68,7 +69,13 @@ export default ({
         onSaveTaskOutputItem(i, regionMat[i][0])
       }
     }
-    if (containerProps.onExit) containerProps.onExit()
+    if (containerProps.onExit) containerProps.onExit(nextAction)
+  })
+  const onNextImage = useEventCallback((output) => {
+    onExit(output, "go-to-next")
+  })
+  const onPrevImage = useEventCallback((output) => {
+    onExit(output, "go-to-previous")
   })
 
   const images = useMemo(
@@ -91,21 +98,16 @@ export default ({
       ),
     [regionTypesAllowed]
   )
-  console.log({
-    selectedImage: taskData[selectedIndex].imageUrl,
-    taskDescription: iface.description,
-    ...labelProps,
-    enabledTools: enabledTools,
-    images,
-    onExit,
-  })
 
   return (
     <div style={{ height: "calc(100vh - 70px)" }}>
       <Annotator
+        key={globalSampleIndex}
         selectedImage={taskData[selectedIndex].imageUrl}
         taskDescription={iface.description}
         {...labelProps}
+        onNextImage={onNextImage}
+        onPrevImage={onPrevImage}
         enabledTools={enabledTools}
         images={images}
         onExit={onExit}

@@ -1,6 +1,6 @@
 {
   "name": "universal-data-tool",
-  "version": "0.6.19",
+  "version": "0.8.8",
   "license": "MIT",
   "main": "desktop/main.js",
   "homepage": "https://universaldatatool.com",
@@ -14,7 +14,7 @@
     "start:desktop:dev": "USE_DEV_SERVER=yes electron ./desktop",
     "start:desktop": "electron ./desktop",
     "release:lib": "npm run build && cd lib && npm publish",
-    "release:desktop": "npm run build:desktop && electron-builder --mac --windows --linux --publish always",
+    "release:desktop": "npm run build:desktop && cross-env EP_RELEASE=true electron-builder --linux --publish always",
     "release": "npm run release:desktop",
     "test": "react-scripts test",
     "storybook": "start-storybook -p 6002 -s public",
@@ -54,6 +54,7 @@
     "electron-builder-notarize": "^1.1.2",
     "gh-pages": "^2.1.1",
     "material-survey": "^1.0.32",
+    "prettier": "2.0.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-markdown": "^4.1.0",
@@ -74,20 +75,21 @@
     "fast-json-patch": "^3.0.0-1",
     "ffmpeg-static": "^4.0.1",
     "in-browser-download": "^2.0.0",
-    "jac-format": "^1.0.7",
+    "jac-format": "^1.1.3",
     "js-md5": "^0.7.3",
     "moment": "^2.24.0",
     "posthog-js": "^1.0.4",
-    "prettier": "^2.0.2",
     "react-ace": "^7.0.4",
     "react-data-table-component": "^6.2.2",
     "react-dropzone": "^10.1.8",
     "react-icons": "^3.9.0",
-    "react-image-annotate": "^0.2.4",
+    "react-image-annotate": "^1.0.4",
     "react-scripts": "^3.4.1",
     "react-select": "^3.0.8",
     "rfc6902": "^3.0.4",
     "seamless-immutable": "^7.1.4",
+    "seed-random": "^2.2.0",
+    "seedrandom": "^3.0.5",
     "styled-components": "^5.0.0",
     "use-event-callback": "^0.1.0",
     "ytdl-core": "^2.0.1"
@@ -113,6 +115,10 @@
     "files": [
       "**/*",
       "build/"
-    ]
+    ],
+    "publish": {
+      "provider": "github",
+      "releaseType": "release"
+    }
   }
 }

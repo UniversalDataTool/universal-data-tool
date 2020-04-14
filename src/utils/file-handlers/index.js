@@ -19,7 +19,7 @@ export default () => {
   const { addToast } = useToasts()
 
   const { saveFile } = useFilesystem(file, changeFile)
-  const { recentItems } = useLocalStorage(file, changeFile)
+  const { recentItems, changeRecentItems } = useLocalStorage(file, changeFile)
   useServer(file, changeFile)
 
   // Telemetry
@@ -115,6 +115,7 @@ export default () => {
       makeSession,
       saveFile,
       recentItems,
+      changeRecentItems,
     }),
     [file, changeFile, openFile, makeSession, recentItems]
   )

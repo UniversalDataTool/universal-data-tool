@@ -177,6 +177,7 @@ export default ({
       {currentTab === "grid" && (
         <SampleGrid
           count={(oha.taskData || []).length}
+          taskData={oha.taskData || []}
           completed={(oha.taskOutput || []).map(Boolean)}
           onClick={(sampleIndex) => {
             openSampleLabelEditor(sampleIndex)
