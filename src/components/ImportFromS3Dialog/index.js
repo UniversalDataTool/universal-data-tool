@@ -105,7 +105,7 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
           if(result[i].key.match(`(${folderToFetch}/data).*(\\.).*`)){
             console.log(result[i]);
             await Storage.get(result[i].key, {
-              expires: 24 * 60 * 60*1000,
+              expires: 24 * 60 * 60*2000,
               level: "private",
             })
             .then((result) => {

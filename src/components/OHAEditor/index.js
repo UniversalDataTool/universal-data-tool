@@ -128,11 +128,12 @@ export default ({
     percentComplete =
       oha.taskOutput.filter(Boolean).length / oha.taskData.length
   }
-
-  async function fetchAnImage(element){
-    const response = await fetch(element.imageUrl);
+  async function fetchAnImage(element){ 
+    var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    const response = await fetch(proxyUrl+element.imageUrl).catch(function(error) {
+      console.log('Looks like there was a problem: \n', error);
+    });
     const blob = await response.blob();
-    console.log("Image fetché :" + blob); 
     return blob;
   }
 
@@ -270,36 +271,26 @@ export default ({
               
               if (!isEmpty(authConfig)) {            
                 let index;
-                console.log("Entrée dans la fonction");
                 for(let y=0;y<recentItems.length;y++){
                   if(recentItems[y].fileName===fileName)
                     index=y;
                 }
-                console.log("Index du fichier récupéré :"+index);
                 if(typeof index !== 'undefined'){
                   var json = JSON.stringify(recentItems[index]);
                   
                   Storage.put(`${fileName}/annotations/annotations.json`,json,{
-                    level: "private",
-                  })
-                  .then(result => 
-                    console.log("Item récupéré et envoyer sur AWS :"+result))
-                  .catch(err => console.log(err));                  
+                    level: "private", 
+                  }).catch(err => console.log(err));                  
                   
                   recentItems[index].content.taskData.forEach(async (element) => {
                     try {
                       const blob= await fetchAnImage(element);                      
-                      let imageName = element.imageUrl.match(`\\/([a-zA-Z0-9]*\\.([a-zA-Z0-9]*))\\?`);
+                      let imageName = element.imageUrl.match(`\\/([^/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`);
                       var pathToFile = `${fileName}/data/${imageName[1]}`;
-                      console.log("Récupération du nom de l'image :"+imageName[1]);
-                      console.log("Extension identifié :"+imageName[2]);
-                      console.log("Path identifié :"+pathToFile);
                       Storage.put(pathToFile, blob, {
                         level: "private",
                         contentType: `image/${imageName[2]}`,
-                      })
-                      .then(result => console.log("image envoyée sur AWS"))
-                      .catch(err => console.log(err));                      
+                      }).catch(err => console.log(err));                      
                     } catch (err) {
                       console.log(err)
                     }
