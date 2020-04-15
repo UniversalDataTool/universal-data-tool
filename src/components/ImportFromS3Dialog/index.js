@@ -145,10 +145,7 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
       .then(async (result) => {
         var samples = await GetImageFromAFolderAWS(result); 
         var annotation= await GetAnnotationFromAFolderAWS(result);
-        console.log("Sample :" +samples);
-        console.log("Annotation :" + annotation);
-        
-        //onAddSamples(samples,annotation);
+        onAddSamples(samples,annotation);
       })
       .catch((err) => {
         console.log("error getting link for s3 image", err)

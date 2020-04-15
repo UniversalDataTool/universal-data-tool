@@ -311,16 +311,7 @@ export default ({ oha, onChangeOHA, isDesktop, authConfig, user }) => {
           open={selectedDialog === "import-from-s3"}
           onClose={closeDialog}
           user={user}
-          onAddSamples={(samples) => {
-            onChangeOHA(
-              {
-                ...oha,
-                taskData: (oha.taskData || []).concat(samples),
-              },
-              true
-            )
-            closeDialog()
-          }}
+          onAddSamples={onAddSamples}
         />
         <ImportFromGoogleDriveDialog
           open={selectedDialog === "google-drive-file-picker"}
