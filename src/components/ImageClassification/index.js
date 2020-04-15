@@ -93,6 +93,8 @@ export default ({
   containerProps = emptyObj,
   onSaveTaskOutputItem,
 }) => {
+  if (!iface.availableLabels)
+    throw new Error("No labels defined. Add some labels in Setup to continue.")
   const [sampleIndex, changeSampleIndex] = useState(0)
   const [enlargedLabel, changeEnlargedLabel] = useState(null)
   const [currentOutput, changeCurrentOutput] = useState(emptyArr)

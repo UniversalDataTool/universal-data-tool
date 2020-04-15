@@ -80,8 +80,8 @@ export default ({
     return "Video segmentation is currently limited to only a single video per selection"
   }
 
-  if (taskData.length === 0) return "taskData[0] with videoUrl is required"
-  if (!taskData[0].videoUrl) return "taskData[0] must have videoUrl"
+  if (taskData.length === 0) throw new Error("No sample data provided selected")
+  if (!taskData[0].videoUrl) throw new Error("Sample must have videoUrl")
 
   return (
     <div style={{ height: "calc(100vh - 70px)" }}>

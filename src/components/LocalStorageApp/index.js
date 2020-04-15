@@ -11,7 +11,7 @@ import useFileHandler from "../../utils/file-handlers"
 import download from "in-browser-download"
 import toUDTCSV from "../../utils/to-udt-csv.js"
 import { setIn } from "seamless-immutable"
-import ErrorBoundary from "../ErrorBoundary"
+import AppErrorBoundary from "../AppErrorBoundary"
 import useEventCallback from "use-event-callback"
 import usePreventNavigation from "../../utils/use-prevent-navigation"
 
@@ -115,7 +115,7 @@ export default () => {
             onClickOpenSession={() => changeSessionBoxOpen(true)}
           />
         ) : (
-          <ErrorBoundary>
+          <AppErrorBoundary>
             <OHAEditor
               key={file.id}
               {...file}
@@ -129,7 +129,7 @@ export default () => {
                 changeFile(setIn(file, ["content"], newOHA))
               }}
             />
-          </ErrorBoundary>
+          </AppErrorBoundary>
         )}
       </HeaderContext.Provider>
       <ErrorToasts errors={errors} />
