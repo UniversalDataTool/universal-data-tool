@@ -151,6 +151,48 @@ export default ({
     return blob;
   }
 
+  
+  function UpdateAWSStorage(){
+    if (!isEmpty(authConfig)) {            
+      let index;
+      for(let y=0;y<recentItems.length;y++){
+        if(recentItems[y].fileName===fileName)
+          index=y;
+      }
+      if(typeof index !== 'undefined'){
+        var json = JSON.stringify(recentItems[index]);
+
+        Storage.put(`${fileName}/`,null,{
+          level: "private", 
+        }).catch(err => console.log(err)); 
+
+        Storage.put(`${fileName}/annotations/annotations.json`,json,{
+          level: "private", 
+        }).catch(err => console.log(err));                  
+        
+        recentItems[index].content.taskData.forEach(async (element) => {
+          try {
+            const blob= await fetchAnImage(element);
+            let imageOrVideoName;
+            console.log("Image URL :"+element.imageUrl);
+            if(typeof element.imageUrl !== "undefined"){
+              imageOrVideoName = element.imageUrl.match(`\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`);
+            }else {
+              imageOrVideoName = element.videoUrl.match(`\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`);
+            }              
+            
+            var pathToFile = `${fileName}/data/${imageOrVideoName[1]}`;
+            Storage.put(pathToFile, blob, {
+              level: "private",
+            }).catch(err => console.log(err));                      
+          } catch (err) {
+            console.log(err)
+          }
+        }); 
+      }
+    }
+  }
+
   return (
     <div className={c.container}>
       <Header
@@ -297,44 +339,7 @@ export default ({
               )
               onChangeOHA(newOHA);
               
-              if (!isEmpty(authConfig)) {            
-                let index;
-                for(let y=0;y<recentItems.length;y++){
-                  if(recentItems[y].fileName===fileName)
-                    index=y;
-                }
-                if(typeof index !== 'undefined'){
-                  var json = JSON.stringify(recentItems[index]);
-
-                  Storage.put(`${fileName}/`,null,{
-                    level: "private", 
-                  }).catch(err => console.log(err)); 
-
-                  Storage.put(`${fileName}/annotations/annotations.json`,json,{
-                    level: "private", 
-                  }).catch(err => console.log(err));                  
-                  
-                  recentItems[index].content.taskData.forEach(async (element) => {
-                    try {
-                      const blob= await fetchAnImage(element);
-                      let imageOrVideoName;
-                      console.log("Image URL :"+element.imageUrl);
-                      if(typeof element.imageUrl !== "undefined"){
-                        imageOrVideoName = element.imageUrl.match(`\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`);
-                      }else {
-                        imageOrVideoName = element.videoUrl.match(`\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`);
-                      }              
-                      
-                      var pathToFile = `${fileName}/data/${imageOrVideoName[1]}`;
-                      Storage.put(pathToFile, blob, {
-                        level: "private",
-                      }).catch(err => console.log(err));                      
-                    } catch (err) {
-                      console.log(err)
-                    }
-                  }); 
-                }                             
-              }
+              
             }}
             onExit={(nextAction = "nothing") => {
               if (singleSampleOHA.startTime) {
@@ -372,6 +377,7 @@ export default ({
                   break;
               }
               changeSingleSampleOHA(null)
+              UpdateAWSStorage();
             }}
             oha={singleSampleOHA}
           />
