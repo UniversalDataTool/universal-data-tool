@@ -105,7 +105,12 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
           level: "private",
         })
         .then((result) => {
-          samples.push({ imageUrl: `${result}` });
+          if(result.match(`\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`)[2]!=="mp4")
+          {
+            samples.push({ imageUrl: `${result}` });
+          }else{
+            samples.push({ videoUrl: `${result}` });
+          }          
         })
         .catch((err) => {
           console.log("error getting link for s3 image", err)
