@@ -131,10 +131,23 @@ export default ({
   }
   async function fetchAnImage(element){ 
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    const response = await fetch(proxyUrl+element.imageUrl).catch(function(error) {
-      console.log('Looks like there was a problem: \n', error);
-    });
+    var response;
+    if(typeof element.imageUrl !== "undefined"){
+      response = await fetch(proxyUrl+element.imageUrl).catch((error)=> {
+        console.log('Looks like there was a problem: \n', error);
+      });
+    }else{
+      response = await fetch(proxyUrl+element.videoUrl,  {
+        method: 'GET',
+        headers: {
+          'X-Requested-With': 'xmlhttprequest'
+        }
+      }).catch((error)=> {
+        console.log('Looks like there was a problem: \n', error);
+      });
+    }
     const blob = await response.blob();
+    console.log(blob);
     return blob;
   }
 
@@ -303,12 +316,17 @@ export default ({
                   
                   recentItems[index].content.taskData.forEach(async (element) => {
                     try {
-                      const blob= await fetchAnImage(element);                      
-                      let imageName = element.imageUrl.match(`\\/([^/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`);
-                      var pathToFile = `${fileName}/data/${imageName[1]}`;
+                      const blob= await fetchAnImage(element);
+                      let imageOrVideoName;
+                      if(typeof element.imageUrl !== "undefined"){
+                        imageOrVideoName = element.imageUrl.match(`\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`);
+                      }else {
+                        imageOrVideoName = element.videoUrl.match(`\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`);
+                      }              
+                      
+                      var pathToFile = `${fileName}/data/${imageOrVideoName[1]}`;
                       Storage.put(pathToFile, blob, {
                         level: "private",
-                        contentType: `image/${imageName[2]}`,
                       }).catch(err => console.log(err));                      
                     } catch (err) {
                       console.log(err)
