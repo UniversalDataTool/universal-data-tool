@@ -210,7 +210,7 @@ export default ({ oha, onChangeOHA, isDesktop, authConfig, user }) => {
   }
   const closeDialog = () => changeDialog(null)
   const onAddSamples = useEventCallback(
-    (appendedTaskData, appendedTaskOutput) => {
+    (appendedTaskData, appendedTaskOutput, content) => {
       let newOHA = setIn(
         oha,
         ["taskData"],
@@ -223,6 +223,13 @@ export default ({ oha, onChangeOHA, isDesktop, authConfig, user }) => {
           extendWithNull(oha.taskOutput || [], oha.taskData.length).concat(
             appendedTaskOutput
           )
+        )
+      }
+      if(content){
+        newOHA = setIn(
+          newOHA,
+          ["interface"],
+          content.interface
         )
       }
       onChangeOHA(newOHA, true)
