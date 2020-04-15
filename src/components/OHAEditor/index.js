@@ -53,7 +53,7 @@ const useStyles = makeStyles({
   },
 })
 
-const headerTabs = ["Settings", "Samples", "Label"]
+const headerTabs = ["Setup", "Samples", "Label"]
 
 export default ({
   datasetName = "Universal Data Tool",
@@ -65,7 +65,7 @@ export default ({
   onChangeFileName,
   onChangeOHA = () => null,
   onFileDrop,
-  initialMode = "settings", //= "samples"
+  initialMode = "setup", //= "samples"
   selectedBrush = "complete",
 }) => {
   const c = useStyles()
@@ -99,6 +99,9 @@ export default ({
   useEffect(() => {
     if (mode === "json") {
       changeJSONText(JSON.stringify(oha, null, "  "))
+    }
+    if (mode !== "label") {
+      changeSingleSampleOHA(null)
     }
   }, [mode])
 
@@ -157,7 +160,7 @@ export default ({
             onChange={(t) => changeJSONText(t)}
           />
         )}
-        {mode === "settings" && (
+        {mode === "setup" && (
           <InterfacePage
             onClickEditJSON={() => changeMode("json")}
             oha={oha}
@@ -303,6 +306,7 @@ export default ({
               changeSingleSampleOHA(null)
             }}
             oha={singleSampleOHA}
+            onClickSetup={() => changeMode("setup")}
           />
         ) : (
           mode === "label" && (

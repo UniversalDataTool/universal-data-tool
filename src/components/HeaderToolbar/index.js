@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
 
 const getIcon = (t: string) => {
   switch (t) {
-    case "Settings":
+    case "Setup":
       return <SettingsIcon className="icon" />
     case "Label":
       return <BorderColorIcon className="icon" />

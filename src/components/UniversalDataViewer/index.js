@@ -11,6 +11,7 @@ import DataEntry from "../DataEntry"
 import EmptySampleContainer from "../EmptySampleContainer"
 import Composite from "../Composite"
 import BadOHA from "../BadOHA"
+import Button from "@material-ui/core/Button"
 
 export const UniversalDataViewer = ({
   oha,
@@ -20,6 +21,7 @@ export const UniversalDataViewer = ({
   datasetName,
   requireCompleteToPressNext,
   onSaveTaskOutputItem,
+  onClickSetup,
 }) => {
   // TODO type check w/ superstruct against oha
   const containerProps = useMemo(
@@ -39,11 +41,21 @@ export const UniversalDataViewer = ({
     ]
   )
 
-  if (!oha) {
+  if (!oha || !oha.interface.type) {
     return (
       <BadOHA
-        title="Null OHA"
-        description="Your OHA file isn't defined for some reason."
+        title="Set up your project to begin labeling"
+        description={
+          <p>
+            This interface hasn't been set up properly, try selecting an
+            interface in the "Setup" tab.
+            <br />
+            <br />
+            <Button color="primary" variant="contained" onClick={onClickSetup}>
+              Setup Project
+            </Button>
+          </p>
+        }
       />
     )
   }
