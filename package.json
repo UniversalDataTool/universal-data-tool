@@ -22,7 +22,8 @@
     "gh-pages": "npm run build:web && cp ./CNAME ./build/CNAME && gh-pages -d build",
     "prettier": "prettier --write \"src/**/*.js\"",
     "test:prettier": "prettier --check \"src/**/*.js\"",
-    "test:integration": "npm run cypress"
+    "test:integration:dev": "./node_modules/cypress/bin/cypress open",
+    "test:integration": "./node_modules/cypress/bin/cypress run"
   },
   "eslintConfig": {
     "extends": "react-app"
