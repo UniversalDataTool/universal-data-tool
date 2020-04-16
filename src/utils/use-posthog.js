@@ -9,16 +9,12 @@ export default () => {
       api_host: "https://posthog.universaldatatool.com",
       autocapture: false,
     })
+    window.posthog = posthog
     const domain = isDesktop ? "desktop" : window.location.origin
     posthog.capture("domain", { domain })
     posthog.capture("is_desktop", { isDesktop: isDesktop })
     posthog.people.set({ is_desktop: isDesktop, domain })
     window.posthogInitialized = true
-    setInterval(() => {
-      let usageTime = parseInt(window.localStorage.getItem("usage_time"))
-      if (isNaN(usageTime)) usageTime = 1000
-      posthog.people.set({ usage_time })
-    }, 1000)
   }
   return posthog
 }

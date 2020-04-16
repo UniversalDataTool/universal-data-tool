@@ -32,6 +32,7 @@ import { useToasts } from "../Toasts"
 import { setIn, without } from "seamless-immutable"
 import useEventCallback from "use-event-callback"
 import LabelErrorBoundary from "../LabelErrorBoundary"
+import usePosthog from "../../utils/use-posthog"
 
 import "brace/mode/javascript"
 import "brace/theme/github"
@@ -76,6 +77,7 @@ export default ({
   const [sampleInputEditor, changeSampleInputEditor] = useState({})
   const [jsonText, changeJSONText] = useState()
   const { remote, ipcRenderer } = useElectron() || {}
+  const posthog = usePosthog()
 
   const [
     timeToCompleteSample,
@@ -104,6 +106,7 @@ export default ({
     if (mode !== "label") {
       changeSingleSampleOHA(null)
     }
+    posthog.capture("open_editor_tab", { tab: mode })
   }, [mode])
 
   useEffect(() => {
@@ -198,6 +201,9 @@ export default ({
                 sampleIndex,
                 annotationStartTime: Date.now(),
               })
+              posthog.capture("open_sample", {
+                interface_type: oha.interface.type,
+              })
               changeMode("label")
             }}
             openSampleInputEditor={(sampleIndex) => {
@@ -282,6 +288,9 @@ export default ({
                 switch (nextAction) {
                   case "go-to-next":
                     if (sampleIndex !== oha.taskData.length - 1) {
+                      posthog.capture("next_sample", {
+                        interface_type: oha.interface.type,
+                      })
                       changeSingleSampleOHA({
                         ...oha,
                         taskData: [oha.taskData[sampleIndex + 1]],
@@ -344,6 +353,9 @@ export default ({
                 taskData={oha.taskData || []}
                 completed={(oha.taskOutput || []).map(Boolean)}
                 onClick={(sampleIndex) => {
+                  posthog.capture("open_sample", {
+                    interface_type: oha.interface.type,
+                  })
                   changeSingleSampleOHA({
                     ...oha,
                     taskData: [oha.taskData[sampleIndex]],
