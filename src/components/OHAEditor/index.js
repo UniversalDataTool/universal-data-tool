@@ -31,6 +31,8 @@ import TextField from "@material-ui/core/TextField"
 import { useToasts } from "../Toasts"
 import { setIn, without } from "seamless-immutable"
 import useEventCallback from "use-event-callback"
+import LabelErrorBoundary from "../LabelErrorBoundary"
+import usePosthog from "../../utils/use-posthog"
 
 import "brace/mode/javascript"
 import "brace/theme/github"
@@ -53,7 +55,7 @@ const useStyles = makeStyles({
   },
 })
 
-const headerTabs = ["Settings", "Samples", "Label"]
+const headerTabs = ["Setup", "Samples", "Label"]
 
 export default ({
   datasetName = "Universal Data Tool",
@@ -65,7 +67,7 @@ export default ({
   onChangeFileName,
   onChangeOHA = () => null,
   onFileDrop,
-  initialMode = "settings", //= "samples"
+  initialMode = "setup", //= "samples"
   selectedBrush = "complete",
 }) => {
   const c = useStyles()
@@ -75,6 +77,7 @@ export default ({
   const [sampleInputEditor, changeSampleInputEditor] = useState({})
   const [jsonText, changeJSONText] = useState()
   const { remote, ipcRenderer } = useElectron() || {}
+  const posthog = usePosthog()
 
   const [
     timeToCompleteSample,
@@ -100,6 +103,10 @@ export default ({
     if (mode === "json") {
       changeJSONText(JSON.stringify(oha, null, "  "))
     }
+    if (mode !== "label") {
+      changeSingleSampleOHA(null)
+    }
+    posthog.capture("open_editor_tab", { tab: mode })
   }, [mode])
 
   useEffect(() => {
@@ -157,7 +164,7 @@ export default ({
             onChange={(t) => changeJSONText(t)}
           />
         )}
-        {mode === "settings" && (
+        {mode === "setup" && (
           <InterfacePage
             onClickEditJSON={() => changeMode("json")}
             oha={oha}
@@ -194,6 +201,9 @@ export default ({
                 sampleIndex,
                 annotationStartTime: Date.now(),
               })
+              posthog.capture("open_sample", {
+                interface_type: oha.interface.type,
+              })
               changeMode("label")
             }}
             openSampleInputEditor={(sampleIndex) => {
@@ -218,92 +228,98 @@ export default ({
           />
         )}
         {mode === "label" && singleSampleOHA ? (
-          <UniversalDataViewer
-            datasetName={`Sample ${singleSampleOHA.sampleIndex}`}
-            onSaveTaskOutputItem={(relativeIndex, output) => {
-              let newOHA = oha
-              if (!newOHA.taskOutput) {
-                newOHA = setIn(
-                  newOHA,
-                  ["taskOutput"],
-                  (newOHA.taskData || []).map((td) => null)
-                )
-              }
-              if (
-                newOHA.taskOutput.length < newOHA.taskData.length ||
-                newOHA.taskOutput.includes(undefined)
-              ) {
-                newOHA = setIn(
-                  newOHA,
-                  ["taskOutput"],
-                  newOHA.taskData.map((td, tdi) =>
-                    newOHA.taskOutput[tdi] === undefined
-                      ? null
-                      : newOHA.taskOutput[tdi]
+          <LabelErrorBoundary>
+            <UniversalDataViewer
+              datasetName={`Sample ${singleSampleOHA.sampleIndex}`}
+              onSaveTaskOutputItem={(relativeIndex, output) => {
+                let newOHA = oha
+                if (!newOHA.taskOutput) {
+                  newOHA = setIn(
+                    newOHA,
+                    ["taskOutput"],
+                    (newOHA.taskData || []).map((td) => null)
                   )
-                )
-              }
-              newOHA = setIn(
-                newOHA,
-                ["taskOutput", singleSampleOHA.sampleIndex],
-                output
-              )
-
-              if (
-                singleSampleOHA.taskData[0].brush !== selectedBrush &&
-                !(
-                  singleSampleOHA.taskData[0].brush === undefined &&
-                  selectedBrush === "complete"
-                )
-              ) {
+                }
+                if (
+                  newOHA.taskOutput.length < newOHA.taskData.length ||
+                  newOHA.taskOutput.includes(undefined)
+                ) {
+                  newOHA = setIn(
+                    newOHA,
+                    ["taskOutput"],
+                    newOHA.taskData.map((td, tdi) =>
+                      newOHA.taskOutput[tdi] === undefined
+                        ? null
+                        : newOHA.taskOutput[tdi]
+                    )
+                  )
+                }
                 newOHA = setIn(
                   newOHA,
-                  ["taskData", singleSampleOHA.sampleIndex, "brush"],
-                  selectedBrush
+                  ["taskOutput", singleSampleOHA.sampleIndex],
+                  output
                 )
-              }
-              changeSingleSampleOHA(
-                setIn(singleSampleOHA, ["taskOutput", relativeIndex], output)
-              )
-              onChangeOHA(newOHA)
-            }}
-            onExit={(nextAction = "nothing") => {
-              if (singleSampleOHA.startTime) {
-                changeSampleTimeToComplete(
-                  Date.now() - singleSampleOHA.startTime
+
+                if (
+                  singleSampleOHA.taskData[0].brush !== selectedBrush &&
+                  !(
+                    singleSampleOHA.taskData[0].brush === undefined &&
+                    selectedBrush === "complete"
+                  )
+                ) {
+                  newOHA = setIn(
+                    newOHA,
+                    ["taskData", singleSampleOHA.sampleIndex, "brush"],
+                    selectedBrush
+                  )
+                }
+                changeSingleSampleOHA(
+                  setIn(singleSampleOHA, ["taskOutput", relativeIndex], output)
                 )
-              }
-              const { sampleIndex } = singleSampleOHA
-              switch (nextAction) {
-                case "go-to-next":
-                  if (sampleIndex !== oha.taskData.length - 1) {
-                    changeSingleSampleOHA({
-                      ...oha,
-                      taskData: [oha.taskData[sampleIndex + 1]],
-                      taskOutput: [(oha.taskOutput || [])[sampleIndex + 1]],
-                      sampleIndex: sampleIndex + 1,
-                      startTime: Date.now(),
-                    })
-                    return
-                  }
-                  break
-                case "go-to-previous":
-                  if (sampleIndex !== 0) {
-                    changeSingleSampleOHA({
-                      ...oha,
-                      taskData: [oha.taskData[sampleIndex - 1]],
-                      taskOutput: [(oha.taskOutput || [])[sampleIndex - 1]],
-                      sampleIndex: sampleIndex - 1,
-                      startTime: Date.now(),
-                    })
-                    return
-                  }
-                  break
-              }
-              changeSingleSampleOHA(null)
-            }}
-            oha={singleSampleOHA}
-          />
+                onChangeOHA(newOHA)
+              }}
+              onExit={(nextAction = "nothing") => {
+                if (singleSampleOHA.startTime) {
+                  changeSampleTimeToComplete(
+                    Date.now() - singleSampleOHA.startTime
+                  )
+                }
+                const { sampleIndex } = singleSampleOHA
+                switch (nextAction) {
+                  case "go-to-next":
+                    if (sampleIndex !== oha.taskData.length - 1) {
+                      posthog.capture("next_sample", {
+                        interface_type: oha.interface.type,
+                      })
+                      changeSingleSampleOHA({
+                        ...oha,
+                        taskData: [oha.taskData[sampleIndex + 1]],
+                        taskOutput: [(oha.taskOutput || [])[sampleIndex + 1]],
+                        sampleIndex: sampleIndex + 1,
+                        startTime: Date.now(),
+                      })
+                      return
+                    }
+                    break
+                  case "go-to-previous":
+                    if (sampleIndex !== 0) {
+                      changeSingleSampleOHA({
+                        ...oha,
+                        taskData: [oha.taskData[sampleIndex - 1]],
+                        taskOutput: [(oha.taskOutput || [])[sampleIndex - 1]],
+                        sampleIndex: sampleIndex - 1,
+                        startTime: Date.now(),
+                      })
+                      return
+                    }
+                    break
+                }
+                changeSingleSampleOHA(null)
+              }}
+              oha={singleSampleOHA}
+              onClickSetup={() => changeMode("setup")}
+            />
+          </LabelErrorBoundary>
         ) : (
           mode === "label" && (
             <PaperContainer>
@@ -337,6 +353,9 @@ export default ({
                 taskData={oha.taskData || []}
                 completed={(oha.taskOutput || []).map(Boolean)}
                 onClick={(sampleIndex) => {
+                  posthog.capture("open_sample", {
+                    interface_type: oha.interface.type,
+                  })
                   changeSingleSampleOHA({
                     ...oha,
                     taskData: [oha.taskData[sampleIndex]],

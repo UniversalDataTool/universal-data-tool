@@ -2,6 +2,7 @@
   "name": "universal-data-tool",
   "version": "0.8.9",
   "license": "MIT",
+  "type": "module",
   "main": "desktop/main.js",
   "homepage": "https://universaldatatool.com",
   "scripts": {
@@ -16,7 +17,7 @@
     "release:lib": "npm run build && cd lib && npm publish",
     "release:desktop": "npm run build:desktop && cross-env EP_RELEASE=true electron-builder --linux --publish always",
     "release": "npm run release:desktop",
-    "test": "react-scripts test",
+    "test": "ava **/*.test.js",
     "storybook": "start-storybook -p 6002 -s public",
     "build-storybook": "build-storybook -s public",
     "gh-pages": "npm run build:web && cp ./CNAME ./build/CNAME && gh-pages -d build",
@@ -49,6 +50,8 @@
     "@storybook/addon-links": "^5.3.14",
     "@storybook/addons": "^5.3.14",
     "@storybook/react": "^5.3.14",
+    "@testing-library/react-hooks": "^3.2.1",
+    "ava": "^3.7.0",
     "chroma-js": "^2.0.4",
     "cross-env": "^7.0.0",
     "cypress": "^4.4.0",
@@ -122,5 +125,10 @@
       "provider": "github",
       "releaseType": "release"
     }
+  },
+  "ava": {
+    "nodeArguments": [
+      "--experimental-modules"
+    ]
   }
 }

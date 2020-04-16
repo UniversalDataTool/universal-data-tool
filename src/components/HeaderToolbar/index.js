@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
 
 const getIcon = (t: string) => {
   switch (t) {
-    case "Settings":
+    case "Setup":
       return <SettingsIcon className="icon" />
     case "Label":
       return <BorderColorIcon className="icon" />
@@ -84,6 +84,7 @@ const HeaderToolbar = ({
   selectedBrush,
   onChangeSelectedBrush,
   isSmall,
+  collaborateError,
 }) => {
   const c = useStyles()
   return (
@@ -95,17 +96,16 @@ const HeaderToolbar = ({
           </IconButton>
         )}
         {fileOpen ? title : "Universal Data Tool v" + packageJSON.version}
-        {!isDesktop && (
-          <CollaborateButton
-            sessionBoxOpen={sessionBoxOpen}
-            changeSessionBoxOpen={changeSessionBoxOpen}
-            fileOpen={fileOpen}
-            inSession={inSession}
-            onCreateSession={onCreateSession}
-            onLeaveSession={onLeaveSession}
-            onJoinSession={onJoinSession}
-          />
-        )}
+        <CollaborateButton
+          sessionBoxOpen={sessionBoxOpen}
+          changeSessionBoxOpen={changeSessionBoxOpen}
+          fileOpen={fileOpen}
+          inSession={inSession}
+          onCreateSession={onCreateSession}
+          onLeaveSession={onLeaveSession}
+          onJoinSession={onJoinSession}
+          error={collaborateError}
+        />
         {fileOpen && (
           <BrushButton
             selectedBrush={selectedBrush}

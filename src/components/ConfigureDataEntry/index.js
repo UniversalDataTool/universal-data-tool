@@ -173,7 +173,7 @@ export default ({ iface, onChange }) => {
               setIn(
                 iface,
                 ["surveyjs", "questions"],
-                iface.surveyjs.questions.concat([
+                ((iface.surveyjs || {}).questions || []).concat([
                   {
                     name: "input" + questions.length,
                     type: "text",

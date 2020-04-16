@@ -13,6 +13,12 @@ import getBrushColorPalette from "../../utils/get-brush-color-palette"
 const Container = styled("div")({
   flexWrap: "wrap",
 })
+const EmptyState = styled("div")({
+  fontSize: 24,
+  color: colors.grey[500],
+  padding: 30,
+  textAlign: "center",
+})
 const SampleDiv = styled("div")(({ color }) => ({
   margin: 4,
   padding: 4,
@@ -112,6 +118,11 @@ export default ({ count, completed = [], taskData, onClick }) => {
       onMouseUp={checkAndNullifySelectRange}
       onMouseEnter={checkAndNullifySelectRange}
     >
+      {count === 0 && (
+        <EmptyState>
+          No samples, try using "Import Toy Dataset" in Samples > Import
+        </EmptyState>
+      )}
       {range(sampleOffset, Math.min(count, sampleOffset + samplesPerPage)).map(
         (i) => (
           <Sample

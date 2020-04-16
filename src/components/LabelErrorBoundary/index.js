@@ -5,13 +5,8 @@ import { styled } from "@material-ui/core/styles"
 import * as colors from "@material-ui/core/colors"
 import { detect } from "detect-browser"
 import Button from "@material-ui/core/Button"
-import LaunchIcon from "@material-ui/icons/Launch"
-import * as Sentry from "@sentry/browser"
-
-Sentry.init({
-  dsn: "https://bc19fbac222243f08f0abaf6d66f2034@sentry.io/5182632",
-  whitelistUrls: ["https://universaldatatool.com", "^file:?:"],
-})
+import Sentry from "../../utils/sentry.js"
+import BadOHA from "../BadOHA"
 
 const Container = styled("div")({
   width: "100vw",
@@ -57,9 +52,13 @@ class ErrorBoundary extends React.Component {
 
   static getDerivedStateFromError(error) {
     // Update state so the next render will show the fallback UI.
+    console.error(
+      "The following error occurred when loading a labeling interface:",
+      error
+    )
     return {
       hasError: true,
-      errorDetails: JSON.stringify(detect()) + "\n\n" + error.stack,
+      errorString: error.toString(),
     }
   }
 
@@ -76,35 +75,10 @@ class ErrorBoundary extends React.Component {
     if (this.state.hasError) {
       // You can render any custom fallback UI
       return (
-        <Container>
-          <div className="title">Something has gone amiss</div>
-          <div className="subtitle">All the details are below:</div>
-          <div className="info">
-            <textarea>{this.state.errorDetails}</textarea>
-          </div>
-          <Buttons>
-            <StyledButton
-              variant="outlined"
-              target="_blank"
-              href="https://github.com/Universal/universal-data-tool/issues"
-            >
-              <LaunchIcon style={{ color: "#fff", marginRight: 8 }} /> View
-              Issues on Github
-            </StyledButton>
-            {/* <StyledButton
-              variant="outlined"
-              onClick={this.props.revertLastChange}
-            >
-              Revert Last File Change
-            </StyledButton> */}
-            <StyledButton
-              variant="outlined"
-              onClick={() => window.location.reload()}
-            >
-              Reload (unsaved progress will be lost)
-            </StyledButton>
-          </Buttons>
-        </Container>
+        <BadOHA
+          title="An error occurred loading the labeling interface"
+          description={this.state.errorString}
+        />
       )
     }
 

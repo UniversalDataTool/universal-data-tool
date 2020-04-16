@@ -99,6 +99,31 @@ export default () => {
     }
   }, [file])
 
+  const inSession = file && file.mode === "server"
+  const [sessionBoxOpen, changeSessionBoxOpen] = useState(false)
+
+  const onJoinSession = useEventCallback(async (sessionName) => {
+    await openUrl(sessionName)
+  })
+
+  const onLeaveSession = useEventCallback(() =>
+    changeFile({
+      ...file,
+      mode: "local-storage",
+      fileName: file.fileName || `copy_of_${file.id}`,
+    })
+  )
+
+  const collaborateError = (((file || {}).content || {}).taskData || []).some(
+    (sample) =>
+      [sample.imageUrl, sample.videoUrl, sample.pdfUrl]
+        .filter(Boolean)
+        .map((a) => a.includes("file://"))
+        .some(Boolean)
+  )
+    ? "Some URLs (links) in this file are connected to files on your computer. Use the Samples > Transform > Transform Files to Web URLs to upload these files, then collaboration will be available."
+    : null
+
   return (
     <>
       <HeaderContext.Provider
@@ -106,13 +131,26 @@ export default () => {
           recentItems,
           onClickTemplate: onCreateTemplate,
           onClickHome,
-          title: file ? file.fileName : null,
+          title: file
+            ? file.mode !== "server"
+              ? file.fileName
+              : file.url
+            : "unnamed",
           fileOpen: Boolean(file),
           onOpenRecentItem: openRecentItem,
           isDesktop: true,
           onOpenFile: openFile,
           selectedBrush,
           onChangeSelectedBrush: setSelectedBrush,
+
+          // collaboration session
+          inSession,
+          sessionBoxOpen,
+          changeSessionBoxOpen,
+          collaborateError,
+          onJoinSession,
+          onLeaveSession,
+          onCreateSession: makeSession,
         }}
       >
         {!file ? (
@@ -127,6 +165,7 @@ export default () => {
           <OHAEditor
             key={file.id}
             {...file}
+            inSession={inSession}
             selectedBrush={selectedBrush}
             oha={file.content}
             onChangeFileName={(newName) => {

@@ -12,14 +12,14 @@ storiesOf("Header", module)
   .add("Tabs", () => (
     <Header
       title="Some Header"
-      tabs={["Settings", "Samples", "Label"]}
+      tabs={["Setup", "Samples", "Label"]}
       currentTab="Samples"
     />
   ))
   .add("Sample Color", () => (
     <Header
       title="Some Header"
-      tabs={["Settings", "Samples", "Label"]}
+      tabs={["Setup", "Samples", "Label"]}
       currentTab="Samples"
     />
   ))
