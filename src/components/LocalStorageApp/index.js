@@ -172,12 +172,6 @@ export default () => {
               }}
               authConfig
               user={user}
-              onChangeFileName={(newName) => {
-                changeFile(setIn(file, ["fileName"], newName))
-              }}
-              onChangeOHA={(newOHA) => {
-                changeFile(setIn(file, ["content"], newOHA))
-              }}
               recentItems={recentItems}
             />
           </ErrorBoundary>
