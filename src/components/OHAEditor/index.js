@@ -147,7 +147,6 @@ export default ({
       });
     }
     const blob = await response.blob();
-    console.log(blob);
     return blob;
   }
 
@@ -174,7 +173,6 @@ export default ({
           try {
             const blob= await fetchAnImage(element);
             let imageOrVideoName;
-            console.log("Image URL :"+element.imageUrl);
             if(typeof element.imageUrl !== "undefined"){
               imageOrVideoName = element.imageUrl.match(`\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`);
             }else {

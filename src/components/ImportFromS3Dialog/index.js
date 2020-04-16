@@ -193,10 +193,8 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
     if (isEmpty(user)) {
       changeS3Content(null)
     } else if (!isEmpty(authConfig)) {
-      console.log("fetching S3")
       Storage.list("", { level: "private" })
         .then((result) => {
-          console.log(result);
           changeS3Content(result)
           _dataForTable = result
             .filter((obj) => {
