@@ -150,7 +150,11 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
       .then(async (result) => {
         var samples = await GetImageFromAFolderAWS(result); 
         var content= await GetAnnotationFromAFolderAWS(result);
-        onAddSamples(samples,content.taskOutput,content);
+        if(content === null ||typeof content.taskOutput === "undefined"){
+          onAddSamples(samples);
+        }else{
+          onAddSamples(samples,content.taskOutput,content);
+        }
       })
       .catch((err) => {
         console.log("error getting link for s3 image", err)
