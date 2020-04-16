@@ -100,7 +100,12 @@ export default ({
   )
 
   return (
-    <div style={{ height: "calc(100vh - 70px)" }}>
+    <div
+      style={{
+        height: containerProps.height || "calc(100vh - 70px)",
+        width: "100%",
+      }}
+    >
       <Annotator
         key={globalSampleIndex}
         selectedImage={taskData[selectedIndex].imageUrl}

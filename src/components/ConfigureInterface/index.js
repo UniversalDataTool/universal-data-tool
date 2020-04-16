@@ -1,6 +1,6 @@
 // @flow weak
 
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { styled } from "@material-ui/core/styles"
 import templates from "../StartingPage/templates"
 import Button from "@material-ui/core/Button"
@@ -16,7 +16,16 @@ import ConfigureDataEntry from "../ConfigureDataEntry"
 import ConfigureComposite from "../ConfigureComposite"
 import Configure3D from "../Configure3D"
 import ConfigureVideoSegmentation from "../ConfigureVideoSegmentation"
+import UniversalDataViewer from "../UniversalDataViewer"
 import { setIn } from "seamless-immutable"
+import Grid from "@material-ui/core/Grid"
+import LabelErrorBoundary from "../LabelErrorBoundary"
+import useEventCallback from "use-event-callback"
+import CircularProgress from "@material-ui/core/CircularProgress"
+
+const noop = () => {}
+
+const Container = styled("div")({ padding: 24 })
 
 const NoOptions = styled("div")({
   fontSize: 18,
@@ -54,6 +63,18 @@ export const Heading = styled("div")({
   color: colors.grey[700],
 })
 
+const PreviewContainer = styled("div")({
+  display: "flex",
+  justifyContent: "space-around",
+  mouseEvents: "none",
+  padding: 16,
+})
+const PreviewContent = styled("div")({
+  display: "flex",
+  width: "100%",
+  height: 600,
+})
+
 const SelectType = ({ currentlySelected, onChange }) => {
   return templates.map((t) => (
     <TypeButton
@@ -74,48 +95,98 @@ const SelectType = ({ currentlySelected, onChange }) => {
 
 export const ConfigureInterface = ({
   iface = {},
-  onChange,
+  onChange: onChangeProp,
   onClickEditJSON,
+  isNested = false,
 }) => {
+  const [previewChangedTime, changePreviewChangedTime] = useState(0)
+  const [previewLoading, changePreviewLoading] = useState(false)
+  const [previewVersion, changePreviewVersion] = useState(0)
+  const onChange = useEventCallback((...args) => {
+    changePreviewChangedTime(Date.now())
+    onChangeProp(...args)
+  })
+  useEffect(() => {
+    if (Date.now() - previewChangedTime > 1000) return
+    changePreviewLoading(true)
+    let timeout = setTimeout(() => {
+      changePreviewLoading(false)
+      changePreviewVersion(previewVersion + 1)
+    }, 1000)
+    return () => {
+      clearTimeout(timeout)
+    }
+  }, [previewChangedTime])
   return (
-    <PaperContainer>
+    <Container>
+      <Heading>Interface Type</Heading>
       <SelectType
         currentlySelected={iface.type}
         onChange={(type) => {
           onChange(setIn(iface, ["type"], type))
         }}
       />
-      <Heading>Options</Heading>
-      <Box paddingTop={2} />
-      {!iface.type && <NoOptions>Select a Type</NoOptions>}
-      {iface.type === "image_segmentation" && (
-        <ConfigureImageSegmentation iface={iface} onChange={onChange} />
-      )}
-      {iface.type === "image_classification" && (
-        <ConfigureImageClassification iface={iface} onChange={onChange} />
-      )}
-      {iface.type === "composite" && (
-        <ConfigureComposite iface={iface} onChange={onChange} />
-      )}
-      {iface.type === "data_entry" && (
-        <ConfigureDataEntry iface={iface} onChange={onChange} />
-      )}
-      {iface.type === "audio_transcription" && (
-        <ConfigureAudioTranscription iface={iface} onChange={onChange} />
-      )}
-      {iface.type === "text_entity_recognition" && (
-        <ConfigureNLP iface={iface} onChange={onChange} />
-      )}
-      {iface.type === "text_classification" && (
-        <ConfigureTextClassification iface={iface} onChange={onChange} />
-      )}
-      {iface.type === "video_segmentation" && (
-        <ConfigureVideoSegmentation iface={iface} onChange={onChange} />
-      )}
-      {iface.type === "3d_bounding_box" && (
-        <Configure3D iface={iface} onChange={onChange} />
-      )}
-    </PaperContainer>
+      <Grid container>
+        <Grid item hidden={isNested} xs={12} md={6}>
+          <Heading>Preview</Heading>
+          <PreviewContainer>
+            <PreviewContent style={{ opacity: previewLoading ? 0.5 : 1 }}>
+              <LabelErrorBoundary key={previewVersion}>
+                <UniversalDataViewer
+                  key={previewVersion}
+                  height={600}
+                  onExit={noop}
+                  onSaveTaskOutputItem={noop}
+                  oha={{
+                    interface: iface,
+                    taskData: [
+                      (
+                        templates.find(
+                          (template) =>
+                            template.oha.interface.type === iface.type
+                        ) || { oha: { taskData: [{}] } }
+                      ).oha.taskData[0],
+                    ],
+                  }}
+                />
+              </LabelErrorBoundary>
+            </PreviewContent>
+          </PreviewContainer>
+        </Grid>
+        <Grid item xs={12} md={isNested ? 12 : 6}>
+          <Heading>Options</Heading>
+          <Box paddingTop={2} />
+          {!iface.type && <NoOptions>Select a Type</NoOptions>}
+          {iface.type === "image_segmentation" && (
+            <ConfigureImageSegmentation iface={iface} onChange={onChange} />
+          )}
+          {iface.type === "image_classification" && (
+            <ConfigureImageClassification iface={iface} onChange={onChange} />
+          )}
+          {iface.type === "composite" && (
+            <ConfigureComposite iface={iface} onChange={onChange} />
+          )}
+          {iface.type === "data_entry" && (
+            <ConfigureDataEntry iface={iface} onChange={onChange} />
+          )}
+          {iface.type === "audio_transcription" && (
+            <ConfigureAudioTranscription iface={iface} onChange={onChange} />
+          )}
+          {iface.type === "text_entity_recognition" && (
+            <ConfigureNLP iface={iface} onChange={onChange} />
+          )}
+          {iface.type === "text_classification" && (
+            <ConfigureTextClassification iface={iface} onChange={onChange} />
+          )}
+          {iface.type === "video_segmentation" && (
+            <ConfigureVideoSegmentation iface={iface} onChange={onChange} />
+          )}
+          {iface.type === "3d_bounding_box" && (
+            <Configure3D iface={iface} onChange={onChange} />
+          )}
+        </Grid>
+      </Grid>
+    </Container>
   )
 }
 

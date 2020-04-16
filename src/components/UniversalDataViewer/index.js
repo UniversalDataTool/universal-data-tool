@@ -21,6 +21,7 @@ export const UniversalDataViewer = ({
   datasetName,
   requireCompleteToPressNext,
   onSaveTaskOutputItem,
+  height,
   onClickSetup,
 }) => {
   // TODO type check w/ superstruct against oha
@@ -31,12 +32,14 @@ export const UniversalDataViewer = ({
       datasetName,
       requireCompleteToPressNext,
       onExit,
+      height,
     }),
     [
       hideHeader,
       hideDescription,
       requireCompleteToPressNext,
       datasetName,
+      height,
       onExit,
     ]
   )

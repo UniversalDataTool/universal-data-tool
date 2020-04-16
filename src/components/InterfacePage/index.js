@@ -27,6 +27,7 @@ export default ({ oha, onChange, onClickEditJSON, onClearLabelData }) => {
         iface={iface}
         onChange={onChange}
         onClickEditJSON={onClickEditJSON}
+        isNotNested
       />
       <PaperContainer>
         <Heading>Advanced</Heading>

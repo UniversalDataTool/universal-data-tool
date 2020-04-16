@@ -84,7 +84,12 @@ export default ({
   if (!taskData[0].videoUrl) throw new Error("Sample must have videoUrl")
 
   return (
-    <div style={{ height: "calc(100vh - 70px)" }}>
+    <div
+      style={{
+        height: containerProps.height || "calc(100vh - 70px)",
+        width: "100%",
+      }}
+    >
       <Annotator
         taskDescription={iface.description}
         {...labelProps}
