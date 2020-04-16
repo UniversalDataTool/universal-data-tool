@@ -105,28 +105,12 @@ class CollaborationHandler {
     const patch = rfc6902.createPatch(this.state, newState)
     if (patch.length === 0) return null
 
-    console.log(
-      `I'm sending a patch from version ${this.version} to ${this.version + 1}`
-    )
-
     const { hashOfLatestState, latestVersion } = await this.patchJSON(
       `/api/session/${encodeURIComponent(this.sessionId)}`,
       {
         patch,
         userName: this.userName,
       }
-    )
-
-    const latestState = (await this.getLatestState()).state
-    console.log(
-      latestState,
-      hash(latestState),
-      seamless.asMutable(newState, { deep: true }),
-      hash(newState)
-    )
-    console.log(
-      JSON.stringify(latestState),
-      JSON.stringify(seamless.asMutable(newState, { deep: true }))
     )
 
     if (hash(newState) !== hashOfLatestState) {

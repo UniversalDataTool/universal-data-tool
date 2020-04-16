@@ -11,7 +11,7 @@ const { setIn, from: makeImmutable } = seamless
 
 const serverUrl =
   window.localStorage.CUSTOM_COLLABORATION_SERVER ||
-  "https://udt-collaboration.workaround.now.sh"
+  "https://udt-collaboration-server.now.sh"
 
 // We use a global singleton to manage the collaboration state machine
 const collab = new CollaborationHandler({ serverUrl })
