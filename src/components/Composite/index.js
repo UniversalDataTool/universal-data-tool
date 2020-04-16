@@ -33,8 +33,6 @@ export const Composite = (props) => {
     interface: { fields },
   } = props
   const [selectedField, changeSelectedField] = useState()
-  const [taskOutput, changeTaskOutput] = useState(props.taskOutput)
-
   if (selectedField) {
     return (
       <UniversalDataViewer

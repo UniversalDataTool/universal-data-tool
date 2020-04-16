@@ -325,8 +325,7 @@ export default ({
                 setIn(singleSampleOHA, ["taskOutput", relativeIndex], output)
               )
               onChangeOHA(newOHA);
-              
-              
+              UpdateAWSStorage();
             }}
             onExit={(nextAction = "nothing") => {
               if (singleSampleOHA.startTime) {
@@ -363,8 +362,7 @@ export default ({
                 default :
                   break;
               }
-              changeSingleSampleOHA(null)
-              UpdateAWSStorage();
+              changeSingleSampleOHA(null);
             }}
             oha={singleSampleOHA}
           />
