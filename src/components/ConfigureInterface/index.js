@@ -123,7 +123,12 @@ export const ConfigureInterface = ({
       <SelectType
         currentlySelected={iface.type}
         onChange={(type) => {
-          onChange(setIn(iface, ["type"], type))
+          onChange(
+            templates
+              .map((t) => t.oha.interface)
+              .find((t) => t.type === type) || {}
+          )
+          // onChange(setIn(iface, ["type"], type))
         }}
       />
       <Grid container>
