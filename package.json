@@ -1,6 +1,6 @@
 {
   "name": "universal-data-tool",
-  "version": "0.8.9",
+  "version": "0.9.0",
   "license": "MIT",
   "main": "desktop/main.js",
   "homepage": "https://universaldatatool.com",
