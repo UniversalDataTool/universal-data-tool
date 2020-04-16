@@ -1,17 +1,11 @@
 // @flow weak
-import React, { useState, useEffect, useCallback, useMemo } from "react"
-import { styled } from "@material-ui/core/styles"
+import React, { useState, useEffect } from "react"
 import SimpleDialog from "../SimpleDialog"
 import DataTable from "react-data-table-component"
 import Radio from "@material-ui/core/Radio"
 
 import Amplify, { Storage } from "aws-amplify"
 import isEmpty from "../../utils/isEmpty"
-
-const TextArea = styled("textarea")({
-  width: "100%",
-  minHeight: 300,
-})
 
 const expandedDataColumns = [{ name: "Data", selector: "data", sortable: true }]
 
@@ -24,7 +18,7 @@ const columns = [{ name: "Projects", selector: "folder", sortable: true }]
 const customStyles = {
   headCells: {
     style: {
-      paddingLeft: '10px', // override the cell padding for head cells
+      paddingLeft: '10px', 
     },
   },
   cells: {
@@ -79,23 +73,25 @@ const ExpandedRow = ({ data }) => {
 
 export default ({ open, onClose, onAddSamples, authConfig, user }) => {
   Amplify.configure(authConfig)
-  const [content, changeContent] = useState("")
   const [s3Content, changeS3Content] = useState(null)
   const [dataForTable, changeDataForTable] = useState(null)
-  const [showImage, changeShowImage] = useState(false)
-  const [resolvedUrls, changeResolvedUrls] = useState({})
-  const [toggleCleared, setToggleCleared] = useState(false)
-  const [displayTable, setDisplayTable] = useState(false)
   const [folderToFetch, setFolderToFetch] = useState("")
 
   let _dataForTable = {}
 
-  const addImageUrl = (result, folder, imgName) => {
-    changeResolvedUrls((prevState) => ({
-      ...prevState,
-      [`${folder}-${imgName}`]: result,
-    }))
+  function RecognizeFileExtension(UrlOfAFile){
+    var typeOfFile = "File";
+    var fileExtension =UrlOfAFile.match(`\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`)[2].toLowerCase();
+    if (fileExtension==="jpg"||fileExtension==="jpeg"||fileExtension==="png"
+    ||fileExtension==="ico"||fileExtension==="jpe"||fileExtension==="gif")
+      typeOfFile ="Image";
+    if(fileExtension==="mp4"||fileExtension==="mkv")
+      typeOfFile ="Video";
+    if(fileExtension==="mp3")
+      typeOfFile="Audio";
+    return typeOfFile;
   }
+  
   async function GetImageFromAFolderAWS(result){
     var samples = [];
     for (let i=0; i<result.length;i++){
@@ -105,10 +101,10 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
           level: "private",
         })
         .then((result) => {
-          if(result.match(`\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`)[2]!=="mp4")
+          if(RecognizeFileExtension(result)==="Image")
           {
             samples.push({ imageUrl: `${result}` });
-          }else{
+          }else if (RecognizeFileExtension(result)==="Video"){
             samples.push({ videoUrl: `${result}` });
           }          
         })

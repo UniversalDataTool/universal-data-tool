@@ -129,6 +129,7 @@ export default ({
     percentComplete =
       oha.taskOutput.filter(Boolean).length / oha.taskData.length
   }
+
   async function fetchAnImage(element){ 
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
     var response;
