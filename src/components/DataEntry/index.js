@@ -8,9 +8,7 @@ export const DataEntry = (props) => {
   const form =
     props.taskData[currentSampleIndex].surveyjs || props.interface.surveyjs
   if (!form)
-    throw new Error(
-      "No survey/form created it. Try adding some questions in Setup"
-    )
+    throw new Error("No survey/form created. Try adding some inputs in Setup")
   return (
     <SampleContainer
       {...props.containerProps}

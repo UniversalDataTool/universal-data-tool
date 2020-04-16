@@ -35,6 +35,8 @@ export const Composite = (props) => {
   const [selectedField, changeSelectedField] = useState()
   const [taskOutput, changeTaskOutput] = useState(props.taskOutput)
 
+  if (!fields) throw new Error("No fields defined. Try adding a field in Setup")
+
   if (selectedField) {
     return (
       <UniversalDataViewer
@@ -59,8 +61,6 @@ export const Composite = (props) => {
       />
     )
   }
-
-  console.log("taskOutput", props.taskOutput)
 
   return (
     <SampleContainer

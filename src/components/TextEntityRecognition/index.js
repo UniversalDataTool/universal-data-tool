@@ -55,6 +55,10 @@ export const TextEntityRecognition = (props) => {
         )
       : undefined
 
+  if (!props.interface.labels && !props.interface.availableLabels) {
+    throw new Error("Labels not defined. Try adding some labels in setup.")
+  }
+
   return (
     <SampleContainer
       {...props.containerProps}
@@ -71,7 +75,7 @@ export const TextEntityRecognition = (props) => {
         key={currentSampleIndex}
         type="label-sequence"
         document={props.taskData[currentSampleIndex].document}
-        labels={props.interface.labels}
+        labels={props.interface.labels || props.interface.availableLabels}
         initialSequence={initialSequence}
         onFinish={(result) => {
           props.onSaveTaskOutputItem(currentSampleIndex, {

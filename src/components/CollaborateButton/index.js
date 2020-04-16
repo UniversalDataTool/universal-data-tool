@@ -73,6 +73,11 @@ const PopupBox = styled("div")({
     pointerEvents: "none",
   },
 })
+const ErrorText = styled("div")({
+  color: colors.red[500],
+  padding: 8,
+  fontSize: 14,
+})
 
 const CreateNewButton = styled(Button)({
   marginTop: 16,
@@ -96,6 +101,7 @@ const ExitButton = styled(Button)({
 export default ({
   fileOpen = false,
   inSession = false,
+  error,
   onJoinSession,
   onCreateSession,
   onLeaveSession,
@@ -150,8 +156,10 @@ export default ({
                 ),
               }}
             />
+            {error && <ErrorText>{error}</ErrorText>}
             <CreateNewButton
               fullWidth
+              disabled={error}
               onClick={() => {
                 posthog.capture("create_collaborative_session")
                 onCreateSession()
