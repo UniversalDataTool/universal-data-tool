@@ -74,8 +74,7 @@ export default () => {
     changeFile({
       ...file,
       mode: "local-storage",
-      id: randomId(),
-      fileName: "unnamed",
+      fileName: file.fileName || `copy_of_${file.id}`,
     })
   )
 

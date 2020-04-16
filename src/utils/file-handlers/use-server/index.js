@@ -19,6 +19,7 @@ const collab = new CollaborationHandler({ serverUrl })
 export const convertToCollaborativeFile = async (file) => {
   await collab.createSession(file.content)
   return {
+    fileName: file.fileName,
     id: file.id,
     sessionId: collab.sessionId,
     url: `${window.location.origin}?s=${collab.sessionId}`,
