@@ -118,7 +118,7 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
   }
 
   async function GetAnnotationFromAFolderAWS(result){
-    var content=null;
+    var json=null;
     if(result.find(element => element.key===`${folderToFetch}/annotations/annotations.json`)){
       await Storage.get(`${folderToFetch}/annotations/annotations.json`, {
         expires: 24 * 60 * 60*2000,
@@ -126,9 +126,9 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
       })
       .then(async (result) => {
         await fetch(result).then(async (data) =>{
-          return await data.json().then(async (json) =>{
-            if(typeof json.content != "undefined"){
-              content=json.content;
+          return await data.json().then(async (result) =>{
+            if(typeof result.content != "undefined"){
+              json=result;
             }            
           });
         })
@@ -138,18 +138,18 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
         return null
       });
     }
-    return content;
+    return json;
   }
 
   const handleAddSample =  () => {
     Storage.list("", { level: "private" })
       .then(async (result) => {
         var samples = await GetImageFromAFolderAWS(result); 
-        var content= await GetAnnotationFromAFolderAWS(result);
-        if(content === null ||typeof content.taskOutput === "undefined"){
+        var json= await GetAnnotationFromAFolderAWS(result);
+        if(json === null ||typeof json.content.taskOutput === "undefined"){
           onAddSamples(samples);
         }else{
-          onAddSamples(samples,content.taskOutput,content);
+          onAddSamples(samples,json.content.taskOutput,json);
         }
       })
       .catch((err) => {

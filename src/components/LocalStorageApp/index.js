@@ -139,7 +139,8 @@ export default () => {
     if (!isEmpty(authConfig)) {
       let index;
       for(let y=0;y<recentItems.length;y++){
-        if(recentItems[y].fileName===file.fileName)
+        if(typeof recentItems[y].fileName!=="undefined" && file.fileName !== "undefined" && 
+        recentItems[y].fileName===file.fileName)
           index=y;
       }
       if(typeof index !== 'undefined'){
@@ -232,7 +233,9 @@ export default () => {
               onChangeFileName={(newName) => {
                 changeFile(setIn(file, ["fileName"], newName))
               }}
-              onChangeOHA={async (newOHA) => {
+              onChangeOHA={async (newOHA,newName) => {
+                if(newName)
+                changeFile(setIn(file, ["fileName"], newName))
                 changeFile(setIn(file, ["content"], newOHA))                
               }}
               authConfig
