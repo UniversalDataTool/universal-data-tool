@@ -93,7 +93,7 @@ export default ({
   containerProps = emptyObj,
   onSaveTaskOutputItem,
 }) => {
-  console.log(iface.availableLabels);
+  console.log(iface.availableLabels)
   const [sampleIndex, changeSampleIndex] = useState(0)
   const [enlargedLabel, changeEnlargedLabel] = useState(null)
   const [currentOutput, changeCurrentOutput] = useState(emptyArr)

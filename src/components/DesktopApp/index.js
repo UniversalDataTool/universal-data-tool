@@ -79,9 +79,7 @@ export default () => {
         .require("fs")
         .promises.writeFile(filePath, toUDTCSV(file.content))
     }
-    const onOpenFileFromToolbar = (e, file) => (
-      openFile(file)
-    )
+    const onOpenFileFromToolbar = (e, file) => openFile(file)
 
     ipcRenderer.on("open-welcome-page", onOpenWelcomePage)
     ipcRenderer.on("new-file", onNewFile)

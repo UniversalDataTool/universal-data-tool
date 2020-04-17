@@ -151,8 +151,8 @@ export default ({
       {currentTab === "import" && (
         <ImportPage
           isDesktop={isDesktop}
-          onChangeOHA={(newOHA, shouldViewChange,newName) => {
-            onChangeOHA(newOHA,newName)
+          onChangeOHA={(newOHA, shouldViewChange, newName) => {
+            onChangeOHA(newOHA, newName)
             if (shouldViewChange) {
               changeTab("grid")
             }

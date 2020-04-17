@@ -18,14 +18,14 @@ const columns = [{ name: "Projects", selector: "folder", sortable: true }]
 const customStyles = {
   headCells: {
     style: {
-      paddingLeft: '10px', 
+      paddingLeft: "10px",
     },
   },
   cells: {
     style: {
-      paddingLeft: '25px'
-    }
-  }
+      paddingLeft: "25px",
+    },
+  },
 }
 
 const ExpandedRow = ({ data }) => {
@@ -79,84 +79,94 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
 
   let _dataForTable = {}
 
-  function RecognizeFileExtension(UrlOfAFile){
-    var typeOfFile = "File";
-    var fileExtension =UrlOfAFile.match(`\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`)[2].toLowerCase();
-    if (fileExtension==="jpg"||fileExtension==="jpeg"||fileExtension==="png"
-    ||fileExtension==="ico"||fileExtension==="jpe"||fileExtension==="gif")
-      typeOfFile ="Image";
-    if(fileExtension==="mp4"||fileExtension==="mkv")
-      typeOfFile ="Video";
-    if(fileExtension==="mp3")
-      typeOfFile="Audio";
-    return typeOfFile;
+  function RecognizeFileExtension(UrlOfAFile) {
+    var typeOfFile = "File"
+    var fileExtension = UrlOfAFile.match(
+      `\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
+    )[2].toLowerCase()
+    if (
+      fileExtension === "jpg" ||
+      fileExtension === "jpeg" ||
+      fileExtension === "png" ||
+      fileExtension === "ico" ||
+      fileExtension === "jpe" ||
+      fileExtension === "gif"
+    )
+      typeOfFile = "Image"
+    if (fileExtension === "mp4" || fileExtension === "mkv") typeOfFile = "Video"
+    if (fileExtension === "mp3") typeOfFile = "Audio"
+    return typeOfFile
   }
-  
-  async function GetImageFromAFolderAWS(result){
-    var samples = [];
-    for (let i=0; i<result.length;i++){
-      if(result[i].key.match(`(${folderToFetch}/data).*(\\.).*`)){
+
+  async function GetImageFromAFolderAWS(result) {
+    var samples = []
+    for (let i = 0; i < result.length; i++) {
+      if (result[i].key.match(`(${folderToFetch}/data).*(\\.).*`)) {
         await Storage.get(result[i].key, {
-          expires: 24 * 60 * 60*2000,
+          expires: 24 * 60 * 60 * 2000,
           level: "private",
         })
-        .then((result) => {
-          if(RecognizeFileExtension(result)==="Image")
-          {
-            samples.push({ imageUrl: `${result}` });
-          }else if (RecognizeFileExtension(result)==="Video"){
-            samples.push({ videoUrl: `${result}` });
-          }          
+          .then((result) => {
+            if (RecognizeFileExtension(result) === "Image") {
+              samples.push({ imageUrl: `${result}` })
+            } else if (RecognizeFileExtension(result) === "Video") {
+              samples.push({ videoUrl: `${result}` })
+            }
+          })
+          .catch((err) => {
+            console.log("error getting link for s3 image", err)
+            return null
+          })
+      }
+    }
+    return samples
+  }
+
+  async function GetAnnotationFromAFolderAWS(result) {
+    var json = null
+    if (
+      result.find(
+        (element) =>
+          element.key === `${folderToFetch}/annotations/annotations.json`
+      )
+    ) {
+      await Storage.get(`${folderToFetch}/annotations/annotations.json`, {
+        expires: 24 * 60 * 60 * 2000,
+        level: "private",
+      })
+        .then(async (result) => {
+          await fetch(result).then(async (data) => {
+            return await data.json().then(async (result) => {
+              if (typeof result.content != "undefined") {
+                json = result
+              }
+            })
+          })
         })
         .catch((err) => {
           console.log("error getting link for s3 image", err)
           return null
-        });
-      }
-    } 
-    return samples;
-  }
-
-  async function GetAnnotationFromAFolderAWS(result){
-    var json=null;
-    if(result.find(element => element.key===`${folderToFetch}/annotations/annotations.json`)){
-      await Storage.get(`${folderToFetch}/annotations/annotations.json`, {
-        expires: 24 * 60 * 60*2000,
-        level: "private",
-      })
-      .then(async (result) => {
-        await fetch(result).then(async (data) =>{
-          return await data.json().then(async (result) =>{
-            if(typeof result.content != "undefined"){
-              json=result;
-            }            
-          });
         })
-      })
-      .catch((err) => {
-        console.log("error getting link for s3 image", err)
-        return null
-      });
     }
-    return json;
+    return json
   }
 
-  const handleAddSample =  () => {
+  const handleAddSample = () => {
     Storage.list("", { level: "private" })
       .then(async (result) => {
-        var samples = await GetImageFromAFolderAWS(result); 
-        var json= await GetAnnotationFromAFolderAWS(result);
-        if(json === null ||typeof json.content.taskOutput === "undefined"){
-          onAddSamples(samples);
-        }else{
-          onAddSamples(samples,json.content.taskOutput,json);
+        var samples = await GetImageFromAFolderAWS(result)
+        var json = await GetAnnotationFromAFolderAWS(result)
+        if (json === null || typeof json.content.taskOutput === "undefined") {
+          onAddSamples(samples)
+        } else {
+          onAddSamples(samples, json.content.taskOutput, json)
         }
       })
       .catch((err) => {
         console.log("error getting link for s3 image", err)
         return null
       })
-    }
+  }
 
   const handleRowSelected = (whatsChanging) => {
     if (!isEmpty(whatsChanging.selectedRows[0])) {
@@ -182,8 +192,7 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
     }
   }
 
-  useEffect(() => {
-  }, [dataForTable])
+  useEffect(() => {}, [dataForTable])
 
   useEffect(() => {
     if (isEmpty(user)) {

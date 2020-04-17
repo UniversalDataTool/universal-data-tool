@@ -8,13 +8,13 @@ export default {
 
     // OPTIONAL - Amazon Cognito User Pool ID
     userPoolId: "ca-central-1_TaMMvWe7H",
-    
+
     // OPTIONAL - Amazon Cognito Web Client ID (26-char alphanumeric string)
     userPoolWebClientId: "39cd95g9nmd7vfneiden3qejio",
 
     // OPTIONAL - Enforce user authentication prior to accessing AWS resources or not
     mandatorySignIn: true,
-    
+
     // OPTIONAL - Manually set the authentication flow type. Default is 'USER_SRP_AUTH'
     authenticationFlowType: "USER_PASSWORD_AUTH",
 

@@ -226,17 +226,17 @@ export default ({ oha, onChangeOHA, isDesktop, authConfig, user }) => {
         )
       }
 
-      if(typeof json !== "undefined" && typeof json.content !== "undefined" && typeof json.fileName !== "undefined" ){
-        newOHA = setIn(
-          newOHA,
-          ["interface"],
-          json.content.interface
-        )
-        onChangeOHA(newOHA, true, json.fileName);
-      }else{
-        onChangeOHA(newOHA,true);
+      if (
+        typeof json !== "undefined" &&
+        typeof json.content !== "undefined" &&
+        typeof json.fileName !== "undefined"
+      ) {
+        newOHA = setIn(newOHA, ["interface"], json.content.interface)
+        onChangeOHA(newOHA, true, json.fileName)
+      } else {
+        onChangeOHA(newOHA, true)
       }
-      
+
       closeDialog()
     }
   )
@@ -300,11 +300,8 @@ export default ({ oha, onChangeOHA, isDesktop, authConfig, user }) => {
           onAddSamples={onAddSamples}
         >
           Import from Google Drive
-          </Button>
-        <Button
-          dialog="import-csv-json"
-          Icon={DescriptionIcon}
-        >
+        </Button>
+        <Button dialog="import-csv-json" Icon={DescriptionIcon}>
           Import from CSV / JSON
         </Button>
         <ImportTextSnippetsDialog

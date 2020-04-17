@@ -61,7 +61,6 @@ export default ({
   recentItems,
   selectedBrush = "complete",
 }) => {
-  
   const c = useStyles()
   const { addToast } = useToasts()
   const [mode, changeMode] = useState(initialMode)
@@ -93,7 +92,7 @@ export default ({
   useEffect(() => {
     if (mode === "json") {
       changeJSONText(JSON.stringify(oha, null, "  "))
-    }   
+    }
   }, [mode])
 
   useEffect(() => {
@@ -261,7 +260,7 @@ export default ({
               changeSingleSampleOHA(
                 setIn(singleSampleOHA, ["taskOutput", relativeIndex], output)
               )
-              onChangeOHA(newOHA);
+              onChangeOHA(newOHA)
             }}
             onExit={(nextAction = "nothing") => {
               if (singleSampleOHA.startTime) {
@@ -295,10 +294,10 @@ export default ({
                     return
                   }
                   break
-                default :
-                  break;
+                default:
+                  break
               }
-              changeSingleSampleOHA(null);
+              changeSingleSampleOHA(null)
             }}
             oha={singleSampleOHA}
           />

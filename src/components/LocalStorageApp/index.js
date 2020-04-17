@@ -89,7 +89,6 @@ export default () => {
           .then((tryUser) => {
             changeUser(tryUser)
             changeAuthConfig(config)
-
           })
           .catch((err) => {
             changeAuthConfig(config)
@@ -113,71 +112,77 @@ export default () => {
     })
   )
 
-  async function fetchAnImage(element){ 
-    var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    var response;
-    if(typeof element.imageUrl !== "undefined"){
-      response = await fetch(proxyUrl+element.imageUrl).catch((error)=> {
-        console.log('Looks like there was a problem: \n', error);
-      });
-    }else{
-      response = await fetch(proxyUrl+element.videoUrl,  {
-        method: 'GET',
+  async function fetchAnImage(element) {
+    var proxyUrl = "https://cors-anywhere.herokuapp.com/"
+    var response
+    if (typeof element.imageUrl !== "undefined") {
+      response = await fetch(proxyUrl + element.imageUrl).catch((error) => {
+        console.log("Looks like there was a problem: \n", error)
+      })
+    } else {
+      response = await fetch(proxyUrl + element.videoUrl, {
+        method: "GET",
         headers: {
-          'X-Requested-With': 'xmlhttprequest'
-        }
-      }).catch((error)=> {
-        console.log('Looks like there was a problem: \n', error);
-      });
+          "X-Requested-With": "xmlhttprequest",
+        },
+      }).catch((error) => {
+        console.log("Looks like there was a problem: \n", error)
+      })
     }
-    const blob = await response.blob();
-    return blob;
+    const blob = await response.blob()
+    return blob
   }
 
-  
-  function UpdateAWSStorage(){
+  function UpdateAWSStorage() {
     if (!isEmpty(authConfig)) {
-      let index;
-      for(let y=0;y<recentItems.length;y++){
-        if(typeof recentItems[y].fileName!=="undefined" && file.fileName !== "undefined" && 
-        recentItems[y].fileName===file.fileName)
-          index=y;
+      let index
+      for (let y = 0; y < recentItems.length; y++) {
+        if (
+          typeof recentItems[y].fileName !== "undefined" &&
+          file.fileName !== "undefined" &&
+          recentItems[y].fileName === file.fileName
+        )
+          index = y
       }
-      if(typeof index !== 'undefined'){
-        var json = JSON.stringify(recentItems[index]);
+      if (typeof index !== "undefined") {
+        var json = JSON.stringify(recentItems[index])
 
-        Storage.put(`${file.fileName}/`,null,{
-          level: "private", 
-        }).catch(err => console.log(err)); 
+        Storage.put(`${file.fileName}/`, null, {
+          level: "private",
+        }).catch((err) => console.log(err))
 
-        Storage.put(`${file.fileName}/annotations/annotations.json`,json,{
-          level: "private", 
-        }).catch(err => console.log(err));                  
-        
+        Storage.put(`${file.fileName}/annotations/annotations.json`, json, {
+          level: "private",
+        }).catch((err) => console.log(err))
+
         recentItems[index].content.taskData.forEach(async (element) => {
           try {
-            const blob= await fetchAnImage(element);
-            let imageOrVideoName;
-            if(typeof element.imageUrl !== "undefined"){
-              imageOrVideoName = element.imageUrl.match(`\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`);
-            }else {
-              imageOrVideoName = element.videoUrl.match(`\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`);
-            }              
-            
-            var pathToFile = `${file.fileName}/data/${imageOrVideoName[1]}`;
+            const blob = await fetchAnImage(element)
+            let imageOrVideoName
+            if (typeof element.imageUrl !== "undefined") {
+              imageOrVideoName = element.imageUrl.match(
+                `\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
+              )
+            } else {
+              imageOrVideoName = element.videoUrl.match(
+                `\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
+              )
+            }
+
+            var pathToFile = `${file.fileName}/data/${imageOrVideoName[1]}`
             Storage.put(pathToFile, blob, {
               level: "private",
-            }).catch(err => console.log(err));                      
+            }).catch((err) => console.log(err))
           } catch (err) {
             console.log(err)
           }
-        }); 
+        })
       }
     }
   }
 
   useEffect(() => {
-    UpdateAWSStorage();
+    UpdateAWSStorage()
   }, [recentItems])
 
   return (
@@ -233,10 +238,9 @@ export default () => {
               onChangeFileName={(newName) => {
                 changeFile(setIn(file, ["fileName"], newName))
               }}
-              onChangeOHA={async (newOHA,newName) => {
-                if(newName)
-                changeFile(setIn(file, ["fileName"], newName))
-                changeFile(setIn(file, ["content"], newOHA))                
+              onChangeOHA={async (newOHA, newName) => {
+                if (newName) changeFile(setIn(file, ["fileName"], newName))
+                changeFile(setIn(file, ["content"], newOHA))
               }}
               authConfig
               user={user}
