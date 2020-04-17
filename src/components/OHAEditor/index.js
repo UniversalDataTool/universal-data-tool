@@ -61,7 +61,7 @@ export default ({
   recentItems,
   selectedBrush = "complete",
 }) => {
-  var [valueDisplay, setValueDisplay] = useState(fileName);
+  var [valueDisplay, setValueDisplay] = useState(fileName)
   const c = useStyles()
   const { addToast } = useToasts()
   const [mode, changeMode] = useState(initialMode)
@@ -131,9 +131,9 @@ export default ({
           ) : (
             <EditableTitleText
               label="File Name"
-              onChange={(newName) =>{
-                onChangeFileName(newName);
-                setValueDisplay(newName);
+              onChange={(newName) => {
+                onChangeFileName(newName)
+                setValueDisplay(newName)
               }}
               value={valueDisplay || ""}
             />
@@ -211,10 +211,9 @@ export default ({
                 taskOutput: newTaskOutput,
               })
             }}
-            onChangeOHA={(newOHA, newName) =>{
-              onChangeOHA(newOHA, newName);
-              if(newName)
-              setValueDisplay(newName);
+            onChangeOHA={(newOHA, newName) => {
+              onChangeOHA(newOHA, newName)
+              if (newName) setValueDisplay(newName)
             }}
             authConfig={authConfig}
             user={user}
