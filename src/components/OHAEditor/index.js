@@ -276,7 +276,24 @@ export default ({
                 changeSingleSampleOHA(
                   setIn(singleSampleOHA, ["taskOutput", relativeIndex], output)
                 )
-                onChangeOHA(newOHA)
+
+                let sendOnChange = true
+                if (
+                  oha.taskOutput &&
+                  newOHA.taskOutput &&
+                  oha.taskOutput[singleSampleOHA.sampleIndex] !== null
+                ) {
+                  const o1 = oha["taskOutput"][singleSampleOHA.sampleIndex]
+                  const o2 = newOHA["taskOutput"][singleSampleOHA.sampleIndex]
+                  if (o1.keys.length === o2.keys.length) {
+                    if (JSON.stringify(o1) === JSON.stringify(o2)) {
+                      sendOnChange = false
+                    }
+                  }
+                }
+                if (sendOnChange) {
+                  onChangeOHA(newOHA)
+                }
               }}
               onExit={(nextAction = "nothing") => {
                 if (singleSampleOHA.startTime) {
