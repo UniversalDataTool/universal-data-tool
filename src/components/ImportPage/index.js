@@ -225,7 +225,7 @@ export default ({ oha, onChangeOHA, isDesktop, authConfig, user }) => {
           )
         )
       }
-
+      console.log("json :"+json);
       if (
         typeof json !== "undefined" &&
         typeof json.content !== "undefined" &&

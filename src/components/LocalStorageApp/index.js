@@ -138,8 +138,9 @@ export default () => {
       let index
       for (let y = 0; y < recentItems.length; y++) {
         if (
-          typeof recentItems[y].fileName !== "undefined" &&
+          file !== "undefined" &&
           file.fileName !== "undefined" &&
+          typeof recentItems[y].fileName !== "undefined" &&
           recentItems[y].fileName === file.fileName
         )
           index = y
