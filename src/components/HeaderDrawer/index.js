@@ -31,7 +31,6 @@ export default ({
   onClickTemplate,
 }) => {
   const c = useStyles()
-  let classTrashCan = ""
 
   const onDrop = useCallback((acceptedFiles) => {
     onOpenFile(acceptedFiles[0])

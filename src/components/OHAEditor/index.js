@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useReducer } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 
-import { Storage } from "aws-amplify"
 import Header from "../Header"
 import AceEditor from "react-ace"
 import isEmpty from "../../utils/isEmpty"
@@ -116,68 +115,6 @@ export default ({
   ) {
     percentComplete =
       oha.taskOutput.filter(Boolean).length / oha.taskData.length
-  }
-
-  async function fetchAnImage(element){ 
-    var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    var response;
-    if(typeof element.imageUrl !== "undefined"){
-      response = await fetch(proxyUrl+element.imageUrl).catch((error)=> {
-        console.log('Looks like there was a problem: \n', error);
-      });
-    }else{
-      response = await fetch(proxyUrl+element.videoUrl,  {
-        method: 'GET',
-        headers: {
-          'X-Requested-With': 'xmlhttprequest'
-        }
-      }).catch((error)=> {
-        console.log('Looks like there was a problem: \n', error);
-      });
-    }
-    const blob = await response.blob();
-    return blob;
-  }
-
-  
-  function UpdateAWSStorage(){
-    if (!isEmpty(authConfig)) {            
-      let index;
-      for(let y=0;y<recentItems.length;y++){
-        if(recentItems[y].fileName===fileName)
-          index=y;
-      }
-      if(typeof index !== 'undefined'){
-        var json = JSON.stringify(recentItems[index]);
-
-        Storage.put(`${fileName}/`,null,{
-          level: "private", 
-        }).catch(err => console.log(err)); 
-
-        Storage.put(`${fileName}/annotations/annotations.json`,json,{
-          level: "private", 
-        }).catch(err => console.log(err));                  
-        
-        recentItems[index].content.taskData.forEach(async (element) => {
-          try {
-            const blob= await fetchAnImage(element);
-            let imageOrVideoName;
-            if(typeof element.imageUrl !== "undefined"){
-              imageOrVideoName = element.imageUrl.match(`\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`);
-            }else {
-              imageOrVideoName = element.videoUrl.match(`\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`);
-            }              
-            
-            var pathToFile = `${fileName}/data/${imageOrVideoName[1]}`;
-            Storage.put(pathToFile, blob, {
-              level: "private",
-            }).catch(err => console.log(err));                      
-          } catch (err) {
-            console.log(err)
-          }
-        }); 
-      }
-    }
   }
 
   return (
@@ -325,7 +262,6 @@ export default ({
                 setIn(singleSampleOHA, ["taskOutput", relativeIndex], output)
               )
               onChangeOHA(newOHA);
-              UpdateAWSStorage();
             }}
             onExit={(nextAction = "nothing") => {
               if (singleSampleOHA.startTime) {

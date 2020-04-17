@@ -6,11 +6,10 @@ import OHAEditor from "../OHAEditor"
 import { makeStyles } from "@material-ui/core/styles"
 import ErrorToasts from "../ErrorToasts"
 import useErrors from "../../utils/use-errors.js"
-import useLocalStorage from "../../utils/use-local-storage.js"
 import useFileHandler from "../../utils/file-handlers"
 import download from "in-browser-download"
 import toUDTCSV from "../../utils/to-udt-csv.js"
-import Amplify, { Auth } from "aws-amplify"
+import Amplify, { Auth, Storage } from "aws-amplify"
 import config from "../LocalStorageApp/AWSconfig"
 import isEmpty from "../../utils/isEmpty"
 import { setIn } from "seamless-immutable"
@@ -114,6 +113,72 @@ export default () => {
     })
   )
 
+  async function fetchAnImage(element){ 
+    var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    var response;
+    if(typeof element.imageUrl !== "undefined"){
+      response = await fetch(proxyUrl+element.imageUrl).catch((error)=> {
+        console.log('Looks like there was a problem: \n', error);
+      });
+    }else{
+      response = await fetch(proxyUrl+element.videoUrl,  {
+        method: 'GET',
+        headers: {
+          'X-Requested-With': 'xmlhttprequest'
+        }
+      }).catch((error)=> {
+        console.log('Looks like there was a problem: \n', error);
+      });
+    }
+    const blob = await response.blob();
+    return blob;
+  }
+
+  
+  function UpdateAWSStorage(){
+    if (!isEmpty(authConfig)) {
+      let index;
+      for(let y=0;y<recentItems.length;y++){
+        if(recentItems[y].fileName===file.fileName)
+          index=y;
+      }
+      if(typeof index !== 'undefined'){
+        var json = JSON.stringify(recentItems[index]);
+
+        Storage.put(`${file.fileName}/`,null,{
+          level: "private", 
+        }).catch(err => console.log(err)); 
+
+        Storage.put(`${file.fileName}/annotations/annotations.json`,json,{
+          level: "private", 
+        }).catch(err => console.log(err));                  
+        
+        recentItems[index].content.taskData.forEach(async (element) => {
+          try {
+            const blob= await fetchAnImage(element);
+            let imageOrVideoName;
+            if(typeof element.imageUrl !== "undefined"){
+              imageOrVideoName = element.imageUrl.match(`\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`);
+            }else {
+              imageOrVideoName = element.videoUrl.match(`\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`);
+            }              
+            
+            var pathToFile = `${file.fileName}/data/${imageOrVideoName[1]}`;
+            Storage.put(pathToFile, blob, {
+              level: "private",
+            }).catch(err => console.log(err));                      
+          } catch (err) {
+            console.log(err)
+          }
+        }); 
+      }
+    }
+  }
+
+  useEffect(() => {
+    UpdateAWSStorage();
+  }, [recentItems])
+
   return (
     <>
       <HeaderContext.Provider
@@ -167,8 +232,8 @@ export default () => {
               onChangeFileName={(newName) => {
                 changeFile(setIn(file, ["fileName"], newName))
               }}
-              onChangeOHA={(newOHA) => {
-                changeFile(setIn(file, ["content"], newOHA))
+              onChangeOHA={async (newOHA) => {
+                changeFile(setIn(file, ["content"], newOHA))                
               }}
               authConfig
               user={user}
