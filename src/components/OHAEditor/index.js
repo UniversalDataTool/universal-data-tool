@@ -114,7 +114,7 @@ export default ({
     try {
       // TODO schema validation etc.
       onChangeOHA(JSON.parse(jsonText))
-    } catch (e) { }
+    } catch (e) {}
   }, [jsonText])
 
   const onChangeTab = useEventCallback((tab) => changeMode(tab.toLowerCase()))
@@ -142,12 +142,12 @@ export default ({
               size="small"
             />
           ) : (
-              <EditableTitleText
-                label="File Name"
-                onChange={onChangeFileName}
-                value={fileName || ""}
-              />
-            )
+            <EditableTitleText
+              label="File Name"
+              onChange={onChangeFileName}
+              value={fileName || ""}
+            />
+          )
         }
         onChangeTab={onChangeTab}
         currentTab={mode}
@@ -285,8 +285,10 @@ export default ({
                 ) {
                   const o1 = oha["taskOutput"][singleSampleOHA.sampleIndex]
                   const o2 = newOHA["taskOutput"][singleSampleOHA.sampleIndex]
-                  if (oha.interface.type === "image_segmentation" &&
-                    o1.keys.length === o2.keys.length) {
+                  if (
+                    oha.interface.type === "image_segmentation" &&
+                    o1.keys.length === o2.keys.length
+                  ) {
                     if (JSON.stringify(o1) === JSON.stringify(o2)) {
                       sendOnChange = false
                     }
@@ -339,53 +341,53 @@ export default ({
             />
           </LabelErrorBoundary>
         ) : (
-            mode === "label" && (
-              <PaperContainer>
-                <Stats
-                  stats={[
-                    {
-                      name: "Percent Complete",
-                      value: Math.floor(percentComplete * 100) + "%",
-                    },
-                    {
-                      name: "Time per Sample",
-                      value: duration(
-                        new Date(Date.now() - timeToCompleteSample)
-                      ).toString(1, 1),
-                    },
-                    {
-                      name: "Estimated Remaining",
-                      value: duration(
-                        new Date(
-                          Date.now() -
+          mode === "label" && (
+            <PaperContainer>
+              <Stats
+                stats={[
+                  {
+                    name: "Percent Complete",
+                    value: Math.floor(percentComplete * 100) + "%",
+                  },
+                  {
+                    name: "Time per Sample",
+                    value: duration(
+                      new Date(Date.now() - timeToCompleteSample)
+                    ).toString(1, 1),
+                  },
+                  {
+                    name: "Estimated Remaining",
+                    value: duration(
+                      new Date(
+                        Date.now() -
                           timeToCompleteSample *
-                          (1 - percentComplete) *
-                          (oha.taskData || []).length
-                        )
-                      ).toString(1, 2),
-                    },
-                  ]}
-                />
-                <SampleGrid
-                  count={(oha.taskData || []).length}
-                  taskData={oha.taskData || []}
-                  completed={(oha.taskOutput || []).map(Boolean)}
-                  onClick={(sampleIndex) => {
-                    posthog.capture("open_sample", {
-                      interface_type: oha.interface.type,
-                    })
-                    changeSingleSampleOHA({
-                      ...oha,
-                      taskData: [oha.taskData[sampleIndex]],
-                      taskOutput: [(oha.taskOutput || [])[sampleIndex]],
-                      sampleIndex,
-                      startTime: Date.now(),
-                    })
-                  }}
-                />
-              </PaperContainer>
-            )
-          )}
+                            (1 - percentComplete) *
+                            (oha.taskData || []).length
+                      )
+                    ).toString(1, 2),
+                  },
+                ]}
+              />
+              <SampleGrid
+                count={(oha.taskData || []).length}
+                taskData={oha.taskData || []}
+                completed={(oha.taskOutput || []).map(Boolean)}
+                onClick={(sampleIndex) => {
+                  posthog.capture("open_sample", {
+                    interface_type: oha.interface.type,
+                  })
+                  changeSingleSampleOHA({
+                    ...oha,
+                    taskData: [oha.taskData[sampleIndex]],
+                    taskOutput: [(oha.taskOutput || [])[sampleIndex]],
+                    sampleIndex,
+                    startTime: Date.now(),
+                  })
+                }}
+              />
+            </PaperContainer>
+          )
+        )}
       </div>
       <EditSampleDialog
         {...sampleInputEditor}
