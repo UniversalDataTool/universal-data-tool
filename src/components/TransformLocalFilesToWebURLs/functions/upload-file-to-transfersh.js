@@ -1,21 +1,25 @@
-const uploadFileToTransferSh = async({ fileName, fileURL, remote }) => {
-    window.remote = remote // TODO remove
-    const remoteURL = `https://files.universaldatatool.com/${fileName}` ///${hashedFileName}
-    
-    const axios = remote.require('axios')
-    const exactFilePath = fileURL.split("file://")[1]
+const uploadFileToTransferSh = async ({ fileName, fileURL, remote }) => {
+  window.remote = remote // TODO remove
+  const remoteURL = `https://files.universaldatatool.com/${fileName}` ///${hashedFileName}
 
-    const fsFileBuffer = remote.require("fs").readFileSync(exactFilePath)
+  const axios = remote.require("axios")
+  const exactFilePath = fileURL.split("file://")[1]
 
-    const uploadedFileURL = await axios.put(remoteURL, fsFileBuffer)
-        .then(response => {
-            if (response.status === 200) {
-                console.log(response)
-                return response.data
-            }
-        })
-        
-    return uploadedFileURL.replace("universaldatatool.com/", "universaldatatool.com/get/")
+  const fsFileBuffer = remote.require("fs").readFileSync(exactFilePath)
+
+  const uploadedFileURL = await axios
+    .put(remoteURL, fsFileBuffer)
+    .then((response) => {
+      if (response.status === 200) {
+        console.log(response)
+        return response.data
+      }
+    })
+
+  return uploadedFileURL.replace(
+    "universaldatatool.com/",
+    "universaldatatool.com/get/"
+  )
 }
 
 export default uploadFileToTransferSh

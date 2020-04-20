@@ -26,8 +26,8 @@ import TransformVideoFramesToImagesDialog from "../TransformVideoFramesToImagesD
 import usePosthog from "../../utils/use-posthog"
 import TransformLocalFilesToWebURLs from "../TransformLocalFilesToWebURLs"
 
-import ComputerIcon from '@material-ui/icons/Computer';
-import LanguageIcon from '@material-ui/icons/Language';
+import ComputerIcon from "@material-ui/icons/Computer"
+import LanguageIcon from "@material-ui/icons/Language"
 
 const ButtonBase = styled(MuiButton)({
   width: 240,
