@@ -239,8 +239,7 @@ export default () => {
               onChangeFileName={(newName) => {
                 changeFile(setIn(file, ["fileName"], newName))
               }}
-              onChangeOHA={async (newOHA, newName) => {
-                if (newName) changeFile(setIn(file, ["fileName"], newName))
+              onChangeOHA={(newOHA) => {
                 changeFile(setIn(file, ["content"], newOHA))
               }}
               authConfig

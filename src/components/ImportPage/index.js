@@ -169,7 +169,7 @@ const S3Icon = (props, disabled) => {
   )
 }
 
-export default ({ oha, onChangeOHA, isDesktop, authConfig, user }) => {
+export default ({ oha, onChangeFileName, onChangeOHA, isDesktop, authConfig, user }) => {
   const [selectedDialog, changeDialog] = useState()
   const electron = useElectron()
   const onChangeDialog = async (dialog) => {
@@ -232,7 +232,8 @@ export default ({ oha, onChangeOHA, isDesktop, authConfig, user }) => {
         typeof json.fileName !== "undefined"
       ) {
         newOHA = setIn(newOHA, ["interface"], json.content.interface)
-        onChangeOHA(newOHA, true, json.fileName)
+        onChangeFileName(json.fileName);
+        onChangeOHA(newOHA, true)
       } else {
         onChangeOHA(newOHA, true)
       }

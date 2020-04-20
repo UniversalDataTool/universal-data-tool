@@ -66,6 +66,7 @@ export default ({
   openSampleInputEditor,
   openSampleLabelEditor,
   deleteSample,
+  onChangeFileName,
   onChangeOHA,
   authConfig,
   user,
@@ -151,8 +152,9 @@ export default ({
       {currentTab === "import" && (
         <ImportPage
           isDesktop={isDesktop}
-          onChangeOHA={(newOHA, shouldViewChange, newName) => {
-            onChangeOHA(newOHA, newName)
+          onChangeFileName={onChangeFileName}
+          onChangeOHA={(newOHA, shouldViewChange) => {
+            onChangeOHA(newOHA)
             if (shouldViewChange) {
               changeTab("grid")
             }

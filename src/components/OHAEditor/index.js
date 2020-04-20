@@ -211,10 +211,11 @@ export default ({
                 taskOutput: newTaskOutput,
               })
             }}
-            onChangeOHA={(newOHA, newName) => {
-              onChangeOHA(newOHA, newName)
-              if (newName) setValueDisplay(newName)
+            onChangeFileName={(newName) => {
+              onChangeFileName(newName)
+              setValueDisplay(newName)
             }}
+            onChangeOHA={onChangeOHA}
             authConfig={authConfig}
             user={user}
           />
