@@ -135,7 +135,7 @@ export default ({ oha, onChangeOHA }) => {
           Icon1={ComputerIcon}
           Icon2={LanguageIcon}
         >
-          Tranform Local Files to Web URLs
+          Transform Local Files to Web URLs
         </Button>
         <Button desktopOnly dialog="download-urls" Icon1={GetAppIcon}>
           Download URLs
