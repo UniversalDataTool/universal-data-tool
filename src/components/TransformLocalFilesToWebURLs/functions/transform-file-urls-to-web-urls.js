@@ -18,10 +18,7 @@ const getFileURLKey = (item) => {
 
 const transformFileURLsToWebURLs = async({ oha, onChangeOHA, setProgress, remote }) => {
     const newTaskData = []
-
-    //const fileURLsArray = putFileURLsToAnArray(oha.taskData)
-
-    // const filesCount = fileURLsArray.length
+    
     const progressUnit = 100 / oha.taskData.length
     for (let taskDataIndex = 0; taskDataIndex < oha.taskData.length; taskDataIndex++) {
         const taskDataItem = oha.taskData[taskDataIndex]
@@ -58,14 +55,6 @@ const transformFileURLsToWebURLs = async({ oha, onChangeOHA, setProgress, remote
             ...taskDataItem,
             [fileURLKey]: webURLOfUploadedFile
         })
-        
-        
-        // const indexOfFileURL = (fileURLsArray.indexOf(fileURL)) + 1
-        // const webURLOfUploadedFile = await uploadFileToTransferSh({ fileName, fileURL, remote })
-        // const newOhaItem = { videoUrl: webURLOfUploadedFile } //TODO: change this with real ohaItem
-        // newTaskData.push(newOhaItem)
-        // const fullProgressOfUnit = progressUnit * indexOfFileURL
-        // setProgress(fullProgressOfUnit)
     }
     setProgress(100)
     onChangeOHA(setIn(oha, ["taskData"], newTaskData));
