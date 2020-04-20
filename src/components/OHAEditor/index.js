@@ -46,14 +46,15 @@ const useStyles = makeStyles({
 const headerTabs = ["Settings", "Samples", "Label"]
 
 export default ({
+  file,
   datasetName = "Universal Data Tool",
   oha,
   content,
   inSession,
   url,
   fileName = "unnamed",
-  onChangeFileName,
   onChangeOHA = () => null,
+  onChangeFile,
   onFileDrop,
   initialMode = "settings", //= "samples"
   authConfig,
@@ -132,7 +133,7 @@ export default ({
             <EditableTitleText
               label="File Name"
               onChange={(newName) => {
-                onChangeFileName(newName)
+                onChangeFile(setIn(file, ["fileName"], newName))
                 setValueDisplay(newName)
               }}
               value={valueDisplay || ""}
@@ -182,6 +183,7 @@ export default ({
         )}
         {mode === "samples" && (
           <SamplesView
+            file= {file}
             oha={oha}
             openSampleLabelEditor={(sampleIndex) => {
               changeSingleSampleOHA({
@@ -211,8 +213,9 @@ export default ({
                 taskOutput: newTaskOutput,
               })
             }}
-            onChangeFileName={(newName) => {
-              onChangeFileName(newName)
+            onChangeFile={(file, newName) => {
+              onChangeFile(file);
+              if(newName)
               setValueDisplay(newName)
             }}
             onChangeOHA={onChangeOHA}

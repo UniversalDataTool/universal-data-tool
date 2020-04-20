@@ -183,14 +183,8 @@ export default () => {
   }
 
   useEffect(() => {
-    console.log("Update")
-    //UpdateAWSStorage()
+    UpdateAWSStorage()
   }, [recentItems])
-
-  useEffect(() => {
-    console.log("À l'intérieur du useEffect")
-    console.log(file)
-  }, [file])
 
   return (
     <>
@@ -237,17 +231,16 @@ export default () => {
         ) : (
           <ErrorBoundary>
             <OHAEditor
+              file={file}
               key={file.id}
               {...file}
               selectedBrush={selectedBrush}
               inSession={inSession}
               oha={file.content}
-              onChangeFileName={async(newName) => {
-                changeFile(await setIn(file, ["fileName"], newName))
-              }}
               onChangeOHA={(newOHA) => {
                 changeFile(setIn(file, ["content"], newOHA))
               }}
+              onChangeFile={changeFile}
               authConfig
               user={user}
               recentItems={recentItems}

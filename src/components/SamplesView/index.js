@@ -62,12 +62,13 @@ const ExpandedRow = ({ data }) => {
 }
 
 export default ({
+  file,
   oha,
   openSampleInputEditor,
   openSampleLabelEditor,
   deleteSample,
-  onChangeFileName,
   onChangeOHA,
+  onChangeFile,
   authConfig,
   user,
 }) => {
@@ -151,8 +152,14 @@ export default ({
       <Box paddingTop={2} />
       {currentTab === "import" && (
         <ImportPage
+          file={file}
           isDesktop={isDesktop}
-          onChangeFileName={onChangeFileName}
+          onChangeFile={(file,newName, shouldViewChange) =>{
+            onChangeFile(file,newName)
+            if (shouldViewChange) {
+              changeTab("grid")
+            }
+          }}
           onChangeOHA={(newOHA, shouldViewChange) => {
             onChangeOHA(newOHA)
             if (shouldViewChange) {
