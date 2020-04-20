@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import SimpleDialog from "../SimpleDialog"
-import tranfomFileURLsToWebURLs from './functions/transform-file-urls-to-web-urls'
+import transformFileURLsToWebURLs from './functions/transform-file-urls-to-web-urls'
 import ProgressBar from "../ProgressBar"
 import useElectron from "../../utils/use-electron"
 
@@ -10,7 +10,7 @@ import useElectron from "../../utils/use-electron"
     *   =================== How Uploading and Transforming works? ====================  
     *   ==============================================================================
     * 
-    *   When user click "Convert Local Files to Web URLs" everything starts with tranfomFileURLsToWebURLs
+    *   When user click "Convert Local Files to Web URLs" everything starts with transformFileURLsToWebURLs
     *   tranfomFileURLsToWebURLs take oha, onChangeOHA, setProgress, remote
     *   first we put file urls(oha.taskdata) to array with putFileURLsToAnArray
     *   We splitted 100 to progressunits
@@ -36,7 +36,7 @@ const TransformLocalFilesToWebURLs = ({open, onClose, oha, onChangeOHA}) =>{
             actions={[
                 {
                     text: "Convert Local Files to Web URLs",
-                    onClick: async () => await tranfomFileURLsToWebURLs({oha, onChangeOHA, setProgress, remote})
+                    onClick: async () => await transformFileURLsToWebURLs({oha, onChangeOHA, setProgress, remote})
                 }
             ]}
         >
