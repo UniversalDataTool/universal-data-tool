@@ -1,5 +1,6 @@
 import uploadFileToTransferSh from './upload-file-to-transfersh'
 import splitFileNameFromFileURL from './split-file-name-from-file-url'
+import getFileURLKey from './get-file-url-key'
 import { setIn } from "seamless-immutable";
 
 // TODO move to utils directory
@@ -8,13 +9,6 @@ const idify = (s) =>
     .toLowerCase()
     .replace(/[^a-z0-9]/g, "_")
     .replace(/_+/g, "_")
-
-const getFileURLKey = (item) => {
-    if (item.imageUrl) return "imageUrl"
-    if (item.videoUrl) return "videoUrl"
-    if (item.audioUrl) return "audioUrl"
-    return null
-}
 
 const transformFileURLsToWebURLs = async({ oha, onChangeOHA, setProgress, remote }) => {
     const newTaskData = []
