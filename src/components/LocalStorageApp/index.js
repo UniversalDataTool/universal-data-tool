@@ -182,7 +182,7 @@ export default () => {
   function hasChanged(a,b) {
     console.log(a.content.taskData !== b.content.taskData )
     console.log( a.content.taskOutput !== b.content.taskOutput)
-    if (typeof a.content !== "undefined"||typeof a.content !== "undefined"||a.content.taskData !== b.content.taskData 
+    if (typeof a.content !== "undefined"||typeof b.content !== "undefined"||a.content.taskData !== b.content.taskData 
       || a.content.taskOutput !== b.content.taskOutput) return true
     return false
   }
