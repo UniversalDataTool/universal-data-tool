@@ -1,5 +1,5 @@
 // @flow
-import React, { useState, useMemo, useEffect, useCallback } from "react"
+import React, { useState, useMemo, useRef, useEffect, useCallback } from "react"
 import { HeaderContext } from "../Header"
 import StartingPage from "../StartingPage"
 import OHAEditor from "../OHAEditor"
@@ -134,56 +134,68 @@ export default () => {
   }
 
   function UpdateAWSStorage() {
-    if (!isEmpty(authConfig)) {
-      let index
-      for (let y = 0; y < recentItems.length; y++) {
-        if (
-          file !== "undefined" &&
-          file.fileName !== "undefined" &&
-          typeof recentItems[y].fileName !== "undefined" &&
-          recentItems[y].fileName === file.fileName
-        )
-          index = y
-      }
-      if (typeof index !== "undefined") {
-        var json = JSON.stringify(recentItems[index])
+    let index
+    for (let y = 0; y < recentItems.length; y++) {
+      if (
+        file !== "undefined" &&
+        file.fileName !== "undefined" &&
+        typeof recentItems[y].fileName !== "undefined" &&
+        recentItems[y].fileName === file.fileName
+      )
+        index = y
+    }
+    if (typeof index !== "undefined") {
+      var json = JSON.stringify(recentItems[index])
 
-        Storage.put(`${file.fileName}/`, null, {
-          level: "private",
-        }).catch((err) => console.log(err))
+      Storage.put(`${file.fileName}/`, null, {
+        level: "private",
+      }).catch((err) => console.log(err))
 
-        Storage.put(`${file.fileName}/annotations/annotations.json`, json, {
-          level: "private",
-        }).catch((err) => console.log(err))
+      Storage.put(`${file.fileName}/annotations/annotations.json`, json, {
+        level: "private",
+      }).catch((err) => console.log(err))
 
-        recentItems[index].content.taskData.forEach(async (element) => {
-          try {
-            const blob = await fetchAnImage(element)
-            let imageOrVideoName
-            if (typeof element.imageUrl !== "undefined") {
-              imageOrVideoName = element.imageUrl.match(
-                `\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
-              )
-            } else {
-              imageOrVideoName = element.videoUrl.match(
-                `\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
-              )
-            }
-
-            var pathToFile = `${file.fileName}/data/${imageOrVideoName[1]}`
-            Storage.put(pathToFile, blob, {
-              level: "private",
-            }).catch((err) => console.log(err))
-          } catch (err) {
-            console.log(err)
+      recentItems[index].content.taskData.forEach(async (element) => {
+        try {
+          const blob = await fetchAnImage(element)
+          let imageOrVideoName
+          if (typeof element.imageUrl !== "undefined") {
+            imageOrVideoName = element.imageUrl.match(
+              `\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
+            )
+          } else {
+            imageOrVideoName = element.videoUrl.match(
+              `\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
+            )
           }
-        })
-      }
+
+          var pathToFile = `${file.fileName}/data/${imageOrVideoName[1]}`
+          Storage.put(pathToFile, blob, {
+            level: "private",
+          }).catch((err) => console.log(err))
+        } catch (err) {
+          console.log(err)
+        }
+      })
     }
   }
+  function hasChanged(a,b) {
+    console.log(a.content.taskData !== b.content.taskData )
+    console.log( a.content.taskOutput !== b.content.taskOutput)
+    if (typeof a.content !== "undefined"||typeof a.content !== "undefined"||a.content.taskData !== b.content.taskData 
+      || a.content.taskOutput !== b.content.taskOutput) return true
+    return false
+  }
 
+  const lastObjectRef = useRef([])
   useEffect(() => {
-    UpdateAWSStorage()
+    console.log("UseEffect est trigger");
+    if (!isEmpty(authConfig)) {
+      if (hasChanged(lastObjectRef.current, recentItems)) return
+      console.log("J'ai changé")
+      lastObjectRef.current = recentItems
+      UpdateAWSStorage()
+    }
   }, [recentItems])
 
   return (
