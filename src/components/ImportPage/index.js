@@ -210,7 +210,7 @@ export default ({ oha, onChangeFileName, onChangeOHA, isDesktop, authConfig, use
   }
   const closeDialog = () => changeDialog(null)
   const onAddSamples = useEventCallback(
-    (appendedTaskData, appendedTaskOutput, json) => {
+    async (appendedTaskData, appendedTaskOutput, json) => {
       let newOHA = setIn(
         oha,
         ["taskData"],
@@ -225,14 +225,13 @@ export default ({ oha, onChangeFileName, onChangeOHA, isDesktop, authConfig, use
           )
         )
       }
-      console.log("json :" + json)
       if (
         typeof json !== "undefined" &&
         typeof json.content !== "undefined" &&
         typeof json.fileName !== "undefined"
       ) {
         newOHA = setIn(newOHA, ["interface"], json.content.interface)
-        onChangeFileName(json.fileName);
+        await onChangeFileName(json.fileName);
         onChangeOHA(newOHA, true)
       } else {
         onChangeOHA(newOHA, true)

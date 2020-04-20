@@ -183,8 +183,14 @@ export default () => {
   }
 
   useEffect(() => {
-    UpdateAWSStorage()
+    console.log("Update")
+    //UpdateAWSStorage()
   }, [recentItems])
+
+  useEffect(() => {
+    console.log("À l'intérieur du useEffect")
+    console.log(file)
+  }, [file])
 
   return (
     <>
@@ -236,8 +242,8 @@ export default () => {
               selectedBrush={selectedBrush}
               inSession={inSession}
               oha={file.content}
-              onChangeFileName={(newName) => {
-                changeFile(setIn(file, ["fileName"], newName))
+              onChangeFileName={async(newName) => {
+                changeFile(await setIn(file, ["fileName"], newName))
               }}
               onChangeOHA={(newOHA) => {
                 changeFile(setIn(file, ["content"], newOHA))
