@@ -157,21 +157,14 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
   const ChangeAnnotationToKeep = (event) => {
     annotationToKeep.current = event.target.value
   }
-  const handleAddSample = () => {
-    Storage.list("", { level: "private" })
-      .then(async (result) => {
-        var samples = await GetImageFromAFolderAWS(result)
-        var json = await GetAnnotationFromAFolderAWS(result)
-        if (json === null || typeof json.content.taskOutput === "undefined") {
-          onAddSamples(samples,null,json)
-        } else {
-          onAddSamples(samples, json.content.taskOutput, json)
-        }
-      })
-      .catch((err) => {
-        console.log("error getting link for s3 image", err)
-        return null
-      })
+  const handleAddSample = async() => {
+    var samples = await GetImageFromAFolderAWS(s3Content)
+    var json = await GetAnnotationFromAFolderAWS(s3Content)
+    if (json === null || typeof json.content.taskOutput === "undefined") {
+      onAddSamples(samples,null,json, annotationToKeep.current)
+    } else {
+      onAddSamples(samples, json.content.taskOutput, json, annotationToKeep.current)
+    }
   }
 
   const handleRowSelected = (whatsChanging) => {

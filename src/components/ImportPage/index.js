@@ -206,8 +206,7 @@ export default ({
             (oha.taskData || []).concat(
               importedFilePaths.map(convertToTaskDataObject).filter(Boolean)
             )
-          ),
-          true
+          ),true
         )
         return
       }
@@ -218,20 +217,54 @@ export default ({
   }
   const closeDialog = () => changeDialog(null)
   const onAddSamples = useEventCallback(
-    async (appendedTaskData, appendedTaskOutput, json) => {
+    async (appendedTaskData, appendedTaskOutput, json, annotationToKeep) => {
       let newOHA = setIn(
         oha,
         ["taskData"],
         (oha.taskData || []).concat(appendedTaskData)
       )
-      if (appendedTaskOutput) {
-        newOHA = setIn(
-          newOHA,
-          ["taskOutput"],
-          extendWithNull(oha.taskOutput || [], oha.taskData.length).concat(
-            appendedTaskOutput
+      if(annotationToKeep){
+        if(annotationToKeep === "both"){
+          if (appendedTaskOutput) {
+            newOHA = setIn(
+              newOHA,
+              ["taskOutput"],
+              extendWithNull(oha.taskOutput || [], oha.taskData.length).concat(
+                appendedTaskOutput
+              )
+            )
+          }
+        }
+        if(annotationToKeep === "incoming"){
+          if (appendedTaskOutput) {
+            newOHA = setIn(
+              newOHA,
+              ["taskOutput"],
+              extendWithNull([], oha.taskData.length).concat(
+                appendedTaskOutput
+              )
+            )
+          }
+        }
+        if(annotationToKeep === "current"){
+          if (appendedTaskOutput) {
+            newOHA = setIn(
+              newOHA,
+              ["taskOutput"],
+              extendWithNull(oha.taskOutput || [], oha.taskData.length)
+            )
+          }
+        }
+      }else{
+        if (appendedTaskOutput) {
+          newOHA = setIn(
+            newOHA,
+            ["taskOutput"],
+            extendWithNull(oha.taskOutput || [], oha.taskData.length).concat(
+              appendedTaskOutput
+            )
           )
-        )
+        }
       }
       if (
         json !== null &&
