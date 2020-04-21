@@ -179,17 +179,22 @@ export default () => {
       })
     }
   }
-  function hasChanged(a,b) {
-    console.log(a.content.taskData !== b.content.taskData )
-    console.log( a.content.taskOutput !== b.content.taskOutput)
-    if (typeof a.content !== "undefined"||typeof b.content !== "undefined"||a.content.taskData !== b.content.taskData 
-      || a.content.taskOutput !== b.content.taskOutput) return true
+  function hasChanged(a, b) {
+    console.log(a.content.taskData !== b.content.taskData)
+    console.log(a.content.taskOutput !== b.content.taskOutput)
+    if (
+      typeof a.content !== "undefined" ||
+      typeof b.content !== "undefined" ||
+      a.content.taskData !== b.content.taskData ||
+      a.content.taskOutput !== b.content.taskOutput
+    )
+      return true
     return false
   }
 
   const lastObjectRef = useRef([])
   useEffect(() => {
-    console.log("UseEffect est trigger");
+    console.log("UseEffect est trigger")
     if (!isEmpty(authConfig)) {
       if (hasChanged(lastObjectRef.current, recentItems)) return
       console.log("J'ai changé")

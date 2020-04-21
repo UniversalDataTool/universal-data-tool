@@ -183,7 +183,7 @@ export default ({
         )}
         {mode === "samples" && (
           <SamplesView
-            file= {file}
+            file={file}
             oha={oha}
             openSampleLabelEditor={(sampleIndex) => {
               changeSingleSampleOHA({
@@ -214,9 +214,8 @@ export default ({
               })
             }}
             onChangeFile={(file, newName) => {
-              onChangeFile(file);
-              if(newName)
-              setValueDisplay(newName)
+              onChangeFile(file)
+              if (newName) setValueDisplay(newName)
             }}
             onChangeOHA={onChangeOHA}
             authConfig={authConfig}
