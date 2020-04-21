@@ -206,7 +206,8 @@ export default ({
             (oha.taskData || []).concat(
               importedFilePaths.map(convertToTaskDataObject).filter(Boolean)
             )
-          ),true
+          ),
+          true
         )
         return
       }
@@ -223,8 +224,8 @@ export default ({
         ["taskData"],
         (oha.taskData || []).concat(appendedTaskData)
       )
-      if(annotationToKeep){
-        if(annotationToKeep === "both"){
+      if (annotationToKeep) {
+        if (annotationToKeep === "both") {
           if (appendedTaskOutput) {
             newOHA = setIn(
               newOHA,
@@ -235,18 +236,16 @@ export default ({
             )
           }
         }
-        if(annotationToKeep === "incoming"){
+        if (annotationToKeep === "incoming") {
           if (appendedTaskOutput) {
             newOHA = setIn(
               newOHA,
               ["taskOutput"],
-              extendWithNull([], oha.taskData.length).concat(
-                appendedTaskOutput
-              )
+              extendWithNull([], oha.taskData.length).concat(appendedTaskOutput)
             )
           }
         }
-        if(annotationToKeep === "current"){
+        if (annotationToKeep === "current") {
           if (appendedTaskOutput) {
             newOHA = setIn(
               newOHA,
@@ -255,7 +254,7 @@ export default ({
             )
           }
         }
-      }else{
+      } else {
         if (appendedTaskOutput) {
           newOHA = setIn(
             newOHA,
@@ -272,14 +271,16 @@ export default ({
         typeof json.content !== "undefined" &&
         typeof json.fileName !== "undefined"
       ) {
-        if(!isEmpty(file.content.interface) 
-        && !isEmpty(json.content.interface) 
-        && json.content.interface !== file.content.interface){
+        if (
+          !isEmpty(file.content.interface) &&
+          !isEmpty(json.content.interface) &&
+          json.content.interface !== file.content.interface
+        ) {
           console.log("danger")
         }
         newOHA = setIn(newOHA, ["interface"], json.content.interface)
-        if(typeof file.fileName === "undefined"||file.fileName === "unnamed")
-        file = setIn(file, ["fileName"], json.fileName)
+        if (typeof file.fileName === "undefined" || file.fileName === "unnamed")
+          file = setIn(file, ["fileName"], json.fileName)
         file = setIn(file, ["content"], newOHA)
         onChangeFile(file, true)
       } else {

@@ -3,10 +3,10 @@ import React, { useState, useEffect, useRef } from "react"
 import SimpleDialog from "../SimpleDialog"
 import DataTable from "react-data-table-component"
 import Radio from "@material-ui/core/Radio"
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from "@material-ui/core/FormControl"
+import FormLabel from "@material-ui/core/FormLabel"
+import RadioGroup from "@material-ui/core/RadioGroup"
+import FormControlLabel from "@material-ui/core/FormControlLabel"
 import Amplify, { Storage } from "aws-amplify"
 import isEmpty from "../../utils/isEmpty"
 
@@ -79,7 +79,7 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
   const [s3Content, changeS3Content] = useState(null)
   const [dataForTable, changeDataForTable] = useState(null)
   const [folderToFetch, setFolderToFetch] = useState("")
-  var annotationToKeep = useRef("both");
+  var annotationToKeep = useRef("both")
 
   let _dataForTable = {}
 
@@ -157,13 +157,18 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
   const ChangeAnnotationToKeep = (event) => {
     annotationToKeep.current = event.target.value
   }
-  const handleAddSample = async() => {
+  const handleAddSample = async () => {
     var samples = await GetImageFromAFolderAWS(s3Content)
     var json = await GetAnnotationFromAFolderAWS(s3Content)
     if (json === null || typeof json.content.taskOutput === "undefined") {
-      onAddSamples(samples,null,json, annotationToKeep.current)
+      onAddSamples(samples, null, json, annotationToKeep.current)
     } else {
-      onAddSamples(samples, json.content.taskOutput, json, annotationToKeep.current)
+      onAddSamples(
+        samples,
+        json.content.taskOutput,
+        json,
+        annotationToKeep.current
+      )
     }
   }
 
@@ -276,10 +281,27 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
       )}
       <FormControl component="fieldset">
         <FormLabel component="legend">Annotation processing</FormLabel>
-        <RadioGroup aria-label="option" name="option1" defaultValue={annotationToKeep.current} onChange={ChangeAnnotationToKeep}>
-          <FormControlLabel value="both" control={<Radio />} label="Keep both annotations" />
-          <FormControlLabel value="incoming" control={<Radio />} label="Keep incoming annotations" />
-          <FormControlLabel value="current" control={<Radio />} label="Keep current annotations" />
+        <RadioGroup
+          aria-label="option"
+          name="option1"
+          defaultValue={annotationToKeep.current}
+          onChange={ChangeAnnotationToKeep}
+        >
+          <FormControlLabel
+            value="both"
+            control={<Radio />}
+            label="Keep both annotations"
+          />
+          <FormControlLabel
+            value="incoming"
+            control={<Radio />}
+            label="Keep incoming annotations"
+          />
+          <FormControlLabel
+            value="current"
+            control={<Radio />}
+            label="Keep current annotations"
+          />
         </RadioGroup>
       </FormControl>
     </SimpleDialog>
