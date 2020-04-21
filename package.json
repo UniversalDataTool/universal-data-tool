@@ -7,8 +7,9 @@
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
     "start": "cross-env PORT=6001 react-scripts start",
+    "prepublishOnly": "npm run build:babel",
     "build": "npm run build:babel && npm run build:desktop",
-    "build:babel": "cross-env NODE_ENV=production babel ./src --out-dir=./lib && cp ./package.json ./lib/package.json",
+    "build:babel": "cross-env NODE_ENV=production babel ./src --out-dir=./lib && cp ./package.json ./lib/package.json && node ./lib/lib/fix-deps.js",
     "build:web": "CI=false react-scripts build",
     "build:desktop": "cross-env CI=false REACT_APP_DESKTOP=true PUBLIC_URL=./ react-scripts build && electron-builder build && cp ./desktop/entitlements.mac.plist ./build/entitlements.mac.plist",
     "start:desktop:dev": "USE_DEV_SERVER=yes electron ./desktop",
