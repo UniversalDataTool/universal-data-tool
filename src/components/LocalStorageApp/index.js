@@ -179,26 +179,43 @@ export default () => {
       })
     }
   }
-  function hasChanged(a, b) {
-    console.log(a.content.taskData !== b.content.taskData)
-    console.log(a.content.taskOutput !== b.content.taskOutput)
-    if (
-      typeof a.content !== "undefined" ||
-      typeof b.content !== "undefined" ||
-      a.content.taskData !== b.content.taskData ||
-      a.content.taskOutput !== b.content.taskOutput
-    )
-      return true
+  function hasChanged(objectOfRef, objectToCheck) {
+    // Vérifie si la donnée existe dans l'objet d'origine
+    if(typeof objectToCheck === "undefined")  return false
+    if(typeof objectToCheck.content === "undefined")  return false
+    if(typeof objectToCheck.content.taskData === "undefined") return false
+    if(typeof objectToCheck.content.taskData[0] === "undefined") return false
+    
+    // Vérifie si l'objet de référence est initialisé
+    if(typeof objectOfRef === "undefined") return true
+    if(typeof objectOfRef.content === "undefined") return true
+    if(typeof objectOfRef.content.taskData === "undefined") return true
+    
+    //Vérifie si les deux diffèrent sur le premier point à regarder
+     if(objectToCheck.content.taskData !== objectOfRef.content.taskData) return true
+    
+     //Vérifie si le second point existe
+    if(typeof objectToCheck.content.taskOutput === "undefined") return false
+    if(typeof objectToCheck.content.taskOutput[0] === "undefined") return false
+
+    //Vérifie si l'objet de référence possède le second point
+    if(typeof objectOfRef.content.taskOutput === "undefined") return true
+
+    //Vérifie si les deux sont différents
+    if(objectToCheck.content.taskOutput !== objectOfRef.content.taskOutput) return true
+
+    //Comportement par défaut
     return false
   }
 
   const lastObjectRef = useRef([])
   useEffect(() => {
     console.log("UseEffect est trigger")
-    if (!isEmpty(authConfig)) {
-      if (hasChanged(lastObjectRef.current, recentItems)) return
+    console.log(file)
+    if (!isEmpty(authConfig)) { 
+      if (!hasChanged(lastObjectRef.current, file)) return
       console.log("J'ai changé")
-      lastObjectRef.current = recentItems
+      lastObjectRef.current = file
       UpdateAWSStorage()
     }
   }, [recentItems])
