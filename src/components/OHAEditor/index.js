@@ -213,9 +213,9 @@ export default ({
                 taskOutput: newTaskOutput,
               })
             }}
-            onChangeFile={(file, newName) => {
+            onChangeFile={(file) => {
               onChangeFile(file)
-              if (newName) setValueDisplay(newName)
+              setValueDisplay(file.fileName)
             }}
             onChangeOHA={onChangeOHA}
             authConfig={authConfig}

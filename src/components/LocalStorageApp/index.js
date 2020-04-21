@@ -212,11 +212,8 @@ export default () => {
 
   const lastObjectRef = useRef([])
   useEffect(() => {
-    console.log("UseEffect est trigger")
-    console.log(file)
     if (!isEmpty(authConfig)) {
       if (!hasChanged(lastObjectRef.current, file)) return
-      console.log("J'ai changé")
       lastObjectRef.current = file
       UpdateAWSStorage()
     }

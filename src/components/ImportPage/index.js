@@ -234,14 +234,21 @@ export default ({
         )
       }
       if (
+        json !== null &&
         typeof json !== "undefined" &&
         typeof json.content !== "undefined" &&
         typeof json.fileName !== "undefined"
       ) {
+        if(!isEmpty(file.content.interface) 
+        && !isEmpty(json.content.interface) 
+        && json.content.interface !== file.content.interface){
+          console.log("danger")
+        }
         newOHA = setIn(newOHA, ["interface"], json.content.interface)
+        if(typeof file.fileName === "undefined"||file.fileName === "unnamed")
         file = setIn(file, ["fileName"], json.fileName)
         file = setIn(file, ["content"], newOHA)
-        onChangeFile(file, json.fileName, true)
+        onChangeFile(file, true)
       } else {
         onChangeOHA(newOHA, true)
       }

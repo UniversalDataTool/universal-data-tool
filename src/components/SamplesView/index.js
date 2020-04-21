@@ -154,8 +154,8 @@ export default ({
         <ImportPage
           file={file}
           isDesktop={isDesktop}
-          onChangeFile={(file, newName, shouldViewChange) => {
-            onChangeFile(file, newName)
+          onChangeFile={(file, shouldViewChange) => {
+            onChangeFile(file)
             if (shouldViewChange) {
               changeTab("grid")
             }
