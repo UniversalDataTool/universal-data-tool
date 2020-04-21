@@ -1,6 +1,6 @@
 // @flow weak
 
-import React, { useState, useContext, createContext } from "react"
+import React, { useState, createContext } from "react"
 import MuiButton from "@material-ui/core/Button"
 import { styled } from "@material-ui/core/styles"
 import AssignmentReturnedIcon from "@material-ui/icons/AssignmentReturned"
@@ -12,7 +12,6 @@ import * as colors from "@material-ui/core/colors"
 import PasteUrlsDialog from "../PasteUrlsDialog"
 import ImportFromS3Dialog from "../ImportFromS3Dialog"
 import ImportTextSnippetsDialog from "../ImportTextSnippetsDialog"
-import useIsDesktop from "../../utils/use-is-desktop"
 import useElectron from "../../utils/use-electron"
 import classnames from "classnames"
 import SvgIcon from "@material-ui/core/SvgIcon"

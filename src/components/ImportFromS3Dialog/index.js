@@ -9,6 +9,8 @@ import RadioGroup from "@material-ui/core/RadioGroup"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import Amplify, { Storage } from "aws-amplify"
 import isEmpty from "../../utils/isEmpty"
+import { setIn } from "seamless-immutable"
+import RecognizeFileExtension from "../../utils/RecognizeFileExtension"
 
 const expandedDataColumns = [{ name: "Data", selector: "data", sortable: true }]
 
@@ -79,28 +81,11 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
   const [s3Content, changeS3Content] = useState(null)
   const [dataForTable, changeDataForTable] = useState(null)
   const [folderToFetch, setFolderToFetch] = useState("")
-  var annotationToKeep = useRef("both")
-
+  const [configImport, setConfigImport] = useState({
+    annotationToKeep: "both",
+    typeOfFileToLoad: "Image"
+  })
   let _dataForTable = {}
-
-  function RecognizeFileExtension(UrlOfAFile) {
-    var typeOfFile = "File"
-    var fileExtension = UrlOfAFile.match(
-      `\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
-    )[2].toLowerCase()
-    if (
-      fileExtension === "jpg" ||
-      fileExtension === "jpeg" ||
-      fileExtension === "png" ||
-      fileExtension === "ico" ||
-      fileExtension === "jpe" ||
-      fileExtension === "gif"
-    )
-      typeOfFile = "Image"
-    if (fileExtension === "mp4" || fileExtension === "mkv") typeOfFile = "Video"
-    if (fileExtension === "mp3") typeOfFile = "Audio"
-    return typeOfFile
-  }
 
   async function GetImageFromAFolderAWS(result) {
     var samples = []
@@ -111,9 +96,12 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
           level: "private",
         })
           .then((result) => {
-            if (RecognizeFileExtension(result) === "Image") {
+
+            if (RecognizeFileExtension(result) === configImport.typeOfFileToLoad 
+            && configImport.typeOfFileToLoad === "Image") {
               samples.push({ imageUrl: `${result}` })
-            } else if (RecognizeFileExtension(result) === "Video") {
+            } else if (RecognizeFileExtension(result) === configImport.typeOfFileToLoad 
+            && configImport.typeOfFileToLoad==="Video") {
               samples.push({ videoUrl: `${result}` })
             }
           })
@@ -154,20 +142,17 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
     }
     return json
   }
-  const ChangeAnnotationToKeep = (event) => {
-    annotationToKeep.current = event.target.value
-  }
   const handleAddSample = async () => {
     var samples = await GetImageFromAFolderAWS(s3Content)
     var json = await GetAnnotationFromAFolderAWS(s3Content)
     if (json === null || typeof json.content.taskOutput === "undefined") {
-      onAddSamples(samples, null, json, annotationToKeep.current)
+      onAddSamples(samples, null, json, configImport)
     } else {
       onAddSamples(
         samples,
         json.content.taskOutput,
         json,
-        annotationToKeep.current
+        configImport
       )
     }
   }
@@ -202,6 +187,7 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
     } else if (!isEmpty(authConfig)) {
       Storage.list("", { level: "private" })
         .then((result) => {
+          console.log(result);
           changeS3Content(result)
           _dataForTable = result
             .filter((obj) => {
@@ -279,31 +265,62 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
           paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
         />
       )}
-      <FormControl component="fieldset">
-        <FormLabel component="legend">Annotation processing</FormLabel>
-        <RadioGroup
-          aria-label="option"
-          name="option1"
-          defaultValue={annotationToKeep.current}
-          onChange={ChangeAnnotationToKeep}
-        >
-          <FormControlLabel
-            value="both"
-            control={<Radio />}
-            label="Keep both annotations"
-          />
-          <FormControlLabel
-            value="incoming"
-            control={<Radio />}
-            label="Keep incoming annotations"
-          />
-          <FormControlLabel
-            value="current"
-            control={<Radio />}
-            label="Keep current annotations"
-          />
-        </RadioGroup>
-      </FormControl>
+      <div>
+        <div>
+          <FormControl component="fieldset">
+            <FormLabel component="legend">Annotation processing</FormLabel>
+            <RadioGroup
+              aria-label="option1"
+              name="option1"
+              defaultValue={configImport.annotationToKeep||"both"}
+              onChange={(event) => setConfigImport(setIn(configImport,["annotationToKeep"],event.target.value))}
+            >
+              <FormControlLabel
+                value="both"
+                control={<Radio />}
+                label="Keep both annotations"
+              />
+              <FormControlLabel
+                value="incoming"
+                control={<Radio />}
+                label="Keep incoming annotations"
+              />
+              <FormControlLabel
+                value="current"
+                control={<Radio />}
+                label="Keep current annotations"
+              />
+            </RadioGroup>
+          </FormControl>
+        </div>
+        <div>
+          <FormControl component="fieldset">
+            <FormLabel component="legend">Choose file type</FormLabel>
+            <RadioGroup
+              aria-label="option2"
+              name="option2"
+              defaultValue={configImport.typeOfFileToLoad||"Image"}
+              onChange={(event) => setConfigImport(setIn(configImport,["typeOfFileToLoad"],event.target.value))}
+            >
+              <FormControlLabel
+                value="Image"
+                control={<Radio />}
+                label="Load image file"
+              />
+              <FormControlLabel
+                value="Video"
+                control={<Radio />}
+                label="Load video file"
+              />
+              <FormControlLabel
+                value="Audio"
+                control={<Radio />}
+                label="Load audio file"
+              />
+            </RadioGroup>
+          </FormControl>
+        </div>
+      </div>
     </SimpleDialog>
   )
 }
