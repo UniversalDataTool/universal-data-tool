@@ -12,7 +12,10 @@ import isEmpty from "../../utils/isEmpty"
 import { setIn } from "seamless-immutable"
 import RecognizeFileExtension from "../../utils/RecognizeFileExtension"
 
-const expandedDataColumns = [{ name: "Data", selector: "data", sortable: true },{ name: "Last Modified", selector: "lastModified", sortable: true }]
+const expandedDataColumns = [
+  { name: "Data", selector: "data", sortable: true },
+  { name: "Last Modified", selector: "lastModified", sortable: true },
+]
 
 const expandedAnnotationsColumns = [
   { name: "Annotations", selector: "annotation" },
@@ -36,7 +39,6 @@ const customStyles = {
 
 const ExpandedRow = ({ data }) => {
   const { rowData, rowAnnotations, ...notImportant } = data
-  console.log(data)
   return (
     <>
       <DataTable
@@ -84,7 +86,7 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
   const [folderToFetch, setFolderToFetch] = useState("")
   const [configImport, setConfigImport] = useState({
     annotationToKeep: "both",
-    typeOfFileToLoad: "Image"
+    typeOfFileToLoad: "Image",
   })
   let _dataForTable = {}
 
@@ -97,12 +99,17 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
           level: "private",
         })
           .then((result) => {
-
-            if (RecognizeFileExtension(result) === configImport.typeOfFileToLoad 
-            && configImport.typeOfFileToLoad === "Image") {
+            if (
+              RecognizeFileExtension(result) ===
+                configImport.typeOfFileToLoad &&
+              configImport.typeOfFileToLoad === "Image"
+            ) {
               samples.push({ imageUrl: `${result}` })
-            } else if (RecognizeFileExtension(result) === configImport.typeOfFileToLoad 
-            && configImport.typeOfFileToLoad==="Video") {
+            } else if (
+              RecognizeFileExtension(result) ===
+                configImport.typeOfFileToLoad &&
+              configImport.typeOfFileToLoad === "Video"
+            ) {
               samples.push({ videoUrl: `${result}` })
             }
           })
@@ -149,12 +156,7 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
     if (json === null || typeof json.content.taskOutput === "undefined") {
       onAddSamples(samples, null, json, configImport)
     } else {
-      onAddSamples(
-        samples,
-        json.content.taskOutput,
-        json,
-        configImport
-      )
+      onAddSamples(samples, json.content.taskOutput, json, configImport)
     }
   }
 
@@ -188,7 +190,6 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
     } else if (!isEmpty(authConfig)) {
       Storage.list("", { level: "private" })
         .then((result) => {
-          console.log(result);
           changeS3Content(result)
           _dataForTable = result
             .filter((obj) => {
@@ -217,10 +218,10 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
                   )
                 })
                 .map((obj) => {
-                  return { 
+                  return {
                     annotation: obj.key.split("/annotations/")[1],
                     lastModified: obj.lastModified.toDateString(),
-                   }
+                  }
                 })
               return {
                 id: `${index}`,
@@ -277,8 +278,12 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
             <RadioGroup
               aria-label="option1"
               name="option1"
-              defaultValue={configImport.annotationToKeep||"both"}
-              onChange={(event) => setConfigImport(setIn(configImport,["annotationToKeep"],event.target.value))}
+              defaultValue={configImport.annotationToKeep || "both"}
+              onChange={(event) =>
+                setConfigImport(
+                  setIn(configImport, ["annotationToKeep"], event.target.value)
+                )
+              }
             >
               <FormControlLabel
                 value="both"
@@ -304,8 +309,12 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
             <RadioGroup
               aria-label="option2"
               name="option2"
-              defaultValue={configImport.typeOfFileToLoad||"Image"}
-              onChange={(event) => setConfigImport(setIn(configImport,["typeOfFileToLoad"],event.target.value))}
+              defaultValue={configImport.typeOfFileToLoad || "Image"}
+              onChange={(event) =>
+                setConfigImport(
+                  setIn(configImport, ["typeOfFileToLoad"], event.target.value)
+                )
+              }
             >
               <FormControlLabel
                 value="Image"
