@@ -81,32 +81,47 @@ const ExpandedRow = ({ data }) => {
 
 export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
   Amplify.configure(authConfig)
+  console.log(file)
   const [s3Content, changeS3Content] = useState(null)
   const [dataForTable, changeDataForTable] = useState(null)
   const [folderToFetch, setFolderToFetch] = useState("")
   const [configImport, setConfigImport] = useState({
     annotationToKeep: "both",
     typeOfFileToLoad:
-      file.content.interface.type === "image_classification" ||
+      (file.content.interface.type === "image_classification" ||
       file.content.interface.type === "image_segmentation" ||
       file.content.interface.type === "" ||
-      isEmpty(file.content.interface)
+      isEmpty(file.content.interface)) &&(
+        isEmpty(file.content.taskData) || 
+        isEmpty(file.content.taskData[0])||
+        !isEmpty(file.content.taskData[0].imageUrl))
         ? "Image"
-        : file.content.interface.type === "video_segmentation"
+        : (file.content.interface.type === "video_segmentation"||
+        file.content.interface.type === "" ||
+        isEmpty(file.content.interface))&&(
+          isEmpty(file.content.taskData) || 
+          isEmpty(file.content.taskData[0])||
+          !isEmpty(file.content.taskData[0].videoUrl))
         ? "Video"
         : "None",
     typeOfFileToDisable: {
       Image:
-        file.content.interface.type === "image_classification" ||
+        (file.content.interface.type === "image_classification" ||
         file.content.interface.type === "image_segmentation" ||
         file.content.interface.type === "" ||
-        isEmpty(file.content.interface)
+        isEmpty(file.content.interface)) && 
+        (isEmpty(file.content.taskData) || 
+        isEmpty(file.content.taskData[0])||
+        !isEmpty(file.content.taskData[0].imageUrl))
           ? false
           : true,
       Video:
-        file.content.interface.type === "video_segmentation" ||
+        (file.content.interface.type === "video_segmentation" ||
         file.content.interface.type === "" ||
-        isEmpty(file.content.interface)
+        isEmpty(file.content.interface))&&
+        (isEmpty(file.content.taskData) || 
+        isEmpty(file.content.taskData[0])||
+        !isEmpty(file.content.taskData[0].videoUrl))
           ? false
           : true,
       Audio: true,
