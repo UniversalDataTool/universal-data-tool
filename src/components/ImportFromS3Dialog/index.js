@@ -86,20 +86,31 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
   const [folderToFetch, setFolderToFetch] = useState("")
   const [configImport, setConfigImport] = useState({
     annotationToKeep: "both",
-    typeOfFileToLoad: 
-    file.content.interface.type === "image_classification" ||file.content.interface.type === "image_segmentation"||file.content.interface.type === "" ||isEmpty(file.content.interface)
-      ?"Image":
-      file.content.interface.type === "video_segmentation"
-      ?"Video":
-      "None",
-    typeOfFileToDisable: { 
-      Image: 
-      file.content.interface.type === "image_classification" ||file.content.interface.type === "image_segmentation"||file.content.interface.type === "" ||isEmpty(file.content.interface)
-      ?false:true, 
-      Video: 
-      file.content.interface.type === "video_segmentation"||file.content.interface.type === "" ||isEmpty(file.content.interface)
-      ?false:true, 
-      Audio: true },
+    typeOfFileToLoad:
+      file.content.interface.type === "image_classification" ||
+      file.content.interface.type === "image_segmentation" ||
+      file.content.interface.type === "" ||
+      isEmpty(file.content.interface)
+        ? "Image"
+        : file.content.interface.type === "video_segmentation"
+        ? "Video"
+        : "None",
+    typeOfFileToDisable: {
+      Image:
+        file.content.interface.type === "image_classification" ||
+        file.content.interface.type === "image_segmentation" ||
+        file.content.interface.type === "" ||
+        isEmpty(file.content.interface)
+          ? false
+          : true,
+      Video:
+        file.content.interface.type === "video_segmentation" ||
+        file.content.interface.type === "" ||
+        isEmpty(file.content.interface)
+          ? false
+          : true,
+      Audio: true,
+    },
   })
   let _dataForTable = {}
 
@@ -296,7 +307,7 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
                   onChange={(event) => {
                     setConfigImport({
                       ...configImport,
-                      annotationToKeep: event.target.value
+                      annotationToKeep: event.target.value,
                     })
                   }}
                 >
@@ -328,7 +339,7 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
                   onChange={(event) => {
                     setConfigImport({
                       ...configImport,
-                      typeOfFileToLoad: event.target.value
+                      typeOfFileToLoad: event.target.value,
                     })
                   }}
                 >
