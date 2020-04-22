@@ -79,14 +79,27 @@ const ExpandedRow = ({ data }) => {
   )
 }
 
-export default ({ open, onClose, onAddSamples, authConfig, user }) => {
+export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
   Amplify.configure(authConfig)
   const [s3Content, changeS3Content] = useState(null)
   const [dataForTable, changeDataForTable] = useState(null)
   const [folderToFetch, setFolderToFetch] = useState("")
   const [configImport, setConfigImport] = useState({
     annotationToKeep: "both",
-    typeOfFileToLoad: "Image",
+    typeOfFileToLoad: 
+    file.content.interface.type === "image_classification" ||file.content.interface.type === "image_segmentation"||file.content.interface.type === "" ||isEmpty(file.content.interface)
+      ?"Image":
+      file.content.interface.type === "video_segmentation"
+      ?"Video":
+      "None",
+    typeOfFileToDisable: { 
+      Image: 
+      file.content.interface.type === "image_classification" ||file.content.interface.type === "image_segmentation"||file.content.interface.type === "" ||isEmpty(file.content.interface)
+      ?false:true, 
+      Video: 
+      file.content.interface.type === "video_segmentation"||file.content.interface.type === "" ||isEmpty(file.content.interface)
+      ?false:true, 
+      Audio: true },
   })
   let _dataForTable = {}
 
@@ -236,7 +249,6 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
         .catch((err) => console.log(err))
     }
   }, [user])
-
   return (
     <SimpleDialog
       title="Select Project"
@@ -271,70 +283,79 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
           paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
         />
       )}
-      <div>
-        <div>
-          <FormControl component="fieldset">
-            <FormLabel component="legend">Annotation processing</FormLabel>
-            <RadioGroup
-              aria-label="option1"
-              name="option1"
-              defaultValue={configImport.annotationToKeep || "both"}
-              onChange={(event) =>
-                setConfigImport(
-                  setIn(configImport, ["annotationToKeep"], event.target.value)
-                )
-              }
-            >
-              <FormControlLabel
-                value="both"
-                control={<Radio />}
-                label="Keep both annotations"
-              />
-              <FormControlLabel
-                value="incoming"
-                control={<Radio />}
-                label="Keep incoming annotations"
-              />
-              <FormControlLabel
-                value="current"
-                control={<Radio />}
-                label="Keep current annotations"
-              />
-            </RadioGroup>
-          </FormControl>
-        </div>
-        <div>
-          <FormControl component="fieldset">
-            <FormLabel component="legend">Choose file type</FormLabel>
-            <RadioGroup
-              aria-label="option2"
-              name="option2"
-              defaultValue={configImport.typeOfFileToLoad || "Image"}
-              onChange={(event) =>
-                setConfigImport(
-                  setIn(configImport, ["typeOfFileToLoad"], event.target.value)
-                )
-              }
-            >
-              <FormControlLabel
-                value="Image"
-                control={<Radio />}
-                label="Load image file"
-              />
-              <FormControlLabel
-                value="Video"
-                control={<Radio />}
-                label="Load video file"
-              />
-              <FormControlLabel
-                value="Audio"
-                control={<Radio />}
-                label="Load audio file"
-              />
-            </RadioGroup>
-          </FormControl>
-        </div>
-      </div>
+      <table>
+        <tbody>
+          <tr>
+            <th>
+              <FormControl component="fieldset">
+                <FormLabel component="legend">Annotation processing</FormLabel>
+                <RadioGroup
+                  aria-label="option1"
+                  name="option1"
+                  defaultValue={configImport.annotationToKeep || "both"}
+                  onChange={(event) => {
+                    setConfigImport({
+                      ...configImport,
+                      annotationToKeep: event.target.value
+                    })
+                  }}
+                >
+                  <FormControlLabel
+                    value="both"
+                    control={<Radio />}
+                    label="Keep both annotations"
+                  />
+                  <FormControlLabel
+                    value="incoming"
+                    control={<Radio />}
+                    label="Keep incoming annotations"
+                  />
+                  <FormControlLabel
+                    value="current"
+                    control={<Radio />}
+                    label="Keep current annotations"
+                  />
+                </RadioGroup>
+              </FormControl>
+            </th>
+            <th>
+              <FormControl component="fieldset">
+                <FormLabel component="legend">Choose file type</FormLabel>
+                <RadioGroup
+                  aria-label="option2"
+                  name="option2"
+                  defaultValue={configImport.typeOfFileToLoad || "None"}
+                  onChange={(event) => {
+                    setConfigImport({
+                      ...configImport,
+                      typeOfFileToLoad: event.target.value
+                    })
+                  }}
+                >
+                  <FormControlLabel
+                    value="Image"
+                    control={<Radio />}
+                    label="Load image file"
+                    disabled={configImport.typeOfFileToDisable.Image}
+                  />
+                  <FormControlLabel
+                    value="Video"
+                    control={<Radio />}
+                    label="Load video file"
+                    disabled={configImport.typeOfFileToDisable.Video}
+                  />
+                  <FormControlLabel
+                    value="Audio"
+                    control={<Radio />}
+                    label="Load audio file"
+                    disabled={configImport.typeOfFileToDisable.Audio}
+                  />
+                </RadioGroup>
+              </FormControl>
+            </th>
+          </tr>
+        </tbody>
+      </table>
     </SimpleDialog>
   )
 }

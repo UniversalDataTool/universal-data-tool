@@ -364,6 +364,7 @@ export default ({
           onAddSamples={onAddSamples}
         />
         <ImportFromS3Dialog
+          file={file}
           authConfig={authConfig}
           open={selectedDialog === "import-from-s3"}
           onClose={closeDialog}
