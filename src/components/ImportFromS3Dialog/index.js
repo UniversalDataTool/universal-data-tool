@@ -9,8 +9,8 @@ import RadioGroup from "@material-ui/core/RadioGroup"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import Amplify, { Storage } from "aws-amplify"
 import isEmpty from "../../utils/isEmpty"
-import { setIn } from "seamless-immutable"
 import RecognizeFileExtension from "../../utils/RecognizeFileExtension"
+import { useLocalStorage } from "react-use"
 
 const expandedDataColumns = [
   { name: "Data", selector: "data", sortable: true },
@@ -123,9 +123,47 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
   const [s3Content, changeS3Content] = useState(null)
   const [dataForTable, changeDataForTable] = useState(null)
   const [folderToFetch, setFolderToFetch] = useState("")
-  const [configImport, setConfigImport] = useState(initConfigImport(file))
+  const [configImport, setConfigImport] = useLocalStorage("configImport",initConfigImport(file))
   let _dataForTable = {}
 
+  const lastObjectRef = useRef({})
+
+  function interfaceHasChanged(objectOfRef, objectToCheck) {
+    // Vérifie si la donnée existe dans l'objet d'origine
+    if (typeof objectToCheck === "undefined") return false
+    if (typeof objectToCheck.content === "undefined") return false
+    if (typeof objectToCheck.content.interface === "undefined") return false
+    if (typeof objectToCheck.content.interface.type === "undefined") return false
+
+    // Vérifie si l'objet de référence est initialisé
+    if (typeof objectOfRef === "undefined") return true
+    if (typeof objectOfRef.content === "undefined") return true
+    if (typeof objectOfRef.content.taskData === "undefined") return true
+
+    //Vérifie si les deux diffèrent sur le premier point à regarder
+    if (objectToCheck.content.interface.type !== objectOfRef.content.interface.type)
+      return true
+    //Comportement par défaut
+    return false
+  }
+
+  useEffect(()=>{
+    if (!interfaceHasChanged(lastObjectRef.current, file)) return
+    lastObjectRef.current = file
+    setConfigImport({
+      ...configImport,
+      typeOfFileToLoad: checkInterfaceAndTaskData(["Image", "Empty"], file)
+      ? "Image"
+      : checkInterfaceAndTaskData(["Video", "Empty"], file)
+      ? "Video"
+      : "None",
+    typeOfFileToDisable: {
+      Image: checkInterfaceAndTaskData(["Image", "Empty"], file) ? false : true,
+      Video: checkInterfaceAndTaskData(["Video", "Empty"], file) ? false : true,
+      Audio: true,
+    },})
+
+  },[file])
   async function GetImageFromAFolderAWS(result) {
     var samples = []
     for (let i = 0; i < result.length; i++) {
