@@ -12,6 +12,7 @@ import toUDTCSV from "../../utils/to-udt-csv.js"
 import Amplify, { Auth, Storage } from "aws-amplify"
 import config from "../LocalStorageApp/AWSconfig"
 import isEmpty from "../../utils/isEmpty"
+import fileHasChanged from "../../utils/fileHasChanged"
 import { setIn } from "seamless-immutable"
 import ErrorBoundary from "../ErrorBoundary"
 import useEventCallback from "use-event-callback"
@@ -179,41 +180,12 @@ export default () => {
       })
     }
   }
-  function hasChanged(objectOfRef, objectToCheck) {
-    // Vérifie si la donnée existe dans l'objet d'origine
-    if (typeof objectToCheck === "undefined") return false
-    if (typeof objectToCheck.content === "undefined") return false
-    if (typeof objectToCheck.content.taskData === "undefined") return false
-    if (typeof objectToCheck.content.taskData[0] === "undefined") return false
-
-    // Vérifie si l'objet de référence est initialisé
-    if (typeof objectOfRef === "undefined") return true
-    if (typeof objectOfRef.content === "undefined") return true
-    if (typeof objectOfRef.content.taskData === "undefined") return true
-
-    //Vérifie si les deux diffèrent sur le premier point à regarder
-    if (objectToCheck.content.taskData !== objectOfRef.content.taskData)
-      return true
-
-    //Vérifie si le second point existe
-    if (typeof objectToCheck.content.taskOutput === "undefined") return false
-    if (typeof objectToCheck.content.taskOutput[0] === "undefined") return false
-
-    //Vérifie si l'objet de référence possède le second point
-    if (typeof objectOfRef.content.taskOutput === "undefined") return true
-
-    //Vérifie si les deux sont différents
-    if (objectToCheck.content.taskOutput !== objectOfRef.content.taskOutput)
-      return true
-
-    //Comportement par défaut
-    return false
-  }
 
   const lastObjectRef = useRef([])
   useEffect(() => {
     if (!isEmpty(authConfig)) {
-      if (!hasChanged(lastObjectRef.current, file)) return
+      var changes = fileHasChanged(lastObjectRef.current, file)
+      if (!changes.content.taskData&&!changes.content.taskOutput&&!changes.fileName) return
       lastObjectRef.current = file
       UpdateAWSStorage()
     }

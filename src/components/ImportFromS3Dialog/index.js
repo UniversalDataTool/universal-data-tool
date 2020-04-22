@@ -11,6 +11,7 @@ import Amplify, { Storage } from "aws-amplify"
 import isEmpty from "../../utils/isEmpty"
 import RecognizeFileExtension from "../../utils/RecognizeFileExtension"
 import { useLocalStorage } from "react-use"
+import fileHasChanged from "../../utils/fileHasChanged"
 
 const expandedDataColumns = [
   { name: "Data", selector: "data", sortable: true },
@@ -130,32 +131,9 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
   let _dataForTable = {}
 
   const lastObjectRef = useRef({})
-
-  function interfaceHasChanged(objectOfRef, objectToCheck) {
-    // Vérifie si la donnée existe dans l'objet d'origine
-    if (typeof objectToCheck === "undefined") return false
-    if (typeof objectToCheck.content === "undefined") return false
-    if (typeof objectToCheck.content.interface === "undefined") return false
-    if (typeof objectToCheck.content.interface.type === "undefined")
-      return false
-
-    // Vérifie si l'objet de référence est initialisé
-    if (typeof objectOfRef === "undefined") return true
-    if (typeof objectOfRef.content === "undefined") return true
-    if (typeof objectOfRef.content.taskData === "undefined") return true
-
-    //Vérifie si les deux diffèrent sur le premier point à regarder
-    if (
-      objectToCheck.content.interface.type !==
-      objectOfRef.content.interface.type
-    )
-      return true
-    //Comportement par défaut
-    return false
-  }
-
   useEffect(() => {
-    if (!interfaceHasChanged(lastObjectRef.current, file)) return
+    var changes= fileHasChanged(lastObjectRef.current, file)
+    if (!changes.content.interface.type) return
     lastObjectRef.current = file
     setConfigImport({
       ...configImport,
