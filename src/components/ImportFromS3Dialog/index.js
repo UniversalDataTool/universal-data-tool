@@ -79,53 +79,40 @@ const ExpandedRow = ({ data }) => {
   )
 }
 
-function interfaceFileType(type){
-  if(type === "image_classification"||type === "image_segmentation")
+function interfaceFileType(type) {
+  if (type === "image_classification" || type === "image_segmentation")
     return "Image"
-  if(type === "video_segmentation")
-    return "Video"
-  if(false)
-    return "Audio"
-  if(type === "" || typeof type === "undefined")
-    return "Empty"
+  if (type === "video_segmentation") return "Video"
+  if (false) return "Audio"
+  if (type === "" || typeof type === "undefined") return "Empty"
   return "File"
 }
 
-function typeTaskDataSample(taskData){
-  if(isEmpty(taskData) || isEmpty(taskData[0]))
-    return "Empty"
-  if(!isEmpty(taskData[0].imageUrl))
-    return "Image"
-  if(!isEmpty(taskData[0].videoUrl))
-    return "Video"
+function typeTaskDataSample(taskData) {
+  if (isEmpty(taskData) || isEmpty(taskData[0])) return "Empty"
+  if (!isEmpty(taskData[0].imageUrl)) return "Image"
+  if (!isEmpty(taskData[0].videoUrl)) return "Video"
   return "File"
 }
-function checkInterfaceAndTaskData(typeAuthorize,file){
-  var result = [null,null]
-  result[0]=interfaceFileType(file.content.interface.type)
-  result[1]=typeTaskDataSample(file.content.taskData)
-  if(typeAuthorize.includes(result[0])&&typeAuthorize.includes(result[1]))
+function checkInterfaceAndTaskData(typeAuthorize, file) {
+  var result = [null, null]
+  result[0] = interfaceFileType(file.content.interface.type)
+  result[1] = typeTaskDataSample(file.content.taskData)
+  if (typeAuthorize.includes(result[0]) && typeAuthorize.includes(result[1]))
     return true
   return false
 }
-function initConfigImport(file){
+function initConfigImport(file) {
   return {
     annotationToKeep: "both",
-    typeOfFileToLoad:
-      (checkInterfaceAndTaskData(["Image","Empty"],file))
-        ? "Image"
-        : (checkInterfaceAndTaskData(["Video","Empty"],file))
-        ? "Video"
-        : "None",
+    typeOfFileToLoad: checkInterfaceAndTaskData(["Image", "Empty"], file)
+      ? "Image"
+      : checkInterfaceAndTaskData(["Video", "Empty"], file)
+      ? "Video"
+      : "None",
     typeOfFileToDisable: {
-      Image:
-        (checkInterfaceAndTaskData(["Image","Empty"],file))
-          ? false
-          : true,
-      Video:
-      (checkInterfaceAndTaskData(["Video","Empty"],file))
-          ? false
-          : true,
+      Image: checkInterfaceAndTaskData(["Image", "Empty"], file) ? false : true,
+      Video: checkInterfaceAndTaskData(["Video", "Empty"], file) ? false : true,
       Audio: true,
     },
   }
