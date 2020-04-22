@@ -123,7 +123,10 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
   const [s3Content, changeS3Content] = useState(null)
   const [dataForTable, changeDataForTable] = useState(null)
   const [folderToFetch, setFolderToFetch] = useState("")
-  const [configImport, setConfigImport] = useLocalStorage("configImport",initConfigImport(file))
+  const [configImport, setConfigImport] = useLocalStorage(
+    "configImport",
+    initConfigImport(file)
+  )
   let _dataForTable = {}
 
   const lastObjectRef = useRef({})
@@ -133,7 +136,8 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
     if (typeof objectToCheck === "undefined") return false
     if (typeof objectToCheck.content === "undefined") return false
     if (typeof objectToCheck.content.interface === "undefined") return false
-    if (typeof objectToCheck.content.interface.type === "undefined") return false
+    if (typeof objectToCheck.content.interface.type === "undefined")
+      return false
 
     // Vérifie si l'objet de référence est initialisé
     if (typeof objectOfRef === "undefined") return true
@@ -141,29 +145,36 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
     if (typeof objectOfRef.content.taskData === "undefined") return true
 
     //Vérifie si les deux diffèrent sur le premier point à regarder
-    if (objectToCheck.content.interface.type !== objectOfRef.content.interface.type)
+    if (
+      objectToCheck.content.interface.type !==
+      objectOfRef.content.interface.type
+    )
       return true
     //Comportement par défaut
     return false
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     if (!interfaceHasChanged(lastObjectRef.current, file)) return
     lastObjectRef.current = file
     setConfigImport({
       ...configImport,
       typeOfFileToLoad: checkInterfaceAndTaskData(["Image", "Empty"], file)
-      ? "Image"
-      : checkInterfaceAndTaskData(["Video", "Empty"], file)
-      ? "Video"
-      : "None",
-    typeOfFileToDisable: {
-      Image: checkInterfaceAndTaskData(["Image", "Empty"], file) ? false : true,
-      Video: checkInterfaceAndTaskData(["Video", "Empty"], file) ? false : true,
-      Audio: true,
-    },})
-
-  },[file])
+        ? "Image"
+        : checkInterfaceAndTaskData(["Video", "Empty"], file)
+        ? "Video"
+        : "None",
+      typeOfFileToDisable: {
+        Image: checkInterfaceAndTaskData(["Image", "Empty"], file)
+          ? false
+          : true,
+        Video: checkInterfaceAndTaskData(["Video", "Empty"], file)
+          ? false
+          : true,
+        Audio: true,
+      },
+    })
+  }, [file])
   async function GetImageFromAFolderAWS(result) {
     var samples = []
     for (let i = 0; i < result.length; i++) {
