@@ -79,54 +79,64 @@ const ExpandedRow = ({ data }) => {
   )
 }
 
-export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
-  Amplify.configure(authConfig)
-  console.log(file)
-  const [s3Content, changeS3Content] = useState(null)
-  const [dataForTable, changeDataForTable] = useState(null)
-  const [folderToFetch, setFolderToFetch] = useState("")
-  const [configImport, setConfigImport] = useState({
+function interfaceFileType(type){
+  if(type === "image_classification"||type === "image_segmentation")
+    return "Image"
+  if(type === "video_segmentation")
+    return "Video"
+  if(false)
+    return "Audio"
+  if(type === "" || typeof type === "undefined")
+    return "Empty"
+  return "File"
+}
+
+function typeTaskDataSample(taskData){
+  if(isEmpty(taskData) || isEmpty(taskData[0]))
+    return "Empty"
+  if(!isEmpty(taskData[0].imageUrl))
+    return "Image"
+  if(!isEmpty(taskData[0].videoUrl))
+    return "Video"
+  return "File"
+}
+function checkInterfaceAndTaskData(typeAuthorize,file){
+  var result = [null,null]
+  result[0]=interfaceFileType(file.content.interface.type)
+  result[1]=typeTaskDataSample(file.content.taskData)
+  if(typeAuthorize.includes(result[0])&&typeAuthorize.includes(result[1]))
+    return true
+  return false
+}
+function initConfigImport(file){
+  return {
     annotationToKeep: "both",
     typeOfFileToLoad:
-      (file.content.interface.type === "image_classification" ||
-        file.content.interface.type === "image_segmentation" ||
-        file.content.interface.type === "" ||
-        isEmpty(file.content.interface)) &&
-      (isEmpty(file.content.taskData) ||
-        isEmpty(file.content.taskData[0]) ||
-        !isEmpty(file.content.taskData[0].imageUrl))
+      (checkInterfaceAndTaskData(["Image","Empty"],file))
         ? "Image"
-        : (file.content.interface.type === "video_segmentation" ||
-            file.content.interface.type === "" ||
-            isEmpty(file.content.interface)) &&
-          (isEmpty(file.content.taskData) ||
-            isEmpty(file.content.taskData[0]) ||
-            !isEmpty(file.content.taskData[0].videoUrl))
+        : (checkInterfaceAndTaskData(["Video","Empty"],file))
         ? "Video"
         : "None",
     typeOfFileToDisable: {
       Image:
-        (file.content.interface.type === "image_classification" ||
-          file.content.interface.type === "image_segmentation" ||
-          file.content.interface.type === "" ||
-          isEmpty(file.content.interface)) &&
-        (isEmpty(file.content.taskData) ||
-          isEmpty(file.content.taskData[0]) ||
-          !isEmpty(file.content.taskData[0].imageUrl))
+        (checkInterfaceAndTaskData(["Image","Empty"],file))
           ? false
           : true,
       Video:
-        (file.content.interface.type === "video_segmentation" ||
-          file.content.interface.type === "" ||
-          isEmpty(file.content.interface)) &&
-        (isEmpty(file.content.taskData) ||
-          isEmpty(file.content.taskData[0]) ||
-          !isEmpty(file.content.taskData[0].videoUrl))
+      (checkInterfaceAndTaskData(["Video","Empty"],file))
           ? false
           : true,
       Audio: true,
     },
-  })
+  }
+}
+
+export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
+  Amplify.configure(authConfig)
+  const [s3Content, changeS3Content] = useState(null)
+  const [dataForTable, changeDataForTable] = useState(null)
+  const [folderToFetch, setFolderToFetch] = useState("")
+  const [configImport, setConfigImport] = useState(initConfigImport(file))
   let _dataForTable = {}
 
   async function GetImageFromAFolderAWS(result) {
