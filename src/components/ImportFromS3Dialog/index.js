@@ -12,10 +12,11 @@ import isEmpty from "../../utils/isEmpty"
 import { setIn } from "seamless-immutable"
 import RecognizeFileExtension from "../../utils/RecognizeFileExtension"
 
-const expandedDataColumns = [{ name: "Data", selector: "data", sortable: true }]
+const expandedDataColumns = [{ name: "Data", selector: "data", sortable: true },{ name: "Last Modified", selector: "lastModified", sortable: true }]
 
 const expandedAnnotationsColumns = [
   { name: "Annotations", selector: "annotation" },
+  { name: "Last Modified", selector: "lastModified", sortable: true },
 ]
 
 const columns = [{ name: "Projects", selector: "folder", sortable: true }]
@@ -35,7 +36,7 @@ const customStyles = {
 
 const ExpandedRow = ({ data }) => {
   const { rowData, rowAnnotations, ...notImportant } = data
-
+  console.log(data)
   return (
     <>
       <DataTable
@@ -205,6 +206,7 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
                 .map((obj) => {
                   return {
                     data: obj.key.split("/data/")[1],
+                    lastModified: obj.lastModified.toDateString(),
                   }
                 })
               const rowAnnotationsContent = result
@@ -215,7 +217,10 @@ export default ({ open, onClose, onAddSamples, authConfig, user }) => {
                   )
                 })
                 .map((obj) => {
-                  return { annotation: obj.key.split("/annotations/")[1] }
+                  return { 
+                    annotation: obj.key.split("/annotations/")[1],
+                    lastModified: obj.lastModified.toDateString(),
+                   }
                 })
               return {
                 id: `${index}`,
