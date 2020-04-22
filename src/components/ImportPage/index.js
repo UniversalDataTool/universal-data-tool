@@ -218,6 +218,24 @@ export default ({
   const closeDialog = () => changeDialog(null)
   const onAddSamples = useEventCallback(
     async (appendedTaskData, appendedTaskOutput, json, annotationToKeep) => {
+      for(var i =0; i<appendedTaskData.length;i++){
+        var sampleName;
+        if (typeof appendedTaskData[i].imageUrl !== "undefined") {
+          sampleName = appendedTaskData[i].imageUrl.match(
+            `\\/(([^\\/\\\\&\\?]*)\\.([a-zA-Z0-9]*))(\\?|$)`
+          )
+        } else {
+          sampleName = appendedTaskData[i].videoUrl.match(
+            `\\/(([^\\/\\\\&\\?]*)\\.([a-zA-Z0-9]*))(\\?|$)`
+          )
+        }
+        console.log(oha)
+        if(appendedTaskData.findIndex((elem)=>{return elem.sampleName === sampleName})!==-1)
+          sampleName[1] = sampleName[2]+i.toString()+"."+sampleName[3]
+        if(oha.taskData.findIndex((elem)=>{return elem.sampleName === sampleName})!==-1)
+          sampleName[1] = sampleName[2]+i.toString()+"."+sampleName[3]
+        appendedTaskData[i].sampleName=sampleName[1]
+      }
       let newOHA = setIn(
         oha,
         ["taskData"],

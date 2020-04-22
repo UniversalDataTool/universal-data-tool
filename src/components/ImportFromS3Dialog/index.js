@@ -196,8 +196,7 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
       await Storage.get(`${folderToFetch}/annotations/annotations.json`, {
         expires: 24 * 60 * 60 * 2000,
         level: "private",
-      })
-        .then(async (result) => {
+      }).then(async (result) => {
           await fetch(result).then(async (data) => {
             return await data.json().then(async (result) => {
               if (typeof result.content != "undefined") {
@@ -205,14 +204,14 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
               }
             })
           })
-        })
-        .catch((err) => {
+        }).catch((err) => {
           console.log("error getting link for s3 image", err)
           return null
         })
     }
     return json
   }
+
   const handleAddSample = async () => {
     var samples = await GetImageFromAFolderAWS(s3Content)
     var json = await GetAnnotationFromAFolderAWS(s3Content)
