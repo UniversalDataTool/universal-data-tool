@@ -132,7 +132,7 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
 
   const lastObjectRef = useRef({})
   useEffect(() => {
-    var changes= fileHasChanged(lastObjectRef.current, file)
+    var changes = fileHasChanged(lastObjectRef.current, file)
     if (!changes.content.interface.type) return
     lastObjectRef.current = file
     setConfigImport({

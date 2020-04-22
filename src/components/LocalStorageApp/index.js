@@ -185,7 +185,12 @@ export default () => {
   useEffect(() => {
     if (!isEmpty(authConfig)) {
       var changes = fileHasChanged(lastObjectRef.current, file)
-      if (!changes.content.taskData&&!changes.content.taskOutput&&!changes.fileName) return
+      if (
+        !changes.content.taskData &&
+        !changes.content.taskOutput &&
+        !changes.fileName
+      )
+        return
       lastObjectRef.current = file
       UpdateAWSStorage()
     }
