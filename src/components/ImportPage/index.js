@@ -250,7 +250,7 @@ export default ({
     }
     return taskOutput
   }
-  function getSampleNameFromURL(sample){
+  function getSampleNameFromURL(sample) {
     var sampleName
     if (typeof sample.imageUrl !== "undefined") {
       sampleName = sample.imageUrl.match(
@@ -263,16 +263,16 @@ export default ({
     }
     return sampleName
   }
-  function searchSampleName(sampleName, myArray){
+  function searchSampleName(sampleName, myArray) {
     var nameToSearch = ""
-    for (var i=0; i < myArray.length; i++) {
-      if(typeof myArray[i].sampleName === "undefined"){
+    for (var i = 0; i < myArray.length; i++) {
+      if (typeof myArray[i].sampleName === "undefined") {
         nameToSearch = getSampleNameFromURL(myArray[i])[1]
-      }else{
+      } else {
         nameToSearch = myArray[i].sampleName
       }
       if (nameToSearch === sampleName) {
-          return true;
+        return true
       }
     }
     return false
@@ -282,15 +282,17 @@ export default ({
   const onAddSamples = useEventCallback(
     async (appendedTaskData, appendedTaskOutput, json, configImport) => {
       for (var i = 0; i < appendedTaskData.length; i++) {
-        var sampleName= getSampleNameFromURL(appendedTaskData[i])
-        var boolName= true
-        var v= 1
-        while(boolName){
-          if(searchSampleName(sampleName[1],oha.taskData)||searchSampleName(sampleName[1],appendedTaskData))
-          {
-            sampleName[1] = sampleName[2] + v.toString()+"." + sampleName[3]
+        var sampleName = getSampleNameFromURL(appendedTaskData[i])
+        var boolName = true
+        var v = 1
+        while (boolName) {
+          if (
+            searchSampleName(sampleName[1], oha.taskData) ||
+            searchSampleName(sampleName[1], appendedTaskData)
+          ) {
+            sampleName[1] = sampleName[2] + v.toString() + "." + sampleName[3]
             v++
-          }else {
+          } else {
             appendedTaskData[i].sampleName = sampleName[1]
             boolName = false
           }

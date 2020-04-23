@@ -160,7 +160,7 @@ export default () => {
         try {
           const blob = await fetchAnImage(element)
           let imageOrVideoName
-          if(typeof element.sampleName === "undefined"){
+          if (typeof element.sampleName === "undefined") {
             if (typeof element.imageUrl !== "undefined") {
               imageOrVideoName = element.imageUrl.match(
                 `\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
@@ -170,7 +170,7 @@ export default () => {
                 `\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
               )[1]
             }
-          }else{
+          } else {
             console.log(element)
             imageOrVideoName = element.sampleName
           }
