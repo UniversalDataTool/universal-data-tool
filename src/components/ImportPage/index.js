@@ -217,7 +217,7 @@ export default ({
   }
   const closeDialog = () => changeDialog(null)
   const onAddSamples = useEventCallback(
-    async (appendedTaskData, appendedTaskOutput, json, annotationToKeep) => {
+    async (appendedTaskData, appendedTaskOutput, json, configImport) => {
       for(var i =0; i<appendedTaskData.length;i++){
         var sampleName;
         if (typeof appendedTaskData[i].imageUrl !== "undefined") {
@@ -241,8 +241,8 @@ export default ({
         ["taskData"],
         (oha.taskData || []).concat(appendedTaskData)
       )
-      if (annotationToKeep) {
-        if (annotationToKeep === "both") {
+      if (configImport.annotationToKeep) {
+        if (configImport.annotationToKeep === "both") {
           if (appendedTaskOutput) {
             newOHA = setIn(
               newOHA,
@@ -253,7 +253,7 @@ export default ({
             )
           }
         }
-        if (annotationToKeep === "incoming") {
+        if (configImport.annotationToKeep === "incoming") {
           if (appendedTaskOutput) {
             newOHA = setIn(
               newOHA,
@@ -262,7 +262,7 @@ export default ({
             )
           }
         }
-        if (annotationToKeep === "current") {
+        if (configImport.annotationToKeep === "current") {
           if (appendedTaskOutput) {
             newOHA = setIn(
               newOHA,
