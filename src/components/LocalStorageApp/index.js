@@ -192,11 +192,11 @@ export default () => {
       var changes = fileHasChanged(lastObjectRef.current, file)
       if (
         (!changes.content.taskData &&
-        !changes.content.taskOutput &&
-        !changes.fileName) ||
+          !changes.content.taskOutput &&
+          !changes.fileName) ||
         (file.content.interface.type !== "video_segmentation" &&
-        file.content.interface.type !== "image_classification" &&
-        file.content.interface.type !== "image_segmentation")
+          file.content.interface.type !== "image_classification" &&
+          file.content.interface.type !== "image_segmentation")
       )
         return
       lastObjectRef.current = file
