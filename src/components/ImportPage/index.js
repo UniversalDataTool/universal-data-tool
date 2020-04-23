@@ -215,16 +215,24 @@ export default ({
       }
     }
   }
-  function setAnnotations(taskOutput,appendedTaskOutput,configImport){
-    if (!isEmpty(configImport)&&typeof configImport.annotationToKeep !== "undefined") {
+  function setAnnotations(taskOutput, appendedTaskOutput, configImport) {
+    if (
+      !isEmpty(configImport) &&
+      typeof configImport.annotationToKeep !== "undefined"
+    ) {
       if (configImport.annotationToKeep === "both") {
         if (appendedTaskOutput) {
-          taskOutput = extendWithNull(oha.taskOutput || [], oha.taskData.length).concat(appendedTaskOutput)
+          taskOutput = extendWithNull(
+            oha.taskOutput || [],
+            oha.taskData.length
+          ).concat(appendedTaskOutput)
         }
       }
       if (configImport.annotationToKeep === "incoming") {
         if (appendedTaskOutput) {
-          taskOutput = extendWithNull([], oha.taskData.length).concat(appendedTaskOutput)
+          taskOutput = extendWithNull([], oha.taskData.length).concat(
+            appendedTaskOutput
+          )
         }
       }
       if (configImport.annotationToKeep === "current") {
@@ -234,30 +242,59 @@ export default ({
       }
     } else {
       if (appendedTaskOutput) {
-        taskOutput = extendWithNull(oha.taskOutput || [], oha.taskData.length).concat(appendedTaskOutput)
+        taskOutput = extendWithNull(
+          oha.taskOutput || [],
+          oha.taskData.length
+        ).concat(appendedTaskOutput)
       }
     }
     return taskOutput
   }
+  function getSampleNameFromURL(sample){
+    var sampleName
+    if (typeof sample.imageUrl !== "undefined") {
+      sampleName = sample.imageUrl.match(
+        `\\/(([^\\/\\\\&\\?]*)\\.([a-zA-Z0-9]*))(\\?|$)`
+      )
+    } else {
+      sampleName = sample.videoUrl.match(
+        `\\/(([^\\/\\\\&\\?]*)\\.([a-zA-Z0-9]*))(\\?|$)`
+      )
+    }
+    return sampleName
+  }
+  function searchSampleName(sampleName, myArray){
+    var nameToSearch = ""
+    for (var i=0; i < myArray.length; i++) {
+      if(typeof myArray[i].sampleName === "undefined"){
+        nameToSearch = getSampleNameFromURL(myArray[i])[1]
+      }else{
+        nameToSearch = myArray[i].sampleName
+      }
+      if (nameToSearch === sampleName) {
+          return true;
+      }
+    }
+    return false
+  }
+
   const closeDialog = () => changeDialog(null)
   const onAddSamples = useEventCallback(
     async (appendedTaskData, appendedTaskOutput, json, configImport) => {
-      for(var i =0; i<appendedTaskData.length;i++){
-        var sampleName;
-        if (typeof appendedTaskData[i].imageUrl !== "undefined") {
-          sampleName = appendedTaskData[i].imageUrl.match(
-            `\\/(([^\\/\\\\&\\?]*)\\.([a-zA-Z0-9]*))(\\?|$)`
-          )
-        } else {
-          sampleName = appendedTaskData[i].videoUrl.match(
-            `\\/(([^\\/\\\\&\\?]*)\\.([a-zA-Z0-9]*))(\\?|$)`
-          )
+      for (var i = 0; i < appendedTaskData.length; i++) {
+        var sampleName= getSampleNameFromURL(appendedTaskData[i])
+        var boolName= true
+        var v= 1
+        while(boolName){
+          if(searchSampleName(sampleName[1],oha.taskData)||searchSampleName(sampleName[1],appendedTaskData))
+          {
+            sampleName[1] = sampleName[2] + v.toString()+"." + sampleName[3]
+            v++
+          }else {
+            appendedTaskData[i].sampleName = sampleName[1]
+            boolName = false
+          }
         }
-        if(appendedTaskData.findIndex((elem)=>{return elem.sampleName === sampleName})!==-1)
-          sampleName[1] = sampleName[2]+i.toString()+"."+sampleName[3]
-        if(oha.taskData.findIndex((elem)=>{return elem.sampleName === sampleName})!==-1)
-          sampleName[1] = sampleName[2]+i.toString()+"."+sampleName[3]
-        appendedTaskData[i].sampleName=sampleName[1]
       }
       let newOHA = setIn(
         oha,
@@ -267,7 +304,7 @@ export default ({
       newOHA = setIn(
         newOHA,
         ["taskOutput"],
-        setAnnotations(newOHA.taskOutput,appendedTaskOutput,configImport)
+        setAnnotations(newOHA.taskOutput, appendedTaskOutput, configImport)
       )
       if (
         json !== null &&
@@ -275,13 +312,6 @@ export default ({
         typeof json.content !== "undefined" &&
         typeof json.fileName !== "undefined"
       ) {
-        if (
-          !isEmpty(file.content.interface) &&
-          !isEmpty(json.content.interface) &&
-          json.content.interface !== file.content.interface
-        ) {
-          console.log("danger")
-        }
         newOHA = setIn(newOHA, ["interface"], json.content.interface)
         if (typeof file.fileName === "undefined" || file.fileName === "unnamed")
           file = setIn(file, ["fileName"], json.fileName)

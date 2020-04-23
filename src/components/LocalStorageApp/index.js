@@ -18,7 +18,6 @@ import ErrorBoundary from "../ErrorBoundary"
 import useEventCallback from "use-event-callback"
 import usePreventNavigation from "../../utils/use-prevent-navigation"
 
-
 const useStyles = makeStyles({
   empty: {
     textAlign: "center",
@@ -186,7 +185,12 @@ export default () => {
   useEffect(() => {
     if (!isEmpty(authConfig)) {
       var changes = fileHasChanged(lastObjectRef.current, file)
-      if (!changes.content.taskData&&!changes.content.taskOutput&&!changes.fileName) return
+      if (
+        !changes.content.taskData &&
+        !changes.content.taskOutput &&
+        !changes.fileName
+      )
+        return
       lastObjectRef.current = file
       UpdateAWSStorage()
     }
