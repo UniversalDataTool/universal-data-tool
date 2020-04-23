@@ -241,7 +241,7 @@ export default ({
         ["taskData"],
         (oha.taskData || []).concat(appendedTaskData)
       )
-      if (configImport.annotationToKeep) {
+      if (!isEmpty(configImport)&&typeof configImport.annotationToKeep !== "undefined") {
         if (configImport.annotationToKeep === "both") {
           if (appendedTaskOutput) {
             newOHA = setIn(
