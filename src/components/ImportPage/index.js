@@ -63,18 +63,12 @@ const DesktopOnlyText = styled("div")({
 
 const SelectDialogContext = createContext()
 
-<<<<<<< HEAD
-const Button = ({
-  Icon,
-  desktopOnly,
-  isDesktop,
-  children,
-  dialog,
-  authConfiguredOnly,
+
+const Button = ({ Icon, desktopOnly, isDesktop, children, dialog, authConfiguredOnly,
   authConfig,
   signedInOnly,
-  user,
-}) => {
+  user}) => {
+  const posthog = usePosthog()
   const disabled = desktopOnly
     ? !isDesktop
     : authConfiguredOnly
@@ -82,11 +76,6 @@ const Button = ({
       ? isEmpty(user)
       : isEmpty(authConfig)
     : false
-=======
-const Button = ({ Icon, desktopOnly, isDesktop, children, dialog }) => {
-  const posthog = usePosthog()
-  const disabled = desktopOnly ? !isDesktop : false
->>>>>>> upstream/master
   return (
     <SelectDialogContext.Consumer>
       {({ onChangeDialog }) => {
