@@ -218,7 +218,7 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
     var samples = await GetImageFromAFolderAWS(s3Content)
     var json = await GetAnnotationFromAFolderAWS(s3Content)
     if (json === null || typeof json.content.taskOutput === "undefined") {
-      onAddSamples(samples, json.content.taskOutput, json, configImport)
+      onAddSamples(samples, null, json, configImport)
     } else {
       onAddSamples(samples, json.content.taskOutput, json, configImport)
     }
