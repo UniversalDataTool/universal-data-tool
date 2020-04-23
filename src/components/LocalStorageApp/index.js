@@ -160,17 +160,22 @@ export default () => {
         try {
           const blob = await fetchAnImage(element)
           let imageOrVideoName
-          if (typeof element.imageUrl !== "undefined") {
-            imageOrVideoName = element.imageUrl.match(
-              `\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
-            )
-          } else {
-            imageOrVideoName = element.videoUrl.match(
-              `\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
-            )
+          if(typeof element.sampleName === "undefined"){
+            if (typeof element.imageUrl !== "undefined") {
+              imageOrVideoName = element.imageUrl.match(
+                `\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
+              )[1]
+            } else {
+              imageOrVideoName = element.videoUrl.match(
+                `\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
+              )[1]
+            }
+          }else{
+            console.log(element)
+            imageOrVideoName = element.sampleName
           }
 
-          var pathToFile = `${file.fileName}/data/${imageOrVideoName[1]}`
+          var pathToFile = `${file.fileName}/data/${imageOrVideoName}`
           Storage.put(pathToFile, blob, {
             level: "private",
           }).catch((err) => console.log(err))
