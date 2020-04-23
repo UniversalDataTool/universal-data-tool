@@ -215,6 +215,30 @@ export default ({
       }
     }
   }
+  function setAnnotations(taskOutput,appendedTaskOutput,configImport){
+    if (!isEmpty(configImport)&&typeof configImport.annotationToKeep !== "undefined") {
+      if (configImport.annotationToKeep === "both") {
+        if (appendedTaskOutput) {
+          taskOutput = extendWithNull(oha.taskOutput || [], oha.taskData.length).concat(appendedTaskOutput)
+        }
+      }
+      if (configImport.annotationToKeep === "incoming") {
+        if (appendedTaskOutput) {
+          taskOutput = extendWithNull([], oha.taskData.length).concat(appendedTaskOutput)
+        }
+      }
+      if (configImport.annotationToKeep === "current") {
+        if (appendedTaskOutput) {
+          taskOutput = extendWithNull(oha.taskOutput || [], oha.taskData.length)
+        }
+      }
+    } else {
+      if (appendedTaskOutput) {
+        taskOutput = extendWithNull(oha.taskOutput || [], oha.taskData.length).concat(appendedTaskOutput)
+      }
+    }
+    return taskOutput
+  }
   const closeDialog = () => changeDialog(null)
   const onAddSamples = useEventCallback(
     async (appendedTaskData, appendedTaskOutput, json, configImport) => {
@@ -229,7 +253,6 @@ export default ({
             `\\/(([^\\/\\\\&\\?]*)\\.([a-zA-Z0-9]*))(\\?|$)`
           )
         }
-        console.log(oha)
         if(appendedTaskData.findIndex((elem)=>{return elem.sampleName === sampleName})!==-1)
           sampleName[1] = sampleName[2]+i.toString()+"."+sampleName[3]
         if(oha.taskData.findIndex((elem)=>{return elem.sampleName === sampleName})!==-1)
@@ -241,47 +264,11 @@ export default ({
         ["taskData"],
         (oha.taskData || []).concat(appendedTaskData)
       )
-      if (!isEmpty(configImport)&&typeof configImport.annotationToKeep !== "undefined") {
-        if (configImport.annotationToKeep === "both") {
-          if (appendedTaskOutput) {
-            newOHA = setIn(
-              newOHA,
-              ["taskOutput"],
-              extendWithNull(oha.taskOutput || [], oha.taskData.length).concat(
-                appendedTaskOutput
-              )
-            )
-          }
-        }
-        if (configImport.annotationToKeep === "incoming") {
-          if (appendedTaskOutput) {
-            newOHA = setIn(
-              newOHA,
-              ["taskOutput"],
-              extendWithNull([], oha.taskData.length).concat(appendedTaskOutput)
-            )
-          }
-        }
-        if (configImport.annotationToKeep === "current") {
-          if (appendedTaskOutput) {
-            newOHA = setIn(
-              newOHA,
-              ["taskOutput"],
-              extendWithNull(oha.taskOutput || [], oha.taskData.length)
-            )
-          }
-        }
-      } else {
-        if (appendedTaskOutput) {
-          newOHA = setIn(
-            newOHA,
-            ["taskOutput"],
-            extendWithNull(oha.taskOutput || [], oha.taskData.length).concat(
-              appendedTaskOutput
-            )
-          )
-        }
-      }
+      newOHA = setIn(
+        newOHA,
+        ["taskOutput"],
+        setAnnotations(newOHA.taskOutput,appendedTaskOutput,configImport)
+      )
       if (
         json !== null &&
         typeof json !== "undefined" &&
