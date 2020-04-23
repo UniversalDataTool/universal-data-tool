@@ -249,3 +249,4 @@ storiesOf("UniversalDataViewer", module)
       }}
     />
   ))
+  .add("Undefined Interface Type", () => <UniversalDataViewer />)

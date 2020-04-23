@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useCallback, useEffect } from "react"
 import useServer, {
-  getLatestState,
+  joinSession,
   convertToCollaborativeFile,
 } from "./use-server"
 import useFilesystem from "./use-filesystem"
@@ -65,7 +65,7 @@ export default () => {
   const openUrl = useEventCallback(async (url) => {
     const sessionId = decodeURIComponent(url.match(/[\?&]s=([^&]+)/)[1])
     if (!sessionId) return
-    const { state, version } = await getLatestState(sessionId)
+    const { state, version } = await joinSession(sessionId)
     if (!state) return
     window.history.replaceState(
       {},
@@ -78,8 +78,6 @@ export default () => {
       mode: "server",
       id: sessionId,
       content: state,
-      lastSyncedState: cloneDeep(state),
-      lastSyncedVersion: version,
     })
   })
 

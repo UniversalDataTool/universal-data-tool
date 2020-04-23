@@ -4,16 +4,18 @@ import { setIn } from "seamless-immutable"
 
 const form = {
   questions: [
-    {
-      name: "description",
-      title: "Description",
-      type: "multiline-text",
-    },
-    {
-      name: "overlapAllowed",
-      title: "Overlap Allowed",
-      type: "boolean",
-    },
+    // TODO uncomment when description can be seen in the interface somewhere
+    // {
+    //   name: "description",
+    //   title: "Description",
+    //   type: "multiline-text",
+    // },
+    // TODO enable when we support overlap
+    // {
+    //   name: "overlapAllowed",
+    //   title: "Overlap Allowed",
+    //   type: "boolean",
+    // },
     {
       name: "labels",
       title: "Labels",

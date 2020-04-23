@@ -6,7 +6,6 @@ import Toolbar from "@material-ui/core/Toolbar"
 import Tabs from "@material-ui/core/Tabs"
 import Tab from "@material-ui/core/Tab"
 import { makeStyles } from "@material-ui/core/styles"
-import CodeIcon from "@material-ui/icons/Code"
 import SettingsIcon from "@material-ui/icons/Settings"
 import StorageIcon from "@material-ui/icons/Storage"
 import BorderColorIcon from "@material-ui/icons/BorderColor"
@@ -15,7 +14,6 @@ import CollaborateButton from "../CollaborateButton"
 import DownloadButton from "../DownloadButton"
 import Button from "@material-ui/core/Button"
 import GithubIcon from "../Header/GithubIcon"
-import * as colors from "@material-ui/core/colors"
 import IconButton from "@material-ui/core/IconButton"
 import isEmpty from "../../utils/isEmpty"
 import packageJSON from "../../../package.json"
@@ -57,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
 
 const getIcon = (t: string) => {
   switch (t) {
-    case "Settings":
+    case "Setup":
       return <SettingsIcon className="icon" />
     case "Label":
       return <BorderColorIcon className="icon" />
@@ -89,6 +87,7 @@ const HeaderToolbar = ({
   user,
   changeLoginDrawerOpen,
   logoutUser,
+  collaborateError,
 }) => {
   const c = useStyles()
   return (
@@ -100,17 +99,16 @@ const HeaderToolbar = ({
           </IconButton>
         )}
         {fileOpen ? title : "Universal Data Tool v" + packageJSON.version}
-        {!isDesktop && (
-          <CollaborateButton
-            sessionBoxOpen={sessionBoxOpen}
-            changeSessionBoxOpen={changeSessionBoxOpen}
-            fileOpen={fileOpen}
-            inSession={inSession}
-            onCreateSession={onCreateSession}
-            onLeaveSession={onLeaveSession}
-            onJoinSession={onJoinSession}
-          />
-        )}
+        <CollaborateButton
+          sessionBoxOpen={sessionBoxOpen}
+          changeSessionBoxOpen={changeSessionBoxOpen}
+          fileOpen={fileOpen}
+          inSession={inSession}
+          onCreateSession={onCreateSession}
+          onLeaveSession={onLeaveSession}
+          onJoinSession={onJoinSession}
+          error={collaborateError}
+        />
         {fileOpen && (
           <BrushButton
             selectedBrush={selectedBrush}

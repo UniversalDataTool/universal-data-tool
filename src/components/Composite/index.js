@@ -33,6 +33,9 @@ export const Composite = (props) => {
     interface: { fields },
   } = props
   const [selectedField, changeSelectedField] = useState()
+
+  if (!fields) throw new Error("No fields defined. Try adding a field in Setup")
+
   if (selectedField) {
     return (
       <UniversalDataViewer

@@ -10,7 +10,10 @@ export const TextClassification = (props) => {
       ? [props.taskOutput[currentSampleIndex].label] ||
         props.taskOutput[currentSampleIndex].labels
       : undefined
-  let labels = props.interface.labels
+  if (!props.interface.labels && !props.interface.availableLabels) {
+    throw new Error("Labels not defined. Try defining some labels in Setup")
+  }
+  let labels = (props.interface.labels || props.interface.availableLabels)
     .map((l) =>
       typeof l === "string" ? { id: l, description: l, displayName: l } : l
     )

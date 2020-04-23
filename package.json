@@ -1,6 +1,6 @@
 {
   "name": "universal-data-tool",
-  "version": "0.8.8",
+  "version": "0.9.0",
   "license": "MIT",
   "main": "desktop/main.js",
   "homepage": "https://universaldatatool.com",
@@ -16,12 +16,14 @@
     "release:lib": "npm run build && cd lib && npm publish",
     "release:desktop": "npm run build:desktop && cross-env EP_RELEASE=true electron-builder --linux --publish always",
     "release": "npm run release:desktop",
-    "test": "react-scripts test",
+    "test": "ava **/*.test.js",
     "storybook": "start-storybook -p 6002 -s public",
     "build-storybook": "build-storybook -s public",
     "gh-pages": "npm run build:web && cp ./CNAME ./build/CNAME && gh-pages -d build",
     "prettier": "prettier --write \"src/**/*.js\"",
-    "prettier:test": "prettier --check \"src/**/*.js\""
+    "test:prettier": "prettier --check \"src/**/*.js\"",
+    "test:integration:dev": "./node_modules/cypress/bin/cypress open",
+    "test:integration": "./node_modules/cypress/bin/cypress run"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -47,8 +49,11 @@
     "@storybook/addon-links": "^5.3.14",
     "@storybook/addons": "^5.3.14",
     "@storybook/react": "^5.3.14",
+    "@testing-library/react-hooks": "^3.2.1",
+    "ava": "^3.7.0",
     "chroma-js": "^2.0.4",
     "cross-env": "^7.0.0",
+    "cypress": "^4.4.0",
     "electron": "^8.0.0",
     "electron-builder": "^22.3.2",
     "electron-builder-notarize": "^1.1.2",
@@ -120,5 +125,10 @@
       "provider": "github",
       "releaseType": "release"
     }
+  },
+  "ava": {
+    "nodeArguments": [
+      "--experimental-modules"
+    ]
   }
 }

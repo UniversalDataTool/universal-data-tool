@@ -27,6 +27,7 @@ export default ({ oha, onChange, onClickEditJSON, onClearLabelData }) => {
         iface={iface}
         onChange={onChange}
         onClickEditJSON={onClickEditJSON}
+        isNotNested
       />
       <PaperContainer>
         <Heading>Advanced</Heading>
@@ -61,6 +62,24 @@ export default ({ oha, onChange, onClickEditJSON, onClearLabelData }) => {
             }}
           >
             {posthog.has_opted_out_capturing() ? "Enable" : "Disable"} Telemetry
+          </Button>
+          <Button
+            onClick={onClickEditJSON}
+            variant="outlined"
+            onClick={() => {
+              const response = window.prompt(
+                "Input URL for new collaboration server (empty to use universaldatatool.com):",
+                window.localStorage.getItem("CUSTOM_COLLABORATION_SERVER") || ""
+              )
+              if (response === null) return
+              window.localStorage.setItem(
+                "CUSTOM_COLLABORATION_SERVER",
+                response
+              )
+              window.location.reload()
+            }}
+          >
+            Custom Collaboration Server
           </Button>
         </Box>
       </PaperContainer>

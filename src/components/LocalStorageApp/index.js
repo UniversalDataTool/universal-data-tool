@@ -14,7 +14,7 @@ import config from "../LocalStorageApp/AWSconfig"
 import isEmpty from "../../utils/isEmpty"
 import fileHasChanged from "../../utils/fileHasChanged"
 import { setIn } from "seamless-immutable"
-import ErrorBoundary from "../ErrorBoundary"
+import AppErrorBoundary from "../AppErrorBoundary"
 import useEventCallback from "use-event-callback"
 import usePreventNavigation from "../../utils/use-prevent-navigation"
 
@@ -108,8 +108,7 @@ export default () => {
     changeFile({
       ...file,
       mode: "local-storage",
-      id: randomId(),
-      fileName: "unnamed",
+      fileName: file.fileName || `copy_of_${file.id}`,
     })
   )
 
@@ -247,7 +246,7 @@ export default () => {
             logoutUser={logoutUser}
           />
         ) : (
-          <ErrorBoundary>
+          <AppErrorBoundary>
             <OHAEditor
               file={file}
               key={file.id}
@@ -263,7 +262,7 @@ export default () => {
               user={user}
               recentItems={recentItems}
             />
-          </ErrorBoundary>
+          </AppErrorBoundary>
         )}
       </HeaderContext.Provider>
       <ErrorToasts errors={errors} />

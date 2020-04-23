@@ -20,9 +20,19 @@ import ImportIcon from "@material-ui/icons/Publish"
 import ImportPage from "../ImportPage"
 import TransformPage from "../TransformPage"
 import useIsDesktop from "../../utils/use-is-desktop.js"
+import * as colors from "@material-ui/core/colors"
 
 const Container = styled("div")({
   padding: 16,
+})
+
+const SampleCounter = styled("div")({
+  fontSize: 14,
+  color: colors.grey[600],
+  display: "flex",
+  justifyContent: "flex-end",
+  alignItems: "center",
+  flexGrow: 1,
 })
 
 const ExpandedRowContainer = styled("div")({
@@ -143,12 +153,19 @@ export default ({
   }, [oha.taskData, oha.taskOutput])
   return (
     <Container>
-      <Tabs value={currentTab} onChange={(e, newTab) => changeTab(newTab)}>
-        <Tab icon={<ImportIcon />} label="Import" value="import" />
-        <Tab icon={<SlideshowIcon />} label="Transform" value="transform" />
-        <Tab icon={<AppsIcon />} label="Grid" value="grid" />
-        <Tab icon={<TableChartIcon />} label="Table" value="table" />
-      </Tabs>
+      <Box display="flex">
+        <Tabs value={currentTab} onChange={(e, newTab) => changeTab(newTab)}>
+          <Tab icon={<ImportIcon />} label="Import" value="import" />
+          <Tab icon={<SlideshowIcon />} label="Transform" value="transform" />
+          <Tab icon={<AppsIcon />} label="Grid" value="grid" />
+          <Tab icon={<TableChartIcon />} label="Table" value="table" />
+        </Tabs>
+        <SampleCounter>
+          {(oha.taskData || []).length} Samples
+          <br />
+          {(oha.taskOutput || []).length} Labels
+        </SampleCounter>
+      </Box>
       <Box paddingTop={2} />
       {currentTab === "import" && (
         <ImportPage

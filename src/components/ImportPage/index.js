@@ -23,6 +23,7 @@ import ImportUDTFileDialog from "../ImportUDTFileDialog"
 import ImportToyDataset from "../ImportToyDatasetDialog"
 import ImportFromYoutubeUrls from "../ImportFromYoutubeUrls"
 import { FaGoogleDrive, FaYoutube } from "react-icons/fa"
+import usePosthog from "../../utils/use-posthog"
 
 const extendWithNull = (ar, len) => {
   ar = [...ar]
@@ -62,6 +63,7 @@ const DesktopOnlyText = styled("div")({
 
 const SelectDialogContext = createContext()
 
+<<<<<<< HEAD
 const Button = ({
   Icon,
   desktopOnly,
@@ -80,12 +82,22 @@ const Button = ({
       ? isEmpty(user)
       : isEmpty(authConfig)
     : false
+=======
+const Button = ({ Icon, desktopOnly, isDesktop, children, dialog }) => {
+  const posthog = usePosthog()
+  const disabled = desktopOnly ? !isDesktop : false
+>>>>>>> upstream/master
   return (
     <SelectDialogContext.Consumer>
       {({ onChangeDialog }) => {
         return (
           <ButtonBase
-            onClick={() => onChangeDialog(dialog)}
+            onClick={() => {
+              posthog.capture("import_button_clicked", {
+                import_button: dialog,
+              })
+              onChangeDialog(dialog)
+            }}
             className={classnames({ disabled })}
             variant="outlined"
             disabled={disabled}

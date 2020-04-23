@@ -46,6 +46,7 @@ export default ({ iface, onChange }) => {
                   }}
                 />
                 <ConfigureInterface
+                  isNested
                   iface={f.interface}
                   onChange={(newFieldInterface) => {
                     onChange({

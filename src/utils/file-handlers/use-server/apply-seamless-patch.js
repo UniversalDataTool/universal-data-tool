@@ -8,7 +8,9 @@ a download of the latest version. Because of this, we can safely ignore the
 tricky edge cases.
 */
 
-import { setIn, getIn, updateIn, without } from "seamless-immutable"
+import seamless from "seamless-immutable"
+
+const { setIn, getIn, updateIn, without } = seamless
 
 function addToArray(a, newValue) {
   return a.concat([newValue])

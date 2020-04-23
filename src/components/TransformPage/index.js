@@ -23,6 +23,7 @@ import DownloadURLsDialog from "../DownloadURLsDialog"
 import GetAppIcon from "@material-ui/icons/GetApp"
 import CollectionsIcon from "@material-ui/icons/Collections"
 import TransformVideoFramesToImagesDialog from "../TransformVideoFramesToImagesDialog"
+import usePosthog from "../../utils/use-posthog"
 
 const ButtonBase = styled(MuiButton)({
   width: 240,
@@ -56,6 +57,7 @@ const SelectDialogContext = createContext()
 
 const Button = ({ Icon1, Icon2, desktopOnly, children, dialog, disabled }) => {
   const isDesktop = useIsDesktop()
+  const posthog = usePosthog()
   disabled =
     disabled === undefined ? (desktopOnly ? !isDesktop : false) : disabled
   return (
@@ -63,7 +65,12 @@ const Button = ({ Icon1, Icon2, desktopOnly, children, dialog, disabled }) => {
       {({ onChangeDialog }) => {
         return (
           <ButtonBase
-            onClick={() => onChangeDialog(dialog)}
+            onClick={() => {
+              onChangeDialog(dialog)
+              posthog.capture("transform_button_clicked", {
+                transform_button: dialog,
+              })
+            }}
             className={classnames({ disabled })}
             variant="outlined"
             disabled={disabled}
