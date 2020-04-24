@@ -28,17 +28,17 @@ const OtherColorContainers = styled("div")({
   flexWrap: "wrap",
 })
 
-const StyledIconButton = styled(IconButton)(({ iconColor, selected }) => ({
+const StyledIconButton = styled(IconButton)(({ iconcolor, selected }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  backgroundColor: iconColor[700],
-  border: selected ? `4px solid ${iconColor["A200"]}` : "4px solid #fff",
+  backgroundColor: iconcolor[700],
+  border: selected ? `4px solid ${iconcolor["A200"]}` : "4px solid #fff",
   boxSizing: "content-box",
   margin: 4,
   transition: "transform 200ms linear",
   "&:hover": {
-    backgroundColor: iconColor[800],
+    backgroundColor: iconcolor[800],
     transform: "scale(1.2,1.2)",
   },
   "&:active": {
@@ -47,16 +47,16 @@ const StyledIconButton = styled(IconButton)(({ iconColor, selected }) => ({
   },
 }))
 
-const StyledButton = styled(Button)(({ selected, iconColor }) => ({
+const StyledButton = styled(Button)(({ selected, iconcolor }) => ({
   justifyContent: "flex-start",
   marginTop: 4,
   marginBottom: 4,
   paddingTop: 8,
   paddingBottom: 8,
-  backgroundColor: selected ? iconColor[50] : "#fff",
-  border: selected ? `2px solid ${iconColor[200]}` : "2px solid #fff",
+  backgroundColor: selected ? iconcolor[50] : "#fff",
+  border: selected ? `2px solid ${iconcolor[200]}` : "2px solid #fff",
   "&:hover": {
-    backgroundColor: selected ? iconColor[100] : "none",
+    backgroundColor: selected ? iconcolor[100] : "none",
   },
 }))
 
@@ -80,7 +80,7 @@ export default ({ selectedBrush, onChangeSelectedBrush }) => {
         <h1>Sample Brushes</h1>
         <StyledButton
           selected={selectedBrush === "complete" || selectedBrush === "blue"}
-          iconColor={colors.blue}
+          iconcolor={colors.blue}
           fullWidth
           onClick={handleClick("complete")}
         >
@@ -91,7 +91,7 @@ export default ({ selectedBrush, onChangeSelectedBrush }) => {
           selected={
             selectedBrush === "review" || selectedBrush === "deepOrange"
           }
-          iconColor={colors.deepOrange}
+          iconcolor={colors.deepOrange}
           fullWidth
           onClick={handleClick("review")}
         >
@@ -102,32 +102,32 @@ export default ({ selectedBrush, onChangeSelectedBrush }) => {
           <StyledIconButton
             onClick={handleClick("green")}
             selected={selectedBrush === "green"}
-            iconColor={colors.green}
+            iconcolor={colors.green}
           />
           <StyledIconButton
             onClick={handleClick("purple")}
             selected={selectedBrush === "purple"}
-            iconColor={colors.purple}
+            iconcolor={colors.purple}
           />
           <StyledIconButton
             onClick={handleClick("pink")}
             selected={selectedBrush === "pink"}
-            iconColor={colors.pink}
+            iconcolor={colors.pink}
           />
           <StyledIconButton
             onClick={handleClick("cyan")}
             selected={selectedBrush === "cyan"}
-            iconColor={colors.cyan}
+            iconcolor={colors.cyan}
           />
           <StyledIconButton
             onClick={handleClick("orange")}
             selected={selectedBrush === "orange"}
-            iconColor={colors.orange}
+            iconcolor={colors.orange}
           />
           <StyledIconButton
             onClick={handleClick("indigo")}
             selected={selectedBrush === "indigo"}
-            iconColor={colors.indigo}
+            iconcolor={colors.indigo}
           />
         </OtherColorContainers>
       </HeaderPopupBox>

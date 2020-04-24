@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const getIcon = (t: string) => {
+const getIcon = (t) => {
   switch (t) {
     case "Setup":
       return <SettingsIcon className="icon" />
@@ -61,6 +61,8 @@ const getIcon = (t: string) => {
       return <BorderColorIcon className="icon" />
     case "Samples":
       return <StorageIcon className="icon" />
+    default :
+      return <div></div>
   }
 }
 
@@ -91,7 +93,7 @@ const HeaderToolbar = ({
 }) => {
   const c = useStyles()
   return (
-    <AppBar color="white" position="static">
+    <AppBar color="default" position="static">
       <Toolbar variant="dense">
         {!isDesktop && (
           <IconButton onClick={onOpenDrawer} className={c.headerButton}>
