@@ -271,35 +271,31 @@ export default ({
     return sampleName
   }
   function searchSampleName(sampleName, myArray) {
-    var nameToSearch 
+    var nameToSearch
     for (var i = 0; i < myArray.length; i++) {
       nameToSearch = getSampleNameFromURL(myArray[i])
       if (typeof myArray[i].sampleName !== "undefined") {
         nameToSearch[1] = myArray[i].sampleName
       }
-      console.log("essai")
-      console.log(nameToSearch[0])
-      console.log(sampleName[0])
-      console.log(nameToSearch[1])
-      console.log(sampleName[1])
-      console.log(nameToSearch[0] !== sampleName[0])
-      console.log(nameToSearch[1] === sampleName[1])
-      if (nameToSearch[0] !== sampleName[0] && nameToSearch[1] === sampleName[1]) {
+      if (
+        nameToSearch[0] !== sampleName[0] &&
+        nameToSearch[1] === sampleName[1]
+      ) {
         return true
       }
     }
     return false
   }
 
-  function giveSampleName(appendedTaskData){
+  function giveSampleName(appendedTaskData) {
     for (var i = 0; i < appendedTaskData.length; i++) {
       var sampleName = getSampleNameFromURL(appendedTaskData[i])
       var boolName = true
       var v = 1
       while (boolName) {
         if (
-          (searchSampleName(sampleName, oha.taskData) ||
-          searchSampleName(sampleName, appendedTaskData)) 
+          searchSampleName(sampleName, oha.taskData) ||
+          searchSampleName(sampleName, appendedTaskData)
         ) {
           sampleName[1] = sampleName[2] + v.toString() + "." + sampleName[3]
           v++
@@ -328,7 +324,7 @@ export default ({
         typeof json.content !== "undefined" &&
         typeof json.fileName !== "undefined"
       ) {
-        json.content.taskData = giveSampleName(json.content.taskData);
+        json.content.taskData = giveSampleName(json.content.taskData)
         newOHA = setIn(
           newOHA,
           ["taskData"],
@@ -340,7 +336,7 @@ export default ({
         file = setIn(file, ["content"], newOHA)
         onChangeFile(file, true)
       } else {
-        appendedTaskData = giveSampleName(appendedTaskData);
+        appendedTaskData = giveSampleName(appendedTaskData)
         newOHA = setIn(
           oha,
           ["taskData"],
