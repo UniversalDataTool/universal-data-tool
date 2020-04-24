@@ -115,8 +115,9 @@ export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
         onFinish={onFinish}
       >
         {isEmpty(authProvider) &&
-          authTemplates.map((template) => (
+          authTemplates.map((template,i) => (
             <Button
+              key={i}
               onClick={() => {
                 setAuthProvider(template.provider)
                 setDialogTitle(`Add Authentification for ${template.name}`)
