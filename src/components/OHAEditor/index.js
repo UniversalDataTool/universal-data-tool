@@ -281,42 +281,6 @@ export default ({
                 changeSingleSampleOHA(
                   setIn(singleSampleOHA, ["taskOutput", relativeIndex], output)
                 )
-<<<<<<< HEAD
-              }
-              const { sampleIndex } = singleSampleOHA
-              switch (nextAction) {
-                case "go-to-next":
-                  if (sampleIndex !== oha.taskData.length - 1) {
-                    changeSingleSampleOHA({
-                      ...oha,
-                      taskData: [oha.taskData[sampleIndex + 1]],
-                      taskOutput: [(oha.taskOutput || [])[sampleIndex + 1]],
-                      sampleIndex: sampleIndex + 1,
-                      startTime: Date.now(),
-                    })
-                    return
-                  }
-                  break
-                case "go-to-previous":
-                  if (sampleIndex !== 0) {
-                    changeSingleSampleOHA({
-                      ...oha,
-                      taskData: [oha.taskData[sampleIndex - 1]],
-                      taskOutput: [(oha.taskOutput || [])[sampleIndex - 1]],
-                      sampleIndex: sampleIndex - 1,
-                      startTime: Date.now(),
-                    })
-                    return
-                  }
-                  break
-                default:
-                  break
-              }
-              changeSingleSampleOHA(null)
-            }}
-            oha={singleSampleOHA}
-          />
-=======
                 onChangeOHA(newOHA)
               }}
               onExit={(nextAction = "nothing") => {
@@ -354,6 +318,8 @@ export default ({
                       return
                     }
                     break
+                  default:
+                      break
                 }
                 changeSingleSampleOHA(null)
               }}
@@ -361,7 +327,6 @@ export default ({
               onClickSetup={() => changeMode("setup")}
             />
           </LabelErrorBoundary>
->>>>>>> upstream/master
         ) : (
           mode === "label" && (
             <PaperContainer>

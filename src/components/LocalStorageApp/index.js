@@ -170,7 +170,6 @@ export default () => {
               )[1]
             }
           } else {
-            console.log(element)
             imageOrVideoName = element.sampleName
           }
 
