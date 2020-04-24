@@ -49,7 +49,7 @@ const transformFileURLsToWebURLs = async ({
       fileName,
       fileURL,
       remote,
-    }).catch((e) => (console.warn(e), null))
+    }).catch((e) => console.warn(e))
 
     if (!webURLOfUploadedFile) {
       newTaskData.push(taskDataItem)
