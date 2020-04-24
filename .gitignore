@@ -26,6 +26,7 @@ storybook-static
 dist
 
 desktop/node_modules
-lib
+
+/lib
 
 .env
