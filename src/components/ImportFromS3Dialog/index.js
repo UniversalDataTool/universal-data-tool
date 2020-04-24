@@ -194,7 +194,21 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
     return samples
   }
 
-  async function GetAnnotationFromAFolderAWS(result) {
+  function getSampleNameFromURL(sample) {
+    var sampleName
+    if (typeof sample.imageUrl !== "undefined") {
+      sampleName = sample.imageUrl.match(
+        `\\/(([^\\/\\\\&\\?]*)\\.([a-zA-Z0-9]*))(\\?|$)`
+      )
+    } else {
+      sampleName = sample.videoUrl.match(
+        `\\/(([^\\/\\\\&\\?]*)\\.([a-zA-Z0-9]*))(\\?|$)`
+      )
+    }
+    return sampleName
+  }
+
+  async function GetAnnotationFromAFolderAWS(result,samples) {
     var json = null
     if (
       result.find(
@@ -211,6 +225,18 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
             return await data.json().then(async (result) => {
               if (typeof result.content != "undefined") {
                 json = result
+                if(typeof json.content.taskOutput !== "undefined"&&!isEmpty(json.content.taskOutput)){
+                  var newSamples= []
+                  for(var i=0;i<json.content.taskOutput.length;i++){
+                    var sampleName = getSampleNameFromURL(json.content.taskData[i])
+                    for (var y = 0; y < samples.length; y++) {
+                        if(sampleName[1] === getSampleNameFromURL(samples[y])[1]){
+                          newSamples.push(samples[y])
+                        }
+                    }
+                  }
+                  json.content.taskData = newSamples
+                }
               }
             })
           })
@@ -227,7 +253,7 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
     var samples = await GetImageFromAFolderAWS(s3Content)
     var json
     if (loadProjectIsSelected)
-      json = await GetAnnotationFromAFolderAWS(s3Content)
+      json = await GetAnnotationFromAFolderAWS(s3Content,samples)
     else json = null
     if (json === null || typeof json.content.taskOutput === "undefined") {
       onAddSamples(samples, null, json, configImport)

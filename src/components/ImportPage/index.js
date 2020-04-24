@@ -288,23 +288,6 @@ export default ({
   const closeDialog = () => changeDialog(null)
   const onAddSamples = useEventCallback(
     async (appendedTaskData, appendedTaskOutput, json, configImport) => {
-      for (var i = 0; i < appendedTaskData.length; i++) {
-        var sampleName = getSampleNameFromURL(appendedTaskData[i])
-        var boolName = true
-        var v = 1
-        while (boolName) {
-          if (
-            searchSampleName(sampleName[1], oha.taskData) ||
-            searchSampleName(sampleName[1], appendedTaskData)
-          ) {
-            sampleName[1] = sampleName[2] + v.toString() + "." + sampleName[3]
-            v++
-          } else {
-            appendedTaskData[i].sampleName = sampleName[1]
-            boolName = false
-          }
-        }
-      }
       let newOHA = setIn(
         oha,
         ["taskData"],
@@ -321,6 +304,11 @@ export default ({
         typeof json.content !== "undefined" &&
         typeof json.fileName !== "undefined"
       ) {
+        newOHA = setIn(
+          newOHA,
+          ["taskData"],
+          (oha.taskData || []).concat(json.content.taskData)
+        )
         newOHA = setIn(newOHA, ["interface"], json.content.interface)
         if (typeof file.fileName === "undefined" || file.fileName === "unnamed")
           file = setIn(file, ["fileName"], json.fileName)
