@@ -138,7 +138,6 @@ const convertToTaskDataObject = (fp) => {
 }
 
 const S3Icon = (props, disabled) => {
-  const iconStyle = { fill: "black" }
   return (
     <SvgIcon {...props} viewBox="0 0 50 50">
       <g id="Working">

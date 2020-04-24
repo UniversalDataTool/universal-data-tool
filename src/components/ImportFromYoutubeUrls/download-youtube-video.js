@@ -14,7 +14,7 @@ export default ({
   onComplete,
   onChangeOverallProgress,
 }) => {
-  let starttime = Date.now()
+  //let starttime = Date.now()
 
   const ytdl = remote.require("ytdl-core")
   const path = remote.require("path")
@@ -37,9 +37,9 @@ export default ({
 
   youtubeVideoWithOptions.pipe(writableVideoFile)
 
-  youtubeVideoWithOptions.once("response", () => {
+  /*youtubeVideoWithOptions.once("response", () => {
     starttime = Date.now()
-  })
+  })*/
 
   youtubeVideoWithOptions.on("progress", (chunkLength, downloaded, total) => {
     const percent = downloaded / total
