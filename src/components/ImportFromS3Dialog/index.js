@@ -131,9 +131,7 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
   const [contentDialogBoxIsSetting, setcontentDialogBoxIsSetting] = useState(
     false
   )
-  const [loadProjectIsSelected, setloadProjectIsSelected] = useState(
-    true
-  )
+  const [loadProjectIsSelected, setloadProjectIsSelected] = useState(true)
   const [configImport, setConfigImport] = useLocalStorage(
     "configImport",
     initConfigImport(file)
@@ -228,10 +226,9 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
   const handleAddSample = async () => {
     var samples = await GetImageFromAFolderAWS(s3Content)
     var json
-    if(loadProjectIsSelected)
+    if (loadProjectIsSelected)
       json = await GetAnnotationFromAFolderAWS(s3Content)
-    else
-      json = null
+    else json = null
     if (json === null || typeof json.content.taskOutput === "undefined") {
       onAddSamples(samples, null, json, configImport)
     } else {
@@ -262,7 +259,7 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
       )
     }
   }
-  function changeLoadProjectIsSelected(){
+  function changeLoadProjectIsSelected() {
     setloadProjectIsSelected(!loadProjectIsSelected)
   }
 
@@ -336,18 +333,24 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
         <tbody>
           <tr>
             <th>
-              {loadProjectIsSelected ?(
-                <Button onClick={changeLoadProjectIsSelected} disabled>Load Project</Button>
-              ):(
-                <Button onClick={changeLoadProjectIsSelected}>Load Project</Button>
-              )
-              }
-              {loadProjectIsSelected ?(
-                <Button onClick={changeLoadProjectIsSelected}>Load Samples</Button>
-              ):(
-                <Button onClick={changeLoadProjectIsSelected} disabled>Load Samples</Button>
-              )
-              }               
+              {loadProjectIsSelected ? (
+                <Button onClick={changeLoadProjectIsSelected} disabled>
+                  Load Project
+                </Button>
+              ) : (
+                <Button onClick={changeLoadProjectIsSelected}>
+                  Load Project
+                </Button>
+              )}
+              {loadProjectIsSelected ? (
+                <Button onClick={changeLoadProjectIsSelected}>
+                  Load Samples
+                </Button>
+              ) : (
+                <Button onClick={changeLoadProjectIsSelected} disabled>
+                  Load Samples
+                </Button>
+              )}
               <IconButton
                 onClick={() => {
                   setcontentDialogBoxIsSetting(!contentDialogBoxIsSetting)
