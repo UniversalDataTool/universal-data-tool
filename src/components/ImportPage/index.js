@@ -63,11 +63,17 @@ const DesktopOnlyText = styled("div")({
 
 const SelectDialogContext = createContext()
 
-
-const Button = ({ Icon, desktopOnly, isDesktop, children, dialog, authConfiguredOnly,
+const Button = ({
+  Icon,
+  desktopOnly,
+  isDesktop,
+  children,
+  dialog,
+  authConfiguredOnly,
   authConfig,
   signedInOnly,
-  user}) => {
+  user,
+}) => {
   const posthog = usePosthog()
   const disabled = desktopOnly
     ? !isDesktop

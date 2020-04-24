@@ -58,7 +58,7 @@ export default ({
   onChangeOHA = () => null,
   onChangeFile,
   onFileDrop,
-  initialMode = "setup", 
+  initialMode = "setup",
   authConfig,
   user,
   recentItems,
@@ -319,7 +319,7 @@ export default ({
                     }
                     break
                   default:
-                      break
+                    break
                 }
                 changeSingleSampleOHA(null)
               }}
