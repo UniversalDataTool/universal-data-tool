@@ -2,12 +2,9 @@
 
 import React, { useState } from "react"
 import SimpleDialog from "../SimpleDialog"
-import * as colors from "@material-ui/core/colors"
 import { styled } from "@material-ui/core/styles"
 import useElectron from "../../utils/use-electron"
 import ProgressBar from "../ProgressBar"
-import md5 from "js-md5"
-import path from "path"
 import { setIn, without } from "seamless-immutable"
 
 const ErrorBox = styled("pre")({

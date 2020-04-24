@@ -54,7 +54,7 @@ export default ({ iface, onChange }) => {
           typeof a === "string" ? { id: a, description: a } : a
         ) || [],
     }),
-    []
+    [iface]
   )
   return (
     <Survey

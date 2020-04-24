@@ -76,7 +76,7 @@ export default (file, changeFile) => {
         )
       )
     }
-  }, [file && file.fileName, file && file.fileName])
+  }, [file, changeFile])
 
   return { saveFile }
 }

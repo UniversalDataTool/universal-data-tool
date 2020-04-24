@@ -1,22 +1,14 @@
 // @flow weak
 
-import React, { useState, useContext, createContext } from "react"
+import React, { useState, createContext } from "react"
 import MuiButton from "@material-ui/core/Button"
 import { styled } from "@material-ui/core/styles"
-import AssignmentReturnedIcon from "@material-ui/icons/AssignmentReturned"
-import CreateNewFolderIcon from "@material-ui/icons/CreateNewFolder"
 import ImageIcon from "@material-ui/icons/Image"
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward"
-import TextFieldsIcon from "@material-ui/icons/TextFields"
-import PetsIcon from "@material-ui/icons/Pets"
 import * as colors from "@material-ui/core/colors"
-import PasteUrlsDialog from "../PasteUrlsDialog"
-import ImportTextSnippetsDialog from "../ImportTextSnippetsDialog"
 import useIsDesktop from "../../utils/use-is-desktop"
 import useElectron from "../../utils/use-electron"
 import classnames from "classnames"
-import { setIn } from "seamless-immutable"
-import useEventCallback from "use-event-callback"
 import OndemandVideoIcon from "@material-ui/icons/OndemandVideo"
 import TransformVideoKeyframesDialog from "../TransformVideoKeyframesDialog"
 import DownloadURLsDialog from "../DownloadURLsDialog"
@@ -103,10 +95,10 @@ const Button = ({ Icon1, Icon2, desktopOnly, children, dialog, disabled }) => {
 
 export default ({ oha, onChangeOHA }) => {
   const [selectedDialog, changeDialog] = useState()
-  const electron = useElectron()
   const onChangeDialog = async (dialog) => {
     switch (dialog) {
       case "convert-keyframes-to-samples": {
+        break;
       }
       default: {
         return changeDialog(dialog)

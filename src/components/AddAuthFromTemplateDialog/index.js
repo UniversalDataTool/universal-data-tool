@@ -2,13 +2,8 @@
 
 import React, { useState } from "react"
 import Button from "@material-ui/core/Button"
-import Dialog from "@material-ui/core/Dialog"
-import DialogTitle from "@material-ui/core/DialogTitle"
-import DialogContent from "@material-ui/core/DialogContent"
-import DialogActions from "@material-ui/core/DialogActions"
 import { makeStyles } from "@material-ui/core/styles"
 import authTemplates from "./authTemplates"
-import { grey } from "@material-ui/core/colors"
 import SimpleDialog from "../SimpleDialog"
 import isEmpty from "../../utils/isEmpty"
 import Survey from "material-survey/components/Survey"

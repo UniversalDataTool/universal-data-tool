@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect } from "react"
 import SimpleDialog from "../SimpleDialog"
 import Button from "@material-ui/core/Button"
 import { styled } from "@material-ui/core/styles"

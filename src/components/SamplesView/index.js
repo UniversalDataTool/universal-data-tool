@@ -141,7 +141,7 @@ export default ({
       ),
     })
     return columns
-  }, [oha.taskData, oha.taskOutput])
+  }, [oha.taskData, deleteSample, openSampleInputEditor, openSampleLabelEditor])
 
   const data = useMemo(() => {
     if (!oha.taskData) return []

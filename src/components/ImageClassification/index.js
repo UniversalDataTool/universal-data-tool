@@ -4,8 +4,6 @@ import React, { useState, useEffect, useMemo } from "react"
 import useEventCallback from "use-event-callback"
 import { styled } from "@material-ui/core/styles"
 import Button from "@material-ui/core/Button"
-import CheckBoxIcon from "@material-ui/icons/CheckBox"
-import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank"
 import * as colors from "@material-ui/core/colors"
 import Checkbox from "@material-ui/core/Checkbox"
 import without from "lodash/without"
@@ -171,7 +169,7 @@ export default ({
     if (!newOutput) newOutput = []
     if (typeof newOutput === "string") newOutput = [newOutput]
     changeCurrentOutput(newOutput)
-  }, [sampleIndex, globalSampleIndex])
+  }, [sampleIndex, globalSampleIndex,taskOutput])
 
   const [hotkeyMap, labelKeyMap] = useMemo(() => {
     const hotkeyMap = {
@@ -192,7 +190,7 @@ export default ({
       labelKeyMap[label.id] = nextAvailableLetter
     }
     return [hotkeyMap, labelKeyMap]
-  }, [labels])
+  }, [labels,onClickLabel,onDone,onNext,onPrev])
 
   useEffect(() => {
     const onKeyDown = (e) => {

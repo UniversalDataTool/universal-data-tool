@@ -2,7 +2,6 @@
 
 import React, { useState } from "react"
 import SimpleDialog from "../SimpleDialog"
-import * as colors from "@material-ui/core/colors"
 import { styled } from "@material-ui/core/styles"
 import useElectron from "../../utils/use-electron"
 import ProgressBar from "../ProgressBar"

@@ -1,9 +1,8 @@
 // @flow
-import React, { useState, useMemo, useRef, useEffect, useCallback } from "react"
+import React, { useState, useRef, useEffect, useCallback } from "react"
 import { HeaderContext } from "../Header"
 import StartingPage from "../StartingPage"
 import OHAEditor from "../OHAEditor"
-import { makeStyles } from "@material-ui/core/styles"
 import ErrorToasts from "../ErrorToasts"
 import useErrors from "../../utils/use-errors.js"
 import useFileHandler from "../../utils/file-handlers"
@@ -18,19 +17,9 @@ import AppErrorBoundary from "../AppErrorBoundary"
 import useEventCallback from "use-event-callback"
 import usePreventNavigation from "../../utils/use-prevent-navigation"
 
-const useStyles = makeStyles({
-  empty: {
-    textAlign: "center",
-    padding: 100,
-    color: "#666",
-    fontSize: 28,
-  },
-})
-
 const randomId = () => Math.random().toString().split(".")[1]
 
 export default () => {
-  const c = useStyles()
   const {
     file,
     changeFile,
@@ -41,7 +30,7 @@ export default () => {
     changeRecentItems,
   } = useFileHandler()
   usePreventNavigation(Boolean(file))
-  const [errors, addError] = useErrors()
+  const [errors] = useErrors()
 
   const [selectedBrush, setSelectedBrush] = useState("complete")
 
@@ -98,11 +87,11 @@ export default () => {
         changeAuthConfig(null)
       }
     }
-  }, [])
+  }, [authConfig,user])
 
   const onJoinSession = useCallback(async (sessionName) => {
     await openUrl(sessionName)
-  }, [])
+  }, [openUrl])
 
   const onLeaveSession = useEventCallback(() =>
     changeFile({
@@ -133,7 +122,7 @@ export default () => {
     return blob
   }
 
-  function UpdateAWSStorage() {
+  const UpdateAWSStorage = useEventCallback(() => {
     let index
     for (let y = 0; y < recentItems.length; y++) {
       if (
@@ -182,7 +171,7 @@ export default () => {
         }
       })
     }
-  }
+  })
 
   const lastObjectRef = useRef([])
   useEffect(() => {
@@ -200,7 +189,7 @@ export default () => {
       lastObjectRef.current = file
       UpdateAWSStorage()
     }
-  }, [recentItems])
+  }, [recentItems,UpdateAWSStorage,authConfig,file])
 
   return (
     <>

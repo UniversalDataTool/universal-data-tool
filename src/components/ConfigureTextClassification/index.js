@@ -2,7 +2,6 @@
 
 import React, { useMemo } from "react"
 import Survey from "material-survey/components/Survey"
-import { styled } from "@material-ui/core/styles"
 import { setIn } from "seamless-immutable"
 
 const form = {
@@ -39,7 +38,7 @@ export default ({ iface, onChange }) => {
           typeof a === "string" ? { id: a, displayName: a, description: a } : a
         ) || [],
     }),
-    []
+    [iface.labels]
   )
   return (
     <Survey
