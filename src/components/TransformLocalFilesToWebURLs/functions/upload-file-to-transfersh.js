@@ -11,7 +11,6 @@ const uploadFileToTransferSh = async ({ fileName, fileURL, remote }) => {
     .put(remoteURL, fsFileBuffer)
     .then((response) => {
       if (response.status === 200) {
-        console.log(response)
         return response.data
       }
     })
