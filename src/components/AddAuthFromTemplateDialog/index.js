@@ -115,7 +115,7 @@ export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
         onFinish={onFinish}
       >
         {isEmpty(authProvider) &&
-          authTemplates.map((template,i) => (
+          authTemplates.map((template, i) => (
             <Button
               key={i}
               onClick={() => {

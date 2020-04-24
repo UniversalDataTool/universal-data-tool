@@ -61,7 +61,7 @@ const getIcon = (t) => {
       return <BorderColorIcon className="icon" />
     case "Samples":
       return <StorageIcon className="icon" />
-    default :
+    default:
       return <div></div>
   }
 }
