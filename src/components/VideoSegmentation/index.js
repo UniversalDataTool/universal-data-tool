@@ -24,7 +24,6 @@ export default ({
   containerProps = emptyObj,
   onSaveTaskOutputItem,
 }) => {
-
   const { regionTypesAllowed = ["bounding-box"] } = iface
 
   const isClassification = !Boolean(iface.multipleRegionLabels)
@@ -42,10 +41,9 @@ export default ({
               typeof l === "string" ? l : l.id
             ),
           },
-    [isClassification,iface.availableLabels]
+    [isClassification, iface.availableLabels]
   )
 
-  
   const onExit = useEventCallback((output) => {
     const newKeyframes = {}
     for (const key in output.keyframes) {

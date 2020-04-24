@@ -80,7 +80,15 @@ export default () => {
       ipcRenderer.removeListener("save-file-as", saveFileAs)
       ipcRenderer.removeListener("export-to-csv", exportToCSV)
     }
-  }, [file, changeFile, ipcRenderer, openFile, onCreateTemplate, remote, saveFile])
+  }, [
+    file,
+    changeFile,
+    ipcRenderer,
+    openFile,
+    onCreateTemplate,
+    remote,
+    saveFile,
+  ])
 
   const inSession = file && file.mode === "server"
   const [sessionBoxOpen, changeSessionBoxOpen] = useState(false)

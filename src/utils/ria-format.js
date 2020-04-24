@@ -59,7 +59,7 @@ export const convertToRIARegionFmt = (region) => {
     case "pixel-mask": {
       throw new Error(`Unsupported region "${JSON.stringify(region)}"`)
     }
-    default :
+    default:
       return null
   }
 }
@@ -97,7 +97,7 @@ export const convertFromRIARegionFmt = (riaRegion) => {
         points: riaRegion.points.map(([x, y]) => ({ x, y })),
       }
     }
-    default :
+    default:
       throw new Error(`Unsupported riaRegion "${JSON.stringify(riaRegion)}"`)
   }
 }

@@ -169,7 +169,7 @@ export default ({
     if (!newOutput) newOutput = []
     if (typeof newOutput === "string") newOutput = [newOutput]
     changeCurrentOutput(newOutput)
-  }, [sampleIndex, globalSampleIndex,taskOutput])
+  }, [sampleIndex, globalSampleIndex, taskOutput])
 
   const [hotkeyMap, labelKeyMap] = useMemo(() => {
     const hotkeyMap = {
@@ -190,7 +190,7 @@ export default ({
       labelKeyMap[label.id] = nextAvailableLetter
     }
     return [hotkeyMap, labelKeyMap]
-  }, [labels,onClickLabel,onDone,onNext,onPrev])
+  }, [labels, onClickLabel, onDone, onNext, onPrev])
 
   useEffect(() => {
     const onKeyDown = (e) => {

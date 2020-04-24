@@ -44,7 +44,7 @@ export default ({
               typeof l === "string" ? l : l.id
             ),
           },
-    [isClassification,iface.availableLabels]
+    [isClassification, iface.availableLabels]
   )
 
   const multipleRegions =

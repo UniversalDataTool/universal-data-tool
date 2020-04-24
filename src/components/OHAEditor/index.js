@@ -101,7 +101,7 @@ export default ({
       changeSingleSampleOHA(null)
     }
     posthog.capture("open_editor_tab", { tab: mode })
-  }, [mode,posthog,changeJSONText,oha])
+  }, [mode, posthog, changeJSONText, oha])
 
   useEffect(() => {
     if (!jsonText || mode !== "json") return

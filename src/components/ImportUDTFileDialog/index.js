@@ -65,27 +65,19 @@ const ImportUDTFileDialog = ({ open, onClose, onAddSamples }) => {
     >
       <InfoText>
         See the{" "}
-        <a
-          href="https://github.com/UniversalDataTool/udt-format"
-        >
+        <a href="https://github.com/UniversalDataTool/udt-format">
           UDT JSON format
         </a>{" "}
         or the{" "}
-        <a
-          href="https://github.com/UniversalDataTool/udt-format"
-        >
+        <a href="https://github.com/UniversalDataTool/udt-format">
           UDT CSV format
         </a>{" "}
         for formatting details. Or take a look at a{" "}
-        <a
-          href="https://github.com/UniversalDataTool/udt-format/blob/master/SAMPLE.udt.json"
-        >
+        <a href="https://github.com/UniversalDataTool/udt-format/blob/master/SAMPLE.udt.json">
           sample JSON
         </a>{" "}
         or{" "}
-        <a
-          href="https://github.com/UniversalDataTool/udt-format/blob/master/SAMPLE.udt.csv"
-        >
+        <a href="https://github.com/UniversalDataTool/udt-format/blob/master/SAMPLE.udt.csv">
           sample CSV
         </a>{" "}
         file.

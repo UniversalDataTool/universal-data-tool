@@ -31,9 +31,12 @@ export default ({
 }) => {
   const c = useStyles()
 
-  const onDrop = useCallback((acceptedFiles) => {
-    onOpenFile(acceptedFiles[0])
-  }, [onOpenFile])
+  const onDrop = useCallback(
+    (acceptedFiles) => {
+      onOpenFile(acceptedFiles[0])
+    },
+    [onOpenFile]
+  )
 
   function onDeleteFile(i) {
     changeRecentItems(

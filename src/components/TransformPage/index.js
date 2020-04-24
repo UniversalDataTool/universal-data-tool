@@ -98,7 +98,7 @@ export default ({ oha, onChangeOHA }) => {
   const onChangeDialog = async (dialog) => {
     switch (dialog) {
       case "convert-keyframes-to-samples": {
-        break;
+        break
       }
       default: {
         return changeDialog(dialog)

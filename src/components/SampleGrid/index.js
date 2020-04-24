@@ -84,7 +84,7 @@ export default ({ count, completed = [], taskData, onClick }) => {
     if (sampleOffset > count) {
       changeSampleOffset(0)
     }
-  }, [changeSampleOffset,sampleOffset,count])
+  }, [changeSampleOffset, sampleOffset, count])
 
   const [selectRange, changeSelectRange] = useReducer((state, newValue) => {
     if (newValue === null) return null

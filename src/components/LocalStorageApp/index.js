@@ -87,11 +87,14 @@ export default () => {
         changeAuthConfig(null)
       }
     }
-  }, [authConfig,user])
+  }, [authConfig, user])
 
-  const onJoinSession = useCallback(async (sessionName) => {
-    await openUrl(sessionName)
-  }, [openUrl])
+  const onJoinSession = useCallback(
+    async (sessionName) => {
+      await openUrl(sessionName)
+    },
+    [openUrl]
+  )
 
   const onLeaveSession = useEventCallback(() =>
     changeFile({
@@ -189,7 +192,7 @@ export default () => {
       lastObjectRef.current = file
       UpdateAWSStorage()
     }
-  }, [recentItems,UpdateAWSStorage,authConfig,file])
+  }, [recentItems, UpdateAWSStorage, authConfig, file])
 
   return (
     <>
