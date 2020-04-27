@@ -237,7 +237,7 @@ export default ({
         typeof json.content !== "undefined" &&
         typeof json.fileName !== "undefined"
       ) {
-        json.content.taskData = giveSampleName(json.content.taskData,oha)
+        json.content.taskData = giveSampleName(json.content.taskData, oha)
         newOHA = setIn(
           newOHA,
           ["taskData"],
@@ -249,7 +249,7 @@ export default ({
         file = setIn(file, ["content"], newOHA)
         onChangeFile(file, true)
       } else {
-        appendedTaskData = giveSampleName(appendedTaskData,oha)
+        appendedTaskData = giveSampleName(appendedTaskData, oha)
         newOHA = setIn(
           oha,
           ["taskData"],

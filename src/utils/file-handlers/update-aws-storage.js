@@ -68,7 +68,7 @@ export default (file) => {
       }
     })
   }
-  
+
   if (fileNameExist(file)) {
     var json = JSON.stringify(file)
     createOrReplaceProjectFile(file)
