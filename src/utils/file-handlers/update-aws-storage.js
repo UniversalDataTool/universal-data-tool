@@ -22,29 +22,25 @@ export default (file) => {
     return blob
   }
 
-  function fileNameExist(file){
-    if (
-      file !== "undefined" &&
-      file.fileName !== "undefined" 
-    )
-      return true
-    
+  function fileNameExist(file) {
+    if (file !== "undefined" && file.fileName !== "undefined") return true
+
     return false
   }
 
-  function createOrReplaceProjectFile(file){
+  function createOrReplaceProjectFile(file) {
     Storage.put(`${file.fileName}/`, null, {
       level: "private",
     }).catch((err) => console.log(err))
   }
 
-  function createOrReplaceAnnotations(file,json){
+  function createOrReplaceAnnotations(file, json) {
     Storage.put(`${file.fileName}/annotations/annotations.json`, json, {
       level: "private",
     }).catch((err) => console.log(err))
   }
 
-  function createOrReplaceImages(file){
+  function createOrReplaceImages(file) {
     file.content.taskData.forEach(async (element) => {
       try {
         const blob = await fetchAnImage(element)
@@ -76,7 +72,7 @@ export default (file) => {
   if (fileNameExist(file)) {
     var json = JSON.stringify(file)
     createOrReplaceProjectFile(file)
-    createOrReplaceAnnotations(file,json)
+    createOrReplaceAnnotations(file, json)
     createOrReplaceImages(file)
   }
 }
