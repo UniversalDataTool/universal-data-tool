@@ -43,7 +43,7 @@ const customStyles = {
 }
 
 const ExpandedRow = ({ data }) => {
-  const { rowData, rowAnnotations, ...notImportant } = data
+  const { rowData, rowAnnotations } = data
   return (
     <>
       <DataTable
@@ -136,7 +136,6 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
     "configImport",
     initConfigImport(file)
   )
-  let _dataForTable = {}
 
   const lastObjectRef = useRef({})
 
@@ -161,7 +160,7 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
         Audio: true,
       },
     })
-  }, [file])
+  }, [file, configImport, setConfigImport])
   async function GetImageFromAFolderAWS(result) {
     var samples = []
     for (let i = 0; i < result.length; i++) {
@@ -303,7 +302,7 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
       Storage.list("", { level: "private" })
         .then((result) => {
           changeS3Content(result)
-          _dataForTable = result
+          let _dataForTable = result
             .filter((obj) => {
               return obj.key.endsWith("/") & (obj.key.split("/").length === 2)
             })

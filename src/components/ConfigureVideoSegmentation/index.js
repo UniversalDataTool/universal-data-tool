@@ -1,7 +1,6 @@
 // @flow
 import React, { useMemo } from "react"
 import Survey from "material-survey/components/Survey"
-import { styled } from "@material-ui/core/styles"
 import { setIn } from "seamless-immutable"
 
 const form = {
