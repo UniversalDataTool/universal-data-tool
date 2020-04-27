@@ -1,6 +1,6 @@
 // @flow
 
-import { useState, useMemo, useCallback, useEffect } from "react"
+import { useState, useMemo, useEffect } from "react"
 import useServer, {
   joinSession,
   convertToCollaborativeFile,
@@ -8,7 +8,6 @@ import useServer, {
 import useFilesystem from "./use-filesystem"
 import useLocalStorage from "./use-local-storage"
 import { useToasts } from "../../components/Toasts"
-import cloneDeep from "lodash/cloneDeep"
 import fromUDTCSV from "../from-udt-csv.js"
 import useEventCallback from "use-event-callback"
 import useFileTelemetry from "./use-file-telemetry"
@@ -63,9 +62,9 @@ export default () => {
   })
 
   const openUrl = useEventCallback(async (url) => {
-    const sessionId = decodeURIComponent(url.match(/[\?&]s=([^&]+)/)[1])
+    const sessionId = decodeURIComponent(url.match(/[?&]s=([^&]+)/)[1])
     if (!sessionId) return
-    const { state, version } = await joinSession(sessionId)
+    const { state } = await joinSession(sessionId)
     if (!state) return
     window.history.replaceState(
       {},
@@ -85,13 +84,13 @@ export default () => {
     if (!file) return
     if (file.mode === "server") return
     window.history.replaceState({}, window.document.title, `/`)
-  }, [file && file.mode])
+  }, [file])
 
   useEffect(() => {
     if (window.location.search.match(/[\?&]s=([a-zA-Z0-9]+)/)) {
       openUrl(window.location.href)
     }
-  }, [])
+  }, [openUrl])
 
   const makeSession = useEventCallback(async () => {
     const newFile = await convertToCollaborativeFile(file)
@@ -114,6 +113,6 @@ export default () => {
       recentItems,
       changeRecentItems,
     }),
-    [file, changeFile, openFile, makeSession, recentItems]
+    [file, changeFile, openFile, saveFile, makeSession, recentItems,changeRecentItems, openUrl]
   )
 }
