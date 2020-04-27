@@ -1,5 +1,5 @@
 export default (objectOfRef, objectToCheck) => {
-  // This class return every change in the localStorage and its location
+  // This class return every change in one item of recentItems and its location
   var resultSet = {
     fileName: false,
     content: {
