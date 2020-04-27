@@ -12,12 +12,14 @@ export default (obj) => {
     output: (obj.taskOutput || [])[i],
   }))
 
-  const AddSamplesKeys = (k) => {sampleKeys.add(k)}
+  const AddSamplesKeys = (k) => {
+    sampleKeys.add(k)
+  }
 
   // Find all possible sample keys
   let sampleKeys = new Set()
   for (const sample of samplesObj.samples) {
-    Object.keys(flatten(sample)).forEach((k)=>AddSamplesKeys(k))
+    Object.keys(flatten(sample)).forEach((k) => AddSamplesKeys(k))
   }
   sampleKeys = Array.from(sampleKeys).sort(
     (a, b) => a.split(".").length - b.split(".").length

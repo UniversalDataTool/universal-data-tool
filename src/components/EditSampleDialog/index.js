@@ -14,7 +14,7 @@ export default ({ open, sampleIndex, sampleInput, onChange, onClose }) => {
       changeText(newText)
       changeError(null)
     }
-  }, [sampleIndex,sampleInput,text])
+  }, [sampleIndex, sampleInput, text])
 
   return (
     <SimpleDialog

@@ -53,21 +53,24 @@ export default ({ open, onClose, onAddSamples }) => {
     }
   }, [])
 
-  const googlePickerActionCallback = useCallback((data) => {
-    if (data.action === window.google.picker.Action.PICKED) {
-      setUserSelectedItemsFromDrive(
-        data.docs.map((googleDriveDocument) => ({
-          url: googleDriveDocument.url,
-          mimeType: googleDriveDocument.mimeType,
-          name: googleDriveDocument.name,
-          id: googleDriveDocument.id,
-        }))
-      )
-      setIsPickerOpen(false)
-    } else if (data.action === "cancel") {
-      onClose()
-    }
-  },[onClose])
+  const googlePickerActionCallback = useCallback(
+    (data) => {
+      if (data.action === window.google.picker.Action.PICKED) {
+        setUserSelectedItemsFromDrive(
+          data.docs.map((googleDriveDocument) => ({
+            url: googleDriveDocument.url,
+            mimeType: googleDriveDocument.mimeType,
+            name: googleDriveDocument.name,
+            id: googleDriveDocument.id,
+          }))
+        )
+        setIsPickerOpen(false)
+      } else if (data.action === "cancel") {
+        onClose()
+      }
+    },
+    [onClose]
+  )
 
   const createPicker = useCallback(() => {
     if (pickerApiLoaded && oauthToken) {
@@ -96,18 +99,21 @@ export default ({ open, onClose, onAddSamples }) => {
       picker.setVisible(true)
       setIsPickerOpen(true)
     }
-  },[googlePickerActionCallback,oauthToken,pickerApiLoaded])
+  }, [googlePickerActionCallback, oauthToken, pickerApiLoaded])
 
   useEffect(() => {
     createPicker()
-  }, [pickerApiLoaded, oauthToken,createPicker])
+  }, [pickerApiLoaded, oauthToken, createPicker])
 
-  const handleAuthenticationResponse = useCallback((authenticationResponse) => {
-    if (authenticationResponse && !authenticationResponse.error) {
-      setOAuthToken(authenticationResponse.access_token)
-      createPicker()
-    }
-  },[createPicker])
+  const handleAuthenticationResponse = useCallback(
+    (authenticationResponse) => {
+      if (authenticationResponse && !authenticationResponse.error) {
+        setOAuthToken(authenticationResponse.access_token)
+        createPicker()
+      }
+    },
+    [createPicker]
+  )
 
   const onAuthApiLoad = useCallback(() => {
     window.gapi.auth.authorize(
@@ -118,19 +124,19 @@ export default ({ open, onClose, onAddSamples }) => {
       },
       handleAuthenticationResponse
     )
-  },[handleAuthenticationResponse])
+  }, [handleAuthenticationResponse])
 
   const onPickerApiLoad = useCallback(() => {
     setPickerApiLoaded(true)
     createPicker()
-  },[createPicker])
+  }, [createPicker])
 
   const onLoadPicker = useCallback(() => {
     if (googleScriptLoaded === true) {
       window.gapi.load("auth", { callback: onAuthApiLoad })
       window.gapi.load("picker", { callback: onPickerApiLoad })
     }
-  },[googleScriptLoaded,onAuthApiLoad,onPickerApiLoad])
+  }, [googleScriptLoaded, onAuthApiLoad, onPickerApiLoad])
 
   const onAddSamplesClicked = () => {
     const samples = []

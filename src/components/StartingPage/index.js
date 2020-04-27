@@ -264,7 +264,9 @@ export default ({
               <ActionList>
                 <ActionTitle>Instant Try Now</ActionTitle>
                 <ActionText>
-                  <Action onClick={() => changeCreateFromTemplateDialogOpen(true)}>
+                  <Action
+                    onClick={() => changeCreateFromTemplateDialogOpen(true)}
+                  >
                     Open a template
                   </Action>{" "}
                   to see how the UDT could work for your data.

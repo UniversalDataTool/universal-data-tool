@@ -34,7 +34,7 @@ export default ({ value, onChange }) => {
     return () => {
       window.removeEventListener("keydown", listener)
     }
-  }, [editing, newValue,onChange])
+  }, [editing, newValue, onChange])
 
   useEffect(() => {
     if (!newValue) return

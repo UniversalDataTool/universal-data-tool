@@ -10,7 +10,7 @@ export default (file, changeFile) => {
   const lastObjectRef = useRef([])
   useEffect(() => {
     var changes = fileHasChanged(lastObjectRef.current, file)
-    if(!changes.any) return
+    if (!changes.any) return
     if (recentItems.map((item) => item.id).includes(file.id)) {
       changeRecentItems(
         recentItems.map((ri) => (ri.id === file.id ? file : ri))

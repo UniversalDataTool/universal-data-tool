@@ -76,7 +76,7 @@ export default (object, patches) => {
         object = withoutIn(object, path)
         continue
       }
-      default :
+      default:
         return object
     }
   }

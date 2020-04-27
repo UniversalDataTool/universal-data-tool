@@ -113,6 +113,15 @@ export default () => {
       recentItems,
       changeRecentItems,
     }),
-    [file, changeFile, openFile, saveFile, makeSession, recentItems,changeRecentItems, openUrl]
+    [
+      file,
+      changeFile,
+      openFile,
+      saveFile,
+      makeSession,
+      recentItems,
+      changeRecentItems,
+      openUrl,
+    ]
   )
 }

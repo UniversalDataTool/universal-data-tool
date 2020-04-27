@@ -28,13 +28,13 @@ export default (objectOfRef, objectToCheck) => {
     resultSet.content.taskOutput = true
     resultSet.id = true
     resultSet.mode = true
-    resultSet.any =true
+    resultSet.any = true
     return resultSet
   }
 
-  if(objectOfRef !== objectToCheck){
-    resultSet.any =true
-  }else{
+  if (objectOfRef !== objectToCheck) {
+    resultSet.any = true
+  } else {
     return resultSet
   }
 

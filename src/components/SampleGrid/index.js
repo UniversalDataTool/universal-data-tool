@@ -102,7 +102,7 @@ export default ({ count, completed = [], taskData, onClick }) => {
   const moveSelectRange = useCallback((index) => changeSelectRange(index), [
     changeSelectRange,
   ])
-  const endSelectRange = useCallback(() => {},[])
+  const endSelectRange = useCallback(() => {}, [])
   const checkAndNullifySelectRange = useCallback(
     (e) => {
       if (e.buttons !== 1) {
