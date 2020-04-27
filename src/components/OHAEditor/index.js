@@ -70,7 +70,7 @@ export default ({
   const [singleSampleOHA, changeSingleSampleOHA] = useState()
   const [sampleInputEditor, changeSampleInputEditor] = useState({})
   const [jsonText, changeJSONText] = useState()
-  const { remote, ipcRenderer } = useElectron() || {}
+  const { ipcRenderer } = useElectron() || {}
   const posthog = usePosthog()
 
   const [
