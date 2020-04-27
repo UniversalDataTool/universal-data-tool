@@ -20,7 +20,7 @@ export default ({ value, onChange }) => {
 
   useEffect(() => {
     changeEditing({ editing, newValue: value })
-  }, [value,editing])
+  }, [value])
 
   useEffect(() => {
     if (!editing) return
@@ -34,7 +34,7 @@ export default ({ value, onChange }) => {
     return () => {
       window.removeEventListener("keydown", listener)
     }
-  }, [editing, newValue,onChange])
+  }, [editing, newValue])
 
   useEffect(() => {
     if (!newValue) return
@@ -51,7 +51,7 @@ export default ({ value, onChange }) => {
     } else {
       return () => {}
     }
-  }, [editing, newValue,onChange,value])
+  }, [editing, newValue])
 
   return (
     <TextField

@@ -346,7 +346,7 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
         })
         .catch((err) => console.log(err))
     }
-  }, [user,authConfig])
+  }, [user])
   return (
     <SimpleDialog
       title="Select Project"
