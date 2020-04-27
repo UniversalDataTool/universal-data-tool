@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import SimpleDialog from "../SimpleDialog"
 import Button from "@material-ui/core/Button"
 import { styled } from "@material-ui/core/styles"
@@ -53,7 +53,7 @@ export default ({ open, onClose, onAddSamples }) => {
     }
   }, [])
 
-  const googlePickerActionCallback = (data) => {
+  const googlePickerActionCallback = useCallback((data) => {
     if (data.action === window.google.picker.Action.PICKED) {
       setUserSelectedItemsFromDrive(
         data.docs.map((googleDriveDocument) => ({
@@ -67,9 +67,9 @@ export default ({ open, onClose, onAddSamples }) => {
     } else if (data.action === "cancel") {
       onClose()
     }
-  }
+  },[onClose])
 
-  const createPicker = () => {
+  const createPicker = useCallback(() => {
     if (pickerApiLoaded && oauthToken) {
       const view = new window.google.picker.View(
         window.google.picker.ViewId.Docs
@@ -96,20 +96,20 @@ export default ({ open, onClose, onAddSamples }) => {
       picker.setVisible(true)
       setIsPickerOpen(true)
     }
-  }
+  },[googlePickerActionCallback,oauthToken,pickerApiLoaded])
 
   useEffect(() => {
     createPicker()
-  }, [pickerApiLoaded, oauthToken])
+  }, [pickerApiLoaded, oauthToken,createPicker])
 
-  const handleAuthenticationResponse = (authenticationResponse) => {
+  const handleAuthenticationResponse = useCallback((authenticationResponse) => {
     if (authenticationResponse && !authenticationResponse.error) {
       setOAuthToken(authenticationResponse.access_token)
       createPicker()
     }
-  }
+  },[createPicker])
 
-  const onAuthApiLoad = () => {
+  const onAuthApiLoad = useCallback(() => {
     window.gapi.auth.authorize(
       {
         client_id: credentials.web.client_id,
@@ -118,19 +118,19 @@ export default ({ open, onClose, onAddSamples }) => {
       },
       handleAuthenticationResponse
     )
-  }
+  },[handleAuthenticationResponse])
 
-  const onPickerApiLoad = () => {
+  const onPickerApiLoad = useCallback(() => {
     setPickerApiLoaded(true)
     createPicker()
-  }
+  },[createPicker])
 
-  const onLoadPicker = () => {
+  const onLoadPicker = useCallback(() => {
     if (googleScriptLoaded === true) {
       window.gapi.load("auth", { callback: onAuthApiLoad })
       window.gapi.load("picker", { callback: onPickerApiLoad })
     }
-  }
+  },[googleScriptLoaded,onAuthApiLoad,onPickerApiLoad])
 
   const onAddSamplesClicked = () => {
     const samples = []
@@ -148,7 +148,7 @@ export default ({ open, onClose, onAddSamples }) => {
     if (open) {
       onLoadPicker()
     }
-  }, [open, googleScriptLoaded])
+  }, [open, googleScriptLoaded, onLoadPicker])
 
   return (
     <SimpleDialog

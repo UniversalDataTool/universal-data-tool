@@ -2,7 +2,6 @@ import React from "react"
 import SvgIcon from "@material-ui/core/SvgIcon"
 
 export default (props) => {
-  const iconStyle = { fill: "black" }
   return (
     <SvgIcon {...props} viewBox="0 0 50 50">
       <g id="Working">

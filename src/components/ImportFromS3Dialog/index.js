@@ -161,7 +161,7 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
         Audio: true,
       },
     })
-  }, [file])
+  }, [file,configImport,setConfigImport])
 
   const handleAddSample = async () => {
     var samples = await GetImageFromAFolderAWS(
@@ -264,7 +264,7 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
         })
         .catch((err) => console.log(err))
     }
-  }, [user])
+  }, [user,authConfig])
   return (
     <SimpleDialog
       title="Select Project"

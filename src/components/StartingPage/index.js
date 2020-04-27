@@ -13,7 +13,6 @@ import AddAuthFromTemplateDialog from "../AddAuthFromTemplateDialog"
 import { styled } from "@material-ui/core/styles"
 import usePosthog from "../../utils/use-posthog"
 import packageInfo from "../../../package.json"
-import useIsDesktop from "../../utils/use-is-desktop"
 import useEventCallback from "use-event-callback"
 
 const useStyles = makeStyles({
@@ -265,9 +264,9 @@ export default ({
               <ActionList>
                 <ActionTitle>Instant Try Now</ActionTitle>
                 <ActionText>
-                  <a onClick={() => changeCreateFromTemplateDialogOpen(true)}>
+                  <Action onClick={() => changeCreateFromTemplateDialogOpen(true)}>
                     Open a template
-                  </a>{" "}
+                  </Action>{" "}
                   to see how the UDT could work for your data.
                 </ActionText>
               </ActionList>

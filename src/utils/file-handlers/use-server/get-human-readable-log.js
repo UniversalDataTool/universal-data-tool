@@ -9,7 +9,7 @@ export default (changeLog) => {
         message: `${userName} changed the project settings`,
       })
     } else if (path.startsWith("/taskOutput")) {
-      const sampleMatch = path.match(/\/taskOutput\/([^\/]+)/)
+      const sampleMatch = path.match(/\/taskOutput\/([^/]+)/)
       if (sampleMatch) {
         humanReadableChangeLog.push({
           type: "info",

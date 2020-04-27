@@ -8,7 +8,7 @@ import useErrors from "../../utils/use-errors.js"
 import useFileHandler from "../../utils/file-handlers"
 import download from "in-browser-download"
 import toUDTCSV from "../../utils/to-udt-csv.js"
-import Amplify, { Auth, Storage } from "aws-amplify"
+import Amplify, { Auth } from "aws-amplify"
 import config from "../LocalStorageApp/AWSconfig"
 import isEmpty from "../../utils/isEmpty"
 import fileHasChanged from "../../utils/fileHasChanged"
@@ -121,7 +121,7 @@ export default () => {
       lastObjectRef.current = file
       UpdateAWSStorage(file)
     }
-  }, [recentItems, UpdateAWSStorage, authConfig, file])
+  }, [recentItems, authConfig, file])
 
   return (
     <>
