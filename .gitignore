@@ -26,7 +26,8 @@ storybook-static
 dist
 
 desktop/node_modules
-lib
+
+/lib
 
 src/components/LocalStorageApp/myAWSconfig.js
 package-lock.json

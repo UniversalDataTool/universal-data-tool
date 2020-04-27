@@ -135,7 +135,6 @@ export default ({ count, completed = [], taskData, onClick }) => {
             selected={selectRange && i >= selectRange[0] && i < selectRange[1]}
             onMouseDown={startSelectRange}
             onMouseEnter={moveSelectRange}
-            onMouseUp={() => {}}
           />
         )
       )}
