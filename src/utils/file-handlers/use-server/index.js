@@ -71,5 +71,5 @@ export default (file, changeFile) => {
     if (!file || file.mode !== "server") return
     async function doPatch() {}
     doPatch()
-  }, [file && file.content])
+  }, [file])
 }
