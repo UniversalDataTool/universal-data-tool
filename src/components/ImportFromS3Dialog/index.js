@@ -16,6 +16,7 @@ import IconButton from "@material-ui/core/IconButton"
 import SettingsIcon from "@material-ui/icons/Settings"
 import StorageIcon from "@material-ui/icons/Storage"
 import Button from "@material-ui/core/Button"
+import getSampleNameFromURL from "../../utils/get-sample-name-from-url"
 
 const expandedDataColumns = [
   { name: "Data", selector: "data", sortable: true },
@@ -192,20 +193,6 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
       }
     }
     return samples
-  }
-
-  function getSampleNameFromURL(sample) {
-    var sampleName
-    if (typeof sample.imageUrl !== "undefined") {
-      sampleName = sample.imageUrl.match(
-        `\\/(([^\\/\\\\&\\?]*)\\.([a-zA-Z0-9]*))(\\?|$)`
-      )
-    } else {
-      sampleName = sample.videoUrl.match(
-        `\\/(([^\\/\\\\&\\?]*)\\.([a-zA-Z0-9]*))(\\?|$)`
-      )
-    }
-    return sampleName
   }
 
   async function GetAnnotationFromAFolderAWS(result, samples) {

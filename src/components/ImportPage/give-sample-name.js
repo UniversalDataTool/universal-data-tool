@@ -1,17 +1,5 @@
+import getSampleNameFromURL from "../../utils/get-sample-name-from-url"
 export default (appendedTaskData, oha) => {
-  function getSampleNameFromURL(sample) {
-    var sampleName
-    if (typeof sample.imageUrl !== "undefined") {
-      sampleName = sample.imageUrl.match(
-        `.*\\/(([^\\/\\\\&\\?]*)\\.([a-zA-Z0-9]*))(\\?|$)`
-      )
-    } else {
-      sampleName = sample.videoUrl.match(
-        `.*\\/(([^\\/\\\\&\\?]*)\\.([a-zA-Z0-9]*))(\\?|$)`
-      )
-    }
-    return sampleName
-  }
   function searchSampleName(sampleName, myArray) {
     var nameToSearch
     for (var i = 0; i < myArray.length; i++) {
