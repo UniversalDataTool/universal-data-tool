@@ -87,7 +87,7 @@ export default () => {
   }, [file])
 
   useEffect(() => {
-    if (window.location.search.match(/[\?&]s=([a-zA-Z0-9]+)/)) {
+    if (window.location.search.match(/[?&]s=([a-zA-Z0-9]+)/)) {
       openUrl(window.location.href)
     }
   }, [openUrl])
