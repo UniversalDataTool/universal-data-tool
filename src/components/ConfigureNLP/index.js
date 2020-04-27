@@ -57,7 +57,7 @@ export default ({ iface, onChange }) => {
           }
         : column
     ),
-  }))
+  }),[iface])
   return (
     <Survey
       noActions
