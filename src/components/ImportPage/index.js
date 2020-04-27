@@ -25,6 +25,7 @@ import ImportToyDataset from "../ImportToyDatasetDialog"
 import ImportFromYoutubeUrls from "../ImportFromYoutubeUrls"
 import { FaGoogleDrive, FaYoutube } from "react-icons/fa"
 import usePosthog from "../../utils/use-posthog"
+import giveSampleName from "./give-sample-name"
 
 const extendWithNull = (ar, len) => {
   ar = [...ar]
@@ -220,57 +221,6 @@ export default ({
     }
     return taskOutput
   }
-  function getSampleNameFromURL(sample) {
-    var sampleName
-    if (typeof sample.imageUrl !== "undefined") {
-      sampleName = sample.imageUrl.match(
-        `.*\\/(([^\\/\\\\&\\?]*)\\.([a-zA-Z0-9]*))(\\?|$)`
-      )
-    } else {
-      sampleName = sample.videoUrl.match(
-        `.*\\/(([^\\/\\\\&\\?]*)\\.([a-zA-Z0-9]*))(\\?|$)`
-      )
-    }
-    return sampleName
-  }
-  function searchSampleName(sampleName, myArray) {
-    var nameToSearch
-    for (var i = 0; i < myArray.length; i++) {
-      nameToSearch = getSampleNameFromURL(myArray[i])
-      if (typeof myArray[i].sampleName !== "undefined") {
-        nameToSearch[1] = myArray[i].sampleName
-      }
-      if (
-        nameToSearch[0] !== sampleName[0] &&
-        nameToSearch[1] === sampleName[1]
-      ) {
-        return true
-      }
-    }
-    return false
-  }
-
-  function giveSampleName(appendedTaskData) {
-    for (var i = 0; i < appendedTaskData.length; i++) {
-      var sampleName = getSampleNameFromURL(appendedTaskData[i])
-      var boolName = true
-      var v = 1
-      while (boolName) {
-        if (
-          searchSampleName(sampleName, oha.taskData) ||
-          searchSampleName(sampleName, appendedTaskData)
-        ) {
-          sampleName[1] = sampleName[2] + v.toString() + "." + sampleName[3]
-          v++
-        } else {
-          appendedTaskData[i].sampleName = sampleName[1]
-          boolName = false
-        }
-      }
-      appendedTaskData[i].sampleName = sampleName[1]
-    }
-    return appendedTaskData
-  }
 
   const closeDialog = () => changeDialog(null)
   const onAddSamples = useEventCallback(
@@ -287,7 +237,7 @@ export default ({
         typeof json.content !== "undefined" &&
         typeof json.fileName !== "undefined"
       ) {
-        json.content.taskData = giveSampleName(json.content.taskData)
+        json.content.taskData = giveSampleName(json.content.taskData,oha)
         newOHA = setIn(
           newOHA,
           ["taskData"],
@@ -299,7 +249,7 @@ export default ({
         file = setIn(file, ["content"], newOHA)
         onChangeFile(file, true)
       } else {
-        appendedTaskData = giveSampleName(appendedTaskData)
+        appendedTaskData = giveSampleName(appendedTaskData,oha)
         newOHA = setIn(
           oha,
           ["taskData"],
