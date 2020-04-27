@@ -19,7 +19,6 @@ import useEventCallback from "use-event-callback"
 import usePreventNavigation from "../../utils/use-prevent-navigation"
 import UpdateAWSStorage from "../../utils/file-handlers/update-aws-storage"
 
-
 const useStyles = makeStyles({
   empty: {
     textAlign: "center",
@@ -128,7 +127,7 @@ export default () => {
       )
         return
       lastObjectRef.current = file
-      UpdateAWSStorage(file,recentItems)
+      UpdateAWSStorage(file, recentItems)
     }
   }, [recentItems])
 
