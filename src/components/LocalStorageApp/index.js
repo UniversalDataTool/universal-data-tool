@@ -127,7 +127,7 @@ export default () => {
       )
         return
       lastObjectRef.current = file
-      UpdateAWSStorage(file, recentItems)
+      UpdateAWSStorage(file)
     }
   }, [recentItems])
 

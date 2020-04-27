@@ -1,6 +1,6 @@
 import Amplify, { Auth, Storage } from "aws-amplify"
 
-export default (file, recentItems) => {
+export default (file) => {
   async function fetchAnImage(element) {
     var proxyUrl = "https://cors-anywhere.herokuapp.com/"
     var response
@@ -22,28 +22,30 @@ export default (file, recentItems) => {
     return blob
   }
 
-  let index
-  for (let y = 0; y < recentItems.length; y++) {
+  function fileNameExist(file){
     if (
       file !== "undefined" &&
-      file.fileName !== "undefined" &&
-      typeof recentItems[y].fileName !== "undefined" &&
-      recentItems[y].fileName === file.fileName
+      file.fileName !== "undefined" 
     )
-      index = y
+      return true
+    
+    return false
   }
-  if (typeof index !== "undefined") {
-    var json = JSON.stringify(recentItems[index])
 
+  function createOrReplaceProjectFile(file){
     Storage.put(`${file.fileName}/`, null, {
       level: "private",
     }).catch((err) => console.log(err))
+  }
 
+  function createOrReplaceAnnotations(file,json){
     Storage.put(`${file.fileName}/annotations/annotations.json`, json, {
       level: "private",
     }).catch((err) => console.log(err))
+  }
 
-    recentItems[index].content.taskData.forEach(async (element) => {
+  function createOrReplaceImages(file){
+    file.content.taskData.forEach(async (element) => {
       try {
         const blob = await fetchAnImage(element)
         let imageOrVideoName
@@ -69,5 +71,12 @@ export default (file, recentItems) => {
         console.log(err)
       }
     })
+  }
+  console.log(file)
+  if (fileNameExist(file)) {
+    var json = JSON.stringify(file)
+    createOrReplaceProjectFile(file)
+    createOrReplaceAnnotations(file,json)
+    createOrReplaceImages(file)
   }
 }
