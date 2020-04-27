@@ -24,6 +24,10 @@ import GetAppIcon from "@material-ui/icons/GetApp"
 import CollectionsIcon from "@material-ui/icons/Collections"
 import TransformVideoFramesToImagesDialog from "../TransformVideoFramesToImagesDialog"
 import usePosthog from "../../utils/use-posthog"
+import TransformLocalFilesToWebURLs from "../TransformLocalFilesToWebURLs"
+
+import ComputerIcon from "@material-ui/icons/Computer"
+import LanguageIcon from "@material-ui/icons/Language"
 
 const ButtonBase = styled(MuiButton)({
   width: 240,
@@ -125,6 +129,14 @@ export default ({ oha, onChangeOHA }) => {
         >
           Convert Video Keyframes to Samples
         </Button>
+        <Button
+          desktopOnly
+          dialog="convert-local-files-to-web-urls"
+          Icon1={ComputerIcon}
+          Icon2={LanguageIcon}
+        >
+          Transform Local Files to Web URLs
+        </Button>
         <Button desktopOnly dialog="download-urls" Icon1={GetAppIcon}>
           Download URLs
         </Button>
@@ -152,6 +164,13 @@ export default ({ oha, onChangeOHA }) => {
           desktopOnly
           onChangeOHA={onChangeOHA}
         ></DownloadURLsDialog>
+        <TransformLocalFilesToWebURLs
+          oha={oha}
+          onClose={closeDialog}
+          onChangeOHA={onChangeOHA}
+          desktopOnly
+          open={selectedDialog === "convert-local-files-to-web-urls"}
+        ></TransformLocalFilesToWebURLs>
         <TransformVideoFramesToImagesDialog
           open={selectedDialog === "convert-video-frames-to-images"}
           onClose={closeDialog}
