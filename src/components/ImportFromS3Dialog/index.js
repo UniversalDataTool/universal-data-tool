@@ -164,12 +164,21 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
     })
   }, [file])
 
-
   const handleAddSample = async () => {
-    var samples = await GetImageFromAFolderAWS(s3Content,folderToFetch,configImport,authConfig)
+    var samples = await GetImageFromAFolderAWS(
+      s3Content,
+      folderToFetch,
+      configImport,
+      authConfig
+    )
     var json
     if (loadProjectIsSelected)
-      json = await GetAnnotationFromAFolderAWS(s3Content, samples,folderToFetch,authConfig)
+      json = await GetAnnotationFromAFolderAWS(
+        s3Content,
+        samples,
+        folderToFetch,
+        authConfig
+      )
     else json = null
     if (json === null || typeof json.content.taskOutput === "undefined") {
       onAddSamples(samples, null, json, configImport)
