@@ -1,4 +1,5 @@
 export default (objectOfRef, objectToCheck) => {
+  // This class return every change in the localStorage and its location
   var resultSet = {
     fileName: false,
     content: {
@@ -13,10 +14,10 @@ export default (objectOfRef, objectToCheck) => {
     id: false,
     mode: false,
   }
-  // Vérifie si la donnée existe dans l'objet d'origine
+  // Check if the object to check exist if not return false
   if (typeof objectToCheck === "undefined") return resultSet
 
-  // Vérifie si la donnée de référence existe
+  // Check if the object of reference exist if not return true
   if (typeof objectOfRef === "undefined") {
     resultSet.fileName = true
     resultSet.content.interface.type = true
@@ -29,13 +30,13 @@ export default (objectOfRef, objectToCheck) => {
     return resultSet
   }
 
-  // Vérifie si la donnée id existe et est changé
+  // Check if the id doesn't exist or have change
   if (typeof objectToCheck.id !== "undefined") {
     if (typeof objectOfRef.id === "undefined") resultSet.id = true
     else if (objectToCheck.id !== objectOfRef.id) resultSet.id = true
   }
 
-  // Vérifie si la donnée content existe et est changé
+  // Check if the content doesn't exist or have change
   if (typeof objectToCheck.content !== "undefined") {
     if (typeof objectOfRef.content === "undefined") {
       resultSet.content.interface.type = true
@@ -44,7 +45,7 @@ export default (objectOfRef, objectToCheck) => {
       resultSet.content.taskData = true
       resultSet.content.taskOutput = true
     } else if (objectToCheck.content !== objectOfRef.content) {
-      //Vérifie si la donnée interface a changé
+      //Check if the interface doesn't exist or have change
       if (typeof objectToCheck.content.interface !== "undefined") {
         if (typeof objectOfRef.content.interface === "undefined") {
           resultSet.content.interface.type = true
@@ -53,7 +54,7 @@ export default (objectOfRef, objectToCheck) => {
         } else if (
           objectToCheck.content.interface !== objectOfRef.content.interface
         ) {
-          //Vérifie si la donnée type a changé
+          //Check if the type doesn't exist or have change
           if (typeof objectToCheck.content.interface.type !== "undefined") {
             if (typeof objectOfRef.content.interface.type === "undefined") {
               resultSet.content.interface.type = true
@@ -64,7 +65,7 @@ export default (objectOfRef, objectToCheck) => {
               resultSet.content.interface.type = true
             }
           }
-          //Vérifie si la donnée availableLabels a changé
+          //Check if the availableLabels doesn't exist or have change
           if (
             typeof objectToCheck.content.interface.availableLabels !==
             "undefined"
@@ -81,7 +82,7 @@ export default (objectOfRef, objectToCheck) => {
               resultSet.content.interface.availableLabels = true
             }
           }
-          //Vérifie si la donnée regionTypesAllowed a changé
+          //Check if the regionsTypesAllowed doesn't exist or have change
           if (
             typeof objectToCheck.content.interface.regionTypesAllowed !==
             "undefined"
@@ -100,7 +101,7 @@ export default (objectOfRef, objectToCheck) => {
           }
         }
       }
-      //Vérifie si la donnée taskData a changé
+      //Check if the taskData doesn't exist or have change
       if (typeof objectToCheck.content.taskData !== "undefined") {
         if (typeof objectOfRef.content.taskData === "undefined") {
           resultSet.content.taskData = true
@@ -110,7 +111,7 @@ export default (objectOfRef, objectToCheck) => {
           resultSet.content.taskData = true
         }
       }
-      //Vérifie si la donnée taskOutput a changé
+      //Check if the taskOutput doesn't exist or have change
       if (typeof objectToCheck.content.taskOutput !== "undefined") {
         if (typeof objectOfRef.content.taskOutput === "undefined") {
           resultSet.content.taskOutput = true
@@ -123,18 +124,18 @@ export default (objectOfRef, objectToCheck) => {
     }
   }
 
-  // Vérifie si la donnée mode existe et est changé
+  // Check if the mode doesn't exist or have change
   if (typeof objectToCheck.mode !== "undefined") {
     if (typeof objectOfRef.mode === "undefined") resultSet.mode = true
     else if (objectToCheck.mode !== objectOfRef.mode) resultSet.mode = true
   }
 
-  // Vérifie si la donnée fileName existe et est changé
+  // Check if the fileName doesn't exist or have change
   if (typeof objectToCheck.fileName !== "undefined") {
     if (typeof objectOfRef.fileName === "undefined") resultSet.fileName = true
     else if (objectToCheck.fileName !== objectOfRef.fileName)
       resultSet.fileName = true
   }
-  //Comportement par défaut
+  //Default behavior return false
   return resultSet
 }
