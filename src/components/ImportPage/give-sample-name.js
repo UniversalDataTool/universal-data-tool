@@ -34,6 +34,5 @@ export default (appendedTaskData, oha) => {
     }
     appendedTaskData[i].sampleName = sampleName[1]
   }
-  console.log(appendedTaskData)
   return appendedTaskData
 }

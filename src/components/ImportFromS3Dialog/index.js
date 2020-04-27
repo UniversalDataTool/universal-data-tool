@@ -9,14 +9,14 @@ import RadioGroup from "@material-ui/core/RadioGroup"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import Amplify, { Storage } from "aws-amplify"
 import isEmpty from "../../utils/isEmpty"
-import RecognizeFileExtension from "../../utils/RecognizeFileExtension"
 import { useLocalStorage } from "react-use"
 import fileHasChanged from "../../utils/fileHasChanged"
 import IconButton from "@material-ui/core/IconButton"
 import SettingsIcon from "@material-ui/icons/Settings"
 import StorageIcon from "@material-ui/icons/Storage"
 import Button from "@material-ui/core/Button"
-import getSampleNameFromURL from "../../utils/get-sample-name-from-url"
+import GetAnnotationFromAFolderAWS from "./get-annotation-from-aws"
+import GetImageFromAFolderAWS from "./get-images-from-aws"
 
 const expandedDataColumns = [
   { name: "Data", selector: "data", sortable: true },
@@ -163,91 +163,13 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
       },
     })
   }, [file])
-  async function GetImageFromAFolderAWS(result) {
-    var samples = []
-    for (let i = 0; i < result.length; i++) {
-      if (result[i].key.match(`(${folderToFetch}/data).*(\\.).*`)) {
-        await Storage.get(result[i].key, {
-          expires: 24 * 60 * 60 * 2000,
-          level: "private",
-        })
-          .then((result) => {
-            if (
-              RecognizeFileExtension(result) ===
-                configImport.typeOfFileToLoad &&
-              configImport.typeOfFileToLoad === "Image"
-            ) {
-              samples.push({ imageUrl: `${result}` })
-            } else if (
-              RecognizeFileExtension(result) ===
-                configImport.typeOfFileToLoad &&
-              configImport.typeOfFileToLoad === "Video"
-            ) {
-              samples.push({ videoUrl: `${result}` })
-            }
-          })
-          .catch((err) => {
-            console.log("error getting link for s3 image", err)
-            return null
-          })
-      }
-    }
-    return samples
-  }
 
-  async function GetAnnotationFromAFolderAWS(result, samples) {
-    var json = null
-    if (
-      result.find(
-        (element) =>
-          element.key === `${folderToFetch}/annotations/annotations.json`
-      )
-    ) {
-      await Storage.get(`${folderToFetch}/annotations/annotations.json`, {
-        expires: 24 * 60 * 60 * 2000,
-        level: "private",
-      })
-        .then(async (result) => {
-          await fetch(result).then(async (data) => {
-            return await data.json().then(async (result) => {
-              if (typeof result.content != "undefined") {
-                json = result
-                if (
-                  typeof json.content.taskOutput !== "undefined" &&
-                  !isEmpty(json.content.taskOutput)
-                ) {
-                  var newSamples = []
-                  for (var i = 0; i < json.content.taskOutput.length; i++) {
-                    var sampleName = getSampleNameFromURL(
-                      json.content.taskData[i]
-                    )
-                    for (var y = 0; y < samples.length; y++) {
-                      if (
-                        sampleName[1] === getSampleNameFromURL(samples[y])[1]
-                      ) {
-                        newSamples.push(samples[y])
-                      }
-                    }
-                  }
-                  json.content.taskData = newSamples
-                }
-              }
-            })
-          })
-        })
-        .catch((err) => {
-          console.log("error getting link for s3 image", err)
-          return null
-        })
-    }
-    return json
-  }
 
   const handleAddSample = async () => {
-    var samples = await GetImageFromAFolderAWS(s3Content)
+    var samples = await GetImageFromAFolderAWS(s3Content,folderToFetch,configImport,authConfig)
     var json
     if (loadProjectIsSelected)
-      json = await GetAnnotationFromAFolderAWS(s3Content, samples)
+      json = await GetAnnotationFromAFolderAWS(s3Content, samples,folderToFetch,authConfig)
     else json = null
     if (json === null || typeof json.content.taskOutput === "undefined") {
       onAddSamples(samples, null, json, configImport)
