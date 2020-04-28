@@ -33,6 +33,7 @@ export default ({
 }) => {
   const c = useStyles()
   const [selectedIndex, changeSelectedIndex] = useState(0)
+  const [showTags, changeShowTags] = useState(true)
 
   const { regionTypesAllowed = ["bounding-box"] } = iface
 
@@ -69,6 +70,7 @@ export default ({
         onSaveTaskOutputItem(i, regionMat[i][0])
       }
     }
+    changeShowTags(output.showTags)
     if (containerProps.onExit) containerProps.onExit(nextAction)
   })
   const onNextImage = useEventCallback((output) => {
@@ -110,6 +112,7 @@ export default ({
         key={globalSampleIndex}
         selectedImage={taskData[selectedIndex].imageUrl}
         taskDescription={iface.description}
+        showTags={showTags}
         {...labelProps}
         onNextImage={onNextImage}
         onPrevImage={onPrevImage}
