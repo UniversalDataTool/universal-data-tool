@@ -93,7 +93,7 @@ export const UniversalDataViewer = ({
     case "image_classification":
       return (
         <ImageClassification
-        sampleIndex={sampleIndex}
+          sampleIndex={sampleIndex}
           containerProps={containerProps}
           {...oha}
           onExit={onExit}

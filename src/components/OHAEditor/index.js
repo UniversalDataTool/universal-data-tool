@@ -245,7 +245,7 @@ export default ({
                   )
                 )
               }
-              if(typeof output[0] !== "undefined"){
+              if (typeof output[0] !== "undefined") {
                 newOHA = setIn(
                   newOHA,
                   ["taskOutput", singleSampleOHA.sampleIndex],
@@ -266,10 +266,14 @@ export default ({
                   selectedBrush
                 )
               }
-              if(typeof output[0] !== "undefined")
-              changeSingleSampleOHA(
-                setIn(singleSampleOHA, ["taskOutput", relativeIndex], output[relativeIndex])
-              )
+              if (typeof output[0] !== "undefined")
+                changeSingleSampleOHA(
+                  setIn(
+                    singleSampleOHA,
+                    ["taskOutput", relativeIndex],
+                    output[relativeIndex]
+                  )
+                )
               onChangeOHA(newOHA)
             }}
             onExit={(nextAction = "nothing") => {
