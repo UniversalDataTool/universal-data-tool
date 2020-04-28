@@ -80,7 +80,7 @@ export default () => {
         .promises.writeFile(filePath, toUDTCSV(file.content))
     }
     const onOpenFileFromToolbar = (e, file) => (
-      console.log(file), openFile(file)
+    openFile(file)
     )
 
     ipcRenderer.on("open-welcome-page", onOpenWelcomePage)

@@ -20,6 +20,7 @@ export const UniversalDataViewer = ({
   datasetName,
   requireCompleteToPressNext,
   onSaveTaskOutputItem,
+  sampleIndex,
 }) => {
   // TODO type check w/ superstruct against oha
   const containerProps = useMemo(
@@ -92,6 +93,7 @@ export const UniversalDataViewer = ({
     case "image_classification":
       return (
         <ImageClassification
+        sampleIndex={sampleIndex}
           containerProps={containerProps}
           {...oha}
           onExit={onExit}

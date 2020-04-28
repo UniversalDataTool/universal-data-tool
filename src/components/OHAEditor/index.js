@@ -73,6 +73,7 @@ export default ({
   const [mode, changeMode] = useState(initialMode)
   const [singleSampleOHA, changeSingleSampleOHA] = useState()
   const [sampleInputEditor, changeSampleInputEditor] = useState({})
+  const [sampleIndex, changeSampleIndex] = useState({})
   const [jsonText, changeJSONText] = useState()
   const { remote, ipcRenderer } = useElectron() || {}
 
@@ -191,9 +192,10 @@ export default ({
                 ...oha,
                 taskData: [oha.taskData[sampleIndex]],
                 taskOutput: [(oha.taskOutput || [])[sampleIndex]],
-                sampleIndex,
+                sampleIndex: sampleIndex,
                 annotationStartTime: Date.now(),
               })
+              changeSampleIndex(sampleIndex)
               changeMode("label")
             }}
             openSampleInputEditor={(sampleIndex) => {
@@ -243,11 +245,13 @@ export default ({
                   )
                 )
               }
-              newOHA = setIn(
-                newOHA,
-                ["taskOutput", singleSampleOHA.sampleIndex],
-                output
-              )
+              if(typeof output[0] !== "undefined"){
+                newOHA = setIn(
+                  newOHA,
+                  ["taskOutput", singleSampleOHA.sampleIndex],
+                  output
+                )
+              }
 
               if (
                 singleSampleOHA.taskData[0].brush !== selectedBrush &&
@@ -262,8 +266,9 @@ export default ({
                   selectedBrush
                 )
               }
+              if(typeof output[0] !== "undefined")
               changeSingleSampleOHA(
-                setIn(singleSampleOHA, ["taskOutput", relativeIndex], output)
+                setIn(singleSampleOHA, ["taskOutput", relativeIndex], output[relativeIndex])
               )
               onChangeOHA(newOHA)
             }}
@@ -302,7 +307,8 @@ export default ({
               }
               changeSingleSampleOHA(null)
             }}
-            oha={singleSampleOHA}
+            oha={oha}
+            sampleIndex={sampleIndex}
           />
         ) : (
           mode === "label" && (

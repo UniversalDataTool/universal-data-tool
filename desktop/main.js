@@ -5,7 +5,6 @@ const menuTemplate = require("./menu-template")
 const { format: formatUrl } = require("url")
 
 function createWindow() {
-  console.log("Creating window...")
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 1200,

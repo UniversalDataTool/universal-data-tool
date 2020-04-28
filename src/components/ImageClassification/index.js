@@ -93,7 +93,7 @@ export default ({
   containerProps = emptyObj,
   onSaveTaskOutputItem,
 }) => {
-  const [sampleIndex, changeSampleIndex] = useState(0)
+  const [sampleIndex, changeSampleIndex] = useState(globalSampleIndex)
   const [enlargedLabel, changeEnlargedLabel] = useState(null)
   const [currentOutput, changeCurrentOutput] = useState(emptyArr)
   const labels = useMemo(
@@ -108,7 +108,7 @@ export default ({
     if (containerProps.onExit) containerProps.onExit()
   })
   const onNext = useEventCallback((newOutput) => {
-    onSaveTaskOutputItem(sampleIndex, newOutput || currentOutput)
+      onSaveTaskOutputItem(sampleIndex, newOutput || currentOutput)
     if (sampleIndex !== taskData.length - 1) {
       changeSampleIndex(sampleIndex + 1)
     } else {
