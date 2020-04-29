@@ -17,7 +17,8 @@ import StorageIcon from "@material-ui/icons/Storage"
 import Button from "@material-ui/core/Button"
 import GetAnnotationFromAFolderAWS from "./get-annotation-from-aws"
 import GetImageFromAFolderAWS from "./get-images-from-aws"
-
+import { styled } from "@material-ui/core/styles"
+import * as colors from "@material-ui/core/colors"
 const expandedDataColumns = [
   { name: "Data", selector: "data", sortable: true },
   { name: "Last Modified", selector: "lastModified", sortable: true },
@@ -285,7 +286,7 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
           <tr>
             <th>
               {loadProjectIsSelected ? (
-                <Button onClick={changeLoadProjectIsSelected} disabled>
+                <Button style={{color: "white", backgroundColor: "DodgerBlue"}}onClick={changeLoadProjectIsSelected} disabled>
                   Load Project
                 </Button>
               ) : (
@@ -298,7 +299,7 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
                   Load Samples
                 </Button>
               ) : (
-                <Button onClick={changeLoadProjectIsSelected} disabled>
+                <Button style={{color: "white", backgroundColor: "DodgerBlue"}} onClick={changeLoadProjectIsSelected} disabled>
                   Load Samples
                 </Button>
               )}
