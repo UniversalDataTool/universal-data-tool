@@ -19,7 +19,7 @@ import GetAnnotationFromAFolderAWS from "./get-annotation-from-aws"
 import GetImageFromAFolderAWS from "./get-images-from-aws"
 import RecognizeFileExtension from "../../utils/RecognizeFileExtension"
 
-const selectedStyle ={color: "DodgerBlue","font-weight": "bold"}
+const selectedStyle ={color: "DodgerBlue"}
 const expandedDataColumns = [
   { name: "Data", selector: "data", sortable: true },
   { name: "Last Modified", selector: "lastModified", sortable: true },
