@@ -286,7 +286,7 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
           <tr>
             <th>
               {loadProjectIsSelected ? (
-                <Button style={{color: "white", backgroundColor: "DodgerBlue"}}onClick={changeLoadProjectIsSelected} disabled>
+                <Button style={{color: "DodgerBlue","font-weight": "bold"}}onClick={changeLoadProjectIsSelected} disabled>
                   Load Project
                 </Button>
               ) : (
@@ -299,7 +299,7 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
                   Load Samples
                 </Button>
               ) : (
-                <Button style={{color: "white", backgroundColor: "DodgerBlue"}} onClick={changeLoadProjectIsSelected} disabled>
+                <Button style={{color: "DodgerBlue","font-weight": "bold",}} onClick={changeLoadProjectIsSelected} disabled>
                   Load Samples
                 </Button>
               )}
