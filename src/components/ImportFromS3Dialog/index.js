@@ -17,15 +17,15 @@ import StorageIcon from "@material-ui/icons/Storage"
 import Button from "@material-ui/core/Button"
 import GetAnnotationFromAFolderAWS from "./get-annotation-from-aws"
 import GetImageFromAFolderAWS from "./get-images-from-aws"
-import { styled } from "@material-ui/core/styles"
-import * as colors from "@material-ui/core/colors"
+
+const selectedStyle ={color: "DodgerBlue","font-weight": "bold"}
 const expandedDataColumns = [
   { name: "Data", selector: "data", sortable: true },
   { name: "Last Modified", selector: "lastModified", sortable: true },
 ]
 
 const expandedAnnotationsColumns = [
-  { name: "Annotations", selector: "annotation" },
+  { name: "Annotations", selector: "annotation"},
   { name: "Last Modified", selector: "lastModified", sortable: true },
 ]
 
@@ -35,6 +35,7 @@ const customStyles = {
   headCells: {
     style: {
       paddingLeft: "10px",
+      "font-weight": "bold",
     },
   },
   cells: {
@@ -286,7 +287,7 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
           <tr>
             <th>
               {loadProjectIsSelected ? (
-                <Button style={{color: "DodgerBlue","font-weight": "bold"}}onClick={changeLoadProjectIsSelected} disabled>
+                <Button style={selectedStyle}onClick={changeLoadProjectIsSelected} disabled>
                   Load Project
                 </Button>
               ) : (
@@ -299,7 +300,7 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
                   Load Samples
                 </Button>
               ) : (
-                <Button style={{color: "DodgerBlue","font-weight": "bold",}} onClick={changeLoadProjectIsSelected} disabled>
+                <Button style={selectedStyle} onClick={changeLoadProjectIsSelected} disabled>
                   Load Samples
                 </Button>
               )}
