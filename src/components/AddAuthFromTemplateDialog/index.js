@@ -78,7 +78,7 @@ const forms = {
         placeholder: "XX-XXXX-X",
         type: "text",
         isRequired: true,
-      }
+      },
     ],
   },
 }
@@ -101,11 +101,11 @@ export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
           authenticationFlowType: "USER_PASSWORD_AUTH",
         },
         Storage: {
-          AWSS3:{
+          AWSS3: {
             bucket: answers.bucket,
             region: answers.regionBucket,
-          }
-        }
+          },
+        },
       }
       try {
         Amplify.configure(config)
