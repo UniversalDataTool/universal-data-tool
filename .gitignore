@@ -30,3 +30,4 @@ desktop/node_modules
 /lib
 
 .env
+.cache
