@@ -19,14 +19,14 @@ import GetAnnotationFromAFolderAWS from "./get-annotation-from-aws"
 import GetImageFromAFolderAWS from "./get-images-from-aws"
 import RecognizeFileExtension from "../../utils/RecognizeFileExtension"
 
-const selectedStyle ={color: "DodgerBlue"}
+const selectedStyle = { color: "DodgerBlue" }
 const expandedDataColumns = [
   { name: "Data", selector: "data", sortable: true },
   { name: "Last Modified", selector: "lastModified", sortable: true },
 ]
 
 const expandedAnnotationsColumns = [
-  { name: "Annotations", selector: "annotation"},
+  { name: "Annotations", selector: "annotation" },
   { name: "Last Modified", selector: "lastModified", sortable: true },
 ]
 
@@ -218,27 +218,37 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
     setloadProjectIsSelected(!loadProjectIsSelected)
   }
 
-  useEffect(()=>{
-    var numberOfSamples =0
-    if(folderToFetch!==""&&!isEmpty(dataForTable)){
-      for(var i =0;i<dataForTable.length;i++){
-        if(dataForTable[i].folder === folderToFetch){
-          if(!isEmpty(dataForTable[i].rowData)){
-            for(var y=0;y<dataForTable[i].rowData.length;y++){
-              if(RecognizeFileExtension(dataForTable[i].rowData[y].data)===configImport.typeOfFileToLoad){
+  useEffect(() => {
+    var numberOfSamples = 0
+    if (folderToFetch !== "" && !isEmpty(dataForTable)) {
+      for (var i = 0; i < dataForTable.length; i++) {
+        if (dataForTable[i].folder === folderToFetch) {
+          if (!isEmpty(dataForTable[i].rowData)) {
+            for (var y = 0; y < dataForTable[i].rowData.length; y++) {
+              if (
+                RecognizeFileExtension(dataForTable[i].rowData[y].data) ===
+                configImport.typeOfFileToLoad
+              ) {
                 numberOfSamples++
               }
             }
           }
         }
       }
-      if(loadProjectIsSelected){
-        changetextButtonAdd("Load "+folderToFetch)
-      }else{
-        changetextButtonAdd("Add "+numberOfSamples+" "+configImport.typeOfFileToLoad)
+      if (loadProjectIsSelected) {
+        changetextButtonAdd("Load " + folderToFetch)
+      } else {
+        changetextButtonAdd(
+          "Add " + numberOfSamples + " " + configImport.typeOfFileToLoad
+        )
       }
     }
-  },[folderToFetch,loadProjectIsSelected,configImport.typeOfFileToLoad,dataForTable])
+  }, [
+    folderToFetch,
+    loadProjectIsSelected,
+    configImport.typeOfFileToLoad,
+    dataForTable,
+  ])
 
   useEffect(() => {
     if (isEmpty(user)) {
@@ -311,7 +321,11 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
           <tr>
             <th>
               {loadProjectIsSelected ? (
-                <Button style={selectedStyle}onClick={changeLoadProjectIsSelected} disabled>
+                <Button
+                  style={selectedStyle}
+                  onClick={changeLoadProjectIsSelected}
+                  disabled
+                >
                   Load Project
                 </Button>
               ) : (
@@ -324,7 +338,11 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
                   Load Samples
                 </Button>
               ) : (
-                <Button style={selectedStyle} onClick={changeLoadProjectIsSelected} disabled>
+                <Button
+                  style={selectedStyle}
+                  onClick={changeLoadProjectIsSelected}
+                  disabled
+                >
                   Load Samples
                 </Button>
               )}
