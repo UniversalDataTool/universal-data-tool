@@ -1,4 +1,3 @@
-
 // @flow
 
 import React from "react"
@@ -8,6 +7,4 @@ import { action } from "@storybook/addon-actions"
 
 import Waveform from "./"
 
-storiesOf("Waveform", module).add("Basic", () => (
-    <Waveform />
-))
+storiesOf("Waveform", module).add("Basic", () => <Waveform />)
