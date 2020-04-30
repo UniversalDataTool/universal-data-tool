@@ -17,7 +17,9 @@ import StorageIcon from "@material-ui/icons/Storage"
 import Button from "@material-ui/core/Button"
 import GetAnnotationFromAFolderAWS from "./get-annotation-from-aws"
 import GetImageFromAFolderAWS from "./get-images-from-aws"
+import RecognizeFileExtension from "../../utils/RecognizeFileExtension"
 
+const selectedStyle = { color: "DodgerBlue" }
 const expandedDataColumns = [
   { name: "Data", selector: "data", sortable: true },
   { name: "Last Modified", selector: "lastModified", sortable: true },
@@ -34,6 +36,7 @@ const customStyles = {
   headCells: {
     style: {
       paddingLeft: "10px",
+      "font-weight": "bold",
     },
   },
   cells: {
@@ -126,6 +129,7 @@ function initConfigImport(file) {
 
 export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
   Amplify.configure(authConfig)
+  const [textButtonAdd, changetextButtonAdd] = useState("Add Samples")
   const [s3Content, changeS3Content] = useState(null)
   const [dataForTable, changeDataForTable] = useState(null)
   const [folderToFetch, setFolderToFetch] = useState("")
@@ -215,6 +219,38 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
   }
 
   useEffect(() => {
+    var numberOfSamples = 0
+    if (folderToFetch !== "" && !isEmpty(dataForTable)) {
+      for (var i = 0; i < dataForTable.length; i++) {
+        if (dataForTable[i].folder === folderToFetch) {
+          if (!isEmpty(dataForTable[i].rowData)) {
+            for (var y = 0; y < dataForTable[i].rowData.length; y++) {
+              if (
+                RecognizeFileExtension(dataForTable[i].rowData[y].data) ===
+                configImport.typeOfFileToLoad
+              ) {
+                numberOfSamples++
+              }
+            }
+          }
+        }
+      }
+      if (loadProjectIsSelected) {
+        changetextButtonAdd("Load " + folderToFetch)
+      } else {
+        changetextButtonAdd(
+          "Add " + numberOfSamples + " " + configImport.typeOfFileToLoad
+        )
+      }
+    }
+  }, [
+    folderToFetch,
+    loadProjectIsSelected,
+    configImport.typeOfFileToLoad,
+    dataForTable,
+  ])
+
+  useEffect(() => {
     if (isEmpty(user)) {
       changeS3Content(null)
     } else if (!isEmpty(authConfig)) {
@@ -273,7 +309,7 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
       onClose={onClose}
       actions={[
         {
-          text: "Add Samples",
+          text: textButtonAdd,
           onClick: () => {
             handleAddSample()
           },
@@ -285,7 +321,11 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
           <tr>
             <th>
               {loadProjectIsSelected ? (
-                <Button onClick={changeLoadProjectIsSelected} disabled>
+                <Button
+                  style={selectedStyle}
+                  onClick={changeLoadProjectIsSelected}
+                  disabled
+                >
                   Load Project
                 </Button>
               ) : (
@@ -298,7 +338,11 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
                   Load Samples
                 </Button>
               ) : (
-                <Button onClick={changeLoadProjectIsSelected} disabled>
+                <Button
+                  style={selectedStyle}
+                  onClick={changeLoadProjectIsSelected}
+                  disabled
+                >
                   Load Samples
                 </Button>
               )}

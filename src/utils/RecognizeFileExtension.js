@@ -1,7 +1,7 @@
 export default (UrlOfAFile) => {
   var typeOfFile = "File"
   var fileExtension = UrlOfAFile.match(
-    `\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
+    `\\/?([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
   )[2].toLowerCase()
   if (
     fileExtension === "jpg" ||
