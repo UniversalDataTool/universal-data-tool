@@ -29,10 +29,18 @@ function setOneNewSample(newSamples,sampleName,samples){
     if (
       sampleName === sampleToCheck[1]
     ) {
-      newSamples.push({
-        imageUrl: samples[y].imageUrl,
-        sampleName: sampleName,
-      })
+      if(!isEmpty(samples[y].imageUrl)){
+        newSamples.push({
+          imageUrl: samples[y].imageUrl,
+          sampleName: sampleName,
+        })
+      }
+      if(!isEmpty(samples[y].videoUrl)){
+        newSamples.push({
+          videoUrl: samples[y].videoUrl,
+          sampleName: sampleName,
+        })
+      }
     }
   }
   return newSamples
