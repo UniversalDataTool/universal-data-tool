@@ -9,7 +9,6 @@ import * as colors from "@material-ui/core/colors"
 import ConfigureImageSegmentation from "../ConfigureImageSegmentation"
 import ConfigureImageClassification from "../ConfigureImageClassification"
 import ConfigureTextClassification from "../ConfigureTextClassification"
-import PaperContainer from "../PaperContainer"
 import ConfigureAudioTranscription from "../ConfigureAudioTranscription"
 import ConfigureNLP from "../ConfigureNLP"
 import ConfigureDataEntry from "../ConfigureDataEntry"
@@ -17,11 +16,9 @@ import ConfigureComposite from "../ConfigureComposite"
 import Configure3D from "../Configure3D"
 import ConfigureVideoSegmentation from "../ConfigureVideoSegmentation"
 import UniversalDataViewer from "../UniversalDataViewer"
-import { setIn } from "seamless-immutable"
 import Grid from "@material-ui/core/Grid"
 import LabelErrorBoundary from "../LabelErrorBoundary"
 import useEventCallback from "use-event-callback"
-import CircularProgress from "@material-ui/core/CircularProgress"
 
 const noop = () => {}
 
@@ -116,7 +113,7 @@ export const ConfigureInterface = ({
     return () => {
       clearTimeout(timeout)
     }
-  }, [previewChangedTime])
+  }, [previewChangedTime, previewVersion])
   return (
     <Container>
       <Heading>Interface Type</Heading>

@@ -58,7 +58,6 @@ const ImportFromYoutubeUrls = ({ open, onClose, onAddSamples }) => {
 
   const [urlsFromTextArea, setUrlsFromTextArea] = useState([])
   const [videoQuality, setVideoQuality] = useState(qualityOptions[0].value)
-  const [downloadPath, setDownloadPath] = useState(null)
   const [error, setError] = useState(null)
 
   const [unitProgress, setUnitProgress] = useState({ progress: 0 })
@@ -110,7 +109,6 @@ const ImportFromYoutubeUrls = ({ open, onClose, onAddSamples }) => {
             if (canceled || !filePaths) return setIsDownloading(false)
 
             const downloadPath = filePaths[0]
-            setDownloadPath(downloadPath)
 
             const youtubeVideoInfos = await getYoutubeVideoInformation(
               remote,

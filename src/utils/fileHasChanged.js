@@ -1,5 +1,5 @@
 export default (objectOfRef, objectToCheck) => {
-  // This class return every change in the localStorage and its location
+  // This class return every change in one item of recentItems and its location
   var resultSet = {
     fileName: false,
     content: {
@@ -13,6 +13,7 @@ export default (objectOfRef, objectToCheck) => {
     },
     id: false,
     mode: false,
+    any: false,
   }
   // Check if the object to check exist if not return false
   if (typeof objectToCheck === "undefined") return resultSet
@@ -27,6 +28,13 @@ export default (objectOfRef, objectToCheck) => {
     resultSet.content.taskOutput = true
     resultSet.id = true
     resultSet.mode = true
+    resultSet.any = true
+    return resultSet
+  }
+
+  if (objectOfRef !== objectToCheck) {
+    resultSet.any = true
+  } else {
     return resultSet
   }
 

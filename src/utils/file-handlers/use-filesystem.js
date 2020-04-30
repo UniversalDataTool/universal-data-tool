@@ -4,7 +4,6 @@ import { useEffect } from "react"
 import useEventCallback from "use-event-callback"
 import useElectron from "../use-electron.js"
 import { useToasts } from "../../components/Toasts"
-import templates from "../../components/StartingPage/templates.js"
 import { setIn } from "seamless-immutable"
 import toUDTCSV from "../to-udt-csv.js"
 import useIsDesktop from "../use-is-desktop"
@@ -15,7 +14,7 @@ export default (file, changeFile) => {
   const isDesktop = useIsDesktop()
   if (!isDesktop) return webReturn
   const { addToast } = useToasts()
-  const { remote, ipcRenderer } = useElectron()
+  const { remote } = useElectron()
   const saveFile = useEventCallback(({ saveAs = false } = {}) => {
     if (!file) return
     async function saveFileAsync() {
@@ -77,7 +76,7 @@ export default (file, changeFile) => {
         )
       )
     }
-  }, [file && file.fileName, file && file.fileName])
+  }, [file, changeFile])
 
   return { saveFile }
 }

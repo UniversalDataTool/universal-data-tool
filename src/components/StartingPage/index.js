@@ -1,23 +1,18 @@
 // @flow
 
-import React, { useState, useMemo, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Grid from "@material-ui/core/Grid"
 import Header from "../Header"
 import Button from "@material-ui/core/Button"
-import Typography from "@material-ui/core/Typography"
 import templates from "./templates"
 import * as colors from "@material-ui/core/colors"
-import VideoIcon from "@material-ui/icons/OndemandVideo"
-import FileIcon from "@material-ui/icons/InsertDriveFile"
-import TemplateIcon from "@material-ui/icons/Description"
 import { useDropzone } from "react-dropzone"
 import CreateFromTemplateDialog from "../CreateFromTemplateDialog"
 import AddAuthFromTemplateDialog from "../AddAuthFromTemplateDialog"
 import { styled } from "@material-ui/core/styles"
 import usePosthog from "../../utils/use-posthog"
 import packageInfo from "../../../package.json"
-import useIsDesktop from "../../utils/use-is-desktop"
 import useEventCallback from "use-event-callback"
 
 const useStyles = makeStyles({
@@ -103,7 +98,7 @@ export default ({
   const c = useStyles()
   const posthog = usePosthog()
 
-  const isDesktop = useIsDesktop()
+  //const isDesktop = useIsDesktop()
   const [newVersionAvailable, changeNewVersionAvailable] = useState(false)
   useEffect(() => {
     // if (!isDesktop) return
@@ -127,7 +122,7 @@ export default ({
     onFileDrop(acceptedFiles[0])
   })
 
-  let { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+  let { getRootProps, getInputProps } = useDropzone({ onDrop })
 
   return (
     <div className={c.container}>
@@ -269,9 +264,11 @@ export default ({
               <ActionList>
                 <ActionTitle>Instant Try Now</ActionTitle>
                 <ActionText>
-                  <a onClick={() => changeCreateFromTemplateDialogOpen(true)}>
+                  <Action
+                    onClick={() => changeCreateFromTemplateDialogOpen(true)}
+                  >
                     Open a template
-                  </a>{" "}
+                  </Action>{" "}
                   to see how the UDT could work for your data.
                 </ActionText>
               </ActionList>

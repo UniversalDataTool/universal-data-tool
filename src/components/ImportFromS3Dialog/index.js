@@ -47,7 +47,7 @@ const customStyles = {
 }
 
 const ExpandedRow = ({ data }) => {
-  const { rowData, rowAnnotations, ...notImportant } = data
+  const { rowData, rowAnnotations } = data
   return (
     <>
       <DataTable
@@ -141,7 +141,6 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
     "configImport",
     initConfigImport(file)
   )
-  let _dataForTable = {}
 
   const lastObjectRef = useRef({})
 
@@ -166,7 +165,7 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
         Audio: true,
       },
     })
-  }, [file])
+  }, [file, configImport, setConfigImport])
 
   const handleAddSample = async () => {
     var samples = await GetImageFromAFolderAWS(
@@ -257,7 +256,7 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
       Storage.list("", { level: "private" })
         .then((result) => {
           changeS3Content(result)
-          _dataForTable = result
+          let _dataForTable = result
             .filter((obj) => {
               return obj.key.endsWith("/") & (obj.key.split("/").length === 2)
             })
@@ -301,7 +300,7 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
         })
         .catch((err) => console.log(err))
     }
-  }, [user])
+  }, [user, authConfig])
   return (
     <SimpleDialog
       title="Select Project"

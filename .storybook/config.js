@@ -11,6 +11,7 @@ function loadStories() {
   addDecorator(themeDecorator)
   const importAll = (r) => r.keys().map(r)
   importAll(require.context("../src/components", true, /\.story\.js$/))
+  importAll(require.context("../src/vanilla", true, /\.story\.js$/))
 }
 
 configure(loadStories, module)

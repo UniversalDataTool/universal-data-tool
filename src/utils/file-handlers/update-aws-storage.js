@@ -1,4 +1,4 @@
-import Amplify, { Auth, Storage } from "aws-amplify"
+import { Storage } from "aws-amplify"
 
 export default (file) => {
   async function fetchAnImage(element) {

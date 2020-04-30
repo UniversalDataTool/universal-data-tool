@@ -1,13 +1,7 @@
 // @flow
 
-import { useState, useEffect } from "react"
-import moment from "moment"
-// import { useToasts } from "../../../components/Toasts"
-import seamless from "seamless-immutable"
-import applySeamlessPatch from "./apply-seamless-patch"
+import { useEffect } from "react"
 import CollaborationHandler from "./handler.js"
-
-const { setIn, from: makeImmutable } = seamless
 
 const serverUrl =
   window.localStorage.CUSTOM_COLLABORATION_SERVER ||
@@ -70,14 +64,12 @@ export default (file, changeFile) => {
       clearTimeout(timeout)
       timeout = null
     }
-  }, [file])
+  }, [file, changeFile])
 
   // Update the Server State by Sending Patches
   useEffect(() => {
     if (!file || file.mode !== "server") return
-    async function doPatch() {
-      const patchResult = await collab.sendPatchIfChanged(file.content)
-    }
+    async function doPatch() {}
     doPatch()
-  }, [file && file.content])
+  }, [file])
 }

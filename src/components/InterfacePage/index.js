@@ -2,14 +2,11 @@
 
 import React from "react"
 import ConfigureInterface, { Heading } from "../ConfigureInterface"
-import { useUpdate } from "react-use"
 import usePosthog from "../../utils/use-posthog"
 import PaperContainer from "../PaperContainer"
 import Box from "@material-ui/core/Box"
-import Paper from "@material-ui/core/Paper"
 import MuiButton from "@material-ui/core/Button"
 import { styled } from "@material-ui/core/styles"
-import useIsDesktop from "../../utils/use-is-desktop"
 
 const Button = styled(MuiButton)({
   margin: 8,
@@ -18,8 +15,6 @@ const Button = styled(MuiButton)({
 export default ({ oha, onChange, onClickEditJSON, onClearLabelData }) => {
   const { interface: iface } = oha
   const posthog = usePosthog()
-  const forceUpdate = useUpdate()
-  const isDesktop = useIsDesktop()
 
   return (
     <div>
@@ -52,21 +47,21 @@ export default ({ oha, onChange, onClickEditJSON, onClearLabelData }) => {
           <Button
             onClick={onClickEditJSON}
             variant="outlined"
-            onClick={() => {
+            /*onClick={() => {
               if (posthog.has_opted_out_capturing()) {
                 posthog.opt_in_capturing()
               } else {
                 posthog.opt_out_capturing()
               }
               forceUpdate()
-            }}
+            }}*/
           >
             {posthog.has_opted_out_capturing() ? "Enable" : "Disable"} Telemetry
           </Button>
           <Button
             onClick={onClickEditJSON}
             variant="outlined"
-            onClick={() => {
+            /*onClick={() => {
               const response = window.prompt(
                 "Input URL for new collaboration server (empty to use universaldatatool.com):",
                 window.localStorage.getItem("CUSTOM_COLLABORATION_SERVER") || ""
@@ -77,7 +72,7 @@ export default ({ oha, onChange, onClickEditJSON, onClearLabelData }) => {
                 response
               )
               window.location.reload()
-            }}
+            }}*/
           >
             Custom Collaboration Server
           </Button>
