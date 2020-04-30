@@ -26,7 +26,6 @@ export default (appendedTaskData, oha) => {
         searchSampleName(sampleName, oha.taskData) ||
         searchSampleName(sampleName, appendedTaskData)
       ) {
-        console.log(sampleName[2])
         if(isEmpty(sampleName[2].match('(.*)\\([0-9]*\\)$'))){
           sampleName[1] = sampleName[2] +"(" +v.toString()+")." + sampleName[3]
         }else{

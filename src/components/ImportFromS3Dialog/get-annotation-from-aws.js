@@ -21,22 +21,41 @@ export default async (result, samples, folderToFetch, authConfig) => {
             if (typeof result.content != "undefined") {
               json = result
               if (
-                typeof json.content.taskOutput !== "undefined" &&
-                !isEmpty(json.content.taskOutput)
+                typeof json.content.taskData !== "undefined" &&
+                !isEmpty(json.content.taskData)
               ) {
-                var newSamples = []
-                for (var i = 0; i < json.content.taskOutput.length; i++) {
-                  var sampleName = getSampleNameFromURL(
-                    json.content.taskData[i]
-                  )
+                var newSamples = [json.content.taskData.length]
+                for (var i = 0; i < json.content.taskData.length; i++) {
+                  var sampleName
+                  if(typeof json.content.taskData[i].sampleName!=="undefined"){
+                    sampleName = json.content.taskData[i].sampleName
+                  }else{
+                    sampleName = getSampleNameFromURL(
+                      json.content.taskData[i]
+                    )[1]
+                  }
                   for (var y = 0; y < samples.length; y++) {
-                    if (sampleName[1] === getSampleNameFromURL(samples[y])[1]) {
-                      newSamples.push(samples[y])
+                    var sampleToCheck = getSampleNameFromURL(samples[y])
+                    if (typeof samples[y].imageUrl !== "undefined"&&sampleName === sampleToCheck[1]) {
+                      newSamples[i]={
+                        imageUrl: samples[y].imageUrl,
+                        sampleName: sampleName,
+                      }
+                    }
+                    if (typeof samples[y].videoUrl !== "undefined"&&sampleName === sampleToCheck[1]) {
+                      newSamples[i]={
+                        videoUrl: samples[y].videoUrl,
+                        sampleName: sampleName,
+                      }
                     }
                   }
+                  console.log(sampleName)
                 }
+                console.log(json)
                 json.content.taskData = newSamples
               }
+              console.log(samples)
+              console.log(json)
             }
           })
         })
