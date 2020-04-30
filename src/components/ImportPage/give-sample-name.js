@@ -26,10 +26,17 @@ export default (appendedTaskData, oha) => {
         searchSampleName(sampleName, oha.taskData) ||
         searchSampleName(sampleName, appendedTaskData)
       ) {
-        if(isEmpty(sampleName[2].match('(.*)\\([0-9]*\\)$'))){
-          sampleName[1] = sampleName[2] +"(" +v.toString()+")." + sampleName[3]
-        }else{
-          sampleName[1] = sampleName[2].match('(.*)\\([0-9]*\\)$')[1] +"(" +v.toString()+")"+ + "." + sampleName[3] 
+        if (isEmpty(sampleName[2].match("(.*)\\([0-9]*\\)$"))) {
+          sampleName[1] =
+            sampleName[2] + "(" + v.toString() + ")." + sampleName[3]
+        } else {
+          sampleName[1] =
+            sampleName[2].match("(.*)\\([0-9]*\\)$")[1] +
+            "(" +
+            v.toString() +
+            ")" +
+            +"." +
+            sampleName[3]
         }
         v++
       } else {
