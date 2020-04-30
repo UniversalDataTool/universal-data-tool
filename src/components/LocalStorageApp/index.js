@@ -8,13 +8,8 @@ import useErrors from "../../utils/use-errors.js"
 import useFileHandler from "../../utils/file-handlers"
 import download from "in-browser-download"
 import toUDTCSV from "../../utils/to-udt-csv.js"
-<<<<<<< HEAD
-import Amplify, { Auth, Storage } from "aws-amplify"
-import config from "../LocalStorageApp/invalidconfig"
-=======
 import Amplify, { Auth } from "aws-amplify"
 import config from "../LocalStorageApp/AWSconfig"
->>>>>>> fixwarning
 import isEmpty from "../../utils/isEmpty"
 import fileHasChanged from "../../utils/fileHasChanged"
 import { setIn } from "seamless-immutable"
