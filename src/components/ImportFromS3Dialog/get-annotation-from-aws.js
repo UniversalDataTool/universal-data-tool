@@ -2,15 +2,17 @@ import getSampleNameFromURL from "../../utils/get-sample-name-from-url"
 import isEmpty from "../../utils/isEmpty"
 import Amplify, { Storage } from "aws-amplify"
 
+function CheckIfAnnotationExist(result, folderToFetch){
+  return result.find(
+    (element) =>
+      element.key === `${folderToFetch}/annotations/annotations.json`
+  )
+}
+
 export default async (result, samples, folderToFetch, authConfig) => {
   Amplify.configure(authConfig)
   var json = null
-  if (
-    result.find(
-      (element) =>
-        element.key === `${folderToFetch}/annotations/annotations.json`
-    )
-  ) {
+  if ( CheckIfAnnotationExist(result,folderToFetch) ) {
     await Storage.get(`${folderToFetch}/annotations/annotations.json`, {
       expires: 24 * 60 * 60 * 2000,
       level: "private",
@@ -20,10 +22,7 @@ export default async (result, samples, folderToFetch, authConfig) => {
           return await data.json().then(async (result) => {
             if (typeof result.content != "undefined") {
               json = result
-              if (
-                typeof json.content.taskData !== "undefined" &&
-                !isEmpty(json.content.taskData)
-              ) {
+              if (!isEmpty(json.content.taskData)) {
                 var newSamples = [json.content.taskData.length]
                 for (var i = 0; i < json.content.taskData.length; i++) {
                   var sampleName
@@ -57,13 +56,9 @@ export default async (result, samples, folderToFetch, authConfig) => {
                       }
                     }
                   }
-                  console.log(sampleName)
                 }
-                console.log(json)
                 json.content.taskData = newSamples
               }
-              console.log(samples)
-              console.log(json)
             }
           })
         })
