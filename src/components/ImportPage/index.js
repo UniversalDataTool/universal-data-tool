@@ -236,12 +236,14 @@ export default ({
         typeof json.content !== "undefined" &&
         typeof json.fileName !== "undefined"
       ) {
-        json.content.taskData = giveSampleName(json.content.taskData, oha)
-        newOHA = setIn(
-          newOHA,
-          ["taskData"],
-          (oha.taskData || []).concat(json.content.taskData)
-        )
+        if(!isEmpty(json.content.taskData)){
+          json.content.taskData = giveSampleName(json.content.taskData, oha)
+          newOHA = setIn(
+            newOHA,
+            ["taskData"],
+            (oha.taskData || []).concat(json.content.taskData)
+          )
+        }
         newOHA = setIn(newOHA, ["interface"], json.content.interface)
         if (typeof file.fileName === "undefined" || file.fileName === "unnamed")
           file = setIn(file, ["fileName"], json.fileName)

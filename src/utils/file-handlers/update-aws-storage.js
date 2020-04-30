@@ -1,4 +1,5 @@
 import { Storage } from "aws-amplify"
+import isEmpty from "../isEmpty"
 
 export default (file) => {
   async function fetchAnImage(element) {
@@ -41,32 +42,34 @@ export default (file) => {
   }
 
   function createOrReplaceImages(file) {
-    file.content.taskData.forEach(async (element) => {
-      try {
-        const blob = await fetchAnImage(element)
-        let imageOrVideoName
-        if (typeof element.sampleName === "undefined") {
-          if (typeof element.imageUrl !== "undefined") {
-            imageOrVideoName = element.imageUrl.match(
-              `\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
-            )[1]
+    if(!isEmpty(file.content.taskData)){
+      file.content.taskData.forEach(async (element) => {
+        try {
+          const blob = await fetchAnImage(element)
+          let imageOrVideoName
+          if (typeof element.sampleName === "undefined") {
+            if (typeof element.imageUrl !== "undefined") {
+              imageOrVideoName = element.imageUrl.match(
+                `\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
+              )[1]
+            } else {
+              imageOrVideoName = element.videoUrl.match(
+                `\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
+              )[1]
+            }
           } else {
-            imageOrVideoName = element.videoUrl.match(
-              `\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
-            )[1]
+            imageOrVideoName = element.sampleName
           }
-        } else {
-          imageOrVideoName = element.sampleName
+  
+          var pathToFile = `${file.fileName}/data/${imageOrVideoName}`
+          Storage.put(pathToFile, blob, {
+            level: "private",
+          }).catch((err) => console.log(err))
+        } catch (err) {
+          console.log(err)
         }
-
-        var pathToFile = `${file.fileName}/data/${imageOrVideoName}`
-        Storage.put(pathToFile, blob, {
-          level: "private",
-        }).catch((err) => console.log(err))
-      } catch (err) {
-        console.log(err)
-      }
-    })
+      })
+    }
   }
 
   if (fileNameExist(file)) {
