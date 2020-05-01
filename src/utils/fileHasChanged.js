@@ -1,3 +1,5 @@
+import isEmpty from "./isEmpty"
+
 export default (objectOfRef, objectToCheck) => {
   // This class return every change in one item of recentItems and its location
   var resultSet = {
@@ -16,7 +18,7 @@ export default (objectOfRef, objectToCheck) => {
     any: false,
   }
   // Check if the object to check exist if not return false
-  if (typeof objectToCheck === "undefined") return resultSet
+  if (isEmpty(objectToCheck)) return resultSet
 
   // Check if the object of reference exist if not return true
   if (typeof objectOfRef === "undefined") {
