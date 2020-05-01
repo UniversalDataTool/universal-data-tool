@@ -1,5 +1,5 @@
 // @flow
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect } from "react"
 import TextField from "@material-ui/core/TextField"
 import { makeStyles } from "@material-ui/core/styles"
 
@@ -19,8 +19,12 @@ export default ({ value, onChange }) => {
   })
 
   useEffect(() => {
-    changeEditing({ editing, newValue: value })
-  }, [value, editing])
+    if(typeof newValue !== "undefined"){
+      changeEditing({ editing, newValue: newValue })
+    }else{
+      changeEditing({ editing, newValue: value })
+    }
+  }, [newValue, editing,value])
 
   useEffect(() => {
     if (!editing) return
@@ -40,7 +44,7 @@ export default ({ value, onChange }) => {
     if (!newValue) return
     if (editing) {
       let timeout = setTimeout(
-        () => {
+        () => {          
           onChange(newValue)
           changeEditing({ editing: false })
         },
