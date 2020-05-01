@@ -143,6 +143,7 @@ export default ({
         onFinish={(anwsers) => console.log(anwsers)}
         onAuthConfigured={(config) => {
           onAuthConfigured(config)
+          logoutUser()
         }}
       />
       <Header
