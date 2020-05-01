@@ -236,7 +236,7 @@ export default ({
         typeof json.content !== "undefined" &&
         typeof json.fileName !== "undefined"
       ) {
-        if(!isEmpty(json.content.taskData)){
+        if (!isEmpty(json.content.taskData)) {
           json.content.taskData = giveSampleName(json.content.taskData, oha)
           newOHA = setIn(
             newOHA,

@@ -3,9 +3,9 @@ import isEmpty from "../../utils/isEmpty"
 export default (appendedTaskData, oha) => {
   function searchSampleName(sampleName, myArray) {
     var nameToSearch
-    if(!isEmpty(myArray)){
+    if (!isEmpty(myArray)) {
       for (var i = 0; i < myArray.length; i++) {
-        if(!isEmpty(myArray[i])){
+        if (!isEmpty(myArray[i])) {
           nameToSearch = getSampleNameFromURL(myArray[i])
           if (typeof myArray[i].sampleName !== "undefined") {
             nameToSearch[1] = myArray[i].sampleName
@@ -18,13 +18,12 @@ export default (appendedTaskData, oha) => {
           }
         }
       }
-    
     }
     return false
   }
-  if(!isEmpty(appendedTaskData)){
+  if (!isEmpty(appendedTaskData)) {
     for (var i = 0; i < appendedTaskData.length; i++) {
-      if(!isEmpty(appendedTaskData[i])){
+      if (!isEmpty(appendedTaskData[i])) {
         var sampleName = getSampleNameFromURL(appendedTaskData[i])
         var boolName = true
         var v = 1
@@ -52,7 +51,6 @@ export default (appendedTaskData, oha) => {
           }
         }
         appendedTaskData[i].sampleName = sampleName[1]
-        
       }
     }
   }

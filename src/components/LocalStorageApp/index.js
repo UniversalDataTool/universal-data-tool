@@ -110,13 +110,13 @@ export default () => {
     if (!isEmpty(authConfig)) {
       var changes = fileHasChanged(lastObjectRef.current, file)
       if (
-        isEmpty(file)||
+        isEmpty(file) ||
         (!changes.content.taskData &&
           !changes.content.taskOutput &&
           !changes.fileName) ||
         (file.content.interface.type !== "video_segmentation" &&
           file.content.interface.type !== "image_classification" &&
-          file.content.interface.type !== "image_segmentation")||
+          file.content.interface.type !== "image_segmentation") ||
         file.fileName === "unnamed"
       )
         return

@@ -7,11 +7,11 @@ export default (file) => {
     var response
     var url
     if (typeof element.imageUrl !== "undefined") {
-      url=proxyUrl+element.imageUrl
+      url = proxyUrl + element.imageUrl
     } else {
-      url=proxyUrl + element.videoUrl
+      url = proxyUrl + element.videoUrl
     }
-    response = await fetch(url,{
+    response = await fetch(url, {
       method: "GET",
       headers: {
         "X-Requested-With": "xmlhttprequest",
@@ -42,7 +42,7 @@ export default (file) => {
   }
 
   function createOrReplaceImages(file) {
-    if(!isEmpty(file.content.taskData)){
+    if (!isEmpty(file.content.taskData)) {
       file.content.taskData.forEach(async (element) => {
         try {
           const blob = await fetchAnImage(element)
@@ -60,7 +60,7 @@ export default (file) => {
           } else {
             imageOrVideoName = element.sampleName
           }
-  
+
           var pathToFile = `${file.fileName}/data/${imageOrVideoName}`
           Storage.put(pathToFile, blob, {
             level: "private",
