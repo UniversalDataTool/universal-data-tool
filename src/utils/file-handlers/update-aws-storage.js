@@ -5,20 +5,20 @@ export default (file) => {
   async function fetchAnImage(element) {
     var proxyUrl = "https://cors-anywhere.herokuapp.com/"
     var response
+    var url
     if (typeof element.imageUrl !== "undefined") {
-      response = await fetch(proxyUrl + element.imageUrl).catch((error) => {
-        console.log("Looks like there was a problem: \n", error)
-      })
+      url=proxyUrl+element.imageUrl
     } else {
-      response = await fetch(proxyUrl + element.videoUrl, {
-        method: "GET",
-        headers: {
-          "X-Requested-With": "xmlhttprequest",
-        },
-      }).catch((error) => {
-        console.log("Looks like there was a problem: \n", error)
-      })
+      url=proxyUrl + element.videoUrl
     }
+    response = await fetch(url,{
+      method: "GET",
+      headers: {
+        "X-Requested-With": "xmlhttprequest",
+      },
+    }).catch((error) => {
+      console.log("Looks like there was a problem: \n", error)
+    })
     const blob = await response.blob()
     return blob
   }

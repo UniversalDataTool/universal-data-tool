@@ -398,7 +398,6 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
                   </FormLabel>
                   <RadioGroup
                     aria-label="option1"
-                    defaultValue={configImport.annotationToKeep || "both"}
                     onChange={(event) => {
                       setConfigImport({
                         ...configImport,
@@ -410,16 +409,19 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
                       value="both"
                       control={<Radio />}
                       label="Keep both annotations"
+                      checked={configImport.annotationToKeep==="both"}
                     />
                     <FormControlLabel
                       value="incoming"
                       control={<Radio />}
                       label="Keep incoming annotations"
+                      checked={configImport.annotationToKeep==="incoming"}
                     />
                     <FormControlLabel
                       value="current"
                       control={<Radio />}
                       label="Keep current annotations"
+                      checked={configImport.annotationToKeep==="current"}
                     />
                   </RadioGroup>
                 </FormControl>
@@ -427,7 +429,6 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
                   <FormLabel component="legend">Choose file type</FormLabel>
                   <RadioGroup
                     aria-label="option2"
-                    defaultValue={configImport.typeOfFileToLoad || "None"}
                     onChange={(event) => {
                       setConfigImport({
                         ...configImport,
@@ -440,18 +441,21 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
                       control={<Radio />}
                       label="Load image file"
                       disabled={configImport.typeOfFileToDisable.Image}
+                      checked={configImport.typeOfFileToLoad==="Image"}
                     />
                     <FormControlLabel
                       value="Video"
                       control={<Radio />}
                       label="Load video file"
                       disabled={configImport.typeOfFileToDisable.Video}
+                      checked={configImport.typeOfFileToLoad==="Video"}
                     />
                     <FormControlLabel
                       value="Audio"
                       control={<Radio />}
                       label="Load audio file"
                       disabled={configImport.typeOfFileToDisable.Audio}
+                      checked={configImport.typeOfFileToLoad==="Audio"}
                     />
                   </RadioGroup>
                 </FormControl>
