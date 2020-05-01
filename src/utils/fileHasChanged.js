@@ -21,7 +21,7 @@ export default (objectOfRef, objectToCheck) => {
   if (isEmpty(objectToCheck)) return resultSet
 
   // Check if the object of reference exist if not return true
-  if (typeof objectOfRef === "undefined") {
+  if (isEmpty(objectOfRef)) {
     resultSet.fileName = true
     resultSet.content.interface.type = true
     resultSet.content.interface.availableLabels = true
@@ -41,14 +41,14 @@ export default (objectOfRef, objectToCheck) => {
   }
 
   // Check if the id doesn't exist or have change
-  if (typeof objectToCheck.id !== "undefined") {
-    if (typeof objectOfRef.id === "undefined") resultSet.id = true
+  if (!isEmpty(objectToCheck.id)) {
+    if (isEmpty(objectOfRef.id)) resultSet.id = true
     else if (objectToCheck.id !== objectOfRef.id) resultSet.id = true
   }
 
   // Check if the content doesn't exist or have change
-  if (typeof objectToCheck.content !== "undefined") {
-    if (typeof objectOfRef.content === "undefined") {
+  if (!isEmpty(objectToCheck.content)) {
+    if (isEmpty(objectOfRef.content)) {
       resultSet.content.interface.type = true
       resultSet.content.interface.availableLabels = true
       resultSet.content.interface.regionTypesAllowed = true
@@ -56,8 +56,8 @@ export default (objectOfRef, objectToCheck) => {
       resultSet.content.taskOutput = true
     } else if (objectToCheck.content !== objectOfRef.content) {
       //Check if the interface doesn't exist or have change
-      if (typeof objectToCheck.content.interface !== "undefined") {
-        if (typeof objectOfRef.content.interface === "undefined") {
+      if (!isEmpty(objectToCheck.content.interface)) {
+        if (isEmpty(objectOfRef.content.interface)) {
           resultSet.content.interface.type = true
           resultSet.content.interface.availableLabels = true
           resultSet.content.interface.regionTypesAllowed = true
@@ -65,8 +65,8 @@ export default (objectOfRef, objectToCheck) => {
           objectToCheck.content.interface !== objectOfRef.content.interface
         ) {
           //Check if the type doesn't exist or have change
-          if (typeof objectToCheck.content.interface.type !== "undefined") {
-            if (typeof objectOfRef.content.interface.type === "undefined") {
+          if (!isEmpty(objectToCheck.content.interface.type)) {
+            if (isEmpty(objectOfRef.content.interface.type)) {
               resultSet.content.interface.type = true
             } else if (
               objectToCheck.content.interface.type !==
@@ -77,12 +77,10 @@ export default (objectOfRef, objectToCheck) => {
           }
           //Check if the availableLabels doesn't exist or have change
           if (
-            typeof objectToCheck.content.interface.availableLabels !==
-            "undefined"
+            !isEmpty(objectToCheck.content.interface.availableLabels)
           ) {
             if (
-              typeof objectOfRef.content.interface.availableLabels ===
-              "undefined"
+              isEmpty(objectOfRef.content.interface.availableLabels)
             ) {
               resultSet.content.interface.availableLabels = true
             } else if (
@@ -94,12 +92,10 @@ export default (objectOfRef, objectToCheck) => {
           }
           //Check if the regionsTypesAllowed doesn't exist or have change
           if (
-            typeof objectToCheck.content.interface.regionTypesAllowed !==
-            "undefined"
+            !isEmpty(objectToCheck.content.interface.regionTypesAllowed)
           ) {
             if (
-              typeof objectOfRef.content.interface.regionTypesAllowed ===
-              "undefined"
+              isEmpty(objectOfRef.content.interface.regionTypesAllowed)
             ) {
               resultSet.content.interface.regionTypesAllowed = true
             } else if (
@@ -112,8 +108,8 @@ export default (objectOfRef, objectToCheck) => {
         }
       }
       //Check if the taskData doesn't exist or have change
-      if (typeof objectToCheck.content.taskData !== "undefined") {
-        if (typeof objectOfRef.content.taskData === "undefined") {
+      if (!isEmpty(objectToCheck.content.taskData)) {
+        if (isEmpty(objectOfRef.content.taskData)) {
           resultSet.content.taskData = true
         } else if (
           objectToCheck.content.taskData !== objectOfRef.content.taskData
@@ -122,8 +118,8 @@ export default (objectOfRef, objectToCheck) => {
         }
       }
       //Check if the taskOutput doesn't exist or have change
-      if (typeof objectToCheck.content.taskOutput !== "undefined") {
-        if (typeof objectOfRef.content.taskOutput === "undefined") {
+      if (!isEmpty(objectToCheck.content.taskOutput)) {
+        if (isEmpty(objectOfRef.content.taskOutput)) {
           resultSet.content.taskOutput = true
         } else if (
           objectToCheck.content.taskOutput !== objectOfRef.content.taskOutput
@@ -135,14 +131,14 @@ export default (objectOfRef, objectToCheck) => {
   }
 
   // Check if the mode doesn't exist or have change
-  if (typeof objectToCheck.mode !== "undefined") {
-    if (typeof objectOfRef.mode === "undefined") resultSet.mode = true
+  if (!isEmpty(objectToCheck.mode)) {
+    if (isEmpty(objectOfRef.mode)) resultSet.mode = true
     else if (objectToCheck.mode !== objectOfRef.mode) resultSet.mode = true
   }
 
   // Check if the fileName doesn't exist or have change
-  if (typeof objectToCheck.fileName !== "undefined") {
-    if (typeof objectOfRef.fileName === "undefined") resultSet.fileName = true
+  if (!isEmpty(objectToCheck.fileName)) {
+    if (isEmpty(objectOfRef.fileName)) resultSet.fileName = true
     else if (objectToCheck.fileName !== objectOfRef.fileName)
       resultSet.fileName = true
   }

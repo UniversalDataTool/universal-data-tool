@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react"
 import TextField from "@material-ui/core/TextField"
 import { makeStyles } from "@material-ui/core/styles"
+import isEmpty from "../../utils/isEmpty"
 
 const useStyles = makeStyles({
   textField: {
@@ -19,7 +20,7 @@ export default ({ value, onChange }) => {
   })
 
   useEffect(() => {
-    if(typeof newValue !== "undefined"){
+    if(!isEmpty(newValue)){
       changeEditing({ editing, newValue: newValue })
     }else{
       changeEditing({ editing, newValue: value })

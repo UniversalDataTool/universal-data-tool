@@ -93,7 +93,7 @@ function interfaceFileType(type) {
     return "Image"
   if (type === "video_segmentation") return "Video"
   if (false) return "Audio"
-  if (type === "" || typeof type === "undefined") return "Empty"
+  if (isEmpty(type)) return "Empty"
   return "File"
 }
 
@@ -143,7 +143,6 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
   )
 
   const lastObjectRef = useRef({})
-
   useEffect(() => {
     var changes = fileHasChanged(lastObjectRef.current, file)
     if (!changes.content.interface.type) return
@@ -153,9 +152,14 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
       lastObjectRef.current = file
       setConfigImport({
         ...configImport,
-        typeOfFileToLoad: checkInterfaceAndTaskData(["Image", "Empty"], file)
+        typeOfFileToLoad: 
+          !isEmpty(configImport)&&
+          !isEmpty(configImport.typeOfFileToLoad)&&
+          checkInterfaceAndTaskData([configImport.typeOfFileToLoad,"Empty"], file)
+          ? configImport.typeOfFileToLoad:
+          checkInterfaceAndTaskData(["Image","Empty"], file)
           ? "Image"
-          : checkInterfaceAndTaskData(["Video", "Empty"], file)
+          : checkInterfaceAndTaskData(["Video","Empty"], file)
           ? "Video"
           : "None",
         typeOfFileToDisable: {
