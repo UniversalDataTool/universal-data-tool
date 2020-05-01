@@ -142,37 +142,29 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
     initConfigImport(file)
   )
 
-  const lastObjectRef = useRef({})
   useEffect(() => {
-    var changes = fileHasChanged(lastObjectRef.current, file)
-    if (!changes.content.interface.type) return
-    if (lastObjectRef.current === {}) {
-      lastObjectRef.current = file
-    } else {
-      lastObjectRef.current = file
-      setConfigImport({
-        ...configImport,
-        typeOfFileToLoad: 
-          !isEmpty(configImport)&&
-          !isEmpty(configImport.typeOfFileToLoad)&&
-          checkInterfaceAndTaskData([configImport.typeOfFileToLoad,"Empty"], file)
-          ? configImport.typeOfFileToLoad:
-          checkInterfaceAndTaskData(["Image","Empty"], file)
-          ? "Image"
-          : checkInterfaceAndTaskData(["Video","Empty"], file)
-          ? "Video"
-          : "None",
-        typeOfFileToDisable: {
-          Image: checkInterfaceAndTaskData(["Image", "Empty"], file)
-            ? false
-            : true,
-          Video: checkInterfaceAndTaskData(["Video", "Empty"], file)
-            ? false
-            : true,
-          Audio: true,
-        },
-      })
-    }
+    setConfigImport({
+      ...configImport,
+      typeOfFileToLoad: 
+        !isEmpty(configImport)&&
+        !isEmpty(configImport.typeOfFileToLoad)&&
+        checkInterfaceAndTaskData([configImport.typeOfFileToLoad,"Empty"], file)
+        ? configImport.typeOfFileToLoad:
+        checkInterfaceAndTaskData(["Image","Empty"], file)
+        ? "Image"
+        : checkInterfaceAndTaskData(["Video","Empty"], file)
+        ? "Video"
+        : "None",
+      typeOfFileToDisable: {
+        Image: checkInterfaceAndTaskData(["Image", "Empty"], file)
+          ? false
+          : true,
+        Video: checkInterfaceAndTaskData(["Video", "Empty"], file)
+          ? false
+          : true,
+        Audio: true,
+      },
+    })
   }, [file, configImport, setConfigImport])
 
   const handleAddSample = async () => {
