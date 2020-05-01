@@ -20,12 +20,12 @@ export default ({ value, onChange }) => {
   })
 
   useEffect(() => {
-    if(!isEmpty(newValue)){
+    if (!isEmpty(newValue)) {
       changeEditing({ editing, newValue: newValue })
-    }else{
+    } else {
       changeEditing({ editing, newValue: value })
     }
-  }, [newValue, editing,value])
+  }, [newValue, editing, value])
 
   useEffect(() => {
     if (!editing) return
@@ -45,7 +45,7 @@ export default ({ value, onChange }) => {
     if (!newValue) return
     if (editing) {
       let timeout = setTimeout(
-        () => {          
+        () => {
           onChange(newValue)
           changeEditing({ editing: false })
         },

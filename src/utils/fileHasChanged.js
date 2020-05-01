@@ -76,12 +76,8 @@ export default (objectOfRef, objectToCheck) => {
             }
           }
           //Check if the availableLabels doesn't exist or have change
-          if (
-            !isEmpty(objectToCheck.content.interface.availableLabels)
-          ) {
-            if (
-              isEmpty(objectOfRef.content.interface.availableLabels)
-            ) {
+          if (!isEmpty(objectToCheck.content.interface.availableLabels)) {
+            if (isEmpty(objectOfRef.content.interface.availableLabels)) {
               resultSet.content.interface.availableLabels = true
             } else if (
               objectToCheck.content.interface.availableLabels !==
@@ -91,12 +87,8 @@ export default (objectOfRef, objectToCheck) => {
             }
           }
           //Check if the regionsTypesAllowed doesn't exist or have change
-          if (
-            !isEmpty(objectToCheck.content.interface.regionTypesAllowed)
-          ) {
-            if (
-              isEmpty(objectOfRef.content.interface.regionTypesAllowed)
-            ) {
+          if (!isEmpty(objectToCheck.content.interface.regionTypesAllowed)) {
+            if (isEmpty(objectOfRef.content.interface.regionTypesAllowed)) {
               resultSet.content.interface.regionTypesAllowed = true
             } else if (
               objectToCheck.content.interface.regionTypesAllowed !==

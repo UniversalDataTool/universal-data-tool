@@ -145,16 +145,19 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
   useEffect(() => {
     setConfigImport({
       ...configImport,
-      typeOfFileToLoad: 
-        !isEmpty(configImport)&&
-        !isEmpty(configImport.typeOfFileToLoad)&&
-        checkInterfaceAndTaskData([configImport.typeOfFileToLoad,"Empty"], file)
-        ? configImport.typeOfFileToLoad:
-        checkInterfaceAndTaskData(["Image","Empty"], file)
-        ? "Image"
-        : checkInterfaceAndTaskData(["Video","Empty"], file)
-        ? "Video"
-        : "None",
+      typeOfFileToLoad:
+        !isEmpty(configImport) &&
+        !isEmpty(configImport.typeOfFileToLoad) &&
+        checkInterfaceAndTaskData(
+          [configImport.typeOfFileToLoad, "Empty"],
+          file
+        )
+          ? configImport.typeOfFileToLoad
+          : checkInterfaceAndTaskData(["Image", "Empty"], file)
+          ? "Image"
+          : checkInterfaceAndTaskData(["Video", "Empty"], file)
+          ? "Video"
+          : "None",
       typeOfFileToDisable: {
         Image: checkInterfaceAndTaskData(["Image", "Empty"], file)
           ? false
