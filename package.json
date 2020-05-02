@@ -74,6 +74,7 @@
     "@semantic-release/git": "^9.0.0",
     "@sentry/browser": "^5.15.4",
     "any-shell-escape": "^0.1.1",
+    "aws-amplify": "^3.0.6",
     "axios": "^0.19.2",
     "bent": "^7.1.0",
     "brace": "^0.11.1",

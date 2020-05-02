@@ -19,6 +19,5 @@ export default (file, changeFile) => {
       changeRecentItems([file].concat(recentItems).slice(0, 3))
     }
   }, [file])
-
   return { recentItems, changeRecentItems }
 }

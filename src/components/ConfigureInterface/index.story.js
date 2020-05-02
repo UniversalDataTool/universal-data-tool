@@ -14,7 +14,6 @@ storiesOf("ConfigureInterface", module).add("Data Entry", () => {
       iface={iface}
       onChange={(...args) => {
         action("onChange")(...args)
-        console.log(args[0])
         changeIFace(args[0])
       }}
     />

@@ -29,5 +29,8 @@ desktop/node_modules
 
 /lib
 
+src/components/LocalStorageApp/myAWSconfig.js
+package-lock.json
+src/components/LocalStorageApp/myAWSconfig.js
 .env
 .cache

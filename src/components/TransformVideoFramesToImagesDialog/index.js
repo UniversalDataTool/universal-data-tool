@@ -77,7 +77,6 @@ export default ({ open, onChangeOHA, onClose, oha }) => {
                   1,
                   imageOutputPath,
                 ])
-                console.log("running:", ffmpegCommand)
                 await new Promise((resolve, reject) => {
                   exec(ffmpegCommand, { timeout: 5000 }, (err) => {
                     if (err) return reject(err)

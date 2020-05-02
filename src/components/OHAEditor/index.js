@@ -3,18 +3,9 @@
 import React, { useState, useEffect, useReducer } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 
-import Grid from "@material-ui/core/Grid"
-import Button from "@material-ui/core/Button"
-import IconButton from "@material-ui/core/IconButton"
-import Typography from "@material-ui/core/Typography"
-import GithubIcon from "../Header/GithubIcon.js"
 import Header from "../Header"
-import brace from "brace"
 import AceEditor from "react-ace"
-import NextIcon from "@material-ui/icons/KeyboardArrowRight"
-import EditIcon from "@material-ui/icons/Edit"
-import SaveIcon from "@material-ui/icons/Save"
-import defaultOHAObject from "./default-oha-object"
+import isEmpty from "../../utils/isEmpty"
 import UniversalDataViewer from "../UniversalDataViewer"
 import EditableTitleText from "./EditableTitleText.js"
 import SamplesView from "../SamplesView"
@@ -24,7 +15,6 @@ import SampleGrid from "../SampleGrid"
 import PaperContainer from "../PaperContainer"
 import Stats from "../Stats"
 import useElectron from "../../utils/use-electron"
-import moment from "moment"
 import duration from "duration"
 import useTimeToCompleteSample from "../../utils/use-time-to-complete-sample.js"
 import TextField from "@material-ui/core/TextField"
@@ -58,18 +48,23 @@ const useStyles = makeStyles({
 const headerTabs = ["Setup", "Samples", "Label"]
 
 export default ({
+  file,
   datasetName = "Universal Data Tool",
   oha,
   content,
   inSession,
   url,
   fileName = "unnamed",
-  onChangeFileName,
   onChangeOHA = () => null,
+  onChangeFile,
   onFileDrop,
-  initialMode = "setup", //= "samples"
+  initialMode = "setup",
+  authConfig,
+  user,
+  recentItems,
   selectedBrush = "complete",
 }) => {
+  var [valueDisplay, setValueDisplay] = useState(fileName)
   const c = useStyles()
   const { addToast } = useToasts()
   const [mode, changeMode] = useState(initialMode)
@@ -144,8 +139,11 @@ export default ({
           ) : (
             <EditableTitleText
               label="File Name"
-              onChange={onChangeFileName}
-              value={fileName || ""}
+              onChange={(newName) => {
+                onChangeFile(setIn(file, ["fileName"], newName))
+                setValueDisplay(newName)
+              }}
+              value={valueDisplay || ""}
             />
           )
         }
@@ -192,6 +190,7 @@ export default ({
         )}
         {mode === "samples" && (
           <SamplesView
+            file={file}
             oha={oha}
             openSampleLabelEditor={(sampleIndex) => {
               changeSingleSampleOHA({
@@ -224,7 +223,13 @@ export default ({
                 taskOutput: newTaskOutput,
               })
             }}
+            onChangeFile={(file) => {
+              onChangeFile(file)
+              setValueDisplay(file.fileName)
+            }}
             onChangeOHA={onChangeOHA}
+            authConfig={authConfig}
+            user={user}
           />
         )}
         {mode === "label" && singleSampleOHA ? (
@@ -312,6 +317,8 @@ export default ({
                       })
                       return
                     }
+                    break
+                  default:
                     break
                 }
                 changeSingleSampleOHA(null)

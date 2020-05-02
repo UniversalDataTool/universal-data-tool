@@ -72,11 +72,15 @@ const ExpandedRow = ({ data }) => {
 }
 
 export default ({
+  file,
   oha,
   openSampleInputEditor,
   openSampleLabelEditor,
   deleteSample,
   onChangeOHA,
+  onChangeFile,
+  authConfig,
+  user,
 }) => {
   const isDesktop = useIsDesktop()
   const [currentTab, changeTabState] = useState(
@@ -165,7 +169,14 @@ export default ({
       <Box paddingTop={2} />
       {currentTab === "import" && (
         <ImportPage
+          file={file}
           isDesktop={isDesktop}
+          onChangeFile={(file, shouldViewChange) => {
+            onChangeFile(file)
+            if (shouldViewChange) {
+              changeTab("grid")
+            }
+          }}
           onChangeOHA={(newOHA, shouldViewChange) => {
             onChangeOHA(newOHA)
             if (shouldViewChange) {
@@ -173,6 +184,8 @@ export default ({
             }
           }}
           oha={oha}
+          authConfig={authConfig}
+          user={user}
         />
       )}
       {currentTab === "transform" && (

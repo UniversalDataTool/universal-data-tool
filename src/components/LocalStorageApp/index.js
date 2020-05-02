@@ -1,19 +1,23 @@
 // @flow
-import React, { useState, useMemo, useEffect, useCallback } from "react"
+import React, { useState, useMemo, useRef, useEffect, useCallback } from "react"
 import { HeaderContext } from "../Header"
 import StartingPage from "../StartingPage"
 import OHAEditor from "../OHAEditor"
 import { makeStyles } from "@material-ui/core/styles"
 import ErrorToasts from "../ErrorToasts"
 import useErrors from "../../utils/use-errors.js"
-import useLocalStorage from "../../utils/use-local-storage.js"
 import useFileHandler from "../../utils/file-handlers"
 import download from "in-browser-download"
 import toUDTCSV from "../../utils/to-udt-csv.js"
+import Amplify, { Auth, Storage } from "aws-amplify"
+import config from "../LocalStorageApp/AWSconfig"
+import isEmpty from "../../utils/isEmpty"
+import fileHasChanged from "../../utils/fileHasChanged"
 import { setIn } from "seamless-immutable"
 import AppErrorBoundary from "../AppErrorBoundary"
 import useEventCallback from "use-event-callback"
 import usePreventNavigation from "../../utils/use-prevent-navigation"
+import UpdateAWSStorage from "../../utils/file-handlers/update-aws-storage"
 
 const useStyles = makeStyles({
   empty: {
@@ -65,6 +69,37 @@ export default () => {
 
   const inSession = file && file.mode === "server"
   const [sessionBoxOpen, changeSessionBoxOpen] = useState(false)
+  const [authConfig, changeAuthConfig] = useState(null)
+  const [user, changeUser] = useState(null)
+
+  const logoutUser = () => {
+    Auth.signOut()
+      .then(() => {
+        changeUser(null)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  useEffect(() => {
+    if (isEmpty(user) && isEmpty(authConfig)) {
+      try {
+        Amplify.configure(config)
+
+        Auth.currentAuthenticatedUser()
+          .then((tryUser) => {
+            changeUser(tryUser)
+            changeAuthConfig(config)
+          })
+          .catch((err) => {
+            changeAuthConfig(config)
+          })
+      } catch (err) {
+        changeAuthConfig(null)
+      }
+    }
+  }, [])
 
   const onJoinSession = useCallback(async (sessionName) => {
     await openUrl(sessionName)
@@ -77,6 +112,24 @@ export default () => {
       fileName: file.fileName || `copy_of_${file.id}`,
     })
   )
+
+  const lastObjectRef = useRef([])
+  useEffect(() => {
+    if (!isEmpty(authConfig)) {
+      var changes = fileHasChanged(lastObjectRef.current, file)
+      if (
+        (!changes.content.taskData &&
+          !changes.content.taskOutput &&
+          !changes.fileName) ||
+        (file.content.interface.type !== "video_segmentation" &&
+          file.content.interface.type !== "image_classification" &&
+          file.content.interface.type !== "image_segmentation")
+      )
+        return
+      lastObjectRef.current = file
+      UpdateAWSStorage(file)
+    }
+  }, [recentItems])
 
   return (
     <>
@@ -101,6 +154,10 @@ export default () => {
           onCreateSession: makeSession,
           fileOpen: Boolean(file),
           onDownload,
+          authConfig,
+          onUserChange: (userToSet) => changeUser(userToSet),
+          user: user,
+          logoutUser: logoutUser,
           onChangeSelectedBrush: setSelectedBrush,
           selectedBrush,
         }}
@@ -112,21 +169,26 @@ export default () => {
             recentItems={recentItems}
             onOpenRecentItem={openRecentItem}
             onClickOpenSession={() => changeSessionBoxOpen(true)}
+            onAuthConfigured={(config) => changeAuthConfig(config)}
+            user={user}
+            logoutUser={logoutUser}
           />
         ) : (
           <AppErrorBoundary>
             <OHAEditor
+              file={file}
               key={file.id}
               {...file}
               selectedBrush={selectedBrush}
               inSession={inSession}
               oha={file.content}
-              onChangeFileName={(newName) => {
-                changeFile(setIn(file, ["fileName"], newName))
-              }}
               onChangeOHA={(newOHA) => {
                 changeFile(setIn(file, ["content"], newOHA))
               }}
+              onChangeFile={changeFile}
+              authConfig
+              user={user}
+              recentItems={recentItems}
             />
           </AppErrorBoundary>
         )}
