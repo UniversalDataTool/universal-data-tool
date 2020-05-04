@@ -236,8 +236,14 @@ export default ({
         typeof json.content !== "undefined" &&
         typeof json.fileName !== "undefined"
       ) {
-        if (!isEmpty(json.content.taskData)) {
+        if (!isEmpty(json.content.taskData) && json.content.interface.type !== "text_entity_recognition") {
           json.content.taskData = giveSampleName(json.content.taskData, oha)
+          newOHA = setIn(
+            newOHA,
+            ["taskData"],
+            (oha.taskData || []).concat(json.content.taskData)
+          )
+        }else if(json.content.interface.type === "text_entity_recognition"){
           newOHA = setIn(
             newOHA,
             ["taskData"],
