@@ -117,7 +117,8 @@ export default () => {
         (file.content.interface.type !== "video_segmentation" &&
           file.content.interface.type !== "image_classification" &&
           file.content.interface.type !== "image_segmentation" &&
-          file.content.interface.type !== "text_entity_recognition") ||
+          file.content.interface.type !== "text_entity_recognition" &&
+          file.content.interface.type !== "text_classification") ||
         file.fileName === "unnamed"
       )
         return
