@@ -20,10 +20,10 @@ import RecognizeFileExtension from "../../utils/RecognizeFileExtension"
 import fileHasChanged from "../../utils/fileHasChanged"
 
 const selectedStyle = { color: "DodgerBlue" }
-const tableStyle ={
-  "margin-left": "auto",
-  "margin-right": "auto",
-  "width": "100%"
+const tableStyle = {
+  marginLeft: "auto",
+  marginRight: "auto",
+  width: "100%",
 }
 const expandedDataColumns = [
   { name: "Data", selector: "data", sortable: true },
@@ -154,32 +154,32 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
       lastObjectRef.current = file
     } else {
       lastObjectRef.current = file
-    setConfigImport({
-      ...configImport,
-      typeOfFileToLoad:
-        !isEmpty(configImport) &&
-        !isEmpty(configImport.typeOfFileToLoad) &&
-        checkInterfaceAndTaskData(
-          [configImport.typeOfFileToLoad, "Empty"],
-          file
-        )
-          ? configImport.typeOfFileToLoad
-          : checkInterfaceAndTaskData(["Image", "Empty"], file)
-          ? "Image"
-          : checkInterfaceAndTaskData(["Video", "Empty"], file)
-          ? "Video"
-          : "None",
-      typeOfFileToDisable: {
-        Image: checkInterfaceAndTaskData(["Image", "Empty"], file)
-          ? false
-          : true,
-        Video: checkInterfaceAndTaskData(["Video", "Empty"], file)
-          ? false
-          : true,
-        Audio: true,
-      },
-    })
-  }
+      setConfigImport({
+        ...configImport,
+        typeOfFileToLoad:
+          !isEmpty(configImport) &&
+          !isEmpty(configImport.typeOfFileToLoad) &&
+          checkInterfaceAndTaskData(
+            [configImport.typeOfFileToLoad, "Empty"],
+            file
+          )
+            ? configImport.typeOfFileToLoad
+            : checkInterfaceAndTaskData(["Image", "Empty"], file)
+            ? "Image"
+            : checkInterfaceAndTaskData(["Video", "Empty"], file)
+            ? "Video"
+            : "None",
+        typeOfFileToDisable: {
+          Image: checkInterfaceAndTaskData(["Image", "Empty"], file)
+            ? false
+            : true,
+          Video: checkInterfaceAndTaskData(["Video", "Empty"], file)
+            ? false
+            : true,
+          Audio: true,
+        },
+      })
+    }
   }, [file, configImport, setConfigImport])
 
   const handleAddSample = async () => {
@@ -331,6 +331,7 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
       ]}
     >
       <table style={tableStyle}>
+        <tbody>
           <tr>
             <th>
               {loadProjectIsSelected ? (
@@ -471,6 +472,7 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
               </th>
             </tr>
           )}
+        </tbody>
       </table>
     </SimpleDialog>
   )
