@@ -1,5 +1,5 @@
 // @flow weak
-import React, { useState, useEffect} from "react"
+import React, { useState, useEffect, useRef } from "react"
 import SimpleDialog from "../SimpleDialog"
 import DataTable from "react-data-table-component"
 import Radio from "@material-ui/core/Radio"
@@ -17,6 +17,7 @@ import Button from "@material-ui/core/Button"
 import GetAnnotationFromAFolderAWS from "./get-annotation-from-aws"
 import GetImageFromAFolderAWS from "./get-images-from-aws"
 import RecognizeFileExtension from "../../utils/RecognizeFileExtension"
+import fileHasChanged from "../../utils/fileHasChanged"
 
 const selectedStyle = { color: "DodgerBlue" }
 const expandedDataColumns = [
@@ -140,8 +141,14 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
     "configImport",
     initConfigImport(file)
   )
-
+  const lastObjectRef = useRef({})
   useEffect(() => {
+    var changes = fileHasChanged(lastObjectRef.current, file)
+    if (!changes.content.interface.type) return
+    if (lastObjectRef.current === {}) {
+      lastObjectRef.current = file
+    } else {
+      lastObjectRef.current = file
     setConfigImport({
       ...configImport,
       typeOfFileToLoad:
@@ -167,6 +174,7 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
         Audio: true,
       },
     })
+  }
   }, [file, configImport, setConfigImport])
 
   const handleAddSample = async () => {

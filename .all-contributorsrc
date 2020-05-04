@@ -39,7 +39,17 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "beru",
+      "name": "beru",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1131125?v=4",
+      "profile": "http://berupon.hatenablog.com/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
-  "contributorsPerLine": 7
+  "contributorsPerLine": 7,
+  "skipCi": true
 }
