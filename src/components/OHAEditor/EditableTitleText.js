@@ -20,7 +20,7 @@ export default ({ value, onChange }) => {
   })
 
   useEffect(() => {
-    if (!isEmpty(newValue)) {
+    if (!isEmpty(newValue) && newValue !== "unnamed") {
       changeEditing({ editing, newValue: newValue })
     } else {
       changeEditing({ editing, newValue: value })

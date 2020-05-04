@@ -224,6 +224,7 @@ export default ({
             }}
             onChangeFile={(file) => {
               onChangeFile(file)
+              setValueDisplay(file.fileName)
             }}
             onChangeOHA={onChangeOHA}
             authConfig={authConfig}

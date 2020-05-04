@@ -20,6 +20,11 @@ import RecognizeFileExtension from "../../utils/RecognizeFileExtension"
 import fileHasChanged from "../../utils/fileHasChanged"
 
 const selectedStyle = { color: "DodgerBlue" }
+const tableStyle ={
+  "margin-left": "auto",
+  "margin-right": "auto",
+  "width": "100%"
+}
 const expandedDataColumns = [
   { name: "Data", selector: "data", sortable: true },
   { name: "Last Modified", selector: "lastModified", sortable: true },
@@ -325,8 +330,7 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
         },
       ]}
     >
-      <table>
-        <tbody>
+      <table style={tableStyle}>
           <tr>
             <th>
               {loadProjectIsSelected ? (
@@ -467,7 +471,6 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
               </th>
             </tr>
           )}
-        </tbody>
       </table>
     </SimpleDialog>
   )
