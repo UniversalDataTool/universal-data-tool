@@ -1,0 +1,55 @@
+{
+  "projectName": "universal-data-tool",
+  "projectOwner": "UniversalDataTool",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "none",
+  "contributors": [
+    {
+      "login": "seveibar",
+      "name": "Severin Ibarluzea",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/1910070?v=4",
+      "profile": "https://twitter.com/seveibar",
+      "contributions": [
+        "code",
+        "doc",
+        "review"
+      ]
+    },
+    {
+      "login": "puskuruk",
+      "name": "Puskuruk",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/22892227?v=4",
+      "profile": "http://puskuruk.github.io",
+      "contributions": [
+        "code",
+        "review"
+      ]
+    },
+    {
+      "login": "CedricJean",
+      "name": "CedricJean",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/63243979?v=4",
+      "profile": "https://github.com/CedricJean",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "beru",
+      "name": "beru",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1131125?v=4",
+      "profile": "http://berupon.hatenablog.com/",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true
+}
