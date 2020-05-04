@@ -2,13 +2,14 @@
 import { useRef, useEffect } from "react"
 import { useLocalStorage } from "react-use"
 import fileHasChanged from "../../utils/fileHasChanged"
-
+import isEmpty from "../../utils/isEmpty"
 export default (file, changeFile) => {
   let [recentItems, changeRecentItems] = useLocalStorage("recentItems", [])
 
   if (!recentItems) recentItems = []
   const lastObjectRef = useRef([])
   useEffect(() => {
+    if(!isEmpty(file)&&file.fileName === "unnamed")return
     var changes = fileHasChanged(lastObjectRef.current, file)
     if (!changes.any) return
     if (recentItems.map((item) => item.id).includes(file.id)) {
