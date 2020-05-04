@@ -8,8 +8,10 @@ export default (file) => {
     var url
     if (typeof element.imageUrl !== "undefined") {
       url = proxyUrl + element.imageUrl
-    } else {
+    } if (typeof element.videoUrl !== "undefined") {
       url = proxyUrl + element.videoUrl
+    }if (typeof element.audioUrl !== "undefined") {
+      url = proxyUrl + element.audioUrl
     }
     response = await fetch(url, {
       method: "GET",
@@ -52,8 +54,12 @@ export default (file) => {
               imageOrVideoName = element.imageUrl.match(
                 `\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
               )[1]
-            } else {
+            } if (typeof element.videoUrl !== "undefined") {
               imageOrVideoName = element.videoUrl.match(
+                `\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
+              )[1]
+            }if (typeof element.audioUrl !== "undefined") {
+              imageOrVideoName = element.audioUrl.match(
                 `\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
               )[1]
             }
