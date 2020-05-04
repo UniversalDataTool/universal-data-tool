@@ -190,7 +190,8 @@ export default ({
     "text_classification"===s) return "text"
     if("video_segmentation"===s||
     "image_classification"===s||
-    "image_segmentation"===s) return "file"
+    "image_segmentation"===s||
+    "audio_transcription"===s) return "file"
     return ""
   }
 

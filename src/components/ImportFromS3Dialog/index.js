@@ -97,7 +97,7 @@ function interfaceFileType(type) {
   if (type === "image_classification" || type === "image_segmentation")
     return "Image"
   if (type === "video_segmentation") return "Video"
-  if (false) return "Audio"
+  if (type === "audio_transcription") return "Audio"
   if (isEmpty(type)) return "Empty"
   return "File"
 }
@@ -106,6 +106,7 @@ function typeTaskDataSample(taskData) {
   if (isEmpty(taskData) || isEmpty(taskData[0])) return "Empty"
   if (!isEmpty(taskData[0].imageUrl)) return "Image"
   if (!isEmpty(taskData[0].videoUrl)) return "Video"
+  if (!isEmpty(taskData[0].audioUrl)) return "Audio"
   return "File"
 }
 function checkInterfaceAndTaskData(typeAuthorize, file) {
@@ -123,11 +124,13 @@ function initConfigImport(file) {
       ? "Image"
       : checkInterfaceAndTaskData(["Video", "Empty"], file)
       ? "Video"
+      : checkInterfaceAndTaskData(["Audio", "Empty"], file)
+      ? "Audio"
       : "None",
     typeOfFileToDisable: {
       Image: checkInterfaceAndTaskData(["Image", "Empty"], file) ? false : true,
       Video: checkInterfaceAndTaskData(["Video", "Empty"], file) ? false : true,
-      Audio: true,
+      Audio: checkInterfaceAndTaskData(["Audio", "Empty"], file) ? false : true,
     },
   }
 }
@@ -168,6 +171,8 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
             ? "Image"
             : checkInterfaceAndTaskData(["Video", "Empty"], file)
             ? "Video"
+            : checkInterfaceAndTaskData(["Audio", "Empty"], file)
+            ? "Audio"
             : "None",
         typeOfFileToDisable: {
           Image: checkInterfaceAndTaskData(["Image", "Empty"], file)
@@ -176,7 +181,9 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
           Video: checkInterfaceAndTaskData(["Video", "Empty"], file)
             ? false
             : true,
-          Audio: true,
+          Audio: checkInterfaceAndTaskData(["Audio", "Empty"], file)
+          ? false
+          : true
         },
       })
     }

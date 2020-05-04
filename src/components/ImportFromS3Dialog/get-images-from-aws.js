@@ -21,6 +21,11 @@ export default async (result, folderToFetch, configImport, authConfig) => {
             configImport.typeOfFileToLoad === "Video"
           ) {
             samples.push({ videoUrl: `${result}` })
+          } else if (
+            RecognizeFileExtension(result) === configImport.typeOfFileToLoad &&
+            configImport.typeOfFileToLoad === "Audio"
+          ) {
+            samples.push({ audioUrl: `${result}` })
           }
         })
         .catch((err) => {
