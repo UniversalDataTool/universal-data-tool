@@ -84,7 +84,7 @@ export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
   const [dialogTitle, setDialogTitle] = useState("Add Authentification")
   const [errors, addError] = useErrors()
 
-  const validateAuthProvider = async (answers) => {
+  const validateAuthProvider = (answers) => {
     if (answers.provider === "AWS") {
       const config = {
         Auth: {
@@ -113,7 +113,6 @@ export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
             onAuthConfigured(config)
             onClose()
           })
-          console.log(await Auth.verifyCurrentUserAttribute())
       } catch (err) {
         addError("Invalid Cognito config")
       }
