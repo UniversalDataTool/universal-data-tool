@@ -57,13 +57,9 @@ export default async (result, samples, folderToFetch, authConfig) => {
                       }
                     }
                   }
-                  console.log(sampleName)
                 }
-                console.log(json)
                 json.content.taskData = newSamples
               }
-              console.log(samples)
-              console.log(json)
             }
           })
         })

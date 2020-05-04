@@ -17,7 +17,8 @@ jobs:
           node-version: 12
       - name: Install dependencies
         run: npm install
-      # TODO run build:package and prepare npm package for release
+      - name: Build NPM package
+        run: npm run build:lib
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN }}
