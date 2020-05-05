@@ -23,7 +23,7 @@ storiesOf("ImportPage", module)
             // "pixel-mask"
           ],
         },
-        taskData: [
+        samples: [
           {
             imageUrl:
               "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
@@ -52,7 +52,7 @@ storiesOf("ImportPage", module)
             // "pixel-mask"
           ],
         },
-        taskData: [
+        samples: [
           {
             imageUrl:
               "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",

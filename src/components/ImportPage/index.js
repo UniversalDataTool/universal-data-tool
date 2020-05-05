@@ -173,7 +173,7 @@ export default ({
           setIn(
             oha,
             ["taskData"],
-            (oha.taskData || []).concat(
+            (oha.samples || []).concat(
               importedFilePaths.map(convertToTaskDataObject).filter(Boolean)
             )
           ),
@@ -241,7 +241,7 @@ export default ({
         newOHA = setIn(
           newOHA,
           ["taskData"],
-          (oha.taskData || []).concat(json.content.taskData)
+          (oha.samples || []).concat(json.content.taskData)
         )
         newOHA = setIn(newOHA, ["interface"], json.content.interface)
         if (typeof file.fileName === "undefined" || file.fileName === "unnamed")
@@ -253,7 +253,7 @@ export default ({
         newOHA = setIn(
           oha,
           ["taskData"],
-          (oha.taskData || []).concat(appendedTaskData)
+          (oha.samples || []).concat(appendedTaskData)
         )
         onChangeOHA(newOHA, true)
       }

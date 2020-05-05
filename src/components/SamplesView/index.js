@@ -84,7 +84,7 @@ export default ({
 }) => {
   const isDesktop = useIsDesktop()
   const [currentTab, changeTabState] = useState(
-    (oha.taskData || []).length === 0
+    (oha.samples || []).length === 0
       ? "import"
       : window.localStorage.lastSampleTab || "grid"
   )
@@ -161,7 +161,7 @@ export default ({
           <Tab icon={<TableChartIcon />} label="Table" value="table" />
         </Tabs>
         <SampleCounter>
-          {(oha.taskData || []).length} Samples
+          {(oha.samples || []).length} Samples
           <br />
           {(oha.taskOutput || []).length} Labels
         </SampleCounter>
@@ -202,8 +202,8 @@ export default ({
       )}
       {currentTab === "grid" && (
         <SampleGrid
-          count={(oha.taskData || []).length}
-          taskData={oha.taskData || []}
+          count={(oha.samples || []).length}
+          taskData={oha.samples || []}
           completed={(oha.taskOutput || []).map(Boolean)}
           onClick={(sampleIndex) => {
             openSampleLabelEditor(sampleIndex)

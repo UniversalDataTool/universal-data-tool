@@ -63,7 +63,7 @@ export default [
     Icon: CognitoIcon,
     oha: {
       interface: {},
-      taskData: [],
+      samples: [],
     },
   },
 ]

@@ -26,8 +26,7 @@ const [emptyObj, emptyArr] = [{}, []]
 export default ({
   sampleIndex: globalSampleIndex,
   interface: iface,
-  taskData = emptyArr,
-  taskOutput = emptyObj,
+  samples = emptyArr,
   containerProps = emptyObj,
   onSaveTaskOutputItem,
 }) => {
@@ -84,15 +83,15 @@ export default ({
 
   const images = useMemo(
     () =>
-      taskData.map((taskDatum, index) =>
+      samples.map((taskDatum, index) =>
         convertToRIAImageFmt({
           title: containerProps.datasetName,
           taskDatum,
-          output: taskOutput[index],
+          output: samples[index].annotation,
           index,
         })
       ),
-    [taskData]
+    [samples]
   )
 
   const enabledTools = useMemo(
@@ -112,7 +111,7 @@ export default ({
     >
       <Annotator
         key={globalSampleIndex}
-        selectedImage={taskData[selectedIndex].imageUrl}
+        selectedImage={samples[selectedIndex].imageUrl}
         taskDescription={iface.description}
         showTags={showTags}
         {...labelProps}

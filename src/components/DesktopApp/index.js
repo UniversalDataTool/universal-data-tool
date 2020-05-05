@@ -112,7 +112,7 @@ export default () => {
     })
   )
 
-  const collaborateError = (((file || {}).content || {}).taskData || []).some(
+  const collaborateError = (((file || {}).content || {}).samples || []).some(
     (sample) =>
       [sample.imageUrl, sample.videoUrl, sample.pdfUrl]
         .filter(Boolean)

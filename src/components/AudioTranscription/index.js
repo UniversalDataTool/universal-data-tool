@@ -12,10 +12,10 @@ export default (props) => {
     <SampleContainer
       {...props.containerProps}
       currentSampleIndex={currentSampleIndex}
-      totalSamples={props.taskData.length}
-      taskOutput={props.taskOutput}
+      totalSamples={props.samples.length}
+      taskOutput={props.samples.map((s) => s.annotation)}
       description={
-        getTaskDescription(props.taskData[currentSampleIndex]) ||
+        getTaskDescription(props.samples[currentSampleIndex]) ||
         props.interface.description
       }
       onChangeSample={(sampleIndex) => changeCurrentSampleIndex(sampleIndex)}
@@ -23,7 +23,7 @@ export default (props) => {
       <NLPAnnotator
         key={(props.sampleIndex || 0) + currentSampleIndex}
         type="transcribe"
-        audio={props.taskData[currentSampleIndex].audioUrl}
+        audio={props.samples[currentSampleIndex].audioUrl}
         phraseBank={props.phraseBank}
         initialTranscriptionText={
           (props.taskOutput || [])[currentSampleIndex] || ""

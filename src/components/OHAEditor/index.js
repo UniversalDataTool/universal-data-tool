@@ -242,7 +242,7 @@ export default ({
                   newOHA = setIn(
                     newOHA,
                     ["taskOutput"],
-                    (newOHA.taskData || []).map((td) => null)
+                    (newOHA.samples || []).map((td) => null)
                   )
                 }
                 if (
@@ -349,15 +349,15 @@ export default ({
                         Date.now() -
                           timeToCompleteSample *
                             (1 - percentComplete) *
-                            (oha.taskData || []).length
+                            (oha.samples || []).length
                       )
                     ).toString(1, 2),
                   },
                 ]}
               />
               <SampleGrid
-                count={(oha.taskData || []).length}
-                taskData={oha.taskData || []}
+                count={(oha.samples || []).length}
+                taskData={oha.samples || []}
                 completed={(oha.taskOutput || []).map(Boolean)}
                 onClick={(sampleIndex) => {
                   posthog.capture("open_sample", {

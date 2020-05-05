@@ -28,8 +28,10 @@ storiesOf("TextClassification", module)
           },
         ],
       }}
-      taskData={[{ document: "Harry" }, { document: "Malfoy" }]}
-      taskOutput={[{ label: "gryffindor" }, null]}
+      samples={[
+        { document: "Harry", annotation: "gryffindor" },
+        { document: "Malfoy" },
+      ]}
     />
   ))
   .add("Multi", () => (
@@ -53,7 +55,9 @@ storiesOf("TextClassification", module)
           },
         ],
       }}
-      taskData={[{ document: "Harry" }, { document: "Malfoy" }]}
-      taskOutput={[{ label: "gryffindor" }, null]}
+      samples={[
+        { document: "Harry", annotation: ["slytherin", "gryffindor"] },
+        { document: "Malfoy" },
+      ]}
     />
   ))
