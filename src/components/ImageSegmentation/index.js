@@ -24,6 +24,7 @@ const regionTypeToTool = {
 const [emptyObj, emptyArr] = [{}, []]
 
 export default ({
+  sampleIndex: globalSampleIndex,
   interface: iface,
   taskData = emptyArr,
   taskOutput = emptyObj,
@@ -32,6 +33,8 @@ export default ({
 }) => {
   const c = useStyles()
   const [selectedIndex, changeSelectedIndex] = useState(0)
+  const [showTags, changeShowTags] = useState(true)
+  const [selectedTool, changeSelectedTool] = useState("select")
 
   const { regionTypesAllowed = ["bounding-box"] } = iface
 
@@ -56,7 +59,7 @@ export default ({
   const multipleRegions =
     iface.multipleRegions || iface.multipleRegions === undefined
 
-  const onExit = useEventCallback((output) => {
+  const onExit = useEventCallback((output, nextAction) => {
     const regionMat = (output.images || [])
       .map((img) => img.regions)
       .map((riaRegions) => (riaRegions || []).map(convertFromRIARegionFmt))
@@ -68,7 +71,15 @@ export default ({
         onSaveTaskOutputItem(i, regionMat[i][0])
       }
     }
-    if (containerProps.onExit) containerProps.onExit()
+    changeShowTags(output.showTags)
+    changeSelectedTool(output.selectedTool)
+    if (containerProps.onExit) containerProps.onExit(nextAction)
+  })
+  const onNextImage = useEventCallback((output) => {
+    onExit(output, "go-to-next")
+  })
+  const onPrevImage = useEventCallback((output) => {
+    onExit(output, "go-to-previous")
   })
 
   const images = useMemo(
@@ -91,22 +102,24 @@ export default ({
       ),
     [regionTypesAllowed]
   )
-  console.log({
-    selectedImage: taskData[selectedIndex].imageUrl,
-    taskDescription: iface.description,
-    ...labelProps,
-    enabledTools: enabledTools,
-    images,
-    onExit,
-  })
 
   return (
-    <div style={{ height: "calc(100vh - 70px)" }}>
+    <div
+      style={{
+        height: containerProps.height || "calc(100vh - 70px)",
+        width: "100%",
+      }}
+    >
       <Annotator
+        key={globalSampleIndex}
         selectedImage={taskData[selectedIndex].imageUrl}
         taskDescription={iface.description}
+        showTags={showTags}
         {...labelProps}
+        onNextImage={onNextImage}
+        onPrevImage={onPrevImage}
         enabledTools={enabledTools}
+        selectedTool={selectedTool}
         images={images}
         onExit={onExit}
       />

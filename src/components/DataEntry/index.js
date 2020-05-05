@@ -5,6 +5,10 @@ import SampleContainer from "../SampleContainer"
 
 export const DataEntry = (props) => {
   const [currentSampleIndex, changeCurrentSampleIndex] = useState(0)
+  const form =
+    props.taskData[currentSampleIndex].surveyjs || props.interface.surveyjs
+  if (!form)
+    throw new Error("No survey/form created. Try adding some inputs in Setup")
   return (
     <SampleContainer
       {...props.containerProps}
@@ -20,10 +24,7 @@ export const DataEntry = (props) => {
       <Survey
         key={(props.sampleIndex || 0) + currentSampleIndex}
         variant="flat"
-        form={
-          props.taskData[currentSampleIndex].surveyjs ||
-          props.interface.surveyjs
-        }
+        form={form}
         defaultAnswers={
           props.taskOutput && props.taskOutput[currentSampleIndex]
             ? props.taskOutput[currentSampleIndex]

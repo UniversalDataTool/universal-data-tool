@@ -9,6 +9,7 @@ export default () => {
       api_host: "https://posthog.universaldatatool.com",
       autocapture: false,
     })
+    window.posthog = posthog
     const domain = isDesktop ? "desktop" : window.location.origin
     posthog.capture("domain", { domain })
     posthog.capture("is_desktop", { isDesktop: isDesktop })

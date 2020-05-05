@@ -32,17 +32,25 @@ const getRandomColor = (label) => {
   return brightColors[hashInt % brightColors.length]
 }
 
-const Container = styled("div")({ maxWidth: "100vw" })
+const Container = styled("div")({
+  maxWidth: "100vw",
+  display: "flex",
+  flexDirection: "column",
+})
 
 const ImageContainer = styled("div")({
-  maxHeight: "50vh",
+  position: "relative",
+  display: "flex",
+  flexGrow: 1,
 })
 
 const Image = styled("img")({
   display: "inline-block",
+  position: "absolute",
+  left: 0,
+  top: 0,
   width: "100%",
   height: "100%",
-  maxHeight: "50vh",
   objectFit: "contain",
 })
 
@@ -50,6 +58,7 @@ const Nav = styled("div")({
   display: "flex",
   justifyContent: "center",
   marginTop: 4,
+  flexShrink: 0,
 })
 const NavItem = styled("div")({
   backgroundColor: "#000",
@@ -73,6 +82,7 @@ const ButtonsContainer = styled("div")({
   paddingRight: 50,
   marginTop: 8,
   textAlign: "center",
+  flexShrink: 0,
 })
 
 const CheckButton = styled(Button)({
@@ -93,6 +103,8 @@ export default ({
   containerProps = emptyObj,
   onSaveTaskOutputItem,
 }) => {
+  if (!iface.availableLabels)
+    throw new Error("No labels defined. Add some labels in Setup to continue.")
   const [sampleIndex, changeSampleIndex] = useState(0)
   const [enlargedLabel, changeEnlargedLabel] = useState(null)
   const [currentOutput, changeCurrentOutput] = useState(emptyArr)
@@ -104,8 +116,13 @@ export default ({
     [iface.availableLabels]
   )
 
-  const onDone = useEventCallback((newOutput) => {
+  const onDone = useEventCallback(() => {
     if (containerProps.onExit) containerProps.onExit()
+  })
+  const onNextNoSave = useEventCallback(() => {
+    if (containerProps.onExit) {
+      containerProps.onExit("go-to-next")
+    }
   })
   const onNext = useEventCallback((newOutput) => {
     onSaveTaskOutputItem(sampleIndex, newOutput || currentOutput)
@@ -139,7 +156,7 @@ export default ({
       if (iface.allowMultiple) {
         newOutput = currentOutput.concat([label.id])
       } else {
-        newOutput = [label.id]
+        newOutput = label.id
       }
     }
 
@@ -191,7 +208,9 @@ export default ({
   }, [hotkeyMap])
 
   return (
-    <Container>
+    <Container
+      style={{ height: containerProps.height || "calc(100vh - 70px)" }}
+    >
       <ImageContainer>
         <Image src={taskData[sampleIndex].imageUrl} />
       </ImageContainer>
@@ -211,7 +230,7 @@ export default ({
           </NavItem>
         ) : null}
         <NavItem>
-          <NavButton onClick={onNext}>Next (space)</NavButton>
+          <NavButton onClick={onNextNoSave}>Next (space)</NavButton>
         </NavItem>
         <NavItem>
           <NavButton onClick={onDone}>Done (enter)</NavButton>

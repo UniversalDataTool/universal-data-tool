@@ -9,17 +9,17 @@ import { action } from "@storybook/addon-actions"
 import Header from "./"
 
 storiesOf("Header", module)
-  .add("Basic", () => (
+  .add("Tabs", () => (
     <Header
       title="Some Header"
-      additionalButtons={[<Button>Switch to Sample Editor</Button>]}
-      tabs={["Settings"]}
+      tabs={["Setup", "Samples", "Label"]}
+      currentTab="Samples"
     />
   ))
-  .add("Tab Test", () => (
+  .add("Sample Color", () => (
     <Header
       title="Some Header"
-      tabs={["Settings", "Samples", "Label"]}
+      tabs={["Setup", "Samples", "Label"]}
       currentTab="Samples"
     />
   ))

@@ -14,49 +14,49 @@ module.exports = [
             label: "Empty",
             click: (menuItem, currentWindow) => {
               currentWindow.webContents.send("new-file", {})
-            }
+            },
           },
           {
             label: "Computer Vision",
             click: (menuItem, currentWindow) => {
               currentWindow.webContents.send("new-file", {
-                templateName: menuItem.label
+                templateName: menuItem.label,
               })
-            }
+            },
           },
           {
             label: "Data Entry",
             click: (menuItem, currentWindow) => {
               currentWindow.webContents.send("new-file", {
-                templateName: menuItem.label
+                templateName: menuItem.label,
               })
-            }
+            },
           },
           {
             label: "Natural Language",
             click: (menuItem, currentWindow) => {
               currentWindow.webContents.send("new-file", {
-                templateName: menuItem.label
+                templateName: menuItem.label,
               })
-            }
+            },
           },
           {
             label: "Audio Transcription",
             click: (menuItem, currentWindow) => {
               currentWindow.webContents.send("new-file", {
-                templateName: menuItem.label
+                templateName: menuItem.label,
               })
-            }
+            },
           },
           {
             label: "Composite",
             click: (menuItem, currentWindow) => {
               currentWindow.webContents.send("new-file", {
-                templateName: menuItem.label
+                templateName: menuItem.label,
               })
-            }
-          }
-        ]
+            },
+          },
+        ],
       },
       {
         role: "open",
@@ -70,40 +70,40 @@ module.exports = [
               currentWindow.webContents.send("open-file", {
                 name: path.basename(filePaths[0]),
                 path: filePaths[0],
-                content: fs.readFileSync(filePaths[0]).toString()
+                content: fs.readFileSync(filePaths[0]).toString(),
               })
             })
-        }
+        },
       },
       {
         role: "copy",
         label: "Copy",
         accelerator: "CommandOrControl+C",
-        selector: "copy:"
+        selector: "copy:",
       },
       {
         role: "paste",
         label: "Paste",
         accelerator: "CommandOrControl+V",
-        selector: "paste:"
+        selector: "paste:",
       },
       {
         role: "selectAll",
         label: "Select All",
         accelerator: "CommandOrControl+A",
-        selector: "selectAll:"
+        selector: "selectAll:",
       },
       {
         role: "cut",
         label: "Cut",
         accelerator: "CommandOrControl+X",
-        selector: "cut:"
+        selector: "cut:",
       },
       {
         role: "undo",
         label: "Undo",
         accelerator: "CommandOrControl+Z",
-        selector: "undo:"
+        selector: "undo:",
       },
       {
         role: "save",
@@ -111,7 +111,7 @@ module.exports = [
         label: "Save",
         click: (menuItem, currentWindow) => {
           currentWindow.webContents.send("save-file")
-        }
+        },
       },
       {
         role: "save",
@@ -119,20 +119,20 @@ module.exports = [
         label: "Save As",
         click: (menuItem, currentWindow) => {
           currentWindow.webContents.send("save-file-as")
-        }
+        },
       },
       {
         role: "export",
         label: "Export CSV",
         click: (menuItem, currentWindow) => {
           currentWindow.webContents.send("export-to-csv")
-        }
+        },
       },
       { type: "separator" },
       {
-        role: "quit"
-      }
-    ]
+        role: "quit",
+      },
+    ],
   },
   {
     label: "Edit",
@@ -141,44 +141,33 @@ module.exports = [
         role: "copy",
         label: "Copy",
         accelerator: "CommandOrControl+C",
-        selector: "copy:"
+        selector: "copy:",
       },
       {
         role: "paste",
         label: "Paste",
         accelerator: "CommandOrControl+V",
-        selector: "paste:"
+        selector: "paste:",
       },
       {
         role: "selectAll",
         label: "Select All",
         accelerator: "CommandOrControl+A",
-        selector: "selectAll:"
+        selector: "selectAll:",
       },
       {
         role: "cut",
         label: "Cut",
         accelerator: "CommandOrControl+X",
-        selector: "cut:"
+        selector: "cut:",
       },
       {
         role: "undo",
         label: "Undo",
         accelerator: "CommandOrControl+Z",
-        selector: "undo:"
+        selector: "undo:",
       },
-    ]
-  },
-  {
-    label: "Navigate",
-    submenu: [
-      {
-        label: "Welcome Page",
-        click: (menuItem, currentWindow) => {
-          currentWindow.webContents.send("open-welcome-page")
-        }
-      }
-    ]
+    ],
   },
   {
     label: "About",
@@ -186,15 +175,15 @@ module.exports = [
       {
         label: "Github",
         click: () => {
-          shell.openItem(
+          shell.openExternal(
             "https://github.com/openhumanannotation/universal-data-tool"
           )
-        }
-      }
-    ]
+        },
+      },
+    ],
   },
   {
     label: "Debug",
-    submenu: [{ role: "reload" }, { role: "toggledevtools" }]
-  }
+    submenu: [{ role: "reload" }, { role: "toggledevtools" }],
+  },
 ]

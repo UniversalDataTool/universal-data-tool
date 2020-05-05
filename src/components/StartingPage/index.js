@@ -13,6 +13,7 @@ import FileIcon from "@material-ui/icons/InsertDriveFile"
 import TemplateIcon from "@material-ui/icons/Description"
 import { useDropzone } from "react-dropzone"
 import CreateFromTemplateDialog from "../CreateFromTemplateDialog"
+import AddAuthFromTemplateDialog from "../AddAuthFromTemplateDialog"
 import { styled } from "@material-ui/core/styles"
 import usePosthog from "../../utils/use-posthog"
 import packageInfo from "../../../package.json"
@@ -95,6 +96,9 @@ export default ({
   recentItems = [],
   onOpenRecentItem,
   onClickOpenSession,
+  onAuthConfigured,
+  user,
+  logoutUser,
 }) => {
   const c = useStyles()
   const posthog = usePosthog()
@@ -108,7 +112,7 @@ export default ({
         "https://raw.githubusercontent.com/UniversalDataTool/universal-data-tool/master/package.json"
       ).then((r) => r.json())
       if (newPackage.version !== packageInfo.version) {
-        changeNewVersionAvailable(true)
+        changeNewVersionAvailable(newPackage.version)
       }
     }
     checkNewVersion()
@@ -118,6 +122,7 @@ export default ({
     createFromTemplateDialogOpen,
     changeCreateFromTemplateDialogOpen,
   ] = useState(false)
+  const [addAuthFromDialogOpen, changeAddAuthFromDialogOpen] = useState(false)
   const onDrop = useEventCallback((acceptedFiles) => {
     onFileDrop(acceptedFiles[0])
   })
@@ -136,6 +141,15 @@ export default ({
         }}
         onClose={() => changeCreateFromTemplateDialogOpen(false)}
       />
+      <AddAuthFromTemplateDialog
+        open={addAuthFromDialogOpen}
+        onSelect={(template) => onOpenTemplate(template)}
+        onClose={() => changeAddAuthFromDialogOpen(false)}
+        onFinish={(anwsers) => console.log(anwsers)}
+        onAuthConfigured={(config) => {
+          onAuthConfigured(config)
+        }}
+      />
       <Header
         additionalButtons={[
           newVersionAvailable && (
@@ -144,10 +158,10 @@ export default ({
               className={c.headerButton}
               href="https://github.com/OpenHumanAnnotation/universal-data-tool/releases"
             >
-              Out of date! Download New Version
+              Download Version v{newVersionAvailable}
             </Button>
           ),
-          showDownloadLink && (
+          !newVersionAvailable && showDownloadLink && (
             <Button
               key="download"
               href="https://github.com/OpenHumanAnnotation/universal-data-tool/releases"
@@ -157,6 +171,8 @@ export default ({
             </Button>
           ),
         ].filter(Boolean)}
+        user={user}
+        logoutUser={logoutUser}
       />
       <ContentContainer>
         <Content>
@@ -192,6 +208,9 @@ export default ({
                     Open Collaborative Session
                   </Action>
                 )}
+                <Action onClick={() => changeAddAuthFromDialogOpen(true)}>
+                  Add Authentification
+                </Action>
                 {/* <Action>Open Folder</Action> */}
               </ActionList>
               <ActionList>

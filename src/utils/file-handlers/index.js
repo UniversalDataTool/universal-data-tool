@@ -2,13 +2,12 @@
 
 import { useState, useMemo, useCallback, useEffect } from "react"
 import useServer, {
-  getLatestState,
+  joinSession,
   convertToCollaborativeFile,
 } from "./use-server"
 import useFilesystem from "./use-filesystem"
 import useLocalStorage from "./use-local-storage"
 import { useToasts } from "../../components/Toasts"
-import moment from "moment"
 import cloneDeep from "lodash/cloneDeep"
 import fromUDTCSV from "../from-udt-csv.js"
 import useEventCallback from "use-event-callback"
@@ -19,7 +18,7 @@ export default () => {
   const { addToast } = useToasts()
 
   const { saveFile } = useFilesystem(file, changeFile)
-  const { recentItems } = useLocalStorage(file, changeFile)
+  const { recentItems, changeRecentItems } = useLocalStorage(file, changeFile)
   useServer(file, changeFile)
 
   // Telemetry
@@ -66,7 +65,7 @@ export default () => {
   const openUrl = useEventCallback(async (url) => {
     const sessionId = decodeURIComponent(url.match(/[\?&]s=([^&]+)/)[1])
     if (!sessionId) return
-    const { state, version } = await getLatestState(sessionId)
+    const { state, version } = await joinSession(sessionId)
     if (!state) return
     window.history.replaceState(
       {},
@@ -79,8 +78,6 @@ export default () => {
       mode: "server",
       id: sessionId,
       content: state,
-      lastSyncedState: cloneDeep(state),
-      lastSyncedVersion: version,
     })
   })
 
@@ -115,6 +112,7 @@ export default () => {
       makeSession,
       saveFile,
       recentItems,
+      changeRecentItems,
     }),
     [file, changeFile, openFile, makeSession, recentItems]
   )

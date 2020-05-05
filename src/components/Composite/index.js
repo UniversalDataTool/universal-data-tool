@@ -33,7 +33,8 @@ export const Composite = (props) => {
     interface: { fields },
   } = props
   const [selectedField, changeSelectedField] = useState()
-  const [taskOutput, changeTaskOutput] = useState(props.taskOutput)
+
+  if (!fields) throw new Error("No fields defined. Try adding a field in Setup")
 
   if (selectedField) {
     return (
@@ -59,8 +60,6 @@ export const Composite = (props) => {
       />
     )
   }
-
-  console.log("taskOutput", props.taskOutput)
 
   return (
     <SampleContainer

@@ -232,6 +232,7 @@ export default [
         type: "3d_bounding_box",
         description: "3D Bounding Box",
       },
+      taskData: [{}],
     },
   },
 ]

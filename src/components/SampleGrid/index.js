@@ -8,14 +8,21 @@ import range from "lodash/range"
 import * as colors from "@material-ui/core/colors"
 import classNames from "classnames"
 import TablePagination from "@material-ui/core/TablePagination"
+import getBrushColorPalette from "../../utils/get-brush-color-palette"
 
 const Container = styled("div")({
   flexWrap: "wrap",
 })
-const SampleDiv = styled("div")({
+const EmptyState = styled("div")({
+  fontSize: 24,
+  color: colors.grey[500],
+  padding: 30,
+  textAlign: "center",
+})
+const SampleDiv = styled("div")(({ color }) => ({
   margin: 4,
   padding: 4,
-  backgroundColor: colors.grey[300],
+  backgroundColor: color[500],
   display: "inline-flex",
   fontSize: 11,
   textAlign: "center",
@@ -25,15 +32,12 @@ const SampleDiv = styled("div")({
   cursor: "pointer",
   userSelect: "none",
   transition: "box-shadow 200ms ease, transform 200ms ease",
-  "&.completed": {
-    backgroundColor: colors.blue[500],
-    color: "#fff",
-  },
+  color: color.isFaded ? "#000" : "#fff",
   "&.selected": {
-    boxShadow: `0px 0px 2px 1px ${colors.blue[400]}`,
+    boxShadow: `0px 0px 2px 1px ${color["A200"]}`,
     transform: "scale(1.05,1.05)",
   },
-})
+}))
 
 const Sample = memo(
   ({
@@ -44,6 +48,7 @@ const Sample = memo(
     onMouseDown,
     onMouseUp,
     onMouseEnter,
+    brush,
   }) => {
     return (
       <SampleDiv
@@ -52,6 +57,7 @@ const Sample = memo(
         onMouseDown={() => onMouseDown(index)}
         onMouseUp={() => onMouseUp(index)}
         onMouseEnter={() => onMouseEnter(index)}
+        color={getBrushColorPalette(brush)}
       >
         {index}
       </SampleDiv>
@@ -61,12 +67,13 @@ const Sample = memo(
     return (
       p.index === n.index &&
       p.completed === n.completed &&
-      p.selected === n.selected
+      p.selected === n.selected &&
+      p.brush === n.brush
     )
   }
 )
 
-export default ({ count, completed = [], onClick }) => {
+export default ({ count, completed = [], taskData, onClick }) => {
   const [samplesPerPage, changeSamplesPerPage] = useLocalStorage(
     "samplesPerPage",
     100
@@ -111,6 +118,11 @@ export default ({ count, completed = [], onClick }) => {
       onMouseUp={checkAndNullifySelectRange}
       onMouseEnter={checkAndNullifySelectRange}
     >
+      {count === 0 && (
+        <EmptyState>
+          No samples, try using "Import Toy Dataset" in Samples > Import
+        </EmptyState>
+      )}
       {range(sampleOffset, Math.min(count, sampleOffset + samplesPerPage)).map(
         (i) => (
           <Sample
@@ -118,6 +130,9 @@ export default ({ count, completed = [], onClick }) => {
             key={i}
             index={i}
             completed={completed[i]}
+            brush={
+              completed[i] ? taskData[i].brush || "complete" : "incomplete"
+            }
             selected={selectRange && i >= selectRange[0] && i < selectRange[1]}
             onMouseDown={startSelectRange}
             onMouseEnter={moveSelectRange}
