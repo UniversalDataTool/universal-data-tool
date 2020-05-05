@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react"
 import { styled } from "@material-ui/core/styles"
-import templates from "../StartingPage/templates"
+import templates, { templateMap } from "../StartingPage/templates"
 import Button from "@material-ui/core/Button"
 import Box from "@material-ui/core/Box"
 import * as colors from "@material-ui/core/colors"
@@ -144,14 +144,7 @@ export const ConfigureInterface = ({
                   onSaveTaskOutputItem={noop}
                   oha={{
                     interface: iface,
-                    taskData: [
-                      (
-                        templates.find(
-                          (template) =>
-                            template.oha.interface.type === iface.type
-                        ) || { oha: { taskData: [{}] } }
-                      ).oha.taskData[0],
-                    ],
+                    samples: [templateMap[iface.type].oha.samples[0]],
                   }}
                 />
               </LabelErrorBoundary>

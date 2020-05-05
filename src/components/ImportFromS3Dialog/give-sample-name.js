@@ -1,5 +1,6 @@
 import getSampleNameFromURL from "../../utils/get-sample-name-from-url"
 import isEmpty from "../../utils/isEmpty"
+
 export default (appendedTaskData, oha) => {
   function searchSampleName(sampleName, myArray) {
     var nameToSearch
@@ -17,14 +18,14 @@ export default (appendedTaskData, oha) => {
     }
     return false
   }
-  for (var i = 0; i < appendedTaskData.length; i++) {
-    var sampleName = getSampleNameFromURL(appendedTaskData[i])
+  for (var i = 0; i < appendedsamples.length; i++) {
+    var sampleName = getSampleNameFromURL(appendedsamples[i])
     var boolName = true
     var v = 1
     while (boolName) {
       if (
-        searchSampleName(sampleName, oha.taskData) ||
-        searchSampleName(sampleName, appendedTaskData)
+        searchSampleName(sampleName, oha.samples) ||
+        searchSampleName(sampleName, appendedsamples)
       ) {
         if (isEmpty(sampleName[2].match("(.*)\\([0-9]*\\)$"))) {
           sampleName[1] =
@@ -40,11 +41,11 @@ export default (appendedTaskData, oha) => {
         }
         v++
       } else {
-        appendedTaskData[i].sampleName = sampleName[1]
+        appendedsamples[i].sampleName = sampleName[1]
         boolName = false
       }
     }
-    appendedTaskData[i].sampleName = sampleName[1]
+    appendedsamples[i].sampleName = sampleName[1]
   }
-  return appendedTaskData
+  return appendedsamples
 }

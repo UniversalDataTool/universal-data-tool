@@ -118,9 +118,7 @@ export default () => {
     if (!isEmpty(authConfig)) {
       var changes = fileHasChanged(lastObjectRef.current, file)
       if (
-        (!changes.content.taskData &&
-          !changes.content.taskOutput &&
-          !changes.fileName) ||
+        (!changes.content.samples && !changes.fileName) ||
         (file.content.interface.type !== "video_segmentation" &&
           file.content.interface.type !== "image_classification" &&
           file.content.interface.type !== "image_segmentation")

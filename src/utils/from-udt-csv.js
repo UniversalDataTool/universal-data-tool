@@ -37,7 +37,7 @@ export default (csv) => {
   return {
     interface: json.interface,
     taskOutput: json.samples.map((sample) => sample.output),
-    taskData: json.samples.map(convertTaskDatumMistakes).map((sample) => {
+    samples: json.samples.map(convertTaskDatumMistakes).map((sample) => {
       delete sample.output
       return sample
     }),

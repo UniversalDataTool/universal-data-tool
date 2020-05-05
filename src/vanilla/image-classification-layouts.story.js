@@ -12,7 +12,7 @@ storiesOf("Vanilla Image Classification", module).add("Layout 1", () => {
       type: "image_classification",
       labels: ["A", "B"],
     },
-    taskData: [
+    samples: [
       {
         imageUrl:
           "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",

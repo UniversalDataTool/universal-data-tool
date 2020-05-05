@@ -70,13 +70,13 @@ export default ({ open, onChangeOHA, onClose, oha }) => {
               return
             }
 
-            const newTaskData = [...oha.taskData]
+            const newSamples = [...oha.samples]
             let errors = ""
 
             // Iterate over each task datum and download the url, then convert
             // the path to a filesystem path
-            for (let i = 0; i < oha.taskData.length; i++) {
-              const td = oha.taskData[i]
+            for (let i = 0; i < oha.samples.length; i++) {
+              const td = oha.samples[i]
               let urlKey
               if (td.imageUrl) urlKey = "imageUrl"
               if (td.videoUrl) urlKey = "videoUrl"
@@ -88,17 +88,17 @@ export default ({ open, onChangeOHA, onClose, oha }) => {
                   directoryPath,
                   remote
                 )
-                newTaskData[i] = {
+                newSamples[i] = {
                   ...td,
                   [urlKey]: `file://${pathToFile}`,
                 }
               } catch (e) {
-                errors += `Skipping sample, error downloading taskData[${i}] (${urlToDownload}): ${e.toString()} \n`
+                errors += `Skipping sample, error downloading samples[${i}] (${urlToDownload}): ${e.toString()} \n`
               }
-              changeProgress((i / oha.taskData.length) * 100)
+              changeProgress((i / oha.samples.length) * 100)
             }
 
-            onChangeOHA(setIn(oha, ["taskData"], newTaskData))
+            onChangeOHA(setIn(oha, ["samples"], newSamples))
 
             changeErrors(errors)
             changeProgress(100)

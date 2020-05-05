@@ -17,15 +17,12 @@ export default (udt) => {
     })
   }, [udt && (udt.samples || []).length])
   useEffect(() => {
-    if (!udt || !udt.taskOutput) return
+    if (!udt || !udt.samples) return
     const numCompleted = (udt.samples || []).filter((s) => s.annotation).length
     posthog.capture("sample_completion", {
       dataset_size: (udt.samples || []).length,
       samples_completed: numCompleted,
       percent_completed: numCompleted / (udt.samples || []).length,
     })
-  }, [
-    udt && (udt.samples || []).length,
-    udt && udt.taskOutput && udt.taskOutput.filter(Boolean).length,
-  ])
+  }, [udt && udt.samples])
 }

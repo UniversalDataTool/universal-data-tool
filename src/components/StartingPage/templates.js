@@ -11,13 +11,13 @@ import ThreeDRotation from "@material-ui/icons/ThreeDRotation"
 import OndemandVideoIcon from "@material-ui/icons/OndemandVideo"
 import ContactSupport from "@material-ui/icons/ContactSupport"
 
-export default [
+export const templates = [
   {
     name: "Empty",
     Icon: CropFree,
     oha: {
       interface: {},
-      taskData: [],
+      samples: [],
     },
   },
   {
@@ -35,7 +35,7 @@ export default [
           // "pixel-mask"
         ],
       },
-      taskData: [
+      samples: [
         {
           imageUrl:
             "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
@@ -55,7 +55,7 @@ export default [
         type: "image_classification",
         availableLabels: ["valid", "invalid"],
       },
-      taskData: [
+      samples: [
         {
           imageUrl:
             "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
@@ -76,7 +76,7 @@ export default [
         availableLabels: ["valid", "invalid"],
         regionTypesAllowed: ["bounding-box", "polygon", "point"],
       },
-      taskData: [
+      samples: [
         {
           videoUrl:
             "https://s3.amazonaws.com/asset.workaround.online/SampleVideo_1280x720_1mb.mp4",
@@ -101,7 +101,7 @@ export default [
           ],
         },
       },
-      taskData: [
+      samples: [
         {
           pdfUrl: "https://arxiv.org/pdf/1906.01969.pdf",
         },
@@ -131,7 +131,7 @@ export default [
           },
         ],
       },
-      taskData: [
+      samples: [
         {
           document:
             "This strainer makes a great hat, I'll wear it while I serve spaghetti!",
@@ -150,7 +150,7 @@ export default [
         type: "text_classification",
         labels: ["positive_sentiment", "negative_sentiment"],
       },
-      taskData: [
+      samples: [
         {
           document: "Wow this is terrible. I hated it.",
         },
@@ -172,7 +172,7 @@ export default [
         type: "audio_transcription",
         description: "# Markdown description here",
       },
-      taskData: [
+      samples: [
         {
           audioUrl: "https://html5tutorial.info/media/vincent.mp3",
         },
@@ -212,7 +212,7 @@ export default [
           },
         ],
       },
-      taskData: [
+      samples: [
         {
           imageUrl:
             "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
@@ -232,7 +232,14 @@ export default [
         type: "3d_bounding_box",
         description: "3D Bounding Box",
       },
-      taskData: [{}],
+      samples: [{}],
     },
   },
 ]
+
+export const templateMap = templates.reduce((acc, t) => {
+  acc[t.name] = t
+  return acc
+}, {})
+
+export default templates

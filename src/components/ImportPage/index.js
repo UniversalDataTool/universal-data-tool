@@ -25,7 +25,7 @@ import ImportToyDataset from "../ImportToyDatasetDialog"
 import ImportFromYoutubeUrls from "../ImportFromYoutubeUrls"
 import { FaGoogleDrive, FaYoutube } from "react-icons/fa"
 import usePosthog from "../../utils/use-posthog"
-import giveSampleName from "./give-sample-name"
+import promptAndGetSamplesFromLocalDirectory from "./prompt-and-get-samples-from-local-directory.js"
 
 const extendWithNull = (ar, len) => {
   ar = [...ar]
@@ -125,20 +125,6 @@ const Button = ({
   )
 }
 
-const convertToTaskDataObject = (fp) => {
-  const ext = fp.split(".").slice(-1)[0].toLowerCase()
-  if (["png", "jpg", "jpeg"].includes(ext)) {
-    return { imageUrl: `file://${fp}` }
-  }
-  if (["pdf"].includes(ext)) {
-    return { pdfUrl: `file://${fp}` }
-  }
-  if (["mp4", "webm", "mkv"].includes(ext)) {
-    return { videoUrl: `file://${fp}` }
-  }
-  return null
-}
-
 export default ({
   file,
   oha,
@@ -154,29 +140,11 @@ export default ({
     switch (dialog) {
       case "upload-directory": {
         if (!electron) return
-        const {
-          canceled,
-          filePaths: dirPaths,
-        } = await electron.remote.dialog.showOpenDialog({
-          title: "Select Directory to Import Files",
-          properties: ["openDirectory"],
+        const localSamples = await promptAndGetSamplesFromLocalDirectory({
+          electron,
         })
-        if (canceled) return
-        const dirPath = dirPaths[0]
-        const fs = electron.remote.require("fs")
-        const path = electron.remote.require("path")
-        const importedFilePaths = (await fs.promises.readdir(dirPath))
-          .filter((fn) => fn.includes("."))
-          .map((fileName) => path.join(dirPath, fileName))
-
         onChangeOHA(
-          setIn(
-            oha,
-            ["taskData"],
-            (oha.samples || []).concat(
-              importedFilePaths.map(convertToTaskDataObject).filter(Boolean)
-            )
-          ),
+          setIn(oha, ["samples"], (oha.samples || []).concat(localSamples)),
           true
         )
         return
@@ -186,81 +154,14 @@ export default ({
       }
     }
   }
-  function setAnnotations(taskOutput, appendedTaskOutput, configImport) {
-    if (
-      !isEmpty(configImport) &&
-      typeof configImport.annotationToKeep !== "undefined"
-    ) {
-      if (configImport.annotationToKeep === "both") {
-        if (appendedTaskOutput) {
-          taskOutput = extendWithNull(
-            oha.taskOutput || [],
-            oha.taskData.length
-          ).concat(appendedTaskOutput)
-        }
-      }
-      if (configImport.annotationToKeep === "incoming") {
-        if (appendedTaskOutput) {
-          taskOutput = extendWithNull([], oha.taskData.length).concat(
-            appendedTaskOutput
-          )
-        }
-      }
-      if (configImport.annotationToKeep === "current") {
-        if (appendedTaskOutput) {
-          taskOutput = extendWithNull(oha.taskOutput || [], oha.taskData.length)
-        }
-      }
-    } else {
-      if (appendedTaskOutput) {
-        taskOutput = extendWithNull(
-          oha.taskOutput || [],
-          oha.taskData.length
-        ).concat(appendedTaskOutput)
-      }
-    }
-    return taskOutput
-  }
 
   const closeDialog = () => changeDialog(null)
-  const onAddSamples = useEventCallback(
-    async (appendedTaskData, appendedTaskOutput, json, configImport) => {
-      var newOHA = {}
-      newOHA = setIn(
-        newOHA,
-        ["taskOutput"],
-        setAnnotations(newOHA.taskOutput, appendedTaskOutput, configImport)
-      )
-      if (
-        json !== null &&
-        typeof json !== "undefined" &&
-        typeof json.content !== "undefined" &&
-        typeof json.fileName !== "undefined"
-      ) {
-        json.content.taskData = giveSampleName(json.content.taskData, oha)
-        newOHA = setIn(
-          newOHA,
-          ["taskData"],
-          (oha.samples || []).concat(json.content.taskData)
-        )
-        newOHA = setIn(newOHA, ["interface"], json.content.interface)
-        if (typeof file.fileName === "undefined" || file.fileName === "unnamed")
-          file = setIn(file, ["fileName"], json.fileName)
-        file = setIn(file, ["content"], newOHA)
-        onChangeFile(file, true)
-      } else {
-        appendedTaskData = giveSampleName(appendedTaskData, oha)
-        newOHA = setIn(
-          oha,
-          ["taskData"],
-          (oha.samples || []).concat(appendedTaskData)
-        )
-        onChangeOHA(newOHA, true)
-      }
-
-      closeDialog()
-    }
-  )
+  const onAddSamples = useEventCallback(async (samplesToAdd) => {
+    onChangeOHA(
+      setIn(oha, ["samples"], (oha.samples || []).concat(samplesToAdd))
+    )
+    closeDialog()
+  })
   return (
     <SelectDialogContext.Provider value={{ onChangeDialog }}>
       <div>
@@ -339,6 +240,7 @@ export default ({
           file={file}
           authConfig={authConfig}
           open={selectedDialog === "import-from-s3"}
+          onChangeFile={onChangeFile}
           onClose={closeDialog}
           user={user}
           onAddSamples={onAddSamples}
