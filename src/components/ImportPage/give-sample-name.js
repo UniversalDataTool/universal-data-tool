@@ -1,5 +1,8 @@
 import getSampleNameFromURL from "../../utils/get-sample-name-from-url"
+<<<<<<< HEAD
 import isEmpty from "../../utils/isEmpty"
+=======
+>>>>>>> upstream/master
 export default (appendedTaskData, oha) => {
   function searchSampleName(sampleName, myArray) {
     var nameToSearch
