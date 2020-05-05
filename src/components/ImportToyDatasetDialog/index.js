@@ -27,7 +27,7 @@ async function getSamples(dataset) {
 
   return await fetch(datasetUrl)
     .then((r) => r.json())
-    .then((r) => r.samples)
+    .then((r) => r.samples || r.taskData)
 }
 
 const StyledButton = styled(Button)({})

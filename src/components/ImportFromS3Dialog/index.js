@@ -137,7 +137,9 @@ export default ({
   authConfig,
   user,
 }) => {
-  Amplify.configure(authConfig)
+  try {
+    Amplify.configure(authConfig)
+  } catch (e) {}
   const [textButtonAdd, changetextButtonAdd] = useState("Add Samples")
   const [s3Content, changeS3Content] = useState(null)
   const [dataForTable, changeDataForTable] = useState(null)

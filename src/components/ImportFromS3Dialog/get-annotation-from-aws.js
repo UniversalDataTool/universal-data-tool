@@ -4,6 +4,7 @@ import Amplify, { Storage } from "aws-amplify"
 
 export default async (result, samples, folderToFetch, authConfig) => {
   Amplify.configure(authConfig)
+
   var json = null
   if (
     result.find(
