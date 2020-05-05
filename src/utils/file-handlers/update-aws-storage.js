@@ -6,7 +6,7 @@ export default (file) => {
     var proxyUrl = "https://cors-anywhere.herokuapp.com/"
     var response
     var url
-    if(getUrlFromSample(element) !== undefined)
+    if (getUrlFromSample(element) !== undefined)
       url = proxyUrl + getUrlFromSample(element)
     response = await fetch(url, {
       method: "GET",

@@ -45,13 +45,11 @@ function setOneNewSample(newSamples, sampleName, samples) {
   return newSamples
 }
 
-function GetSampleFromDataTask(json,samples){
+function GetSampleFromDataTask(json, samples) {
   if (isEmpty(json.content.taskData)) return
   var newSamples = []
   for (var i = 0; i < json.content.taskData.length; i++) {
-    var sampleName = ReadSampleNameFromJsonOrFromUrl(
-      json.content.taskData[i]
-    )
+    var sampleName = ReadSampleNameFromJsonOrFromUrl(json.content.taskData[i])
     newSamples = setOneNewSample(newSamples, sampleName, samples)
   }
   json.content.taskData = newSamples
@@ -71,7 +69,7 @@ export default async (result, samples, folderToFetch, authConfig) => {
             if (typeof result.content === "undefined") return
             json = result
 
-            GetSampleFromDataTask(json,samples)
+            GetSampleFromDataTask(json, samples)
           })
         })
       })

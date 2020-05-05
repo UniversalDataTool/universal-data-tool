@@ -234,7 +234,7 @@ export default ({
     return taskOutput
   }
 
-  function setInfoProjectLoaded(newOHA,json){
+  function setInfoProjectLoaded(newOHA, json) {
     if (!isEmpty(json.content.taskData)) {
       switch (recognizeTypeProject(json.content.interface.type)) {
         case "text":
@@ -263,7 +263,7 @@ export default ({
     onChangeFile(file, true)
   }
 
-  function setInfoWhenOnlySample(appendedTaskData,newOHA){
+  function setInfoWhenOnlySample(appendedTaskData, newOHA) {
     appendedTaskData = giveSampleName(appendedTaskData, oha)
     newOHA = setIn(
       oha,
@@ -271,7 +271,6 @@ export default ({
       (oha.taskData || []).concat(appendedTaskData)
     )
     onChangeOHA(newOHA, true)
-
   }
 
   const closeDialog = () => changeDialog(null)
@@ -285,14 +284,10 @@ export default ({
         setAnnotations(newOHA.taskOutput, appendedTaskOutput, configImport)
       )
       //Set all the other feature depending of the type of loading
-      if (
-        !isEmpty(json) &&
-        !isEmpty(json.content) &&
-        !isEmpty(json.fileName)
-      ) {
-        setInfoProjectLoaded(newOHA,json)
+      if (!isEmpty(json) && !isEmpty(json.content) && !isEmpty(json.fileName)) {
+        setInfoProjectLoaded(newOHA, json)
       } else {
-        setInfoWhenOnlySample(appendedTaskData,newOHA)
+        setInfoWhenOnlySample(appendedTaskData, newOHA)
       }
 
       closeDialog()

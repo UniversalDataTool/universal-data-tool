@@ -104,10 +104,15 @@ export default () => {
     })
   )
 
-  function ifFileAuthorizeToSaveOnAWS(s){
-    var fileAuthorize =["video_segmentation","image_classification",
-      "image_segmentation","text_entity_recognition","text_classification",
-      "audio_transcription"]
+  function ifFileAuthorizeToSaveOnAWS(s) {
+    var fileAuthorize = [
+      "video_segmentation",
+      "image_classification",
+      "image_segmentation",
+      "text_entity_recognition",
+      "text_classification",
+      "audio_transcription",
+    ]
     if (fileAuthorize.includes(s)) return true
     return false
   }
@@ -121,7 +126,7 @@ export default () => {
         (!changes.content.taskData &&
           !changes.content.taskOutput &&
           !changes.fileName) ||
-          !ifFileAuthorizeToSaveOnAWS ||
+        !ifFileAuthorizeToSaveOnAWS ||
         file.fileName === "unnamed"
       )
         return
