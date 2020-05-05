@@ -17,7 +17,6 @@ import AppErrorBoundary from "../AppErrorBoundary"
 import useEventCallback from "use-event-callback"
 import usePreventNavigation from "../../utils/use-prevent-navigation"
 import UpdateAWSStorage from "../../utils/file-handlers/update-aws-storage"
-
 const randomId = () => Math.random().toString().split(".")[1]
 
 export default () => {
