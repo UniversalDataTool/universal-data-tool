@@ -65,6 +65,20 @@ const forms = {
         type: "text",
         isRequired: true,
       },
+      {
+        name: "bucket",
+        title: "Bucket AWS",
+        placeholder: "Name of the bucket",
+        type: "text",
+        isRequired: true,
+      },
+      {
+        name: "regionBucket",
+        title: "Region of the bucket",
+        placeholder: "XX-XXXX-X",
+        type: "text",
+        isRequired: true,
+      },
     ],
   },
 }
@@ -85,6 +99,12 @@ export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
           userPoolWebClientId: answers.userPoolWebClientId,
           mandatorySignIn: true,
           authenticationFlowType: "USER_PASSWORD_AUTH",
+        },
+        Storage: {
+          AWSS3: {
+            bucket: answers.bucket,
+            region: answers.regionBucket,
+          },
         },
       }
       try {
