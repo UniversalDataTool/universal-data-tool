@@ -12,6 +12,11 @@ export default (sample) => {
         `.*\\/(([^\\/\\\\&\\?]*)\\.([a-zA-Z0-9]*))(\\?|$)`
       )
     }
+    if (!isEmpty(sample.audioUrl)) {
+      sampleName = decodeURI(sample.audioUrl).match(
+        `.*\\/(([^\\/\\\\&\\?]*)\\.([a-zA-Z0-9]*))(\\?|$)`
+      )
+    }
   }
   return sampleName
 }

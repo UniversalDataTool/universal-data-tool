@@ -34,6 +34,12 @@ function setOneNewSample(newSamples, sampleName, samples) {
           sampleName: sampleName,
         })
       }
+      if (!isEmpty(samples[y].audioUrl)) {
+        newSamples.push({
+          audioUrl: samples[y].audioUrl,
+          sampleName: sampleName,
+        })
+      }
     }
   }
   return newSamples
