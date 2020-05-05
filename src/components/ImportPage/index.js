@@ -234,55 +234,65 @@ export default ({
     return taskOutput
   }
 
+  function setInfoProjectLoaded(newOHA,json){
+    if (!isEmpty(json.content.taskData)) {
+      switch (recognizeTypeProject(json.content.interface.type)) {
+        case "text":
+          newOHA = setIn(
+            newOHA,
+            ["taskData"],
+            (oha.taskData || []).concat(json.content.taskData)
+          )
+          break
+        case "file":
+          json.content.taskData = giveSampleName(json.content.taskData, oha)
+          newOHA = setIn(
+            newOHA,
+            ["taskData"],
+            (oha.taskData || []).concat(json.content.taskData)
+          )
+          break
+        default:
+          break
+      }
+    }
+    newOHA = setIn(newOHA, ["interface"], json.content.interface)
+    if (typeof file.fileName === "undefined" || file.fileName === "unnamed")
+      file = setIn(file, ["fileName"], json.fileName)
+    file = setIn(file, ["content"], newOHA)
+    onChangeFile(file, true)
+  }
+
+  function setInfoWhenOnlySample(appendedTaskData,newOHA){
+    appendedTaskData = giveSampleName(appendedTaskData, oha)
+    newOHA = setIn(
+      oha,
+      ["taskData"],
+      (oha.taskData || []).concat(appendedTaskData)
+    )
+    onChangeOHA(newOHA, true)
+
+  }
+
   const closeDialog = () => changeDialog(null)
   const onAddSamples = useEventCallback(
     async (appendedTaskData, appendedTaskOutput, json, configImport) => {
+      // Set the taskOutput for both
       var newOHA = {}
       newOHA = setIn(
         newOHA,
         ["taskOutput"],
         setAnnotations(newOHA.taskOutput, appendedTaskOutput, configImport)
       )
+      //Set all the other feature depending of the type of loading
       if (
-        json !== null &&
-        typeof json !== "undefined" &&
-        typeof json.content !== "undefined" &&
-        typeof json.fileName !== "undefined"
+        !isEmpty(json) &&
+        !isEmpty(json.content) &&
+        !isEmpty(json.fileName)
       ) {
-        if (!isEmpty(json.content.taskData)) {
-          switch (recognizeTypeProject(json.content.interface.type)) {
-            case "text":
-              newOHA = setIn(
-                newOHA,
-                ["taskData"],
-                (oha.taskData || []).concat(json.content.taskData)
-              )
-              break
-            case "file":
-              json.content.taskData = giveSampleName(json.content.taskData, oha)
-              newOHA = setIn(
-                newOHA,
-                ["taskData"],
-                (oha.taskData || []).concat(json.content.taskData)
-              )
-              break
-            default:
-              break
-          }
-        }
-        newOHA = setIn(newOHA, ["interface"], json.content.interface)
-        if (typeof file.fileName === "undefined" || file.fileName === "unnamed")
-          file = setIn(file, ["fileName"], json.fileName)
-        file = setIn(file, ["content"], newOHA)
-        onChangeFile(file, true)
+        setInfoProjectLoaded(newOHA,json)
       } else {
-        appendedTaskData = giveSampleName(appendedTaskData, oha)
-        newOHA = setIn(
-          oha,
-          ["taskData"],
-          (oha.taskData || []).concat(appendedTaskData)
-        )
-        onChangeOHA(newOHA, true)
+        setInfoWhenOnlySample(appendedTaskData,newOHA)
       }
 
       closeDialog()
