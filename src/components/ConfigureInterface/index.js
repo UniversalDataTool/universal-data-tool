@@ -132,7 +132,7 @@ export const ConfigureInterface = ({
         }}
       />
       <Grid container>
-        <Grid item hidden={isNested} xs={12} md={6}>
+        <Grid item hidden={isNested} xs={12} lg={6}>
           <Heading>Preview</Heading>
           <PreviewContainer>
             <PreviewContent style={{ opacity: previewLoading ? 0.5 : 1 }}>
@@ -151,7 +151,7 @@ export const ConfigureInterface = ({
             </PreviewContent>
           </PreviewContainer>
         </Grid>
-        <Grid item xs={12} md={isNested ? 12 : 6}>
+        <Grid item xs={12} lg={isNested ? 12 : 6}>
           <Heading>Options</Heading>
           <Box paddingTop={2} />
           {!iface.type && <NoOptions>Select a Type</NoOptions>}

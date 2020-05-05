@@ -239,6 +239,7 @@ export const templates = [
 
 export const templateMap = templates.reduce((acc, t) => {
   acc[t.name] = t
+  acc[t.oha.interface.type] = t
   return acc
 }, {})
 
