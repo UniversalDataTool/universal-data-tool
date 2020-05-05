@@ -45,6 +45,18 @@ function setOneNewSample(newSamples, sampleName, samples) {
   return newSamples
 }
 
+function GetSampleFromDataTask(json,samples){
+  if (isEmpty(json.content.taskData)) return
+  var newSamples = []
+  for (var i = 0; i < json.content.taskData.length; i++) {
+    var sampleName = ReadSampleNameFromJsonOrFromUrl(
+      json.content.taskData[i]
+    )
+    newSamples = setOneNewSample(newSamples, sampleName, samples)
+  }
+  json.content.taskData = newSamples
+}
+
 export default async (result, samples, folderToFetch, authConfig) => {
   Amplify.configure(authConfig)
   var json = null
@@ -59,15 +71,7 @@ export default async (result, samples, folderToFetch, authConfig) => {
             if (typeof result.content === "undefined") return
             json = result
 
-            if (isEmpty(json.content.taskData)) return
-            var newSamples = []
-            for (var i = 0; i < json.content.taskData.length; i++) {
-              var sampleName = ReadSampleNameFromJsonOrFromUrl(
-                json.content.taskData[i]
-              )
-              newSamples = setOneNewSample(newSamples, sampleName, samples)
-            }
-            json.content.taskData = newSamples
+            GetSampleFromDataTask(json,samples)
           })
         })
       })
