@@ -104,6 +104,14 @@ export default () => {
     })
   )
 
+  function ifFileAuthorizeToSaveOnAWS(s){
+    var fileAuthorize =["video_segmentation","image_classification",
+      "image_segmentation","text_entity_recognition","text_classification",
+      "audio_transcription"]
+    if (fileAuthorize.includes(s)) return true
+    return false
+  }
+
   const lastObjectRef = useRef([])
   useEffect(() => {
     if (!isEmpty(authConfig)) {
@@ -113,12 +121,7 @@ export default () => {
         (!changes.content.taskData &&
           !changes.content.taskOutput &&
           !changes.fileName) ||
-        (file.content.interface.type !== "video_segmentation" &&
-          file.content.interface.type !== "image_classification" &&
-          file.content.interface.type !== "image_segmentation" &&
-          file.content.interface.type !== "text_entity_recognition" &&
-          file.content.interface.type !== "text_classification" &&
-          file.content.interface.type !== "audio_transcription") ||
+          !ifFileAuthorizeToSaveOnAWS ||
         file.fileName === "unnamed"
       )
         return
