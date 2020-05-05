@@ -197,14 +197,14 @@ export default ({
     }
 
     // TODO need to merge samples from GetImageFromAFolderAWS with
-    // GetAnnotationFromAFolderAWS
+    // GetAnnotationFromAFolderAWS?
 
     if (json === null || typeof json.content.samples === "undefined") {
       onAddSamples(samples)
-      // TODO use onChangeFile here
+      // TODO use onChangeFile here?
     } else {
       onAddSamples(samples)
-      // TODO use onChangeFile here
+      // TODO use onChangeFile here?
     }
 
     // TODO need to apply configImport
