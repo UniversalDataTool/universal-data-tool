@@ -130,9 +130,7 @@ export default ({ count, completed = [], samples, onClick }) => {
             key={i}
             index={i}
             completed={completed[i]}
-            brush={
-              completed[i] ? samples[i].brush || "complete" : "incomplete"
-            }
+            brush={completed[i] ? samples[i].brush || "complete" : "incomplete"}
             selected={selectRange && i >= selectRange[0] && i < selectRange[1]}
             onMouseDown={startSelectRange}
             onMouseEnter={moveSelectRange}
