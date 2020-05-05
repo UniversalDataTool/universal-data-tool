@@ -176,14 +176,14 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
       authConfig
     )
     var json
-    if (loadProjectIsSelected)
+    if (loadProjectIsSelected) {
       json = await GetAnnotationFromAFolderAWS(
         s3Content,
         samples,
         folderToFetch,
         authConfig
       )
-    else json = null
+    } else json = null
     if (json === null || typeof json.content.taskOutput === "undefined") {
       onAddSamples(samples, null, json, configImport)
     } else {

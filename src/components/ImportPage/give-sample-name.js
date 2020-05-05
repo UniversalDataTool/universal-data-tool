@@ -1,4 +1,5 @@
 import getSampleNameFromURL from "../../utils/get-sample-name-from-url"
+import isEmpty from "../../utils/isEmpty"
 export default (appendedTaskData, oha) => {
   function searchSampleName(sampleName, myArray) {
     var nameToSearch
@@ -25,7 +26,18 @@ export default (appendedTaskData, oha) => {
         searchSampleName(sampleName, oha.taskData) ||
         searchSampleName(sampleName, appendedTaskData)
       ) {
-        sampleName[1] = sampleName[2] + v.toString() + "." + sampleName[3]
+        if (isEmpty(sampleName[2].match("(.*)\\([0-9]*\\)$"))) {
+          sampleName[1] =
+            sampleName[2] + "(" + v.toString() + ")." + sampleName[3]
+        } else {
+          sampleName[1] =
+            sampleName[2].match("(.*)\\([0-9]*\\)$")[1] +
+            "(" +
+            v.toString() +
+            ")" +
+            +"." +
+            sampleName[3]
+        }
         v++
       } else {
         appendedTaskData[i].sampleName = sampleName[1]
