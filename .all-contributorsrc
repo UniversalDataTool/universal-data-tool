@@ -48,6 +48,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "Ownmarc",
+      "name": "Marc",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/24617457?v=4",
+      "profile": "https://github.com/Ownmarc",
+      "contributions": [
+        "code",
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
