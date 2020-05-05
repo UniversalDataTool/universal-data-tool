@@ -182,8 +182,8 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
             ? false
             : true,
           Audio: checkInterfaceAndTaskData(["Audio", "Empty"], file)
-          ? false
-          : true
+            ? false
+            : true,
         },
       })
     }

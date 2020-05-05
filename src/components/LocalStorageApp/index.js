@@ -118,7 +118,7 @@ export default () => {
           file.content.interface.type !== "image_classification" &&
           file.content.interface.type !== "image_segmentation" &&
           file.content.interface.type !== "text_entity_recognition" &&
-          file.content.interface.type !== "text_classification"&&
+          file.content.interface.type !== "text_classification" &&
           file.content.interface.type !== "audio_transcription") ||
         file.fileName === "unnamed"
       )

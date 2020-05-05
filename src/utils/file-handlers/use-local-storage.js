@@ -9,7 +9,7 @@ export default (file, changeFile) => {
   if (!recentItems) recentItems = []
   const lastObjectRef = useRef([])
   useEffect(() => {
-    if(!isEmpty(file)&&file.fileName === "unnamed")return
+    if (!isEmpty(file) && file.fileName === "unnamed") return
     var changes = fileHasChanged(lastObjectRef.current, file)
     if (!changes.any) return
     if (recentItems.map((item) => item.id).includes(file.id)) {

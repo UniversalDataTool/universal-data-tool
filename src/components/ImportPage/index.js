@@ -185,13 +185,16 @@ export default ({
       }
     }
   }
-  function recognizeTypeProject(s){
-    if("text_entity_recognition"===s||
-    "text_classification"===s) return "text"
-    if("video_segmentation"===s||
-    "image_classification"===s||
-    "image_segmentation"===s||
-    "audio_transcription"===s) return "file"
+  function recognizeTypeProject(s) {
+    if ("text_entity_recognition" === s || "text_classification" === s)
+      return "text"
+    if (
+      "video_segmentation" === s ||
+      "image_classification" === s ||
+      "image_segmentation" === s ||
+      "audio_transcription" === s
+    )
+      return "file"
     return ""
   }
 
@@ -224,7 +227,7 @@ export default ({
       if (appendedTaskOutput) {
         taskOutput = extendWithNull(
           oha.taskOutput || [],
-          oha.taskData.length|| 0
+          oha.taskData.length || 0
         ).concat(appendedTaskOutput)
       }
     }
@@ -247,24 +250,24 @@ export default ({
         typeof json.fileName !== "undefined"
       ) {
         if (!isEmpty(json.content.taskData)) {
-          switch(recognizeTypeProject(json.content.interface.type)){
+          switch (recognizeTypeProject(json.content.interface.type)) {
             case "text":
-            newOHA = setIn(
-              newOHA,
-              ["taskData"],
-              (oha.taskData || []).concat(json.content.taskData)
-            )
-              break;
+              newOHA = setIn(
+                newOHA,
+                ["taskData"],
+                (oha.taskData || []).concat(json.content.taskData)
+              )
+              break
             case "file":
-            json.content.taskData = giveSampleName(json.content.taskData, oha)
-            newOHA = setIn(
-              newOHA,
-              ["taskData"],
-              (oha.taskData || []).concat(json.content.taskData)
-            )
-              break;
+              json.content.taskData = giveSampleName(json.content.taskData, oha)
+              newOHA = setIn(
+                newOHA,
+                ["taskData"],
+                (oha.taskData || []).concat(json.content.taskData)
+              )
+              break
             default:
-              break;
+              break
           }
         }
         newOHA = setIn(newOHA, ["interface"], json.content.interface)
