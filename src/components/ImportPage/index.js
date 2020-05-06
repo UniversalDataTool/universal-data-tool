@@ -24,15 +24,7 @@ import ImportToyDataset from "../ImportToyDatasetDialog"
 import ImportFromYoutubeUrls from "../ImportFromYoutubeUrls"
 import { FaGoogleDrive, FaYoutube } from "react-icons/fa"
 import usePosthog from "../../utils/use-posthog"
-import giveSampleName from "./give-sample-name"
-
-const extendWithNull = (ar, len) => {
-  ar = [...ar]
-  while (ar.length < len) {
-    ar.push(null)
-  }
-  return ar
-}
+import jsonHandler from "../../utils/file-handlers/recent-items-handler"
 
 const ButtonBase = styled(MuiButton)({
   width: 240,
@@ -185,54 +177,6 @@ export default ({
       }
     }
   }
-  function recognizeTypeProject(s) {
-    if ("text_entity_recognition" === s || "text_classification" === s)
-      return "text"
-    if (
-      "video_segmentation" === s ||
-      "image_classification" === s ||
-      "image_segmentation" === s ||
-      "audio_transcription" === s
-    )
-      return "file"
-    return ""
-  }
-
-  function setAnnotations(taskOutput, appendedTaskOutput, configImport) {
-    if (
-      !isEmpty(configImport) &&
-      typeof configImport.annotationToKeep !== "undefined"
-    ) {
-      if (configImport.annotationToKeep === "both") {
-        if (appendedTaskOutput) {
-          taskOutput = extendWithNull(
-            oha.taskOutput || [],
-            oha.taskData.length || 0
-          ).concat(appendedTaskOutput)
-        }
-      }
-      if (configImport.annotationToKeep === "incoming") {
-        if (appendedTaskOutput) {
-          taskOutput = extendWithNull([], oha.taskData.length).concat(
-            appendedTaskOutput
-          )
-        }
-      }
-      if (configImport.annotationToKeep === "current") {
-        if (appendedTaskOutput) {
-          taskOutput = extendWithNull(oha.taskOutput || [], oha.taskData.length)
-        }
-      }
-    } else {
-      if (appendedTaskOutput) {
-        taskOutput = extendWithNull(
-          oha.taskOutput || [],
-          oha.taskData.length || 0
-        ).concat(appendedTaskOutput)
-      }
-    }
-    return taskOutput
-  }
 
   const closeDialog = () => changeDialog(null)
   const onAddSamples = useEventCallback(
@@ -241,7 +185,7 @@ export default ({
       newOHA = setIn(
         newOHA,
         ["taskOutput"],
-        setAnnotations(newOHA.taskOutput, appendedTaskOutput, configImport)
+        jsonHandler.concatSampleOutput(oha, appendedTaskOutput, configImport.annotationToKeep)
       )
       if (
         json !== null &&
@@ -250,8 +194,8 @@ export default ({
         typeof json.fileName !== "undefined"
       ) {
         if (!isEmpty(json.content.taskData)) {
-          switch (recognizeTypeProject(json.content.interface.type)) {
-            case "text":
+          switch (jsonHandler.projectHasDataFile(json.content.interface.type)) {
+            case "none":
               newOHA = setIn(
                 newOHA,
                 ["taskData"],
@@ -259,7 +203,7 @@ export default ({
               )
               break
             case "file":
-              json.content.taskData = giveSampleName(json.content.taskData, oha)
+              json.content.taskData = jsonHandler.setSamplesName(json.content.taskData, oha.taskData)
               newOHA = setIn(
                 newOHA,
                 ["taskData"],
@@ -276,7 +220,7 @@ export default ({
         file = setIn(file, ["content"], newOHA)
         onChangeFile(file, true)
       } else {
-        appendedTaskData = giveSampleName(appendedTaskData, oha)
+        appendedTaskData = jsonHandler.setSamplesName(appendedTaskData, oha)
         newOHA = setIn(
           oha,
           ["taskData"],
