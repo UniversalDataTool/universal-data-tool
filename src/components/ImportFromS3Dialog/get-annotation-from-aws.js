@@ -26,7 +26,7 @@ export default async (result, samples, folderToFetch, authConfig) => {
                 !isEmpty(json.content.samples)
               ) {
                 var newSamples = []
-                for (var i = 0; i < taskOutput.length; i++) {
+                for (var i = 0; i < samples.length; i++) {
                   var sampleName = getSampleNameFromURL(json.content.samples[i])
                   for (var y = 0; y < samples.length; y++) {
                     var sampleToCheck = getSampleNameFromURL(samples[y])
