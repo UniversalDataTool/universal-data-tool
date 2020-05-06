@@ -1,13 +1,13 @@
 import { Storage } from "aws-amplify"
 import isEmpty from "../isEmpty"
-import getUrlFromSample from "../getUrlFromSample"
+import jsonHandler from "./recent-items-handler"
 export default (file) => {
   async function fetchAFile(element) {
     var proxyUrl = "https://cors-anywhere.herokuapp.com/"
     var response
     var url
-    if (getUrlFromSample(element) !== undefined)
-      url = proxyUrl + getUrlFromSample(element)
+    if (jsonHandler.getSampleUrl(element) !== undefined)
+      url = proxyUrl + jsonHandler.getSampleUrl(element)
     response = await fetch(url, {
       method: "GET",
       headers: {
@@ -43,26 +43,7 @@ export default (file) => {
       file.content.taskData.forEach(async (element) => {
         try {
           const blob = await fetchAFile(element)
-          let imageOrVideoName
-          if (typeof element.sampleName === "undefined") {
-            if (typeof element.imageUrl !== "undefined") {
-              imageOrVideoName = element.imageUrl.match(
-                `\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
-              )[1]
-            }
-            if (typeof element.videoUrl !== "undefined") {
-              imageOrVideoName = element.videoUrl.match(
-                `\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
-              )[1]
-            }
-            if (typeof element.audioUrl !== "undefined") {
-              imageOrVideoName = element.audioUrl.match(
-                `\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
-              )[1]
-            }
-          } else {
-            imageOrVideoName = element.sampleName
-          }
+          let imageOrVideoName = jsonHandler.getSampleName(element)
 
           var pathToFile = `${file.fileName}/data/${imageOrVideoName}`
           Storage.put(pathToFile, blob, {

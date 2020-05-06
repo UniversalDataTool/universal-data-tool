@@ -51,12 +51,12 @@ class LocalStorageHandler {
     }
     static getSampleWithThisSampleName(sampleName, samples) {
         var nameToSearch
-        if (!isEmpty(samples)) {
-          for (var i = 0; i < samples.length; i++) {
-            if (!isEmpty(samples[i])) {
-              nameToSearch = getSampleNameFromURL(samples[i])
-              if (typeof samples[i].sampleName !== "undefined") {
-                nameToSearch[1] = samples[i].sampleName
+        if (!isEmpty(samples)&&!isEmpty(samples.taskData)) {
+          for (var i = 0; i < samples.taskData.length; i++) {
+            if (!isEmpty(samples.taskData[i])) {
+              nameToSearch = getSampleNameFromURL(samples.taskData[i])
+              if (typeof samples.taskData[i].sampleName !== "undefined") {
+                nameToSearch[1] = samples.taskData[i].sampleName
               }
               if (
                 nameToSearch[0] !== sampleName[0] &&

@@ -136,7 +136,9 @@ function initConfigImport(file) {
 }
 
 export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
-  Amplify.configure(authConfig)
+  try{
+    Amplify.configure(authConfig)
+  }catch(err){}
   const [textButtonAdd, changetextButtonAdd] = useState("Add Samples")
   const [s3Content, changeS3Content] = useState(null)
   const [dataForTable, changeDataForTable] = useState(null)
