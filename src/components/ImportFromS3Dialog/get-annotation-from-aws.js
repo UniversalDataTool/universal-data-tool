@@ -7,6 +7,24 @@ function CheckIfAnnotationExist(result, folderToFetch) {
   )
 }
 
+function GetSampleFromDataTask(json, samples) {
+  if (isEmpty(json.content.taskData)) return
+  var newSamples = []
+  for (var i = 0; i < json.content.taskData.length; i++) {
+    var sampleName = jsonHandler.getSampleName(
+      json.content.taskData[i]
+    )
+    var sampleFound = jsonHandler.getSampleWithThisSampleName(sampleName,samples)
+    var url
+    if(sampleFound === null){
+      url = jsonHandler.getSampleUrl(json.content.taskData[i])
+    }else{
+      url = jsonHandler.getSampleUrl(sampleFound)
+    }
+    newSamples.push(jsonHandler.createOneNewSample(sampleName,url))
+  }
+  json.content.taskData = newSamples
+}
 export default async (result, samples, folderToFetch, authConfig) => {
   Amplify.configure(authConfig)
   var json = null
@@ -21,22 +39,7 @@ export default async (result, samples, folderToFetch, authConfig) => {
             if (typeof result.content === "undefined") return
             json = result
 
-            if (isEmpty(json.content.taskData)) return
-            var newSamples = []
-            for (var i = 0; i < json.content.taskData.length; i++) {
-              var sampleName = jsonHandler.getSampleName(
-                json.content.taskData[i]
-              )
-              var sampleFound = jsonHandler.getSampleWithThisSampleName(sampleName,samples)
-              var url
-              if(sampleFound === null){
-                url = jsonHandler.getSampleUrl(json.content.taskData[i])
-              }else{
-                url = jsonHandler.getSampleUrl(sampleFound)
-              }
-              newSamples.push(jsonHandler.createOneNewSample(sampleName,url))
-            }
-            json.content.taskData = newSamples
+            GetSampleFromDataTask(json, samples)
           })
         })
       })

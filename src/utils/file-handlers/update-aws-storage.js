@@ -1,20 +1,13 @@
 import { Storage } from "aws-amplify"
 import isEmpty from "../isEmpty"
-
+import getUrlFromSample from "../getUrlFromSample"
 export default (file) => {
-  async function fetchAnImage(element) {
+  async function fetchAFile(element) {
     var proxyUrl = "https://cors-anywhere.herokuapp.com/"
     var response
     var url
-    if (typeof element.imageUrl !== "undefined") {
-      url = proxyUrl + element.imageUrl
-    }
-    if (typeof element.videoUrl !== "undefined") {
-      url = proxyUrl + element.videoUrl
-    }
-    if (typeof element.audioUrl !== "undefined") {
-      url = proxyUrl + element.audioUrl
-    }
+    if (getUrlFromSample(element) !== undefined)
+      url = proxyUrl + getUrlFromSample(element)
     response = await fetch(url, {
       method: "GET",
       headers: {
@@ -49,7 +42,7 @@ export default (file) => {
     if (!isEmpty(file.content.taskData)) {
       file.content.taskData.forEach(async (element) => {
         try {
-          const blob = await fetchAnImage(element)
+          const blob = await fetchAFile(element)
           let imageOrVideoName
           if (typeof element.sampleName === "undefined") {
             if (typeof element.imageUrl !== "undefined") {
