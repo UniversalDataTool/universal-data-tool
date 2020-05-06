@@ -13,6 +13,6 @@ export default `
       ]
     }
   },
-  "taskData": []
+  "samples": []
 }
 `.trim()

@@ -115,14 +115,11 @@ export default ({
   const onChangeTab = useEventCallback((tab) => changeMode(tab.toLowerCase()))
 
   let percentComplete = 0
-  if (
-    oha.taskOutput &&
-    oha.taskOutput.length > 0 &&
-    oha.taskData &&
-    oha.taskData.length > 0
-  ) {
+  if (oha.samples && oha.samples.length > 0) {
     percentComplete =
-      oha.taskOutput.filter(Boolean).length / oha.taskData.length
+      oha.samples
+        .map((s) => s.annotation !== undefined && s.annotation !== null)
+        .filter(Boolean).length / oha.samples.length
   }
 
   return (
@@ -167,19 +164,25 @@ export default ({
             onClickEditJSON={() => changeMode("json")}
             oha={oha}
             onClearLabelData={() => {
-              onChangeOHA(without(oha, "taskOutput"))
+              onChangeOHA(
+                setIn(
+                  oha,
+                  ["samples"],
+                  oha.samples.map((s) => without(s, "annotation"))
+                )
+              )
             }}
             onChange={(iface) => {
               if (
                 iface.type !== oha.interface.type &&
                 oha.interface.type !== "empty" &&
-                oha.taskOutput &&
-                oha.taskOutput.some(Boolean)
+                oha.samples.map((s) => s.annotation).some(Boolean)
               ) {
                 addToast(
-                  "Warning: Changing label types can cause label data issues. You might want to clear all label data.",
+                  "Changing label types can cause label data issues. You must clear all label data first.",
                   "error"
                 )
+                return
               }
               onChangeOHA({
                 ...oha,
@@ -195,8 +198,7 @@ export default ({
             openSampleLabelEditor={(sampleIndex) => {
               changeSingleSampleOHA({
                 ...oha,
-                taskData: [oha.taskData[sampleIndex]],
-                taskOutput: [(oha.taskOutput || [])[sampleIndex]],
+                samples: [oha.samples[sampleIndex]],
                 sampleIndex,
                 annotationStartTime: Date.now(),
               })
@@ -209,18 +211,11 @@ export default ({
               changeSampleInputEditor({ open: true, sampleIndex })
             }}
             deleteSample={(sampleIndex) => {
-              const newTaskData = [...oha.taskData]
-              const newTaskOutput = oha.taskOutput
-                ? [...oha.taskOutput]
-                : undefined
-              newTaskData.splice(sampleIndex, 1)
-              if (newTaskOutput) {
-                newTaskOutput.splice(sampleIndex, 1)
-              }
+              const newSamples = [...oha.samples]
+              newSamples.splice(sampleIndex, 1)
               onChangeOHA({
                 ...oha,
-                taskData: newTaskData,
-                taskOutput: newTaskOutput,
+                samples: newSamples,
               })
             }}
             onChangeFile={(file) => {
@@ -238,48 +233,31 @@ export default ({
               datasetName={`Sample ${singleSampleOHA.sampleIndex}`}
               onSaveTaskOutputItem={(relativeIndex, output) => {
                 let newOHA = oha
-                if (!newOHA.taskOutput) {
-                  newOHA = setIn(
-                    newOHA,
-                    ["taskOutput"],
-                    (newOHA.taskData || []).map((td) => null)
-                  )
-                }
-                if (
-                  newOHA.taskOutput.length < newOHA.taskData.length ||
-                  newOHA.taskOutput.includes(undefined)
-                ) {
-                  newOHA = setIn(
-                    newOHA,
-                    ["taskOutput"],
-                    newOHA.taskData.map((td, tdi) =>
-                      newOHA.taskOutput[tdi] === undefined
-                        ? null
-                        : newOHA.taskOutput[tdi]
-                    )
-                  )
-                }
                 newOHA = setIn(
                   newOHA,
-                  ["taskOutput", singleSampleOHA.sampleIndex],
+                  ["samples", singleSampleOHA.sampleIndex, "annotation"],
                   output
                 )
 
                 if (
-                  singleSampleOHA.taskData[0].brush !== selectedBrush &&
+                  singleSampleOHA.samples[0].brush !== selectedBrush &&
                   !(
-                    singleSampleOHA.taskData[0].brush === undefined &&
+                    singleSampleOHA.samples[0].brush === undefined &&
                     selectedBrush === "complete"
                   )
                 ) {
                   newOHA = setIn(
                     newOHA,
-                    ["taskData", singleSampleOHA.sampleIndex, "brush"],
+                    ["samples", singleSampleOHA.sampleIndex, "brush"],
                     selectedBrush
                   )
                 }
                 changeSingleSampleOHA(
-                  setIn(singleSampleOHA, ["taskOutput", relativeIndex], output)
+                  setIn(
+                    singleSampleOHA,
+                    ["samples", relativeIndex, "annotation"],
+                    output
+                  )
                 )
                 onChangeOHA(newOHA)
               }}
@@ -292,14 +270,13 @@ export default ({
                 const { sampleIndex } = singleSampleOHA
                 switch (nextAction) {
                   case "go-to-next":
-                    if (sampleIndex !== oha.taskData.length - 1) {
+                    if (sampleIndex !== oha.samples.length - 1) {
                       posthog.capture("next_sample", {
                         interface_type: oha.interface.type,
                       })
                       changeSingleSampleOHA({
                         ...oha,
-                        taskData: [oha.taskData[sampleIndex + 1]],
-                        taskOutput: [(oha.taskOutput || [])[sampleIndex + 1]],
+                        samples: [oha.samples[sampleIndex + 1]],
                         sampleIndex: sampleIndex + 1,
                         startTime: Date.now(),
                       })
@@ -310,8 +287,7 @@ export default ({
                     if (sampleIndex !== 0) {
                       changeSingleSampleOHA({
                         ...oha,
-                        taskData: [oha.taskData[sampleIndex - 1]],
-                        taskOutput: [(oha.taskOutput || [])[sampleIndex - 1]],
+                        samples: [oha.samples[sampleIndex - 1]],
                         sampleIndex: sampleIndex - 1,
                         startTime: Date.now(),
                       })
@@ -349,24 +325,25 @@ export default ({
                         Date.now() -
                           timeToCompleteSample *
                             (1 - percentComplete) *
-                            (oha.taskData || []).length
+                            (oha.samples || []).length
                       )
                     ).toString(1, 2),
                   },
                 ]}
               />
               <SampleGrid
-                count={(oha.taskData || []).length}
-                taskData={oha.taskData || []}
-                completed={(oha.taskOutput || []).map(Boolean)}
+                count={(oha.samples || []).length}
+                samples={oha.samples || []}
+                completed={(oha.samples || []).map((s) =>
+                  Boolean(s.annotation)
+                )}
                 onClick={(sampleIndex) => {
                   posthog.capture("open_sample", {
                     interface_type: oha.interface.type,
                   })
                   changeSingleSampleOHA({
                     ...oha,
-                    taskData: [oha.taskData[sampleIndex]],
-                    taskOutput: [(oha.taskOutput || [])[sampleIndex]],
+                    samples: [oha.samples[sampleIndex]],
                     sampleIndex,
                     startTime: Date.now(),
                   })
@@ -380,7 +357,7 @@ export default ({
         {...sampleInputEditor}
         sampleInput={
           sampleInputEditor.sampleIndex !== undefined
-            ? oha.taskData[sampleInputEditor.sampleIndex]
+            ? oha.samples[sampleInputEditor.sampleIndex]
             : null
         }
         onClose={() => {
@@ -388,7 +365,7 @@ export default ({
         }}
         onChange={(newInput) => {
           onChangeOHA(
-            setIn(oha, ["taskData", sampleInputEditor.sampleIndex], newInput)
+            setIn(oha, ["samples", sampleInputEditor.sampleIndex], newInput)
           )
         }}
       />

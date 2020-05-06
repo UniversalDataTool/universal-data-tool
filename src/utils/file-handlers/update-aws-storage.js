@@ -41,7 +41,7 @@ export default (file) => {
   }
 
   function createOrReplaceImages(file) {
-    file.content.taskData.forEach(async (element) => {
+    file.content.samples.forEach(async (element) => {
       try {
         const blob = await fetchAnImage(element)
         let imageOrVideoName

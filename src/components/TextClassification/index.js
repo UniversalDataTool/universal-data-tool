@@ -5,11 +5,12 @@ import NLPAnnotator from "react-nlp-annotate/components/NLPAnnotator"
 
 export const TextClassification = (props) => {
   const [currentSampleIndex, changeCurrentSampleIndex] = useState(0)
-  const initialLabels =
-    props.taskOutput && props.taskOutput[currentSampleIndex]
-      ? [props.taskOutput[currentSampleIndex].label] ||
-        props.taskOutput[currentSampleIndex].labels
-      : undefined
+  const { annotation } = props.samples[currentSampleIndex]
+  const initialLabels = annotation
+    ? typeof annotation === "string"
+      ? [annotation]
+      : annotation
+    : undefined
   if (!props.interface.labels && !props.interface.availableLabels) {
     throw new Error("Labels not defined. Try defining some labels in Setup")
   }
@@ -22,10 +23,10 @@ export const TextClassification = (props) => {
     <SampleContainer
       {...props.containerProps}
       currentSampleIndex={currentSampleIndex}
-      totalSamples={props.taskData.length}
-      taskOutput={props.taskOutput}
+      totalSamples={props.samples.length}
+      taskOutput={props.samples}
       description={
-        getTaskDescription(props.taskData[currentSampleIndex]) ||
+        getTaskDescription(props.samples[currentSampleIndex]) ||
         props.interface.description
       }
       onChangeSample={(sampleIndex) => changeCurrentSampleIndex(sampleIndex)}
@@ -35,11 +36,9 @@ export const TextClassification = (props) => {
         type="label-document"
         labels={labels}
         multipleLabels={props.interface.multiple}
-        document={props.taskData[currentSampleIndex].document}
+        document={props.samples[currentSampleIndex].document}
         initialLabels={initialLabels}
         onFinish={(result) => {
-          if (typeof result === "string") result = { label: result }
-          else result = { labels: result }
           props.onSaveTaskOutputItem(currentSampleIndex, result)
           if (props.containerProps.onExit)
             props.containerProps.onExit("go-to-next")

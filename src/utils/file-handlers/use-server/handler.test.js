@@ -15,7 +15,7 @@ test("collaboration session reconciliation - single user", async (t) => {
     interface: {
       type: "image_classification",
     },
-    taskData: [
+    samples: [
       { imageUrl: "https://example.com/image1.jpg" },
       { imageUrl: "https://example.com/image2.jpg" },
       { imageUrl: "https://example.com/image3.jpg" },
@@ -55,7 +55,7 @@ test("collaboration session reconciliation - two users", async (t) => {
     interface: {
       type: "image_classification",
     },
-    taskData: [
+    samples: [
       { imageUrl: "https://example.com/image1.jpg" },
       { imageUrl: "https://example.com/image2.jpg" },
       { imageUrl: "https://example.com/image3.jpg" },

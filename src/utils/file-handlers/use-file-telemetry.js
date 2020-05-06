@@ -11,21 +11,18 @@ export default (udt) => {
     posthog.people.set({ last_used_interface_type: udt.interface.type })
   }, [udt && udt.interface && udt.interface.type])
   useEffect(() => {
-    if (!udt || !udt.taskData) return
+    if (!udt || !udt.samples) return
     posthog.capture("dataset_size", {
-      dataset_size: (udt.taskData || []).length,
+      dataset_size: (udt.samples || []).length,
     })
-  }, [udt && (udt.taskData || []).length])
+  }, [udt && (udt.samples || []).length])
   useEffect(() => {
-    if (!udt || !udt.taskOutput) return
-    const numCompleted = udt.taskOutput.filter(Boolean).length
+    if (!udt || !udt.samples) return
+    const numCompleted = (udt.samples || []).filter((s) => s.annotation).length
     posthog.capture("sample_completion", {
-      dataset_size: (udt.taskData || []).length,
+      dataset_size: (udt.samples || []).length,
       samples_completed: numCompleted,
-      percent_completed: numCompleted / (udt.taskData || []).length,
+      percent_completed: numCompleted / (udt.samples || []).length,
     })
-  }, [
-    udt && (udt.taskData || []).length,
-    udt && udt.taskOutput && udt.taskOutput.filter(Boolean).length,
-  ])
+  }, [udt && udt.samples])
 }

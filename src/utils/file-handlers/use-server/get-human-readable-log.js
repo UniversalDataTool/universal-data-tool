@@ -21,7 +21,7 @@ export default (changeLog) => {
           message: `${userName} changed many samples`,
         })
       }
-    } else if (path.startsWith("/taskData")) {
+    } else if (path.startsWith("/samples")) {
       if (path.endsWith("brush")) continue
       humanReadableChangeLog.push({
         type: "warning",

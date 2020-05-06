@@ -98,7 +98,7 @@ export const SampleContainer = ({
   lastSampleExitText,
   onExit,
   requireCompleteToPressNext = false,
-  taskData,
+  samples,
   minContentHeight,
   currentSampleIndex,
   totalSamples,

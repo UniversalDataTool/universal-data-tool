@@ -16,31 +16,31 @@ const transformFileURLsToWebURLs = async ({
   setProgress,
   remote,
 }) => {
-  const newTaskData = []
+  const newsamples = []
 
-  const progressUnit = 100 / oha.taskData.length
+  const progressUnit = 100 / oha.samples.length
   for (
-    let taskDataIndex = 0;
-    taskDataIndex < oha.taskData.length;
-    taskDataIndex++
+    let samplesIndex = 0;
+    samplesIndex < oha.samples.length;
+    samplesIndex++
   ) {
-    const taskDataItem = oha.taskData[taskDataIndex]
+    const samplesItem = oha.samples[samplesIndex]
 
-    const fileURLKey = getFileURLKey(taskDataItem)
+    const fileURLKey = getFileURLKey(samplesItem)
 
     if (!fileURLKey) {
-      newTaskData.push(taskDataItem)
+      newsamples.push(samplesItem)
       continue
     }
 
-    const fileURL = taskDataItem[fileURLKey]
+    const fileURL = samplesItem[fileURLKey]
 
     if (!fileURL.startsWith("file://")) {
-      newTaskData.push(taskDataItem)
+      newsamples.push(samplesItem)
       continue
     }
 
-    const halfProgressOfUnit = progressUnit * taskDataIndex
+    const halfProgressOfUnit = progressUnit * samplesIndex
     setProgress(halfProgressOfUnit)
 
     const fileName = idify(splitFileNameFromFileURL(fileURL))
@@ -52,17 +52,17 @@ const transformFileURLsToWebURLs = async ({
     }).catch((e) => console.warn(e))
 
     if (!webURLOfUploadedFile) {
-      newTaskData.push(taskDataItem)
+      newsamples.push(samplesItem)
       continue
     }
 
-    newTaskData.push({
-      ...taskDataItem,
+    newsamples.push({
+      ...samplesItem,
       [fileURLKey]: webURLOfUploadedFile,
     })
   }
   setProgress(100)
-  onChangeOHA(setIn(oha, ["taskData"], newTaskData))
+  onChangeOHA(setIn(oha, ["samples"], newsamples))
 }
 
 export default transformFileURLsToWebURLs

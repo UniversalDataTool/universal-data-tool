@@ -29,7 +29,9 @@ export default ({
   onRequireCompleteSignUp,
   onClose,
 }) => {
-  Amplify.configure(authConfig)
+  try {
+    Amplify.configure(authConfig)
+  } catch (e) {}
   const classes = useStyles()
 
   const [state, setState] = useState({

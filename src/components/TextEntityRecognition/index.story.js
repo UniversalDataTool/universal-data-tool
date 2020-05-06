@@ -27,18 +27,16 @@ storiesOf("TextEntityRecognition", module).add("Basic", () => (
         },
       ],
     }}
-    taskData={[
+    samples={[
       {
         document:
           "This strainer makes a great hat, I'll wear it while I serve spaghetti!",
-      },
-    ]}
-    taskOutput={[
-      {
-        entities: [
-          { text: "strainer", label: "hat", start: 5, end: 13 },
-          { text: "spaghetti", label: "food", start: 60, end: 69 },
-        ],
+        annotation: {
+          entities: [
+            { text: "strainer", label: "hat", start: 5, end: 13 },
+            { text: "spaghetti", label: "food", start: 60, end: 69 },
+          ],
+        },
       },
     ]}
   />

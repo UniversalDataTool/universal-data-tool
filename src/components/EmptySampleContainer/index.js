@@ -6,7 +6,7 @@ import BadOHA from "../BadOHA"
 export default () => {
   return (
     <BadOHA title="No Samples to Show">
-      Make sure that <code>taskData</code> is defined and not empty.
+      Make sure that <code>samples</code> is defined and not empty.
       <br />
       <br />
       Need help setting up? <a href="#">Check out this tutorial.</a>

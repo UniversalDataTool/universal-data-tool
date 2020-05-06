@@ -8,7 +8,7 @@ export default (objectOfRef, objectToCheck) => {
         availableLabels: false,
         regionTypesAllowed: false,
       },
-      taskData: false,
+      samples: false,
       taskOutput: false,
     },
     id: false,
@@ -23,8 +23,7 @@ export default (objectOfRef, objectToCheck) => {
     resultSet.content.interface.type = true
     resultSet.content.interface.availableLabels = true
     resultSet.content.interface.regionTypesAllowed = true
-    resultSet.content.taskData = true
-    resultSet.content.taskOutput = true
+    resultSet.content.samples = true
     resultSet.id = true
     resultSet.mode = true
     return resultSet
@@ -42,8 +41,7 @@ export default (objectOfRef, objectToCheck) => {
       resultSet.content.interface.type = true
       resultSet.content.interface.availableLabels = true
       resultSet.content.interface.regionTypesAllowed = true
-      resultSet.content.taskData = true
-      resultSet.content.taskOutput = true
+      resultSet.content.samples = true
     } else if (objectToCheck.content !== objectOfRef.content) {
       //Check if the interface doesn't exist or have change
       if (typeof objectToCheck.content.interface !== "undefined") {
@@ -101,24 +99,14 @@ export default (objectOfRef, objectToCheck) => {
           }
         }
       }
-      //Check if the taskData doesn't exist or have change
-      if (typeof objectToCheck.content.taskData !== "undefined") {
-        if (typeof objectOfRef.content.taskData === "undefined") {
-          resultSet.content.taskData = true
+      //Check if the samples doesn't exist or have change
+      if (typeof objectToCheck.content.samples !== "undefined") {
+        if (typeof objectOfRef.content.samples === "undefined") {
+          resultSet.content.samples = true
         } else if (
-          objectToCheck.content.taskData !== objectOfRef.content.taskData
+          objectToCheck.content.samples !== objectOfRef.content.samples
         ) {
-          resultSet.content.taskData = true
-        }
-      }
-      //Check if the taskOutput doesn't exist or have change
-      if (typeof objectToCheck.content.taskOutput !== "undefined") {
-        if (typeof objectOfRef.content.taskOutput === "undefined") {
-          resultSet.content.taskOutput = true
-        } else if (
-          objectToCheck.content.taskOutput !== objectOfRef.content.taskOutput
-        ) {
-          resultSet.content.taskOutput = true
+          resultSet.content.samples = true
         }
       }
     }

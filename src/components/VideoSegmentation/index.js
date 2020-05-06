@@ -25,7 +25,7 @@ const [emptyObj, emptyArr] = [{}, []]
 
 export default ({
   interface: iface,
-  taskData = emptyArr,
+  samples = emptyArr,
   taskOutput = emptyObj,
   containerProps = emptyObj,
   onSaveTaskOutputItem,
@@ -76,12 +76,12 @@ export default ({
   )
 
   // TODO fix by adding some way of going to the "next" video
-  if (taskData.length > 1) {
+  if (samples.length > 1) {
     return "Video segmentation is currently limited to only a single video per selection"
   }
 
-  if (taskData.length === 0) throw new Error("No sample data provided selected")
-  if (!taskData[0].videoUrl) throw new Error("Sample must have videoUrl")
+  if (samples.length === 0) throw new Error("No sample data provided selected")
+  if (!samples[0].videoUrl) throw new Error("Sample must have videoUrl")
 
   return (
     <div
@@ -97,9 +97,9 @@ export default ({
         keyframes={convertToRIAKeyframes(
           ((taskOutput || [])[0] || {}).keyframes
         )}
-        videoName={taskData[0].customId || ""}
+        videoName={samples[0].customId || ""}
         videoTime={0}
-        videoSrc={taskData[0].videoUrl}
+        videoSrc={samples[0].videoUrl}
         onExit={onExit}
       />
     </div>
