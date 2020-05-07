@@ -18,44 +18,73 @@ function ReadSampleNameFromJsonOrFromUrl(sample) {
   return sampleName
 }
 
-function setOneNewSample(newSamples, sampleName, samples) {
+function setOneNewSample(newSamples, sampleName, samples,annotation) {
   for (var y = 0; y < samples.length; y++) {
     var sampleToCheck = getSampleNameFromURL(samples[y])
     if (sampleName === sampleToCheck[1]) {
-      if (!isEmpty(samples[y].imageUrl)) {
-        newSamples.push({
-          imageUrl: samples[y].imageUrl,
-          sampleName: sampleName,
-        })
-      }
-      if (!isEmpty(samples[y].videoUrl)) {
-        newSamples.push({
-          videoUrl: samples[y].videoUrl,
-          sampleName: sampleName,
-        })
-      }
-      if (!isEmpty(samples[y].audioUrl)) {
-        newSamples.push({
-          audioUrl: samples[y].audioUrl,
-          sampleName: sampleName,
-        })
+      if(isEmpty(annotation)){
+        if (!isEmpty(samples[y].imageUrl)) {
+          newSamples.push({
+            imageUrl: samples[y].imageUrl,
+            sampleName: sampleName,
+          })
+        }
+        if (!isEmpty(samples[y].videoUrl)) {
+          newSamples.push({
+            videoUrl: samples[y].videoUrl,
+            sampleName: sampleName,
+          })
+        }
+        if (!isEmpty(samples[y].audioUrl)) {
+          newSamples.push({
+            audioUrl: samples[y].audioUrl,
+            sampleName: sampleName,
+          })
+        }
+      }else{
+        if (!isEmpty(samples[y].imageUrl)) {
+          newSamples.push({
+            annotation: annotation,
+            imageUrl: samples[y].imageUrl,
+            sampleName: sampleName,
+          })
+        }
+        if (!isEmpty(samples[y].videoUrl)) {
+          newSamples.push({
+            annotation: annotation,
+            videoUrl: samples[y].videoUrl,
+            sampleName: sampleName,
+          })
+        }
+        if (!isEmpty(samples[y].audioUrl)) {
+          newSamples.push({
+            annotation: annotation,
+            audioUrl: samples[y].audioUrl,
+            sampleName: sampleName,
+          })
+        }
       }
     }
   }
   return newSamples
 }
 
-function GetSampleFromDataTask(json, samples) {
+function GetSampleFromAnnotation(json, samples, configImport) {
   if (isEmpty(json.content.samples)) return
   var newSamples = []
   for (var i = 0; i < json.content.samples.length; i++) {
     var sampleName = ReadSampleNameFromJsonOrFromUrl(json.content.samples[i])
-    newSamples = setOneNewSample(newSamples, sampleName, samples)
+    var annotation = json.content.samples[i].annotation
+    if(configImport.annotationToKeep === "incomming" || configImport.annotationToKeep === "both"){
+      newSamples = setOneNewSample(newSamples, sampleName, samples,annotation)
+    }else{
+      newSamples = setOneNewSample(newSamples, sampleName, samples,undefined)
+    }
   }
   json.content.samples = newSamples
 }
 
-export default async (result, samples, folderToFetch, authConfig) => {
+export default async (result, samples, folderToFetch, authConfig,configImport) => {
   Amplify.configure(authConfig)
 
   var json = null
@@ -70,7 +99,7 @@ export default async (result, samples, folderToFetch, authConfig) => {
             if (typeof result.content === "undefined") return
             json = result
 
-            GetSampleFromDataTask(json, samples)
+            GetSampleFromAnnotation(json, samples,configImport)
           })
         })
       })

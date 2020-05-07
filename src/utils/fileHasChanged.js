@@ -11,7 +11,6 @@ export default (objectOfRef, objectToCheck) => {
         regionTypesAllowed: false,
       },
       samples: false,
-      taskOutput: false,
     },
     id: false,
     mode: false,
@@ -97,24 +96,14 @@ export default (objectOfRef, objectToCheck) => {
           }
         }
       }
-      //Check if the taskData doesn't exist or have change
-      if (!isEmpty(objectToCheck.content.taskData)) {
-        if (isEmpty(objectOfRef.content.taskData)) {
+      //Check if the samples doesn't exist or have change
+      if (!isEmpty(objectToCheck.content.samples)) {
+        if (isEmpty(objectOfRef.content.samples)) {
           resultSet.content.samples = true
         } else if (
           objectToCheck.content.samples !== objectOfRef.content.samples
         ) {
           resultSet.content.samples = true
-        }
-      }
-      //Check if the taskOutput doesn't exist or have change
-      if (!isEmpty(objectToCheck.content.taskOutput)) {
-        if (isEmpty(objectOfRef.content.taskOutput)) {
-          resultSet.content.taskOutput = true
-        } else if (
-          objectToCheck.content.taskOutput !== objectOfRef.content.taskOutput
-        ) {
-          resultSet.content.taskOutput = true
         }
       }
     }

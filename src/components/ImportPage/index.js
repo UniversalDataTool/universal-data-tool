@@ -25,14 +25,6 @@ import ImportFromYoutubeUrls from "../ImportFromYoutubeUrls"
 import { FaGoogleDrive, FaYoutube } from "react-icons/fa"
 import usePosthog from "../../utils/use-posthog"
 import promptAndGetSamplesFromLocalDirectory from "./prompt-and-get-samples-from-local-directory.js"
-import giveSampleName from "./give-sample-name"
-const extendWithNull = (ar, len) => {
-  ar = [...ar]
-  while (ar.length < len) {
-    ar.push(null)
-  }
-  return ar
-}
 
 const ButtonBase = styled(MuiButton)({
   width: 240,
@@ -153,116 +145,13 @@ export default ({
       }
     }
   }
-  function recognizeTypeProject(s) {
-    if ("text_entity_recognition" === s || "text_classification" === s)
-      return "text"
-    if (
-      "video_segmentation" === s ||
-      "image_classification" === s ||
-      "image_segmentation" === s ||
-      "audio_transcription" === s
-    )
-      return "file"
-    return ""
-  }
-
-  function setAnnotations(taskOutput, appendedTaskOutput, configImport) {
-    if (
-      !isEmpty(configImport) &&
-      typeof configImport.annotationToKeep !== "undefined"
-    ) {
-      if (configImport.annotationToKeep === "both") {
-        if (appendedTaskOutput) {
-          taskOutput = extendWithNull(
-            oha.taskOutput || [],
-            oha.taskData.length || 0
-          ).concat(appendedTaskOutput)
-        }
-      }
-      if (configImport.annotationToKeep === "incoming") {
-        if (appendedTaskOutput) {
-          taskOutput = extendWithNull([], oha.taskData.length).concat(
-            appendedTaskOutput
-          )
-        }
-      }
-      if (configImport.annotationToKeep === "current") {
-        if (appendedTaskOutput) {
-          taskOutput = extendWithNull(oha.taskOutput || [], oha.taskData.length)
-        }
-      }
-    } else {
-      if (appendedTaskOutput) {
-        taskOutput = extendWithNull(
-          oha.taskOutput || [],
-          oha.taskData.length || 0
-        ).concat(appendedTaskOutput)
-      }
-    }
-    return taskOutput
-  }
-
-  function setInfoProjectLoaded(newOHA, json) {
-    if (!isEmpty(json.content.taskData)) {
-      switch (recognizeTypeProject(json.content.interface.type)) {
-        case "text":
-          newOHA = setIn(
-            newOHA,
-            ["taskData"],
-            (oha.taskData || []).concat(json.content.taskData)
-          )
-          break
-        case "file":
-          json.content.taskData = giveSampleName(json.content.taskData, oha)
-          newOHA = setIn(
-            newOHA,
-            ["taskData"],
-            (oha.taskData || []).concat(json.content.taskData)
-          )
-          break
-        default:
-          break
-      }
-    }
-    newOHA = setIn(newOHA, ["interface"], json.content.interface)
-    if (typeof file.fileName === "undefined" || file.fileName === "unnamed")
-      file = setIn(file, ["fileName"], json.fileName)
-    file = setIn(file, ["content"], newOHA)
-    onChangeFile(file, true)
-  }
-
-  function setInfoWhenOnlySample(appendedTaskData, newOHA) {
-    appendedTaskData = giveSampleName(appendedTaskData, oha)
-    newOHA = setIn(
-      oha,
-      ["taskData"],
-      (oha.taskData || []).concat(appendedTaskData)
-    )
-    onChangeOHA(newOHA, true)
-  }
 
   const closeDialog = () => changeDialog(null)
-  const onAddSamples = useEventCallback(
-    async (appendedTaskData, appendedTaskOutput, json, configImport) => {
-      // Set the taskOutput for both
-      var newOHA = {}
-      newOHA = setIn(
-        newOHA,
-        ["taskOutput"],
-        setAnnotations(newOHA.taskOutput, appendedTaskOutput, configImport)
-      )
-      //Set all the other feature depending of the type of loading
-      if (!isEmpty(json) && !isEmpty(json.content) && !isEmpty(json.fileName)) {
-        setInfoProjectLoaded(newOHA, json)
-      } else {
-        setInfoWhenOnlySample(appendedTaskData, newOHA)
-      }
-      /*strive for a code like this
       
-      const onAddSamples = useEventCallback(async (samplesToAdd) => {
-        onChangeOHA(
-          setIn(oha, ["samples"], (oha.samples || []).concat(samplesToAdd))
-        )*/
+  const onAddSamples = useEventCallback(async (samplesToAdd) => {
+      onChangeOHA(
+        setIn(oha, ["samples"], (oha.samples || []).concat(samplesToAdd))
+      )
       closeDialog()
     }
   )

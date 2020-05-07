@@ -16,8 +16,9 @@ import StorageIcon from "@material-ui/icons/Storage"
 import Button from "@material-ui/core/Button"
 import GetAnnotationFromAFolderAWS from "./get-annotation-from-aws"
 import GetImageFromAFolderAWS from "./get-images-from-aws"
-import RecognizeFileExtension from "../../utils/RecognizeFileExtension"
 import fileHasChanged from "../../utils/fileHasChanged"
+import setButtonNameAddSample from "./set-button-add-sample-name" 
+import { setIn } from "seamless-immutable"
 
 const selectedStyle = { color: "DodgerBlue" }
 const tableStyle = {
@@ -212,19 +213,38 @@ export default ({
         s3Content,
         samples,
         folderToFetch,
-        authConfig
+        authConfig,
+        configImport
       )
     }
 
-    // TODO need to merge samples from GetImageFromAFolderAWS with
-    // GetAnnotationFromAFolderAWS?
-
-    if (json === null || typeof json.content.samples === "undefined") {
+    if (isEmpty(json)||
+    isEmpty(json.content) || 
+    isEmpty(json.content.samples)||
+    isEmpty(json.fileName)) {
       onAddSamples(samples)
-      // TODO use onChangeFile here?
     } else {
-      onAddSamples(samples)
-      // TODO use onChangeFile here?
+      var newcontent= file.content
+      var Tabsamples = []
+      if(configImport.annotationToKeep === "incoming"){
+        for(var i = 0; i< newcontent.samples.length; i++){
+          var Newsample = newcontent.samples[i]
+          if(!isEmpty(Newsample.annotation)){
+            Newsample = setIn(Newsample,["annotation"],null)
+          }
+          Tabsamples.push(Newsample)
+        }
+      }
+      if(Tabsamples!==[]){        
+        newcontent = setIn(newcontent,["samples"],Tabsamples.concat(json.content.samples))
+      }else{
+        newcontent = setIn(newcontent,["samples"],newcontent.samples.concat(json.content.samples))
+      }
+      newcontent = setIn(newcontent, ["interface"], json.content.interface)
+      file = setIn(file, ["content"], newcontent)
+      if (isEmpty(file.fileName) || file.fileName === "unnamed")
+      file = setIn(file, ["fileName"], json.fileName)
+      onChangeFile(file, true)
     }
 
     // TODO need to apply configImport
@@ -258,32 +278,9 @@ export default ({
   }
 
   useEffect(() => {
-    var numberOfSamples = 0
-    if (folderToFetch !== "" && !isEmpty(dataForTable)) {
-      for (var i = 0; i < dataForTable.length; i++) {
-        if (dataForTable[i].folder === folderToFetch) {
-          if (!isEmpty(dataForTable[i].rowData)) {
-            for (var y = 0; y < dataForTable[i].rowData.length; y++) {
-              if (
-                RecognizeFileExtension(dataForTable[i].rowData[y].data) ===
-                configImport.typeOfFileToLoad
-              ) {
-                numberOfSamples++
-              }
-            }
-          }
-        }
-      }
-      if (loadProjectIsSelected) {
-        changetextButtonAdd("Load " + folderToFetch)
-      } else {
-        changetextButtonAdd(
-          "Add " + numberOfSamples + " " + configImport.typeOfFileToLoad
-        )
-      }
-    }
+    var textToSet = setButtonNameAddSample(loadProjectIsSelected, configImport.typeOfFileToLoad, dataForTable)
+    changetextButtonAdd(textToSet)
   }, [
-    folderToFetch,
     loadProjectIsSelected,
     configImport.typeOfFileToLoad,
     dataForTable,

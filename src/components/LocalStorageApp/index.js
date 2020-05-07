@@ -117,24 +117,26 @@ export default () => {
     if (fileAuthorize.includes(s)) return true
     return false
   }
-
   const lastObjectRef = useRef([])
-  useEffect(() => {
-    if (!isEmpty(authConfig)) {
-      var changes = fileHasChanged(lastObjectRef.current, file)
+  const shouldUpdateAWSStorage = useCallback(() =>{
+    var changes = fileHasChanged(lastObjectRef.current, file)
       if (
         isEmpty(file) ||
         (!changes.content.samples &&
-          !changes.content.taskOutput &&
           !changes.fileName) ||
         !ifFileAuthorizeToSaveOnAWS ||
         file.fileName === "unnamed"
-      )
-        return
+      ) return false
+        return true
+  },[file])
+
+  useEffect(() => {
+    if (!isEmpty(authConfig)) {
+      if (shouldUpdateAWSStorage())
+        UpdateAWSStorage(file)
       lastObjectRef.current = file
-      UpdateAWSStorage(file)
     }
-  }, [recentItems, authConfig, file])
+  }, [shouldUpdateAWSStorage, authConfig, file])
 
   return (
     <>

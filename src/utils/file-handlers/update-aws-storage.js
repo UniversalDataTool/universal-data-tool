@@ -1,12 +1,13 @@
 import { Storage } from "aws-amplify"
 import isEmpty from "../isEmpty"
 import getUrlFromSample from "../getUrlFromSample"
+import getSampleNameFromURL from "../../utils/get-sample-name-from-url" 
 export default (file) => {
   async function fetchAFile(element) {
     var proxyUrl = "https://cors-anywhere.herokuapp.com/"
     var response
     var url
-    if (getUrlFromSample(element) !== undefined)
+    if (getUrlFromSample(element) === undefined) return
       url = proxyUrl + getUrlFromSample(element)
     response = await fetch(url, {
       method: "GET",
@@ -39,27 +40,13 @@ export default (file) => {
   }
 
   function createOrReplaceImages(file) {
-    if (!isEmpty(file.content.taskData)) {
+    if (!isEmpty(file.content.samples)) {
       file.content.samples.forEach(async (element) => {
         try {
           const blob = await fetchAFile(element)
           let imageOrVideoName
-          if (typeof element.sampleName === "undefined") {
-            if (typeof element.imageUrl !== "undefined") {
-              imageOrVideoName = element.imageUrl.match(
-                `\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
-              )[1]
-            }
-            if (typeof element.videoUrl !== "undefined") {
-              imageOrVideoName = element.videoUrl.match(
-                `\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
-              )[1]
-            }
-            if (typeof element.audioUrl !== "undefined") {
-              imageOrVideoName = element.audioUrl.match(
-                `\\/([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
-              )[1]
-            }
+          if (isEmpty(element.sampleName)) {
+            imageOrVideoName= getSampleNameFromURL(element)[1]
           } else {
             imageOrVideoName = element.sampleName
           }
