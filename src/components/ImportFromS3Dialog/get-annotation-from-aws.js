@@ -46,17 +46,18 @@ function setOneNewSample(newSamples, sampleName, samples) {
 }
 
 function GetSampleFromDataTask(json, samples) {
-  if (isEmpty(json.content.taskData)) return
+  if (isEmpty(json.content.samples)) return
   var newSamples = []
-  for (var i = 0; i < json.content.taskData.length; i++) {
-    var sampleName = ReadSampleNameFromJsonOrFromUrl(json.content.taskData[i])
+  for (var i = 0; i < json.content.samples.length; i++) {
+    var sampleName = ReadSampleNameFromJsonOrFromUrl(json.content.samples[i])
     newSamples = setOneNewSample(newSamples, sampleName, samples)
   }
-  json.content.taskData = newSamples
+  json.content.samples = newSamples
 }
 
 export default async (result, samples, folderToFetch, authConfig) => {
   Amplify.configure(authConfig)
+
   var json = null
   if (CheckIfAnnotationExist(result, folderToFetch)) {
     await Storage.get(`${folderToFetch}/annotations/annotations.json`, {

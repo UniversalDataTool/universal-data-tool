@@ -63,7 +63,7 @@ export const UniversalDataViewer = ({
     )
   }
 
-  if (!oha.taskData || oha.taskData.length === 0) {
+  if (!oha.samples || oha.samples.length === 0) {
     return <EmptySampleContainer />
   }
 

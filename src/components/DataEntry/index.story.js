@@ -48,7 +48,7 @@ storiesOf("DataEntry", module)
           ],
         },
       }}
-      taskData={[
+      samples={[
         {
           imageUrl:
             "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
@@ -104,10 +104,11 @@ storiesOf("DataEntry", module)
           ],
         },
       }}
-      taskData={[
+      samples={[
         {
           imageUrl:
             "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
+          annotation: { group_letter: "A", feedback: "some feedback here" },
         },
         {
           imageUrl:
@@ -118,7 +119,6 @@ storiesOf("DataEntry", module)
             "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image3.jpg",
         },
       ]}
-      taskOutput={[{ group_letter: "A", feedback: "some feedback here" }]}
     />
   ))
   .add("PDF Url", () => (
@@ -142,11 +142,11 @@ storiesOf("DataEntry", module)
           ],
         },
       }}
-      taskData={[
+      samples={[
         {
           pdfUrl: "https://arxiv.org/pdf/1608.04481v1.pdf",
+          annotation: { group_letter: "A", feedback: "some feedback here" },
         },
       ]}
-      taskOutput={[{ group_letter: "A", feedback: "some feedback here" }]}
     />
   ))

@@ -8,14 +8,16 @@ import NLPAnnotator from "react-nlp-annotate/components/NLPAnnotator"
 export default (props) => {
   const [currentSampleIndex, changeCurrentSampleIndex] = useState(0)
 
+  const sample = props.samples[currentSampleIndex]
+
   return (
     <SampleContainer
       {...props.containerProps}
       currentSampleIndex={currentSampleIndex}
-      totalSamples={props.taskData.length}
-      taskOutput={props.taskOutput}
+      totalSamples={props.samples.length}
+      taskOutput={props.samples.map((s) => s.annotation)}
       description={
-        getTaskDescription(props.taskData[currentSampleIndex]) ||
+        getTaskDescription(props.samples[currentSampleIndex]) ||
         props.interface.description
       }
       onChangeSample={(sampleIndex) => changeCurrentSampleIndex(sampleIndex)}
@@ -23,11 +25,9 @@ export default (props) => {
       <NLPAnnotator
         key={(props.sampleIndex || 0) + currentSampleIndex}
         type="transcribe"
-        audio={props.taskData[currentSampleIndex].audioUrl}
+        audio={sample.audioUrl}
         phraseBank={props.phraseBank}
-        initialTranscriptionText={
-          (props.taskOutput || [])[currentSampleIndex] || ""
-        }
+        initialTranscriptionText={sample.annotation || ""}
         onFinish={(result) => {
           props.onSaveTaskOutputItem(currentSampleIndex, result)
           if (props.containerProps.onExit)

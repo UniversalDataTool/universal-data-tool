@@ -24,7 +24,7 @@ import ImportToyDataset from "../ImportToyDatasetDialog"
 import ImportFromYoutubeUrls from "../ImportFromYoutubeUrls"
 import { FaGoogleDrive, FaYoutube } from "react-icons/fa"
 import usePosthog from "../../utils/use-posthog"
-import giveSampleName from "./give-sample-name"
+import promptAndGetSamplesFromLocalDirectory from "./prompt-and-get-samples-from-local-directory.js"
 
 const extendWithNull = (ar, len) => {
   ar = [...ar]
@@ -124,20 +124,6 @@ const Button = ({
   )
 }
 
-const convertToTaskDataObject = (fp) => {
-  const ext = fp.split(".").slice(-1)[0].toLowerCase()
-  if (["png", "jpg", "jpeg"].includes(ext)) {
-    return { imageUrl: `file://${fp}` }
-  }
-  if (["pdf"].includes(ext)) {
-    return { pdfUrl: `file://${fp}` }
-  }
-  if (["mp4", "webm", "mkv"].includes(ext)) {
-    return { videoUrl: `file://${fp}` }
-  }
-  return null
-}
-
 export default ({
   file,
   oha,
@@ -153,29 +139,11 @@ export default ({
     switch (dialog) {
       case "upload-directory": {
         if (!electron) return
-        const {
-          canceled,
-          filePaths: dirPaths,
-        } = await electron.remote.dialog.showOpenDialog({
-          title: "Select Directory to Import Files",
-          properties: ["openDirectory"],
+        const localSamples = await promptAndGetSamplesFromLocalDirectory({
+          electron,
         })
-        if (canceled) return
-        const dirPath = dirPaths[0]
-        const fs = electron.remote.require("fs")
-        const path = electron.remote.require("path")
-        const importedFilePaths = (await fs.promises.readdir(dirPath))
-          .filter((fn) => fn.includes("."))
-          .map((fileName) => path.join(dirPath, fileName))
-
         onChangeOHA(
-          setIn(
-            oha,
-            ["taskData"],
-            (oha.taskData || []).concat(
-              importedFilePaths.map(convertToTaskDataObject).filter(Boolean)
-            )
-          ),
+          setIn(oha, ["samples"], (oha.samples || []).concat(localSamples)),
           true
         )
         return
@@ -185,6 +153,7 @@ export default ({
       }
     }
   }
+<<<<<<< HEAD
   function recognizeTypeProject(s) {
     if ("text_entity_recognition" === s || "text_classification" === s)
       return "text"
@@ -233,6 +202,8 @@ export default ({
     }
     return taskOutput
   }
+=======
+>>>>>>> upstream/master
 
   function setInfoProjectLoaded(newOHA, json) {
     if (!isEmpty(json.content.taskData)) {
@@ -274,6 +245,7 @@ export default ({
   }
 
   const closeDialog = () => changeDialog(null)
+<<<<<<< HEAD
   const onAddSamples = useEventCallback(
     async (appendedTaskData, appendedTaskOutput, json, configImport) => {
       // Set the taskOutput for both
@@ -289,10 +261,15 @@ export default ({
       } else {
         setInfoWhenOnlySample(appendedTaskData, newOHA)
       }
+=======
+  const onAddSamples = useEventCallback(async (samplesToAdd) => {
+    onChangeOHA(
+      setIn(oha, ["samples"], (oha.samples || []).concat(samplesToAdd))
+    )
+    closeDialog()
+  })
+>>>>>>> upstream/master
 
-      closeDialog()
-    }
-  )
   return (
     <SelectDialogContext.Provider value={{ onChangeDialog }}>
       <div>
@@ -371,6 +348,7 @@ export default ({
           file={file}
           authConfig={authConfig}
           open={selectedDialog === "import-from-s3"}
+          onChangeFile={onChangeFile}
           onClose={closeDialog}
           user={user}
           onAddSamples={onAddSamples}

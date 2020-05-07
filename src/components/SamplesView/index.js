@@ -50,19 +50,19 @@ const ExpandedRowTitle = styled("div")({
 const ExpandedRowCode = styled("pre")({ whiteSpace: "pre-wrap", fontSize: 11 })
 
 const ExpandedRow = ({ data }) => {
-  const { _output, ...input } = data
+  const { annotation, ...input } = data
 
   return (
     <ExpandedRowContainer>
       <Grid spacing={2} container>
         <Grid item xs={6}>
-          <ExpandedRowTitle>taskData[{data.index}]:</ExpandedRowTitle>
+          <ExpandedRowTitle>samples[{data.index}]:</ExpandedRowTitle>
           <ExpandedRowCode>{JSON.stringify(input, null, "  ")}</ExpandedRowCode>
         </Grid>
         <Grid item xs={6}>
-          <ExpandedRowTitle>taskOutput[{data.index}]:</ExpandedRowTitle>
+          <ExpandedRowTitle>samples[{data.index}].annotation:</ExpandedRowTitle>
           <ExpandedRowCode>
-            {JSON.stringify(_output, null, "  ")}
+            {JSON.stringify(annotation, null, "  ")}
           </ExpandedRowCode>
         </Grid>
       </Grid>
@@ -83,7 +83,7 @@ export default ({
 }) => {
   const isDesktop = useIsDesktop()
   const [currentTab, changeTabState] = useState(
-    (oha.taskData || []).length === 0
+    (oha.samples || []).length === 0
       ? "import"
       : window.localStorage.lastSampleTab || "grid"
   )
@@ -92,7 +92,7 @@ export default ({
     window.localStorage.lastSampleTab = tab
   }
   const columns = useMemo(() => {
-    if (!oha.taskData) return []
+    if (!oha.samples) return []
     const columns = [
       {
         name: "Index",
@@ -101,7 +101,7 @@ export default ({
       },
     ]
     const knownKeys = new Set()
-    for (const td of oha.taskData) {
+    for (const td of oha.samples) {
       for (const key in td) {
         if (!knownKeys.has(key)) {
           columns.push({
@@ -140,16 +140,15 @@ export default ({
       ),
     })
     return columns
-  }, [oha.taskData, deleteSample, openSampleInputEditor, openSampleLabelEditor])
+  }, [oha.samples, deleteSample, openSampleInputEditor, openSampleLabelEditor])
 
   const data = useMemo(() => {
-    if (!oha.taskData) return []
-    return oha.taskData.map((td, i) => ({
+    if (!oha.samples) return []
+    return oha.samples.map((td, i) => ({
       ...td,
-      _output: oha.taskOutput && oha.taskOutput[i] ? oha.taskOutput[i] : {},
       index: i,
     }))
-  }, [oha.taskData, oha.taskOutput])
+  }, [oha.samples])
   return (
     <Container>
       <Box display="flex">
@@ -160,9 +159,9 @@ export default ({
           <Tab icon={<TableChartIcon />} label="Table" value="table" />
         </Tabs>
         <SampleCounter>
-          {(oha.taskData || []).length} Samples
+          {(oha.samples || []).length} Samples
           <br />
-          {(oha.taskOutput || []).length} Labels
+          {(oha.samples || []).filter((s) => s.annotation).length} Labels
         </SampleCounter>
       </Box>
       <Box paddingTop={2} />
@@ -170,18 +169,9 @@ export default ({
         <ImportPage
           file={file}
           isDesktop={isDesktop}
-          onChangeFile={(file, shouldViewChange) => {
-            onChangeFile(file)
-            if (shouldViewChange) {
-              changeTab("grid")
-            }
-          }}
-          onChangeOHA={(newOHA, shouldViewChange) => {
-            onChangeOHA(newOHA)
-            if (shouldViewChange) {
-              changeTab("grid")
-            }
-          }}
+          onChangeFile={(file) => onChangeFile(file)}
+          onImportPageShouldExit={() => changeTab("grid")}
+          onChangeOHA={(newOHA) => onChangeOHA(newOHA)}
           oha={oha}
           authConfig={authConfig}
           user={user}
@@ -201,9 +191,9 @@ export default ({
       )}
       {currentTab === "grid" && (
         <SampleGrid
-          count={(oha.taskData || []).length}
-          taskData={oha.taskData || []}
-          completed={(oha.taskOutput || []).map(Boolean)}
+          count={(oha.samples || []).length}
+          samples={oha.samples || []}
+          completed={(oha.samples || []).filter((s) => s.annotation)}
           onClick={(sampleIndex) => {
             openSampleLabelEditor(sampleIndex)
           }}

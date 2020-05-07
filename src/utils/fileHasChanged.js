@@ -10,7 +10,7 @@ export default (objectOfRef, objectToCheck) => {
         availableLabels: false,
         regionTypesAllowed: false,
       },
-      taskData: false,
+      samples: false,
       taskOutput: false,
     },
     id: false,
@@ -26,8 +26,7 @@ export default (objectOfRef, objectToCheck) => {
     resultSet.content.interface.type = true
     resultSet.content.interface.availableLabels = true
     resultSet.content.interface.regionTypesAllowed = true
-    resultSet.content.taskData = true
-    resultSet.content.taskOutput = true
+    resultSet.content.samples = true
     resultSet.id = true
     resultSet.mode = true
     resultSet.any = true
@@ -52,8 +51,7 @@ export default (objectOfRef, objectToCheck) => {
       resultSet.content.interface.type = true
       resultSet.content.interface.availableLabels = true
       resultSet.content.interface.regionTypesAllowed = true
-      resultSet.content.taskData = true
-      resultSet.content.taskOutput = true
+      resultSet.content.samples = true
     } else if (objectToCheck.content !== objectOfRef.content) {
       //Check if the interface doesn't exist or have change
       if (!isEmpty(objectToCheck.content.interface)) {
@@ -102,11 +100,11 @@ export default (objectOfRef, objectToCheck) => {
       //Check if the taskData doesn't exist or have change
       if (!isEmpty(objectToCheck.content.taskData)) {
         if (isEmpty(objectOfRef.content.taskData)) {
-          resultSet.content.taskData = true
+          resultSet.content.samples = true
         } else if (
-          objectToCheck.content.taskData !== objectOfRef.content.taskData
+          objectToCheck.content.samples !== objectOfRef.content.samples
         ) {
-          resultSet.content.taskData = true
+          resultSet.content.samples = true
         }
       }
       //Check if the taskOutput doesn't exist or have change

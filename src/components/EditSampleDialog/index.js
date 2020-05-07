@@ -20,7 +20,7 @@ export default ({ open, sampleIndex, sampleInput, onChange, onClose }) => {
     <SimpleDialog
       open={open}
       onClose={onClose}
-      title={`taskData[${sampleIndex}]`}
+      title={`samples[${sampleIndex}]`}
     >
       <AceEditor
         theme="github"

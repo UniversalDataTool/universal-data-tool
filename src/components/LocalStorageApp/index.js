@@ -9,7 +9,7 @@ import useFileHandler from "../../utils/file-handlers"
 import download from "in-browser-download"
 import toUDTCSV from "../../utils/to-udt-csv.js"
 import Amplify, { Auth } from "aws-amplify"
-import config from "../LocalStorageApp/invalidconfig"
+import config from "../LocalStorageApp/invalidconfig.js"
 import isEmpty from "../../utils/isEmpty"
 import fileHasChanged from "../../utils/fileHasChanged"
 import { setIn } from "seamless-immutable"
@@ -70,6 +70,7 @@ export default () => {
       })
   }
 
+  // TODO centralize this with other auth provider code
   useEffect(() => {
     if (isEmpty(user) && isEmpty(authConfig)) {
       try {
@@ -123,7 +124,7 @@ export default () => {
       var changes = fileHasChanged(lastObjectRef.current, file)
       if (
         isEmpty(file) ||
-        (!changes.content.taskData &&
+        (!changes.content.samples &&
           !changes.content.taskOutput &&
           !changes.fileName) ||
         !ifFileAuthorizeToSaveOnAWS ||

@@ -96,8 +96,7 @@ const [emptyObj, emptyArr] = [{}, []]
 export default ({
   sampleIndex: globalSampleIndex,
   interface: iface,
-  taskData = emptyArr,
-  taskOutput = emptyObj,
+  samples = emptyArr,
   containerProps = emptyObj,
   onSaveTaskOutputItem,
 }) => {
@@ -124,7 +123,7 @@ export default ({
   })
   const onNext = useEventCallback((newOutput) => {
     onSaveTaskOutputItem(sampleIndex, newOutput || currentOutput)
-    if (sampleIndex !== taskData.length - 1) {
+    if (sampleIndex !== samples.length - 1) {
       changeSampleIndex(sampleIndex + 1)
     } else {
       if (containerProps.onExit) containerProps.onExit("go-to-next")
@@ -165,7 +164,7 @@ export default ({
   })
 
   useEffect(() => {
-    let newOutput = (taskOutput || [])[sampleIndex]
+    let newOutput = samples[sampleIndex].annotation
     if (!newOutput) newOutput = []
     if (typeof newOutput === "string") newOutput = [newOutput]
     changeCurrentOutput(newOutput)
@@ -210,16 +209,16 @@ export default ({
       style={{ height: containerProps.height || "calc(100vh - 70px)" }}
     >
       <ImageContainer>
-        <Image src={taskData[sampleIndex].imageUrl} />
+        <Image src={samples[sampleIndex].imageUrl} />
       </ImageContainer>
       <Nav>
         <NavItem>
           <NavButton onClick={onPrev}>Prev (backspace)</NavButton>
         </NavItem>
-        {taskData.length > 1 ? (
+        {samples.length > 1 ? (
           <NavItem>
             <span>
-              ({sampleIndex + 1}/{taskData.length})
+              ({sampleIndex + 1}/{samples.length})
             </span>
           </NavItem>
         ) : globalSampleIndex !== undefined ? (

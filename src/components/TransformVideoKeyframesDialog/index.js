@@ -35,21 +35,18 @@ export default ({ open, onChangeOHA, onClose, oha }) => {
       actions={[
         {
           text: "Transform Video Keyframes",
-          disabled: !oha.taskOutput,
+          disabled: !oha.samples,
           onClick: () => {
-            const samples = oha.taskData.flatMap((item, index) => {
-              if (!item.videoUrl)
-                return { data: item, output: oha.taskOutput[index] }
+            const samples = oha.samples.flatMap((item, index) => {
+              if (!item.videoUrl) return { data: item, output: item.annotation }
               if (item.videoUrl && !item.videoFrameAt) {
-                if (!oha.taskOutput[index]) return []
-                if (!oha.taskOutput[index].keyframes) return []
-                const { keyframes } = oha.taskOutput[index]
+                if (!item.annotation) return []
+                if (!item.annotation.keyframes) return []
+                const { keyframes } = item[index].annotation
                 return Object.keys(keyframes).map((kf) => ({
-                  data: {
-                    videoUrl: item.videoUrl,
-                    videoFrameAt: parseInt(kf),
-                  },
-                  output: keyframes[kf].regions || [],
+                  videoUrl: item.videoUrl,
+                  videoFrameAt: parseInt(kf),
+                  annotation: keyframes[kf].regions || [],
                 }))
               }
             })
@@ -57,12 +54,8 @@ export default ({ open, onChangeOHA, onClose, oha }) => {
             onChangeOHA(
               immutable(oha)
                 .setIn(
-                  ["taskData"],
+                  ["samples"],
                   samples.map((s) => s.data)
-                )
-                .setIn(
-                  ["taskOutput"],
-                  samples.map((s) => s.output)
                 )
                 .setIn(["interface", "type"], "image_segmentation")
             )
@@ -74,7 +67,7 @@ export default ({ open, onChangeOHA, onClose, oha }) => {
       segmentation frames. Your interface type will change from
       "video_segmentation" into "image_segmentation". This is sometimes helpful
       when preparing video data for a computer vision model.
-      {!oha.taskOutput && (
+      {!oha.samples && (
         <b>
           <br />
           <br />
@@ -89,7 +82,7 @@ export default ({ open, onChangeOHA, onClose, oha }) => {
               <Code>
                 {`{
   "interface": { "type": "video_segmentation" },
-  taskData: [
+  samples: [
     {
       videoUrl: "https://example.com/video1.mp4"
     }
@@ -115,7 +108,7 @@ export default ({ open, onChangeOHA, onClose, oha }) => {
               <Code>
                 {`{
   "interface": { "type": "image_segmentation" },
-  taskData: [
+  samples: [
     {
       videoUrl: "https://example.com/vid1.mp4",
       videoFrameAt: 0

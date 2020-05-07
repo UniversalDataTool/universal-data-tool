@@ -15,7 +15,7 @@ storiesOf("Vanilla Open", module).add("Basic", () => {
           interface: {
             type: "image_segmentation",
           },
-          taskData: [
+          samples: [
             {
               imageUrl:
                 "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
