@@ -168,7 +168,7 @@ export default ({
     if (!newOutput) newOutput = []
     if (typeof newOutput === "string") newOutput = [newOutput]
     changeCurrentOutput(newOutput)
-  }, [sampleIndex, globalSampleIndex, taskOutput])
+  }, [sampleIndex, globalSampleIndex, samples])
 
   const [hotkeyMap, labelKeyMap] = useMemo(() => {
     const hotkeyMap = {

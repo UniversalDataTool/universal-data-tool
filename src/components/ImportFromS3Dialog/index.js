@@ -18,7 +18,6 @@ import GetAnnotationFromAFolderAWS from "./get-annotation-from-aws"
 import GetImageFromAFolderAWS from "./get-images-from-aws"
 import RecognizeFileExtension from "../../utils/RecognizeFileExtension"
 import fileHasChanged from "../../utils/fileHasChanged"
-import giveSampleName from "./give-sample-name"
 
 const selectedStyle = { color: "DodgerBlue" }
 const tableStyle = {
