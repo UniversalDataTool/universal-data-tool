@@ -32,3 +32,5 @@ async function promptAndGetSamplesLocalDirectory({ electron }) {
     .map(convertToSamplesObject)
     .filter(Boolean)
 }
+
+export default promptAndGetSamplesLocalDirectory
