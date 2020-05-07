@@ -147,14 +147,13 @@ export default ({
   }
 
   const closeDialog = () => changeDialog(null)
-      
+
   const onAddSamples = useEventCallback(async (samplesToAdd) => {
-      onChangeOHA(
-        setIn(oha, ["samples"], (oha.samples || []).concat(samplesToAdd))
-      )
-      closeDialog()
-    }
-  )
+    onChangeOHA(
+      setIn(oha, ["samples"], (oha.samples || []).concat(samplesToAdd))
+    )
+    closeDialog()
+  })
 
   return (
     <SelectDialogContext.Provider value={{ onChangeDialog }}>

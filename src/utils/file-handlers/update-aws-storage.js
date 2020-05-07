@@ -1,14 +1,14 @@
 import { Storage } from "aws-amplify"
 import isEmpty from "../isEmpty"
 import getUrlFromSample from "../getUrlFromSample"
-import getSampleNameFromURL from "../../utils/get-sample-name-from-url" 
+import getSampleNameFromURL from "../../utils/get-sample-name-from-url"
 export default (file) => {
   async function fetchAFile(element) {
     var proxyUrl = "https://cors-anywhere.herokuapp.com/"
     var response
     var url
     if (getUrlFromSample(element) === undefined) return
-      url = proxyUrl + getUrlFromSample(element)
+    url = proxyUrl + getUrlFromSample(element)
     response = await fetch(url, {
       method: "GET",
       headers: {
@@ -46,7 +46,7 @@ export default (file) => {
           const blob = await fetchAFile(element)
           let imageOrVideoName
           if (isEmpty(element.sampleName)) {
-            imageOrVideoName= getSampleNameFromURL(element)[1]
+            imageOrVideoName = getSampleNameFromURL(element)[1]
           } else {
             imageOrVideoName = element.sampleName
           }

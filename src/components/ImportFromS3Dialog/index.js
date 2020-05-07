@@ -17,7 +17,7 @@ import Button from "@material-ui/core/Button"
 import GetAnnotationFromAFolderAWS from "./get-annotation-from-aws"
 import GetImageFromAFolderAWS from "./get-images-from-aws"
 import fileHasChanged from "../../utils/fileHasChanged"
-import setButtonNameAddSample from "./set-button-add-sample-name" 
+import setButtonNameAddSample from "./set-button-add-sample-name"
 import { setIn } from "seamless-immutable"
 
 const selectedStyle = { color: "DodgerBlue" }
@@ -218,32 +218,42 @@ export default ({
       )
     }
 
-    if (isEmpty(json)||
-    isEmpty(json.content) || 
-    isEmpty(json.content.samples)||
-    isEmpty(json.fileName)) {
+    if (
+      isEmpty(json) ||
+      isEmpty(json.content) ||
+      isEmpty(json.content.samples) ||
+      isEmpty(json.fileName)
+    ) {
       onAddSamples(samples)
     } else {
-      var newcontent= file.content
+      var newcontent = file.content
       var Tabsamples = []
-      if(configImport.annotationToKeep === "incoming"){
-        for(var i = 0; i< newcontent.samples.length; i++){
+      if (configImport.annotationToKeep === "incoming") {
+        for (var i = 0; i < newcontent.samples.length; i++) {
           var Newsample = newcontent.samples[i]
-          if(!isEmpty(Newsample.annotation)){
-            Newsample = setIn(Newsample,["annotation"],null)
+          if (!isEmpty(Newsample.annotation)) {
+            Newsample = setIn(Newsample, ["annotation"], null)
           }
           Tabsamples.push(Newsample)
         }
       }
-      if(Tabsamples!==[]){        
-        newcontent = setIn(newcontent,["samples"],Tabsamples.concat(json.content.samples))
-      }else{
-        newcontent = setIn(newcontent,["samples"],newcontent.samples.concat(json.content.samples))
+      if (Tabsamples !== []) {
+        newcontent = setIn(
+          newcontent,
+          ["samples"],
+          Tabsamples.concat(json.content.samples)
+        )
+      } else {
+        newcontent = setIn(
+          newcontent,
+          ["samples"],
+          newcontent.samples.concat(json.content.samples)
+        )
       }
       newcontent = setIn(newcontent, ["interface"], json.content.interface)
       file = setIn(file, ["content"], newcontent)
       if (isEmpty(file.fileName) || file.fileName === "unnamed")
-      file = setIn(file, ["fileName"], json.fileName)
+        file = setIn(file, ["fileName"], json.fileName)
       onChangeFile(file, true)
     }
 
@@ -278,13 +288,13 @@ export default ({
   }
 
   useEffect(() => {
-    var textToSet = setButtonNameAddSample(loadProjectIsSelected, configImport.typeOfFileToLoad, dataForTable)
+    var textToSet = setButtonNameAddSample(
+      loadProjectIsSelected,
+      configImport.typeOfFileToLoad,
+      dataForTable
+    )
     changetextButtonAdd(textToSet)
-  }, [
-    loadProjectIsSelected,
-    configImport.typeOfFileToLoad,
-    dataForTable,
-  ])
+  }, [loadProjectIsSelected, configImport.typeOfFileToLoad, dataForTable])
 
   useEffect(() => {
     if (isEmpty(user)) {
