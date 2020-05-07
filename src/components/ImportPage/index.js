@@ -263,8 +263,9 @@ export default ({
         onChangeOHA(
           setIn(oha, ["samples"], (oha.samples || []).concat(samplesToAdd))
         )*/
-        closeDialog()
-      })
+      closeDialog()
+    }
+  )
 
   return (
     <SelectDialogContext.Provider value={{ onChangeDialog }}>

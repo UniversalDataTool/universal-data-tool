@@ -3,7 +3,7 @@ export default (UrlOfAFile) => {
   var fileExtension = UrlOfAFile.match(
     `\\/?([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
   )
-  if(fileExtension !== null){
+  if (fileExtension !== null) {
     fileExtension = fileExtension[2].toLowerCase()
   }
   if (
