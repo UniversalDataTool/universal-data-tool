@@ -25,7 +25,7 @@ import ImportFromYoutubeUrls from "../ImportFromYoutubeUrls"
 import { FaGoogleDrive, FaYoutube } from "react-icons/fa"
 import usePosthog from "../../utils/use-posthog"
 import promptAndGetSamplesFromLocalDirectory from "./prompt-and-get-samples-from-local-directory.js"
-
+import giveSampleName from "./give-sample-name"
 const extendWithNull = (ar, len) => {
   ar = [...ar]
   while (ar.length < len) {
@@ -153,7 +153,6 @@ export default ({
       }
     }
   }
-<<<<<<< HEAD
   function recognizeTypeProject(s) {
     if ("text_entity_recognition" === s || "text_classification" === s)
       return "text"
@@ -202,8 +201,6 @@ export default ({
     }
     return taskOutput
   }
-=======
->>>>>>> upstream/master
 
   function setInfoProjectLoaded(newOHA, json) {
     if (!isEmpty(json.content.taskData)) {
@@ -245,7 +242,6 @@ export default ({
   }
 
   const closeDialog = () => changeDialog(null)
-<<<<<<< HEAD
   const onAddSamples = useEventCallback(
     async (appendedTaskData, appendedTaskOutput, json, configImport) => {
       // Set the taskOutput for both
@@ -261,14 +257,14 @@ export default ({
       } else {
         setInfoWhenOnlySample(appendedTaskData, newOHA)
       }
-=======
-  const onAddSamples = useEventCallback(async (samplesToAdd) => {
-    onChangeOHA(
-      setIn(oha, ["samples"], (oha.samples || []).concat(samplesToAdd))
-    )
-    closeDialog()
-  })
->>>>>>> upstream/master
+      /*strive for a code like this
+      
+      const onAddSamples = useEventCallback(async (samplesToAdd) => {
+        onChangeOHA(
+          setIn(oha, ["samples"], (oha.samples || []).concat(samplesToAdd))
+        )*/
+        closeDialog()
+      })
 
   return (
     <SelectDialogContext.Provider value={{ onChangeDialog }}>
