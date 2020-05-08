@@ -24,8 +24,8 @@ const form = {
       type: "boolean",
     },
     {
-      name: "availableLabels",
-      title: "Available Labels",
+      name: "labels",
+      title: "Labels",
       description:
         "If you're labeling regions on an video frames, these are the allowed classifications or tags.",
       type: "matrixdynamic",
@@ -49,8 +49,8 @@ export default ({ iface, onChange }) => {
       ),
       multipleRegionLabels: Boolean(iface.multipleRegionLabels),
       regionTypesAllowed: iface.regionTypesAllowed,
-      availableLabels:
-        (iface.availableLabels || []).map((a) =>
+      labels:
+        (iface.labels || []).map((a) =>
           typeof a === "string" ? { id: a, description: a } : a
         ) || [],
     }),

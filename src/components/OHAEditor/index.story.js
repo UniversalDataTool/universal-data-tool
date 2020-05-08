@@ -26,7 +26,7 @@ storiesOf("OHAEditor", module).add("Basic", () => (
     initialOHA={{
       interface: {
         type: "image_segmentation",
-        availableLabels: ["valid", "invalid"],
+        labels: ["valid", "invalid"],
         regionTypesAllowed: ["bounding-box", "polygon", "point"],
       },
       samples: [

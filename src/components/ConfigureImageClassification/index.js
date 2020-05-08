@@ -7,13 +7,13 @@ import { setIn } from "seamless-immutable"
 const form = {
   questions: [
     {
-      name: "allowMultiple",
+      name: "multiple",
       title: "Allow multiple classifications per image?",
       type: "boolean",
     },
     {
-      name: "availableLabels",
-      title: "Available Labels",
+      name: "labels",
+      title: "Labels",
       description: "Classifications or tags to be labeled.",
       type: "matrixdynamic",
       columns: [
@@ -32,8 +32,8 @@ export default ({ iface, onChange }) => {
   const defaultAnswers = useMemo(
     () => ({
       allowMultiple: false,
-      availableLabels:
-        (iface.availableLabels || []).map((a) =>
+      labels:
+        (iface.labels || []).map((a) =>
           typeof a === "string" ? { id: a, description: a } : a
         ) || [],
     }),
