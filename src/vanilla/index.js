@@ -13,6 +13,13 @@ const open = ({ container, udt, ...props }) => {
       React.createElement(UniversalDataViewer, {
         ...props,
         oha: udt,
+        onSaveTaskOutputItem: (index, output) => {
+          if (!props.onSaveSample) return
+          props.onSaveSample(
+            { ...udt.samples[index], annotation: output },
+            index
+          )
+        },
       })
     ),
     typeof container === "string"
