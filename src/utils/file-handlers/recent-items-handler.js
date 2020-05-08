@@ -1,7 +1,7 @@
 import getSampleNameFromURL from "../get-sample-name-from-url"
 import RecognizeFileExtension from "../../utils/RecognizeFileExtension"
 import isEmpty from "../isEmpty"
-import extendWithNull from "../extend-with-null"
+import { setIn } from "seamless-immutable"
 class LocalStorageHandler {
     static getSampleName(sample) {
         var sampleName
@@ -26,23 +26,26 @@ class LocalStorageHandler {
         
         return url
     }
-    static createOneNewSample(sampleName, url) {
+    static createOneNewSample(sampleName, url, annotation) {
         var sample
         var type = RecognizeFileExtension(url)
         if (type === "Image") {
             sample={
+            annotation: annotation,
             imageUrl: url,
             sampleName: sampleName,
             }
         }
         if (type === "Video") {
             sample={
+            annotation: annotation,
             videoUrl: url,
             sampleName: sampleName,
             }
         }
         if (type === "Audio") {
             sample={
+            annotation: annotation,
             audioUrl: url,
             sampleName: sampleName,
             }
@@ -51,12 +54,12 @@ class LocalStorageHandler {
     }
     static getSampleWithThisSampleName(sampleName, samples) {
         var nameToSearch
-        if (!isEmpty(samples)&&!isEmpty(samples.taskData)) {
-          for (var i = 0; i < samples.taskData.length; i++) {
-            if (!isEmpty(samples.taskData[i])) {
-              nameToSearch = getSampleNameFromURL(samples.taskData[i])
-              if (typeof samples.taskData[i].sampleName !== "undefined") {
-                nameToSearch[1] = samples.taskData[i].sampleName
+        if (!isEmpty(samples)) {
+          for (var i = 0; i < samples.length; i++) {
+            if (!isEmpty(samples[i])) {
+              nameToSearch = getSampleNameFromURL(samples[i])
+              if (typeof samples[i].sampleName !== "undefined") {
+                nameToSearch[1] = samples[i].sampleName
               }
               if (
                 nameToSearch[0] !== sampleName[0] &&
@@ -117,34 +120,36 @@ class LocalStorageHandler {
         return "file"
         return ""
     }
-    static concatSampleOutput(oldOHA, appendedTaskOutput, annotationToKeep) {
-        var taskOutput = []
-        if (
-          !isEmpty(annotationToKeep)
-        ) {
-          if (annotationToKeep === "incoming") {
-            if (appendedTaskOutput) {
-              taskOutput = extendWithNull([], oldOHA.taskData.length|| 0).concat(
-                appendedTaskOutput
-              )
-            }
-            return taskOutput
-          }
-          if (annotationToKeep === "current") {
-            if (appendedTaskOutput) {
-              taskOutput = extendWithNull(oldOHA.taskOutput || [], oldOHA.taskData.length|| 0)
-            }
-            return taskOutput
-          }
+    static eraseAnnotation(samples){
+      var Tabsamples = []
+      for (let i = 0; i < samples.length; i++) {
+        let Newsample = samples[i]
+        if (!isEmpty(Newsample.annotation)) {
+          Newsample = setIn(Newsample, ["annotation"], null)
         }
-        if (appendedTaskOutput) {
-            taskOutput = extendWithNull(
-                oldOHA.taskOutput || [],
-                oldOHA.taskData.length || 0
-            ).concat(appendedTaskOutput)
-        }
+        Tabsamples.push(Newsample)
+      }
+      return Tabsamples
+    }
+
+    static concatSample(actualContent, newContent, annotationToKeep) {
+      var Tabsamples = actualContent
+      if (annotationToKeep === "incoming") {
+        Tabsamples = this.eraseAnnotation(actualContent)
+      }
+
+      var Tabsamples2 = newContent
+      if (annotationToKeep === "current") {
+        Tabsamples2 = this.eraseAnnotation(newContent)
+      }
+      var concatContent
+      concatContent = setIn(
+        Tabsamples,
+        ["samples"],
+        Tabsamples.concat(Tabsamples2)
+      )
         
-        return taskOutput
+        return concatContent
       }
 }
   

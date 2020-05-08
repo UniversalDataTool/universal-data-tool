@@ -9,7 +9,7 @@ import useFileHandler from "../../utils/file-handlers"
 import download from "in-browser-download"
 import toUDTCSV from "../../utils/to-udt-csv.js"
 import Amplify, { Auth } from "aws-amplify"
-import config from "../LocalStorageApp/invalidconfig"
+import config from "../LocalStorageApp/invalidconfig.js"
 import isEmpty from "../../utils/isEmpty"
 import fileHasChanged from "../../utils/fileHasChanged"
 import { setIn } from "seamless-immutable"
@@ -70,6 +70,7 @@ export default () => {
       })
   }
 
+  // TODO centralize this with other auth provider code
   useEffect(() => {
     if (isEmpty(user) && isEmpty(authConfig)) {
       try {
@@ -116,24 +117,25 @@ export default () => {
     if (fileAuthorize.includes(s)) return true
     return false
   }
-
   const lastObjectRef = useRef([])
+  const shouldUpdateAWSStorage = useCallback(() => {
+    var changes = fileHasChanged(lastObjectRef.current, file)
+    if (
+      isEmpty(file) ||
+      (!changes.content.samples && !changes.fileName) ||
+      !ifFileAuthorizeToSaveOnAWS ||
+      file.fileName === "unnamed"
+    )
+      return false
+    return true
+  }, [file])
+
   useEffect(() => {
     if (!isEmpty(authConfig)) {
-      var changes = fileHasChanged(lastObjectRef.current, file)
-      if (
-        isEmpty(file) ||
-        (!changes.content.taskData &&
-          !changes.content.taskOutput &&
-          !changes.fileName) ||
-        !ifFileAuthorizeToSaveOnAWS ||
-        file.fileName === "unnamed"
-      )
-        return
+      if (shouldUpdateAWSStorage()) UpdateAWSStorage(file)
       lastObjectRef.current = file
-      UpdateAWSStorage(file)
     }
-  }, [recentItems, authConfig, file])
+  }, [shouldUpdateAWSStorage, authConfig, file])
 
   return (
     <>

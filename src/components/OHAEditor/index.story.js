@@ -29,7 +29,7 @@ storiesOf("OHAEditor", module).add("Basic", () => (
         availableLabels: ["valid", "invalid"],
         regionTypesAllowed: ["bounding-box", "polygon", "point"],
       },
-      taskData: [
+      samples: [
         {
           imageUrl:
             "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",

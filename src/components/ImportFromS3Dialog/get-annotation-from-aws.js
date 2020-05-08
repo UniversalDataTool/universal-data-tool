@@ -7,27 +7,32 @@ function CheckIfAnnotationExist(result, folderToFetch) {
   )
 }
 
-function SetNewUrlIntoTaskData(json, samples) {
-  if (isEmpty(json.content.taskData)) return
+function GetSampleFromAnnotation(json, samples) {
+  if (isEmpty(json.content.samples)) return
   var newSamples = []
-  for (var i = 0; i < json.content.taskData.length; i++) {
-    var sampleName = jsonHandler.getSampleName(
-      json.content.taskData[i]
-    )
+  for (var i = 0; i < json.content.samples.length; i++) {
+    var sampleName = jsonHandler.getSampleName(json.content.samples[i])
+    var annotation = json.content.samples[i].annotation
     var sampleFound = jsonHandler.getSampleWithThisSampleName(sampleName,samples)
     var url
     if(sampleFound === null){
-      url = jsonHandler.getSampleUrl(json.content.taskData[i])
+      url = jsonHandler.getSampleUrl(samples)
     }else{
       url = jsonHandler.getSampleUrl(sampleFound)
-    }
-    newSamples.push(jsonHandler.createOneNewSample(sampleName,url))
+    }      
+    newSamples.push(jsonHandler.createOneNewSample(sampleName,url,annotation))
   }
-  json.content.taskData = newSamples
+  json.content.samples = newSamples
 }
 
-export default async (result, samples, folderToFetch, authConfig) => {
+export default async (
+  result,
+  samples,
+  folderToFetch,
+  authConfig
+) => {
   Amplify.configure(authConfig)
+
   var json = null
   if (CheckIfAnnotationExist(result, folderToFetch)) {
     await Storage.get(`${folderToFetch}/annotations/annotations.json`, {
@@ -40,7 +45,7 @@ export default async (result, samples, folderToFetch, authConfig) => {
             if (typeof result.content === "undefined") return
             json = result
 
-            SetNewUrlIntoTaskData(json, samples)
+            GetSampleFromAnnotation(json, samples)
           })
         })
       })

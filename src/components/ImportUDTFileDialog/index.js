@@ -35,13 +35,13 @@ const ImportUDTFileDialog = ({ open, onClose, onAddSamples }) => {
           text: "Add Samples",
           onClick: () => {
             changeError(null)
-            let taskData, taskOutput
+            let samples, taskOutput
             try {
-              ;[taskData, taskOutput] = JSON.parse(content).taskData
+              ;[samples, taskOutput] = JSON.parse(content).samples
             } catch (e1) {
               try {
                 const udt = fromUDTCSV(content)
-                ;({ taskData, taskOutput } = udt)
+                ;({ samples, taskOutput } = udt)
               } catch (e2) {
                 console.log({
                   message: "CSV/JSON Error Stacks",
@@ -54,11 +54,11 @@ const ImportUDTFileDialog = ({ open, onClose, onAddSamples }) => {
                 return
               }
             }
-            if (!taskData || taskData.length === 0) {
+            if (!samples || samples.length === 0) {
               changeError("No task data found")
               return
             }
-            onAddSamples(taskData, taskOutput)
+            onAddSamples(samples, taskOutput)
           },
         },
       ]}

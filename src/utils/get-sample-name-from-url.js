@@ -3,17 +3,17 @@ export default (sample) => {
   var sampleName
   if (!isEmpty(sample)) {
     if (!isEmpty(sample.imageUrl)) {
-      sampleName = decodeURI(sample.imageUrl).match(
+      sampleName = sample.imageUrl.match(
         `.*\\/(([^\\/\\\\&\\?]*)\\.([a-zA-Z0-9]*))(\\?|$)`
       )
     }
     if (!isEmpty(sample.videoUrl)) {
-      sampleName = decodeURI(sample.videoUrl).match(
+      sampleName = sample.videoUrl.match(
         `.*\\/(([^\\/\\\\&\\?]*)\\.([a-zA-Z0-9]*))(\\?|$)`
       )
     }
     if (!isEmpty(sample.audioUrl)) {
-      sampleName = decodeURI(sample.audioUrl).match(
+      sampleName = sample.audioUrl.match(
         `.*\\/(([^\\/\\\\&\\?]*)\\.([a-zA-Z0-9]*))(\\?|$)`
       )
     }

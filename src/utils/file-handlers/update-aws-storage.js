@@ -39,11 +39,16 @@ export default (file) => {
   }
 
   function createOrReplaceImages(file) {
-    if (!isEmpty(file.content.taskData)) {
-      file.content.taskData.forEach(async (element) => {
+    if (!isEmpty(file.content.samples)) {
+      file.content.samples.forEach(async (element) => {
         try {
           const blob = await fetchAFile(element)
-          let imageOrVideoName = jsonHandler.getSampleName(element)
+          let imageOrVideoName
+          if (isEmpty(element.sampleName)) {
+            imageOrVideoName = jsonHandler.getSampleName(element)
+          } else {
+            imageOrVideoName = element.sampleName
+          }
 
           var pathToFile = `${file.fileName}/data/${imageOrVideoName}`
           Storage.put(pathToFile, blob, {

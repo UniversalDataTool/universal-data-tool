@@ -35,23 +35,23 @@ export const Composite = (props) => {
 
   if (!fields) throw new Error("No fields defined. Try adding a field in Setup")
 
+  const sample = props.samples[currentSampleIndex]
+
   if (selectedField) {
     return (
       <UniversalDataViewer
         oha={{
           interface: selectedField.interface,
-          taskOutput: [
-            props.taskOutput
-              ? (props.taskOutput[currentSampleIndex] || {})[
-                  selectedField.fieldName
-                ]
-              : null,
+          samples: [
+            {
+              ...sample,
+              annotation: (sample.annotation || {})[selectedField.fieldName],
+            },
           ],
-          taskData: [props.taskData[currentSampleIndex]],
         }}
         onSaveTaskOutputItem={(indexZero, output) => {
           props.onSaveTaskOutputItem(currentSampleIndex, {
-            ...(props.taskOutput ? props.taskOutput[currentSampleIndex] : {}),
+            ...sample.annotation,
             [selectedField.fieldName]: output,
           })
           changeSelectedField(null)
@@ -64,12 +64,9 @@ export const Composite = (props) => {
     <SampleContainer
       {...props.containerProps}
       currentSampleIndex={currentSampleIndex}
-      totalSamples={props.taskData.length}
-      taskOutput={props.taskOutput}
-      description={
-        getTaskDescription(props.taskData[currentSampleIndex]) ||
-        props.interface.description
-      }
+      totalSamples={props.samples.length}
+      taskOutput={props.samples.map((s) => s.annotation)}
+      description={getTaskDescription(sample) || props.interface.description}
       onChangeSample={(sampleIndex) => changeCurrentSampleIndex(sampleIndex)}
     >
       <Title>Fields</Title>
@@ -89,11 +86,7 @@ export const Composite = (props) => {
           {field.fieldName}
           <Box flexGrow={1} />
           <Checkbox
-            checked={Boolean(
-              (props.taskOutput
-                ? props.taskOutput[currentSampleIndex] || {}
-                : {})[field.fieldName]
-            )}
+            checked={Boolean((sample.annotation || {})[field.fieldName])}
           />
           <KeyboardArrowRightIcon />
         </StyledButton>

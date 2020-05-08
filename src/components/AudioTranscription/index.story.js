@@ -14,11 +14,11 @@ storiesOf("AudioTranscription", module).add("Basic", () => (
       type: "audio_transcription",
       description: "This is an **audio transcription** description.",
     }}
-    taskData={[
+    samples={[
       {
         audioUrl: "https://html5tutorial.info/media/vincent.mp3",
+        annotation: "starry starry night",
       },
     ]}
-    taskOutput={["starry starry night"]}
   />
 ))

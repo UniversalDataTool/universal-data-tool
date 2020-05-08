@@ -16,8 +16,10 @@ import StorageIcon from "@material-ui/icons/Storage"
 import Button from "@material-ui/core/Button"
 import GetAnnotationFromAFolderAWS from "./get-annotation-from-aws"
 import GetImageFromAFolderAWS from "./get-images-from-aws"
-import RecognizeFileExtension from "../../utils/RecognizeFileExtension"
 import fileHasChanged from "../../utils/fileHasChanged"
+import setButtonNameAddSample from "./set-button-add-sample-name"
+import jsonHandler from "../../utils/file-handlers/recent-items-handler"
+import { setIn } from "seamless-immutable"
 
 const selectedStyle = { color: "DodgerBlue" }
 const tableStyle = {
@@ -102,17 +104,17 @@ function interfaceFileType(type) {
   return "File"
 }
 
-function typeTaskDataSample(taskData) {
-  if (isEmpty(taskData) || isEmpty(taskData[0])) return "Empty"
-  if (!isEmpty(taskData[0].imageUrl)) return "Image"
-  if (!isEmpty(taskData[0].videoUrl)) return "Video"
-  if (!isEmpty(taskData[0].audioUrl)) return "Audio"
+function typesamplesSample(samples) {
+  if (isEmpty(samples) || isEmpty(samples[0])) return "Empty"
+  if (!isEmpty(samples[0].imageUrl)) return "Image"
+  if (!isEmpty(samples[0].videoUrl)) return "Video"
+  if (!isEmpty(samples[0].audioUrl)) return "Audio"
   return "File"
 }
-function checkInterfaceAndTaskData(typeAuthorize, file) {
+function checkInterfaceAndsamples(typeAuthorize, file) {
   var result = [null, null]
   result[0] = interfaceFileType(file.content.interface.type)
-  result[1] = typeTaskDataSample(file.content.taskData)
+  result[1] = typesamplesSample(file.content.samples)
   if (typeAuthorize.includes(result[0]) && typeAuthorize.includes(result[1]))
     return true
   return false
@@ -120,25 +122,33 @@ function checkInterfaceAndTaskData(typeAuthorize, file) {
 function initConfigImport(file) {
   return {
     annotationToKeep: "both",
-    typeOfFileToLoad: checkInterfaceAndTaskData(["Image", "Empty"], file)
+    typeOfFileToLoad: checkInterfaceAndsamples(["Image", "Empty"], file)
       ? "Image"
-      : checkInterfaceAndTaskData(["Video", "Empty"], file)
+      : checkInterfaceAndsamples(["Video", "Empty"], file)
       ? "Video"
-      : checkInterfaceAndTaskData(["Audio", "Empty"], file)
+      : checkInterfaceAndsamples(["Audio", "Empty"], file)
       ? "Audio"
       : "None",
     typeOfFileToDisable: {
-      Image: checkInterfaceAndTaskData(["Image", "Empty"], file) ? false : true,
-      Video: checkInterfaceAndTaskData(["Video", "Empty"], file) ? false : true,
-      Audio: checkInterfaceAndTaskData(["Audio", "Empty"], file) ? false : true,
+      Image: checkInterfaceAndsamples(["Image", "Empty"], file) ? false : true,
+      Video: checkInterfaceAndsamples(["Video", "Empty"], file) ? false : true,
+      Audio: checkInterfaceAndsamples(["Audio", "Empty"], file) ? false : true,
     },
   }
 }
 
-export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
-  try{
+export default ({
+  file,
+  open,
+  onClose,
+  onAddSamples,
+  onChangeFile,
+  authConfig,
+  user,
+}) => {
+  try {
     Amplify.configure(authConfig)
-  }catch(err){}
+  } catch (e) {}
   const [textButtonAdd, changetextButtonAdd] = useState("Add Samples")
   const [s3Content, changeS3Content] = useState(null)
   const [dataForTable, changeDataForTable] = useState(null)
@@ -164,26 +174,26 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
         typeOfFileToLoad:
           !isEmpty(configImport) &&
           !isEmpty(configImport.typeOfFileToLoad) &&
-          checkInterfaceAndTaskData(
+          checkInterfaceAndsamples(
             [configImport.typeOfFileToLoad, "Empty"],
             file
           )
             ? configImport.typeOfFileToLoad
-            : checkInterfaceAndTaskData(["Image", "Empty"], file)
+            : checkInterfaceAndsamples(["Image", "Empty"], file)
             ? "Image"
-            : checkInterfaceAndTaskData(["Video", "Empty"], file)
+            : checkInterfaceAndsamples(["Video", "Empty"], file)
             ? "Video"
-            : checkInterfaceAndTaskData(["Audio", "Empty"], file)
+            : checkInterfaceAndsamples(["Audio", "Empty"], file)
             ? "Audio"
             : "None",
         typeOfFileToDisable: {
-          Image: checkInterfaceAndTaskData(["Image", "Empty"], file)
+          Image: checkInterfaceAndsamples(["Image", "Empty"], file)
             ? false
             : true,
-          Video: checkInterfaceAndTaskData(["Video", "Empty"], file)
+          Video: checkInterfaceAndsamples(["Video", "Empty"], file)
             ? false
             : true,
-          Audio: checkInterfaceAndTaskData(["Audio", "Empty"], file)
+          Audio: checkInterfaceAndsamples(["Audio", "Empty"], file)
             ? false
             : true,
         },
@@ -198,7 +208,7 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
       configImport,
       authConfig
     )
-    var json
+    var json = null
     if (loadProjectIsSelected) {
       json = await GetAnnotationFromAFolderAWS(
         s3Content,
@@ -206,11 +216,23 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
         folderToFetch,
         authConfig
       )
-    } else json = null
-    if (json === null || typeof json.content.taskOutput === "undefined") {
-      onAddSamples(samples, null, json, configImport)
+    }
+
+    if (
+      isEmpty(json) ||
+      isEmpty(json.content) ||
+      isEmpty(json.content.samples) ||
+      isEmpty(json.fileName)
+    ) {
+      onAddSamples(samples)
     } else {
-      onAddSamples(samples, json.content.taskOutput, json, configImport)
+      var contentOldFile = jsonHandler.concatSample(file.content,json.content,configImport.annotationToKeep)
+      
+      contentOldFile = setIn(contentOldFile, ["interface"], json.content.interface)
+      file = setIn(file, ["content"], contentOldFile)
+      if (isEmpty(file.fileName) || file.fileName === "unnamed")
+        file = setIn(file, ["fileName"], json.fileName)
+      onChangeFile(file, true)
     }
   }
 
@@ -242,36 +264,13 @@ export default ({ file, open, onClose, onAddSamples, authConfig, user }) => {
   }
 
   useEffect(() => {
-    var numberOfSamples = 0
-    if (folderToFetch !== "" && !isEmpty(dataForTable)) {
-      for (var i = 0; i < dataForTable.length; i++) {
-        if (dataForTable[i].folder === folderToFetch) {
-          if (!isEmpty(dataForTable[i].rowData)) {
-            for (var y = 0; y < dataForTable[i].rowData.length; y++) {
-              if (
-                RecognizeFileExtension(dataForTable[i].rowData[y].data) ===
-                configImport.typeOfFileToLoad
-              ) {
-                numberOfSamples++
-              }
-            }
-          }
-        }
-      }
-      if (loadProjectIsSelected) {
-        changetextButtonAdd("Load " + folderToFetch)
-      } else {
-        changetextButtonAdd(
-          "Add " + numberOfSamples + " " + configImport.typeOfFileToLoad
-        )
-      }
-    }
-  }, [
-    folderToFetch,
-    loadProjectIsSelected,
-    configImport.typeOfFileToLoad,
-    dataForTable,
-  ])
+    var textToSet = setButtonNameAddSample(
+      loadProjectIsSelected,
+      configImport.typeOfFileToLoad,
+      dataForTable
+    )
+    changetextButtonAdd(textToSet)
+  }, [loadProjectIsSelected, configImport.typeOfFileToLoad, dataForTable])
 
   useEffect(() => {
     if (isEmpty(user)) {

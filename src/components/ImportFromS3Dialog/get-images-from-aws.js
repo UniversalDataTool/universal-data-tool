@@ -11,6 +11,7 @@ export default async (result, folderToFetch, configImport, authConfig) => {
         level: "private",
       })
         .then((result) => {
+          result = decodeURI(result)
           if (
             RecognizeFileExtension(result) === configImport.typeOfFileToLoad &&
             configImport.typeOfFileToLoad === "Image"

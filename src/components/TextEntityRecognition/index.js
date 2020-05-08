@@ -47,13 +47,12 @@ const entitySequenceToSimpleSeq = (doc, entSeq) => {
 
 export const TextEntityRecognition = (props) => {
   const [currentSampleIndex, changeCurrentSampleIndex] = useState(0)
-  const initialSequence =
-    props.taskOutput && props.taskOutput[currentSampleIndex]
-      ? entitySequenceToSimpleSeq(
-          props.taskData[currentSampleIndex].document,
-          props.taskOutput[currentSampleIndex].entities
-        )
-      : undefined
+  const initialSequence = props.samples[currentSampleIndex].annotation
+    ? entitySequenceToSimpleSeq(
+        props.samples[currentSampleIndex].document,
+        props.samples[currentSampleIndex].annotation.entities
+      )
+    : undefined
 
   if (!props.interface.labels && !props.interface.availableLabels) {
     throw new Error("Labels not defined. Try adding some labels in setup.")
@@ -63,10 +62,10 @@ export const TextEntityRecognition = (props) => {
     <SampleContainer
       {...props.containerProps}
       currentSampleIndex={currentSampleIndex}
-      totalSamples={props.taskData.length}
-      taskOutput={props.taskOutput}
+      totalSamples={props.samples.length}
+      taskOutput={props.samples.map((s) => s.annotation)}
       description={
-        getTaskDescription(props.taskData[currentSampleIndex]) ||
+        getTaskDescription(props.samples[currentSampleIndex]) ||
         props.interface.description
       }
       onChangeSample={(sampleIndex) => changeCurrentSampleIndex(sampleIndex)}
@@ -74,7 +73,7 @@ export const TextEntityRecognition = (props) => {
       <NLPAnnotator
         key={currentSampleIndex}
         type="label-sequence"
-        document={props.taskData[currentSampleIndex].document}
+        document={props.samples[currentSampleIndex].document}
         labels={props.interface.labels || props.interface.availableLabels}
         initialSequence={initialSequence}
         onFinish={(result) => {
