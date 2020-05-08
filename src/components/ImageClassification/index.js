@@ -213,7 +213,10 @@ export default ({
 
   return (
     <Container
-      style={{ height: containerProps.height || "calc(100vh - 70px)" }}
+      style={{
+        height: containerProps.height || "calc(100% - 70px)",
+        minHeight: 600,
+      }}
     >
       <ImageContainer>
         <Image src={samples[sampleIndex].imageUrl} />

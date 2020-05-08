@@ -26,9 +26,5 @@ const theme = createMuiTheme({
 
 export default ({ children }: any) => {
   const classes = useStyles()
-  return (
-    <ThemeProvider theme={theme}>
-      <div className={classes.container}>{children}</div>
-    </ThemeProvider>
-  )
+  return <ThemeProvider theme={theme}>{children}</ThemeProvider>
 }

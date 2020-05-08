@@ -110,7 +110,8 @@ export default ({
   return (
     <div
       style={{
-        height: containerProps.height || "calc(100vh - 70px)",
+        height: containerProps.height || "calc(100% - 70px)",
+        minHeight: 600,
         width: "100%",
       }}
     >
