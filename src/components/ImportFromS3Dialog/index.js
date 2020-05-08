@@ -133,7 +133,9 @@ function initConfigImport(file) {
       Image: checkInterfaceAndsamples(["Image", "Empty"], file) ? false : true,
       Video: checkInterfaceAndsamples(["Video", "Empty"], file) ? false : true,
       Audio: checkInterfaceAndsamples(["Audio", "Empty"], file) ? false : true,
-    }
+    },
+    loadProjectIsSelected: true,
+    contentDialogBoxIsSetting: false,
   }
 }
 
@@ -153,10 +155,7 @@ export default ({
   const [s3Content, changeS3Content] = useState(null)
   const [dataForTable, changeDataForTable] = useState(null)
   const [folderToFetch, setFolderToFetch] = useState("")
-  const [contentDialogBoxIsSetting, setcontentDialogBoxIsSetting] = useState(
-    false
-  )
-  const [loadProjectIsSelected, setloadProjectIsSelected] = useState(true)
+
   const [configImport, setConfigImport] = useLocalStorage(
     "configImport",
     initConfigImport(file)
@@ -209,7 +208,7 @@ export default ({
       authConfig
     )
     var json = null
-    if (loadProjectIsSelected) {
+    if (configImport.loadProjectIsSelected) {
       json = await GetAnnotationFromAFolderAWS(
         s3Content,
         samples,
@@ -262,17 +261,20 @@ export default ({
     }
   }
   function changeLoadProjectIsSelected() {
-    setloadProjectIsSelected(!loadProjectIsSelected)
+    setConfigImport({
+      ...configImport,
+      loadProjectIsSelected: !configImport.loadProjectIsSelected,
+    })
   }
 
   useEffect(() => {
     var textToSet = setButtonNameAddSample(
-      loadProjectIsSelected,
+      configImport.loadProjectIsSelected,
       configImport.typeOfFileToLoad,
       dataForTable
     )
     changetextButtonAdd(textToSet)
-  }, [loadProjectIsSelected, configImport.typeOfFileToLoad, dataForTable])
+  }, [configImport.loadProjectIsSelected, configImport.typeOfFileToLoad, dataForTable])
 
   useEffect(() => {
     if (isEmpty(user)) {
@@ -337,7 +339,7 @@ export default ({
           onClick: () => {
             handleAddSample()
           },
-          disabled: contentDialogBoxIsSetting,
+          disabled: configImport.contentDialogBoxIsSetting,
         },
       ]}
     >
@@ -345,7 +347,7 @@ export default ({
         <tbody>
           <tr>
             <th>
-              {loadProjectIsSelected ? (
+              {configImport.loadProjectIsSelected ? (
                 <Button
                   style={selectedStyle}
                   onClick={changeLoadProjectIsSelected}
@@ -358,7 +360,7 @@ export default ({
                   Load Project
                 </Button>
               )}
-              {loadProjectIsSelected ? (
+              {configImport.loadProjectIsSelected ? (
                 <Button onClick={changeLoadProjectIsSelected}>
                   Load Samples
                 </Button>
@@ -373,10 +375,13 @@ export default ({
               )}
               <IconButton
                 onClick={() => {
-                  setcontentDialogBoxIsSetting(!contentDialogBoxIsSetting)
+                  setConfigImport({
+                    ...configImport,
+                    contentDialogBoxIsSetting: !configImport.contentDialogBoxIsSetting,
+                  })
                 }}
               >
-                {contentDialogBoxIsSetting ? (
+                {configImport.contentDialogBoxIsSetting ? (
                   <StorageIcon></StorageIcon>
                 ) : (
                   <SettingsIcon></SettingsIcon>
@@ -385,7 +390,7 @@ export default ({
             </th>
           </tr>
 
-          {!contentDialogBoxIsSetting ? (
+          {!configImport.contentDialogBoxIsSetting ? (
             !isEmpty(dataForTable) && (
               <tr>
                 <th>
