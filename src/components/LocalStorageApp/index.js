@@ -11,11 +11,11 @@ import toUDTCSV from "../../utils/to-udt-csv.js"
 import Amplify, { Auth } from "aws-amplify"
 import config from "../LocalStorageApp/invalidconfig.js"
 import isEmpty from "../../utils/isEmpty"
-import fileHasChanged from "../../utils/fileHasChanged"
 import { setIn } from "seamless-immutable"
 import AppErrorBoundary from "../AppErrorBoundary"
 import useEventCallback from "use-event-callback"
 import usePreventNavigation from "../../utils/use-prevent-navigation"
+import jsonHandler from "../../utils/file-handlers/recent-items-handler"
 import UpdateAWSStorage from "../../utils/file-handlers/update-aws-storage"
 const randomId = () => Math.random().toString().split(".")[1]
 
@@ -119,7 +119,7 @@ export default () => {
   }
   const lastObjectRef = useRef([])
   const shouldUpdateAWSStorage = useCallback(() => {
-    var changes = fileHasChanged(lastObjectRef.current, file)
+    var changes = jsonHandler.fileHasChanged(lastObjectRef.current, file)
     if (
       isEmpty(file) ||
       (!changes.content.samples && !changes.fileName) ||

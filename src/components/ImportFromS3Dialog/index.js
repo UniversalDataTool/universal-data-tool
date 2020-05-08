@@ -16,7 +16,6 @@ import StorageIcon from "@material-ui/icons/Storage"
 import Button from "@material-ui/core/Button"
 import GetAnnotationFromAFolderAWS from "./get-annotation-from-aws"
 import GetImageFromAFolderAWS from "./get-images-from-aws"
-import fileHasChanged from "../../utils/fileHasChanged"
 import setButtonNameAddSample from "./set-button-add-sample-name"
 import jsonHandler from "../../utils/file-handlers/recent-items-handler"
 import { setIn } from "seamless-immutable"
@@ -162,7 +161,7 @@ export default ({
   )
   const lastObjectRef = useRef({})
   useEffect(() => {
-    var changes = fileHasChanged(lastObjectRef.current, file)
+    var changes = jsonHandler.fileHasChanged(lastObjectRef.current, file)
     if (!changes.content.interface.type) return
     if (lastObjectRef.current === {}) {
       lastObjectRef.current = file
