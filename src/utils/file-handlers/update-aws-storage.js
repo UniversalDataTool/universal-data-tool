@@ -65,13 +65,11 @@ export default (file) => {
   if (fileNameExist(file)) {
     var content = file.content
     var samples = content.samples
-    file = setIn(file,
+    file = setIn(
+      file,
       ["content"],
-      setIn(content,
-        ["samples"],
-        jsonHandler.setSamplesName(samples)
-        )
-      )
+      setIn(content, ["samples"], jsonHandler.setSamplesName(samples))
+    )
     var json = JSON.stringify(file)
     createOrReplaceProjectFile(file)
     createOrReplaceAnnotations(file, json)

@@ -224,10 +224,22 @@ export default ({
     ) {
       onAddSamples(samples)
     } else {
-      var contentOldFile =file.content
-      contentOldFile = setIn(contentOldFile,["samples"],jsonHandler.concatSample(file.content.samples,json.content.samples,configImport.annotationToKeep))
-      
-      contentOldFile = setIn(contentOldFile, ["interface"], json.content.interface)
+      var contentOldFile = file.content
+      contentOldFile = setIn(
+        contentOldFile,
+        ["samples"],
+        jsonHandler.concatSample(
+          file.content.samples,
+          json.content.samples,
+          configImport.annotationToKeep
+        )
+      )
+
+      contentOldFile = setIn(
+        contentOldFile,
+        ["interface"],
+        json.content.interface
+      )
       file = setIn(file, ["content"], contentOldFile)
       if (isEmpty(file.fileName) || file.fileName === "unnamed")
         file = setIn(file, ["fileName"], json.fileName)
@@ -273,7 +285,11 @@ export default ({
       dataForTable
     )
     changetextButtonAdd(textToSet)
-  }, [configImport.loadProjectIsSelected, configImport.typeOfFileToLoad, dataForTable])
+  }, [
+    configImport.loadProjectIsSelected,
+    configImport.typeOfFileToLoad,
+    dataForTable,
+  ])
 
   useEffect(() => {
     if (isEmpty(user)) {
