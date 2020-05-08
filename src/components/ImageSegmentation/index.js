@@ -45,11 +45,7 @@ export default ({
               typeof l === "string" ? l : l.id
             ),
           },
-<<<<<<< HEAD
     [isClassification, iface.availableLabels]
-=======
-    [isClassification]
->>>>>>> master
   )
 
   const multipleRegions =
