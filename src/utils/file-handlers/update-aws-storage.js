@@ -1,6 +1,7 @@
 import { Storage } from "aws-amplify"
 import isEmpty from "../isEmpty"
 import jsonHandler from "./recent-items-handler"
+import { setIn } from "seamless-immutable"
 export default (file) => {
   async function fetchAFile(element) {
     var proxyUrl = "https://cors-anywhere.herokuapp.com/"
@@ -62,6 +63,15 @@ export default (file) => {
   }
 
   if (fileNameExist(file)) {
+    var content = file.content
+    var samples = content.samples
+    file = setIn(file,
+      ["content"],
+      setIn(content,
+        ["samples"],
+        jsonHandler.setSamplesName(samples)
+        )
+      )
     var json = JSON.stringify(file)
     createOrReplaceProjectFile(file)
     createOrReplaceAnnotations(file, json)

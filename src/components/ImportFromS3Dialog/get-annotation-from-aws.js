@@ -44,7 +44,6 @@ export default async (
           return await data.json().then(async (result) => {
             if (typeof result.content === "undefined") return
             json = result
-
             GetSampleFromAnnotation(json, samples)
           })
         })

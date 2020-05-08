@@ -1,9 +1,10 @@
+import isEmpty from "./isEmpty"
 export default (UrlOfAFile) => {
   var typeOfFile = "File"
   var fileExtension = UrlOfAFile.match(
     `\\/?([^\\/\\\\&\\?]*\\.([a-zA-Z0-9]*))(\\?|$)`
   )
-  if (fileExtension !== null) {
+  if (!isEmpty(fileExtension)) {
     fileExtension = fileExtension[2].toLowerCase()
   }
   if (

@@ -62,8 +62,7 @@ class LocalStorageHandler {
                 nameToSearch[1] = samples[i].sampleName
               }
               if (
-                nameToSearch[0] !== sampleName[0] &&
-                nameToSearch[1] === sampleName[1]
+                nameToSearch[1] === sampleName
               ) {
                 return samples[i]
               }
@@ -72,41 +71,40 @@ class LocalStorageHandler {
         }
         return null
     }
-    static setSamplesName(newSamples,oldSamples){
-        if (!isEmpty(newSamples)) {
-            for (var i = 0; i < newSamples.length; i++) {
-              if (!isEmpty(newSamples[i])) {
-                var sampleName = getSampleNameFromURL(newSamples[i])
-                var boolName = true
-                var v = 1
-                while (boolName) {
-                  if (
-                    this.getSampleWithThisSampleName(sampleName, oldSamples) !== null||
-                    this.getSampleWithThisSampleName(sampleName, newSamples)!== null
-                  ) {
-                    if (isEmpty(sampleName[2].match("(.*)\\([0-9]*\\)$"))) {
-                      sampleName[1] =
-                        sampleName[2] + "(" + v.toString() + ")." + sampleName[3]
-                    } else {
-                      sampleName[1] =
-                        sampleName[2].match("(.*)\\([0-9]*\\)$")[1] +
-                        "(" +
-                        v.toString() +
-                        ")" +
-                        +"." +
-                        sampleName[3]
-                    }
-                    v++
-                  } else {
-                    newSamples[i].sampleName = sampleName[1]
-                    boolName = false
-                  }
+    static setSamplesName(samples){
+      if (!isEmpty(samples)) {
+        for (var i = 0; i < samples.length; i++) {
+          if (!isEmpty(samples[i])) {
+            var oldsample = samples[i]
+            var sampleName = getSampleNameFromURL(oldsample)
+            var boolName = true
+            var v = 1
+            while (boolName) {
+              var sampletocompare1 = this.getSampleWithThisSampleName(sampleName[1], samples)
+              if (sampletocompare1 !== null && this.getSampleUrl(sampletocompare1)!== this.getSampleUrl(oldsample)) {
+                if (isEmpty(sampleName[2].match("(.*)\\([0-9]*\\)$"))) {
+                  sampleName[1] =
+                    sampleName[2] + "(" + v.toString() + ")." + sampleName[3]
+                } else {
+                  sampleName[1] =
+                    sampleName[2].match("(.*)\\([0-9]*\\)$")[1] +
+                    "(" +
+                    v.toString() +
+                    ")" +
+                    +"." +
+                    sampleName[3]
                 }
-                newSamples[i].sampleName = sampleName[1]
+                v++
+              } else {
+                oldsample= setIn(oldsample,["sampleName"],sampleName[1])
+                samples= setIn(samples,[i],oldsample)
+                boolName = false
               }
             }
           }
-          return newSamples
+        }
+      }
+      return samples
     }
     static projectHasDataFile(typeProject){
         if ("text_entity_recognition" === typeProject || "text_classification" === typeProject)
@@ -132,25 +130,19 @@ class LocalStorageHandler {
       return Tabsamples
     }
 
-    static concatSample(actualContent, newContent, annotationToKeep) {
-      var Tabsamples = actualContent
+    static concatSample(actualSamples, newSamples, annotationToKeep) {
+      var Tabsamples = actualSamples
       if (annotationToKeep === "incoming") {
-        Tabsamples = this.eraseAnnotation(actualContent)
+        Tabsamples = this.eraseAnnotation(actualSamples)
       }
 
-      var Tabsamples2 = newContent
+      var Tabsamples2 = newSamples
       if (annotationToKeep === "current") {
-        Tabsamples2 = this.eraseAnnotation(newContent)
+        Tabsamples2 = this.eraseAnnotation(newSamples)
       }
-      var concatContent
-      concatContent = setIn(
-        Tabsamples,
-        ["samples"],
-        Tabsamples.concat(Tabsamples2)
-      )
-        
-        return concatContent
-      }
+      var concatSamples=Tabsamples.concat(Tabsamples2)
+      return concatSamples
+    }
 }
   
   export default LocalStorageHandler
