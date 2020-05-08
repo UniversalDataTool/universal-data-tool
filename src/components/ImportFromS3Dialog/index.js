@@ -133,7 +133,7 @@ function initConfigImport(file) {
       Image: checkInterfaceAndsamples(["Image", "Empty"], file) ? false : true,
       Video: checkInterfaceAndsamples(["Video", "Empty"], file) ? false : true,
       Audio: checkInterfaceAndsamples(["Audio", "Empty"], file) ? false : true,
-    },
+    }
   }
 }
 
@@ -337,6 +337,7 @@ export default ({
           onClick: () => {
             handleAddSample()
           },
+          disabled: contentDialogBoxIsSetting,
         },
       ]}
     >
