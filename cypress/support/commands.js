@@ -25,4 +25,7 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 import { addMatchImageSnapshotCommand } from 'cypress-image-snapshot/command'
 
+// https://github.com/abramenal/cypress-file-upload
+import 'cypress-file-upload'
+
 addMatchImageSnapshotCommand()
