@@ -22,7 +22,7 @@
     "test": "ava **/*.test.js",
     "storybook": "start-storybook -p 6002 -s public",
     "build-storybook": "build-storybook -s public",
-    "gh-pages": "npm run build:web && cp ./CNAME ./build/CNAME && gh-pages -d build",
+    "gh-pages": "npm run build:web && npm run build:vanilla && cp lib/vanilla.js build/vanilla.js && cp ./CNAME ./build/CNAME && gh-pages -d build",
     "prettier": "prettier --write \"src/**/*.js\"",
     "test:prettier": "prettier --check \"src/**/*.js\"",
     "test:integration:dev": "./node_modules/cypress/bin/cypress open",
