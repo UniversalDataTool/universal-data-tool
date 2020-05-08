@@ -226,38 +226,52 @@ export default ({
     ) {
       onAddSamples(samples)
     } else {
-      var newcontent = file.content
+      var contentOldFile = file.content
       var Tabsamples = []
       if (configImport.annotationToKeep === "incoming") {
-        for (var i = 0; i < newcontent.samples.length; i++) {
-          var Newsample = newcontent.samples[i]
+        for (let i = 0; i < contentOldFile.samples.length; i++) {
+          let Newsample = contentOldFile.samples[i]
           if (!isEmpty(Newsample.annotation)) {
             Newsample = setIn(Newsample, ["annotation"], null)
           }
           Tabsamples.push(Newsample)
         }
       }
-      if (Tabsamples !== []) {
-        newcontent = setIn(
-          newcontent,
-          ["samples"],
-          Tabsamples.concat(json.content.samples)
-        )
-      } else {
-        newcontent = setIn(
-          newcontent,
-          ["samples"],
-          newcontent.samples.concat(json.content.samples)
-        )
+      
+      var contentNewSamples = json.content
+      var Tabsamples2 = []
+      if (configImport.annotationToKeep === "current") {
+        for (let i = 0; i < contentNewSamples.samples.length; i++) {
+          let Newsample = contentNewSamples.samples[i]
+          if (!isEmpty(Newsample.annotation)) {
+            Newsample = setIn(Newsample, ["annotation"], null)
+          }
+          Tabsamples2.push(Newsample)
+        }
       }
-      newcontent = setIn(newcontent, ["interface"], json.content.interface)
-      file = setIn(file, ["content"], newcontent)
+      var oldcontentToAdd
+      if(!isEmpty(Tabsamples)){
+        oldcontentToAdd = Tabsamples
+      } else{
+        oldcontentToAdd = contentOldFile.samples
+      }
+      var newcontentToAdd
+      if(!isEmpty(Tabsamples2)){
+        newcontentToAdd = Tabsamples2
+      } else{
+        newcontentToAdd = contentNewSamples.samples
+      }
+      contentOldFile = setIn(
+        contentOldFile,
+        ["samples"],
+        oldcontentToAdd.concat(newcontentToAdd)
+      )
+      contentOldFile = setIn(contentOldFile, ["interface"], json.content.interface)
+      file = setIn(file, ["content"], contentOldFile)
       if (isEmpty(file.fileName) || file.fileName === "unnamed")
         file = setIn(file, ["fileName"], json.fileName)
       onChangeFile(file, true)
     }
-
-    // TODO need to apply configImport
   }
 
   const handleRowSelected = (whatsChanging) => {

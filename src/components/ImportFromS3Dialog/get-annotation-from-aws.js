@@ -75,14 +75,7 @@ function GetSampleFromAnnotation(json, samples, configImport) {
   for (var i = 0; i < json.content.samples.length; i++) {
     var sampleName = ReadSampleNameFromJsonOrFromUrl(json.content.samples[i])
     var annotation = json.content.samples[i].annotation
-    if (
-      configImport.annotationToKeep === "incomming" ||
-      configImport.annotationToKeep === "both"
-    ) {
-      newSamples = setOneNewSample(newSamples, sampleName, samples, annotation)
-    } else {
-      newSamples = setOneNewSample(newSamples, sampleName, samples, undefined)
-    }
+    newSamples = setOneNewSample(newSamples, sampleName, samples, annotation)
   }
   json.content.samples = newSamples
 }
