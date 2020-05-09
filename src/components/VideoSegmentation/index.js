@@ -88,6 +88,7 @@ export default ({
       style={{
         height: containerProps.height || "calc(100vh - 70px)",
         width: "100%",
+        minHeight: 600,
       }}
     >
       <Annotator

@@ -30,6 +30,11 @@ export default ({
   containerProps = emptyObj,
   onSaveTaskOutputItem,
 }) => {
+  // TODO remove legacy "availableLabels" support
+  if (iface.availableLabels && !iface.labels) {
+    iface.labels = iface.availableLabels
+  }
+
   const c = useStyles()
   const [selectedIndex, changeSelectedIndex] = useState(0)
   const [showTags, changeShowTags] = useState(true)
@@ -43,12 +48,12 @@ export default ({
     () =>
       isClassification
         ? {
-            regionClsList: (iface.availableLabels || []).map((l) =>
+            regionClsList: (iface.labels || []).map((l) =>
               typeof l === "string" ? l : l.id
             ),
           }
         : {
-            regionTagList: (iface.availableLabels || []).map((l) =>
+            regionTagList: (iface.labels || []).map((l) =>
               typeof l === "string" ? l : l.id
             ),
           },
@@ -105,7 +110,8 @@ export default ({
   return (
     <div
       style={{
-        height: containerProps.height || "calc(100vh - 70px)",
+        height: containerProps.height || "calc(100% - 70px)",
+        minHeight: 600,
         width: "100%",
       }}
     >
