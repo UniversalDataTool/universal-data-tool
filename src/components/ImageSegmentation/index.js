@@ -73,7 +73,7 @@ export default ({
     if (containerProps.onExit) containerProps.onExit(nextAction)
   })
   const onNextImage = useEventCallback((output) => {
-    if (selectedIndex + 1 > samples.length) {
+    if (selectedIndex + 1 >= samples.length) {
       onExit(output, "go-to-next")
     } else {
       saveCurrentIndexAnnotation(output)
