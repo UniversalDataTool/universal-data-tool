@@ -1,18 +1,12 @@
 // @flow
 
-import React, { useState, useEffect, useMemo } from "react"
-import { makeStyles } from "@material-ui/core/styles"
+import React, { useState, useMemo } from "react"
 import Annotator from "react-image-annotate"
-import isEqual from "lodash/isEqual"
 import useEventCallback from "use-event-callback"
 import {
-  rid,
   convertFromRIARegionFmt,
-  convertToRIARegionFmt,
   convertToRIAImageFmt,
 } from "../../utils/ria-format.js"
-
-const useStyles = makeStyles({})
 
 const regionTypeToTool = {
   "bounding-box": "create-box",
@@ -35,8 +29,7 @@ export default ({
     iface.labels = iface.availableLabels
   }
 
-  const c = useStyles()
-  const [selectedIndex, changeSelectedIndex] = useState(0)
+  const [selectedIndex] = useState(0)
   const [showTags, changeShowTags] = useState(true)
   const [selectedTool, changeSelectedTool] = useState("select")
 
@@ -57,7 +50,7 @@ export default ({
               typeof l === "string" ? l : l.id
             ),
           },
-    [isClassification]
+    [isClassification, iface.availableLabels]
   )
 
   const multipleRegions =
@@ -96,7 +89,7 @@ export default ({
           index,
         })
       ),
-    [samples]
+    [samples, containerProps.datasetName]
   )
 
   const enabledTools = useMemo(

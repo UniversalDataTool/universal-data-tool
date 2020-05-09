@@ -2,7 +2,6 @@
 
 import React, { useState } from "react"
 import SimpleDialog from "../SimpleDialog"
-import * as colors from "@material-ui/core/colors"
 import { styled } from "@material-ui/core/styles"
 import useElectron from "../../utils/use-electron"
 import ProgressBar from "../ProgressBar"
@@ -20,7 +19,7 @@ function downloadFile(urlToDownload, directoryPath, remote) {
   const fileName = `sample_${md5(urlToDownload).slice(0, 6)}__${urlToDownload
     .split("/")
     .slice(-1)[0]
-    .replace(/[^a-zA-Z0-9_\-\.]/g, "")}`
+    .replace(/[^a-zA-Z0-9_\-.]/g, "")}`
   const downloadPath = path.join(directoryPath, fileName)
   if (remote.require("fs").existsSync(downloadPath)) return downloadPath
   return new Promise((resolve, reject) => {

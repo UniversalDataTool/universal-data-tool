@@ -9,7 +9,7 @@ import { styled } from "@material-ui/core/styles"
 import ExpansionPanel from "@material-ui/core/ExpansionPanel"
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails"
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary"
-import immutable, { setIn } from "seamless-immutable"
+import immutable from "seamless-immutable"
 
 const Code = styled("pre")({
   fontSize: 8,

@@ -1,37 +1,25 @@
 // @flow
-import React, { useState, useMemo, useRef, useEffect, useCallback } from "react"
+import React, { useState, useRef, useEffect, useCallback } from "react"
 import { HeaderContext } from "../Header"
 import StartingPage from "../StartingPage"
 import OHAEditor from "../OHAEditor"
-import { makeStyles } from "@material-ui/core/styles"
 import ErrorToasts from "../ErrorToasts"
 import useErrors from "../../utils/use-errors.js"
 import useFileHandler from "../../utils/file-handlers"
 import download from "in-browser-download"
 import toUDTCSV from "../../utils/to-udt-csv.js"
-import Amplify, { Auth, Storage } from "aws-amplify"
+import Amplify, { Auth } from "aws-amplify"
 import config from "../LocalStorageApp/invalidconfig.js"
 import isEmpty from "../../utils/isEmpty"
-import fileHasChanged from "../../utils/fileHasChanged"
 import { setIn } from "seamless-immutable"
 import AppErrorBoundary from "../AppErrorBoundary"
 import useEventCallback from "use-event-callback"
 import usePreventNavigation from "../../utils/use-prevent-navigation"
+import jsonHandler from "../../utils/file-handlers/recent-items-handler"
 import UpdateAWSStorage from "../../utils/file-handlers/update-aws-storage"
-
-const useStyles = makeStyles({
-  empty: {
-    textAlign: "center",
-    padding: 100,
-    color: "#666",
-    fontSize: 28,
-  },
-})
-
 const randomId = () => Math.random().toString().split(".")[1]
 
 export default () => {
-  const c = useStyles()
   const {
     file,
     changeFile,
@@ -42,7 +30,7 @@ export default () => {
     changeRecentItems,
   } = useFileHandler()
   usePreventNavigation(Boolean(file))
-  const [errors, addError] = useErrors()
+  const [errors] = useErrors()
 
   const [selectedBrush, setSelectedBrush] = useState("complete")
 
@@ -100,11 +88,14 @@ export default () => {
         changeAuthConfig(null)
       }
     }
-  }, [])
+  }, [authConfig, user])
 
-  const onJoinSession = useCallback(async (sessionName) => {
-    await openUrl(sessionName)
-  }, [])
+  const onJoinSession = useCallback(
+    async (sessionName) => {
+      await openUrl(sessionName)
+    },
+    [openUrl]
+  )
 
   const onLeaveSession = useEventCallback(() =>
     changeFile({
@@ -114,21 +105,37 @@ export default () => {
     })
   )
 
+  function ifFileAuthorizeToSaveOnAWS(s) {
+    var fileAuthorize = [
+      "video_segmentation",
+      "image_classification",
+      "image_segmentation",
+      "text_entity_recognition",
+      "text_classification",
+      "audio_transcription",
+    ]
+    if (fileAuthorize.includes(s)) return true
+    return false
+  }
   const lastObjectRef = useRef([])
+  const shouldUpdateAWSStorage = useCallback(() => {
+    var changes = jsonHandler.fileHasChanged(lastObjectRef.current, file)
+    if (
+      isEmpty(file) ||
+      (!changes.content.samples && !changes.fileName) ||
+      !ifFileAuthorizeToSaveOnAWS ||
+      file.fileName === "unnamed"
+    )
+      return false
+    return true
+  }, [file])
+
   useEffect(() => {
     if (!isEmpty(authConfig)) {
-      var changes = fileHasChanged(lastObjectRef.current, file)
-      if (
-        (!changes.content.samples && !changes.fileName) ||
-        (file.content.interface.type !== "video_segmentation" &&
-          file.content.interface.type !== "image_classification" &&
-          file.content.interface.type !== "image_segmentation")
-      )
-        return
+      if (shouldUpdateAWSStorage()) UpdateAWSStorage(file)
       lastObjectRef.current = file
-      UpdateAWSStorage(file)
     }
-  }, [recentItems])
+  }, [shouldUpdateAWSStorage, authConfig, file])
 
   return (
     <>

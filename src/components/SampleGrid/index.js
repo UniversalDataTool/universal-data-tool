@@ -84,7 +84,7 @@ export default ({ count, completed = [], samples, onClick }) => {
     if (sampleOffset > count) {
       changeSampleOffset(0)
     }
-  }, [])
+  }, [changeSampleOffset, sampleOffset, count])
 
   const [selectRange, changeSelectRange] = useReducer((state, newValue) => {
     if (newValue === null) return null
@@ -102,7 +102,7 @@ export default ({ count, completed = [], samples, onClick }) => {
   const moveSelectRange = useCallback((index) => changeSelectRange(index), [
     changeSelectRange,
   ])
-  const endSelectRange = useCallback(() => {}, [changeSelectRange])
+  const endSelectRange = useCallback(() => {}, [])
   const checkAndNullifySelectRange = useCallback(
     (e) => {
       if (e.buttons !== 1) {

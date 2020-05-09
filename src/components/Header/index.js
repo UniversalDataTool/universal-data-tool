@@ -2,8 +2,6 @@
 
 import React, { useState, createContext, useContext, useCallback } from "react"
 import useMediaQuery from "@material-ui/core/useMediaQuery"
-import CollaborateButton from "../CollaborateButton"
-import DownloadButton from "../DownloadButton"
 import LoginDrawer from "../LoginDrawer"
 
 import HeaderToolbar from "../HeaderToolbar"

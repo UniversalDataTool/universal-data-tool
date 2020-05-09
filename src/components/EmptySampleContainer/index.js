@@ -9,7 +9,7 @@ export default () => {
       Make sure that <code>samples</code> is defined and not empty.
       <br />
       <br />
-      Need help setting up? <a href="#">Check out this tutorial.</a>
+      Need help setting up? {/*<a href="#">Check out this tutorial.</a>*/}
     </BadOHA>
   )
 }

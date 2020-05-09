@@ -2,7 +2,6 @@
 
 import React, { useState } from "react"
 import SimpleDialog from "../SimpleDialog"
-import { styled } from "@material-ui/core/styles"
 import TextAreaWithUpload from "../TextAreaWithUpload"
 
 const ImportTextSnippetsDialog = ({ open, onClose, onAddSamples }) => {

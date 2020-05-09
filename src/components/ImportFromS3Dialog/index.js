@@ -10,17 +10,22 @@ import FormControlLabel from "@material-ui/core/FormControlLabel"
 import Amplify, { Storage } from "aws-amplify"
 import isEmpty from "../../utils/isEmpty"
 import { useLocalStorage } from "react-use"
-import fileHasChanged from "../../utils/fileHasChanged"
 import IconButton from "@material-ui/core/IconButton"
 import SettingsIcon from "@material-ui/icons/Settings"
 import StorageIcon from "@material-ui/icons/Storage"
 import Button from "@material-ui/core/Button"
 import GetAnnotationFromAFolderAWS from "./get-annotation-from-aws"
 import GetImageFromAFolderAWS from "./get-images-from-aws"
-import RecognizeFileExtension from "../../utils/RecognizeFileExtension"
-import giveSampleName from "./give-sample-name"
+import setButtonNameAddSample from "./set-button-add-sample-name"
+import jsonHandler from "../../utils/file-handlers/recent-items-handler"
+import { setIn } from "seamless-immutable"
 
 const selectedStyle = { color: "DodgerBlue" }
+const tableStyle = {
+  marginLeft: "auto",
+  marginRight: "auto",
+  width: "100%",
+}
 const expandedDataColumns = [
   { name: "Data", selector: "data", sortable: true },
   { name: "Last Modified", selector: "lastModified", sortable: true },
@@ -48,7 +53,7 @@ const customStyles = {
 }
 
 const ExpandedRow = ({ data }) => {
-  const { rowData, rowAnnotations, ...notImportant } = data
+  const { rowData, rowAnnotations } = data
   return (
     <>
       <DataTable
@@ -93,8 +98,8 @@ function interfaceFileType(type) {
   if (type === "image_classification" || type === "image_segmentation")
     return "Image"
   if (type === "video_segmentation") return "Video"
-  if (false) return "Audio"
-  if (type === "" || typeof type === "undefined") return "Empty"
+  if (type === "audio_transcription") return "Audio"
+  if (isEmpty(type)) return "Empty"
   return "File"
 }
 
@@ -102,6 +107,7 @@ function typesamplesSample(samples) {
   if (isEmpty(samples) || isEmpty(samples[0])) return "Empty"
   if (!isEmpty(samples[0].imageUrl)) return "Image"
   if (!isEmpty(samples[0].videoUrl)) return "Video"
+  if (!isEmpty(samples[0].audioUrl)) return "Audio"
   return "File"
 }
 function checkInterfaceAndsamples(typeAuthorize, file) {
@@ -119,12 +125,16 @@ function initConfigImport(file) {
       ? "Image"
       : checkInterfaceAndsamples(["Video", "Empty"], file)
       ? "Video"
+      : checkInterfaceAndsamples(["Audio", "Empty"], file)
+      ? "Audio"
       : "None",
     typeOfFileToDisable: {
       Image: checkInterfaceAndsamples(["Image", "Empty"], file) ? false : true,
       Video: checkInterfaceAndsamples(["Video", "Empty"], file) ? false : true,
-      Audio: true,
+      Audio: checkInterfaceAndsamples(["Audio", "Empty"], file) ? false : true,
     },
+    loadProjectIsSelected: true,
+    contentDialogBoxIsSetting: false,
   }
 }
 
@@ -144,40 +154,50 @@ export default ({
   const [s3Content, changeS3Content] = useState(null)
   const [dataForTable, changeDataForTable] = useState(null)
   const [folderToFetch, setFolderToFetch] = useState("")
-  const [contentDialogBoxIsSetting, setcontentDialogBoxIsSetting] = useState(
-    false
-  )
-  const [loadProjectIsSelected, setloadProjectIsSelected] = useState(true)
+
   const [configImport, setConfigImport] = useLocalStorage(
     "configImport",
     initConfigImport(file)
   )
-  let _dataForTable = {}
-
   const lastObjectRef = useRef({})
-
   useEffect(() => {
-    var changes = fileHasChanged(lastObjectRef.current, file)
+    var changes = jsonHandler.fileHasChanged(lastObjectRef.current, file)
     if (!changes.content.interface.type) return
-    lastObjectRef.current = file
-    setConfigImport({
-      ...configImport,
-      typeOfFileToLoad: checkInterfaceAndsamples(["Image", "Empty"], file)
-        ? "Image"
-        : checkInterfaceAndsamples(["Video", "Empty"], file)
-        ? "Video"
-        : "None",
-      typeOfFileToDisable: {
-        Image: checkInterfaceAndsamples(["Image", "Empty"], file)
-          ? false
-          : true,
-        Video: checkInterfaceAndsamples(["Video", "Empty"], file)
-          ? false
-          : true,
-        Audio: true,
-      },
-    })
-  }, [file])
+    if (lastObjectRef.current === {}) {
+      lastObjectRef.current = file
+    } else {
+      lastObjectRef.current = file
+      setConfigImport({
+        ...configImport,
+        typeOfFileToLoad:
+          !isEmpty(configImport) &&
+          !isEmpty(configImport.typeOfFileToLoad) &&
+          checkInterfaceAndsamples(
+            [configImport.typeOfFileToLoad, "Empty"],
+            file
+          )
+            ? configImport.typeOfFileToLoad
+            : checkInterfaceAndsamples(["Image", "Empty"], file)
+            ? "Image"
+            : checkInterfaceAndsamples(["Video", "Empty"], file)
+            ? "Video"
+            : checkInterfaceAndsamples(["Audio", "Empty"], file)
+            ? "Audio"
+            : "None",
+        typeOfFileToDisable: {
+          Image: checkInterfaceAndsamples(["Image", "Empty"], file)
+            ? false
+            : true,
+          Video: checkInterfaceAndsamples(["Video", "Empty"], file)
+            ? false
+            : true,
+          Audio: checkInterfaceAndsamples(["Audio", "Empty"], file)
+            ? false
+            : true,
+        },
+      })
+    }
+  }, [file, configImport, setConfigImport])
 
   const handleAddSample = async () => {
     var samples = await GetImageFromAFolderAWS(
@@ -187,7 +207,7 @@ export default ({
       authConfig
     )
     var json = null
-    if (loadProjectIsSelected) {
+    if (configImport.loadProjectIsSelected) {
       json = await GetAnnotationFromAFolderAWS(
         s3Content,
         samples,
@@ -196,18 +216,36 @@ export default ({
       )
     }
 
-    // TODO need to merge samples from GetImageFromAFolderAWS with
-    // GetAnnotationFromAFolderAWS?
-
-    if (json === null || typeof json.content.samples === "undefined") {
+    if (
+      isEmpty(json) ||
+      isEmpty(json.content) ||
+      isEmpty(json.content.samples) ||
+      isEmpty(json.fileName)
+    ) {
       onAddSamples(samples)
-      // TODO use onChangeFile here?
     } else {
-      onAddSamples(samples)
-      // TODO use onChangeFile here?
-    }
+      var contentOldFile = file.content
+      contentOldFile = setIn(
+        contentOldFile,
+        ["samples"],
+        jsonHandler.concatSample(
+          file.content.samples,
+          json.content.samples,
+          configImport.annotationToKeep
+        )
+      )
 
-    // TODO need to apply configImport
+      contentOldFile = setIn(
+        contentOldFile,
+        ["interface"],
+        json.content.interface
+      )
+      file = setIn(file, ["content"], contentOldFile)
+      if (isEmpty(file.fileName) || file.fileName === "unnamed")
+        file = setIn(file, ["fileName"], json.fileName)
+      onChangeFile(file, true)
+      onAddSamples([])
+    }
   }
 
   const handleRowSelected = (whatsChanging) => {
@@ -234,37 +272,21 @@ export default ({
     }
   }
   function changeLoadProjectIsSelected() {
-    setloadProjectIsSelected(!loadProjectIsSelected)
+    setConfigImport({
+      ...configImport,
+      loadProjectIsSelected: !configImport.loadProjectIsSelected,
+    })
   }
 
   useEffect(() => {
-    var numberOfSamples = 0
-    if (folderToFetch !== "" && !isEmpty(dataForTable)) {
-      for (var i = 0; i < dataForTable.length; i++) {
-        if (dataForTable[i].folder === folderToFetch) {
-          if (!isEmpty(dataForTable[i].rowData)) {
-            for (var y = 0; y < dataForTable[i].rowData.length; y++) {
-              if (
-                RecognizeFileExtension(dataForTable[i].rowData[y].data) ===
-                configImport.typeOfFileToLoad
-              ) {
-                numberOfSamples++
-              }
-            }
-          }
-        }
-      }
-      if (loadProjectIsSelected) {
-        changetextButtonAdd("Load " + folderToFetch)
-      } else {
-        changetextButtonAdd(
-          "Add " + numberOfSamples + " " + configImport.typeOfFileToLoad
-        )
-      }
-    }
+    var textToSet = setButtonNameAddSample(
+      configImport.loadProjectIsSelected,
+      configImport.typeOfFileToLoad,
+      dataForTable
+    )
+    changetextButtonAdd(textToSet)
   }, [
-    folderToFetch,
-    loadProjectIsSelected,
+    configImport.loadProjectIsSelected,
     configImport.typeOfFileToLoad,
     dataForTable,
   ])
@@ -276,7 +298,7 @@ export default ({
       Storage.list("", { level: "private" })
         .then((result) => {
           changeS3Content(result)
-          _dataForTable = result
+          let _dataForTable = result
             .filter((obj) => {
               return obj.key.endsWith("/") & (obj.key.split("/").length === 2)
             })
@@ -320,7 +342,7 @@ export default ({
         })
         .catch((err) => console.log(err))
     }
-  }, [user])
+  }, [user, authConfig])
   return (
     <SimpleDialog
       title="Select Project"
@@ -332,14 +354,15 @@ export default ({
           onClick: () => {
             handleAddSample()
           },
+          disabled: configImport.contentDialogBoxIsSetting,
         },
       ]}
     >
-      <table>
+      <table style={tableStyle}>
         <tbody>
           <tr>
             <th>
-              {loadProjectIsSelected ? (
+              {configImport.loadProjectIsSelected ? (
                 <Button
                   style={selectedStyle}
                   onClick={changeLoadProjectIsSelected}
@@ -352,7 +375,7 @@ export default ({
                   Load Project
                 </Button>
               )}
-              {loadProjectIsSelected ? (
+              {configImport.loadProjectIsSelected ? (
                 <Button onClick={changeLoadProjectIsSelected}>
                   Load Samples
                 </Button>
@@ -367,10 +390,13 @@ export default ({
               )}
               <IconButton
                 onClick={() => {
-                  setcontentDialogBoxIsSetting(!contentDialogBoxIsSetting)
+                  setConfigImport({
+                    ...configImport,
+                    contentDialogBoxIsSetting: !configImport.contentDialogBoxIsSetting,
+                  })
                 }}
               >
-                {contentDialogBoxIsSetting ? (
+                {configImport.contentDialogBoxIsSetting ? (
                   <StorageIcon></StorageIcon>
                 ) : (
                   <SettingsIcon></SettingsIcon>
@@ -379,7 +405,7 @@ export default ({
             </th>
           </tr>
 
-          {!contentDialogBoxIsSetting ? (
+          {!configImport.contentDialogBoxIsSetting ? (
             !isEmpty(dataForTable) && (
               <tr>
                 <th>
@@ -413,8 +439,6 @@ export default ({
                   </FormLabel>
                   <RadioGroup
                     aria-label="option1"
-                    name="option1"
-                    defaultValue={configImport.annotationToKeep || "both"}
                     onChange={(event) => {
                       setConfigImport({
                         ...configImport,
@@ -426,16 +450,19 @@ export default ({
                       value="both"
                       control={<Radio />}
                       label="Keep both annotations"
+                      checked={configImport.annotationToKeep === "both"}
                     />
                     <FormControlLabel
                       value="incoming"
                       control={<Radio />}
                       label="Keep incoming annotations"
+                      checked={configImport.annotationToKeep === "incoming"}
                     />
                     <FormControlLabel
                       value="current"
                       control={<Radio />}
                       label="Keep current annotations"
+                      checked={configImport.annotationToKeep === "current"}
                     />
                   </RadioGroup>
                 </FormControl>
@@ -443,8 +470,6 @@ export default ({
                   <FormLabel component="legend">Choose file type</FormLabel>
                   <RadioGroup
                     aria-label="option2"
-                    name="option2"
-                    defaultValue={configImport.typeOfFileToLoad || "None"}
                     onChange={(event) => {
                       setConfigImport({
                         ...configImport,
@@ -457,18 +482,21 @@ export default ({
                       control={<Radio />}
                       label="Load image file"
                       disabled={configImport.typeOfFileToDisable.Image}
+                      checked={configImport.typeOfFileToLoad === "Image"}
                     />
                     <FormControlLabel
                       value="Video"
                       control={<Radio />}
                       label="Load video file"
                       disabled={configImport.typeOfFileToDisable.Video}
+                      checked={configImport.typeOfFileToLoad === "Video"}
                     />
                     <FormControlLabel
                       value="Audio"
                       control={<Radio />}
                       label="Load audio file"
                       disabled={configImport.typeOfFileToDisable.Audio}
+                      checked={configImport.typeOfFileToLoad === "Audio"}
                     />
                   </RadioGroup>
                 </FormControl>

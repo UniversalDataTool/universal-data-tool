@@ -1,14 +1,10 @@
 // @flow weak
-
-import objectHash from "object-hash"
 // NOTE: for unit tests you need to change the following line to...
 // import rfc6902 from "rfc6902"
 import * as rfc6902 from "rfc6902"
 import bent from "bent"
-import moment from "moment"
 import getHumanReadableLog from "./get-human-readable-log.js"
 import applySeamlessPatch from "./apply-seamless-patch.js"
-import seamless from "seamless-immutable"
 import hash from "./server-hash.js"
 
 class CollaborationHandler {
@@ -70,7 +66,6 @@ class CollaborationHandler {
 
   async applyLatestPatches() {
     const {
-      error,
       patch,
       hashOfLatestState,
       latestVersion,
@@ -91,7 +86,6 @@ class CollaborationHandler {
 
     if (hash(newState) !== hashOfLatestState) {
       console.error("new state with patches applied didn't match latest state")
-      const { state: latest, version } = await this.getLatestState()
       await this.updateToLatestState()
       return { patch, changeLog: humanReadableLog }
     }

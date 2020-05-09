@@ -1,34 +1,20 @@
 // @flow
-import React, { useState, useMemo, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { HeaderContext } from "../Header"
 import StartingPage from "../StartingPage"
 import OHAEditor from "../OHAEditor"
-import { makeStyles } from "@material-ui/core/styles"
 import ErrorToasts from "../ErrorToasts"
-import { useToasts } from "../Toasts"
 import useErrors from "../../utils/use-errors.js"
-import useLocalStorage from "../../utils/use-local-storage.js"
 import useElectron from "../../utils/use-electron.js"
 import templates from "../StartingPage/templates"
 import useEventCallback from "use-event-callback"
 import { setIn } from "seamless-immutable"
 import toUDTCSV from "../../utils/to-udt-csv.js"
-
 import useFileHandler from "../../utils/file-handlers"
-
-const useStyles = makeStyles({
-  empty: {
-    textAlign: "center",
-    padding: 100,
-    color: "#666",
-    fontSize: 28,
-  },
-})
 
 const randomId = () => Math.random().toString().split(".")[1]
 
 export default () => {
-  const c = useStyles()
   const {
     file,
     changeFile,
@@ -40,8 +26,7 @@ export default () => {
   } = useFileHandler()
 
   const [selectedBrush, setSelectedBrush] = useState("complete")
-  const [errors, addError] = useErrors()
-  const { addToast } = useToasts()
+  const [errors] = useErrors()
 
   const { remote, ipcRenderer } = useElectron()
 
@@ -67,7 +52,7 @@ export default () => {
     const saveFileAs = () => saveFile({ saveAs: true })
     const exportToCSV = async () => {
       if (!file) return
-      let { cancelled, filePath } = await remote.dialog.showSaveDialog({
+      let { filePath } = await remote.dialog.showSaveDialog({
         filters: [{ name: ".udt.csv", extensions: ["udt.csv"] }],
       })
       filePath =
@@ -95,7 +80,15 @@ export default () => {
       ipcRenderer.removeListener("save-file-as", saveFileAs)
       ipcRenderer.removeListener("export-to-csv", exportToCSV)
     }
-  }, [file])
+  }, [
+    file,
+    changeFile,
+    ipcRenderer,
+    openFile,
+    onCreateTemplate,
+    remote,
+    saveFile,
+  ])
 
   const inSession = file && file.mode === "server"
   const [sessionBoxOpen, changeSessionBoxOpen] = useState(false)
