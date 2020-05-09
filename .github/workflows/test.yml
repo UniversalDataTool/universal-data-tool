@@ -20,6 +20,7 @@ jobs:
           rm package-lock.json
           npm init -y
           npm install create-react-app
+          echo '{"extends": "react-app"}' > .eslintrc
           npx eslint src
   cypress-run:
     needs: iscodeclean
