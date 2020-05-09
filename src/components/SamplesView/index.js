@@ -2,7 +2,6 @@
 
 import React, { useMemo, useState } from "react"
 import DataTable from "react-data-table-component"
-import Button from "@material-ui/core/Button"
 import IconButton from "@material-ui/core/IconButton"
 import EditIcon from "@material-ui/icons/Edit"
 import DeleteIcon from "@material-ui/icons/Delete"
@@ -141,7 +140,7 @@ export default ({
       ),
     })
     return columns
-  }, [oha.samples])
+  }, [oha.samples, deleteSample, openSampleInputEditor, openSampleLabelEditor])
 
   const data = useMemo(() => {
     if (!oha.samples) return []

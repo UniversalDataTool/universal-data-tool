@@ -2,14 +2,12 @@
 
 import React from "react"
 import ConfigureInterface, { Heading } from "../ConfigureInterface"
-import { useUpdate } from "react-use"
 import usePosthog from "../../utils/use-posthog"
 import PaperContainer from "../PaperContainer"
 import Box from "@material-ui/core/Box"
-import Paper from "@material-ui/core/Paper"
 import MuiButton from "@material-ui/core/Button"
 import { styled } from "@material-ui/core/styles"
-import useIsDesktop from "../../utils/use-is-desktop"
+import { useUpdate } from "react-use"
 
 const Button = styled(MuiButton)({
   margin: 8,
@@ -17,9 +15,8 @@ const Button = styled(MuiButton)({
 
 export default ({ oha, onChange, onClickEditJSON, onClearLabelData }) => {
   const { interface: iface } = oha
-  const posthog = usePosthog()
   const forceUpdate = useUpdate()
-  const isDesktop = useIsDesktop()
+  const posthog = usePosthog()
 
   return (
     <div>
@@ -50,7 +47,6 @@ export default ({ oha, onChange, onClickEditJSON, onClearLabelData }) => {
             Clear All Labels
           </Button>
           <Button
-            onClick={onClickEditJSON}
             variant="outlined"
             onClick={() => {
               if (posthog.has_opted_out_capturing()) {
@@ -64,7 +60,6 @@ export default ({ oha, onChange, onClickEditJSON, onClearLabelData }) => {
             {posthog.has_opted_out_capturing() ? "Enable" : "Disable"} Telemetry
           </Button>
           <Button
-            onClick={onClickEditJSON}
             variant="outlined"
             onClick={() => {
               const response = window.prompt(

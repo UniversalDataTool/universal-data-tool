@@ -1,7 +1,7 @@
 name: Test
-on: ["push", "pull_request"]
+on: ["pull_request"]
 jobs:
-  test:
+  iscodeclean:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     name: Test
     runs-on: ubuntu-18.04
@@ -14,3 +14,27 @@ jobs:
           node-version: 12
       - name: Run Prettier Test
         run: npx prettier --check "src/**/*.js"
+      - name: Run Lint Test
+        run: |
+          rm package.json
+          rm package-lock.json
+          npm init -y
+          npm install react-scripts
+          echo '{"extends": "react-app"}' > .eslintrc
+          npx eslint src
+  cypress-run:
+    needs: iscodeclean
+    runs-on: ubuntu-16.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      # Install NPM dependencies, cache them correctly
+      # and run all Cypress tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v1
+        with:
+          start: npm run start
+          wait-on: http://localhost:6001
+          record: true
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}

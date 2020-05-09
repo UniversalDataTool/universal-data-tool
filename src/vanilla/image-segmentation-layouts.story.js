@@ -1,10 +1,9 @@
 // @flow
 
-import React, { useEffect } from "react"
+import React from "react"
 
 import useVanilla from "./use-vanilla"
 import { storiesOf } from "@storybook/react"
-import { action } from "@storybook/addon-actions"
 
 const useVanillaImageSegmentation = () => {
   useVanilla("udt", {

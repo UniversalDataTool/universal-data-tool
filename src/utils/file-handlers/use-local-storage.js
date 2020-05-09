@@ -1,16 +1,17 @@
 // @flow
-
+import { useRef, useEffect } from "react"
 import { useLocalStorage } from "react-use"
-import { useEffect } from "react"
-
+import jsonHandler from "../../utils/file-handlers/recent-items-handler"
+import isEmpty from "../../utils/isEmpty"
 export default (file, changeFile) => {
   let [recentItems, changeRecentItems] = useLocalStorage("recentItems", [])
 
   if (!recentItems) recentItems = []
-
+  const lastObjectRef = useRef([])
   useEffect(() => {
-    if (!file) return
-    if (!file.fileName || file.fileName === "unnamed") return
+    if (!isEmpty(file) && file.fileName === "unnamed") return
+    var changes = jsonHandler.fileHasChanged(lastObjectRef.current, file)
+    if (!changes.any) return
     if (recentItems.map((item) => item.id).includes(file.id)) {
       changeRecentItems(
         recentItems.map((ri) => (ri.id === file.id ? file : ri))
@@ -18,6 +19,7 @@ export default (file, changeFile) => {
     } else {
       changeRecentItems([file].concat(recentItems).slice(0, 3))
     }
-  }, [file])
+    lastObjectRef.current = file
+  }, [file, changeRecentItems, recentItems])
   return { recentItems, changeRecentItems }
 }

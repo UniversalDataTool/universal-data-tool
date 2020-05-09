@@ -14,7 +14,6 @@ import ImportFromS3Dialog from "../ImportFromS3Dialog"
 import ImportTextSnippetsDialog from "../ImportTextSnippetsDialog"
 import useElectron from "../../utils/use-electron"
 import classnames from "classnames"
-import SvgIcon from "@material-ui/core/SvgIcon"
 import S3Icon from "./S3Icon"
 import isEmpty from "../../utils/isEmpty"
 import { setIn } from "seamless-immutable"
@@ -26,14 +25,6 @@ import ImportFromYoutubeUrls from "../ImportFromYoutubeUrls"
 import { FaGoogleDrive, FaYoutube } from "react-icons/fa"
 import usePosthog from "../../utils/use-posthog"
 import promptAndGetSamplesFromLocalDirectory from "./prompt-and-get-samples-from-local-directory.js"
-
-const extendWithNull = (ar, len) => {
-  ar = [...ar]
-  while (ar.length < len) {
-    ar.push(null)
-  }
-  return ar
-}
 
 const ButtonBase = styled(MuiButton)({
   width: 240,
@@ -156,6 +147,7 @@ export default ({
   }
 
   const closeDialog = () => changeDialog(null)
+
   const onAddSamples = useEventCallback(async (samplesToAdd) => {
     onChangeOHA(
       setIn(oha, ["samples"], (oha.samples || []).concat(samplesToAdd))

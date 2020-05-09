@@ -1,8 +1,7 @@
 // @flow
 
-import React, { useState, useMemo, useRef, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { useLocalStorage } from "react-use"
-import { createPortal } from "react-dom"
 import IconButton from "@material-ui/core/IconButton"
 import PeopleIcon from "@material-ui/icons/People"
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward"
@@ -159,13 +158,12 @@ export default ({
             {error && <ErrorText>{error}</ErrorText>}
             <CreateNewButton
               fullWidth
-              disabled={error}
+              disabled={!fileOpen || loadingSession || error}
               onClick={() => {
                 posthog.capture("create_collaborative_session")
                 onCreateSession()
                 changeLoadingSession(true)
               }}
-              disabled={!fileOpen || loadingSession}
             >
               {loadingSession ? (
                 <CircularProgress className="icon" size={24} />

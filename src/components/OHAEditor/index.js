@@ -1,11 +1,10 @@
 // @flow
 
-import React, { useState, useEffect, useReducer } from "react"
+import React, { useState, useEffect } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 
 import Header from "../Header"
 import AceEditor from "react-ace"
-import isEmpty from "../../utils/isEmpty"
 import UniversalDataViewer from "../UniversalDataViewer"
 import EditableTitleText from "./EditableTitleText.js"
 import SamplesView from "../SamplesView"
@@ -71,7 +70,7 @@ export default ({
   const [singleSampleOHA, changeSingleSampleOHA] = useState()
   const [sampleInputEditor, changeSampleInputEditor] = useState({})
   const [jsonText, changeJSONText] = useState()
-  const { remote, ipcRenderer } = useElectron() || {}
+  const { ipcRenderer } = useElectron() || {}
   const posthog = usePosthog()
 
   const [
@@ -92,7 +91,7 @@ export default ({
       ipcRenderer.removeListener("open-samples-page", onOpenSamplesPage)
       ipcRenderer.removeListener("open-label-page", onOpenLabelPage)
     }
-  }, [])
+  }, [ipcRenderer])
 
   useEffect(() => {
     if (mode === "json") {
@@ -102,7 +101,7 @@ export default ({
       changeSingleSampleOHA(null)
     }
     posthog.capture("open_editor_tab", { tab: mode })
-  }, [mode])
+  }, [mode, posthog, changeJSONText, oha])
 
   useEffect(() => {
     if (!jsonText || mode !== "json") return
@@ -110,7 +109,7 @@ export default ({
       // TODO schema validation etc.
       onChangeOHA(JSON.parse(jsonText))
     } catch (e) {}
-  }, [jsonText])
+  }, [jsonText, mode, onChangeOHA])
 
   const onChangeTab = useEventCallback((tab) => changeMode(tab.toLowerCase()))
 

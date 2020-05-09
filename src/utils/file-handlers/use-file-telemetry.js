@@ -9,13 +9,13 @@ export default (udt) => {
     if (!udt || !udt.interface) return
     posthog.capture("interface_type", { interface_type: udt.interface.type })
     posthog.people.set({ last_used_interface_type: udt.interface.type })
-  }, [udt && udt.interface && udt.interface.type])
+  }, [udt])
   useEffect(() => {
     if (!udt || !udt.samples) return
     posthog.capture("dataset_size", {
       dataset_size: (udt.samples || []).length,
     })
-  }, [udt && (udt.samples || []).length])
+  }, [udt])
   useEffect(() => {
     if (!udt || !udt.samples) return
     const numCompleted = (udt.samples || []).filter((s) => s.annotation).length
@@ -24,5 +24,5 @@ export default (udt) => {
       samples_completed: numCompleted,
       percent_completed: numCompleted / (udt.samples || []).length,
     })
-  }, [udt && udt.samples])
+  }, [udt])
 }

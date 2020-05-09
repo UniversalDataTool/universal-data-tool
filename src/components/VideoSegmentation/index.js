@@ -1,18 +1,12 @@
 // @flow
 
-import React, { useState, useEffect, useMemo } from "react"
-import { makeStyles } from "@material-ui/core/styles"
+import React, { useMemo } from "react"
 import Annotator from "react-image-annotate"
-import isEqual from "lodash/isEqual"
 import useEventCallback from "use-event-callback"
 import {
-  rid,
   convertFromRIARegionFmt,
-  convertToRIARegionFmt,
   convertToRIAKeyframes,
 } from "../../utils/ria-format.js"
-
-const useStyles = makeStyles({})
 
 const regionTypeToTool = {
   "bounding-box": "create-box",
@@ -30,9 +24,6 @@ export default ({
   containerProps = emptyObj,
   onSaveTaskOutputItem,
 }) => {
-  const c = useStyles()
-  const [selectedIndex, changeSelectedIndex] = useState(0)
-
   const { regionTypesAllowed = ["bounding-box"] } = iface
 
   const isClassification = !Boolean(iface.multipleRegionLabels)
@@ -41,20 +32,17 @@ export default ({
     () =>
       isClassification
         ? {
-            regionClsList: (iface.availableLabels || []).map((l) =>
+            regionClsList: (iface.labels || []).map((l) =>
               typeof l === "string" ? l : l.id
             ),
           }
         : {
-            regionTagList: (iface.availableLabels || []).map((l) =>
+            regionTagList: (iface.labels || []).map((l) =>
               typeof l === "string" ? l : l.id
             ),
           },
-    [isClassification]
+    [isClassification, iface.labels]
   )
-
-  const multipleRegions =
-    iface.multipleRegions || iface.multipleRegions === undefined
 
   const onExit = useEventCallback((output) => {
     const newKeyframes = {}

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react"
+import React, { useRef, useEffect } from "react"
 import WavesurferJS from "wavesurfer.js"
 import WavesurferRegions from "wavesurfer.js/dist/plugin/wavesurfer.regions.js"
 
@@ -46,7 +46,7 @@ export const Waveform = ({ onChange }) => {
     wavesurfer.on("region-click", sendUpdate)
 
     wavesurferObj.current = wavesurfer
-  }, [])
+  }, [onChange])
 
   return (
     <div>

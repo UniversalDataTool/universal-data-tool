@@ -43,21 +43,24 @@ const form = {
 }
 
 export default ({ iface, onChange }) => {
-  const defaultAnswers = useMemo(() => ({
-    description: iface.description,
-    overlapAllowed: Boolean(
-      iface.overlapAllowed || iface.overlapAllowed === undefined
-    ),
-    labels: (iface.labels || []).map((column) =>
-      typeof column === "string"
-        ? {
-            id: column,
-            displayName: column,
-            description: column,
-          }
-        : column
-    ),
-  }))
+  const defaultAnswers = useMemo(
+    () => ({
+      description: iface.description,
+      overlapAllowed: Boolean(
+        iface.overlapAllowed || iface.overlapAllowed === undefined
+      ),
+      labels: (iface.labels || []).map((column) =>
+        typeof column === "string"
+          ? {
+              id: column,
+              displayName: column,
+              description: column,
+            }
+          : column
+      ),
+    }),
+    [iface]
+  )
   return (
     <Survey
       noActions

@@ -1,10 +1,10 @@
 // @flow weak
 
-import { useEffect } from "react"
+import { useEffectOnce } from "react-use"
 import { action } from "@storybook/addon-actions"
 
 export default (elm, udt) => {
-  useEffect(() => {
+  useEffectOnce(() => {
     const script = document.createElement("script")
     script.onload = () => {
       window.UniversalDataTool.open({
@@ -19,5 +19,5 @@ export default (elm, udt) => {
     script.async = true
     script.src = "http://localhost:1234/index.js"
     window.document.body.appendChild(script)
-  }, [])
+  })
 }

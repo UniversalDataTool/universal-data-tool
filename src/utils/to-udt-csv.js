@@ -3,10 +3,13 @@ import range from "lodash/range"
 import { flatten } from "flat"
 
 export default (obj) => {
+  const AddSamplesKeys = (k) => {
+    sampleKeys.add(k)
+  }
   // Find all possible sample keys
   let sampleKeys = new Set()
   for (const sample of obj.samples) {
-    Object.keys(flatten(sample)).forEach((k) => sampleKeys.add(k))
+    Object.keys(flatten(sample)).forEach((k) => AddSamplesKeys(k))
   }
   sampleKeys = Array.from(sampleKeys).sort(
     (a, b) => a.split(".").length - b.split(".").length

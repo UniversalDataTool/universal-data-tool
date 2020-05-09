@@ -9,7 +9,6 @@ import * as colors from "@material-ui/core/colors"
 import ConfigureImageSegmentation from "../ConfigureImageSegmentation"
 import ConfigureImageClassification from "../ConfigureImageClassification"
 import ConfigureTextClassification from "../ConfigureTextClassification"
-import PaperContainer from "../PaperContainer"
 import ConfigureAudioTranscription from "../ConfigureAudioTranscription"
 import ConfigureNLP from "../ConfigureNLP"
 import ConfigureDataEntry from "../ConfigureDataEntry"
@@ -17,11 +16,9 @@ import ConfigureComposite from "../ConfigureComposite"
 import Configure3D from "../Configure3D"
 import ConfigureVideoSegmentation from "../ConfigureVideoSegmentation"
 import UniversalDataViewer from "../UniversalDataViewer"
-import { setIn } from "seamless-immutable"
 import Grid from "@material-ui/core/Grid"
 import LabelErrorBoundary from "../LabelErrorBoundary"
 import useEventCallback from "use-event-callback"
-import CircularProgress from "@material-ui/core/CircularProgress"
 
 const noop = () => {}
 
@@ -101,7 +98,6 @@ export const ConfigureInterface = ({
 }) => {
   const [previewChangedTime, changePreviewChangedTime] = useState(0)
   const [previewLoading, changePreviewLoading] = useState(false)
-  const [previewVersion, changePreviewVersion] = useState(0)
   const onChange = useEventCallback((...args) => {
     changePreviewChangedTime(Date.now())
     onChangeProp(...args)
@@ -111,7 +107,6 @@ export const ConfigureInterface = ({
     changePreviewLoading(true)
     let timeout = setTimeout(() => {
       changePreviewLoading(false)
-      changePreviewVersion(previewVersion + 1)
     }, 1000)
     return () => {
       clearTimeout(timeout)
@@ -128,7 +123,6 @@ export const ConfigureInterface = ({
               .map((t) => t.oha.interface)
               .find((t) => t.type === type) || {}
           )
-          // onChange(setIn(iface, ["type"], type))
         }}
       />
       <Grid container>
@@ -136,9 +130,9 @@ export const ConfigureInterface = ({
           <Heading>Preview</Heading>
           <PreviewContainer>
             <PreviewContent style={{ opacity: previewLoading ? 0.5 : 1 }}>
-              <LabelErrorBoundary key={previewVersion}>
+              <LabelErrorBoundary key={previewChangedTime}>
                 <UniversalDataViewer
-                  key={previewVersion}
+                  key={previewChangedTime}
                   height={600}
                   onExit={noop}
                   onSaveTaskOutputItem={noop}

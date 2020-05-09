@@ -1,6 +1,6 @@
 //@flow weak
 
-import React, { useCallback, useState } from "react"
+import React, { useCallback } from "react"
 import Drawer from "@material-ui/core/Drawer"
 import { useDropzone } from "react-dropzone"
 import List from "@material-ui/core/List"
@@ -11,7 +11,6 @@ import ListSubheader from "@material-ui/core/ListSubheader"
 import { GoMarkGithub } from "react-icons/go"
 import { makeStyles } from "@material-ui/core/styles"
 import HomeIcon from "@material-ui/icons/Home"
-import { IconContext } from "react-icons"
 import { FaTrashAlt } from "react-icons/fa"
 import templates from "../StartingPage/templates"
 import * as colors from "@material-ui/core/colors"
@@ -32,9 +31,12 @@ export default ({
 }) => {
   const c = useStyles()
 
-  const onDrop = useCallback((acceptedFiles) => {
-    onOpenFile(acceptedFiles[0])
-  }, [])
+  const onDrop = useCallback(
+    (acceptedFiles) => {
+      onOpenFile(acceptedFiles[0])
+    },
+    [onOpenFile]
+  )
 
   function onDeleteFile(i) {
     changeRecentItems(
