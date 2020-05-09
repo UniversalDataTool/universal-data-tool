@@ -14,3 +14,5 @@ jobs:
           node-version: 12
       - name: Run Prettier Test
         run: npx prettier --check "src/**/*.js"
+      - name: Run Lint Test
+        run: npx eslint src

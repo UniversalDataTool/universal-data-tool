@@ -149,7 +149,7 @@ storiesOf("UniversalDataViewer", module)
               fieldName: "Field2",
               interface: {
                 type: "image_segmentation",
-                availableLabels: ["valid", "invalid"],
+                labels: ["valid", "invalid"],
                 regionTypesAllowed: ["bounding-box"],
               },
             },

@@ -158,13 +158,12 @@ export default ({
             {error && <ErrorText>{error}</ErrorText>}
             <CreateNewButton
               fullWidth
-              disabled={error}
+              disabled={!fileOpen || loadingSession || error}
               onClick={() => {
                 posthog.capture("create_collaborative_session")
                 onCreateSession()
                 changeLoadingSession(true)
               }}
-              //disabled={!fileOpen || loadingSession}
             >
               {loadingSession ? (
                 <CircularProgress className="icon" size={24} />

@@ -159,7 +159,7 @@ class LocalStorageHandler {
       content: {
         interface: {
           type: false,
-          availableLabels: false,
+          labels: false,
           regionTypesAllowed: false,
         },
         samples: false,
@@ -175,7 +175,7 @@ class LocalStorageHandler {
     if (isEmpty(objectOfRef)) {
       resultSet.fileName = true
       resultSet.content.interface.type = true
-      resultSet.content.interface.availableLabels = true
+      resultSet.content.interface.labels = true
       resultSet.content.interface.regionTypesAllowed = true
       resultSet.content.samples = true
       resultSet.id = true
@@ -200,7 +200,7 @@ class LocalStorageHandler {
     if (!isEmpty(objectToCheck.content)) {
       if (isEmpty(objectOfRef.content)) {
         resultSet.content.interface.type = true
-        resultSet.content.interface.availableLabels = true
+        resultSet.content.interface.labels = true
         resultSet.content.interface.regionTypesAllowed = true
         resultSet.content.samples = true
       } else if (objectToCheck.content !== objectOfRef.content) {
@@ -208,7 +208,7 @@ class LocalStorageHandler {
         if (!isEmpty(objectToCheck.content.interface)) {
           if (isEmpty(objectOfRef.content.interface)) {
             resultSet.content.interface.type = true
-            resultSet.content.interface.availableLabels = true
+            resultSet.content.interface.labels = true
             resultSet.content.interface.regionTypesAllowed = true
           } else if (
             objectToCheck.content.interface !== objectOfRef.content.interface
@@ -224,15 +224,15 @@ class LocalStorageHandler {
                 resultSet.content.interface.type = true
               }
             }
-            //Check if the availableLabels doesn't exist or have change
-            if (!isEmpty(objectToCheck.content.interface.availableLabels)) {
-              if (isEmpty(objectOfRef.content.interface.availableLabels)) {
-                resultSet.content.interface.availableLabels = true
+            //Check if the labels doesn't exist or have change
+            if (!isEmpty(objectToCheck.content.interface.labels)) {
+              if (isEmpty(objectOfRef.content.interface.labels)) {
+                resultSet.content.interface.labels = true
               } else if (
-                objectToCheck.content.interface.availableLabels !==
-                objectOfRef.content.interface.availableLabels
+                objectToCheck.content.interface.labels !==
+                objectOfRef.content.interface.labels
               ) {
-                resultSet.content.interface.availableLabels = true
+                resultSet.content.interface.labels = true
               }
             }
             //Check if the regionsTypesAllowed doesn't exist or have change

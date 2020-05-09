@@ -1,10 +1,8 @@
 // @flow
 
 import React from "react"
-import Button from "@material-ui/core/Button"
 
 import { storiesOf } from "@storybook/react"
-import { action } from "@storybook/addon-actions"
 
 import Header from "./"
 

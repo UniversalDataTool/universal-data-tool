@@ -32,16 +32,16 @@ export default ({
     () =>
       isClassification
         ? {
-            regionClsList: (iface.availableLabels || []).map((l) =>
+            regionClsList: (iface.labels || []).map((l) =>
               typeof l === "string" ? l : l.id
             ),
           }
         : {
-            regionTagList: (iface.availableLabels || []).map((l) =>
+            regionTagList: (iface.labels || []).map((l) =>
               typeof l === "string" ? l : l.id
             ),
           },
-    [isClassification, iface.availableLabels]
+    [isClassification, iface.labels]
   )
 
   const onExit = useEventCallback((output) => {

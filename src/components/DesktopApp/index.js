@@ -52,9 +52,10 @@ export default () => {
     const saveFileAs = () => saveFile({ saveAs: true })
     const exportToCSV = async () => {
       if (!file) return
-      let { filePath } = await remote.dialog.showSaveDialog({
+      let { cancelled, filePath } = await remote.dialog.showSaveDialog({
         filters: [{ name: ".udt.csv", extensions: ["udt.csv"] }],
       })
+      if (cancelled) return
       filePath =
         !filePath || filePath.endsWith(".csv")
           ? filePath
