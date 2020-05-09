@@ -29,7 +29,7 @@ export default ({
     iface.labels = iface.availableLabels
   }
 
-  const [selectedIndex] = useState(0)
+  const [selectedIndex, changeSelectedIndex] = useState(0)
   const [showTags, changeShowTags] = useState(true)
   const [selectedTool, changeSelectedTool] = useState("select")
 
@@ -57,9 +57,9 @@ export default ({
     iface.multipleRegions || iface.multipleRegions === undefined
 
   const onExit = useEventCallback((output, nextAction) => {
-    const regionMat = (output.images || [])
-      .map((img) => img.regions)
-      .map((riaRegions) => (riaRegions || []).map(convertFromRIARegionFmt))
+    const regionMat = (output.images || []).map((img) =>
+      (img.regions || []).map(convertFromRIARegionFmt)
+    )
 
     for (let i = 0; i < regionMat.length; i++) {
       if (multipleRegions) {
@@ -73,10 +73,30 @@ export default ({
     if (containerProps.onExit) containerProps.onExit(nextAction)
   })
   const onNextImage = useEventCallback((output) => {
-    onExit(output, "go-to-next")
+    if (selectedIndex + 1 > samples.length) {
+      onExit(output, "go-to-next")
+    } else {
+      onSaveTaskOutputItem(
+        selectedIndex,
+        multipleRegions
+          ? output.regions.map(convertFromRIARegionFmt)
+          : convertToRIAImageFmt(output.regions[0])
+      )
+      changeSelectedIndex(selectedIndex + 1)
+    }
   })
   const onPrevImage = useEventCallback((output) => {
-    onExit(output, "go-to-previous")
+    if (selectedIndex - 1 < 0) {
+      onExit(output, "go-to-previous")
+    } else {
+      onSaveTaskOutputItem(
+        selectedIndex,
+        multipleRegions
+          ? output.regions.map(convertFromRIARegionFmt)
+          : convertToRIAImageFmt(output.regions[0])
+      )
+      changeSelectedIndex(selectedIndex - 1)
+    }
   })
 
   const images = useMemo(
