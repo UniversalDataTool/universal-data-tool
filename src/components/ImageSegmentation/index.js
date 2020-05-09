@@ -37,6 +37,16 @@ export default ({
 
   const isClassification = !Boolean(iface.multipleRegionLabels)
 
+  const saveCurrentIndexAnnotation = useEventCallback((output) => {
+    const img = output.images[selectedIndex]
+    onSaveTaskOutputItem(
+      selectedIndex,
+      multipleRegions
+        ? (img.regions || []).map(convertFromRIARegionFmt)
+        : convertToRIAImageFmt((img.regions || [])[0])
+    )
+  })
+
   const labelProps = useMemo(
     () =>
       isClassification
@@ -57,17 +67,7 @@ export default ({
     iface.multipleRegions || iface.multipleRegions === undefined
 
   const onExit = useEventCallback((output, nextAction) => {
-    const regionMat = (output.images || []).map((img) =>
-      (img.regions || []).map(convertFromRIARegionFmt)
-    )
-
-    for (let i = 0; i < regionMat.length; i++) {
-      if (multipleRegions) {
-        onSaveTaskOutputItem(i, regionMat[i])
-      } else {
-        onSaveTaskOutputItem(i, regionMat[i][0])
-      }
-    }
+    saveCurrentIndexAnnotation(output)
     changeShowTags(output.showTags)
     changeSelectedTool(output.selectedTool)
     if (containerProps.onExit) containerProps.onExit(nextAction)
@@ -76,12 +76,7 @@ export default ({
     if (selectedIndex + 1 > samples.length) {
       onExit(output, "go-to-next")
     } else {
-      onSaveTaskOutputItem(
-        selectedIndex,
-        multipleRegions
-          ? output.regions.map(convertFromRIARegionFmt)
-          : convertToRIAImageFmt(output.regions[0])
-      )
+      saveCurrentIndexAnnotation(output)
       changeSelectedIndex(selectedIndex + 1)
     }
   })
@@ -89,12 +84,7 @@ export default ({
     if (selectedIndex - 1 < 0) {
       onExit(output, "go-to-previous")
     } else {
-      onSaveTaskOutputItem(
-        selectedIndex,
-        multipleRegions
-          ? output.regions.map(convertFromRIARegionFmt)
-          : convertToRIAImageFmt(output.regions[0])
-      )
+      saveCurrentIndexAnnotation(output)
       changeSelectedIndex(selectedIndex - 1)
     }
   })
