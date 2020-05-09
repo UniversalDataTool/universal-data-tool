@@ -29,13 +29,23 @@ export default ({
     iface.labels = iface.availableLabels
   }
 
-  const [selectedIndex] = useState(0)
+  const [selectedIndex, changeSelectedIndex] = useState(0)
   const [showTags, changeShowTags] = useState(true)
   const [selectedTool, changeSelectedTool] = useState("select")
 
   const { regionTypesAllowed = ["bounding-box"] } = iface
 
   const isClassification = !Boolean(iface.multipleRegionLabels)
+
+  const saveCurrentIndexAnnotation = useEventCallback((output) => {
+    const img = output.images[selectedIndex]
+    onSaveTaskOutputItem(
+      selectedIndex,
+      multipleRegions
+        ? (img.regions || []).map(convertFromRIARegionFmt)
+        : convertToRIAImageFmt((img.regions || [])[0])
+    )
+  })
 
   const labelProps = useMemo(
     () =>
@@ -57,26 +67,26 @@ export default ({
     iface.multipleRegions || iface.multipleRegions === undefined
 
   const onExit = useEventCallback((output, nextAction) => {
-    const regionMat = (output.images || [])
-      .map((img) => img.regions)
-      .map((riaRegions) => (riaRegions || []).map(convertFromRIARegionFmt))
-
-    for (let i = 0; i < regionMat.length; i++) {
-      if (multipleRegions) {
-        onSaveTaskOutputItem(i, regionMat[i])
-      } else {
-        onSaveTaskOutputItem(i, regionMat[i][0])
-      }
-    }
+    saveCurrentIndexAnnotation(output)
     changeShowTags(output.showTags)
     changeSelectedTool(output.selectedTool)
     if (containerProps.onExit) containerProps.onExit(nextAction)
   })
   const onNextImage = useEventCallback((output) => {
-    onExit(output, "go-to-next")
+    if (selectedIndex + 1 >= samples.length) {
+      onExit(output, "go-to-next")
+    } else {
+      saveCurrentIndexAnnotation(output)
+      changeSelectedIndex(selectedIndex + 1)
+    }
   })
   const onPrevImage = useEventCallback((output) => {
-    onExit(output, "go-to-previous")
+    if (selectedIndex - 1 < 0) {
+      onExit(output, "go-to-previous")
+    } else {
+      saveCurrentIndexAnnotation(output)
+      changeSelectedIndex(selectedIndex - 1)
+    }
   })
 
   const images = useMemo(
