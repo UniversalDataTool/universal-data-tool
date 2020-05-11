@@ -72,18 +72,18 @@ const ExpandedRow = ({ data }) => {
 
 export default ({
   file,
-  oha,
+  dataset,
   openSampleInputEditor,
   openSampleLabelEditor,
   deleteSample,
-  onChangeOHA,
+  onChangeDataset,
   onChangeFile,
   authConfig,
   user,
 }) => {
   const isDesktop = useIsDesktop()
   const [currentTab, changeTabState] = useState(
-    (oha.samples || []).length === 0
+    (dataset.samples || []).length === 0
       ? "import"
       : window.localStorage.lastSampleTab || "grid"
   )
@@ -92,7 +92,7 @@ export default ({
     window.localStorage.lastSampleTab = tab
   }
   const columns = useMemo(() => {
-    if (!oha.samples) return []
+    if (!dataset.samples) return []
     const columns = [
       {
         name: "Index",
@@ -101,7 +101,7 @@ export default ({
       },
     ]
     const knownKeys = new Set()
-    for (const td of oha.samples) {
+    for (const td of dataset.samples) {
       for (const key in td) {
         if (!knownKeys.has(key)) {
           columns.push({
@@ -140,15 +140,15 @@ export default ({
       ),
     })
     return columns
-  }, [oha.samples, deleteSample, openSampleInputEditor, openSampleLabelEditor])
+  }, [dataset.samples, deleteSample, openSampleInputEditor, openSampleLabelEditor])
 
   const data = useMemo(() => {
-    if (!oha.samples) return []
-    return oha.samples.map((td, i) => ({
+    if (!dataset.samples) return []
+    return dataset.samples.map((td, i) => ({
       ...td,
       index: i,
     }))
-  }, [oha.samples])
+  }, [dataset.samples])
   return (
     <Container>
       <Box display="flex">
@@ -159,9 +159,9 @@ export default ({
           <Tab icon={<TableChartIcon />} label="Table" value="table" />
         </Tabs>
         <SampleCounter>
-          {(oha.samples || []).length} Samples
+          {(dataset.samples || []).length} Samples
           <br />
-          {(oha.samples || []).filter((s) => s.annotation).length} Labels
+          {(dataset.samples || []).filter((s) => s.annotation).length} Labels
         </SampleCounter>
       </Box>
       <Box paddingTop={2} />
@@ -171,8 +171,8 @@ export default ({
           isDesktop={isDesktop}
           onChangeFile={(file) => onChangeFile(file)}
           onImportPageShouldExit={() => changeTab("grid")}
-          onChangeOHA={(newOHA) => onChangeOHA(newOHA)}
-          oha={oha}
+          onChangeDataset={(newOHA) => onChangeDataset(newOHA)}
+          dataset={dataset}
           authConfig={authConfig}
           user={user}
         />
@@ -180,9 +180,9 @@ export default ({
       {currentTab === "transform" && (
         <TransformPage
           isDesktop={isDesktop}
-          oha={oha}
-          onChangeOHA={(oha, shouldViewChange) => {
-            onChangeOHA(oha)
+          dataset={dataset}
+          onChangeDataset={(dataset, shouldViewChange) => {
+            onChangeDataset(dataset)
             if (shouldViewChange) {
               changeTab("grid")
             }
@@ -191,9 +191,9 @@ export default ({
       )}
       {currentTab === "grid" && (
         <SampleGrid
-          count={(oha.samples || []).length}
-          samples={oha.samples || []}
-          completed={(oha.samples || []).filter((s) => s.annotation)}
+          count={(dataset.samples || []).length}
+          samples={dataset.samples || []}
+          completed={(dataset.samples || []).filter((s) => s.annotation)}
           onClick={(sampleIndex) => {
             openSampleLabelEditor(sampleIndex)
           }}

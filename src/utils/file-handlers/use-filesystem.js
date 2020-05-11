@@ -70,7 +70,7 @@ export default (file, changeFile) => {
             .slice(0, -1)
             .concat([
               file.fileName +
-                (file.fileName.endsWith(".json") ? "" : ".oha.json"),
+                (file.fileName.endsWith(".json") ? "" : ".dataset.json"),
             ])
             .join("/")
         )

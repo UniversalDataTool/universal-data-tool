@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect, useCallback } from "react"
 import { HeaderContext } from "../Header"
 import StartingPage from "../StartingPage"
-import OHAEditor from "../OHAEditor"
+import DatasetEditor from "../DatasetEditor"
 import ErrorToasts from "../ErrorToasts"
 import useErrors from "../../utils/use-errors.js"
 import useFileHandler from "../../utils/file-handlers"
@@ -35,7 +35,7 @@ export default () => {
   const onCreateTemplate = useEventCallback((template) => {
     changeFile({
       fileName: "unnamed",
-      content: template.oha,
+      content: template.dataset,
       id: randomId(),
       mode: "local-storage",
     })
@@ -180,14 +180,14 @@ export default () => {
           />
         ) : (
           <AppErrorBoundary>
-            <OHAEditor
+            <DatasetEditor
               file={file}
               key={file.id}
               {...file}
               selectedBrush={selectedBrush}
               inSession={inSession}
-              oha={file.content}
-              onChangeOHA={(newOHA) => {
+              dataset={file.content}
+              onChangeDataset={(newOHA) => {
                 changeFile(setIn(file, ["content"], newOHA))
               }}
               onChangeFile={changeFile}

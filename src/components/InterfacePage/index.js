@@ -13,8 +13,8 @@ const Button = styled(MuiButton)({
   margin: 8,
 })
 
-export default ({ oha, onChange, onClickEditJSON, onClearLabelData }) => {
-  const { interface: iface } = oha
+export default ({ dataset, onChange, onClickEditJSON, onClearLabelData }) => {
+  const { interface: iface } = dataset
   const forceUpdate = useUpdate()
   const posthog = usePosthog()
 
