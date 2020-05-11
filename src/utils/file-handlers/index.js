@@ -28,18 +28,18 @@ export default () => {
 
     function handleLoadedFile(content) {
       try {
-        let oha
+        let dataset
         if (fileName.endsWith("csv")) {
-          oha = fromUDTCSV(content)
+          dataset = fromUDTCSV(content)
         } else {
-          oha = JSON.parse(content)
+          dataset = JSON.parse(content)
         }
         // TODO validate OHA and prompt to open anyway if invalid
         changeFile({
           fileName,
           filePath,
           mode: filePath ? "filesystem" : "local-storage",
-          content: oha,
+          content: dataset,
           id: filePath,
         })
       } catch (e) {

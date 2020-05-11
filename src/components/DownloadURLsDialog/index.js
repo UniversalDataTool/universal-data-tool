@@ -37,7 +37,7 @@ function downloadFile(urlToDownload, directoryPath, remote) {
   })
 }
 
-export default ({ open, onChangeOHA, onClose, oha }) => {
+export default ({ open, onChangeDataset, onClose, dataset }) => {
   const { remote } = useElectron() || {}
   const [progress, changeProgress] = useState(null)
   const [errors, changeErrors] = useState("")
@@ -69,13 +69,13 @@ export default ({ open, onChangeOHA, onClose, oha }) => {
               return
             }
 
-            const newSamples = [...oha.samples]
+            const newSamples = [...dataset.samples]
             let errors = ""
 
             // Iterate over each task datum and download the url, then convert
             // the path to a filesystem path
-            for (let i = 0; i < oha.samples.length; i++) {
-              const td = oha.samples[i]
+            for (let i = 0; i < dataset.samples.length; i++) {
+              const td = dataset.samples[i]
               let urlKey
               if (td.imageUrl) urlKey = "imageUrl"
               if (td.videoUrl) urlKey = "videoUrl"
@@ -94,10 +94,10 @@ export default ({ open, onChangeOHA, onClose, oha }) => {
               } catch (e) {
                 errors += `Skipping sample, error downloading samples[${i}] (${urlToDownload}): ${e.toString()} \n`
               }
-              changeProgress((i / oha.samples.length) * 100)
+              changeProgress((i / dataset.samples.length) * 100)
             }
 
-            onChangeOHA(setIn(oha, ["samples"], newSamples))
+            onChangeDataset(setIn(dataset, ["samples"], newSamples))
 
             changeErrors(errors)
             changeProgress(100)

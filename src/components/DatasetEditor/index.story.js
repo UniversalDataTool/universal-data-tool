@@ -5,23 +5,23 @@ import React, { useState } from "react"
 import { storiesOf } from "@storybook/react"
 import { action } from "@storybook/addon-actions"
 
-import OHAEditor from "./"
+import DatasetEditor from "./"
 
 const Controller = (props) => {
-  const [oha, changeOHA] = useState(props.initialOHA)
+  const [dataset, changeOHA] = useState(props.initialOHA)
   return (
-    <OHAEditor
-      oha={oha}
-      onChangeOHA={(...props) => {
+    <DatasetEditor
+      dataset={dataset}
+      onChangeDataset={(...props) => {
         changeOHA(...props)
-        action("onChangeOHA")(...props)
+        action("onChangeDataset")(...props)
       }}
       {...props}
     />
   )
 }
 
-storiesOf("OHAEditor", module).add("Basic", () => (
+storiesOf("DatasetEditor", module).add("Basic", () => (
   <Controller
     initialOHA={{
       interface: {

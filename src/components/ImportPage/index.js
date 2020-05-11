@@ -118,9 +118,9 @@ const Button = ({
 
 export default ({
   file,
-  oha,
+  dataset,
   onChangeFile,
-  onChangeOHA,
+  onChangeDataset,
   isDesktop,
   authConfig,
   user,
@@ -134,8 +134,8 @@ export default ({
         const localSamples = await promptAndGetSamplesFromLocalDirectory({
           electron,
         })
-        onChangeOHA(
-          setIn(oha, ["samples"], (oha.samples || []).concat(localSamples)),
+        onChangeDataset(
+          setIn(dataset, ["samples"], (dataset.samples || []).concat(localSamples)),
           true
         )
         return
@@ -149,8 +149,8 @@ export default ({
   const closeDialog = () => changeDialog(null)
 
   const onAddSamples = useEventCallback(async (samplesToAdd) => {
-    onChangeOHA(
-      setIn(oha, ["samples"], (oha.samples || []).concat(samplesToAdd))
+    onChangeDataset(
+      setIn(dataset, ["samples"], (dataset.samples || []).concat(samplesToAdd))
     )
     closeDialog()
   })

@@ -61,7 +61,7 @@ export default [
     name: "AWS - Cognito",
     provider: "AWS",
     Icon: CognitoIcon,
-    oha: {
+    dataset: {
       interface: {},
       samples: [],
     },

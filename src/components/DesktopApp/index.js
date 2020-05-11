@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react"
 import { HeaderContext } from "../Header"
 import StartingPage from "../StartingPage"
-import OHAEditor from "../OHAEditor"
+import DatasetEditor from "../DatasetEditor"
 import ErrorToasts from "../ErrorToasts"
 import useErrors from "../../utils/use-errors.js"
 import useElectron from "../../utils/use-electron.js"
@@ -33,7 +33,7 @@ export default () => {
   const onCreateTemplate = useEventCallback((template) => {
     changeFile({
       fileName: "unnamed",
-      content: template.oha,
+      content: template.dataset,
       id: randomId(),
       mode: "filesystem",
     })
@@ -154,16 +154,16 @@ export default () => {
             onOpenRecentItem={openRecentItem}
           />
         ) : (
-          <OHAEditor
+          <DatasetEditor
             key={file.id}
             {...file}
             inSession={inSession}
             selectedBrush={selectedBrush}
-            oha={file.content}
+            dataset={file.content}
             onChangeFileName={(newName) => {
               changeFile(setIn(file, ["fileName"], newName))
             }}
-            onChangeOHA={(newOHA) => {
+            onChangeDataset={(newOHA) => {
               changeFile(setIn(file, ["content"], newOHA))
             }}
           />

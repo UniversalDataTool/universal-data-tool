@@ -40,7 +40,7 @@ export const Composite = (props) => {
   if (selectedField) {
     return (
       <UniversalDataViewer
-        oha={{
+        dataset={{
           interface: selectedField.interface,
           samples: [
             {

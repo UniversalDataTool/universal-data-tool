@@ -49,12 +49,12 @@ const headerTabs = ["Setup", "Samples", "Label"]
 export default ({
   file,
   datasetName = "Universal Data Tool",
-  oha,
+  dataset,
   content,
   inSession,
   url,
   fileName = "unnamed",
-  onChangeOHA = () => null,
+  onChangeDataset = () => null,
   onChangeFile,
   onFileDrop,
   initialMode = "setup",
@@ -67,7 +67,7 @@ export default ({
   const c = useStyles()
   const { addToast } = useToasts()
   const [mode, changeMode] = useState(initialMode)
-  const [singleSampleOHA, changeSingleSampleOHA] = useState()
+  const [singleSampleDataset, changeSingleSampleOHA] = useState()
   const [sampleInputEditor, changeSampleInputEditor] = useState({})
   const [jsonText, changeJSONText] = useState()
   const { ipcRenderer } = useElectron() || {}
@@ -95,30 +95,30 @@ export default ({
 
   useEffect(() => {
     if (mode === "json") {
-      changeJSONText(JSON.stringify(oha, null, "  "))
+      changeJSONText(JSON.stringify(dataset, null, "  "))
     }
     if (mode !== "label") {
       changeSingleSampleOHA(null)
     }
     posthog.capture("open_editor_tab", { tab: mode })
-  }, [mode, posthog, changeJSONText, oha])
+  }, [mode, posthog, changeJSONText, dataset])
 
   useEffect(() => {
     if (!jsonText || mode !== "json") return
     try {
       // TODO schema validation etc.
-      onChangeOHA(JSON.parse(jsonText))
+      onChangeDataset(JSON.parse(jsonText))
     } catch (e) {}
-  }, [jsonText, mode, onChangeOHA])
+  }, [jsonText, mode, onChangeDataset])
 
   const onChangeTab = useEventCallback((tab) => changeMode(tab.toLowerCase()))
 
   let percentComplete = 0
-  if (oha.samples && oha.samples.length > 0) {
+  if (dataset.samples && dataset.samples.length > 0) {
     percentComplete =
-      oha.samples
+      dataset.samples
         .map((s) => s.annotation !== undefined && s.annotation !== null)
-        .filter(Boolean).length / oha.samples.length
+        .filter(Boolean).length / dataset.samples.length
   }
 
   return (
@@ -161,21 +161,21 @@ export default ({
         {mode === "setup" && (
           <InterfacePage
             onClickEditJSON={() => changeMode("json")}
-            oha={oha}
+            dataset={dataset}
             onClearLabelData={() => {
-              onChangeOHA(
+              onChangeDataset(
                 setIn(
-                  oha,
+                  dataset,
                   ["samples"],
-                  oha.samples.map((s) => without(s, "annotation"))
+                  dataset.samples.map((s) => without(s, "annotation"))
                 )
               )
             }}
             onChange={(iface) => {
               if (
-                iface.type !== oha.interface.type &&
-                oha.interface.type !== "empty" &&
-                oha.samples.map((s) => s.annotation).some(Boolean)
+                iface.type !== dataset.interface.type &&
+                dataset.interface.type !== "empty" &&
+                dataset.samples.map((s) => s.annotation).some(Boolean)
               ) {
                 addToast(
                   "Changing label types can cause label data issues. You must clear all label data first.",
@@ -183,8 +183,8 @@ export default ({
                 )
                 return
               }
-              onChangeOHA({
-                ...oha,
+              onChangeDataset({
+                ...dataset,
                 interface: iface,
               })
             }}
@@ -193,16 +193,16 @@ export default ({
         {mode === "samples" && (
           <SamplesView
             file={file}
-            oha={oha}
+            dataset={dataset}
             openSampleLabelEditor={(sampleIndex) => {
               changeSingleSampleOHA({
-                ...oha,
-                samples: [oha.samples[sampleIndex]],
+                ...dataset,
+                samples: [dataset.samples[sampleIndex]],
                 sampleIndex,
                 annotationStartTime: Date.now(),
               })
               posthog.capture("open_sample", {
-                interface_type: oha.interface.type,
+                interface_type: dataset.interface.type,
               })
               changeMode("label")
             }}
@@ -210,10 +210,10 @@ export default ({
               changeSampleInputEditor({ open: true, sampleIndex })
             }}
             deleteSample={(sampleIndex) => {
-              const newSamples = [...oha.samples]
+              const newSamples = [...dataset.samples]
               newSamples.splice(sampleIndex, 1)
-              onChangeOHA({
-                ...oha,
+              onChangeDataset({
+                ...dataset,
                 samples: newSamples,
               })
             }}
@@ -221,61 +221,61 @@ export default ({
               onChangeFile(file)
               setValueDisplay(file.fileName)
             }}
-            onChangeOHA={onChangeOHA}
+            onChangeDataset={onChangeDataset}
             authConfig={authConfig}
             user={user}
           />
         )}
-        {mode === "label" && singleSampleOHA ? (
+        {mode === "label" && singleSampleDataset ? (
           <LabelErrorBoundary>
             <UniversalDataViewer
-              datasetName={`Sample ${singleSampleOHA.sampleIndex}`}
+              datasetName={`Sample ${singleSampleDataset.sampleIndex}`}
               onSaveTaskOutputItem={(relativeIndex, output) => {
-                let newOHA = oha
+                let newOHA = dataset
                 newOHA = setIn(
                   newOHA,
-                  ["samples", singleSampleOHA.sampleIndex, "annotation"],
+                  ["samples", singleSampleDataset.sampleIndex, "annotation"],
                   output
                 )
 
                 if (
-                  singleSampleOHA.samples[0].brush !== selectedBrush &&
+                  singleSampleDataset.samples[0].brush !== selectedBrush &&
                   !(
-                    singleSampleOHA.samples[0].brush === undefined &&
+                    singleSampleDataset.samples[0].brush === undefined &&
                     selectedBrush === "complete"
                   )
                 ) {
                   newOHA = setIn(
                     newOHA,
-                    ["samples", singleSampleOHA.sampleIndex, "brush"],
+                    ["samples", singleSampleDataset.sampleIndex, "brush"],
                     selectedBrush
                   )
                 }
                 changeSingleSampleOHA(
                   setIn(
-                    singleSampleOHA,
+                    singleSampleDataset,
                     ["samples", relativeIndex, "annotation"],
                     output
                   )
                 )
-                onChangeOHA(newOHA)
+                onChangeDataset(newOHA)
               }}
               onExit={(nextAction = "nothing") => {
-                if (singleSampleOHA.startTime) {
+                if (singleSampleDataset.startTime) {
                   changeSampleTimeToComplete(
-                    Date.now() - singleSampleOHA.startTime
+                    Date.now() - singleSampleDataset.startTime
                   )
                 }
-                const { sampleIndex } = singleSampleOHA
+                const { sampleIndex } = singleSampleDataset
                 switch (nextAction) {
                   case "go-to-next":
-                    if (sampleIndex !== oha.samples.length - 1) {
+                    if (sampleIndex !== dataset.samples.length - 1) {
                       posthog.capture("next_sample", {
-                        interface_type: oha.interface.type,
+                        interface_type: dataset.interface.type,
                       })
                       changeSingleSampleOHA({
-                        ...oha,
-                        samples: [oha.samples[sampleIndex + 1]],
+                        ...dataset,
+                        samples: [dataset.samples[sampleIndex + 1]],
                         sampleIndex: sampleIndex + 1,
                         startTime: Date.now(),
                       })
@@ -285,8 +285,8 @@ export default ({
                   case "go-to-previous":
                     if (sampleIndex !== 0) {
                       changeSingleSampleOHA({
-                        ...oha,
-                        samples: [oha.samples[sampleIndex - 1]],
+                        ...dataset,
+                        samples: [dataset.samples[sampleIndex - 1]],
                         sampleIndex: sampleIndex - 1,
                         startTime: Date.now(),
                       })
@@ -298,7 +298,7 @@ export default ({
                 }
                 changeSingleSampleOHA(null)
               }}
-              oha={singleSampleOHA}
+              dataset={singleSampleDataset}
               onClickSetup={() => changeMode("setup")}
             />
           </LabelErrorBoundary>
@@ -324,25 +324,25 @@ export default ({
                         Date.now() -
                           timeToCompleteSample *
                             (1 - percentComplete) *
-                            (oha.samples || []).length
+                            (dataset.samples || []).length
                       )
                     ).toString(1, 2),
                   },
                 ]}
               />
               <SampleGrid
-                count={(oha.samples || []).length}
-                samples={oha.samples || []}
-                completed={(oha.samples || []).map((s) =>
+                count={(dataset.samples || []).length}
+                samples={dataset.samples || []}
+                completed={(dataset.samples || []).map((s) =>
                   Boolean(s.annotation)
                 )}
                 onClick={(sampleIndex) => {
                   posthog.capture("open_sample", {
-                    interface_type: oha.interface.type,
+                    interface_type: dataset.interface.type,
                   })
                   changeSingleSampleOHA({
-                    ...oha,
-                    samples: [oha.samples[sampleIndex]],
+                    ...dataset,
+                    samples: [dataset.samples[sampleIndex]],
                     sampleIndex,
                     startTime: Date.now(),
                   })
@@ -356,15 +356,15 @@ export default ({
         {...sampleInputEditor}
         sampleInput={
           sampleInputEditor.sampleIndex !== undefined
-            ? oha.samples[sampleInputEditor.sampleIndex]
+            ? dataset.samples[sampleInputEditor.sampleIndex]
             : null
         }
         onClose={() => {
           changeSampleInputEditor({ open: false })
         }}
         onChange={(newInput) => {
-          onChangeOHA(
-            setIn(oha, ["samples", sampleInputEditor.sampleIndex], newInput)
+          onChangeDataset(
+            setIn(dataset, ["samples", sampleInputEditor.sampleIndex], newInput)
           )
         }}
       />
