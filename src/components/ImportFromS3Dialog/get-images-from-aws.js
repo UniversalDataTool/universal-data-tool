@@ -26,7 +26,7 @@ export default async (result, folderToFetch, configImport, authConfig) => {
             configImport.typeOfFileToLoad === "Audio"
           ) {
             samples.push({ audioUrl: `${result}` })
-          }else if (
+          } else if (
             RecognizeFileExtension(result) === configImport.typeOfFileToLoad &&
             configImport.typeOfFileToLoad === "PDF"
           ) {

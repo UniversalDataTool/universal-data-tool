@@ -204,9 +204,7 @@ export default ({
           Audio: checkInterfaceAndsamples(["Audio", "Empty"], file)
             ? false
             : true,
-          PDF: checkInterfaceAndsamples(["PDF", "Empty"], file)
-            ? false
-            : true,
+          PDF: checkInterfaceAndsamples(["PDF", "Empty"], file) ? false : true,
         },
       })
     }
