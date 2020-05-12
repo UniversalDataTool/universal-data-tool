@@ -95,7 +95,7 @@ const ExpandedRow = ({ data }) => {
 }
 
 function interfaceFileType(type) {
-  if (type === "image_classification" || type === "image_segmentation")
+  if (type === "image_classification" || type === "image_segmentation" || type === "composite")
     return "Image"
   if (type === "video_segmentation") return "Video"
   if (type === "audio_transcription") return "Audio"
