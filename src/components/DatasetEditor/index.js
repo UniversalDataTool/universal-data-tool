@@ -23,6 +23,7 @@ import useEventCallback from "use-event-callback"
 import LabelErrorBoundary from "../LabelErrorBoundary"
 import usePosthog from "../../utils/use-posthog"
 import classnames from "classnames"
+import LabelView from "../LabelView"
 
 import "brace/mode/javascript"
 import "brace/theme/github"
@@ -62,20 +63,20 @@ export default ({
   authConfig,
   user,
   recentItems,
-  selectedBrush = "complete",
+  selectedBrush,
 }) => {
   var [valueDisplay, setValueDisplay] = useState(fileName)
   const c = useStyles()
   const { addToast } = useToasts()
   const [mode, changeMode] = useState(initialMode)
-  const [singleSampleDataset, changeSingleSampleDataset] = useState()
+  const [singleSampleDataset, setSingleSampleDataset] = useState()
   const [sampleInputEditor, changeSampleInputEditor] = useState({})
   const [jsonText, changeJSONText] = useState()
   const { ipcRenderer } = useElectron() || {}
   const posthog = usePosthog()
 
   const [
-    timeToCompleteSample,
+    sampleTimeToComplete,
     changeSampleTimeToComplete,
   ] = useTimeToCompleteSample()
 
@@ -99,7 +100,7 @@ export default ({
       changeJSONText(JSON.stringify(dataset, null, "  "))
     }
     if (mode !== "label") {
-      changeSingleSampleDataset(null)
+      setSingleSampleDataset(null)
     }
     posthog.capture("open_editor_tab", { tab: mode })
   }, [mode, posthog, changeJSONText, dataset])
@@ -113,14 +114,6 @@ export default ({
   }, [jsonText, mode, onChangeDataset])
 
   const onChangeTab = useEventCallback((tab) => changeMode(tab.toLowerCase()))
-
-  let percentComplete = 0
-  if (dataset.samples && dataset.samples.length > 0) {
-    percentComplete =
-      dataset.samples
-        .map((s) => s.annotation !== undefined && s.annotation !== null)
-        .filter(Boolean).length / dataset.samples.length
-  }
 
   return (
     <div className={classnames(c.container, "universaldatatool")}>
@@ -196,7 +189,7 @@ export default ({
             file={file}
             dataset={dataset}
             openSampleLabelEditor={(sampleIndex) => {
-              changeSingleSampleDataset({
+              setSingleSampleDataset({
                 ...dataset,
                 samples: [dataset.samples[sampleIndex]],
                 sampleIndex,
@@ -227,130 +220,17 @@ export default ({
             user={user}
           />
         )}
-        {mode === "label" && singleSampleDataset ? (
-          <LabelErrorBoundary>
-            <UniversalDataViewer
-              datasetName={`Sample ${singleSampleDataset.sampleIndex}`}
-              onSaveTaskOutputItem={(relativeIndex, output) => {
-                let newOHA = dataset
-                newOHA = setIn(
-                  newOHA,
-                  ["samples", singleSampleDataset.sampleIndex, "annotation"],
-                  output
-                )
-
-                if (
-                  singleSampleDataset.samples[0].brush !== selectedBrush &&
-                  !(
-                    singleSampleDataset.samples[0].brush === undefined &&
-                    selectedBrush === "complete"
-                  )
-                ) {
-                  newOHA = setIn(
-                    newOHA,
-                    ["samples", singleSampleDataset.sampleIndex, "brush"],
-                    selectedBrush
-                  )
-                }
-                changeSingleSampleDataset(
-                  setIn(
-                    singleSampleDataset,
-                    ["samples", relativeIndex, "annotation"],
-                    output
-                  )
-                )
-                onChangeDataset(newOHA)
-              }}
-              onExit={(nextAction = "nothing") => {
-                if (singleSampleDataset.startTime) {
-                  changeSampleTimeToComplete(
-                    Date.now() - singleSampleDataset.startTime
-                  )
-                }
-                const { sampleIndex } = singleSampleDataset
-                switch (nextAction) {
-                  case "go-to-next":
-                    if (sampleIndex !== dataset.samples.length - 1) {
-                      posthog.capture("next_sample", {
-                        interface_type: dataset.interface.type,
-                      })
-                      changeSingleSampleDataset({
-                        ...dataset,
-                        samples: [dataset.samples[sampleIndex + 1]],
-                        sampleIndex: sampleIndex + 1,
-                        startTime: Date.now(),
-                      })
-                      return
-                    }
-                    break
-                  case "go-to-previous":
-                    if (sampleIndex !== 0) {
-                      changeSingleSampleDataset({
-                        ...dataset,
-                        samples: [dataset.samples[sampleIndex - 1]],
-                        sampleIndex: sampleIndex - 1,
-                        startTime: Date.now(),
-                      })
-                      return
-                    }
-                    break
-                  default:
-                    break
-                }
-                changeSingleSampleDataset(null)
-              }}
-              dataset={singleSampleDataset}
-              onClickSetup={() => changeMode("setup")}
-            />
-          </LabelErrorBoundary>
-        ) : (
-          mode === "label" && (
-            <PaperContainer>
-              <Stats
-                stats={[
-                  {
-                    name: "Percent Complete",
-                    value: Math.floor(percentComplete * 100) + "%",
-                  },
-                  {
-                    name: "Time per Sample",
-                    value: duration(
-                      new Date(Date.now() - timeToCompleteSample)
-                    ).toString(1, 1),
-                  },
-                  {
-                    name: "Estimated Remaining",
-                    value: duration(
-                      new Date(
-                        Date.now() -
-                          timeToCompleteSample *
-                            (1 - percentComplete) *
-                            (dataset.samples || []).length
-                      )
-                    ).toString(1, 2),
-                  },
-                ]}
-              />
-              <SampleGrid
-                count={(dataset.samples || []).length}
-                samples={dataset.samples || []}
-                completed={(dataset.samples || []).map((s) =>
-                  Boolean(s.annotation)
-                )}
-                onClick={(sampleIndex) => {
-                  posthog.capture("open_sample", {
-                    interface_type: dataset.interface.type,
-                  })
-                  changeSingleSampleDataset({
-                    ...dataset,
-                    samples: [dataset.samples[sampleIndex]],
-                    sampleIndex,
-                    startTime: Date.now(),
-                  })
-                }}
-              />
-            </PaperContainer>
-          )
+        {mode === "label" && (
+          <LabelView
+            selectedBrush={selectedBrush}
+            dataset={dataset}
+            sampleTimeToComplete={sampleTimeToComplete}
+            onChangeSampleTimeToComplete={changeSampleTimeToComplete}
+            onChangeDataset={onChangeDataset}
+            singleSampleDataset={singleSampleDataset}
+            onChangeSingleSampleDataset={setSingleSampleDataset}
+            onClickSetup={() => changeMode("setup")}
+          />
         )}
       </div>
       <EditSampleDialog
