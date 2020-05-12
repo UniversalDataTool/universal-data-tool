@@ -111,7 +111,7 @@ export const ConfigureInterface = ({
     return () => {
       clearTimeout(timeout)
     }
-  }, [previewChangedTime, previewVersion])
+  }, [previewChangedTime])
   return (
     <Container>
       <Heading>Interface Type</Heading>
