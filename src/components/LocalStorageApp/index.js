@@ -113,6 +113,7 @@ export default () => {
       "text_entity_recognition",
       "text_classification",
       "audio_transcription",
+      "composite",
     ]
     if (fileAuthorize.includes(s)) return true
     return false
