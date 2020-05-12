@@ -19,5 +19,6 @@ export default (file) => {
     },
     loadProjectIsSelected: true,
     contentDialogBoxIsSetting: false,
+    projectStarted: false,
   }
 }

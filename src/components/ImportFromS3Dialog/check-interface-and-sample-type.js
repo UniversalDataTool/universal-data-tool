@@ -23,6 +23,7 @@ export default (typeAuthorize, file) => {
     return "File"
   }
   var result = [null, null]
+  if (isEmpty(file)) return false
   result[0] = interfaceFileType(file.content.interface.type)
   result[1] = typesamplesSample(file.content.samples)
   if (typeAuthorize.includes(result[0]) && typeAuthorize.includes(result[1]))

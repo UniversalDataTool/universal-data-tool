@@ -23,6 +23,9 @@ class LocalStorageHandler {
     if (!isEmpty(sample.audioUrl)) {
       url = sample.audioUrl
     }
+    if (!isEmpty(sample.pdfUrl)) {
+      url = sample.pdfUrl
+    }
 
     return url
   }
@@ -47,6 +50,13 @@ class LocalStorageHandler {
       sample = {
         annotation: annotation,
         audioUrl: url,
+        sampleName: sampleName,
+      }
+    }
+    if (type === "PDF") {
+      sample = {
+        annotation: annotation,
+        pdfUrl: url,
         sampleName: sampleName,
       }
     }

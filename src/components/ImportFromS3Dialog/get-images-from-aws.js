@@ -1,6 +1,41 @@
 import RecognizeFileExtension from "../../utils/RecognizeFileExtension"
 import Amplify, { Storage } from "aws-amplify"
 
+function setUrl(result, configImport) {
+  if (configImport.loadProjectIsSelected) {
+    if (RecognizeFileExtension(result) === "Image") {
+      return { imageUrl: `${result}` }
+    } else if (RecognizeFileExtension(result) === "Video") {
+      return { videoUrl: `${result}` }
+    } else if (RecognizeFileExtension(result) === "Audio") {
+      return { audioUrl: `${result}` }
+    } else if (RecognizeFileExtension(result) === "PDF") {
+      return { pdfUrl: `${result}` }
+    }
+  } else {
+    if (
+      RecognizeFileExtension(result) === configImport.typeOfFileToLoad &&
+      configImport.typeOfFileToLoad === "Image"
+    ) {
+      return { imageUrl: `${result}` }
+    } else if (
+      RecognizeFileExtension(result) === configImport.typeOfFileToLoad &&
+      configImport.typeOfFileToLoad === "Video"
+    ) {
+      return { videoUrl: `${result}` }
+    } else if (
+      RecognizeFileExtension(result) === configImport.typeOfFileToLoad &&
+      configImport.typeOfFileToLoad === "Audio"
+    ) {
+      return { audioUrl: `${result}` }
+    } else if (
+      RecognizeFileExtension(result) === configImport.typeOfFileToLoad &&
+      configImport.typeOfFileToLoad === "PDF"
+    ) {
+      return { pdfUrl: `${result}` }
+    }
+  }
+}
 export default async (result, folderToFetch, configImport, authConfig) => {
   Amplify.configure(authConfig)
   var samples = []
@@ -11,27 +46,7 @@ export default async (result, folderToFetch, configImport, authConfig) => {
         level: "private",
       })
         .then((result) => {
-          if (
-            RecognizeFileExtension(result) === configImport.typeOfFileToLoad &&
-            configImport.typeOfFileToLoad === "Image"
-          ) {
-            samples.push({ imageUrl: `${result}` })
-          } else if (
-            RecognizeFileExtension(result) === configImport.typeOfFileToLoad &&
-            configImport.typeOfFileToLoad === "Video"
-          ) {
-            samples.push({ videoUrl: `${result}` })
-          } else if (
-            RecognizeFileExtension(result) === configImport.typeOfFileToLoad &&
-            configImport.typeOfFileToLoad === "Audio"
-          ) {
-            samples.push({ audioUrl: `${result}` })
-          } else if (
-            RecognizeFileExtension(result) === configImport.typeOfFileToLoad &&
-            configImport.typeOfFileToLoad === "PDF"
-          ) {
-            samples.push({ pdfUrl: `${result}` })
-          }
+          samples.push(setUrl(result, configImport))
         })
         .catch((err) => {
           console.log("error getting link for s3 image", err)

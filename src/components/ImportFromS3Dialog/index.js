@@ -95,6 +95,31 @@ const ExpandedRow = ({ data }) => {
     </>
   )
 }
+async function onChangeFileUpdateConfigImport (file,lastObjectRef,setConfigImport,configImport) {
+  if (file === lastObjectRef.current) return
+  var changes = jsonHandler.fileHasChanged(lastObjectRef.current, file)
+  if (changes.content.interface.type) {
+    if (lastObjectRef.current !== {})
+      await setConfigImport(setTypeOfFileToLoadAndDisable(configImport, file))
+  }
+  if (
+    isEmpty(file) ||
+    isEmpty(file.content) ||
+    (isEmpty(file.content.interface) && isEmpty(file.content.samples))
+  ) {
+    setConfigImport({
+      ...configImport,
+      projectStarted: false,
+    })
+  } else {
+    setConfigImport({
+      ...configImport,
+      loadProjectIsSelected: false,
+      projectStarted: true,
+    })
+  }
+  lastObjectRef.current = file
+}
 
 export default ({
   file,
@@ -118,15 +143,8 @@ export default ({
     initConfigImport(file)
   )
   const lastObjectRef = useRef({})
-  useEffect(() => {
-    var changes = jsonHandler.fileHasChanged(lastObjectRef.current, file)
-    if (!changes.content.interface.type) return
-    if (lastObjectRef.current === {}) {
-      lastObjectRef.current = file
-    } else {
-      lastObjectRef.current = file
-      setConfigImport(setTypeOfFileToLoadAndDisable(configImport, file))
-    }
+  useEffect(() =>{
+    onChangeFileUpdateConfigImport(file,lastObjectRef,setConfigImport,configImport)
   }, [file, configImport, setConfigImport])
 
   const handleAddSample = async () => {
@@ -283,7 +301,10 @@ export default ({
                   Load Project
                 </Button>
               ) : (
-                <Button onClick={changeLoadProjectIsSelected}>
+                <Button
+                  onClick={changeLoadProjectIsSelected}
+                  disabled={configImport.projectStarted}
+                >
                   Load Project
                 </Button>
               )}
@@ -345,80 +366,83 @@ export default ({
           ) : (
             <tr>
               <th>
-                <FormControl component="fieldset">
-                  <FormLabel component="legend">
-                    Annotation processing
-                  </FormLabel>
-                  <RadioGroup
-                    aria-label="option1"
-                    onChange={(event) => {
-                      setConfigImport({
-                        ...configImport,
-                        annotationToKeep: event.target.value,
-                      })
-                    }}
-                  >
-                    <FormControlLabel
-                      value="both"
-                      control={<Radio />}
-                      label="Keep both annotations"
-                      checked={configImport.annotationToKeep === "both"}
-                    />
-                    <FormControlLabel
-                      value="incoming"
-                      control={<Radio />}
-                      label="Keep incoming annotations"
-                      checked={configImport.annotationToKeep === "incoming"}
-                    />
-                    <FormControlLabel
-                      value="current"
-                      control={<Radio />}
-                      label="Keep current annotations"
-                      checked={configImport.annotationToKeep === "current"}
-                    />
-                  </RadioGroup>
-                </FormControl>
-                <FormControl component="fieldset">
-                  <FormLabel component="legend">Choose file type</FormLabel>
-                  <RadioGroup
-                    aria-label="option2"
-                    onChange={(event) => {
-                      setConfigImport({
-                        ...configImport,
-                        typeOfFileToLoad: event.target.value,
-                      })
-                    }}
-                  >
-                    <FormControlLabel
-                      value="Image"
-                      control={<Radio />}
-                      label="Load image file"
-                      disabled={configImport.typeOfFileToDisable.Image}
-                      checked={configImport.typeOfFileToLoad === "Image"}
-                    />
-                    <FormControlLabel
-                      value="Video"
-                      control={<Radio />}
-                      label="Load video file"
-                      disabled={configImport.typeOfFileToDisable.Video}
-                      checked={configImport.typeOfFileToLoad === "Video"}
-                    />
-                    <FormControlLabel
-                      value="Audio"
-                      control={<Radio />}
-                      label="Load audio file"
-                      disabled={configImport.typeOfFileToDisable.Audio}
-                      checked={configImport.typeOfFileToLoad === "Audio"}
-                    />
-                    <FormControlLabel
-                      value="PDF"
-                      control={<Radio />}
-                      label="Load PDF file"
-                      disabled={configImport.typeOfFileToDisable.PDF}
-                      checked={configImport.typeOfFileToLoad === "PDF"}
-                    />
-                  </RadioGroup>
-                </FormControl>
+                {configImport.loadProjectIsSelected ? (
+                  <FormControl component="fieldset">
+                    <FormLabel component="legend">
+                      Annotation processing
+                    </FormLabel>
+                    <RadioGroup
+                      aria-label="option1"
+                      onChange={(event) => {
+                        setConfigImport({
+                          ...configImport,
+                          annotationToKeep: event.target.value,
+                        })
+                      }}
+                    >
+                      <FormControlLabel
+                        value="both"
+                        control={<Radio />}
+                        label="Keep both annotations"
+                        checked={configImport.annotationToKeep === "both"}
+                      />
+                      <FormControlLabel
+                        value="incoming"
+                        control={<Radio />}
+                        label="Keep incoming annotations"
+                        checked={configImport.annotationToKeep === "incoming"}
+                      />
+                      <FormControlLabel
+                        value="current"
+                        control={<Radio />}
+                        label="Keep current annotations"
+                        checked={configImport.annotationToKeep === "current"}
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                ) : (
+                  <FormControl component="fieldset">
+                    <FormLabel component="legend">Choose file type</FormLabel>
+                    <RadioGroup
+                      aria-label="option2"
+                      onChange={(event) => {
+                        setConfigImport({
+                          ...configImport,
+                          typeOfFileToLoad: event.target.value,
+                        })
+                      }}
+                    >
+                      <FormControlLabel
+                        value="Image"
+                        control={<Radio />}
+                        label="Load image file"
+                        disabled={configImport.typeOfFileToDisable.Image}
+                        checked={configImport.typeOfFileToLoad === "Image"}
+                      />
+                      <FormControlLabel
+                        value="Video"
+                        control={<Radio />}
+                        label="Load video file"
+                        disabled={configImport.typeOfFileToDisable.Video}
+                        checked={configImport.typeOfFileToLoad === "Video"}
+                      />
+                      <FormControlLabel
+                        value="Audio"
+                        control={<Radio />}
+                        label="Load audio file"
+                        disabled={configImport.typeOfFileToDisable.Audio}
+                        checked={configImport.typeOfFileToLoad === "Audio"}
+                      />
+                      <FormControlLabel
+                        value="PDF"
+                        control={<Radio />}
+                        label="Load PDF file"
+                        disabled={configImport.typeOfFileToDisable.PDF}
+                        checked={configImport.typeOfFileToLoad === "PDF"}
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                )}
               </th>
             </tr>
           )}
