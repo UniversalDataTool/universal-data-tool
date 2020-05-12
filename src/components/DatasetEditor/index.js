@@ -22,6 +22,7 @@ import { setIn, without } from "seamless-immutable"
 import useEventCallback from "use-event-callback"
 import LabelErrorBoundary from "../LabelErrorBoundary"
 import usePosthog from "../../utils/use-posthog"
+import classnames from "classnames"
 
 import "brace/mode/javascript"
 import "brace/theme/github"
@@ -67,7 +68,7 @@ export default ({
   const c = useStyles()
   const { addToast } = useToasts()
   const [mode, changeMode] = useState(initialMode)
-  const [singleSampleDataset, changeSingleSampleOHA] = useState()
+  const [singleSampleDataset, changeSingleSampleDataset] = useState()
   const [sampleInputEditor, changeSampleInputEditor] = useState({})
   const [jsonText, changeJSONText] = useState()
   const { ipcRenderer } = useElectron() || {}
@@ -98,7 +99,7 @@ export default ({
       changeJSONText(JSON.stringify(dataset, null, "  "))
     }
     if (mode !== "label") {
-      changeSingleSampleOHA(null)
+      changeSingleSampleDataset(null)
     }
     posthog.capture("open_editor_tab", { tab: mode })
   }, [mode, posthog, changeJSONText, dataset])
@@ -122,7 +123,7 @@ export default ({
   }
 
   return (
-    <div className={c.container}>
+    <div className={classnames(c.container, "universaldatatool")}>
       <Header
         title={
           inSession ? (
@@ -195,7 +196,7 @@ export default ({
             file={file}
             dataset={dataset}
             openSampleLabelEditor={(sampleIndex) => {
-              changeSingleSampleOHA({
+              changeSingleSampleDataset({
                 ...dataset,
                 samples: [dataset.samples[sampleIndex]],
                 sampleIndex,
@@ -251,7 +252,7 @@ export default ({
                     selectedBrush
                   )
                 }
-                changeSingleSampleOHA(
+                changeSingleSampleDataset(
                   setIn(
                     singleSampleDataset,
                     ["samples", relativeIndex, "annotation"],
@@ -273,7 +274,7 @@ export default ({
                       posthog.capture("next_sample", {
                         interface_type: dataset.interface.type,
                       })
-                      changeSingleSampleOHA({
+                      changeSingleSampleDataset({
                         ...dataset,
                         samples: [dataset.samples[sampleIndex + 1]],
                         sampleIndex: sampleIndex + 1,
@@ -284,7 +285,7 @@ export default ({
                     break
                   case "go-to-previous":
                     if (sampleIndex !== 0) {
-                      changeSingleSampleOHA({
+                      changeSingleSampleDataset({
                         ...dataset,
                         samples: [dataset.samples[sampleIndex - 1]],
                         sampleIndex: sampleIndex - 1,
@@ -296,7 +297,7 @@ export default ({
                   default:
                     break
                 }
-                changeSingleSampleOHA(null)
+                changeSingleSampleDataset(null)
               }}
               dataset={singleSampleDataset}
               onClickSetup={() => changeMode("setup")}
@@ -340,7 +341,7 @@ export default ({
                   posthog.capture("open_sample", {
                     interface_type: dataset.interface.type,
                   })
-                  changeSingleSampleOHA({
+                  changeSingleSampleDataset({
                     ...dataset,
                     samples: [dataset.samples[sampleIndex]],
                     sampleIndex,

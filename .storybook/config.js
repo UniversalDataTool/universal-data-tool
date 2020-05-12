@@ -1,6 +1,7 @@
 import React from "react"
 import { configure, addDecorator } from "@storybook/react"
 import Theme from "../src/components/Theme"
+import "../src/App.css"
 
 export const themeDecorator = (storyFn) => {
   // TODO wrap w/ theme
