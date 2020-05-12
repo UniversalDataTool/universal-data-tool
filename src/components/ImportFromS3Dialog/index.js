@@ -18,7 +18,9 @@ import GetAnnotationFromAFolderAWS from "./get-annotation-from-aws"
 import GetImageFromAFolderAWS from "./get-images-from-aws"
 import setButtonNameAddSample from "./set-button-add-sample-name"
 import jsonHandler from "../../utils/file-handlers/udt-helper"
-import { setIn } from "seamless-immutable"
+import setTypeOfFileToLoadAndDisable from "./set-type-of-file-to-load-and-disable"
+import initConfigImport from "./init-config-import"
+import setAnnotationFromAws from "./set-annotation-from-aws"
 
 const selectedStyle = { color: "DodgerBlue" }
 const tableStyle = {
@@ -94,58 +96,6 @@ const ExpandedRow = ({ data }) => {
   )
 }
 
-function interfaceFileType(type) {
-  if (
-    type === "image_classification" ||
-    type === "image_segmentation" ||
-    type === "composite"
-  )
-    return "Image"
-  if (type === "video_segmentation") return "Video"
-  if (type === "audio_transcription") return "Audio"
-  if (type === "data_entry") return "PDF"
-  if (isEmpty(type)) return "Empty"
-  return "File"
-}
-
-function typesamplesSample(samples) {
-  if (isEmpty(samples) || isEmpty(samples[0])) return "Empty"
-  if (!isEmpty(samples[0].imageUrl)) return "Image"
-  if (!isEmpty(samples[0].videoUrl)) return "Video"
-  if (!isEmpty(samples[0].audioUrl)) return "Audio"
-  return "File"
-}
-function checkInterfaceAndsamples(typeAuthorize, file) {
-  var result = [null, null]
-  result[0] = interfaceFileType(file.content.interface.type)
-  result[1] = typesamplesSample(file.content.samples)
-  if (typeAuthorize.includes(result[0]) && typeAuthorize.includes(result[1]))
-    return true
-  return false
-}
-function initConfigImport(file) {
-  return {
-    annotationToKeep: "both",
-    typeOfFileToLoad: checkInterfaceAndsamples(["Image", "Empty"], file)
-      ? "Image"
-      : checkInterfaceAndsamples(["Video", "Empty"], file)
-      ? "Video"
-      : checkInterfaceAndsamples(["Audio", "Empty"], file)
-      ? "Audio"
-      : checkInterfaceAndsamples(["PDF", "Empty"], file)
-      ? "PDF"
-      : "None",
-    typeOfFileToDisable: {
-      Image: checkInterfaceAndsamples(["Image", "Empty"], file) ? false : true,
-      Video: checkInterfaceAndsamples(["Video", "Empty"], file) ? false : true,
-      Audio: checkInterfaceAndsamples(["Audio", "Empty"], file) ? false : true,
-      PDF: checkInterfaceAndsamples(["PDF", "Empty"], file) ? false : true,
-    },
-    loadProjectIsSelected: true,
-    contentDialogBoxIsSetting: false,
-  }
-}
-
 export default ({
   file,
   open,
@@ -175,38 +125,7 @@ export default ({
       lastObjectRef.current = file
     } else {
       lastObjectRef.current = file
-      setConfigImport({
-        ...configImport,
-        typeOfFileToLoad:
-          !isEmpty(configImport) &&
-          !isEmpty(configImport.typeOfFileToLoad) &&
-          checkInterfaceAndsamples(
-            [configImport.typeOfFileToLoad, "Empty"],
-            file
-          )
-            ? configImport.typeOfFileToLoad
-            : checkInterfaceAndsamples(["Image", "Empty"], file)
-            ? "Image"
-            : checkInterfaceAndsamples(["Video", "Empty"], file)
-            ? "Video"
-            : checkInterfaceAndsamples(["Audio", "Empty"], file)
-            ? "Audio"
-            : checkInterfaceAndsamples(["PDF", "Empty"], file)
-            ? "PDF"
-            : "None",
-        typeOfFileToDisable: {
-          Image: checkInterfaceAndsamples(["Image", "Empty"], file)
-            ? false
-            : true,
-          Video: checkInterfaceAndsamples(["Video", "Empty"], file)
-            ? false
-            : true,
-          Audio: checkInterfaceAndsamples(["Audio", "Empty"], file)
-            ? false
-            : true,
-          PDF: checkInterfaceAndsamples(["PDF", "Empty"], file) ? false : true,
-        },
-      })
+      setConfigImport(setTypeOfFileToLoadAndDisable(configImport, file))
     }
   }, [file, configImport, setConfigImport])
 
@@ -235,25 +154,7 @@ export default ({
     ) {
       onAddSamples(samples)
     } else {
-      var contentOldFile = file.content
-      contentOldFile = setIn(
-        contentOldFile,
-        ["samples"],
-        jsonHandler.concatSample(
-          file.content.samples,
-          json.content.samples,
-          configImport.annotationToKeep
-        )
-      )
-
-      contentOldFile = setIn(
-        contentOldFile,
-        ["interface"],
-        json.content.interface
-      )
-      file = setIn(file, ["content"], contentOldFile)
-      if (isEmpty(file.fileName) || file.fileName === "unnamed")
-        file = setIn(file, ["fileName"], json.fileName)
+      file = setAnnotationFromAws(file, json, configImport)
       onChangeFile(file, true)
       onAddSamples([])
     }
