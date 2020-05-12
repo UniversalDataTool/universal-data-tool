@@ -103,6 +103,7 @@ function interfaceFileType(type) {
     return "Image"
   if (type === "video_segmentation") return "Video"
   if (type === "audio_transcription") return "Audio"
+  if (type === "data_entry") return "PDF"
   if (isEmpty(type)) return "Empty"
   return "File"
 }
@@ -131,11 +132,14 @@ function initConfigImport(file) {
       ? "Video"
       : checkInterfaceAndsamples(["Audio", "Empty"], file)
       ? "Audio"
+      : checkInterfaceAndsamples(["PDF", "Empty"], file)
+      ? "PDF"
       : "None",
     typeOfFileToDisable: {
       Image: checkInterfaceAndsamples(["Image", "Empty"], file) ? false : true,
       Video: checkInterfaceAndsamples(["Video", "Empty"], file) ? false : true,
       Audio: checkInterfaceAndsamples(["Audio", "Empty"], file) ? false : true,
+      PDF: checkInterfaceAndsamples(["PDF", "Empty"], file) ? false : true,
     },
     loadProjectIsSelected: true,
     contentDialogBoxIsSetting: false,
@@ -187,6 +191,8 @@ export default ({
             ? "Video"
             : checkInterfaceAndsamples(["Audio", "Empty"], file)
             ? "Audio"
+            : checkInterfaceAndsamples(["PDF", "Empty"], file)
+            ? "PDF"
             : "None",
         typeOfFileToDisable: {
           Image: checkInterfaceAndsamples(["Image", "Empty"], file)
@@ -196,6 +202,9 @@ export default ({
             ? false
             : true,
           Audio: checkInterfaceAndsamples(["Audio", "Empty"], file)
+            ? false
+            : true,
+          PDF: checkInterfaceAndsamples(["PDF", "Empty"], file)
             ? false
             : true,
         },
@@ -501,6 +510,13 @@ export default ({
                       label="Load audio file"
                       disabled={configImport.typeOfFileToDisable.Audio}
                       checked={configImport.typeOfFileToLoad === "Audio"}
+                    />
+                    <FormControlLabel
+                      value="PDF"
+                      control={<Radio />}
+                      label="Load PDF file"
+                      disabled={configImport.typeOfFileToDisable.PDF}
+                      checked={configImport.typeOfFileToLoad === "PDF"}
                     />
                   </RadioGroup>
                 </FormControl>

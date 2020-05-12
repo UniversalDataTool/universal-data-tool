@@ -114,6 +114,7 @@ export default () => {
       "text_classification",
       "audio_transcription",
       "composite",
+      "data_entry",
     ]
     if (fileAuthorize.includes(s)) return true
     return false

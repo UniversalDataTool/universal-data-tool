@@ -11,7 +11,6 @@ export default async (result, folderToFetch, configImport, authConfig) => {
         level: "private",
       })
         .then((result) => {
-          result = decodeURI(result)
           if (
             RecognizeFileExtension(result) === configImport.typeOfFileToLoad &&
             configImport.typeOfFileToLoad === "Image"
@@ -27,6 +26,11 @@ export default async (result, folderToFetch, configImport, authConfig) => {
             configImport.typeOfFileToLoad === "Audio"
           ) {
             samples.push({ audioUrl: `${result}` })
+          }else if (
+            RecognizeFileExtension(result) === configImport.typeOfFileToLoad &&
+            configImport.typeOfFileToLoad === "PDF"
+          ) {
+            samples.push({ pdfUrl: `${result}` })
           }
         })
         .catch((err) => {

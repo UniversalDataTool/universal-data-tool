@@ -122,7 +122,8 @@ class LocalStorageHandler {
       "image_classification" === typeProject ||
       "image_segmentation" === typeProject ||
       "audio_transcription" === typeProject ||
-      "composite" === typeProject
+      "composite" === typeProject ||
+      "data_entry" === typeProject
     )
       return "file"
     return ""
