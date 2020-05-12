@@ -14,7 +14,7 @@ storiesOf("ImageSegmentation", module).add("Basic", () => (
       interface: {
         type: "image_segmentation",
         description: "# Title\n\nLowercase",
-        availableLabels: ["valid", "invalid"],
+        labels: ["valid", "invalid"],
         regionTypesAllowed: [
           "bounding-box",
           "polygon",

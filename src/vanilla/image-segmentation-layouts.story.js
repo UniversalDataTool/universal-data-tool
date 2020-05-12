@@ -5,10 +5,10 @@ import React from "react"
 import useVanilla from "./use-vanilla"
 import { storiesOf } from "@storybook/react"
 
-const useVanillaImageClassification = () => {
+const useVanillaImageSegmentation = () => {
   useVanilla("udt", {
     interface: {
-      type: "image_classification",
+      type: "image_segmentation",
       labels: ["A", "B"],
     },
     samples: [
@@ -20,9 +20,9 @@ const useVanillaImageClassification = () => {
   })
 }
 
-storiesOf("Vanilla Image Classification", module)
+storiesOf("Vanilla Image Segmentation", module)
   .add("Layout 1", () => {
-    useVanillaImageClassification()
+    useVanillaImageSegmentation()
     return (
       <div>
         you must be running the vanilla dev server for these examples to work
@@ -32,7 +32,7 @@ storiesOf("Vanilla Image Classification", module)
     )
   })
   .add("Layout 2", () => {
-    useVanillaImageClassification()
+    useVanillaImageSegmentation()
     return (
       <div>
         you must be running the vanilla dev server for these examples to work
@@ -46,7 +46,7 @@ storiesOf("Vanilla Image Classification", module)
     )
   })
   .add("Layout 3", () => {
-    useVanillaImageClassification()
+    useVanillaImageSegmentation()
     return (
       <div>
         you must be running the vanilla dev server for these examples to work

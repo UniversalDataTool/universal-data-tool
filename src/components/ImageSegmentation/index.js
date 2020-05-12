@@ -24,7 +24,12 @@ export default ({
   containerProps = emptyObj,
   onSaveTaskOutputItem,
 }) => {
-  const [selectedIndex] = useState(0)
+  // TODO remove legacy "availableLabels" support
+  if (iface.availableLabels && !iface.labels) {
+    iface.labels = iface.availableLabels
+  }
+
+  const [selectedIndex, changeSelectedIndex] = useState(0)
   const [showTags, changeShowTags] = useState(true)
   const [selectedTool, changeSelectedTool] = useState("select")
 
@@ -32,46 +37,56 @@ export default ({
 
   const isClassification = !Boolean(iface.multipleRegionLabels)
 
+  const saveCurrentIndexAnnotation = useEventCallback((output) => {
+    const img = output.images[selectedIndex]
+    onSaveTaskOutputItem(
+      selectedIndex,
+      multipleRegions
+        ? (img.regions || []).map(convertFromRIARegionFmt)
+        : convertToRIAImageFmt((img.regions || [])[0])
+    )
+  })
+
   const labelProps = useMemo(
     () =>
       isClassification
         ? {
-            regionClsList: (iface.availableLabels || []).map((l) =>
+            regionClsList: (iface.labels || []).map((l) =>
               typeof l === "string" ? l : l.id
             ),
           }
         : {
-            regionTagList: (iface.availableLabels || []).map((l) =>
+            regionTagList: (iface.labels || []).map((l) =>
               typeof l === "string" ? l : l.id
             ),
           },
-    [isClassification, iface.availableLabels]
+    [isClassification, iface.labels]
   )
 
   const multipleRegions =
     iface.multipleRegions || iface.multipleRegions === undefined
 
   const onExit = useEventCallback((output, nextAction) => {
-    const regionMat = (output.images || [])
-      .map((img) => img.regions)
-      .map((riaRegions) => (riaRegions || []).map(convertFromRIARegionFmt))
-
-    for (let i = 0; i < regionMat.length; i++) {
-      if (multipleRegions) {
-        onSaveTaskOutputItem(i, regionMat[i])
-      } else {
-        onSaveTaskOutputItem(i, regionMat[i][0])
-      }
-    }
+    saveCurrentIndexAnnotation(output)
     changeShowTags(output.showTags)
     changeSelectedTool(output.selectedTool)
     if (containerProps.onExit) containerProps.onExit(nextAction)
   })
   const onNextImage = useEventCallback((output) => {
-    onExit(output, "go-to-next")
+    if (selectedIndex + 1 >= samples.length) {
+      onExit(output, "go-to-next")
+    } else {
+      saveCurrentIndexAnnotation(output)
+      changeSelectedIndex(selectedIndex + 1)
+    }
   })
   const onPrevImage = useEventCallback((output) => {
-    onExit(output, "go-to-previous")
+    if (selectedIndex - 1 < 0) {
+      onExit(output, "go-to-previous")
+    } else {
+      saveCurrentIndexAnnotation(output)
+      changeSelectedIndex(selectedIndex - 1)
+    }
   })
 
   const images = useMemo(
@@ -98,7 +113,8 @@ export default ({
   return (
     <div
       style={{
-        height: containerProps.height || "calc(100vh - 70px)",
+        height: containerProps.height || "calc(100% - 70px)",
+        minHeight: 600,
         width: "100%",
       }}
     >

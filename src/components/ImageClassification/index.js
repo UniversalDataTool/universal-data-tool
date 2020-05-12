@@ -100,17 +100,22 @@ export default ({
   containerProps = emptyObj,
   onSaveTaskOutputItem,
 }) => {
-  if (!iface.availableLabels)
+  // TODO remove legacy "availableLabels" support
+  if (iface.availableLabels && !iface.labels) {
+    iface.labels = iface.availableLabels
+  }
+
+  if (!iface.labels)
     throw new Error("No labels defined. Add some labels in Setup to continue.")
   const [sampleIndex, changeSampleIndex] = useState(0)
   const [enlargedLabel, changeEnlargedLabel] = useState(null)
   const [currentOutput, changeCurrentOutput] = useState(emptyArr)
   const labels = useMemo(
     () =>
-      iface.availableLabels.map((l) =>
+      iface.labels.map((l) =>
         typeof l === "string" ? { id: l, description: l } : l
       ),
-    [iface.availableLabels]
+    [iface.labels]
   )
 
   const onDone = useEventCallback(() => {
@@ -206,7 +211,10 @@ export default ({
 
   return (
     <Container
-      style={{ height: containerProps.height || "calc(100vh - 70px)" }}
+      style={{
+        height: containerProps.height || "calc(100% - 70px)",
+        minHeight: 600,
+      }}
     >
       <ImageContainer>
         <Image src={samples[sampleIndex].imageUrl} />

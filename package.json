@@ -1,6 +1,6 @@
 {
   "name": "universal-data-tool",
-  "version": "0.10.4",
+  "version": "0.10.7",
   "license": "MIT",
   "main": "desktop/main.js",
   "homepage": "https://universaldatatool.com",
@@ -25,8 +25,9 @@
     "gh-pages": "npm run build:web && npm run build:vanilla && cp lib/vanilla.js build/vanilla.js && cp ./CNAME ./build/CNAME && gh-pages -d build",
     "prettier": "prettier --write \"src/**/*.js\"",
     "test:prettier": "prettier --check \"src/**/*.js\"",
+    "test:lint": "npx eslint src",
     "test:integration:dev": "./node_modules/cypress/bin/cypress open",
-    "test:integration": "./node_modules/cypress/bin/cypress run"
+    "test:integration": "./node_modules/cypress/bin/cypress run --env failOnSnapshotDiff=false"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -57,6 +58,8 @@
     "chroma-js": "^2.0.4",
     "cross-env": "^7.0.0",
     "cypress": "^4.4.0",
+    "cypress-file-upload": "^4.0.6",
+    "cypress-image-snapshot": "^3.1.1",
     "electron": "^8.0.0",
     "electron-builder": "^22.3.2",
     "electron-builder-notarize": "^1.1.2",

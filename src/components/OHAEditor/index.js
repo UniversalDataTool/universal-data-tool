@@ -147,7 +147,7 @@ export default ({
         currentTab={mode}
         tabs={headerTabs}
       />
-      <div style={{ overflowY: "scroll" }}>
+      <div style={{ height: "100%", overflowY: "scroll" }}>
         {mode === "json" && (
           <AceEditor
             theme="github"

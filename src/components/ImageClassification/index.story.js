@@ -15,7 +15,7 @@ storiesOf("ImageClassification", module)
         interface: {
           type: "image_segmentation",
           description: "# Title\n\nLowercase",
-          availableLabels: ["valid", "invalid"],
+          labels: ["valid", "invalid"],
         },
         samples: [
           {
@@ -38,7 +38,7 @@ storiesOf("ImageClassification", module)
         interface: {
           type: "image_segmentation",
           description: "# Title\n\nLowercase",
-          availableLabels: ["valid", "invalid"],
+          labels: ["valid", "invalid"],
           allowMultiple: true,
         },
         samples: [

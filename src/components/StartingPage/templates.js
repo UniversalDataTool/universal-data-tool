@@ -26,7 +26,7 @@ export const templates = [
     oha: {
       interface: {
         type: "image_segmentation",
-        availableLabels: ["valid", "invalid"],
+        labels: ["valid", "invalid"],
         regionTypesAllowed: [
           "bounding-box",
           "polygon",
@@ -53,7 +53,7 @@ export const templates = [
     oha: {
       interface: {
         type: "image_classification",
-        availableLabels: ["valid", "invalid"],
+        labels: ["valid", "invalid"],
       },
       samples: [
         {
@@ -73,7 +73,7 @@ export const templates = [
     oha: {
       interface: {
         type: "video_segmentation",
-        availableLabels: ["valid", "invalid"],
+        labels: ["valid", "invalid"],
         regionTypesAllowed: ["bounding-box", "polygon", "point"],
       },
       samples: [
@@ -206,7 +206,7 @@ export const templates = [
             fieldName: "segmentation",
             interface: {
               type: "image_segmentation",
-              availableLabels: ["group text"],
+              labels: ["group text"],
               regionTypesAllowed: ["bounding-box"],
             },
           },

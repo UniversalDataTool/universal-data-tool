@@ -98,7 +98,6 @@ export const ConfigureInterface = ({
 }) => {
   const [previewChangedTime, changePreviewChangedTime] = useState(0)
   const [previewLoading, changePreviewLoading] = useState(false)
-  const [previewVersion, changePreviewVersion] = useState(0)
   const onChange = useEventCallback((...args) => {
     changePreviewChangedTime(Date.now())
     onChangeProp(...args)
@@ -108,7 +107,6 @@ export const ConfigureInterface = ({
     changePreviewLoading(true)
     let timeout = setTimeout(() => {
       changePreviewLoading(false)
-      changePreviewVersion(previewVersion + 1)
     }, 1000)
     return () => {
       clearTimeout(timeout)
@@ -125,7 +123,6 @@ export const ConfigureInterface = ({
               .map((t) => t.oha.interface)
               .find((t) => t.type === type) || {}
           )
-          // onChange(setIn(iface, ["type"], type))
         }}
       />
       <Grid container>
@@ -133,9 +130,9 @@ export const ConfigureInterface = ({
           <Heading>Preview</Heading>
           <PreviewContainer>
             <PreviewContent style={{ opacity: previewLoading ? 0.5 : 1 }}>
-              <LabelErrorBoundary key={previewVersion}>
+              <LabelErrorBoundary key={previewChangedTime}>
                 <UniversalDataViewer
-                  key={previewVersion}
+                  key={previewChangedTime}
                   height={600}
                   onExit={noop}
                   onSaveTaskOutputItem={noop}

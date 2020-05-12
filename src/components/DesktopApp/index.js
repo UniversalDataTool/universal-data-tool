@@ -55,6 +55,7 @@ export default () => {
       let { filePath } = await remote.dialog.showSaveDialog({
         filters: [{ name: ".udt.csv", extensions: ["udt.csv"] }],
       })
+      if (cancelled) return
       filePath =
         !filePath || filePath.endsWith(".csv")
           ? filePath

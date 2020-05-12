@@ -7,6 +7,7 @@ import PaperContainer from "../PaperContainer"
 import Box from "@material-ui/core/Box"
 import MuiButton from "@material-ui/core/Button"
 import { styled } from "@material-ui/core/styles"
+import { useUpdate } from "react-use"
 
 const Button = styled(MuiButton)({
   margin: 8,
@@ -14,6 +15,7 @@ const Button = styled(MuiButton)({
 
 export default ({ oha, onChange, onClickEditJSON, onClearLabelData }) => {
   const { interface: iface } = oha
+  const forceUpdate = useUpdate()
   const posthog = usePosthog()
 
   return (
@@ -45,23 +47,21 @@ export default ({ oha, onChange, onClickEditJSON, onClearLabelData }) => {
             Clear All Labels
           </Button>
           <Button
-            onClick={onClickEditJSON}
             variant="outlined"
-            /*onClick={() => {
+            onClick={() => {
               if (posthog.has_opted_out_capturing()) {
                 posthog.opt_in_capturing()
               } else {
                 posthog.opt_out_capturing()
               }
               forceUpdate()
-            }}*/
+            }}
           >
             {posthog.has_opted_out_capturing() ? "Enable" : "Disable"} Telemetry
           </Button>
           <Button
-            onClick={onClickEditJSON}
             variant="outlined"
-            /*onClick={() => {
+            onClick={() => {
               const response = window.prompt(
                 "Input URL for new collaboration server (empty to use universaldatatool.com):",
                 window.localStorage.getItem("CUSTOM_COLLABORATION_SERVER") || ""
@@ -72,7 +72,7 @@ export default ({ oha, onChange, onClickEditJSON, onClearLabelData }) => {
                 response
               )
               window.location.reload()
-            }}*/
+            }}
           >
             Custom Collaboration Server
           </Button>

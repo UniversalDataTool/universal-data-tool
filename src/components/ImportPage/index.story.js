@@ -14,7 +14,7 @@ storiesOf("ImportPage", module)
       oha={{
         interface: {
           type: "image_segmentation",
-          availableLabels: ["valid", "invalid"],
+          labels: ["valid", "invalid"],
           regionTypesAllowed: [
             "bounding-box",
             "polygon",
@@ -43,7 +43,7 @@ storiesOf("ImportPage", module)
       oha={{
         interface: {
           type: "image_segmentation",
-          availableLabels: ["valid", "invalid"],
+          labels: ["valid", "invalid"],
           regionTypesAllowed: [
             "bounding-box",
             "polygon",

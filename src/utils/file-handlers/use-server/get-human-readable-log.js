@@ -9,23 +9,10 @@ export default (changeLog) => {
         message: `${userName} changed the project settings`,
       })
     } else if (path.startsWith("/taskOutput")) {
-      const sampleMatch = path.match(/\/taskOutput\/([^/]+)/)
-      if (sampleMatch) {
-        humanReadableChangeLog.push({
-          type: "info",
-          message: `${userName} labeled sample ${sampleMatch[1]}`,
-        })
-      } else {
-        humanReadableChangeLog.push({
-          type: "info",
-          message: `${userName} changed many samples`,
-        })
-      }
-    } else if (path.startsWith("/samples")) {
-      if (path.endsWith("brush")) continue
+      const sampleMatch = path.match(/\/samples\/([^/]+)/)
       humanReadableChangeLog.push({
-        type: "warning",
-        message: `${userName} changed sample data`,
+        type: "info",
+        message: `${userName} changed sample ${sampleMatch[1]}`,
       })
     } else {
       humanReadableChangeLog.push({
