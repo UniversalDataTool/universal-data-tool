@@ -1,0 +1,386 @@
+[33md040bb6[m[33m ([m[1;36mHEAD -> [m[1;32msquash[m[33m)[m HEAD@{0}: reset: moving to ORIG_HEAD
+[33mcf3e835[m[33m ([m[1;31morigin/squash2[m[33m, [m[1;31morigin/squash[m[33m)[m HEAD@{1}: reset: moving to origin/squash
+[33md040bb6[m[33m ([m[1;36mHEAD -> [m[1;32msquash[m[33m)[m HEAD@{2}: reset: moving to HEAD@{4}
+[33mcf3e835[m[33m ([m[1;31morigin/squash2[m[33m, [m[1;31morigin/squash[m[33m)[m HEAD@{3}: reset: moving to HEAD@{1}
+[33mcf3e835[m[33m ([m[1;31morigin/squash2[m[33m, [m[1;31morigin/squash[m[33m)[m HEAD@{4}: reset: moving to HEAD@{4}
+[33mcf3e835[m[33m ([m[1;31morigin/squash2[m[33m, [m[1;31morigin/squash[m[33m)[m HEAD@{5}: checkout: moving from 9e06a4dcd97dfceabb5912a9fe0845bd36c77313 to squash
+[33m9e06a4d[m HEAD@{6}: commit: squash
+[33md040bb6[m[33m ([m[1;36mHEAD -> [m[1;32msquash[m[33m)[m HEAD@{7}: rebase (pick): 0.1.9
+[33mc431b0c[m HEAD@{8}: rebase (start): checkout 9d7d2e8c2d8e436ac1254d7e06372543d5552473
+[33mcf3e835[m[33m ([m[1;31morigin/squash2[m[33m, [m[1;31morigin/squash[m[33m)[m HEAD@{9}: checkout: moving from master to squash2
+[33meeeb554[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/AllModifFeatureCognitoS3[m[33m, [m[1;32msquash3[m[33m, [m[1;32mmaster[m[33m, [m[1;32mAllModifFeatureCognitoS3[m[33m)[m HEAD@{10}: rebase (finish): returning to refs/heads/master
+[33meeeb554[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/AllModifFeatureCognitoS3[m[33m, [m[1;32msquash3[m[33m, [m[1;32mmaster[m[33m, [m[1;32mAllModifFeatureCognitoS3[m[33m)[m HEAD@{11}: rebase (start): checkout HEAD
+[33meeeb554[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/AllModifFeatureCognitoS3[m[33m, [m[1;32msquash3[m[33m, [m[1;32mmaster[m[33m, [m[1;32mAllModifFeatureCognitoS3[m[33m)[m HEAD@{12}: checkout: moving from squash3 to master
+[33meeeb554[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/AllModifFeatureCognitoS3[m[33m, [m[1;32msquash3[m[33m, [m[1;32mmaster[m[33m, [m[1;32mAllModifFeatureCognitoS3[m[33m)[m HEAD@{13}: checkout: moving from master to squash3
+[33meeeb554[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/AllModifFeatureCognitoS3[m[33m, [m[1;32msquash3[m[33m, [m[1;32mmaster[m[33m, [m[1;32mAllModifFeatureCognitoS3[m[33m)[m HEAD@{14}: checkout: moving from squash2 to master
+[33mcf3e835[m[33m ([m[1;31morigin/squash2[m[33m, [m[1;31morigin/squash[m[33m)[m HEAD@{15}: merge squash: Fast-forward
+[33meeeb554[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/AllModifFeatureCognitoS3[m[33m, [m[1;32msquash3[m[33m, [m[1;32mmaster[m[33m, [m[1;32mAllModifFeatureCognitoS3[m[33m)[m HEAD@{16}: checkout: moving from master to squash2
+[33meeeb554[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/AllModifFeatureCognitoS3[m[33m, [m[1;32msquash3[m[33m, [m[1;32mmaster[m[33m, [m[1;32mAllModifFeatureCognitoS3[m[33m)[m HEAD@{17}: checkout: moving from squash to master
+[33mcf3e835[m[33m ([m[1;31morigin/squash2[m[33m, [m[1;31morigin/squash[m[33m)[m HEAD@{18}: commit: fix labels
+[33mafb3c64[m HEAD@{19}: commit: fixconfig import
+[33md233bd4[m HEAD@{20}: commit: fix
+[33m81e67b1[m[33m ([m[1;31morigin/FixAllModif[m[33m, [m[1;32mFixAllModif[m[33m)[m HEAD@{21}: merge FixAllModif: Fast-forward
+[33meeeb554[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/AllModifFeatureCognitoS3[m[33m, [m[1;32msquash3[m[33m, [m[1;32mmaster[m[33m, [m[1;32mAllModifFeatureCognitoS3[m[33m)[m HEAD@{22}: checkout: moving from master to squash
+[33meeeb554[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/AllModifFeatureCognitoS3[m[33m, [m[1;32msquash3[m[33m, [m[1;32mmaster[m[33m, [m[1;32mAllModifFeatureCognitoS3[m[33m)[m HEAD@{23}: checkout: moving from squash to master
+[33meeeb554[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/AllModifFeatureCognitoS3[m[33m, [m[1;32msquash3[m[33m, [m[1;32mmaster[m[33m, [m[1;32mAllModifFeatureCognitoS3[m[33m)[m HEAD@{24}: checkout: moving from master to squash
+[33meeeb554[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/AllModifFeatureCognitoS3[m[33m, [m[1;32msquash3[m[33m, [m[1;32mmaster[m[33m, [m[1;32mAllModifFeatureCognitoS3[m[33m)[m HEAD@{25}: checkout: moving from squash to master
+[33meeeb554[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/AllModifFeatureCognitoS3[m[33m, [m[1;32msquash3[m[33m, [m[1;32mmaster[m[33m, [m[1;32mAllModifFeatureCognitoS3[m[33m)[m HEAD@{26}: checkout: moving from master to squash
+[33meeeb554[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/AllModifFeatureCognitoS3[m[33m, [m[1;32msquash3[m[33m, [m[1;32mmaster[m[33m, [m[1;32mAllModifFeatureCognitoS3[m[33m)[m HEAD@{27}: checkout: moving from FixAllModif to master
+[33m81e67b1[m[33m ([m[1;31morigin/FixAllModif[m[33m, [m[1;32mFixAllModif[m[33m)[m HEAD@{28}: commit: prettier
+[33m52c82e0[m HEAD@{29}: commit (merge): fetch
+[33mbffe25d[m HEAD@{30}: commit: prettier
+[33m3c9c5d9[m HEAD@{31}: commit: fonctionnalité fonctionne
+[33meebf549[m HEAD@{32}: commit: modif interfaceFileType
+[33m0876d6c[m HEAD@{33}: commit: modif projectHasDataFile
+[33mda5e1ab[m HEAD@{34}: commit: composite authorised
+[33m6eeabc8[m HEAD@{35}: commit: rename recent-items-handler -> udt-helper
+[33md8531aa[m HEAD@{36}: commit: rename recent-items-handler -> udt-helper
+[33meeeb554[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/AllModifFeatureCognitoS3[m[33m, [m[1;32msquash3[m[33m, [m[1;32mmaster[m[33m, [m[1;32mAllModifFeatureCognitoS3[m[33m)[m HEAD@{37}: checkout: moving from master to FixAllModif
+[33meeeb554[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/AllModifFeatureCognitoS3[m[33m, [m[1;32msquash3[m[33m, [m[1;32mmaster[m[33m, [m[1;32mAllModifFeatureCognitoS3[m[33m)[m HEAD@{38}: checkout: moving from FixAllModif to master
+[33meeeb554[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/AllModifFeatureCognitoS3[m[33m, [m[1;32msquash3[m[33m, [m[1;32mmaster[m[33m, [m[1;32mAllModifFeatureCognitoS3[m[33m)[m HEAD@{39}: checkout: moving from master to FixAllModif
+[33meeeb554[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/AllModifFeatureCognitoS3[m[33m, [m[1;32msquash3[m[33m, [m[1;32mmaster[m[33m, [m[1;32mAllModifFeatureCognitoS3[m[33m)[m HEAD@{40}: merge AllModifFeatureCognitoS3: Fast-forward
+[33m6480e02[m HEAD@{41}: checkout: moving from AllModifFeatureCognitoS3 to master
+[33meeeb554[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/AllModifFeatureCognitoS3[m[33m, [m[1;32msquash3[m[33m, [m[1;32mmaster[m[33m, [m[1;32mAllModifFeatureCognitoS3[m[33m)[m HEAD@{42}: commit: oubli
+[33m6480e02[m HEAD@{43}: checkout: moving from master to AllModifFeatureCognitoS3
+[33m6480e02[m HEAD@{44}: merge AllModifFeatureCognitoS3: Fast-forward
+[33m4c7361c[m HEAD@{45}: checkout: moving from AllModifFeatureCognitoS3 to master
+[33m6480e02[m HEAD@{46}: commit (merge): merge master
+[33m6f110b6[m HEAD@{47}: commit: mon oubli
+[33m3f6775e[m HEAD@{48}: merge upstream/master: Merge made by the 'recursive' strategy.
+[33m30fd9a3[m HEAD@{49}: commit: prettier
+[33m278bb55[m HEAD@{50}: merge ClassLocalStorage: Fast-forward
+[33m7e5a801[m HEAD@{51}: checkout: moving from ClassLocalStorage to AllModifFeatureCognitoS3
+[33m278bb55[m HEAD@{52}: commit: Handler json terminé
+[33m6542193[m HEAD@{53}: commit: 2 usestate ramené dans configImport
+[33mf14bcc7[m HEAD@{54}: commit: disable le button add sample when on setting
+[33mfee98a1[m HEAD@{55}: commit: fix renommage auto
+[33m615b8f7[m HEAD@{56}: commit (merge): merge
+[33mb0b52e6[m HEAD@{57}: checkout: moving from AllModifFeatureCognitoS3 to ClassLocalStorage
+[33m7e5a801[m HEAD@{58}: commit: annotation fonctionnel
+[33m601d270[m HEAD@{59}: commit: prettier
+[33me70e7e6[m HEAD@{60}: commit: import export fonctionnel non testé
+[33m4952dc4[m HEAD@{61}: commit: prettier
+[33m8736a37[m HEAD@{62}: commit: fix null exception RecognizeFileExtension
+[33ma62395c[m HEAD@{63}: merge upstream/master: Merge made by the 'recursive' strategy.
+[33m239b5f9[m HEAD@{64}: commit: merge part 2
+[33m0875f04[m HEAD@{65}: checkout: moving from ClassLocalStorage to AllModifFeatureCognitoS3
+[33mb0b52e6[m HEAD@{66}: checkout: moving from AllModifFeatureCognitoS3 to ClassLocalStorage
+[33m0875f04[m HEAD@{67}: commit (merge): merge problem part 1
+[33m8e129a6[m HEAD@{68}: checkout: moving from ClassLocalStorage to AllModifFeatureCognitoS3
+[33mb0b52e6[m HEAD@{69}: commit: erreur fetch
+[33m2941d8d[m HEAD@{70}: commit (merge): merge conflict
+[33m8fe7901[m HEAD@{71}: commit: isoler setAnnotation
+[33m2a3fb0a[m HEAD@{72}: commit: fonction isoler de get annotation
+[33mc4a186e[m HEAD@{73}: reset: moving to Head
+[33mc4a186e[m HEAD@{74}: checkout: moving from AllModifFeatureCognitoS3 to ClassLocalStorage
+[33m8e129a6[m HEAD@{75}: commit: Fichier de conf supprimé
+[33mb4b9888[m HEAD@{76}: checkout: moving from ClassLocalStorage to AllModifFeatureCognitoS3
+[33mc4a186e[m HEAD@{77}: commit: essai class
+[33md0d34b2[m HEAD@{78}: checkout: moving from AllModifFeatureCognitoS3 to ClassLocalStorage
+[33mb4b9888[m HEAD@{79}: commit: prettier
+[33m7170328[m HEAD@{80}: checkout: moving from IsolerAWS to AllModifFeatureCognitoS3
+[33m7170328[m HEAD@{81}: checkout: moving from AllModifFeatureCognitoS3 to IsolerAWS
+[33m7170328[m HEAD@{82}: commit: ifFileAuthorize
+[33mc34a143[m HEAD@{83}: merge ClassAWS: Merge made by the 'recursive' strategy.
+[33m7799cc8[m HEAD@{84}: checkout: moving from ClassAWS to AllModifFeatureCognitoS3
+[33m925df9e[m HEAD@{85}: commit: GetSampleFromDataTask
+[33m12a197d[m HEAD@{86}: commit: remove last chang
+[33mba2262a[m HEAD@{87}: checkout: moving from AllModifFeatureCognitoS3 to ClassAWS
+[33m7799cc8[m HEAD@{88}: commit: ménage
+[33md0d34b2[m HEAD@{89}: checkout: moving from ClassAWS to AllModifFeatureCognitoS3
+[33mba2262a[m HEAD@{90}: commit: essai non fonctionnel
+[33m15ee70c[m HEAD@{91}: commit: getUrlFromSample
+[33md0d34b2[m HEAD@{92}: checkout: moving from ClassLocalStorage to ClassAWS
+[33md0d34b2[m HEAD@{93}: checkout: moving from AllModifFeatureCognitoS3 to ClassLocalStorage
+[33md0d34b2[m HEAD@{94}: reset: moving to HEAD
+[33md0d34b2[m HEAD@{95}: checkout: moving from ClassAWS to AllModifFeatureCognitoS3
+[33md0d34b2[m HEAD@{96}: reset: moving to HEAD
+[33md0d34b2[m HEAD@{97}: checkout: moving from AllModifFeatureCognitoS3 to ClassAWS
+[33md0d34b2[m HEAD@{98}: reset: moving to HEAD
+[33md0d34b2[m HEAD@{99}: commit: prettier
+[33m3243cc9[m HEAD@{100}: commit (merge): merge
+[33m15ed051[m HEAD@{101}: merge AudioTranscription: Fast-forward
+[33mfc39c60[m HEAD@{102}: checkout: moving from AudioTranscription to AllModifFeatureCognitoS3
+[33m15ed051[m HEAD@{103}: commit: fonctionnel
+[33m398aa03[m HEAD@{104}: checkout: moving from squash-branch to AudioTranscription
+[33m5aa4c42[m HEAD@{105}: commit: prettier
+[33m378eafc[m HEAD@{106}: commit (merge): merge
+[33m73bfce1[m HEAD@{107}: commit: remove yarn.lock
+[33mf2a8b64[m HEAD@{108}: commit: Intégration rendre-nom-image-beau
+[33m4c7361c[m HEAD@{109}: checkout: moving from master to squash-branch
+[33m4c7361c[m HEAD@{110}: checkout: moving from rendre-beau-2 to master
+[33m2126b68[m HEAD@{111}: checkout: moving from rendre-nom-image-beau to rendre-beau-2
+[33m2126b68[m HEAD@{112}: checkout: moving from AudioTranscription to rendre-nom-image-beau
+[33m398aa03[m HEAD@{113}: commit: Début retour
+[33m1385c28[m HEAD@{114}: commit: fetch de l'audio
+[33m78ef532[m HEAD@{115}: commit: audio Transcription authoriser
+[33mfc39c60[m HEAD@{116}: checkout: moving from AllModifFeatureCognitoS3 to AudioTranscription
+[33mfc39c60[m HEAD@{117}: merge TextClassification: Fast-forward
+[33mb18ba86[m HEAD@{118}: checkout: moving from TextClassification to AllModifFeatureCognitoS3
+[33mfc39c60[m HEAD@{119}: commit: if -> switch
+[33m1aaaa18[m HEAD@{120}: commit: sauvegarde de projet de type TextClassification authoriser
+[33mb18ba86[m HEAD@{121}: checkout: moving from AllModifFeatureCognitoS3 to TextClassification
+[33mb18ba86[m HEAD@{122}: merge NamedEntitiesRecognition: Fast-forward
+[33m632ad90[m HEAD@{123}: checkout: moving from NamedEntitiesRecognition to AllModifFeatureCognitoS3
+[33mb18ba86[m HEAD@{124}: commit: n'enregistre pas les projets non nommé
+[33mbb5b31b[m HEAD@{125}: commit: prettier ++ remove warning
+[33m7897341[m HEAD@{126}: commit: style import s3
+[33m741cfc1[m HEAD@{127}: commit: fonctionnalité ok
+[33mc8219b1[m HEAD@{128}: merge AllModifFeatureCognitoS3: Merge made by the 'recursive' strategy.
+[33m76cf07c[m HEAD@{129}: checkout: moving from AllModifFeatureCognitoS3 to NamedEntitiesRecognition
+[33m632ad90[m HEAD@{130}: commit (merge): merge + bug majeur
+[33m91cd5fa[m HEAD@{131}: checkout: moving from NamedEntitiesRecognition to AllModifFeatureCognitoS3
+[33m76cf07c[m HEAD@{132}: commit: Autoriser la sauvegarde pour ce type
+[33m91cd5fa[m HEAD@{133}: checkout: moving from AllModifFeatureCognitoS3 to NamedEntitiesRecognition
+[33m91cd5fa[m HEAD@{134}: revert: Revert "last changes"
+[33ma239061[m HEAD@{135}: checkout: moving from style-dialog-import-s3 to AllModifFeatureCognitoS3
+[33m0a188cb[m HEAD@{136}: checkout: moving from SetUpStorage to style-dialog-import-s3
+[33mfc936fb[m HEAD@{137}: commit (merge): git merge
+[33m62d301a[m HEAD@{138}: checkout: moving from style-dialog-import-s3 to SetUpStorage
+[33m0a188cb[m HEAD@{139}: commit (merge): merges changes
+[33m80f15e9[m HEAD@{140}: checkout: moving from rendre-nom-image-beau to style-dialog-import-s3
+[33m2126b68[m HEAD@{141}: commit (merge): merge changes
+[33m31798c5[m HEAD@{142}: checkout: moving from fixwarning to rendre-nom-image-beau
+[33m5c1e81f[m HEAD@{143}: commit (merge): merge changes
+[33m2e12ff1[m HEAD@{144}: checkout: moving from AllModifFeatureCognitoS3 to fixwarning
+[33ma239061[m HEAD@{145}: commit: last changes
+[33m56ff0ac[m HEAD@{146}: commit: log out user on config aws
+[33m7d10ba3[m HEAD@{147}: commit: warning remove
+[33m69186bb[m HEAD@{148}: commit: prettier
+[33m98a43bf[m HEAD@{149}: commit: Vérif inutile
+[33m4caa472[m HEAD@{150}: commit: fix configImport interface change
+[33m446cdb3[m HEAD@{151}: commit: fix nomfichier
+[33md576247[m HEAD@{152}: reset: moving to HEAD
+[33md576247[m HEAD@{153}: commit: prettier
+[33mfb0ba77[m HEAD@{154}: commit: bug fix
+[33m602f575[m HEAD@{155}: commit: fix bug && warning
+[33m06a766f[m HEAD@{156}: commit: ménage
+[33md5399af[m HEAD@{157}: commit: ménage get Annotations
+[33m2f4486b[m HEAD@{158}: commit: bug fix
+[33m5082e70[m HEAD@{159}: commit: fix bug
+[33ma01d4b3[m HEAD@{160}: commit: prettier
+[33ma414059[m HEAD@{161}: commit (merge): merge
+[33m3585e00[m HEAD@{162}: merge style-dialog-import-s3: Merge made by the 'recursive' strategy.
+[33md85f306[m HEAD@{163}: merge rendre-nom-image-beau: Merge made by the 'recursive' strategy.
+[33m62d301a[m HEAD@{164}: checkout: moving from SetUpStorage to AllModifFeatureCognitoS3
+[33m62d301a[m HEAD@{165}: checkout: moving from rendre-nom-image-beau to SetUpStorage
+[33m31798c5[m HEAD@{166}: commit: prettier
+[33m4c09c9b[m HEAD@{167}: commit: bug fix url image
+[33mfda5c34[m HEAD@{168}: commit: nom plus beau mais prob source image
+[33m9f20614[m HEAD@{169}: checkout: moving from feature-cognito-s3-stagiaire to rendre-nom-image-beau
+[33m9f20614[m HEAD@{170}: reset: moving to HEAD
+[33m9f20614[m HEAD@{171}: checkout: moving from aws-config-non-essentiel-stagiaire to feature-cognito-s3-stagiaire
+[33mcdc2b84[m HEAD@{172}: commit: import conditionnel dynamique
+[33m9f20614[m HEAD@{173}: checkout: moving from feature-cognito-s3-stagiaire to aws-config-non-essentiel-stagiaire
+[33m9f20614[m HEAD@{174}: reset: moving to HEAD
+[33m9f20614[m HEAD@{175}: checkout: moving from aws-config-non-essentiel-stagiaire to feature-cognito-s3-stagiaire
+[33m9f20614[m HEAD@{176}: checkout: moving from fixwarning to aws-config-non-essentiel-stagiaire
+[33m2e12ff1[m HEAD@{177}: checkout: moving from style-dialog-import-s3 to fixwarning
+[33m80f15e9[m HEAD@{178}: checkout: moving from fixwarning to style-dialog-import-s3
+[33m2e12ff1[m HEAD@{179}: commit: prettier
+[33mde3213e[m HEAD@{180}: commit (merge): merge conflict
+[33m67737b7[m HEAD@{181}: checkout: moving from SetUpStorage to fixwarning
+[33m62d301a[m HEAD@{182}: checkout: moving from style-dialog-import-s3 to SetUpStorage
+[33m80f15e9[m HEAD@{183}: commit: prettier
+[33m31b76f4[m HEAD@{184}: commit: style lighter
+[33m6371aa7[m HEAD@{185}: commit: Renommage du bouton add samples
+[33mf44ca25[m HEAD@{186}: commit: gras pour les noms de colonnes
+[33m6759470[m HEAD@{187}: commit: style plus léger
+[33me6d5567[m HEAD@{188}: commit: Styled button
+[33m9f20614[m HEAD@{189}: checkout: moving from feature-cognito-s3-stagiaire to style-dialog-import-s3
+[33m9f20614[m HEAD@{190}: reset: moving to HEAD
+[33m9f20614[m HEAD@{191}: checkout: moving from SetUpStorage to feature-cognito-s3-stagiaire
+[33m62d301a[m HEAD@{192}: commit: Prettier
+[33m0173a22[m HEAD@{193}: commit: setUp Bucket
+[33m9f20614[m HEAD@{194}: checkout: moving from feature-cognito-s3-stagiaire to SetUpStorage
+[33m9f20614[m HEAD@{195}: checkout: moving from feature-cognito-s3 to feature-cognito-s3-stagiaire
+[33m3b332bf[m HEAD@{196}: reset: moving to HEAD
+[33m3b332bf[m HEAD@{197}: checkout: moving from aws-config-non-essentiel-stagiaire to feature-cognito-s3
+[33m9f20614[m HEAD@{198}: reset: moving to HEAD
+[33m9f20614[m HEAD@{199}: reset: moving to HEAD
+[33m9f20614[m HEAD@{200}: checkout: moving from feature-cognito-s3-stagiaire to aws-config-non-essentiel-stagiaire
+[33m9f20614[m HEAD@{201}: checkout: moving from auth-stagiaire to feature-cognito-s3-stagiaire
+[33m9f20614[m HEAD@{202}: checkout: moving from feature-cognito-s3-stagiaire to auth-stagiaire
+[33m9f20614[m HEAD@{203}: checkout: moving from fixwarning to feature-cognito-s3-stagiaire
+[33m67737b7[m HEAD@{204}: commit: commentaire
+[33m9384ec6[m HEAD@{205}: commit: prettier
+[33me7e9146[m HEAD@{206}: commit: bug fix
+[33m0519e35[m HEAD@{207}: commit: bug fix
+[33mbe4ea0f[m HEAD@{208}: commit: fix bug
+[33m2134f3f[m HEAD@{209}: commit: fix all warning
+[33ma588854[m HEAD@{210}: commit (merge): merge branch stagiaire
+[33m2ae6aac[m HEAD@{211}: revert: Revert "Warning éliminé for useEffect"
+[33mcc91454[m HEAD@{212}: commit: bug fix
+[33mfde8154[m HEAD@{213}: commit: Warning éliminé for useEffect
+[33m5d4eb7a[m HEAD@{214}: commit: Warning éliminé
+[33m3940179[m HEAD@{215}: commit: Warning éliminé de ConfigureImageSegmentation/index.js
+[33m289bac5[m HEAD@{216}: commit: Warning éliminé de DexktopApp/index.js
+[33m80158d7[m HEAD@{217}: commit: Warning éliminé de SamplesView/index.js
+[33m402f69c[m HEAD@{218}: commit: Warning éliminé de ImportFromYoutubeUrls/index.js
+[33mff76c8a[m HEAD@{219}: commit: Warning éliminé de OHAEditor/index.js
+[33mb93ab98[m HEAD@{220}: commit: Warning éliminé de useserver/index.js
+[33m1cb5d45[m HEAD@{221}: commit: Warning éliminé de useserver/index.js
+[33mb5a0102[m HEAD@{222}: commit: Warning éliminé de useserver/index.js
+[33m9cf812a[m HEAD@{223}: reset: moving to 9cf812ad71031431ef646a4a0249a1fa3ab553ab
+[33mbd75ce9[m HEAD@{224}: checkout: moving from 9cf812ad71031431ef646a4a0249a1fa3ab553ab to fixwarning
+[33m9cf812a[m HEAD@{225}: checkout: moving from fixwarning to 9cf812ad71031431ef646a4a0249a1fa3ab553ab
+[33mbd75ce9[m HEAD@{226}: checkout: moving from 58a87c4e3741266af95c8511ec988cb6fdc374d4 to fixwarning
+[33m58a87c4[m HEAD@{227}: checkout: moving from fixwarning to 58a87c4e3741266af95c8511ec988cb6fdc374d4
+[33mbd75ce9[m HEAD@{228}: checkout: moving from 9cf812ad71031431ef646a4a0249a1fa3ab553ab to fixwarning
+[33m9cf812a[m HEAD@{229}: checkout: moving from fixwarning to 9cf812ad71031431ef646a4a0249a1fa3ab553ab
+[33mbd75ce9[m HEAD@{230}: checkout: moving from 3cf349ae05b2042751b5c569f93594416be2c02b to fixwarning
+[33m3cf349a[m HEAD@{231}: checkout: moving from fixwarning to 3cf349ae05b2042751b5c569f93594416be2c02b
+[33mbd75ce9[m HEAD@{232}: checkout: moving from 71214e87b81d2535c99c8dd8d4c6b4c5410b3dc2 to fixwarning
+[33m71214e8[m HEAD@{233}: checkout: moving from fixwarning to 71214e87b81d2535c99c8dd8d4c6b4c5410b3dc2
+[33mbd75ce9[m HEAD@{234}: checkout: moving from feature-cognito-s3-stagiaire to fixwarning
+[33m9f20614[m HEAD@{235}: commit (merge): merge conflict
+[33m8f9b7ca[m HEAD@{236}: commit: prettier
+[33m0ca00c7[m HEAD@{237}: commit: ménage
+[33mc1d6944[m HEAD@{238}: commit: prettier
+[33m7c6e0d3[m HEAD@{239}: commit: isoler get sampleNameByURL
+[33m029b47f[m HEAD@{240}: commit: prettier
+[33m8a02d76[m HEAD@{241}: commit: Isoler give-sample-name
+[33m31e75df[m HEAD@{242}: commit: console log
+[33m083a129[m HEAD@{243}: commit: prettier
+[33mecb909e[m HEAD@{244}: commit: clean update-aws-storage
+[33m736ead5[m HEAD@{245}: commit: prettier
+[33mad02bbd[m HEAD@{246}: commit: Isoler S3Icon
+[33md16e06d[m HEAD@{247}: commit: prettier
+[33m6762740[m HEAD@{248}: commit: isoler updateAWSStorage
+[33m3f8ef1d[m HEAD@{249}: commit: comment in english
+[33md112ef2[m HEAD@{250}: commit: remove json file
+[33m399be23[m HEAD@{251}: commit: remove yarn lock
+[33mfb25959[m HEAD@{252}: checkout: moving from fixwarning to feature-cognito-s3-stagiaire
+[33mbd75ce9[m HEAD@{253}: checkout: moving from feature-cognito-s3-stagiaire to fixwarning
+[33mfb25959[m HEAD@{254}: reset: moving to fb25959ffdb65a866bb3321e2e2c36bb1598d0db
+[33m783b3d3[m HEAD@{255}: checkout: moving from fb25959ffdb65a866bb3321e2e2c36bb1598d0db to feature-cognito-s3-stagiaire
+[33mfb25959[m HEAD@{256}: checkout: moving from feature-cognito-s3-stagiaire to fb25959ffdb65a866bb3321e2e2c36bb1598d0db
+[33m783b3d3[m HEAD@{257}: commit: prettier
+[33md5def8b[m HEAD@{258}: revert: Revert "before fix console log"
+[33mbd75ce9[m HEAD@{259}: checkout: moving from fixwarning to feature-cognito-s3-stagiaire
+[33mbd75ce9[m HEAD@{260}: checkout: moving from feature-cognito-s3-stagiaire to fixwarning
+[33mbd75ce9[m HEAD@{261}: commit: fix
+[33m73d761b[m HEAD@{262}: commit: prettier
+[33m5f53ab8[m HEAD@{263}: commit: fix
+[33me887378[m HEAD@{264}: commit: bug fix
+[33mb3aa13e[m HEAD@{265}: commit: éliminé tout les Warning à l'ouverture de l'app
+[33m58a87c4[m HEAD@{266}: commit: prettier
+[33md95cbe8[m HEAD@{267}: commit: Plein de warning éliminé
+[33m9cf812a[m HEAD@{268}: commit: prettier
+[33mff64181[m HEAD@{269}: commit: Plein de warning éliminé
+[33m847c96a[m HEAD@{270}: commit: prettier
+[33m3cf349a[m HEAD@{271}: commit: Warning éliminé
+[33m8629339[m HEAD@{272}: commit: Warning éliminé
+[33m9ee5704[m HEAD@{273}: commit: Warning éliminé
+[33mdc975c8[m HEAD@{274}: commit: Warning éliminé
+[33m71214e8[m HEAD@{275}: commit: suppression import inutile
+[33mfb25959[m HEAD@{276}: commit: prettier
+[33ma75cf26[m HEAD@{277}: commit: gestion des images de source différentes avec le même nom
+[33m245defe[m HEAD@{278}: commit: sample with the same image
+[33m7e10675[m HEAD@{279}: commit: prettier
+[33m8bc7b36[m HEAD@{280}: commit: modification interface et possibilité de prendre juste les samples
+[33m1e6b090[m HEAD@{281}: commit: prettier
+[33m379cf4c[m HEAD@{282}: commit: Fin merge + ménage
+[33m1247105[m HEAD@{283}: commit: l'avant dernier conflits (non fonctionnel)
+[33m1ac174e[m HEAD@{284}: commit (merge): tout les conflits sauf les deux plus gros (non fonctionnel)
+[33m0126ed0[m HEAD@{285}: commit: fix bug annotation absente
+[33m3770b50[m HEAD@{286}: commit: prettier
+[33m098428c[m HEAD@{287}: commit: Vérif pour ne pas sauvegarder un fichier de type non testé
+[33m3f950db[m HEAD@{288}: commit: prettier
+[33maabd665[m HEAD@{289}: commit: Écriture du nouveau nom dans S3
+[33m3663476[m HEAD@{290}: commit: Donner un nouveau nom aux images ayant le même
+[33m7ba87fa[m HEAD@{291}: commit: ménage
+[33mbed420f[m HEAD@{292}: commit: vérif configImport
+[33mb957884[m HEAD@{293}: commit: Fix config
+[33md2de1fe[m HEAD@{294}: commit: Vérif non complète
+[33mea3efc2[m HEAD@{295}: commit: ménage
+[33m94d9a16[m HEAD@{296}: commit: prettier
+[33m18cd680[m HEAD@{297}: commit: isoler fileHasChange
+[33m1125ce4[m HEAD@{298}: commit: prettier
+[33m65b810d[m HEAD@{299}: commit: Sauvegarde dans la cache du nav de la configImport
+[33m8c478f6[m HEAD@{300}: commit: prettier
+[33m1f941ba[m HEAD@{301}: commit: ménage
+[33mcd4ed6d[m HEAD@{302}: commit: prettier
+[33mb9a82db[m HEAD@{303}: commit: Disable button selon le type de fichier dans le taskData
+[33md25651b[m HEAD@{304}: commit: prettier
+[33mb87197b[m HEAD@{305}: commit: disable fichier non autorisé selon le type de projet
+[33m8495b55[m HEAD@{306}: commit: prettier
+[33m3a9fe58[m HEAD@{307}: commit: dernière date de modification
+[33m35aebf7[m HEAD@{308}: reset: moving to HEAD
+[33m35aebf7[m HEAD@{309}: commit: Choix du type de fichier à télécharger
+[33mb25319c[m HEAD@{310}: commit: Prettier
+[33mf7cee98[m HEAD@{311}: commit: traitement des annotations + centralisation de Storage.list
+[33m5dfbadc[m HEAD@{312}: commit: Élement graphique + 1 arg de moins sur changeFile
+[33md23ae78[m HEAD@{313}: reset: moving to HEAD
+[33md23ae78[m HEAD@{314}: commit: Prettier
+[33mb96a991[m HEAD@{315}: commit: Fin Vérif
+[33maf61a8b[m HEAD@{316}: commit: run prettier
+[33m52a2673[m HEAD@{317}: commit: Vérif si doit updater AWS (Suite 1)
+[33mab71991[m HEAD@{318}: commit: Vérif si doit updater AWS (Début)
+[33m9df5c16[m HEAD@{319}: commit: modif pour intégration des changements provenant du fork originel
+[33m8c02493[m HEAD@{320}: reset: moving to HEAD
+[33m8c02493[m HEAD@{321}: commit: attend le changement du fichier pour faire le second
+[33m1e9dfa3[m HEAD@{322}: commit: Élimination d'un effet de bord
+[33m7a65caf[m HEAD@{323}: reset: moving to HEAD
+[33m7a65caf[m HEAD@{324}: reset: moving to HEAD
+[33m7a65caf[m HEAD@{325}: checkout: moving from d586f364edf93df8442cc684866ba27821d4c348 to feature-cognito-s3-stagiaire
+[33md586f36[m HEAD@{326}: checkout: moving from feature-cognito-s3-stagiaire to d586f364edf93df8442cc684866ba27821d4c348
+[33m7a65caf[m HEAD@{327}: reset: moving to HEAD
+[33m7a65caf[m HEAD@{328}: commit: run Prettier
+[33m984a54d[m HEAD@{329}: commit: nom automatiquement affiché
+[33md586f36[m HEAD@{330}: commit: run prettier
+[33m6567728[m HEAD@{331}: reset: moving to HEAD
+[33m6567728[m HEAD@{332}: commit: Vérif undefined
+[33md242559[m HEAD@{333}: reset: moving to HEAD
+[33md242559[m HEAD@{334}: commit: fix undefined + debut gestion fileName
+[33me1070be[m HEAD@{335}: reset: moving to HEAD
+[33me1070be[m HEAD@{336}: reset: moving to HEAD
+[33me1070be[m HEAD@{337}: reset: moving to HEAD
+[33me1070be[m HEAD@{338}: reset: moving to HEAD
+[33me1070be[m HEAD@{339}: reset: moving to HEAD
+[33me1070be[m HEAD@{340}: commit: ménage + Sauvegarde des dernières modifications correctement
+[33mfe6830c[m HEAD@{341}: reset: moving to HEAD
+[33mfe6830c[m HEAD@{342}: reset: moving to HEAD
+[33mfe6830c[m HEAD@{343}: reset: moving to HEAD
+[33mfe6830c[m HEAD@{344}: reset: moving to HEAD
+[33mfe6830c[m HEAD@{345}: reset: moving to HEAD
+[33mfe6830c[m HEAD@{346}: commit: ménage
+[33mcf09bb1[m HEAD@{347}: commit: ménage
+[33md07b4d9[m HEAD@{348}: reset: moving to HEAD
+[33md07b4d9[m HEAD@{349}: reset: moving to HEAD
+[33md07b4d9[m HEAD@{350}: commit: ménage
+[33m7f0d7a2[m HEAD@{351}: commit: Ménage + Function Recognize extension
+[33m175fd28[m HEAD@{352}: commit: élimine les console log oubliés
+[33m91cc7ab[m HEAD@{353}: commit: Vérif des annotations
+[33m3774cd6[m HEAD@{354}: commit: Résolution du bug de l'upload de vidéo
+[33m6f39aa7[m HEAD@{355}: reset: moving to HEAD
+[33m6f39aa7[m HEAD@{356}: commit: Set interface type lors d'un fetch S3
+[33meb41521[m HEAD@{357}: merge ConsoleRempliDErreur: Merge made by the 'recursive' strategy.
+[33m6fdc407[m HEAD@{358}: commit: Deux fois styled component
+[33m0f9e405[m HEAD@{359}: checkout: moving from ConsoleRempliDErreur to feature-cognito-s3-stagiaire
+[33mfcfe44a[m HEAD@{360}: commit: Vérif de l'extension
+[33m0f9e405[m HEAD@{361}: checkout: moving from feature-cognito-s3-stagiaire to ConsoleRempliDErreur
+[33m0f9e405[m HEAD@{362}: commit: video et videoannotation upload
+[33mfb5999d[m HEAD@{363}: commit: Les annotations s'affichent sur transfert
+[33m1ed580a[m HEAD@{364}: commit: Récupéretion des annotations
+[33m76752c0[m HEAD@{365}: commit: Création du dossier du projet séparément
+[33m5cfb099[m HEAD@{366}: commit (merge): fetch origin upstream
+[33mc0317f4[m HEAD@{367}: checkout: moving from master to feature-cognito-s3-stagiaire
+[33m4c7361c[m HEAD@{368}: checkout: moving from feature-cognito-s3-stagiaire to master
+[33mc0317f4[m HEAD@{369}: reset: moving to HEAD
+[33mc0317f4[m HEAD@{370}: commit: Upload des fichiers fonctionnels
+[33mf5a84c3[m HEAD@{371}: commit: Transfert des images sur le serv AWS (Imparfait)
+[33m2f8f3e5[m HEAD@{372}: commit: add default case and delete useless function
+[33m1e55f69[m HEAD@{373}: commit: suppression de console log
+[33mdead000[m HEAD@{374}: commit: Ajout des samples fonctionnel
+[33m7e8c9ce[m HEAD@{375}: commit: commentaire de la tentative d'ajout des samples
+[33m7081bf3[m HEAD@{376}: commit: Récupération des URLs des fichiers désirés
+[33m0d82fb3[m HEAD@{377}: commit: import issue resolve
+[33m3b332bf[m HEAD@{378}: reset: moving to HEAD
+[33m3b332bf[m HEAD@{379}: checkout: moving from master to feature-cognito-s3-stagiaire
+[33m4c7361c[m HEAD@{380}: checkout: moving from feature-cognito-s3 to master
+[33m3b332bf[m HEAD@{381}: checkout: moving from feature-cognito-s3-stagiaire to feature-cognito-s3
+[33m3b332bf[m HEAD@{382}: checkout: moving from feature-cognito-s3 to feature-cognito-s3-stagiaire
+[33m3b332bf[m HEAD@{383}: checkout: moving from master to feature-cognito-s3
+[33m4c7361c[m HEAD@{384}: reset: moving to HEAD
+[33m4c7361c[m HEAD@{385}: clone: from https://github.com/Ownmarc/universal-data-tool.git
