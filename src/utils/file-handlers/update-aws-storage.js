@@ -1,6 +1,6 @@
 import { Storage } from "aws-amplify"
 import isEmpty from "../isEmpty"
-import jsonHandler from "./recent-items-handler"
+import jsonHandler from "./udt-helper"
 import { setIn } from "seamless-immutable"
 export default (file) => {
   async function fetchAFile(element) {

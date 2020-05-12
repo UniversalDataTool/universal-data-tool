@@ -17,7 +17,7 @@ import Button from "@material-ui/core/Button"
 import GetAnnotationFromAFolderAWS from "./get-annotation-from-aws"
 import GetImageFromAFolderAWS from "./get-images-from-aws"
 import setButtonNameAddSample from "./set-button-add-sample-name"
-import jsonHandler from "../../utils/file-handlers/recent-items-handler"
+import jsonHandler from "../../utils/file-handlers/udt-helper"
 import { setIn } from "seamless-immutable"
 
 const selectedStyle = { color: "DodgerBlue" }

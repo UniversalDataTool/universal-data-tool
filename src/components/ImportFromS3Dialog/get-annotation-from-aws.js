@@ -1,6 +1,6 @@
 import isEmpty from "../../utils/isEmpty"
 import Amplify, { Storage } from "aws-amplify"
-import jsonHandler from "../../utils/file-handlers/recent-items-handler"
+import jsonHandler from "../../utils/file-handlers/udt-helper"
 function CheckIfAnnotationExist(result, folderToFetch) {
   return result.find(
     (element) => element.key === `${folderToFetch}/annotations/annotations.json`

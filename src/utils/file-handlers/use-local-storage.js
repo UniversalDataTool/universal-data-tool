@@ -1,7 +1,7 @@
 // @flow
 import { useRef, useEffect } from "react"
 import { useLocalStorage } from "react-use"
-import jsonHandler from "../../utils/file-handlers/recent-items-handler"
+import jsonHandler from "../../utils/file-handlers/udt-helper"
 import isEmpty from "../../utils/isEmpty"
 export default (file, changeFile) => {
   let [recentItems, changeRecentItems] = useLocalStorage("recentItems", [])

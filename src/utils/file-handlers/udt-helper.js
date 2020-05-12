@@ -1,5 +1,5 @@
 import getSampleNameFromURL from "../get-sample-name-from-url"
-import RecognizeFileExtension from "../../utils/RecognizeFileExtension"
+import RecognizeFileExtension from "../RecognizeFileExtension"
 import isEmpty from "../isEmpty"
 import { setIn } from "seamless-immutable"
 class LocalStorageHandler {
