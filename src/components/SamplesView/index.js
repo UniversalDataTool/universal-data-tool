@@ -23,6 +23,10 @@ import * as colors from "@material-ui/core/colors"
 
 const Container = styled("div")({
   padding: 16,
+  height: "100%",
+  display: "flex",
+  flexDirection: "column",
+  boxSizing: "border-box",
 })
 
 const SampleCounter = styled("div")({
@@ -140,7 +144,12 @@ export default ({
       ),
     })
     return columns
-  }, [dataset.samples, deleteSample, openSampleInputEditor, openSampleLabelEditor])
+  }, [
+    dataset.samples,
+    deleteSample,
+    openSampleInputEditor,
+    openSampleLabelEditor,
+  ])
 
   const data = useMemo(() => {
     if (!dataset.samples) return []
@@ -165,53 +174,55 @@ export default ({
         </SampleCounter>
       </Box>
       <Box paddingTop={2} />
-      {currentTab === "import" && (
-        <ImportPage
-          file={file}
-          isDesktop={isDesktop}
-          onChangeFile={(file) => onChangeFile(file)}
-          onImportPageShouldExit={() => changeTab("grid")}
-          onChangeDataset={(newOHA) => onChangeDataset(newOHA)}
-          dataset={dataset}
-          authConfig={authConfig}
-          user={user}
-        />
-      )}
-      {currentTab === "transform" && (
-        <TransformPage
-          isDesktop={isDesktop}
-          dataset={dataset}
-          onChangeDataset={(dataset, shouldViewChange) => {
-            onChangeDataset(dataset)
-            if (shouldViewChange) {
-              changeTab("grid")
-            }
-          }}
-        />
-      )}
-      {currentTab === "grid" && (
-        <SampleGrid
-          count={(dataset.samples || []).length}
-          samples={dataset.samples || []}
-          completed={(dataset.samples || []).filter((s) => s.annotation)}
-          onClick={(sampleIndex) => {
-            openSampleLabelEditor(sampleIndex)
-          }}
-        />
-      )}
-      {currentTab === "table" && (
-        <DataTable
-          title="Samples"
-          expandableRowsComponent={<ExpandedRow />}
-          expandableRows
-          dense
-          columns={columns}
-          data={data}
-          pagination
-          paginationPerPage={10}
-          paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
-        />
-      )}
+      <Box flexGrow={1}>
+        {currentTab === "import" && (
+          <ImportPage
+            file={file}
+            isDesktop={isDesktop}
+            onChangeFile={(file) => onChangeFile(file)}
+            onImportPageShouldExit={() => changeTab("grid")}
+            onChangeDataset={(newOHA) => onChangeDataset(newOHA)}
+            dataset={dataset}
+            authConfig={authConfig}
+            user={user}
+          />
+        )}
+        {currentTab === "transform" && (
+          <TransformPage
+            isDesktop={isDesktop}
+            dataset={dataset}
+            onChangeDataset={(dataset, shouldViewChange) => {
+              onChangeDataset(dataset)
+              if (shouldViewChange) {
+                changeTab("grid")
+              }
+            }}
+          />
+        )}
+        {currentTab === "grid" && (
+          <SampleGrid
+            count={(dataset.samples || []).length}
+            samples={dataset.samples || []}
+            completed={(dataset.samples || []).filter((s) => s.annotation)}
+            onClick={(sampleIndex) => {
+              openSampleLabelEditor(sampleIndex)
+            }}
+          />
+        )}
+        {currentTab === "table" && (
+          <DataTable
+            title="Samples"
+            expandableRowsComponent={<ExpandedRow />}
+            expandableRows
+            dense
+            columns={columns}
+            data={data}
+            pagination
+            paginationPerPage={10}
+            paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
+          />
+        )}
+      </Box>
     </Container>
   )
 }

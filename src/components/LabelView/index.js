@@ -7,6 +7,11 @@ import SampleGrid from "../SampleGrid"
 import { setIn } from "seamless-immutable"
 import usePosthog from "../../utils/use-posthog"
 import duration from "duration"
+import { styled } from "@material-ui/core/styles"
+
+const OverviewContainer = styled("div")({
+  padding: 16,
+})
 
 export default ({
   dataset,
@@ -103,7 +108,7 @@ export default ({
       />
     </LabelErrorBoundary>
   ) : (
-    <PaperContainer>
+    <OverviewContainer>
       <Stats
         stats={[
           {
@@ -145,6 +150,6 @@ export default ({
           })
         }}
       />
-    </PaperContainer>
+    </OverviewContainer>
   )
 }

@@ -110,7 +110,7 @@ function typesamplesSample(samples) {
   if (!isEmpty(samples[0].audioUrl)) return "Audio"
   return "File"
 }
-function checkInterfaceAndsamples(typeAuthorize, file) {
+function checkInterfaceAndSamples(typeAuthorize, file) {
   var result = [null, null]
   result[0] = interfaceFileType(file.content.interface.type)
   result[1] = typesamplesSample(file.content.samples)
@@ -121,17 +121,17 @@ function checkInterfaceAndsamples(typeAuthorize, file) {
 function initConfigImport(file) {
   return {
     annotationToKeep: "both",
-    typeOfFileToLoad: checkInterfaceAndsamples(["Image", "Empty"], file)
+    typeOfFileToLoad: checkInterfaceAndSamples(["Image", "Empty"], file)
       ? "Image"
-      : checkInterfaceAndsamples(["Video", "Empty"], file)
+      : checkInterfaceAndSamples(["Video", "Empty"], file)
       ? "Video"
-      : checkInterfaceAndsamples(["Audio", "Empty"], file)
+      : checkInterfaceAndSamples(["Audio", "Empty"], file)
       ? "Audio"
       : "None",
     typeOfFileToDisable: {
-      Image: checkInterfaceAndsamples(["Image", "Empty"], file) ? false : true,
-      Video: checkInterfaceAndsamples(["Video", "Empty"], file) ? false : true,
-      Audio: checkInterfaceAndsamples(["Audio", "Empty"], file) ? false : true,
+      Image: checkInterfaceAndSamples(["Image", "Empty"], file) ? false : true,
+      Video: checkInterfaceAndSamples(["Video", "Empty"], file) ? false : true,
+      Audio: checkInterfaceAndSamples(["Audio", "Empty"], file) ? false : true,
     },
     loadProjectIsSelected: true,
     contentDialogBoxIsSetting: false,
@@ -172,26 +172,26 @@ export default ({
         typeOfFileToLoad:
           !isEmpty(configImport) &&
           !isEmpty(configImport.typeOfFileToLoad) &&
-          checkInterfaceAndsamples(
+          checkInterfaceAndSamples(
             [configImport.typeOfFileToLoad, "Empty"],
             file
           )
             ? configImport.typeOfFileToLoad
-            : checkInterfaceAndsamples(["Image", "Empty"], file)
+            : checkInterfaceAndSamples(["Image", "Empty"], file)
             ? "Image"
-            : checkInterfaceAndsamples(["Video", "Empty"], file)
+            : checkInterfaceAndSamples(["Video", "Empty"], file)
             ? "Video"
-            : checkInterfaceAndsamples(["Audio", "Empty"], file)
+            : checkInterfaceAndSamples(["Audio", "Empty"], file)
             ? "Audio"
             : "None",
         typeOfFileToDisable: {
-          Image: checkInterfaceAndsamples(["Image", "Empty"], file)
+          Image: checkInterfaceAndSamples(["Image", "Empty"], file)
             ? false
             : true,
-          Video: checkInterfaceAndsamples(["Video", "Empty"], file)
+          Video: checkInterfaceAndSamples(["Video", "Empty"], file)
             ? false
             : true,
-          Audio: checkInterfaceAndsamples(["Audio", "Empty"], file)
+          Audio: checkInterfaceAndSamples(["Audio", "Empty"], file)
             ? false
             : true,
         },
