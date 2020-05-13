@@ -1,5 +1,5 @@
 import getSampleNameFromURL from "../get-sample-name-from-url"
-import RecognizeFileExtension from "../../utils/RecognizeFileExtension"
+import RecognizeFileExtension from "../RecognizeFileExtension"
 import isEmpty from "../isEmpty"
 import { setIn } from "seamless-immutable"
 class LocalStorageHandler {
@@ -22,6 +22,9 @@ class LocalStorageHandler {
     }
     if (!isEmpty(sample.audioUrl)) {
       url = sample.audioUrl
+    }
+    if (!isEmpty(sample.pdfUrl)) {
+      url = sample.pdfUrl
     }
 
     return url
@@ -50,11 +53,18 @@ class LocalStorageHandler {
         sampleName: sampleName,
       }
     }
+    if (type === "PDF") {
+      sample = {
+        annotation: annotation,
+        pdfUrl: url,
+        sampleName: sampleName,
+      }
+    }
     return sample
   }
   static getSampleWithThisSampleName(sampleName, samples) {
     var nameToSearch
-    if (!isEmpty(samples)) {
+    if (!isEmpty(samples) && !isEmpty(sampleName)) {
       for (var i = 0; i < samples.length; i++) {
         if (!isEmpty(samples[i])) {
           nameToSearch = getSampleNameFromURL(samples[i])
@@ -74,42 +84,61 @@ class LocalStorageHandler {
       for (var i = 0; i < samples.length; i++) {
         if (!isEmpty(samples[i])) {
           var oldsample = samples[i]
-          var sampleName = getSampleNameFromURL(oldsample)
-          var boolName = true
-          var v = 1
-          while (boolName) {
-            var sampletocompare1 = this.getSampleWithThisSampleName(
-              sampleName[1],
-              samples
+          var sampleName
+          if (!isEmpty(oldsample.document)) {
+            // Deal with the exception of the text file (they don't have url)
+            sampleName = [
+              oldsample.document,
+              "sample" + i.toString() + ".txt",
+              "sample",
+              "txt",
+            ]
+          } else {
+            sampleName = getSampleNameFromURL(oldsample)
+            sampleName = this.renameSampleFromUrl(
+              samples,
+              oldsample,
+              sampleName
             )
-            if (
-              sampletocompare1 !== null &&
-              this.getSampleUrl(sampletocompare1) !==
-                this.getSampleUrl(oldsample)
-            ) {
-              if (isEmpty(sampleName[2].match("(.*)\\([0-9]*\\)$"))) {
-                sampleName[1] =
-                  sampleName[2] + "(" + v.toString() + ")." + sampleName[3]
-              } else {
-                sampleName[1] =
-                  sampleName[2].match("(.*)\\([0-9]*\\)$")[1] +
-                  "(" +
-                  v.toString() +
-                  ")" +
-                  +"." +
-                  sampleName[3]
-              }
-              v++
-            } else {
-              oldsample = setIn(oldsample, ["sampleName"], sampleName[1])
-              samples = setIn(samples, [i], oldsample)
-              boolName = false
-            }
           }
+          oldsample = setIn(oldsample, ["sampleName"], sampleName[1])
+          samples = setIn(samples, [i], oldsample)
         }
       }
     }
     return samples
+  }
+  static renameSampleFromUrl(samples, sampleToChange, sampleName) {
+    var boolName = true
+    var v = 1
+    while (boolName) {
+      var sampletocompare1 = this.getSampleWithThisSampleName(
+        sampleName[1],
+        samples
+      )
+      if (
+        sampletocompare1 !== null &&
+        this.getSampleUrl(sampletocompare1) !==
+          this.getSampleUrl(sampleToChange)
+      ) {
+        if (isEmpty(sampleName[2].match("(.*)\\([0-9]*\\)$"))) {
+          sampleName[1] =
+            sampleName[2] + "(" + v.toString() + ")." + sampleName[3]
+        } else {
+          sampleName[1] =
+            sampleName[2].match("(.*)\\([0-9]*\\)$")[1] +
+            "(" +
+            v.toString() +
+            ")" +
+            +"." +
+            sampleName[3]
+        }
+        v++
+      } else {
+        boolName = false
+      }
+    }
+    return sampleName
   }
   static projectHasDataFile(typeProject) {
     if (
@@ -121,7 +150,9 @@ class LocalStorageHandler {
       "video_segmentation" === typeProject ||
       "image_classification" === typeProject ||
       "image_segmentation" === typeProject ||
-      "audio_transcription" === typeProject
+      "audio_transcription" === typeProject ||
+      "composite" === typeProject ||
+      "data_entry" === typeProject
     )
       return "file"
     return ""

@@ -1,6 +1,6 @@
 import { Storage } from "aws-amplify"
 import isEmpty from "../isEmpty"
-import jsonHandler from "./recent-items-handler"
+import jsonHandler from "./udt-helper"
 import { setIn } from "seamless-immutable"
 export default (file) => {
   async function fetchAFile(element) {
@@ -43,7 +43,13 @@ export default (file) => {
     if (!isEmpty(file.content.samples)) {
       file.content.samples.forEach(async (element) => {
         try {
-          const blob = await fetchAFile(element)
+          var blob
+          if (!isEmpty(jsonHandler.getSampleUrl(element))) {
+            blob = await fetchAFile(element)
+          } else if (!isEmpty(element.document)) {
+            blob = element.document
+          }
+
           let imageOrVideoName
           if (isEmpty(element.sampleName)) {
             imageOrVideoName = jsonHandler.getSampleName(element)
