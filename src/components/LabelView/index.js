@@ -1,16 +1,24 @@
 import React, { useState } from "react"
 import LabelErrorBoundary from "../LabelErrorBoundary"
 import UniversalDataViewer from "../UniversalDataViewer"
-import PaperContainer from "../PaperContainer"
 import Stats from "../Stats"
 import SampleGrid from "../SampleGrid"
+import Box from "@material-ui/core/Box"
 import { setIn } from "seamless-immutable"
 import usePosthog from "../../utils/use-posthog"
 import duration from "duration"
 import { styled } from "@material-ui/core/styles"
+import Tabs from "@material-ui/core/Tabs"
+import Tab from "@material-ui/core/Tab"
+import BorderColorIcon from "@material-ui/icons/BorderColor"
+import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle"
 
 const OverviewContainer = styled("div")({
   padding: 16,
+  height: "100%",
+  display: "flex",
+  flexDirection: "column",
+  boxSizing: "border-box",
 })
 
 export default ({
@@ -23,6 +31,7 @@ export default ({
   onChangeSampleTimeToComplete,
   sampleTimeToComplete,
 }) => {
+  const [currentTab, setTab] = useState("label")
   const posthog = usePosthog()
   let percentComplete = 0
   if (dataset.samples && dataset.samples.length > 0) {
@@ -36,32 +45,31 @@ export default ({
       <UniversalDataViewer
         datasetName={`Sample ${singleSampleDataset.sampleIndex}`}
         onSaveTaskOutputItem={(relativeIndex, output) => {
+          const {
+            sampleIndex,
+            samples: [sample],
+          } = singleSampleDataset
+
           let newDataset = dataset
           newDataset = setIn(
             newDataset,
-            ["samples", singleSampleDataset.sampleIndex, "annotation"],
+            ["samples", sampleIndex, "annotation"],
             output
           )
 
           if (
-            singleSampleDataset.samples[0].brush !== selectedBrush &&
-            !(
-              singleSampleDataset.samples[0].brush === undefined &&
-              selectedBrush === "complete"
-            )
+            sample.brush !== selectedBrush &&
+            !(sample.brush === undefined && selectedBrush === "complete")
           ) {
             newDataset = setIn(
               newDataset,
-              ["samples", singleSampleDataset.sampleIndex, "brush"],
+              ["samples", sampleIndex, "brush"],
               selectedBrush
             )
           }
+
           onChangeSingleSampleDataset(
-            setIn(
-              singleSampleDataset,
-              ["samples", relativeIndex, "annotation"],
-              output
-            )
+            setIn(singleSampleDataset, ["samples", 0, "annotation"], output)
           )
           onChangeDataset(newDataset)
         }}
@@ -109,47 +117,62 @@ export default ({
     </LabelErrorBoundary>
   ) : (
     <OverviewContainer>
-      <Stats
-        stats={[
-          {
-            name: "Percent Complete",
-            value: Math.floor(percentComplete * 100) + "%",
-          },
-          {
-            name: "Time per Sample",
-            value: duration(
-              new Date(Date.now() - sampleTimeToComplete)
-            ).toString(1, 1),
-          },
-          {
-            name: "Estimated Remaining",
-            value: duration(
-              new Date(
-                Date.now() -
-                  sampleTimeToComplete *
-                    (1 - percentComplete) *
-                    (dataset.samples || []).length
-              )
-            ).toString(1, 2),
-          },
-        ]}
-      />
-      <SampleGrid
-        count={(dataset.samples || []).length}
-        samples={dataset.samples || []}
-        completed={(dataset.samples || []).map((s) => Boolean(s.annotation))}
-        onClick={(sampleIndex) => {
-          posthog.capture("open_sample", {
-            interface_type: dataset.interface.type,
-          })
-          onChangeSingleSampleDataset({
-            ...dataset,
-            samples: [dataset.samples[sampleIndex]],
-            sampleIndex,
-            startTime: Date.now(),
-          })
-        }}
-      />
+      <Box display="flex">
+        <Box>
+          <Tabs value={currentTab} onChange={(e, newTab) => setTab(newTab)}>
+            <Tab icon={<BorderColorIcon />} label="Label" value="label" />
+            <Tab
+              icon={<SupervisedUserCircleIcon />}
+              label="Label Help"
+              value="labelhelp"
+            />
+          </Tabs>
+        </Box>
+        <Box flexGrow={1} />
+        <Stats
+          stats={[
+            {
+              name: "Percent Complete",
+              value: Math.floor(percentComplete * 100) + "%",
+            },
+            {
+              name: "Time per Sample",
+              value: duration(
+                new Date(Date.now() - sampleTimeToComplete)
+              ).toString(1, 1),
+            },
+            {
+              name: "Estimated Remaining",
+              value: duration(
+                new Date(
+                  Date.now() -
+                    sampleTimeToComplete *
+                      (1 - percentComplete) *
+                      (dataset.samples || []).length
+                )
+              ).toString(1, 2),
+            },
+          ]}
+        />
+      </Box>
+      <Box flexGrow={1}>
+        <SampleGrid
+          count={(dataset.samples || []).length}
+          samples={dataset.samples || []}
+          completed={(dataset.samples || []).map((s) => Boolean(s.annotation))}
+          onClick={(sampleIndex) => {
+            posthog.capture("open_sample", {
+              interface_type: dataset.interface.type,
+            })
+            onChangeSingleSampleDataset({
+              ...dataset,
+              samples: [dataset.samples[sampleIndex]],
+              sampleIndex,
+              startTime: Date.now(),
+            })
+          }}
+        />
+      </Box>
     </OverviewContainer>
   )
 }
