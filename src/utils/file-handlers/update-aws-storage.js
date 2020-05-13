@@ -44,12 +44,12 @@ export default (file) => {
       file.content.samples.forEach(async (element) => {
         try {
           var blob
-          if(!isEmpty(jsonHandler.getSampleUrl(element))){
+          if (!isEmpty(jsonHandler.getSampleUrl(element))) {
             blob = await fetchAFile(element)
-          } else if (!isEmpty(element.document)){
+          } else if (!isEmpty(element.document)) {
             blob = element.document
           }
-          
+
           let imageOrVideoName
           if (isEmpty(element.sampleName)) {
             imageOrVideoName = jsonHandler.getSampleName(element)

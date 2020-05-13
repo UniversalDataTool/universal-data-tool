@@ -10,8 +10,8 @@ export default (typeAuthorize, file) => {
     if (type === "video_segmentation") return "Video"
     if (type === "audio_transcription") return "Audio"
     if (type === "data_entry") return "PDF"
-    if (type === "text_entity_recognition"||
-    type === "text_classification") return "Texte"
+    if (type === "text_entity_recognition" || type === "text_classification")
+      return "Texte"
     if (isEmpty(type)) return "Empty"
     return "File"
   }

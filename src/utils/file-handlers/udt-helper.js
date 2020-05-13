@@ -64,7 +64,7 @@ class LocalStorageHandler {
   }
   static getSampleWithThisSampleName(sampleName, samples) {
     var nameToSearch
-    if (!isEmpty(samples)&&!isEmpty(sampleName)) {
+    if (!isEmpty(samples) && !isEmpty(sampleName)) {
       for (var i = 0; i < samples.length; i++) {
         if (!isEmpty(samples[i])) {
           nameToSearch = getSampleNameFromURL(samples[i])
@@ -83,15 +83,23 @@ class LocalStorageHandler {
     if (!isEmpty(samples)) {
       for (var i = 0; i < samples.length; i++) {
         if (!isEmpty(samples[i])) {
-          
           var oldsample = samples[i]
-          var sampleName 
-          if(!isEmpty(oldsample.document)){
+          var sampleName
+          if (!isEmpty(oldsample.document)) {
             // Deal with the exception of the text file (they don't have url)
-            sampleName = [oldsample.document,"sample"+i.toString()+".txt","sample","txt"]
-          } else{
+            sampleName = [
+              oldsample.document,
+              "sample" + i.toString() + ".txt",
+              "sample",
+              "txt",
+            ]
+          } else {
             sampleName = getSampleNameFromURL(oldsample)
-            sampleName=this.renameSampleFromUrl(samples,oldsample,sampleName)
+            sampleName = this.renameSampleFromUrl(
+              samples,
+              oldsample,
+              sampleName
+            )
           }
           oldsample = setIn(oldsample, ["sampleName"], sampleName[1])
           samples = setIn(samples, [i], oldsample)
@@ -100,7 +108,7 @@ class LocalStorageHandler {
     }
     return samples
   }
-  static renameSampleFromUrl(samples,sampleToChange,sampleName){
+  static renameSampleFromUrl(samples, sampleToChange, sampleName) {
     var boolName = true
     var v = 1
     while (boolName) {
