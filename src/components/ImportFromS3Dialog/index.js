@@ -1,5 +1,5 @@
 // @flow weak
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef, useCallback } from "react"
 import SimpleDialog from "../SimpleDialog"
 import DataTable from "react-data-table-component"
 import Radio from "@material-ui/core/Radio"
@@ -95,31 +95,6 @@ const ExpandedRow = ({ data }) => {
     </>
   )
 }
-async function onChangeFileUpdateConfigImport (file,lastObjectRef,setConfigImport,configImport) {
-  if (file === lastObjectRef.current) return
-  var changes = jsonHandler.fileHasChanged(lastObjectRef.current, file)
-  if (changes.content.interface.type) {
-    if (lastObjectRef.current !== {})
-      await setConfigImport(setTypeOfFileToLoadAndDisable(configImport, file))
-  }
-  if (
-    isEmpty(file) ||
-    isEmpty(file.content) ||
-    (isEmpty(file.content.interface) && isEmpty(file.content.samples))
-  ) {
-    setConfigImport({
-      ...configImport,
-      projectStarted: false,
-    })
-  } else {
-    setConfigImport({
-      ...configImport,
-      loadProjectIsSelected: false,
-      projectStarted: true,
-    })
-  }
-  lastObjectRef.current = file
-}
 
 export default ({
   file,
@@ -143,9 +118,29 @@ export default ({
     initConfigImport(file)
   )
   const lastObjectRef = useRef({})
+  const CheckIfProjectIsStarted = useCallback(() => {
+      if(isEmpty(file) ||
+      isEmpty(file.content) ||
+      (isEmpty(file.content.interface) && isEmpty(file.content.samples)))
+        return false
+      return true
+    },[file])
+
   useEffect(() =>{
-    onChangeFileUpdateConfigImport(file,lastObjectRef,setConfigImport,configImport)
-  }, [file, configImport, setConfigImport])
+    if (file === lastObjectRef.current) return
+    var configToSet = configImport
+    var changes = jsonHandler.fileHasChanged(lastObjectRef.current, file)
+    if (changes.content.interface.type || changes.content.samples) {
+      if (lastObjectRef.current !== {})
+       configToSet=setTypeOfFileToLoadAndDisable(configToSet, file)
+    }
+    setConfigImport({
+      ...configToSet,
+      projectStarted: CheckIfProjectIsStarted(),
+      loadProjectIsSelected: CheckIfProjectIsStarted()?false: setConfigImport.loadProjectIsSelected,
+    })
+    lastObjectRef.current = file
+  }, [file, configImport, setConfigImport, CheckIfProjectIsStarted])
 
   const handleAddSample = async () => {
     var samples = await GetImageFromAFolderAWS(
