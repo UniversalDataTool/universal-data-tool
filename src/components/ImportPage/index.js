@@ -117,9 +117,11 @@ const Button = ({
 }
 
 export default ({
+  // TODO remove file, onChangeFile
   file,
-  dataset,
   onChangeFile,
+
+  dataset,
   onChangeDataset,
   isDesktop,
   authConfig,
@@ -135,7 +137,11 @@ export default ({
           electron,
         })
         onChangeDataset(
-          setIn(dataset, ["samples"], (dataset.samples || []).concat(localSamples)),
+          setIn(
+            dataset,
+            ["samples"],
+            (dataset.samples || []).concat(localSamples)
+          ),
           true
         )
         return
@@ -197,17 +203,19 @@ export default ({
         >
           Import from Youtube URLs
         </Button>
-        <Button
-          isDesktop={isDesktop}
-          dialog="import-from-s3"
-          Icon={S3Icon}
-          authConfiguredOnly={true}
-          authConfig={authConfig}
-          signedInOnly={true}
-          user={user}
-        >
-          Import from S3
-        </Button>
+        {file && (
+          <Button
+            isDesktop={isDesktop}
+            dialog="import-from-s3"
+            Icon={S3Icon}
+            authConfiguredOnly={true}
+            authConfig={authConfig}
+            signedInOnly={true}
+            user={user}
+          >
+            Import from S3
+          </Button>
+        )}
         <Button
           isDesktop={isDesktop}
           dialog="google-drive-file-picker"
@@ -229,15 +237,17 @@ export default ({
           onClose={closeDialog}
           onAddSamples={onAddSamples}
         />
-        <ImportFromS3Dialog
-          file={file}
-          authConfig={authConfig}
-          open={selectedDialog === "import-from-s3"}
-          onChangeFile={onChangeFile}
-          onClose={closeDialog}
-          user={user}
-          onAddSamples={onAddSamples}
-        />
+        {file && (
+          <ImportFromS3Dialog
+            file={file}
+            authConfig={authConfig}
+            open={selectedDialog === "import-from-s3"}
+            onChangeFile={onChangeFile}
+            onClose={closeDialog}
+            user={user}
+            onAddSamples={onAddSamples}
+          />
+        )}
         <ImportFromGoogleDriveDialog
           open={selectedDialog === "google-drive-file-picker"}
           onClose={closeDialog}

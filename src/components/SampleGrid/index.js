@@ -8,10 +8,15 @@ import range from "lodash/range"
 import * as colors from "@material-ui/core/colors"
 import classNames from "classnames"
 import TablePagination from "@material-ui/core/TablePagination"
+import Box from "@material-ui/core/Box"
 import getBrushColorPalette from "../../utils/get-brush-color-palette"
 
 const Container = styled("div")({
   flexWrap: "wrap",
+  height: "100%",
+  boxSizing: "border-box",
+  display: "flex",
+  flexDirection: "column",
 })
 const EmptyState = styled("div")({
   fontSize: 24,
@@ -123,8 +128,11 @@ export default ({ count, completed = [], samples, onClick }) => {
           No samples, try using "Import Toy Dataset" in Samples > Import
         </EmptyState>
       )}
-      {range(sampleOffset, Math.min(count, sampleOffset + samplesPerPage)).map(
-        (i) => (
+      <Box flexGrow={1}>
+        {range(
+          sampleOffset,
+          Math.min(count, sampleOffset + samplesPerPage)
+        ).map((i) => (
           <Sample
             onClick={onClickMemo}
             key={i}
@@ -136,8 +144,8 @@ export default ({ count, completed = [], samples, onClick }) => {
             onMouseEnter={moveSelectRange}
             onMouseUp={endSelectRange}
           />
-        )
-      )}
+        ))}
+      </Box>
       <TablePagination
         rowsPerPageOptions={[100, 250, 500, 1000, 2000, 10000]}
         component="div"
