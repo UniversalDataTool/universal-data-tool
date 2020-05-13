@@ -119,25 +119,29 @@ export default ({
   )
   const lastObjectRef = useRef({})
   const CheckIfProjectIsStarted = useCallback(() => {
-      if(isEmpty(file) ||
+    if (
+      isEmpty(file) ||
       isEmpty(file.content) ||
-      (isEmpty(file.content.interface) && isEmpty(file.content.samples)))
-        return false
-      return true
-    },[file])
+      (isEmpty(file.content.interface) && isEmpty(file.content.samples))
+    )
+      return false
+    return true
+  }, [file])
 
-  useEffect(() =>{
+  useEffect(() => {
     if (file === lastObjectRef.current) return
     var configToSet = configImport
     var changes = jsonHandler.fileHasChanged(lastObjectRef.current, file)
     if (changes.content.interface.type || changes.content.samples) {
       if (lastObjectRef.current !== {})
-       configToSet=setTypeOfFileToLoadAndDisable(configToSet, file)
+        configToSet = setTypeOfFileToLoadAndDisable(configToSet, file)
     }
     setConfigImport({
       ...configToSet,
       projectStarted: CheckIfProjectIsStarted(),
-      loadProjectIsSelected: CheckIfProjectIsStarted()?false: setConfigImport.loadProjectIsSelected,
+      loadProjectIsSelected: CheckIfProjectIsStarted()
+        ? false
+        : setConfigImport.loadProjectIsSelected,
     })
     lastObjectRef.current = file
   }, [file, configImport, setConfigImport, CheckIfProjectIsStarted])
