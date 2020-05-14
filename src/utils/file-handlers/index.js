@@ -63,13 +63,16 @@ export default () => {
 
   const openUrl = useEventCallback(async (url) => {
     const sessionId = decodeURIComponent(url.match(/[?&]s=([^&]+)/)[1])
+    const labelOnly = url.includes("mode=labelonly")
     if (!sessionId) return
     const { state } = await joinSession(sessionId)
     if (!state) return
     window.history.replaceState(
       {},
       window.document.title,
-      `/?s=${encodeURIComponent(sessionId)}`
+      `/?s=${encodeURIComponent(sessionId)}${
+        labelOnly ? "&mode=labelonly" : ""
+      }`
     )
     setFile({
       url,

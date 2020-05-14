@@ -4,7 +4,7 @@ import LocalStorageApp from "./components/LocalStorageApp"
 import DesktopApp from "./components/DesktopApp"
 import { ToastProvider } from "./components/Toasts"
 import useElectron from "./utils/use-electron.js"
-import AppConfigProvider from "./AppConfig"
+import { AppConfigProvider } from "./components/AppConfig"
 import "./App.css"
 
 export const App = () => {

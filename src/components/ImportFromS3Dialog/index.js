@@ -96,53 +96,6 @@ const ExpandedRow = ({ data }) => {
   )
 }
 
-<<<<<<< HEAD
-=======
-function interfaceFileType(type) {
-  if (type === "image_classification" || type === "image_segmentation")
-    return "Image"
-  if (type === "video_segmentation") return "Video"
-  if (type === "audio_transcription") return "Audio"
-  if (isEmpty(type)) return "Empty"
-  return "File"
-}
-
-function typesamplesSample(samples) {
-  if (isEmpty(samples) || isEmpty(samples[0])) return "Empty"
-  if (!isEmpty(samples[0].imageUrl)) return "Image"
-  if (!isEmpty(samples[0].videoUrl)) return "Video"
-  if (!isEmpty(samples[0].audioUrl)) return "Audio"
-  return "File"
-}
-function checkInterfaceAndSamples(typeAuthorize, file) {
-  var result = [null, null]
-  result[0] = interfaceFileType(file.content.interface.type)
-  result[1] = typesamplesSample(file.content.samples)
-  if (typeAuthorize.includes(result[0]) && typeAuthorize.includes(result[1]))
-    return true
-  return false
-}
-function initConfigImport(file) {
-  return {
-    annotationToKeep: "both",
-    typeOfFileToLoad: checkInterfaceAndSamples(["Image", "Empty"], file)
-      ? "Image"
-      : checkInterfaceAndSamples(["Video", "Empty"], file)
-      ? "Video"
-      : checkInterfaceAndSamples(["Audio", "Empty"], file)
-      ? "Audio"
-      : "None",
-    typeOfFileToDisable: {
-      Image: checkInterfaceAndSamples(["Image", "Empty"], file) ? false : true,
-      Video: checkInterfaceAndSamples(["Video", "Empty"], file) ? false : true,
-      Audio: checkInterfaceAndSamples(["Audio", "Empty"], file) ? false : true,
-    },
-    loadProjectIsSelected: true,
-    contentDialogBoxIsSetting: false,
-  }
-}
-
->>>>>>> e91b57b... new sample layout, storybook styling fix
 export default ({
   file,
   open,
@@ -179,46 +132,9 @@ export default ({
     if (file === lastObjectRef.current) return
     var configToSet = configImport
     var changes = jsonHandler.fileHasChanged(lastObjectRef.current, file)
-<<<<<<< HEAD
     if (changes.content.interface.type || changes.content.samples) {
       if (lastObjectRef.current !== {})
         configToSet = setTypeOfFileToLoadAndDisable(configToSet, file)
-=======
-    if (!changes.content.interface.type) return
-    if (lastObjectRef.current === {}) {
-      lastObjectRef.current = file
-    } else {
-      lastObjectRef.current = file
-      setConfigImport({
-        ...configImport,
-        typeOfFileToLoad:
-          !isEmpty(configImport) &&
-          !isEmpty(configImport.typeOfFileToLoad) &&
-          checkInterfaceAndSamples(
-            [configImport.typeOfFileToLoad, "Empty"],
-            file
-          )
-            ? configImport.typeOfFileToLoad
-            : checkInterfaceAndSamples(["Image", "Empty"], file)
-            ? "Image"
-            : checkInterfaceAndSamples(["Video", "Empty"], file)
-            ? "Video"
-            : checkInterfaceAndSamples(["Audio", "Empty"], file)
-            ? "Audio"
-            : "None",
-        typeOfFileToDisable: {
-          Image: checkInterfaceAndSamples(["Image", "Empty"], file)
-            ? false
-            : true,
-          Video: checkInterfaceAndSamples(["Video", "Empty"], file)
-            ? false
-            : true,
-          Audio: checkInterfaceAndSamples(["Audio", "Empty"], file)
-            ? false
-            : true,
-        },
-      })
->>>>>>> e91b57b... new sample layout, storybook styling fix
     }
     setConfigImport({
       ...configToSet,

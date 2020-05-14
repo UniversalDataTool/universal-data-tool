@@ -18,6 +18,7 @@ import useEventCallback from "use-event-callback"
 import usePosthog from "../../utils/use-posthog"
 import classnames from "classnames"
 import LabelView from "../LabelView"
+import useIsLabelOnlyMode from "../../utils/use-is-label-only-mode"
 
 import "brace/mode/javascript"
 import "brace/theme/github"
@@ -40,8 +41,6 @@ const useStyles = makeStyles({
   },
 })
 
-const headerTabs = ["Setup", "Samples", "Label"]
-
 export default ({
   file,
   datasetName = "Universal Data Tool",
@@ -59,15 +58,18 @@ export default ({
   recentItems,
   selectedBrush,
 }) => {
+  const labelOnlyMode = useIsLabelOnlyMode()
   var [valueDisplay, setValueDisplay] = useState(fileName)
   const c = useStyles()
   const { addToast } = useToasts()
-  const [mode, changeMode] = useState(initialMode)
+  const [mode, changeMode] = useState(labelOnlyMode ? "label" : initialMode)
   const [singleSampleDataset, setSingleSampleDataset] = useState()
   const [sampleInputEditor, changeSampleInputEditor] = useState({})
   const [jsonText, changeJSONText] = useState()
   const { ipcRenderer } = useElectron() || {}
   const posthog = usePosthog()
+
+  const headerTabs = labelOnlyMode ? ["Label"] : ["Setup", "Samples", "Label"]
 
   const [
     sampleTimeToComplete,

@@ -17,6 +17,7 @@ import useEventCallback from "use-event-callback"
 import usePreventNavigation from "../../utils/use-prevent-navigation"
 import jsonHandler from "../../utils/file-handlers/udt-helper"
 import UpdateAWSStorage from "../../utils/file-handlers/update-aws-storage"
+import { FileContext } from "../FileContext"
 const randomId = () => Math.random().toString().split(".")[1]
 
 export default () => {

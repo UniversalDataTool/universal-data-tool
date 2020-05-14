@@ -15,6 +15,7 @@ import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle"
 import DataUsageIcon from "@material-ui/icons/DataUsage"
 import LabelHelpView, { useLabelHelp } from "../LabelHelpView"
 import ActiveLearningView from "../ActiveLearningView"
+import useIsLabelOnlyMode from "../../utils/use-is-label-only-mode"
 
 const OverviewContainer = styled("div")({
   padding: 16,
@@ -34,9 +35,10 @@ export default ({
   onChangeSampleTimeToComplete,
   sampleTimeToComplete,
 }) => {
-  const [currentTab, setTab] = useState("labelhelp")
+  const [currentTab, setTab] = useState("label")
   const posthog = usePosthog()
   const { labelHelpEnabled } = useLabelHelp()
+  const labelOnlyMode = useIsLabelOnlyMode()
   let percentComplete = 0
   if (dataset.samples && dataset.samples.length > 0) {
     percentComplete =
@@ -125,11 +127,13 @@ export default ({
         <Box>
           <Tabs value={currentTab} onChange={(e, newTab) => setTab(newTab)}>
             <Tab icon={<BorderColorIcon />} label="Label" value="label" />
-            <Tab
-              icon={<DataUsageIcon />}
-              label="Active Learning"
-              value="activelearning"
-            />
+            {!labelOnlyMode && (
+              <Tab
+                icon={<DataUsageIcon />}
+                label="Active Learning"
+                value="activelearning"
+              />
+            )}
             {labelHelpEnabled && (
               <Tab
                 icon={<SupervisedUserCircleIcon />}

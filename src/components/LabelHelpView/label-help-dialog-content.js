@@ -36,14 +36,16 @@ const preciseUSDFormatter = new Intl.NumberFormat("en-US", {
 const steps = ["setup", "running", "completed"]
 
 export default () => {
-  const { formula, variables } = useLabelHelp()
+  const [activeStep, setActiveStep] = useState("completed")
+  const { labelHelpEnabled, formula, variables } = useLabelHelp()
+  if (!labelHelpEnabled) return null
+
   const funcArgs = Object.keys(variables)
   const formulaFuncPos = new Function(...funcArgs, "return " + formula)
   const formulaFunc = (variables) => {
     return formulaFuncPos(...funcArgs.map((ak) => variables[ak]))
   }
   const totalCost = formulaFunc(variables)
-  const [activeStep, setActiveStep] = useState("completed")
   return (
     <Container>
       <Stepper activeStep={steps.indexOf(activeStep)}>
