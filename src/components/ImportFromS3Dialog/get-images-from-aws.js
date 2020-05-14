@@ -38,8 +38,8 @@ async function setUrl(result, configImport) {
       RecognizeFileExtension(result) === configImport.typeOfFileToLoad &&
       configImport.typeOfFileToLoad === "Texte"
     ) {
-      var texte = await fetchTextInFile(result)
-      return { document: `${texte}` }
+      var text = await fetchTextInFile(result)
+      return { document: `${text}` }
     }
   }
 }
@@ -53,8 +53,8 @@ async function fetchTextInFile(urlSource) {
   }).catch((error) => {
     console.log("Looks like there was a problem: \n", error)
   })
-  const texte = await response.text()
-  return texte
+  const text = await response.text()
+  return text
 }
 export default async (result, folderToFetch, configImport, authConfig) => {
   Amplify.configure(authConfig)
