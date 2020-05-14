@@ -104,7 +104,6 @@ export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
       }
       try {
         Amplify.configure(config)
-        Storage.list("", { level: "private" })
         Auth.currentAuthenticatedUser()
           .then((user) => {
             onAuthConfigured(config)

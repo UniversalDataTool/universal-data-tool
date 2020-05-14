@@ -3,12 +3,45 @@ import RecognizeFileExtension from "../RecognizeFileExtension"
 import isEmpty from "../isEmpty"
 import { setIn } from "seamless-immutable"
 class LocalStorageHandler {
-  static getSampleName(sample) {
+  static async getTextFromUrl(urlSource) {
+    var proxyUrl = "https://cors-anywhere.herokuapp.com/"
+    var response
+    var url
+    url = proxyUrl + urlSource
+    response = await fetch(url, {
+      method: "GET",
+    }).catch((error) => {
+      console.log("Looks like there was a problem: \n", error)
+    })
+    const text = await response.text()
+    return text
+  }
+  
+  static async getTextfromSample(sample){
+   var text = ""
+   if (isEmpty(sample.document)){
+      if(!isEmpty(sample.textUrl)){
+        text = await this.getTextFromUrl(sample.textUrl)
+      }
+   }else{
+     text = sample.document
+   }
+   return text
+  }
+  
+  static getSampleName(sample,indexSample) {
     var sampleName
     if (!isEmpty(sample.sampleName)) {
       sampleName = sample.sampleName
     } else {
-      sampleName = getSampleNameFromURL(sample)[1]
+      sampleName = getSampleNameFromURL(sample)
+      if(isEmpty(sampleName))
+      sampleName = [
+        sample.document,
+        "sample" + indexSample.toString() + ".txt",
+        "sample",
+        "txt",
+      ]
     }
     return sampleName
   }
@@ -25,6 +58,9 @@ class LocalStorageHandler {
     }
     if (!isEmpty(sample.pdfUrl)) {
       url = sample.pdfUrl
+    }
+    if (!isEmpty(sample.textUrl)) {
+      url = sample.textUrl
     }
 
     return url
@@ -67,13 +103,14 @@ class LocalStorageHandler {
     if (!isEmpty(samples) && !isEmpty(sampleName)) {
       for (var i = 0; i < samples.length; i++) {
         if (!isEmpty(samples[i])) {
-          nameToSearch = getSampleNameFromURL(samples[i])
-          if (typeof samples[i].sampleName !== "undefined") {
-            nameToSearch[1] = samples[i].sampleName
+          nameToSearch = this.getSampleName(samples[i],i)
+          if (!isEmpty(samples[i].sampleName)) {
+            nameToSearch = setIn(nameToSearch,[1],samples[i].sampleName)
           }
           if (nameToSearch[1] === sampleName) {
             return samples[i]
           }
+          
         }
       }
     }
@@ -94,7 +131,7 @@ class LocalStorageHandler {
               "txt",
             ]
           } else {
-            sampleName = getSampleNameFromURL(oldsample)
+            sampleName = this.getSampleName(oldsample,i)
             sampleName = this.renameSampleFromUrl(
               samples,
               oldsample,

@@ -23,6 +23,7 @@ export default (typeAuthorize, file) => {
     if (!isEmpty(samples[0].audioUrl)) return "Audio"
     if (!isEmpty(samples[0].pdfUrl)) return "PDF"
     if (!isEmpty(samples[0].document)) return "Texte"
+    if (!isEmpty(samples[0].textUrl)) return "Texte"
     return "File"
   }
   var result = [null, null]

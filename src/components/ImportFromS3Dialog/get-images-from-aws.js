@@ -38,23 +38,9 @@ async function setUrl(result, configImport) {
       RecognizeFileExtension(result) === configImport.typeOfFileToLoad &&
       configImport.typeOfFileToLoad === "Texte"
     ) {
-      var text = await fetchTextInFile(result)
-      return { document: `${text}` }
+      return { textUrl: `${result}` }
     }
   }
-}
-async function fetchTextInFile(urlSource) {
-  var proxyUrl = "https://cors-anywhere.herokuapp.com/"
-  var response
-  var url
-  url = proxyUrl + urlSource
-  response = await fetch(url, {
-    method: "GET",
-  }).catch((error) => {
-    console.log("Looks like there was a problem: \n", error)
-  })
-  const text = await response.text()
-  return text
 }
 export default async (result, folderToFetch, configImport, authConfig) => {
   Amplify.configure(authConfig)
