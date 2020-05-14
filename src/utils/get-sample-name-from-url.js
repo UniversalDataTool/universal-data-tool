@@ -17,6 +17,11 @@ export default (sample) => {
         `.*\\/(([^\\/\\\\&\\?]*)\\.([a-zA-Z0-9]*))(\\?|$)`
       )
     }
+    if (!isEmpty(sample.pdfUrl)) {
+      sampleName = decodeURI(sample.pdfUrl).match(
+        `.*\\/(([^\\/\\\\&\\?]*)\\.([a-zA-Z0-9]*))(\\?|$)`
+      )
+    }
   }
   return sampleName
 }

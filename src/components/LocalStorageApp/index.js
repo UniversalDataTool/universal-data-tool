@@ -18,7 +18,6 @@ import usePreventNavigation from "../../utils/use-prevent-navigation"
 import jsonHandler from "../../utils/file-handlers/udt-helper"
 import UpdateAWSStorage from "../../utils/file-handlers/update-aws-storage"
 const randomId = () => Math.random().toString().split(".")[1]
-
 export default () => {
   const {
     file,
@@ -33,7 +32,6 @@ export default () => {
   const [errors] = useErrors()
 
   const [selectedBrush, setSelectedBrush] = useState("complete")
-
   const onCreateTemplate = useEventCallback((template) => {
     changeFile({
       fileName: "unnamed",
@@ -114,6 +112,7 @@ export default () => {
       "text_classification",
       "audio_transcription",
       "composite",
+      "data_entry",
     ]
     if (fileAuthorize.includes(s)) return true
     return false
@@ -137,7 +136,6 @@ export default () => {
       lastObjectRef.current = file
     }
   }, [shouldUpdateAWSStorage, authConfig, file])
-
   return (
     <>
       <HeaderContext.Provider
