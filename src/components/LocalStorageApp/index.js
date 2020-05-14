@@ -18,10 +18,11 @@ import usePreventNavigation from "../../utils/use-prevent-navigation"
 import jsonHandler from "../../utils/file-handlers/udt-helper"
 import UpdateAWSStorage from "../../utils/file-handlers/update-aws-storage"
 const randomId = () => Math.random().toString().split(".")[1]
+
 export default () => {
   const {
     file,
-    changeFile,
+    setFile,
     openFile,
     openUrl,
     makeSession,
@@ -33,7 +34,7 @@ export default () => {
 
   const [selectedBrush, setSelectedBrush] = useState("complete")
   const onCreateTemplate = useEventCallback((template) => {
-    changeFile({
+    setFile({
       fileName: "unnamed",
       content: template.dataset,
       id: randomId(),
@@ -41,8 +42,8 @@ export default () => {
     })
   })
 
-  const openRecentItem = useEventCallback((item) => changeFile(item))
-  const onClickHome = useEventCallback(() => changeFile(null))
+  const openRecentItem = useEventCallback((item) => setFile(item))
+  const onClickHome = useEventCallback(() => setFile(null))
   const onDownload = useEventCallback((format) => {
     if (!file) return
     const outputName = (file.sessionId || file.fileName) + ".udt." + format
@@ -96,7 +97,7 @@ export default () => {
   )
 
   const onLeaveSession = useEventCallback(() =>
-    changeFile({
+    setFile({
       ...file,
       mode: "local-storage",
       fileName: file.fileName || `copy_of_${file.id}`,
@@ -138,66 +139,68 @@ export default () => {
   }, [shouldUpdateAWSStorage, authConfig, file])
   return (
     <>
-      <HeaderContext.Provider
-        value={{
-          title: file
-            ? file.mode === "local-storage"
-              ? file.fileName
-              : file.url
-            : "unnamed",
-          recentItems,
-          changeRecentItems,
-          onClickTemplate: onCreateTemplate,
-          onClickHome,
-          onOpenFile: openFile,
-          onOpenRecentItem: openRecentItem,
-          inSession,
-          sessionBoxOpen,
-          changeSessionBoxOpen,
-          onJoinSession,
-          onLeaveSession,
-          onCreateSession: makeSession,
-          fileOpen: Boolean(file),
-          onDownload,
-          authConfig,
-          onUserChange: (userToSet) => changeUser(userToSet),
-          user: user,
-          logoutUser: logoutUser,
-          onChangeSelectedBrush: setSelectedBrush,
-          selectedBrush,
-        }}
-      >
-        {!file ? (
-          <StartingPage
-            onFileDrop={openFile}
-            onOpenTemplate={onCreateTemplate}
-            recentItems={recentItems}
-            onOpenRecentItem={openRecentItem}
-            onClickOpenSession={() => changeSessionBoxOpen(true)}
-            onAuthConfigured={(config) => changeAuthConfig(config)}
-            user={user}
-            logoutUser={logoutUser}
-          />
-        ) : (
-          <AppErrorBoundary>
-            <DatasetEditor
-              file={file}
-              key={file.id}
-              {...file}
-              selectedBrush={selectedBrush}
-              inSession={inSession}
-              dataset={file.content}
-              onChangeDataset={(newOHA) => {
-                changeFile(setIn(file, ["content"], newOHA))
-              }}
-              onChangeFile={changeFile}
-              authConfig
-              user={user}
+      <FileContext.Provider value={{ file, setFile }}>
+        <HeaderContext.Provider
+          value={{
+            title: file
+              ? file.mode === "local-storage"
+                ? file.fileName
+                : file.url
+              : "unnamed",
+            recentItems,
+            changeRecentItems,
+            onClickTemplate: onCreateTemplate,
+            onClickHome,
+            onOpenFile: openFile,
+            onOpenRecentItem: openRecentItem,
+            inSession,
+            sessionBoxOpen,
+            changeSessionBoxOpen,
+            onJoinSession,
+            onLeaveSession,
+            onCreateSession: makeSession,
+            fileOpen: Boolean(file),
+            onDownload,
+            authConfig,
+            onUserChange: (userToSet) => changeUser(userToSet),
+            user: user,
+            logoutUser: logoutUser,
+            onChangeSelectedBrush: setSelectedBrush,
+            selectedBrush,
+          }}
+        >
+          {!file ? (
+            <StartingPage
+              onFileDrop={openFile}
+              onOpenTemplate={onCreateTemplate}
               recentItems={recentItems}
+              onOpenRecentItem={openRecentItem}
+              onClickOpenSession={() => changeSessionBoxOpen(true)}
+              onAuthConfigured={(config) => changeAuthConfig(config)}
+              user={user}
+              logoutUser={logoutUser}
             />
-          </AppErrorBoundary>
-        )}
-      </HeaderContext.Provider>
+          ) : (
+            <AppErrorBoundary>
+              <DatasetEditor
+                file={file}
+                key={file.id}
+                {...file}
+                selectedBrush={selectedBrush}
+                inSession={inSession}
+                dataset={file.content}
+                onChangeDataset={(newOHA) => {
+                  setFile(setIn(file, ["content"], newOHA))
+                }}
+                onChangeFile={setFile}
+                authConfig
+                user={user}
+                recentItems={recentItems}
+              />
+            </AppErrorBoundary>
+          )}
+        </HeaderContext.Provider>
+      </FileContext.Provider>
       <ErrorToasts errors={errors} />
     </>
   )
