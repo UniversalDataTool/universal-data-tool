@@ -12,6 +12,9 @@ import Tabs from "@material-ui/core/Tabs"
 import Tab from "@material-ui/core/Tab"
 import BorderColorIcon from "@material-ui/icons/BorderColor"
 import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle"
+import DataUsageIcon from "@material-ui/icons/DataUsage"
+import LabelHelpView, { useLabelHelp } from "../LabelHelpView"
+import ActiveLearningView from "../ActiveLearningView"
 
 const OverviewContainer = styled("div")({
   padding: 16,
@@ -31,8 +34,9 @@ export default ({
   onChangeSampleTimeToComplete,
   sampleTimeToComplete,
 }) => {
-  const [currentTab, setTab] = useState("label")
+  const [currentTab, setTab] = useState("labelhelp")
   const posthog = usePosthog()
+  const { labelHelpEnabled } = useLabelHelp()
   let percentComplete = 0
   if (dataset.samples && dataset.samples.length > 0) {
     percentComplete =
@@ -122,10 +126,17 @@ export default ({
           <Tabs value={currentTab} onChange={(e, newTab) => setTab(newTab)}>
             <Tab icon={<BorderColorIcon />} label="Label" value="label" />
             <Tab
-              icon={<SupervisedUserCircleIcon />}
-              label="Label Help"
-              value="labelhelp"
+              icon={<DataUsageIcon />}
+              label="Active Learning"
+              value="activelearning"
             />
+            {labelHelpEnabled && (
+              <Tab
+                icon={<SupervisedUserCircleIcon />}
+                label="Label Help"
+                value="labelhelp"
+              />
+            )}
           </Tabs>
         </Box>
         <Box flexGrow={1} />
@@ -156,22 +167,28 @@ export default ({
         />
       </Box>
       <Box flexGrow={1}>
-        <SampleGrid
-          count={(dataset.samples || []).length}
-          samples={dataset.samples || []}
-          completed={(dataset.samples || []).map((s) => Boolean(s.annotation))}
-          onClick={(sampleIndex) => {
-            posthog.capture("open_sample", {
-              interface_type: dataset.interface.type,
-            })
-            onChangeSingleSampleDataset({
-              ...dataset,
-              samples: [dataset.samples[sampleIndex]],
-              sampleIndex,
-              startTime: Date.now(),
-            })
-          }}
-        />
+        {currentTab === "label" && (
+          <SampleGrid
+            count={(dataset.samples || []).length}
+            samples={dataset.samples || []}
+            completed={(dataset.samples || []).map((s) =>
+              Boolean(s.annotation)
+            )}
+            onClick={(sampleIndex) => {
+              posthog.capture("open_sample", {
+                interface_type: dataset.interface.type,
+              })
+              onChangeSingleSampleDataset({
+                ...dataset,
+                samples: [dataset.samples[sampleIndex]],
+                sampleIndex,
+                startTime: Date.now(),
+              })
+            }}
+          />
+        )}
+        {currentTab === "activelearning" && <ActiveLearningView />}
+        {currentTab === "labelhelp" && <LabelHelpView />}
       </Box>
     </OverviewContainer>
   )
