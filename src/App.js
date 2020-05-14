@@ -4,15 +4,18 @@ import LocalStorageApp from "./components/LocalStorageApp"
 import DesktopApp from "./components/DesktopApp"
 import { ToastProvider } from "./components/Toasts"
 import useElectron from "./utils/use-electron.js"
+import AppConfigProvider from "./AppConfig"
 import "./App.css"
 
 export const App = () => {
   const electron = useElectron()
   return (
     <Theme>
-      <ToastProvider>
-        {Boolean(electron) ? <DesktopApp /> : <LocalStorageApp />}
-      </ToastProvider>
+      <AppConfigProvider>
+        <ToastProvider>
+          {Boolean(electron) ? <DesktopApp /> : <LocalStorageApp />}
+        </ToastProvider>
+      </AppConfigProvider>
     </Theme>
   )
 }

@@ -89,11 +89,7 @@ export default () => {
                         variables.sample_count
                     )}
                   </TableCell>
-                  <TableCell>
-                    {/* {varName === "sample_count"
-                    ? usdFormatter.format(totalCost)
-                    : ""} */}
-                  </TableCell>
+                  <TableCell></TableCell>
                 </TableRow>
               ))}
               <TableRow>
