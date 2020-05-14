@@ -1,5 +1,6 @@
 import RecognizeFileExtension from "../../utils/RecognizeFileExtension"
 import Amplify, { Storage } from "aws-amplify"
+import isEmpty from "../../utils/isEmpty"
 
 async function setUrl(result, configImport) {
   if (configImport.loadProjectIsSelected) {
@@ -65,7 +66,8 @@ export default async (result, folderToFetch, configImport, authConfig) => {
         level: "private",
       })
         .then(async (result) => {
-          samples.push(await setUrl(result, configImport))
+          var url = await setUrl(result, configImport)
+          if (!isEmpty(url)) samples.push(url)
         })
         .catch((err) => {
           console.log("error getting link for s3 image", err)
