@@ -15,6 +15,7 @@ import TableContainer from "@material-ui/core/TableContainer"
 import TableHead from "@material-ui/core/TableHead"
 import TableRow from "@material-ui/core/TableRow"
 import Divider from "@material-ui/core/Divider"
+import { useAppConfig } from "../AppConfig"
 import { useLabelHelp } from "./"
 import * as colors from "@material-ui/core/colors"
 
@@ -36,7 +37,8 @@ const preciseUSDFormatter = new Intl.NumberFormat("en-US", {
 const steps = ["setup", "running", "completed"]
 
 export default () => {
-  const [activeStep, setActiveStep] = useState("completed")
+  const [activeStep, setActiveStep] = useState("setup")
+  const { fromConfig, setInConfig } = useAppConfig()
   const { labelHelpEnabled, formula, variables } = useLabelHelp()
   if (!labelHelpEnabled) return null
 
@@ -119,7 +121,12 @@ export default () => {
           >
             <Box>Credits: $132.00</Box>
             <Box flexGrow={1} />
-            <Button variant="outlined">API Key</Button>
+            <Button
+              onClick={() => setInConfig("labelhelp.apikey", null)}
+              variant="outlined"
+            >
+              API Key
+            </Button>
             <Button style={{ marginLeft: 12 }} variant="outlined">
               Info
             </Button>

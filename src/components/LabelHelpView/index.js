@@ -1,4 +1,4 @@
-import React from "react"
+import React, { createContext, useContext, useMemo, useState } from "react"
 import { styled } from "@material-ui/core/styles"
 import Box from "@material-ui/core/Box"
 import Grid from "@material-ui/core/Grid"
@@ -7,6 +7,7 @@ import PaperContainer from "../PaperContainer"
 import LabelHelpDialogContent from "./label-help-dialog-content"
 import useIsLabelOnlyMode from "../../utils/use-is-label-only-mode"
 import { useFileContext } from "../FileContext"
+import { useAppConfig } from "../AppConfig"
 
 const Container = styled("div")({
   display: "flex",
@@ -14,17 +15,54 @@ const Container = styled("div")({
   alignItems: "center",
 })
 
+export const LabelHelpContext = createContext({})
+
+export const LabelHelpProvider = ({ children }) => {
+  const [loadingPricingConfig, setLoadingPricingConfig] = useState(false)
+  const [pricingConfig, setPricingConfig] = useState(false)
+  const contextValue = useMemo(
+    () => ({
+      pricingConfig,
+      loadPricingConfig: async () => {
+        if (loadingPricingConfig) return
+        setLoadingPricingConfig(true)
+        // TODO get pricing config via fetch
+
+        setLoadingPricingConfig(false)
+        setPricingConfig({})
+      },
+    }),
+    [pricingConfig, loadingPricingConfig]
+  )
+  return (
+    <LabelHelpContext.Provider value={contextValue}>
+      {children}
+    </LabelHelpContext.Provider>
+  )
+}
+
 export const useLabelHelp = () => {
   const isLabelOnlyMode = useIsLabelOnlyMode()
   const { file } = useFileContext()
-  if (isLabelOnlyMode) return { labelHelpEnabled: false }
+  const { pricingConfig, loadPricingConfig } = useContext(LabelHelpContext)
+  const { fromConfig } = useAppConfig()
+  if (fromConfig("labelhelp.disabled")) return { labelHelpEnabled: false }
   try {
+    const hasLabelHelpAPIKey = Boolean(fromConfig("labelhelp.apikey"))
+    if (isLabelOnlyMode) return { labelHelpEnabled: false }
+    if (!hasLabelHelpAPIKey && file.content.samples.length < 100)
+      return { labelHelpEnabled: false }
+
+    if (!pricingConfig) {
+      loadPricingConfig()
+      return { labelHelpEnabled: false }
+    }
+
+    const { formula } = pricingConfig[file.content.interface.type]
+
     return {
-      labelHelpEnabled: isLabelOnlyMode
-        ? false
-        : file.content.samples.length > 100,
-      formula:
-        "(0.06 + number_of_fields * 0.02 + text_field_count * 0.1 + total_labels * 0.005 + 0.07 * total_bounding_boxes) * sample_count",
+      labelHelpEnabled: true,
+      formula,
       variables: {
         number_of_fields: 3,
         text_field_count: 5,
@@ -33,6 +71,7 @@ export const useLabelHelp = () => {
         sample_count: 1000,
       },
       price: 104,
+      labelHelpAPIKey: fromConfig("labelhelp.apikey"),
     }
   } catch (e) {
     return { labelHelpEnabled: false }
@@ -40,12 +79,17 @@ export const useLabelHelp = () => {
 }
 
 export const LabelHelpView = () => {
+  const { fromConfig, setInConfig } = useAppConfig()
+  const hasAPIKey = Boolean(fromConfig("labelhelp.apikey"))
   return (
     <Container>
-      {/* <APIKeyEntry /> */}
-      <PaperContainer style={{ marginTop: 64, width: "100%", maxWidth: 800 }}>
-        <LabelHelpDialogContent />
-      </PaperContainer>
+      {!hasAPIKey ? (
+        <APIKeyEntry />
+      ) : (
+        <PaperContainer style={{ marginTop: 48, width: "100%", maxWidth: 800 }}>
+          <LabelHelpDialogContent />
+        </PaperContainer>
+      )}
     </Container>
   )
 }
