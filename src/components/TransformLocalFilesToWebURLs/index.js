@@ -4,7 +4,12 @@ import transformFileURLsToWebURLs from "./functions/transform-file-urls-to-web-u
 import ProgressBar from "../ProgressBar"
 import useElectron from "../../utils/use-electron"
 
-const TransformLocalFilesToWebURLs = ({ open, onClose, dataset, onChangeDataset }) => {
+const TransformLocalFilesToWebURLs = ({
+  open,
+  onClose,
+  dataset,
+  onChangeDataset,
+}) => {
   const [progress, setProgress] = useState(0)
   const { remote } = useElectron() || {}
 

@@ -23,7 +23,9 @@ function GetSampleFromAnnotation(json, samples) {
     } else {
       url = datasetHelper.getSampleUrl(sampleFound)
     }
-    newSamples.push(datasetHelper.createOneNewSample(sampleName, url, annotation))
+    newSamples.push(
+      datasetHelper.createOneNewSample(sampleName, url, annotation)
+    )
   }
   json.content.samples = newSamples
 }

@@ -76,7 +76,9 @@ const SelectType = ({ currentlySelected, onChange }) => {
   return templates.map((t) => (
     <TypeButton
       key={t.dataset.interface.type || "empty"}
-      className={currentlySelected === t.dataset.interface.type ? "selected" : ""}
+      className={
+        currentlySelected === t.dataset.interface.type ? "selected" : ""
+      }
       variant="outlined"
       onClick={() => {
         if (currentlySelected !== t.dataset.interface.type) {
