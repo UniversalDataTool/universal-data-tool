@@ -25,6 +25,7 @@ import usePosthog from "../../utils/use-posthog"
 
 import "brace/mode/javascript"
 import "brace/theme/github"
+import isEmpty from "../../utils/isEmpty"
 
 const useStyles = makeStyles({
   headerButton: {
@@ -43,6 +44,56 @@ const useStyles = makeStyles({
     height: "100vh",
   },
 })
+
+const functionOnExit = (nextAction = "nothing", 
+singleSampleOHA,
+changeSingleSampleOHA,
+changeSampleTimeToComplete,
+oha,
+onChangeOHA,
+posthog) => {
+    if (singleSampleOHA.startTime) {
+      changeSampleTimeToComplete(
+        Date.now() - singleSampleOHA.startTime
+      )
+    }
+    const { sampleIndex } = singleSampleOHA
+    switch (nextAction) {
+      case "go-to-next":
+        if (sampleIndex !== oha.samples.length - 1) {
+          posthog.capture("next_sample", {
+            interface_type: oha.interface.type,
+          })
+          changeSingleSampleOHA({
+            ...oha,
+            samples: [oha.samples[sampleIndex + 1]],
+            sampleIndex: sampleIndex + 1,
+            startTime: Date.now(),
+          })
+          return
+        }
+        break
+      case "go-to-previous":
+        if (sampleIndex !== 0) {
+          changeSingleSampleOHA({
+            ...oha,
+            samples: [oha.samples[sampleIndex - 1]],
+            sampleIndex: sampleIndex - 1,
+            startTime: Date.now(),
+          })
+          return
+        }
+        break
+      case "delete-annotation":
+        if(sampleIndex !== null){
+        }
+        return
+      default:
+        break
+    }
+    changeSingleSampleOHA(null)
+  
+}
 
 const headerTabs = ["Setup", "Samples", "Label"]
 
@@ -72,7 +123,20 @@ export default ({
   const [jsonText, changeJSONText] = useState()
   const { ipcRenderer } = useElectron() || {}
   const posthog = usePosthog()
-
+  document.addEventListener("keydown",event => {
+    if (event.isComposing || event.keyCode === 229) {
+      return;
+    }
+    if(event.keyCode === 46){
+      if(!isEmpty(singleSampleOHA) )
+      functionOnExit("delete-annotation",singleSampleOHA,
+      changeSingleSampleOHA,
+      changeSampleTimeToComplete,
+      oha,
+      onChangeOHA,
+      posthog)
+    }
+  })
   const [
     timeToCompleteSample,
     changeSampleTimeToComplete,
@@ -92,7 +156,6 @@ export default ({
       ipcRenderer.removeListener("open-label-page", onOpenLabelPage)
     }
   }, [ipcRenderer])
-
   useEffect(() => {
     if (mode === "json") {
       changeJSONText(JSON.stringify(oha, null, "  "))
@@ -260,46 +323,13 @@ export default ({
                 )
                 onChangeOHA(newOHA)
               }}
-              onExit={(nextAction = "nothing") => {
-                if (singleSampleOHA.startTime) {
-                  changeSampleTimeToComplete(
-                    Date.now() - singleSampleOHA.startTime
-                  )
-                }
-                const { sampleIndex } = singleSampleOHA
-                switch (nextAction) {
-                  case "go-to-next":
-                    if (sampleIndex !== oha.samples.length - 1) {
-                      posthog.capture("next_sample", {
-                        interface_type: oha.interface.type,
-                      })
-                      changeSingleSampleOHA({
-                        ...oha,
-                        samples: [oha.samples[sampleIndex + 1]],
-                        sampleIndex: sampleIndex + 1,
-                        startTime: Date.now(),
-                      })
-                      return
-                    }
-                    break
-                  case "go-to-previous":
-                    if (sampleIndex !== 0) {
-                      changeSingleSampleOHA({
-                        ...oha,
-                        samples: [oha.samples[sampleIndex - 1]],
-                        sampleIndex: sampleIndex - 1,
-                        startTime: Date.now(),
-                      })
-                      return
-                    }
-                    break
-                  case "delete-annotation":
-                    break
-                  default:
-                    break
-                }
-                changeSingleSampleOHA(null)
-              }}
+              onExit={(param) => functionOnExit(param,
+                singleSampleOHA,
+                changeSingleSampleOHA,
+                changeSampleTimeToComplete,
+                oha,
+                onChangeOHA,
+                posthog)}
               oha={singleSampleOHA}
               onClickSetup={() => changeMode("setup")}
             />

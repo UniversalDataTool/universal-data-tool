@@ -192,7 +192,7 @@ class LocalStorageHandler {
       return "file"
     return ""
   }
-  static eraseAnnotation(samples) {
+  static eraseAnnotationAllSamples(samples) {
     var Tabsamples = []
     for (let i = 0; i < samples.length; i++) {
       let Newsample = samples[i]
@@ -203,13 +203,19 @@ class LocalStorageHandler {
     }
     return Tabsamples
   }
-
+  static eraseAnnotationOneSample(sample) {
+    let Newsample = sample
+    if (!isEmpty(Newsample.annotation)) {
+      delete Newsample["annotation"]
+    }
+    return Newsample
+  }
   static concatSample(actualSamples, newSamples, annotationToKeep) {
     var Tabsamples = actualSamples
 
     var Tabsamples2 = newSamples
     if (annotationToKeep === "dontKeepAnnotation") {
-      Tabsamples2 = this.eraseAnnotation(newSamples)
+      Tabsamples2 = this.eraseAnnotationAllSamples(newSamples)
     }
     var concatSamples = Tabsamples.concat(Tabsamples2)
     return concatSamples
