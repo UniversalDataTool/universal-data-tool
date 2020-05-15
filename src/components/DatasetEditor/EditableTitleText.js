@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react"
 import TextField from "@material-ui/core/TextField"
 import { makeStyles } from "@material-ui/core/styles"
-import isEmpty from "../../utils/isEmpty"
+import isEmpty from "lodash/isEmpty"
 
 const useStyles = makeStyles({
   textField: {

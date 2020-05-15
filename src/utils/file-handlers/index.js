@@ -11,6 +11,7 @@ import { useToasts } from "../../components/Toasts"
 import fromUDTCSV from "../from-udt-csv.js"
 import useEventCallback from "use-event-callback"
 import useFileTelemetry from "./use-file-telemetry"
+import useAWSCognito from "./use-aws-cognito"
 
 export default () => {
   const [file, setFile] = useState()
@@ -19,6 +20,9 @@ export default () => {
   const { saveFile } = useFilesystem(file, setFile)
   const { recentItems, changeRecentItems } = useLocalStorage(file, setFile)
   useServer(file, setFile)
+
+  // Auth/Cloud
+  useAWSCognito({ file, setFile })
 
   // Telemetry
   useFileTelemetry(file && file.content)

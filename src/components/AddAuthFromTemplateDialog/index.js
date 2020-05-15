@@ -5,11 +5,12 @@ import Button from "@material-ui/core/Button"
 import { makeStyles } from "@material-ui/core/styles"
 import authTemplates from "./authTemplates"
 import SimpleDialog from "../SimpleDialog"
-import isEmpty from "../../utils/isEmpty"
+import isEmpty from "lodash/isEmpty"
 import Survey from "material-survey/components/Survey"
 import ErrorToasts from "../ErrorToasts"
 import useErrors from "../../utils/use-errors.js"
-import Amplify, { Auth } from "aws-amplify"
+import Amplify, { Auth as AWSAmplifyAuth } from "aws-amplify"
+import { useAppConfig } from "../AppConfig"
 
 const useStyles = makeStyles({
   bigButton: {
@@ -83,8 +84,11 @@ export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
   const [authProvider, setAuthProvider] = useState(null)
   const [dialogTitle, setDialogTitle] = useState("Add Authentification")
   const [errors, addError] = useErrors()
+  const { appConfig, setAppConfig, fromConfig } = useAppConfig()
 
-  const validateAuthProvider = (answers) => {
+  // TODO useAppConfig to load in existing configuration
+
+  const validateAuthProvider = async (answers) => {
     if (answers.provider === "AWS") {
       const config = {
         Auth: {
@@ -102,20 +106,25 @@ export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
           },
         },
       }
+
       try {
         Amplify.configure(config)
-        Auth.currentAuthenticatedUser()
-          .then((user) => {
-            onAuthConfigured(config)
-            onClose()
-          })
-          .catch((err) => {
-            onAuthConfigured(config)
-            onClose()
-          })
       } catch (err) {
-        addError("Invalid Cognito config")
+        addError("Invalid Cognito config: " + err.toString())
       }
+
+      setAppConfig({
+        ...appConfig,
+        "auth.cognito.identity_pool_id": answers.identityPoolId,
+        "auth.cognito.region": answers.region,
+        "auth.cognito.user_pool_id": answers.userPoolId,
+        "auth.cognito.user_pool_web_client_id": answers.userPoolWebClientId,
+        "auth.cognito.mandatory_sign_in": true,
+        "auth.cognito.authentication_flow_type": "USER_PASSWORD_AUTH",
+        "auth.cognito.storage.aws_s3.bucket": answers.bucket,
+        "auth.cognito.storage.aws_s3.region": answers.regionBucket,
+        "auth.provider": answers.provider,
+      })
     }
   }
 
@@ -155,6 +164,17 @@ export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
             onFinish={(answers) => {
               answers["provider"] = authProvider
               validateAuthProvider(answers)
+            }}
+            defaultAnswers={{
+              identityPoolId: fromConfig("auth.cognito.identity_pool_id"),
+              region: fromConfig("auth.cognito.region"),
+              userPoolId: fromConfig("auth.cognito.user_pool_id"),
+              userPoolWebClientId: fromConfig(
+                "auth.cognito.user_pool_web_client_id"
+              ),
+              bucket: fromConfig("auth.cognito.storage.aws_s3.bucket"),
+              regionBucket: fromConfig("auth.cognito.storage.aws_s3.region"),
+              provider: fromConfig("auth.provider"),
             }}
           />
         )}

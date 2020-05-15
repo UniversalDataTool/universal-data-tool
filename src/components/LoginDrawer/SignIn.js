@@ -7,7 +7,7 @@ import {
   Checkbox,
 } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
-import isEmpty from "../../utils/isEmpty"
+import isEmpty from "lodash/isEmpty"
 
 import Amplify, { Auth } from "aws-amplify"
 

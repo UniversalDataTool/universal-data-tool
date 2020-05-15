@@ -138,16 +138,16 @@ export default ({
         tabs={headerTabs}
       />
       <div style={{ height: "100%", overflowY: "scroll" }}>
-        {mode === "json" && (
+        {/* {mode === "json" && (
           <AceEditor
             theme="github"
             mode="javascript"
             width="100%"
             value={jsonText || ""}
             editorProps={{ $blockScrolling: Infinity }}
-            onChange={(t) => changeJSONText(t)}
+            // onChange={(t) => changeJSONText(t)}
           />
-        )}
+        )} */}
         {mode === "setup" && (
           <InterfacePage
             onClickEditJSON={() => changeMode("json")}

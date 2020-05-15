@@ -15,9 +15,9 @@ import DownloadButton from "../DownloadButton"
 import Button from "@material-ui/core/Button"
 import GithubIcon from "../Header/GithubIcon"
 import IconButton from "@material-ui/core/IconButton"
-import isEmpty from "../../utils/isEmpty"
 import packageJSON from "../../../package.json"
 import BrushButton from "../BrushButton"
+import useAuth from "../../utils/auth-handlers/use-auth.js"
 
 const useStyles = makeStyles((theme) => ({
   headerButton: {
@@ -86,12 +86,12 @@ const HeaderToolbar = ({
   onChangeSelectedBrush,
   isSmall,
   authConfig,
-  user,
   changeLoginDrawerOpen,
   logoutUser,
   collaborateError,
 }) => {
   const c = useStyles()
+  const { authProvider, isLoggedIn } = useAuth()
   return (
     <AppBar color="default" position="static">
       <Toolbar variant="dense">
@@ -137,7 +137,7 @@ const HeaderToolbar = ({
             ))}
           </Tabs>
         )}
-        {!isEmpty(authConfig) && isEmpty(user) && (
+        {authProvider !== "none" && (
           <Button
             onClick={() => {
               changeLoginDrawerOpen(true)
@@ -147,7 +147,7 @@ const HeaderToolbar = ({
             Login
           </Button>
         )}
-        {!isEmpty(authConfig) && !isEmpty(user) && (
+        {isLoggedIn && (
           <Button onClick={logoutUser} className={c.headerButton}>
             Logout
           </Button>

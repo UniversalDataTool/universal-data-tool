@@ -1,7 +1,19 @@
 import React, { useMemo, useContext, createContext } from "react"
 import { useLocalStorage } from "react-use"
 
-const configKeyNames = ["labelhelp.disabled", "labelhelp.apikey"]
+const configKeyNames = [
+  "auth.provider",
+  "auth.cognito.identity_pool_id",
+  "auth.cognito.region",
+  "auth.cognito.user_pool_id",
+  "auth.cognito.user_pool_web_client_id",
+  "auth.cognito.mandatory_sign_in",
+  "auth.cognito.authentication_flow_type",
+  "auth.cognito.storage.aws_s3.bucket",
+  "auth.cognito.storage.aws_s3.region",
+  "labelhelp.disabled",
+  "labelhelp.apikey",
+]
 
 // NOTE: appConfig should not allow any nested values
 export const AppConfigContext = createContext({

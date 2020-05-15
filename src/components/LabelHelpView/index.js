@@ -79,7 +79,7 @@ export const useLabelHelp = () => {
 }
 
 export const LabelHelpView = () => {
-  const { fromConfig, setInConfig } = useAppConfig()
+  const { fromConfig } = useAppConfig()
   const hasAPIKey = Boolean(fromConfig("labelhelp.apikey"))
   return (
     <Container>

@@ -1,4 +1,4 @@
-import isEmpty from "./isEmpty"
+import isEmpty from "lodash/isEmpty"
 export default (sample) => {
   var sampleName
   if (!isEmpty(sample)) {
