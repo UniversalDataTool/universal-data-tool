@@ -203,7 +203,9 @@ export default ({
           <SampleGrid
             count={(dataset.samples || []).length}
             samples={dataset.samples || []}
-            completed={(dataset.samples || []).filter((s) => s.annotation)}
+            completed={(dataset.samples || []).map((s) =>
+              Boolean(s.annotation)
+            )}
             onClick={(sampleIndex) => {
               openSampleLabelEditor(sampleIndex)
             }}
