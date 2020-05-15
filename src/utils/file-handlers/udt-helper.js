@@ -31,18 +31,16 @@ class LocalStorageHandler {
   
   static getSampleName(sample,indexSample) {
     var sampleName
-    if (!isEmpty(sample.sampleName)) {
-      sampleName = sample.sampleName
-    } else {
-      sampleName = getSampleNameFromURL(sample)
-      if(isEmpty(sampleName))
+    sampleName = getSampleNameFromURL(sample)
+    if(isEmpty(sampleName))
       sampleName = [
         sample.document,
         "sample" + indexSample.toString() + ".txt",
         "sample",
         "txt",
       ]
-    }
+    if (!isEmpty(sample.sampleName))
+      sampleName = setIn(sampleName,[1],sample.sampleName)
     return sampleName
   }
   static getSampleUrl(sample) {
@@ -159,8 +157,8 @@ class LocalStorageHandler {
           this.getSampleUrl(sampleToChange)
       ) {
         if (isEmpty(sampleName[2].match("(.*)\\([0-9]*\\)$"))) {
-          sampleName[1] =
-            sampleName[2] + "(" + v.toString() + ")." + sampleName[3]
+          sampleName= setIn(sampleName,[1],
+            sampleName[2] + "(" + v.toString() + ")." + sampleName[3])
         } else {
           sampleName[1] =
             sampleName[2].match("(.*)\\([0-9]*\\)$")[1] +
@@ -208,12 +206,9 @@ class LocalStorageHandler {
 
   static concatSample(actualSamples, newSamples, annotationToKeep) {
     var Tabsamples = actualSamples
-    if (annotationToKeep === "incoming") {
-      Tabsamples = this.eraseAnnotation(actualSamples)
-    }
 
     var Tabsamples2 = newSamples
-    if (annotationToKeep === "current") {
+    if (annotationToKeep === "dontKeepAnnotation") {
       Tabsamples2 = this.eraseAnnotation(newSamples)
     }
     var concatSamples = Tabsamples.concat(Tabsamples2)

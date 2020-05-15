@@ -383,22 +383,16 @@ export default ({
                       }}
                     >
                       <FormControlLabel
-                        value="both"
+                        value="keepAnnotation"
                         control={<Radio />}
-                        label="Keep both annotations"
-                        checked={configImport.annotationToKeep === "both"}
+                        label="Keep annotations"
+                        checked={configImport.annotationToKeep === "keepAnnotation"}
                       />
                       <FormControlLabel
-                        value="incoming"
+                        value="dontKeepAnnotation"
                         control={<Radio />}
-                        label="Keep incoming annotations"
-                        checked={configImport.annotationToKeep === "incoming"}
-                      />
-                      <FormControlLabel
-                        value="current"
-                        control={<Radio />}
-                        label="Keep current annotations"
-                        checked={configImport.annotationToKeep === "current"}
+                        label="Don't"
+                        checked={configImport.annotationToKeep === "dontKeepAnnotation"}
                       />
                     </RadioGroup>
                   </FormControl>
