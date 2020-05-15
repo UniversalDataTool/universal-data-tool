@@ -197,7 +197,7 @@ class LocalStorageHandler {
     for (let i = 0; i < samples.length; i++) {
       let Newsample = samples[i]
       if (!isEmpty(Newsample.annotation)) {
-        Newsample = setIn(Newsample, ["annotation"], null)
+        delete Newsample["annotation"]
       }
       Tabsamples.push(Newsample)
     }
