@@ -42,40 +42,41 @@ export const LabelHelpProvider = ({ children }) => {
 }
 
 export const useLabelHelp = () => {
-  const isLabelOnlyMode = useIsLabelOnlyMode()
-  const { file } = useFileContext()
-  const { pricingConfig, loadPricingConfig } = useContext(LabelHelpContext)
-  const { fromConfig } = useAppConfig()
-  if (fromConfig("labelhelp.disabled")) return { labelHelpEnabled: false }
-  try {
-    const hasLabelHelpAPIKey = Boolean(fromConfig("labelhelp.apikey"))
-    if (isLabelOnlyMode) return { labelHelpEnabled: false }
-    if (!hasLabelHelpAPIKey && file.content.samples.length < 100)
-      return { labelHelpEnabled: false }
-
-    if (!pricingConfig) {
-      loadPricingConfig()
-      return { labelHelpEnabled: false }
-    }
-
-    const { formula } = pricingConfig[file.content.interface.type]
-
-    return {
-      labelHelpEnabled: true,
-      formula,
-      variables: {
-        number_of_fields: 3,
-        text_field_count: 5,
-        total_labels: 20,
-        total_bounding_boxes: 0,
-        sample_count: 1000,
-      },
-      price: 104,
-      labelHelpAPIKey: fromConfig("labelhelp.apikey"),
-    }
-  } catch (e) {
-    return { labelHelpEnabled: false }
-  }
+  return { labelHelpEnabled: false }
+  // const isLabelOnlyMode = useIsLabelOnlyMode()
+  // const { file } = useFileContext()
+  // const { pricingConfig, loadPricingConfig } = useContext(LabelHelpContext)
+  // const { fromConfig } = useAppConfig()
+  // if (fromConfig("labelhelp.disabled")) return { labelHelpEnabled: false }
+  // try {
+  //   const hasLabelHelpAPIKey = Boolean(fromConfig("labelhelp.apikey"))
+  //   if (isLabelOnlyMode) return { labelHelpEnabled: false }
+  //   if (!hasLabelHelpAPIKey && file.content.samples.length < 100)
+  //     return { labelHelpEnabled: false }
+  //
+  //   if (!pricingConfig) {
+  //     loadPricingConfig()
+  //     return { labelHelpEnabled: false }
+  //   }
+  //
+  //   const { formula } = pricingConfig[file.content.interface.type]
+  //
+  //   return {
+  //     labelHelpEnabled: true,
+  //     formula,
+  //     variables: {
+  //       number_of_fields: 3,
+  //       text_field_count: 5,
+  //       total_labels: 20,
+  //       total_bounding_boxes: 0,
+  //       sample_count: 1000,
+  //     },
+  //     price: 104,
+  //     labelHelpAPIKey: fromConfig("labelhelp.apikey"),
+  //   }
+  // } catch (e) {
+  //   return { labelHelpEnabled: false }
+  // }
 }
 
 export const LabelHelpView = () => {
