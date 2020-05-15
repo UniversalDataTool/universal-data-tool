@@ -11,7 +11,7 @@ function GetSampleFromAnnotation(json, samples) {
   if (isEmpty(json.content.samples)) return
   var newSamples = []
   for (var i = 0; i < json.content.samples.length; i++) {
-    var sampleName = jsonHandler.getSampleName(json.content.samples[i])
+    var sampleName = jsonHandler.getSampleName(json.content.samples[i],i)[1]
     var annotation = json.content.samples[i].annotation
     var sampleFound = jsonHandler.getSampleWithThisSampleName(
       sampleName,

@@ -41,18 +41,18 @@ export default (file) => {
 
   function createOrReplaceImages(file) {
     if (!isEmpty(file.content.samples)) {
-      file.content.samples.forEach(async (element) => {
+      file.content.samples.forEach(async (element,index) => {
         try {
           var blob
           if (!isEmpty(jsonHandler.getSampleUrl(element))) {
             blob = await fetchAFile(element)
-          } else if (!isEmpty(element.document)) {
-            blob = element.document
+          } else if (!isEmpty(element.document)||!isEmpty(element.textUrl)) {
+            blob = await jsonHandler.getTextfromSample(element)
           }
 
           let imageOrVideoName
           if (isEmpty(element.sampleName)) {
-            imageOrVideoName = jsonHandler.getSampleName(element)
+            imageOrVideoName = jsonHandler.getSampleName(element,index)[1]
           } else {
             imageOrVideoName = element.sampleName
           }

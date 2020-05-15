@@ -1,5 +1,6 @@
 import RecognizeFileExtension from "../../utils/RecognizeFileExtension"
 import Amplify, { Storage } from "aws-amplify"
+import isEmpty from "../../utils/isEmpty"
 
 async function setUrl(result, configImport) {
   if (configImport.loadProjectIsSelected) {
@@ -37,23 +38,9 @@ async function setUrl(result, configImport) {
       RecognizeFileExtension(result) === configImport.typeOfFileToLoad &&
       configImport.typeOfFileToLoad === "Texte"
     ) {
-      var texte = await fetchTextInFile(result)
-      return { document: `${texte}` }
+      return { textUrl: `${result}` }
     }
   }
-}
-async function fetchTextInFile(urlSource) {
-  var proxyUrl = "https://cors-anywhere.herokuapp.com/"
-  var response
-  var url
-  url = proxyUrl + urlSource
-  response = await fetch(url, {
-    method: "GET",
-  }).catch((error) => {
-    console.log("Looks like there was a problem: \n", error)
-  })
-  const texte = await response.text()
-  return texte
 }
 export default async (result, folderToFetch, configImport, authConfig) => {
   Amplify.configure(authConfig)
@@ -65,7 +52,8 @@ export default async (result, folderToFetch, configImport, authConfig) => {
         level: "private",
       })
         .then(async (result) => {
-          samples.push(await setUrl(result, configImport))
+          var url = await setUrl(result, configImport)
+          if (!isEmpty(url)) samples.push(url)
         })
         .catch((err) => {
           console.log("error getting link for s3 image", err)

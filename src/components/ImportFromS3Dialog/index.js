@@ -21,6 +21,8 @@ import jsonHandler from "../../utils/file-handlers/udt-helper"
 import setTypeOfFileToLoadAndDisable from "./set-type-of-file-to-load-and-disable"
 import initConfigImport from "./init-config-import"
 import setAnnotationFromAws from "./set-annotation-from-aws"
+import useErrors from "../../utils/use-errors.js"
+import ErrorToasts from "../ErrorToasts"
 
 const selectedStyle = { color: "DodgerBlue" }
 const tableStyle = {
@@ -112,6 +114,7 @@ export default ({
   const [s3Content, changeS3Content] = useState(null)
   const [dataForTable, changeDataForTable] = useState(null)
   const [folderToFetch, setFolderToFetch] = useState("")
+  const [errors, addError] = useErrors()
 
   const [configImport, setConfigImport] = useLocalStorage(
     "configImport",
@@ -136,13 +139,9 @@ export default ({
       if (lastObjectRef.current !== {})
         configToSet = setTypeOfFileToLoadAndDisable(configToSet, file)
     }
-    setConfigImport({
-      ...configToSet,
-      projectStarted: CheckIfProjectIsStarted(),
-      loadProjectIsSelected: CheckIfProjectIsStarted()
-        ? false
-        : setConfigImport.loadProjectIsSelected,
-    })
+    configToSet.projectStarted = CheckIfProjectIsStarted()
+    configToSet.loadProjectIsSelected = !CheckIfProjectIsStarted()
+    setConfigImport(configToSet)
     lastObjectRef.current = file
   }, [file, configImport, setConfigImport, CheckIfProjectIsStarted])
 
@@ -169,7 +168,11 @@ export default ({
       isEmpty(json.content.samples) ||
       isEmpty(json.fileName)
     ) {
-      onAddSamples(samples)
+      if (configImport.loadProjectIsSelected) {
+        addError("Invalid project information")
+      } else {
+        onAddSamples(samples)
+      }
     } else {
       file = setAnnotationFromAws(file, json, configImport)
       onChangeFile(file, true)
@@ -380,22 +383,16 @@ export default ({
                       }}
                     >
                       <FormControlLabel
-                        value="both"
+                        value="keepAnnotation"
                         control={<Radio />}
-                        label="Keep both annotations"
-                        checked={configImport.annotationToKeep === "both"}
+                        label="Keep annotations"
+                        checked={configImport.annotationToKeep === "keepAnnotation"}
                       />
                       <FormControlLabel
-                        value="incoming"
+                        value="dontKeepAnnotation"
                         control={<Radio />}
-                        label="Keep incoming annotations"
-                        checked={configImport.annotationToKeep === "incoming"}
-                      />
-                      <FormControlLabel
-                        value="current"
-                        control={<Radio />}
-                        label="Keep current annotations"
-                        checked={configImport.annotationToKeep === "current"}
+                        label="Don't"
+                        checked={configImport.annotationToKeep === "dontKeepAnnotation"}
                       />
                     </RadioGroup>
                   </FormControl>
@@ -454,6 +451,7 @@ export default ({
           )}
         </tbody>
       </table>
+      <ErrorToasts errors={errors} />
     </SimpleDialog>
   )
 }

@@ -3,13 +3,44 @@ import RecognizeFileExtension from "../RecognizeFileExtension"
 import isEmpty from "../isEmpty"
 import { setIn } from "seamless-immutable"
 class LocalStorageHandler {
-  static getSampleName(sample) {
+  static async getTextFromUrl(urlSource) {
+    var proxyUrl = "https://cors-anywhere.herokuapp.com/"
+    var response
+    var url
+    url = proxyUrl + urlSource
+    response = await fetch(url, {
+      method: "GET",
+    }).catch((error) => {
+      console.log("Looks like there was a problem: \n", error)
+    })
+    const text = await response.text()
+    return text
+  }
+  
+  static async getTextfromSample(sample){
+   var text = ""
+   if (isEmpty(sample.document)){
+      if(!isEmpty(sample.textUrl)){
+        text = await this.getTextFromUrl(sample.textUrl)
+      }
+   }else{
+     text = sample.document
+   }
+   return text
+  }
+  
+  static getSampleName(sample,indexSample) {
     var sampleName
-    if (!isEmpty(sample.sampleName)) {
-      sampleName = sample.sampleName
-    } else {
-      sampleName = getSampleNameFromURL(sample)[1]
-    }
+    sampleName = getSampleNameFromURL(sample)
+    if(isEmpty(sampleName))
+      sampleName = [
+        sample.document,
+        "sample" + indexSample.toString() + ".txt",
+        "sample",
+        "txt",
+      ]
+    if (!isEmpty(sample.sampleName))
+      sampleName = setIn(sampleName,[1],sample.sampleName)
     return sampleName
   }
   static getSampleUrl(sample) {
@@ -25,6 +56,9 @@ class LocalStorageHandler {
     }
     if (!isEmpty(sample.pdfUrl)) {
       url = sample.pdfUrl
+    }
+    if (!isEmpty(sample.textUrl)) {
+      url = sample.textUrl
     }
 
     return url
@@ -67,13 +101,14 @@ class LocalStorageHandler {
     if (!isEmpty(samples) && !isEmpty(sampleName)) {
       for (var i = 0; i < samples.length; i++) {
         if (!isEmpty(samples[i])) {
-          nameToSearch = getSampleNameFromURL(samples[i])
-          if (typeof samples[i].sampleName !== "undefined") {
-            nameToSearch[1] = samples[i].sampleName
+          nameToSearch = this.getSampleName(samples[i],i)
+          if (!isEmpty(samples[i].sampleName)) {
+            nameToSearch = setIn(nameToSearch,[1],samples[i].sampleName)
           }
           if (nameToSearch[1] === sampleName) {
             return samples[i]
           }
+          
         }
       }
     }
@@ -94,7 +129,7 @@ class LocalStorageHandler {
               "txt",
             ]
           } else {
-            sampleName = getSampleNameFromURL(oldsample)
+            sampleName = this.getSampleName(oldsample,i)
             sampleName = this.renameSampleFromUrl(
               samples,
               oldsample,
@@ -122,8 +157,8 @@ class LocalStorageHandler {
           this.getSampleUrl(sampleToChange)
       ) {
         if (isEmpty(sampleName[2].match("(.*)\\([0-9]*\\)$"))) {
-          sampleName[1] =
-            sampleName[2] + "(" + v.toString() + ")." + sampleName[3]
+          sampleName= setIn(sampleName,[1],
+            sampleName[2] + "(" + v.toString() + ")." + sampleName[3])
         } else {
           sampleName[1] =
             sampleName[2].match("(.*)\\([0-9]*\\)$")[1] +
@@ -162,7 +197,7 @@ class LocalStorageHandler {
     for (let i = 0; i < samples.length; i++) {
       let Newsample = samples[i]
       if (!isEmpty(Newsample.annotation)) {
-        Newsample = setIn(Newsample, ["annotation"], null)
+        delete Newsample["annotation"]
       }
       Tabsamples.push(Newsample)
     }
@@ -171,12 +206,9 @@ class LocalStorageHandler {
 
   static concatSample(actualSamples, newSamples, annotationToKeep) {
     var Tabsamples = actualSamples
-    if (annotationToKeep === "incoming") {
-      Tabsamples = this.eraseAnnotation(actualSamples)
-    }
 
     var Tabsamples2 = newSamples
-    if (annotationToKeep === "current") {
+    if (annotationToKeep === "dontKeepAnnotation") {
       Tabsamples2 = this.eraseAnnotation(newSamples)
     }
     var concatSamples = Tabsamples.concat(Tabsamples2)
