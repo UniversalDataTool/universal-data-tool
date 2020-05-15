@@ -25,20 +25,28 @@ const EmptyState = styled("div")({
   textAlign: "center",
 })
 const SampleDiv = styled("div")(({ color }) => ({
+  color: "#fff",
+  fontVariantNumeric: "tabular-nums",
   margin: 4,
   padding: 4,
   backgroundColor: color[500],
   display: "inline-flex",
-  fontSize: 11,
+  fontSize: 14,
+  fontWeight: 500,
   textAlign: "center",
   justifyContent: "center",
   minWidth: "3em",
   borderRadius: 3,
   cursor: "pointer",
   userSelect: "none",
-  transition: "box-shadow 200ms ease, transform 200ms ease",
-  color: color.isFaded ? "#000" : "#fff",
+  transition:
+    "box-shadow 200ms ease, transform 200ms ease, background-color 200ms ease",
+  "&:hover": {
+    backgroundColor: color[700],
+  },
+  // color: color.isFaded ? "#000" : "#fff",
   "&.selected": {
+    backgroundColor: color[700],
     boxShadow: `0px 0px 2px 1px ${color["A200"]}`,
     transform: "scale(1.05,1.05)",
   },
