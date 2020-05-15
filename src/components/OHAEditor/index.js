@@ -293,6 +293,8 @@ export default ({
                       return
                     }
                     break
+                  case "delete-annotation":
+                    break
                   default:
                     break
                 }
