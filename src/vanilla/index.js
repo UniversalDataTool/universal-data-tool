@@ -12,7 +12,7 @@ const open = ({ container, udt, ...props }) => {
       null,
       React.createElement(UniversalDataViewer, {
         ...props,
-        oha: udt,
+        dataset: udt,
         onSaveTaskOutputItem: (index, output) => {
           if (!props.onSaveSample) return
           props.onSaveSample(

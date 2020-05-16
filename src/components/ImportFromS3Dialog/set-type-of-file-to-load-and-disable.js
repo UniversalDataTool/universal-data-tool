@@ -1,4 +1,4 @@
-import isEmpty from "../../utils/isEmpty"
+import isEmpty from "lodash/isEmpty"
 import checkInterfaceAndsamples from "./check-interface-and-sample-type"
 export default (configImport, file) => {
   return {

@@ -33,8 +33,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default ({ authConfig, loginDrawerOpen, onClose, onUserChange }) => {
+export default ({ loginDrawerOpen, onClose }) => {
   const classes = useStyles()
+  const [user, setUser] = useState({})
 
   const [state, setState] = useState({
     signingIn: true,
@@ -75,19 +76,21 @@ export default ({ authConfig, loginDrawerOpen, onClose, onUserChange }) => {
             </Avatar>
             {state.signingIn && (
               <SignIn
-                authConfig={authConfig}
                 onRequireCompleteSignUp={(user) => toggleCompleteSignUp(user)}
-                onUserChange={onUserChange}
+                onUserChange={(user) => {
+                  setUser(user)
+                }}
                 onClose={onClose}
               />
             )}
             {state.completeSignUp && (
               <CompleteSignUp
-                authConfig={authConfig}
                 requiredAttributes={state.requiredAttributes}
-                user={state.user}
+                user={user}
                 onClose={onClose}
-                onUserChange={onUserChange}
+                onUserChange={(user) => {
+                  setUser(user)
+                }}
               />
             )}
           </div>

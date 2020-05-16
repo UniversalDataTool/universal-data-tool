@@ -26,7 +26,7 @@ const StyledExpansionPanelSummary = styled(ExpansionPanelSummary)({
   fontWeight: "bold",
 })
 
-export default ({ open, onChangeOHA, onClose, oha }) => {
+export default ({ open, onChangeDataset, onClose, dataset }) => {
   return (
     <SimpleDialog
       open={open}
@@ -35,9 +35,9 @@ export default ({ open, onChangeOHA, onClose, oha }) => {
       actions={[
         {
           text: "Transform Video Keyframes",
-          disabled: !oha.samples,
+          disabled: !dataset.samples,
           onClick: () => {
-            const samples = oha.samples.flatMap((item, index) => {
+            const samples = dataset.samples.flatMap((item, index) => {
               if (!item.videoUrl) return { data: item, output: item.annotation }
               if (item.videoUrl && !item.videoFrameAt) {
                 if (!item.annotation) return []
@@ -51,8 +51,8 @@ export default ({ open, onChangeOHA, onClose, oha }) => {
               }
             })
 
-            onChangeOHA(
-              immutable(oha)
+            onChangeDataset(
+              immutable(dataset)
                 .setIn(
                   ["samples"],
                   samples.map((s) => s.data)
@@ -67,7 +67,7 @@ export default ({ open, onChangeOHA, onClose, oha }) => {
       segmentation frames. Your interface type will change from
       "video_segmentation" into "image_segmentation". This is sometimes helpful
       when preparing video data for a computer vision model.
-      {!oha.samples && (
+      {!dataset.samples && (
         <b>
           <br />
           <br />

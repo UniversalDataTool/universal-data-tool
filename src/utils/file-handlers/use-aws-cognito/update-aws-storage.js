@@ -1,14 +1,15 @@
 import { Storage } from "aws-amplify"
-import isEmpty from "../isEmpty"
-import jsonHandler from "./udt-helper"
+import isEmpty from "lodash/isEmpty"
+import * as datasetHelper from "../../dataset-helper"
 import { setIn } from "seamless-immutable"
+
 export default (file) => {
   async function fetchAFile(element) {
     var proxyUrl = "https://cors-anywhere.herokuapp.com/"
     var response
     var url
-    if (jsonHandler.getSampleUrl(element) !== undefined)
-      url = proxyUrl + jsonHandler.getSampleUrl(element)
+    if (datasetHelper.getSampleUrl(element) !== undefined)
+      url = proxyUrl + datasetHelper.getSampleUrl(element)
     response = await fetch(url, {
       method: "GET",
       headers: {
@@ -44,7 +45,7 @@ export default (file) => {
       file.content.samples.forEach(async (element) => {
         try {
           var blob
-          if (!isEmpty(jsonHandler.getSampleUrl(element))) {
+          if (!isEmpty(datasetHelper.getSampleUrl(element))) {
             blob = await fetchAFile(element)
           } else if (!isEmpty(element.document)) {
             blob = element.document
@@ -52,7 +53,7 @@ export default (file) => {
 
           let imageOrVideoName
           if (isEmpty(element.sampleName)) {
-            imageOrVideoName = jsonHandler.getSampleName(element)
+            imageOrVideoName = datasetHelper.getSampleName(element)
           } else {
             imageOrVideoName = element.sampleName
           }
@@ -69,12 +70,11 @@ export default (file) => {
   }
 
   if (fileNameExist(file)) {
-    var content = file.content
-    var samples = content.samples
+    var dataset = file.content
     file = setIn(
       file,
       ["content"],
-      setIn(content, ["samples"], jsonHandler.setSamplesName(samples))
+      setIn(dataset, ["samples"], datasetHelper.setSamplesName(dataset))
     )
     var json = JSON.stringify(file)
     createOrReplaceProjectFile(file)

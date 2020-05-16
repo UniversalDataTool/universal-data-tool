@@ -1,5 +1,5 @@
 import RecognizeFileExtension from "../../utils/RecognizeFileExtension"
-import isEmpty from "../../utils/isEmpty"
+import isEmpty from "lodash/isEmpty"
 export default (loadProjectIsSelected, typeOfFileToLoad, dataForTable) => {
   var numberOfSamples = 0
   var textToSet = ""

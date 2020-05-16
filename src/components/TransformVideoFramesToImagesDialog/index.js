@@ -23,7 +23,7 @@ const getFfmpegTimeCode = (ms) => {
     .join("")
 }
 
-export default ({ open, onChangeOHA, onClose, oha }) => {
+export default ({ open, onChangeDataset, onClose, dataset }) => {
   const { remote } = useElectron() || {}
   const [progress, changeProgress] = useState(null)
   const [errors, changeErrors] = useState("")
@@ -48,11 +48,11 @@ export default ({ open, onChangeOHA, onClose, oha }) => {
 
             const shell = remote.require("any-shell-escape")
             const { exec } = remote.require("child_process")
-            const newsamples = [...oha.samples]
+            const newsamples = [...dataset.samples]
             let transformsPerformed = 0
 
-            for (let i = 0; i < oha.samples.length; i++) {
-              const td = oha.samples[i]
+            for (let i = 0; i < dataset.samples.length; i++) {
+              const td = dataset.samples[i]
               if (td.videoUrl && td.videoFrameAt !== undefined) {
                 if (td.videoUrl.startsWith("http")) {
                   errors += `Sample ${i} has a url to a video, videos must be downloaded before extracting frames.`
@@ -82,13 +82,13 @@ export default ({ open, onChangeOHA, onClose, oha }) => {
                 })
                 newsamples[i] = {
                   ...without(
-                    without(oha.samples[i], "videoUrl"),
+                    without(dataset.samples[i], "videoUrl"),
                     "videoFrameAt"
                   ),
                   imageUrl: `file://${imageOutputPath}`,
                 }
               }
-              changeProgress((i / oha.samples.length) * 100)
+              changeProgress((i / dataset.samples.length) * 100)
             }
 
             if (transformsPerformed === 0) {
@@ -96,7 +96,7 @@ export default ({ open, onChangeOHA, onClose, oha }) => {
                 "No transforms were performed, do all of your video samples have frames specified? You may need to convert the keyframes to samples."
             }
 
-            onChangeOHA(setIn(oha, ["samples"], newsamples))
+            onChangeDataset(setIn(dataset, ["samples"], newsamples))
 
             changeErrors(errors)
             changeProgress(100)

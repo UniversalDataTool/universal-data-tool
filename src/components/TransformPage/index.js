@@ -96,7 +96,7 @@ const Button = ({ Icon1, Icon2, desktopOnly, children, dialog, disabled }) => {
   )
 }
 
-export default ({ oha, onChangeOHA }) => {
+export default ({ dataset, onChangeDataset }) => {
   const [selectedDialog, changeDialog] = useState()
   const onChangeDialog = async (dialog) => {
     switch (dialog) {
@@ -113,7 +113,7 @@ export default ({ oha, onChangeOHA }) => {
     <SelectDialogContext.Provider value={{ onChangeDialog }}>
       <div>
         <Button
-          disabled={oha.interface.type !== "video_segmentation"}
+          disabled={dataset.interface.type !== "video_segmentation"}
           dialog="convert-keyframes-to-samples"
           Icon1={OndemandVideoIcon}
           Icon2={CollectionsIcon}
@@ -142,32 +142,32 @@ export default ({ oha, onChangeOHA }) => {
         <TransformVideoKeyframesDialog
           open={selectedDialog === "convert-keyframes-to-samples"}
           onClose={closeDialog}
-          oha={oha}
-          onChangeOHA={(...args) => {
-            onChangeOHA(...args)
+          dataset={dataset}
+          onChangeDataset={(...args) => {
+            onChangeDataset(...args)
             closeDialog()
           }}
         />
         <DownloadURLsDialog
           open={selectedDialog === "download-urls"}
           onClose={closeDialog}
-          oha={oha}
+          dataset={dataset}
           desktopOnly
-          onChangeOHA={onChangeOHA}
+          onChangeDataset={onChangeDataset}
         ></DownloadURLsDialog>
         <TransformLocalFilesToWebURLs
-          oha={oha}
+          dataset={dataset}
           onClose={closeDialog}
-          onChangeOHA={onChangeOHA}
+          onChangeDataset={onChangeDataset}
           desktopOnly
           open={selectedDialog === "convert-local-files-to-web-urls"}
         ></TransformLocalFilesToWebURLs>
         <TransformVideoFramesToImagesDialog
           open={selectedDialog === "convert-video-frames-to-images"}
           onClose={closeDialog}
-          oha={oha}
+          dataset={dataset}
           desktopOnly
-          onChangeOHA={onChangeOHA}
+          onChangeDataset={onChangeDataset}
         ></TransformVideoFramesToImagesDialog>
       </div>
     </SelectDialogContext.Provider>

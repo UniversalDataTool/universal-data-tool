@@ -1,0 +1,10 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  border-spacing: 0;
+}
+
+.universaldatatool {
+  font-family: "Inter";
+}

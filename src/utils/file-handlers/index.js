@@ -11,14 +11,18 @@ import { useToasts } from "../../components/Toasts"
 import fromUDTCSV from "../from-udt-csv.js"
 import useEventCallback from "use-event-callback"
 import useFileTelemetry from "./use-file-telemetry"
+import useAWSCognito from "./use-aws-cognito"
 
 export default () => {
-  const [file, changeFile] = useState()
+  const [file, setFile] = useState()
   const { addToast } = useToasts()
 
-  const { saveFile } = useFilesystem(file, changeFile)
-  const { recentItems, changeRecentItems } = useLocalStorage(file, changeFile)
-  useServer(file, changeFile)
+  const { saveFile } = useFilesystem(file, setFile)
+  const { recentItems, changeRecentItems } = useLocalStorage(file, setFile)
+  useServer(file, setFile)
+
+  // Auth/Cloud
+  useAWSCognito({ file, setFile })
 
   // Telemetry
   useFileTelemetry(file && file.content)
@@ -28,18 +32,18 @@ export default () => {
 
     function handleLoadedFile(content) {
       try {
-        let oha
+        let dataset
         if (fileName.endsWith("csv")) {
-          oha = fromUDTCSV(content)
+          dataset = fromUDTCSV(content)
         } else {
-          oha = JSON.parse(content)
+          dataset = JSON.parse(content)
         }
         // TODO validate OHA and prompt to open anyway if invalid
-        changeFile({
+        setFile({
           fileName,
           filePath,
           mode: filePath ? "filesystem" : "local-storage",
-          content: oha,
+          content: dataset,
           id: filePath,
         })
       } catch (e) {
@@ -63,15 +67,18 @@ export default () => {
 
   const openUrl = useEventCallback(async (url) => {
     const sessionId = decodeURIComponent(url.match(/[?&]s=([^&]+)/)[1])
+    const labelOnly = url.includes("mode=labelonly")
     if (!sessionId) return
     const { state } = await joinSession(sessionId)
     if (!state) return
     window.history.replaceState(
       {},
       window.document.title,
-      `/?s=${encodeURIComponent(sessionId)}`
+      `/?s=${encodeURIComponent(sessionId)}${
+        labelOnly ? "&mode=labelonly" : ""
+      }`
     )
-    changeFile({
+    setFile({
       url,
       sessionId,
       mode: "server",
@@ -94,7 +101,7 @@ export default () => {
 
   const makeSession = useEventCallback(async () => {
     const newFile = await convertToCollaborativeFile(file)
-    changeFile(newFile)
+    setFile(newFile)
     window.history.replaceState(
       {},
       window.document.title,
@@ -105,7 +112,7 @@ export default () => {
   return useMemo(
     () => ({
       file,
-      changeFile,
+      setFile,
       openFile,
       openUrl,
       makeSession,
@@ -115,7 +122,7 @@ export default () => {
     }),
     [
       file,
-      changeFile,
+      setFile,
       openFile,
       saveFile,
       makeSession,

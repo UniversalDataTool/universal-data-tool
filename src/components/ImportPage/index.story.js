@@ -11,7 +11,7 @@ storiesOf("ImportPage", module)
   .add("Basic", () => (
     <ImportPage
       isDesktop={false}
-      oha={{
+      dataset={{
         interface: {
           type: "image_segmentation",
           labels: ["valid", "invalid"],
@@ -34,13 +34,13 @@ storiesOf("ImportPage", module)
           },
         ],
       }}
-      onChangeOHA={action("onChangeOHA")}
+      onChangeDataset={action("onChangeDataset")}
     />
   ))
   .add("Basic Desktop", () => (
     <ImportPage
       isDesktop
-      oha={{
+      dataset={{
         interface: {
           type: "image_segmentation",
           labels: ["valid", "invalid"],
@@ -63,6 +63,6 @@ storiesOf("ImportPage", module)
           },
         ],
       }}
-      onChangeOHA={action("onChangeOHA")}
+      onChangeDataset={action("onChangeDataset")}
     />
   ))

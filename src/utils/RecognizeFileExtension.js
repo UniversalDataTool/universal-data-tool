@@ -1,4 +1,4 @@
-import isEmpty from "./isEmpty"
+import isEmpty from "lodash/isEmpty"
 export default (UrlOfAFile) => {
   var typeOfFile = "File"
   var fileExtension = UrlOfAFile.match(

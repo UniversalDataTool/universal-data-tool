@@ -75,12 +75,14 @@ const PreviewContent = styled("div")({
 const SelectType = ({ currentlySelected, onChange }) => {
   return templates.map((t) => (
     <TypeButton
-      key={t.oha.interface.type || "empty"}
-      className={currentlySelected === t.oha.interface.type ? "selected" : ""}
+      key={t.dataset.interface.type || "empty"}
+      className={
+        currentlySelected === t.dataset.interface.type ? "selected" : ""
+      }
       variant="outlined"
       onClick={() => {
-        if (currentlySelected !== t.oha.interface.type) {
-          onChange(t.oha.interface.type)
+        if (currentlySelected !== t.dataset.interface.type) {
+          onChange(t.dataset.interface.type)
         }
       }}
     >
@@ -120,7 +122,7 @@ export const ConfigureInterface = ({
         onChange={(type) => {
           onChange(
             templates
-              .map((t) => t.oha.interface)
+              .map((t) => t.dataset.interface)
               .find((t) => t.type === type) || {}
           )
         }}
@@ -136,9 +138,9 @@ export const ConfigureInterface = ({
                   height={600}
                   onExit={noop}
                   onSaveTaskOutputItem={noop}
-                  oha={{
+                  dataset={{
                     interface: iface,
-                    samples: [templateMap[iface.type].oha.samples[0]],
+                    samples: [templateMap[iface.type].dataset.samples[0]],
                   }}
                 />
               </LabelErrorBoundary>

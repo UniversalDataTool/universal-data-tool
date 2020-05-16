@@ -15,7 +15,7 @@ import ImportTextSnippetsDialog from "../ImportTextSnippetsDialog"
 import useElectron from "../../utils/use-electron"
 import classnames from "classnames"
 import S3Icon from "./S3Icon"
-import isEmpty from "../../utils/isEmpty"
+import isEmpty from "lodash/isEmpty"
 import { setIn } from "seamless-immutable"
 import useEventCallback from "use-event-callback"
 import ImportFromGoogleDriveDialog from "../ImportFromGoogleDriveDialog"
@@ -117,10 +117,12 @@ const Button = ({
 }
 
 export default ({
+  // TODO remove file, onChangeFile
   file,
-  oha,
   onChangeFile,
-  onChangeOHA,
+
+  dataset,
+  onChangeDataset,
   isDesktop,
   authConfig,
   user,
@@ -134,8 +136,12 @@ export default ({
         const localSamples = await promptAndGetSamplesFromLocalDirectory({
           electron,
         })
-        onChangeOHA(
-          setIn(oha, ["samples"], (oha.samples || []).concat(localSamples)),
+        onChangeDataset(
+          setIn(
+            dataset,
+            ["samples"],
+            (dataset.samples || []).concat(localSamples)
+          ),
           true
         )
         return
@@ -149,8 +155,8 @@ export default ({
   const closeDialog = () => changeDialog(null)
 
   const onAddSamples = useEventCallback(async (samplesToAdd) => {
-    onChangeOHA(
-      setIn(oha, ["samples"], (oha.samples || []).concat(samplesToAdd))
+    onChangeDataset(
+      setIn(dataset, ["samples"], (dataset.samples || []).concat(samplesToAdd))
     )
     closeDialog()
   })
@@ -197,17 +203,19 @@ export default ({
         >
           Import from Youtube URLs
         </Button>
-        <Button
-          isDesktop={isDesktop}
-          dialog="import-from-s3"
-          Icon={S3Icon}
-          authConfiguredOnly={true}
-          authConfig={authConfig}
-          signedInOnly={true}
-          user={user}
-        >
-          Import from S3
-        </Button>
+        {file && (
+          <Button
+            isDesktop={isDesktop}
+            dialog="import-from-s3"
+            Icon={S3Icon}
+            authConfiguredOnly={true}
+            authConfig={authConfig}
+            signedInOnly={true}
+            user={user}
+          >
+            Import from S3
+          </Button>
+        )}
         <Button
           isDesktop={isDesktop}
           dialog="google-drive-file-picker"
@@ -229,15 +237,17 @@ export default ({
           onClose={closeDialog}
           onAddSamples={onAddSamples}
         />
-        <ImportFromS3Dialog
-          file={file}
-          authConfig={authConfig}
-          open={selectedDialog === "import-from-s3"}
-          onChangeFile={onChangeFile}
-          onClose={closeDialog}
-          user={user}
-          onAddSamples={onAddSamples}
-        />
+        {file && (
+          <ImportFromS3Dialog
+            file={file}
+            authConfig={authConfig}
+            open={selectedDialog === "import-from-s3"}
+            onChangeFile={onChangeFile}
+            onClose={closeDialog}
+            user={user}
+            onAddSamples={onAddSamples}
+          />
+        )}
         <ImportFromGoogleDriveDialog
           open={selectedDialog === "google-drive-file-picker"}
           onClose={closeDialog}

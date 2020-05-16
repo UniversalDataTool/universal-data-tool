@@ -15,7 +15,7 @@ export const templates = [
   {
     name: "Empty",
     Icon: CropFree,
-    oha: {
+    dataset: {
       interface: {},
       samples: [],
     },
@@ -23,7 +23,7 @@ export const templates = [
   {
     name: "Image Segmentation",
     Icon: ImageSearch,
-    oha: {
+    dataset: {
       interface: {
         type: "image_segmentation",
         labels: ["valid", "invalid"],
@@ -50,7 +50,7 @@ export const templates = [
   {
     name: "Image Classification",
     Icon: Image,
-    oha: {
+    dataset: {
       interface: {
         type: "image_classification",
         labels: ["valid", "invalid"],
@@ -70,7 +70,7 @@ export const templates = [
   {
     name: "Video Segmentation",
     Icon: OndemandVideoIcon,
-    oha: {
+    dataset: {
       interface: {
         type: "video_segmentation",
         labels: ["valid", "invalid"],
@@ -87,7 +87,7 @@ export const templates = [
   {
     name: "Data Entry",
     Icon: Edit,
-    oha: {
+    dataset: {
       interface: {
         type: "data_entry",
         description: "# Markdown description here",
@@ -114,7 +114,7 @@ export const templates = [
   {
     name: "Named Entity Recognition",
     Icon: TextFormat,
-    oha: {
+    dataset: {
       interface: {
         type: "text_entity_recognition",
         overlapAllowed: false,
@@ -145,7 +145,7 @@ export const templates = [
   {
     name: "Text Classification",
     Icon: ContactSupport,
-    oha: {
+    dataset: {
       interface: {
         type: "text_classification",
         labels: ["positive_sentiment", "negative_sentiment"],
@@ -167,7 +167,7 @@ export const templates = [
   {
     name: "Audio Transcription",
     Icon: Audiotrack,
-    oha: {
+    dataset: {
       interface: {
         type: "audio_transcription",
         description: "# Markdown description here",
@@ -182,7 +182,7 @@ export const templates = [
   {
     name: "Composite",
     Icon: Category,
-    oha: {
+    dataset: {
       description: "# Markdown description here",
       interface: {
         type: "composite",
@@ -227,7 +227,7 @@ export const templates = [
   {
     name: "3D Bounding Box",
     Icon: ThreeDRotation,
-    oha: {
+    dataset: {
       interface: {
         type: "3d_bounding_box",
         description: "3D Bounding Box",
@@ -239,7 +239,7 @@ export const templates = [
 
 export const templateMap = templates.reduce((acc, t) => {
   acc[t.name] = t
-  acc[t.oha.interface.type] = t
+  acc[t.dataset.interface.type] = t
   return acc
 }, {})
 
