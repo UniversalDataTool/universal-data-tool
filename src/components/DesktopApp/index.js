@@ -143,6 +143,7 @@ export default () => {
           onJoinSession,
           onLeaveSession,
           onCreateSession: makeSession,
+          isWelcomePage: !file,
         }}
       >
         {!file ? (

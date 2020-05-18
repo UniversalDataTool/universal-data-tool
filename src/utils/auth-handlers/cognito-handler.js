@@ -9,10 +9,9 @@ class CognitoHandler {
         identityPoolId: appConfig["auth.cognito.identity_pool_id"],
         region: appConfig["auth.cognito.region"],
         userPoolId: appConfig["auth.cognito.user_pool_id"],
-        userPoolWebClientId: appConfig["auth.cognito.invalid"],
-        mandatorySignIn: appConfig["auth.cognito.mandatory_sign_in"],
-        authenticationFlowType:
-          appConfig["auth.cognito.authentication_flow_type"],
+        userPoolWebClientId: appConfig["auth.cognito.user_pool_web_client_id"],
+        mandatorySignIn: true,
+        authenticationFlowType: "USER_PASSWORD_AUTH",
       },
       Storage: {
         AWSS3: {
@@ -23,28 +22,30 @@ class CognitoHandler {
     }
     this.isLoggedIn = false
   }
-  login(tryUser) {
-    try {
-      Amplify.configure(this.authConfig)
+  setUser = (userHandle) => {
+    this.user = userHandle
+    this.isLoggedIn = Boolean(userHandle)
+    this.hasChanged = true
+  }
+  login = async (tryUser) => {
+    Amplify.configure(this.authConfig)
 
-      Auth.currentAuthenticatedUser().then((tryUser) => {
-        this.user = tryUser
-        this.hasChanged = true
-      })
-    } catch (err) {
-      this.authConfig = null
-    }
+    const userHandle = await Auth.currentAuthenticatedUser()
+
+    this.user = userHandle
+    this.hasChanged = true
   }
   logout = () => {
+    this.user = null
+    this.isLoggedIn = false
+    this.hasChanged = true
     Auth.signOut()
-      .then(() => {
-        this.user = null
-        this.hasChanged = true
-      })
-      .catch((err) => {
-        console.log(err)
-      })
   }
+  getState = () => ({
+    user: this.user,
+    isLoggedIn: this.isLoggedIn,
+    authConfig: this.authConfig,
+  })
 }
 
 export default CognitoHandler

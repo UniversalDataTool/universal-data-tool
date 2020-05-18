@@ -94,6 +94,7 @@ export default () => {
             onDownload,
             onChangeSelectedBrush: setSelectedBrush,
             selectedBrush,
+            isWelcomePage: !file,
           }}
         >
           {!file ? (

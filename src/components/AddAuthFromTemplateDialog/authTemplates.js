@@ -59,7 +59,7 @@ const CognitoIcon = (props) => {
 export default [
   {
     name: "AWS - Cognito",
-    provider: "AWS",
+    provider: "cognito",
     Icon: CognitoIcon,
     dataset: {
       interface: {},

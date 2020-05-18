@@ -11,6 +11,7 @@ import ErrorToasts from "../ErrorToasts"
 import useErrors from "../../utils/use-errors.js"
 import Amplify, { Auth as AWSAmplifyAuth } from "aws-amplify"
 import { useAppConfig } from "../AppConfig"
+import * as colors from "@material-ui/core/colors"
 
 const useStyles = makeStyles({
   bigButton: {
@@ -28,48 +29,56 @@ const useStyles = makeStyles({
     width: 48,
     height: 48,
   },
+  howToSetupText: {
+    padding: 16,
+    color: colors.grey[600],
+    "& a": {
+      color: colors.blue[500],
+      textDecoration: "none",
+    },
+  },
 })
 
 const forms = {
-  AWS: {
+  cognito: {
     questions: [
       {
-        name: "identityPoolId",
+        name: "auth.cognito.identity_pool_id",
         title: "Amazon Cognito Identity Pool ID",
         placeholder: "XX-XXXX-X:XXXXXXXX-XXXX-1234-abcd-1234567890ab",
         type: "text",
         isRequired: true,
       },
       {
-        name: "region",
+        name: "auth.cognito.region",
         title: "AWS Region",
         placeholder: "XX-XXXX-X",
         type: "text",
         isRequired: true,
       },
       {
-        name: "userPoolId",
+        name: "auth.cognito.user_pool_id",
         title: "Amazon Cognito User Pool ID",
         placeholder: "XX-XXXX-X_12ab34cd9",
         type: "text",
         isRequired: true,
       },
       {
-        name: "userPoolWebClientId",
+        name: "auth.cognito.user_pool_web_client_id",
         title: "Amazon Cognito Web Client ID",
         placeholder: "26-char alphanumeric string",
         type: "text",
         isRequired: true,
       },
       {
-        name: "bucket",
+        name: "auth.cognito.storage.aws_s3.bucket",
         title: "Bucket AWS",
         placeholder: "Name of the bucket",
         type: "text",
         isRequired: true,
       },
       {
-        name: "regionBucket",
+        name: "auth.cognito.storage.aws_s3.region",
         title: "Region of the bucket",
         placeholder: "XX-XXXX-X",
         type: "text",
@@ -84,25 +93,25 @@ export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
   const [authProvider, setAuthProvider] = useState(null)
   const [dialogTitle, setDialogTitle] = useState("Add Authentification")
   const [errors, addError] = useErrors()
-  const { appConfig, setAppConfig, fromConfig } = useAppConfig()
+  const { appConfig, setAppConfig, fromConfig, setInConfig } = useAppConfig()
 
   // TODO useAppConfig to load in existing configuration
 
   const validateAuthProvider = async (answers) => {
-    if (answers.provider === "AWS") {
+    if (answers.provider === "cognito") {
       const config = {
         Auth: {
-          identityPoolId: answers.identityPoolId,
-          region: answers.region,
-          userPoolId: answers.userPoolId,
-          userPoolWebClientId: answers.userPoolWebClientId,
+          identityPoolId: answers["auth.cognito.identity_pool_id"],
+          region: answers["auth.cognito.region"],
+          userPoolId: answers["auth.cognito.user_pool_id"],
+          userPoolWebClientId: answers["auth.cognito.user_pool_web_client_id"],
           mandatorySignIn: true,
           authenticationFlowType: "USER_PASSWORD_AUTH",
         },
         Storage: {
           AWSS3: {
-            bucket: answers.bucket,
-            region: answers.regionBucket,
+            bucket: answers["auth.cognito.storage.aws_s3.bucket"],
+            region: answers["auth.cognito.storage.aws_s3.region"],
           },
         },
       }
@@ -115,16 +124,11 @@ export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
 
       setAppConfig({
         ...appConfig,
-        "auth.cognito.identity_pool_id": answers.identityPoolId,
-        "auth.cognito.region": answers.region,
-        "auth.cognito.user_pool_id": answers.userPoolId,
-        "auth.cognito.user_pool_web_client_id": answers.userPoolWebClientId,
-        "auth.cognito.mandatory_sign_in": true,
-        "auth.cognito.authentication_flow_type": "USER_PASSWORD_AUTH",
-        "auth.cognito.storage.aws_s3.bucket": answers.bucket,
-        "auth.cognito.storage.aws_s3.region": answers.regionBucket,
+        ...answers,
         "auth.provider": answers.provider,
       })
+      // TODO some kind of success message
+      onClose()
     }
   }
 
@@ -156,25 +160,44 @@ export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
               </div>
             </Button>
           ))}
-
+        {authProvider === "cognito" && (
+          <div className={c.howToSetupText}>
+            Check this wiki{" "}
+            <a href="https://github.com/UniversalDataTool/universal-data-tool/wiki/Cognito---Amplify-Authentication-Setup-Instructions">
+              guide for setting up AWS Cognito with the Universal Data Tool
+            </a>
+            .
+          </div>
+        )}
         {!isEmpty(authProvider) && forms[authProvider] && (
           <Survey
             variant="flat"
             form={forms[authProvider]}
+            onQuestionChange={(questionId, newValue) => {
+              setInConfig(questionId, newValue)
+            }}
             onFinish={(answers) => {
               answers["provider"] = authProvider
               validateAuthProvider(answers)
             }}
             defaultAnswers={{
-              identityPoolId: fromConfig("auth.cognito.identity_pool_id"),
-              region: fromConfig("auth.cognito.region"),
-              userPoolId: fromConfig("auth.cognito.user_pool_id"),
-              userPoolWebClientId: fromConfig(
+              "auth.cognito.identity_pool_id": fromConfig(
+                "auth.cognito.identity_pool_id"
+              ),
+              "auth.cognito.region": fromConfig("auth.cognito.region"),
+              "auth.cognito.user_pool_id": fromConfig(
+                "auth.cognito.user_pool_id"
+              ),
+              "auth.cognito.user_pool_web_client_id": fromConfig(
                 "auth.cognito.user_pool_web_client_id"
               ),
-              bucket: fromConfig("auth.cognito.storage.aws_s3.bucket"),
-              regionBucket: fromConfig("auth.cognito.storage.aws_s3.region"),
-              provider: fromConfig("auth.provider"),
+              "auth.cognito.storage.aws_s3.bucket": fromConfig(
+                "auth.cognito.storage.aws_s3.bucket"
+              ),
+              "auth.cognito.storage.aws_s3.region": fromConfig(
+                "auth.cognito.storage.aws_s3.region"
+              ),
+              "auth.provider": fromConfig("auth.provider"),
             }}
           />
         )}

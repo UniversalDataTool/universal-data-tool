@@ -27,8 +27,8 @@ export const useAppConfig = () => useContext(AppConfigContext)
 
 export const AppConfigProvider = ({ children }) => {
   const [appConfig, setAppConfig] = useLocalStorage("app_config", {})
-  const contextValue = useMemo(
-    () => ({
+  const contextValue = useMemo(() => {
+    return {
       appConfig,
       setAppConfig,
       fromConfig: (key) => {
@@ -56,9 +56,8 @@ export const AppConfigProvider = ({ children }) => {
         }
         setAppConfig({ ...appConfig, [key]: value })
       },
-    }),
-    [appConfig, setAppConfig]
-  )
+    }
+  }, [appConfig, setAppConfig])
   return (
     <AppConfigContext.Provider value={contextValue}>
       {children}

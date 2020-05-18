@@ -19,10 +19,13 @@ import packageJSON from "../../../package.json"
 import BrushButton from "../BrushButton"
 import useAuth from "../../utils/auth-handlers/use-auth.js"
 
+const capitalize = (s) => {
+  return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
 const useStyles = makeStyles((theme) => ({
   headerButton: {
     marginLeft: 16,
-    color: "#888",
   },
   grow: { flexGrow: 1 },
   list: {
@@ -87,11 +90,11 @@ const HeaderToolbar = ({
   isSmall,
   authConfig,
   changeLoginDrawerOpen,
-  logoutUser,
   collaborateError,
+  isWelcomePage,
 }) => {
   const c = useStyles()
-  const { authProvider, isLoggedIn } = useAuth()
+  const { authProvider, isLoggedIn, logout } = useAuth()
   return (
     <AppBar color="default" position="static">
       <Toolbar variant="dense">
@@ -137,18 +140,18 @@ const HeaderToolbar = ({
             ))}
           </Tabs>
         )}
-        {authProvider !== "none" && (
+        {authProvider !== "none" && isWelcomePage && !isLoggedIn && (
           <Button
             onClick={() => {
               changeLoginDrawerOpen(true)
             }}
             className={c.headerButton}
           >
-            Login
+            Login with {capitalize(authProvider)}
           </Button>
         )}
         {isLoggedIn && (
-          <Button onClick={logoutUser} className={c.headerButton}>
+          <Button onClick={logout} className={c.headerButton}>
             Logout
           </Button>
         )}
