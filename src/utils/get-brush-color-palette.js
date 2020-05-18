@@ -4,12 +4,13 @@ import seed from "seed-random"
 import * as colors from "@material-ui/core/colors"
 
 const fadedGrey = {
-  "800": colors.grey[600],
-  "700": colors.grey[500],
-  "600": colors.grey[400],
-  "500": colors.grey[300],
-  "400": colors.grey[200],
-  "300": colors.grey[100],
+  ...colors.grey,
+  // "800": colors.grey[600],
+  // "700": colors.grey[500],
+  // "600": colors.grey[400],
+  // "500": colors.grey[300],
+  // "400": colors.grey[200],
+  // "300": colors.grey[100],
   isFaded: true,
 }
 
