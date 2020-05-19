@@ -71,7 +71,7 @@ const Button = ({
   const disabled = desktopOnly
     ? !isDesktop
     : authConfiguredOnly
-    ? signedInOnly
+    ? (signedInOnly)
       ? isEmpty(user)
       : isEmpty(authConfig)
     : false
