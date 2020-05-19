@@ -36,7 +36,7 @@ const useStyles = makeStyles({
 
 const REFRESH_INTERVAL = 100
 
-const ToastContext = createContext()
+const ToastContext = createContext({})
 
 export const useToasts = () => {
   const { addToast } = useContext(ToastContext)

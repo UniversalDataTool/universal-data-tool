@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react"
 import getTaskDescription from "../../utils/get-task-description.js"
 import SampleContainer from "../SampleContainer"
 import NLPAnnotator from "react-nlp-annotate/components/NLPAnnotator"
-import jsonHandler from "../../utils/file-handlers/udt-helper"
+import * as datasetHelper from "../../utils/dataset-helper"
 
 const simpleSequenceToEntitySequence = (simpleSeq) => {
   const entSeq = []
@@ -52,7 +52,7 @@ export const TextEntityRecognition = (props) => {
   const oldText = useRef()
   useEffect(() =>{
     if(oldText.current !== textToShow){
-      jsonHandler.getTextfromSample(props.samples[currentSampleIndex]).then((result) => {
+      datasetHelper.getTextfromSample(props.samples[currentSampleIndex]).then((result) => {
         if(result !== "")
         changeTextToShow(result)
         console.log(result)

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react"
 import getTaskDescription from "../../utils/get-task-description.js"
 import SampleContainer from "../SampleContainer"
 import NLPAnnotator from "react-nlp-annotate/components/NLPAnnotator"
-import jsonHandler from "../../utils/file-handlers/udt-helper"
+import * as datasetHelper from "../../utils/dataset-helper"
 
 export const TextClassification = (props) => {
   const [currentSampleIndex, changeCurrentSampleIndex] = useState(0)
@@ -29,7 +29,7 @@ export const TextClassification = (props) => {
     const oldText = useRef()
     useEffect(() =>{
       if(oldText.current !== textToShow){
-        jsonHandler.getTextfromSample(props.samples[currentSampleIndex]).then((result) => {
+        datasetHelper.getTextfromSample(props.samples[currentSampleIndex]).then((result) => {
           changeTextToShow(result)
         })
         oldText.current= textToShow

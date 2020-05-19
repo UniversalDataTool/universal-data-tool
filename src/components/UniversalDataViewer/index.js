@@ -14,7 +14,7 @@ import BadOHA from "../BadOHA"
 import Button from "@material-ui/core/Button"
 
 export const UniversalDataViewer = ({
-  oha,
+  dataset,
   onExit,
   hideHeader,
   hideDescription,
@@ -24,7 +24,7 @@ export const UniversalDataViewer = ({
   height,
   onClickSetup,
 }) => {
-  // TODO type check w/ superstruct against oha
+  // TODO type check w/ superstruct against dataset
   const containerProps = useMemo(
     () => ({
       hideHeader,
@@ -44,7 +44,7 @@ export const UniversalDataViewer = ({
     ]
   )
 
-  if (!oha || !oha.interface.type) {
+  if (!dataset || !dataset.interface.type) {
     return (
       <BadOHA
         title="Set up your project to begin labeling"
@@ -63,16 +63,16 @@ export const UniversalDataViewer = ({
     )
   }
 
-  if (!oha.samples || oha.samples.length === 0) {
+  if (!dataset.samples || dataset.samples.length === 0) {
     return <EmptySampleContainer />
   }
 
-  switch (oha.interface.type) {
+  switch (dataset.interface.type) {
     case "data_entry":
       return (
         <DataEntry
           containerProps={containerProps}
-          {...oha}
+          {...dataset}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
           onExit={onExit}
         />
@@ -81,7 +81,7 @@ export const UniversalDataViewer = ({
       return (
         <TextClassification
           containerProps={containerProps}
-          {...oha}
+          {...dataset}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
           onExit={onExit}
         />
@@ -90,7 +90,7 @@ export const UniversalDataViewer = ({
       return (
         <TextEntityRecognition
           containerProps={containerProps}
-          {...oha}
+          {...dataset}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
           onExit={onExit}
         />
@@ -99,7 +99,7 @@ export const UniversalDataViewer = ({
       return (
         <ImageSegmentation
           containerProps={containerProps}
-          {...oha}
+          {...dataset}
           onExit={onExit}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
         />
@@ -108,7 +108,7 @@ export const UniversalDataViewer = ({
       return (
         <ImageClassification
           containerProps={containerProps}
-          {...oha}
+          {...dataset}
           onExit={onExit}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
         />
@@ -117,7 +117,7 @@ export const UniversalDataViewer = ({
       return (
         <VideoSegmentation
           containerProps={containerProps}
-          {...oha}
+          {...dataset}
           onExit={onExit}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
         />
@@ -126,8 +126,8 @@ export const UniversalDataViewer = ({
       return (
         <Composite
           containerProps={containerProps}
-          {...oha}
-          oha={oha}
+          {...dataset}
+          dataset={dataset}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
           onExit={onExit}
         />
@@ -136,13 +136,13 @@ export const UniversalDataViewer = ({
       return (
         <AudioTranscription
           containerProps={containerProps}
-          {...oha}
+          {...dataset}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
           onExit={onExit}
         />
       )
     default:
-      return `"${oha.interface.type}" not supported`
+      return `"${dataset.interface.type}" not supported`
   }
 }
 

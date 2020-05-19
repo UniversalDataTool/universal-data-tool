@@ -1,7 +1,8 @@
 import React, { Fragment, useState } from "react"
 import { Typography, TextField, Button } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
-import Amplify, { Auth } from "aws-amplify"
+import { Auth } from "aws-amplify"
+import { useAuth } from "../../utils/auth-handlers/use-auth.js"
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -13,15 +14,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default ({
-  authConfig,
-  user,
-  requiredAttributes,
-  onUserChange,
-  onClose,
-}) => {
-  Amplify.configure(authConfig)
-
+export default ({ requiredAttributes, onUserChange, onClose }) => {
+  const { user } = useAuth()
   const requiredAttributesDict = {}
   const requiredAttributesErrorDict = {}
   requiredAttributes.forEach((requiredAttribute) => {
@@ -47,7 +41,6 @@ export default ({
   const handleCompleteSignUpClick = () => {
     if (
       checkIfPasswordEqualsConfirmationPassword() &&
-      checkValidPassword() &&
       _handleCantBeNull("checkAll")
     ) {
       completeNewPassword()
@@ -71,6 +64,7 @@ export default ({
   const _handleTextFieldChange = (event) => {
     setState({
       ...state,
+      newPasswordError: null,
       newPasswordNotValid: false,
       newPasswordNotEqualsConfirmation: false,
       [event.target.name]: event.target.value,
@@ -83,17 +77,6 @@ export default ({
       return true
     } else {
       setState({ ...state, newPasswordNotEqualsConfirmation: true })
-      return false
-    }
-  }
-
-  const checkValidPassword = () => {
-    var validPasswordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,100}$/
-    if (state.newPassword.match(validPasswordRegex)) {
-      setState({ ...state, newPasswordNotValid: false })
-      return true
-    } else {
-      setState({ ...state, newPasswordNotValid: true })
       return false
     }
   }
@@ -146,8 +129,7 @@ export default ({
         onClose()
       })
       .catch((err) => {
-        console.log("Setting ne password failled")
-        console.log(err)
+        setState({ ...state, newPasswordError: err.toString() })
       })
   }
 
@@ -169,12 +151,7 @@ export default ({
           id="password"
           value={state.newPassword}
           onChange={_handleTextFieldChange}
-          onBlur={checkValidPassword}
-          helperText={
-            state.newPasswordNotValid
-              ? "Password must have 8 characters, an uppercase letter and a digit"
-              : ""
-          }
+          helperText={state.newPasswordError || ""}
         />
         <TextField
           error={state.newPasswordNotEqualsConfirmation}

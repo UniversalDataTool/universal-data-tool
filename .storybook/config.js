@@ -1,10 +1,23 @@
 import React from "react"
 import { configure, addDecorator } from "@storybook/react"
 import Theme from "../src/components/Theme"
+import "../src/App.css"
+import "./storybook.css"
 
 export const themeDecorator = (storyFn) => {
   // TODO wrap w/ theme
-  return React.createElement(Theme, {}, storyFn())
+  return React.createElement(
+    Theme,
+    {},
+    React.createElement(
+      "div",
+      {
+        className: "universaldatatool",
+        style: { height: "100vh" },
+      },
+      storyFn()
+    )
+  )
 }
 
 function loadStories() {

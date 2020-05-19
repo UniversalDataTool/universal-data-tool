@@ -101,6 +101,7 @@ export default ({
         <ListSubheader>Create From Template</ListSubheader>
         {templates.map((template) => (
           <ListItem
+            button
             key={template.name}
             onClick={() => onClickTemplate(template)}
           >

@@ -11,20 +11,20 @@ const idify = (s) =>
     .replace(/_+/g, "_")
 
 const transformFileURLsToWebURLs = async ({
-  oha,
-  onChangeOHA,
+  dataset,
+  onChangeDataset,
   setProgress,
   remote,
 }) => {
   const newsamples = []
 
-  const progressUnit = 100 / oha.samples.length
+  const progressUnit = 100 / dataset.samples.length
   for (
     let samplesIndex = 0;
-    samplesIndex < oha.samples.length;
+    samplesIndex < dataset.samples.length;
     samplesIndex++
   ) {
-    const samplesItem = oha.samples[samplesIndex]
+    const samplesItem = dataset.samples[samplesIndex]
 
     const fileURLKey = getFileURLKey(samplesItem)
 
@@ -62,7 +62,7 @@ const transformFileURLsToWebURLs = async ({
     })
   }
   setProgress(100)
-  onChangeOHA(setIn(oha, ["samples"], newsamples))
+  onChangeDataset(setIn(dataset, ["samples"], newsamples))
 }
 
 export default transformFileURLsToWebURLs

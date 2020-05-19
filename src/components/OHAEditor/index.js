@@ -25,7 +25,7 @@ import usePosthog from "../../utils/use-posthog"
 
 import "brace/mode/javascript"
 import "brace/theme/github"
-import isEmpty from "../../utils/isEmpty"
+import isEmpty from "lodash/isEmpty"
 
 const useStyles = makeStyles({
   headerButton: {

@@ -91,9 +91,6 @@ export default ({
   recentItems = [],
   onOpenRecentItem,
   onClickOpenSession,
-  onAuthConfigured,
-  user,
-  logoutUser,
 }) => {
   const c = useStyles()
   const posthog = usePosthog()
@@ -140,11 +137,6 @@ export default ({
         open={addAuthFromDialogOpen}
         onSelect={(template) => onOpenTemplate(template)}
         onClose={() => changeAddAuthFromDialogOpen(false)}
-        onFinish={(anwsers) => console.log(anwsers)}
-        onAuthConfigured={(config) => {
-          onAuthConfigured(config)
-          logoutUser()
-        }}
       />
       <Header
         additionalButtons={[
@@ -167,8 +159,6 @@ export default ({
             </Button>
           ),
         ].filter(Boolean)}
-        user={user}
-        logoutUser={logoutUser}
       />
       <ContentContainer>
         <Content>
@@ -266,6 +256,7 @@ export default ({
                 <ActionTitle>Instant Try Now</ActionTitle>
                 <ActionText>
                   <Action
+                    style={{ display: "inline" }}
                     onClick={() => changeCreateFromTemplateDialogOpen(true)}
                   >
                     Open a template

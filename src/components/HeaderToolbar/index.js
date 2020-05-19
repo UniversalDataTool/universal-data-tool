@@ -15,14 +15,17 @@ import DownloadButton from "../DownloadButton"
 import Button from "@material-ui/core/Button"
 import GithubIcon from "../Header/GithubIcon"
 import IconButton from "@material-ui/core/IconButton"
-import isEmpty from "../../utils/isEmpty"
 import packageJSON from "../../../package.json"
 import BrushButton from "../BrushButton"
+import useAuth from "../../utils/auth-handlers/use-auth.js"
+
+const capitalize = (s) => {
+  return s.charAt(0).toUpperCase() + s.slice(1)
+}
 
 const useStyles = makeStyles((theme) => ({
   headerButton: {
     marginLeft: 16,
-    color: "#888",
   },
   grow: { flexGrow: 1 },
   list: {
@@ -86,12 +89,12 @@ const HeaderToolbar = ({
   onChangeSelectedBrush,
   isSmall,
   authConfig,
-  user,
   changeLoginDrawerOpen,
-  logoutUser,
   collaborateError,
+  isWelcomePage,
 }) => {
   const c = useStyles()
+  const { authProvider, isLoggedIn, logout } = useAuth()
   return (
     <AppBar color="default" position="static">
       <Toolbar variant="dense">
@@ -137,18 +140,18 @@ const HeaderToolbar = ({
             ))}
           </Tabs>
         )}
-        {!isEmpty(authConfig) && isEmpty(user) && (
+        {authProvider !== "none" && isWelcomePage && !isLoggedIn && (
           <Button
             onClick={() => {
               changeLoginDrawerOpen(true)
             }}
             className={c.headerButton}
           >
-            Login
+            Login with {capitalize(authProvider)}
           </Button>
         )}
-        {!isEmpty(authConfig) && !isEmpty(user) && (
-          <Button onClick={logoutUser} className={c.headerButton}>
+        {isLoggedIn && (
+          <Button onClick={logout} className={c.headerButton}>
             Logout
           </Button>
         )}

@@ -1,6 +1,6 @@
 import RecognizeFileExtension from "../../utils/RecognizeFileExtension"
 import Amplify, { Storage } from "aws-amplify"
-import isEmpty from "../../utils/isEmpty"
+import isEmpty from "lodash/isEmpty"
 
 async function setUrl(result, configImport) {
   if (configImport.loadProjectIsSelected) {

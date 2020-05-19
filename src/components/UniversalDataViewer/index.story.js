@@ -12,7 +12,7 @@ storiesOf("UniversalDataViewer", module)
     <UniversalDataViewer
       onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
       hideHeader
-      oha={{
+      dataset={{
         interface: {
           type: "text_entity_recognition",
           description: "Label words or phrases as food or hat.",
@@ -49,7 +49,7 @@ storiesOf("UniversalDataViewer", module)
     <UniversalDataViewer
       onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
       hideHeader
-      oha={{
+      dataset={{
         interface: {
           type: "data_entry",
           description: "",
@@ -103,7 +103,7 @@ storiesOf("UniversalDataViewer", module)
     <UniversalDataViewer
       onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
       hideHeader
-      oha={{
+      dataset={{
         interface: {
           type: "audio_transcription",
           description: "",
@@ -121,7 +121,7 @@ storiesOf("UniversalDataViewer", module)
     <UniversalDataViewer
       onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
       hideHeader
-      oha={{
+      dataset={{
         interface: {
           type: "composite",
           fields: [
@@ -181,7 +181,7 @@ storiesOf("UniversalDataViewer", module)
     <UniversalDataViewer
       onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
       hideHeader
-      oha={{
+      dataset={{
         interface: {
           type: "composite",
           fields: [

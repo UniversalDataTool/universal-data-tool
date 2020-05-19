@@ -1,4 +1,4 @@
-import isEmpty from "../../utils/isEmpty"
+import isEmpty from "lodash/isEmpty"
 export default (typeAuthorize, file) => {
   function interfaceFileType(type) {
     if (

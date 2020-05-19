@@ -7,8 +7,8 @@ import FormControl from "@material-ui/core/FormControl"
 import FormLabel from "@material-ui/core/FormLabel"
 import RadioGroup from "@material-ui/core/RadioGroup"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
-import Amplify, { Storage } from "aws-amplify"
-import isEmpty from "../../utils/isEmpty"
+import { Storage } from "aws-amplify"
+import isEmpty from "lodash/isEmpty"
 import { useLocalStorage } from "react-use"
 import IconButton from "@material-ui/core/IconButton"
 import SettingsIcon from "@material-ui/icons/Settings"
@@ -17,12 +17,13 @@ import Button from "@material-ui/core/Button"
 import GetAnnotationFromAFolderAWS from "./get-annotation-from-aws"
 import GetImageFromAFolderAWS from "./get-images-from-aws"
 import setButtonNameAddSample from "./set-button-add-sample-name"
-import jsonHandler from "../../utils/file-handlers/udt-helper"
+import * as datasetHelper from "../../utils//dataset-helper"
 import setTypeOfFileToLoadAndDisable from "./set-type-of-file-to-load-and-disable"
 import initConfigImport from "./init-config-import"
 import setAnnotationFromAws from "./set-annotation-from-aws"
 import useErrors from "../../utils/use-errors.js"
 import ErrorToasts from "../ErrorToasts"
+import useAuth from "../../utils/auth-handlers/use-auth.js"
 
 const selectedStyle = { color: "DodgerBlue" }
 const tableStyle = {
@@ -98,18 +99,8 @@ const ExpandedRow = ({ data }) => {
   )
 }
 
-export default ({
-  file,
-  open,
-  onClose,
-  onAddSamples,
-  onChangeFile,
-  authConfig,
-  user,
-}) => {
-  try {
-    Amplify.configure(authConfig)
-  } catch (e) {}
+export default ({ file, open, onClose, onAddSamples, onChangeFile }) => {
+  const { authProvider, user, authConfig } = useAuth()
   const [textButtonAdd, changetextButtonAdd] = useState("Add Samples")
   const [s3Content, changeS3Content] = useState(null)
   const [dataForTable, changeDataForTable] = useState(null)
@@ -121,7 +112,8 @@ export default ({
     initConfigImport(file)
   )
   const lastObjectRef = useRef({})
-  const CheckIfProjectIsStarted = useCallback(() => {
+  const hasProjectStarted = useCallback(() => {
+    if (authProvider !== "cognito") return
     if (
       isEmpty(file) ||
       isEmpty(file.content) ||
@@ -129,21 +121,22 @@ export default ({
     )
       return false
     return true
-  }, [file])
+  }, [file, authProvider])
 
   useEffect(() => {
+    if (authProvider !== "cognito") return
     if (file === lastObjectRef.current) return
     var configToSet = configImport
-    var changes = jsonHandler.fileHasChanged(lastObjectRef.current, file)
+    var changes = datasetHelper.fileHasChanged(lastObjectRef.current, file)
     if (changes.content.interface.type || changes.content.samples) {
       if (lastObjectRef.current !== {})
         configToSet = setTypeOfFileToLoadAndDisable(configToSet, file)
     }
-    configToSet.projectStarted = CheckIfProjectIsStarted()
-    configToSet.loadProjectIsSelected = !CheckIfProjectIsStarted()
+    configToSet.projectStarted = hasProjectStarted()
+    configToSet.loadProjectIsSelected = !hasProjectStarted()
     setConfigImport(configToSet)
     lastObjectRef.current = file
-  }, [file, configImport, setConfigImport, CheckIfProjectIsStarted])
+  }, [file, configImport, setConfigImport, hasProjectStarted, authProvider])
 
   const handleAddSample = async () => {
     var samples = await GetImageFromAFolderAWS(
