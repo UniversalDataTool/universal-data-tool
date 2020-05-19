@@ -36,7 +36,7 @@ export default ({
   onChangeSampleTimeToComplete,
   sampleTimeToComplete,
 }) => {
-  const [currentTab, setTab] = useState("label")
+  const [currentTab, setTab] = useState("labelhelp")
   const posthog = usePosthog()
   const { fromConfig, setInConfig } = useAppConfig()
   const { labelHelpEnabled } = useLabelHelp()

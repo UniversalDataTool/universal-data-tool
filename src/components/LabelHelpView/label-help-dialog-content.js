@@ -39,15 +39,25 @@ const steps = ["setup", "running", "completed"]
 export default () => {
   const [activeStep, setActiveStep] = useState("setup")
   const { fromConfig, setInConfig } = useAppConfig()
-  const { labelHelpEnabled, formula, variables } = useLabelHelp()
-  if (!labelHelpEnabled) return null
+  const {
+    labelHelpEnabled,
+    labelHelpError,
+    variables,
+    totalCost,
+    formulaFunc,
+    myCredits,
+  } = useLabelHelp()
 
-  const funcArgs = Object.keys(variables)
-  const formulaFuncPos = new Function(...funcArgs, "return " + formula)
-  const formulaFunc = (variables) => {
-    return formulaFuncPos(...funcArgs.map((ak) => variables[ak]))
-  }
-  const totalCost = formulaFunc(variables)
+  if (!labelHelpEnabled)
+    return (
+      <Container>
+        Label Help is Disabled.
+        {labelHelpError && (
+          <div style={{ color: colors.red[500] }}>{labelHelpError}</div>
+        )}
+      </Container>
+    )
+
   return (
     <Container>
       <Stepper activeStep={steps.indexOf(activeStep)}>
@@ -119,7 +129,7 @@ export default () => {
             padding={2}
             paddingTop={4}
           >
-            <Box>Credits: $132.00</Box>
+            <Box>Credits: {usdFormatter.format(myCredits)}</Box>
             <Box flexGrow={1} />
             <Button
               onClick={() => setInConfig("labelhelp.apikey", null)}
@@ -127,10 +137,11 @@ export default () => {
             >
               API Key
             </Button>
-            <Button style={{ marginLeft: 12 }} variant="outlined">
-              Info
-            </Button>
-            <Button style={{ marginLeft: 12 }} variant="outlined">
+            <Button
+              color={myCredits < totalCost ? "primary" : "none"}
+              style={{ marginLeft: 12 }}
+              variant="outlined"
+            >
               Add Credits
             </Button>
             <Button

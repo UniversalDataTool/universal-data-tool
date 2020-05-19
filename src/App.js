@@ -15,9 +15,11 @@ export const App = () => {
     <Theme>
       <AppConfigProvider>
         <AuthProvider>
-          <ToastProvider>
-            {Boolean(electron) ? <DesktopApp /> : <LocalStorageApp />}
-          </ToastProvider>
+          <LabelHelpProvider>
+            <ToastProvider>
+              {Boolean(electron) ? <DesktopApp /> : <LocalStorageApp />}
+            </ToastProvider>
+          </LabelHelpProvider>
         </AuthProvider>
       </AppConfigProvider>
     </Theme>
