@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
     return () => {
       clearInterval(interval)
     }
-  }, [handler, forceUpdate])
+  })
 
   const contextValue = useMemo(
     () => ({
@@ -45,8 +45,7 @@ export const AuthProvider = ({ children }) => {
       setUser: handler.setUser,
       logout: handler.logout,
       login: handler.login,
-    }),
-    [handler]
+    }),[handler,handler.hasChanged,handler.isLoggedIn]
   )
 
   return (
