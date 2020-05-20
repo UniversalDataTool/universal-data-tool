@@ -3,7 +3,7 @@ import React, {
   useEffect,
   createContext,
   useContext,
-  useMemo,
+  useCallback,
 } from "react"
 import { useAppConfig } from "../../components/AppConfig"
 import CognitoHandler from "./cognito-handler.js"
@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
     }
   })
 
-  const contextValue = useMemo(
+  const contextValue = useCallback(
     () => ({
       authProvider: handler.authProvider,
       ...(handler.getState ? handler.getState() : {}),
@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }) => {
       setUser: handler.setUser,
       logout: handler.logout,
       login: handler.login,
-    }),[handler,handler.hasChanged,handler.isLoggedIn]
+    }),[handler]
   )
 
   return (
