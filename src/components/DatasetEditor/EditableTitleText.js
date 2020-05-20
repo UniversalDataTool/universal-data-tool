@@ -1,5 +1,5 @@
 // @flow
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import TextField from "@material-ui/core/TextField"
 import { makeStyles } from "@material-ui/core/styles"
 import isEmpty from "lodash/isEmpty"
@@ -40,7 +40,6 @@ export default ({ value, onChange }) => {
       window.removeEventListener("keydown", listener)
     }
   }, [editing, newValue, onChange])
-
   useEffect(() => {
     if (!newValue) return
     if (editing) {
@@ -51,7 +50,6 @@ export default ({ value, onChange }) => {
         },
         value === newValue ? SAVE_WAIT * 5 : SAVE_WAIT
       )
-
       return () => clearTimeout(timeout)
     } else {
       return () => {}
