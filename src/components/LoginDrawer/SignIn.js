@@ -61,7 +61,7 @@ export default ({ onUserChange, onRequireCompleteSignUp, onClose }) => {
   async function SignInAWS(username, password) {
     setError(null)
     try {
-      await Amplify.configure(authConfig)
+      Amplify.configure(authConfig)
       await Auth.signIn(username, password)
         .then((user) => {
           setUser(user)
