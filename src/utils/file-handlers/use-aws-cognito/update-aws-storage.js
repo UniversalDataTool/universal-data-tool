@@ -74,7 +74,7 @@ export default (file) => {
     file = setIn(
       file,
       ["content"],
-      setIn(dataset, ["samples"], datasetHelper.setSamplesName(dataset))
+      datasetHelper.setSamplesName(dataset)
     )
     var json = JSON.stringify(file)
     createOrReplaceProjectFile(file)

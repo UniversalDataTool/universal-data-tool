@@ -28,7 +28,7 @@ export default ({ file, setFile }) => {
     if (
       isEmpty(file) ||
       (!changes.content.samples && !changes.fileName) ||
-      !workingInterfaces.includes(file.content.interface.authProvider) ||
+      !workingInterfaces.includes(file.content.interface.type) ||
       file.fileName === "unnamed"
     )
       return false
