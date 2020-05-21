@@ -34,3 +34,6 @@ package-lock.json
 src/components/LocalStorageApp/myAWSconfig.js
 .env
 .cache
+
+# eventually we'll commit these
+cypress/snapshots

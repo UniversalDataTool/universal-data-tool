@@ -8,7 +8,7 @@ const Container = styled("div")({})
 const Stat = styled("div")({
   display: "inline-flex",
   flexDirection: "column",
-  margin: 16,
+  margin: 8,
 })
 const Label = styled("div")({
   fontSize: 14,
