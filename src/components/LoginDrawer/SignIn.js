@@ -61,7 +61,7 @@ export default ({ onUserChange, onRequireCompleteSignUp, onClose }) => {
   async function SignInAWS(username, password) {
     setError(null)
     try {
-      await Amplify.configure(authConfig)
+      Amplify.configure(authConfig)
       await Auth.signIn(username, password)
         .then((user) => {
           setUser(user)
@@ -95,11 +95,11 @@ export default ({ onUserChange, onRequireCompleteSignUp, onClose }) => {
             console.log("Error that we do not handle for")
             console.log(err.code)
           }
-          setError(err.toString())
+          setError(err.message.toString())
           return err
         })
     } catch (e) {
-      setError(e.toString())
+      setError(e.message.toString())
     }
   }
 

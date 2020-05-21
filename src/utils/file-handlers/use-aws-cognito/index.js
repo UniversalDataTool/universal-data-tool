@@ -17,7 +17,7 @@ const workingInterfaces = [
   "data_entry",
 ]
 
-export default ({ file, setFile }) => {
+export default ({ file }) => {
   const { isLoggedIn, authProvider, authConfig } = useAuth()
 
   const lastObjectRef = useRef([])
@@ -28,7 +28,7 @@ export default ({ file, setFile }) => {
     if (
       isEmpty(file) ||
       (!changes.content.samples && !changes.fileName) ||
-      !workingInterfaces.includes(file.content.interface.authProvider) ||
+      !workingInterfaces.includes(file.content.interface.type) ||
       file.fileName === "unnamed"
     )
       return false

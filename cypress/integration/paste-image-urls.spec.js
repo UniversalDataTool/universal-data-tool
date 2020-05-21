@@ -1,7 +1,7 @@
 const imageUrls = [
-    'https://wao.ai/app/api/download/fef3ee4d-f841-42f5-ba22-a7c8eb214628',
-    'https://wao.ai/app/api/download/f80f660f-6641-4241-9c9d-7c3ac26c5a17',
-    'https://wao.ai/app/api/download/ff03593a-6b7e-46dd-91bf-9e741c35c227'
+  "https://wao.ai/app/api/download/fef3ee4d-f841-42f5-ba22-a7c8eb214628",
+  "https://wao.ai/app/api/download/f80f660f-6641-4241-9c9d-7c3ac26c5a17",
+  "https://wao.ai/app/api/download/ff03593a-6b7e-46dd-91bf-9e741c35c227",
 ]
 
 describe("Create a new", () => {

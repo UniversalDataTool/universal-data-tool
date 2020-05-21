@@ -25,7 +25,7 @@ import ImportFromYoutubeUrls from "../ImportFromYoutubeUrls"
 import { FaGoogleDrive, FaYoutube } from "react-icons/fa"
 import usePosthog from "../../utils/use-posthog"
 import promptAndGetSamplesFromLocalDirectory from "./prompt-and-get-samples-from-local-directory.js"
-
+import useAuth from "../../utils/auth-handlers/use-auth.js"
 const ButtonBase = styled(MuiButton)({
   width: 240,
   height: 140,
@@ -63,12 +63,12 @@ const Button = ({
   children,
   dialog,
   authConfiguredOnly,
-  authConfig,
   signedInOnly,
   user,
   onlySupportType,
   type,
 }) => {
+  const { user, authConfig } = useAuth()
   const posthog = usePosthog()
 
   const isDisabled = () => {

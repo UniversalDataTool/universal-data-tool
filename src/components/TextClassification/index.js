@@ -1,7 +1,8 @@
-import React, { useState } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import getTaskDescription from "../../utils/get-task-description.js"
 import SampleContainer from "../SampleContainer"
 import NLPAnnotator from "react-nlp-annotate/components/NLPAnnotator"
+import * as datasetHelper from "../../utils/dataset-helper"
 
 export const TextClassification = (props) => {
   const [currentSampleIndex, changeCurrentSampleIndex] = useState(0)
@@ -23,6 +24,20 @@ export const TextClassification = (props) => {
       typeof l === "string" ? { id: l, description: l, displayName: l } : l
     )
     .map((l) => (!l.displayName ? { ...l, displayName: l.id } : l))
+
+  const [textToShow, changeTextToShow] = useState("")
+  const oldText = useRef()
+  useEffect(() => {
+    if (oldText.current !== textToShow) {
+      datasetHelper
+        .getTextfromSample(props.samples[currentSampleIndex])
+        .then((result) => {
+          changeTextToShow(result)
+        })
+      oldText.current = textToShow
+    }
+  }, [props.samples, currentSampleIndex, textToShow])
+
   return (
     <SampleContainer
       {...props.containerProps}
@@ -40,7 +55,7 @@ export const TextClassification = (props) => {
         type="label-document"
         labels={labels}
         multipleLabels={props.interface.multiple}
-        document={props.samples[currentSampleIndex].document}
+        document={textToShow}
         initialLabels={initialLabels}
         onFinish={(result) => {
           props.onSaveTaskOutputItem(currentSampleIndex, result)

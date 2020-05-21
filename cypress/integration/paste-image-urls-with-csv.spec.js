@@ -1,8 +1,8 @@
 const csvHeader = "customId,imageUrl,male_or_female.value"
 const csvRows = [
-    "faces/010260.jpg,https://wao.ai/app/api/download/0031a48c-635a-4ea9-833f-9381c88836d2,female",
-    "faces/010265.jpg,https://wao.ai/app/api/download/00409ca5-1e28-43c6-9f10-6cccf47178a3,female",
-    "faces/011094.jpg,https://wao.ai/app/api/download/0060b2fa-6f7d-49c3-a965-ab82fe8a9475,female"
+  "faces/010260.jpg,https://wao.ai/app/api/download/0031a48c-635a-4ea9-833f-9381c88836d2,female",
+  "faces/010265.jpg,https://wao.ai/app/api/download/00409ca5-1e28-43c6-9f10-6cccf47178a3,female",
+  "faces/011094.jpg,https://wao.ai/app/api/download/0060b2fa-6f7d-49c3-a965-ab82fe8a9475,female",
 ]
 
 describe.skip("Create a new", () => {

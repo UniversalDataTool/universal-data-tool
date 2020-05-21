@@ -40,7 +40,6 @@ export default ({ value, onChange }) => {
       window.removeEventListener("keydown", listener)
     }
   }, [editing, newValue, onChange])
-
   useEffect(() => {
     if (!newValue) return
     if (editing) {
@@ -51,7 +50,6 @@ export default ({ value, onChange }) => {
         },
         value === newValue ? SAVE_WAIT * 5 : SAVE_WAIT
       )
-
       return () => clearTimeout(timeout)
     } else {
       return () => {}

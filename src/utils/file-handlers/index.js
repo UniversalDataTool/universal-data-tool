@@ -22,7 +22,7 @@ export default () => {
   useServer(file, setFile)
 
   // Auth/Cloud
-  useAWSCognito({ file, setFile })
+  useAWSCognito({ file })
 
   // Telemetry
   useFileTelemetry(file && file.content)

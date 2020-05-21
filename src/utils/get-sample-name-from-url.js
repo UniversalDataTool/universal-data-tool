@@ -22,6 +22,11 @@ export default (sample) => {
         `.*\\/(([^\\/\\\\&\\?]*)\\.([a-zA-Z0-9]*))(\\?|$)`
       )
     }
+    if (!isEmpty(sample.textUrl)) {
+      sampleName = decodeURI(sample.textUrl).match(
+        `.*\\/(([^\\/\\\\&\\?]*)\\.([a-zA-Z0-9]*))(\\?|$)`
+      )
+    }
   }
   return sampleName
 }
