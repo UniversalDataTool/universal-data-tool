@@ -8,7 +8,9 @@ export default (file, changeFile) => {
   if (!recentItems) recentItems = []
   useEffect(() => {
     if (!file || file.fileName === "unnamed") return
-    if(datasetHelper.getFileDifferences(oldRecentItems.current, recentItems).any){
+    if (
+      datasetHelper.getFileDifferences(oldRecentItems.current, recentItems).any
+    ) {
       oldRecentItems.current = recentItems
       return
     }

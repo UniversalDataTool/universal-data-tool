@@ -379,13 +379,17 @@ export default ({ file, open, onClose, onAddSamples, onChangeFile }) => {
                         value="keepAnnotation"
                         control={<Radio />}
                         label="Keep annotations"
-                        checked={configImport.annotationToKeep === "keepAnnotation"}
+                        checked={
+                          configImport.annotationToKeep === "keepAnnotation"
+                        }
                       />
                       <FormControlLabel
                         value="dontKeepAnnotation"
                         control={<Radio />}
                         label="Don't"
-                        checked={configImport.annotationToKeep === "dontKeepAnnotation"}
+                        checked={
+                          configImport.annotationToKeep === "dontKeepAnnotation"
+                        }
                       />
                     </RadioGroup>
                   </FormControl>

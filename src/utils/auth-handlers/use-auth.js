@@ -39,14 +39,14 @@ export const AuthProvider = ({ children }) => {
 
   const contextValue = useMemo(
     () => ({
-        authProvider: handler.authProvider,
-        ...(handler.getState ? handler.getState() : {}),
-        // TODO remove setUser
-        setUser: handler.setUser,
-        logout: handler.logout,
-        login: handler.login,
-      }
-    ),[handler,handler.hasChanged,handler.isLoggedIn]
+      authProvider: handler.authProvider,
+      ...(handler.getState ? handler.getState() : {}),
+      // TODO remove setUser
+      setUser: handler.setUser,
+      logout: handler.logout,
+      login: handler.login,
+    }),
+    [handler, handler.hasChanged, handler.isLoggedIn]
   )
 
   return (

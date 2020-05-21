@@ -7,41 +7,41 @@ import { setIn } from "seamless-immutable"
 
 export const getTextFromUrl = async (urlSource) => {
   var proxyUrl = "https://cors-anywhere.herokuapp.com/"
-    var response
-    var url
-    url = proxyUrl + urlSource
-    response = await fetch(url, {
-      method: "GET",
-    }).catch((error) => {
-      console.log("Looks like there was a problem: \n", error)
-    })
-    const text = await response.text()
-    return text
+  var response
+  var url
+  url = proxyUrl + urlSource
+  response = await fetch(url, {
+    method: "GET",
+  }).catch((error) => {
+    console.log("Looks like there was a problem: \n", error)
+  })
+  const text = await response.text()
+  return text
 }
 export const getTextfromSample = async (sample) => {
   var text = ""
-   if (isEmpty(sample.document)){
-      if(!isEmpty(sample.textUrl)){
-        text = await this.getTextFromUrl(sample.textUrl)
-      }
-   }else{
-     text = sample.document
-   }
-   return text
+  if (isEmpty(sample.document)) {
+    if (!isEmpty(sample.textUrl)) {
+      text = await this.getTextFromUrl(sample.textUrl)
+    }
+  } else {
+    text = sample.document
+  }
+  return text
 }
-export const getSampleName = (sample,indexSample) => {
+export const getSampleName = (sample, indexSample) => {
   var sampleName
-    sampleName = getSampleNameFromURL(sample)
-    if(isEmpty(sampleName))
-      sampleName = [
-        sample.document,
-        "sample" + indexSample.toString() + ".txt",
-        "sample",
-        "txt",
-      ]
-    if (!isEmpty(sample.sampleName))
-      sampleName = setIn(sampleName,[1],sample.sampleName)
-    return sampleName
+  sampleName = getSampleNameFromURL(sample)
+  if (isEmpty(sampleName))
+    sampleName = [
+      sample.document,
+      "sample" + indexSample.toString() + ".txt",
+      "sample",
+      "txt",
+    ]
+  if (!isEmpty(sample.sampleName))
+    sampleName = setIn(sampleName, [1], sample.sampleName)
+  return sampleName
 }
 
 export const getSampleUrl = (sample) => {
@@ -56,7 +56,7 @@ export const getSampleUrl = (sample) => {
 }
 
 export const constructSample = (sampleName, url, annotation) => {
-  // TODO add logic for txt file 
+  // TODO add logic for txt file
   var type = RecognizeFileExtension(url)
   if (type === "Image") {
     return {
@@ -96,7 +96,7 @@ export const getSampleWithName = (dataset, sampleName) => {
     if (!isEmpty(samples[i])) {
       var nameToSearch = getSampleNameFromURL(samples[i])
       if (!isEmpty(samples[i].sampleName)) {
-        nameToSearch = setIn(nameToSearch,[1],samples[i].sampleName)
+        nameToSearch = setIn(nameToSearch, [1], samples[i].sampleName)
       }
       if (nameToSearch[1] === sampleName) {
         return samples[i]
@@ -136,14 +136,17 @@ export const renameSampleFromUrl = (dataset, sampleToChange, sampleName) => {
   var boolName = true
   var v = 1
   while (boolName) {
-    var sampletocompare1 = getSampleWithThisSampleName(dataset,sampleName[1])
+    var sampletocompare1 = getSampleWithThisSampleName(dataset, sampleName[1])
     if (
       sampletocompare1 !== null &&
       getSampleUrl(sampletocompare1) !== getSampleUrl(sampleToChange)
     ) {
       if (isEmpty(sampleName[2].match("(.*)\\([0-9]*\\)$"))) {
-        sampleName = setIn(sampleName,[1],
-          sampleName[2] + "(" + v.toString() + ")." + sampleName[3])
+        sampleName = setIn(
+          sampleName,
+          [1],
+          sampleName[2] + "(" + v.toString() + ")." + sampleName[3]
+        )
       } else {
         sampleName[1] =
           sampleName[2].match("(.*)\\([0-9]*\\)$")[1] +
@@ -190,10 +193,10 @@ export const eraseAnnotationAllSamples = (samples) => {
 }
 export const eraseAnnotationOneSample = (sample) => {
   let Newsample = sample
-    if (!isEmpty(Newsample.annotation)) {
-      delete Newsample["annotation"]
-    }
-    return Newsample
+  if (!isEmpty(Newsample.annotation)) {
+    delete Newsample["annotation"]
+  }
+  return Newsample
 }
 
 export const concatSample = (actualSamples, newSamples, annotationToKeep) => {

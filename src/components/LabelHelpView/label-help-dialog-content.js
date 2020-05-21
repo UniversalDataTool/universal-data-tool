@@ -61,7 +61,7 @@ export default () => {
     if (myCredits === null || myCredits === undefined) {
       loadMyCredits(dataset)
     }
-  }, [myCredits,loadMyCredits,dataset])
+  }, [myCredits, loadMyCredits, dataset])
 
   useEffect(() => {
     if (!collabUrl) return
@@ -80,7 +80,7 @@ export default () => {
       })
     }
     loadJob()
-  }, [collabUrl, fromConfig,dataset.labelHelp])
+  }, [collabUrl, fromConfig, dataset.labelHelp])
 
   if (!labelHelpEnabled)
     return (

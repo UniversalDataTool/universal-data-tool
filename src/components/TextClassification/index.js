@@ -24,18 +24,20 @@ export const TextClassification = (props) => {
       typeof l === "string" ? { id: l, description: l, displayName: l } : l
     )
     .map((l) => (!l.displayName ? { ...l, displayName: l.id } : l))
-  
-    const [textToShow, changeTextToShow] = useState("")
-    const oldText = useRef()
-    useEffect(() =>{
-      if(oldText.current !== textToShow){
-        datasetHelper.getTextfromSample(props.samples[currentSampleIndex]).then((result) => {
+
+  const [textToShow, changeTextToShow] = useState("")
+  const oldText = useRef()
+  useEffect(() => {
+    if (oldText.current !== textToShow) {
+      datasetHelper
+        .getTextfromSample(props.samples[currentSampleIndex])
+        .then((result) => {
           changeTextToShow(result)
         })
-        oldText.current= textToShow
-      }  
-    },[props.samples,currentSampleIndex,textToShow])
-  
+      oldText.current = textToShow
+    }
+  }, [props.samples, currentSampleIndex, textToShow])
+
   return (
     <SampleContainer
       {...props.containerProps}

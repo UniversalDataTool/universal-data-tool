@@ -42,18 +42,18 @@ export default (file) => {
 
   function createOrReplaceImages(file) {
     if (!isEmpty(file.content.samples)) {
-      file.content.samples.forEach(async (element,index) => {
+      file.content.samples.forEach(async (element, index) => {
         try {
           var blob
           if (!isEmpty(datasetHelper.getSampleUrl(element))) {
             blob = await fetchAFile(element)
-          } else if (!isEmpty(element.document)||!isEmpty(element.textUrl)) {
+          } else if (!isEmpty(element.document) || !isEmpty(element.textUrl)) {
             blob = await datasetHelper.getTextfromSample(element)
           }
 
           let imageOrVideoName
           if (isEmpty(element.sampleName)) {
-            imageOrVideoName = datasetHelper.getSampleName(element,index)[1]
+            imageOrVideoName = datasetHelper.getSampleName(element, index)[1]
           } else {
             imageOrVideoName = element.sampleName
           }
@@ -71,11 +71,7 @@ export default (file) => {
 
   if (fileNameExist(file)) {
     var dataset = file.content
-    file = setIn(
-      file,
-      ["content"],
-      datasetHelper.setSamplesName(dataset)
-    )
+    file = setIn(file, ["content"], datasetHelper.setSamplesName(dataset))
     var json = JSON.stringify(file)
     createOrReplaceProjectFile(file)
     createOrReplaceAnnotations(file, json)
