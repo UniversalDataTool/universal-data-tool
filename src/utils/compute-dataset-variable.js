@@ -1,15 +1,5 @@
 export default (dataset, varName) => {
   let fields = (dataset.interface || {}).fields || []
-  const totalLabels = fields.reduce(
-    (acc, f) =>
-      f.interface.type !== "data_entry"
-        ? acc
-        : acc + (f.interface.surveyjs.questions[0].choices || []).length,
-    0
-  )
-  const totalBoundingBoxes = fields.filter(
-    (f) => f.interface.type === "image_segmentation"
-  ).length
 
   switch (varName) {
     case "sample_count":
@@ -29,6 +19,7 @@ export default (dataset, varName) => {
             f.interface.surveyjs.questions[0].type === "text"
         ).length
       }
+      break
     case "number_of_classifications":
       return dataset.interface.labels.length
     default:
