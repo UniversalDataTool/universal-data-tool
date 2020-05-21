@@ -34,6 +34,7 @@ export default (dataset, varName) => {
             dataset.interface.type
         )
       }
+      break
     case "number_of_classifications":
       return dataset.interface.labels.length
     default:
