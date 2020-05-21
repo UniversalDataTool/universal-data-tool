@@ -94,9 +94,9 @@ export const getSampleWithName = (dataset, sampleName) => {
   const { samples } = dataset
   for (var i = 0; i < samples.length; i++) {
     if (!isEmpty(samples[i])) {
-      const nameToSearch = getSampleNameFromURL(samples[i])
+      var nameToSearch = getSampleNameFromURL(samples[i])
       if (!isEmpty(samples[i].sampleName)) {
-        nameToSearch[1] = setIn(nameToSearch,[1],samples[i].sampleName)
+        nameToSearch = setIn(nameToSearch,[1],samples[i].sampleName)
       }
       if (nameToSearch[1] === sampleName) {
         return samples[i]
@@ -123,7 +123,7 @@ export const addNamesToSamples = (dataset) => {
       ]
     } else {
       sampleName = getSampleNameFromURL(oldsample)
-      sampleName = renameSampleFromUrl(dataset.samples, oldsample, sampleName)
+      sampleName = renameSampleFromUrl(dataset, oldsample, sampleName)
     }
     oldsample = setIn(oldsample, ["sampleName"], sampleName[1])
     dataset = setIn(dataset, ["samples", i], oldsample)
@@ -132,11 +132,11 @@ export const addNamesToSamples = (dataset) => {
 }
 export const setSamplesName = addNamesToSamples
 
-export const renameSampleFromUrl = (samples, sampleToChange, sampleName) => {
+export const renameSampleFromUrl = (dataset, sampleToChange, sampleName) => {
   var boolName = true
   var v = 1
   while (boolName) {
-    var sampletocompare1 = getSampleWithThisSampleName(sampleName[1], samples)
+    var sampletocompare1 = getSampleWithThisSampleName(dataset,sampleName[1])
     if (
       sampletocompare1 !== null &&
       getSampleUrl(sampletocompare1) !== getSampleUrl(sampleToChange)

@@ -25,7 +25,7 @@ export const TextClassification = (props) => {
     )
     .map((l) => (!l.displayName ? { ...l, displayName: l.id } : l))
   
-    const [textToShow, changeTextToShow] = useState()
+    const [textToShow, changeTextToShow] = useState("")
     const oldText = useRef()
     useEffect(() =>{
       if(oldText.current !== textToShow){

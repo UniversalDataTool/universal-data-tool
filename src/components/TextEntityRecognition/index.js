@@ -49,18 +49,15 @@ const entitySequenceToSimpleSeq = (doc, entSeq) => {
 export const TextEntityRecognition = (props) => {
   const [currentSampleIndex, changeCurrentSampleIndex] = useState(0)
   const [textToShow, changeTextToShow] = useState("")
-  const oldText = useRef()
-  useEffect(() =>{
-    if(oldText.current !== textToShow){
-      datasetHelper.getTextfromSample(props.samples[currentSampleIndex]).then((result) => {
-        if(result !== "")
-        changeTextToShow(result)
-        console.log(result)
-        console.log(textToShow)
-      })
-      oldText.current= textToShow
-    }  
-  },[props.samples,currentSampleIndex,textToShow])
+    const oldText = useRef()
+    useEffect(() =>{
+      if(oldText.current !== textToShow){
+        datasetHelper.getTextfromSample(props.samples[currentSampleIndex]).then((result) => {
+          changeTextToShow(result)
+        })
+        oldText.current= textToShow
+      }  
+    },[props.samples,currentSampleIndex,textToShow])
   
   const initialSequence = props.samples[currentSampleIndex].annotation
     ? entitySequenceToSimpleSeq(
