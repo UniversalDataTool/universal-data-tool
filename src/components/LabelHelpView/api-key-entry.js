@@ -45,7 +45,7 @@ export default () => {
       >
         <TextField
           onChange={(e) => setTextFieldValue(e.target.value)}
-          data-cypress="label-help-api-key"
+          className="label-help-api-key-text-field"
           variant="outlined"
           label="API Key"
         />
