@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 
 import Header from "../Header"
+import AceEditor from "react-ace"
 import EditableTitleText from "./EditableTitleText.js"
 import SamplesView from "../SamplesView"
 import InterfacePage from "../InterfacePage"

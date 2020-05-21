@@ -6,6 +6,7 @@ import { ToastProvider } from "./components/Toasts"
 import useElectron from "./utils/use-electron.js"
 import { AppConfigProvider } from "./components/AppConfig"
 import { AuthProvider } from "./utils/auth-handlers/use-auth.js"
+import { LabelHelpProvider } from "./components/LabelHelpView"
 import "./App.css"
 
 export const App = () => {
