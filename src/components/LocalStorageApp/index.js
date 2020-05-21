@@ -68,6 +68,10 @@ export default () => {
     })
   )
 
+  const onChangeDataset = useEventCallback((newOHA) => {
+    setFile(setIn(file, ["content"], newOHA))
+  })
+
   return (
     <>
       <FileContext.Provider value={{ file, setFile }}>
@@ -114,9 +118,7 @@ export default () => {
                 selectedBrush={selectedBrush}
                 inSession={inSession}
                 dataset={file.content}
-                onChangeDataset={(newOHA) => {
-                  setFile(setIn(file, ["content"], newOHA))
-                }}
+                onChangeDataset={onChangeDataset}
                 onChangeFile={setFile}
                 authConfig
                 recentItems={recentItems}

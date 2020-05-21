@@ -91,6 +91,7 @@
     "jac-format": "^1.1.3",
     "js-md5": "^0.7.3",
     "moment": "^2.24.0",
+    "nan": "^2.14.1",
     "posthog-js": "^1.0.4",
     "react-ace": "^7.0.4",
     "react-data-table-component": "^6.2.2",
