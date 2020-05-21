@@ -1,0 +1,19 @@
+describe("Create a Label Help ", () => {
+  it("should be able to use label help", () => {
+    cy.visit("http://localhost:6001")
+
+    cy.contains("Start from Template").click()
+    cy.contains("Image Classification").click()
+    cy.contains("Samples").click()
+    cy.contains("Import").click()
+    cy.contains("Import Toy Dataset").click()
+    cy.get('[data-import-toy-dataset-name="Cats"]').click()
+    cy.contains("Label").click()
+    cy.contains("Label Help").click()
+    cy.get('[data-cypress="label-help-api-key"]').type(
+      "7d773e8566102c1f971e1b52254e1749"
+    )
+    cy.contains("Save").click()
+    cy.contains("Start Label Help").click()
+  })
+})

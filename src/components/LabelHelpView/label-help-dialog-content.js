@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { styled } from "@material-ui/core/styles"
 import Grid from "@material-ui/core/Grid"
 import Box from "@material-ui/core/Box"
@@ -18,6 +18,9 @@ import Divider from "@material-ui/core/Divider"
 import { useAppConfig } from "../AppConfig"
 import { useLabelHelp } from "./"
 import * as colors from "@material-ui/core/colors"
+import { useActiveDataset } from "../FileContext"
+import CircularProgress from "@material-ui/core/CircularProgress"
+import { setIn } from "seamless-immutable"
 
 const Container = styled("div")({
   fontVariantNumeric: "tabular-nums",
@@ -37,16 +40,46 @@ const preciseUSDFormatter = new Intl.NumberFormat("en-US", {
 const steps = ["setup", "running", "completed"]
 
 export default () => {
-  const [activeStep, setActiveStep] = useState("setup")
   const { fromConfig, setInConfig } = useAppConfig()
   const {
     labelHelpEnabled,
     labelHelpError,
+    loadMyCredits,
     variables,
     totalCost,
     formulaFunc,
     myCredits,
   } = useLabelHelp()
+  const [error, setError] = useState()
+  const { dataset, setDataset } = useActiveDataset()
+
+  const [labelHelpInfo, setLabelHelpInfo] = useState(dataset.labelHelp || {})
+  const collabUrl = labelHelpInfo.url
+
+  useEffect(() => {
+    if (myCredits === null || myCredits === undefined) {
+      loadMyCredits(dataset)
+    }
+  }, [myCredits])
+
+  useEffect(() => {
+    if (!collabUrl) return
+    const interval = setInterval(async () => {
+      const response = await fetch(
+        `https://labelhelp.universaldatatool.com/api/job?custom_id=${encodeURIComponent(
+          collabUrl
+        )}&api_key=${fromConfig("labelhelp.apikey")}`
+      ).then((r) => r.json())
+      // response contains { progress, status }
+      setLabelHelpInfo({
+        ...dataset.labelHelp,
+        response,
+      })
+    }, 5000)
+    return () => {
+      clearInterval(interval)
+    }
+  }, [collabUrl])
 
   if (!labelHelpEnabled)
     return (
@@ -58,6 +91,12 @@ export default () => {
       </Container>
     )
 
+  const activeStep = !collabUrl
+    ? "setup"
+    : labelHelpInfo.progress === 1
+    ? "completed"
+    : "running"
+
   return (
     <Container>
       <Stepper activeStep={steps.indexOf(activeStep)}>
@@ -67,6 +106,7 @@ export default () => {
           </Step>
         ))}
       </Stepper>
+      {error && <Box color={colors.red[600]}>{error}</Box>}
       {activeStep === "setup" ? (
         <Box>
           <Table>
@@ -141,13 +181,44 @@ export default () => {
               color={myCredits < totalCost ? "primary" : "none"}
               style={{ marginLeft: 12 }}
               variant="outlined"
+              href="https://labelhelp.universaldatatool.com#addcredits"
             >
               Add Credits
             </Button>
             <Button
+              onClick={async () => {
+                setError(null)
+                const response = await fetch(
+                  "https://labelhelp.universaldatatool.com/api/submit",
+                  {
+                    method: "POST",
+                    body: JSON.stringify({
+                      dataset,
+                      price: totalCost,
+                      api_key: fromConfig("labelhelp.apikey"),
+                    }),
+                    headers: { "Content-Type": "application/json" },
+                  }
+                )
+                  .then((r) => r.json())
+                  .catch((e) => {
+                    setError(e.toString())
+                    return null
+                  })
+                if (!response) {
+                  setError("Empty response from server")
+                  return null
+                }
+
+                setDataset(
+                  setIn(dataset, ["labelHelp"], {
+                    url: response.custom_id,
+                  })
+                )
+              }}
               style={{ marginLeft: 12 }}
               variant="outlined"
-              color="primary"
+              color={myCredits >= totalCost ? "primary" : "none"}
             >
               Start Label Help
             </Button>
@@ -155,26 +226,34 @@ export default () => {
         </Box>
       ) : activeStep === "running" ? (
         <Box>
-          <Table>
-            <TableBody>
-              <TableRow>
-                <TableCell>Percent Complete</TableCell>
-                <TableCell>72%</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Budget Used</TableCell>
-                <TableCell>$45 / $75</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Remaining Samples</TableCell>
-                <TableCell>120</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Unsynced Samples</TableCell>
-                <TableCell>32</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
+          {labelHelpInfo.loaded ? (
+            <Table>
+              <TableBody>
+                <TableRow>
+                  <TableCell>Percent Complete</TableCell>
+                  <TableCell>{labelHelpInfo.progress.toFixed(1)}%</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Budget Used</TableCell>
+                  <TableCell>
+                    ${labelHelpInfo.progress * labelHelpInfo.pice} / $75
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Remaining Samples</TableCell>
+                  <TableCell>120</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Unsynced Samples</TableCell>
+                  <TableCell>32</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          ) : (
+            <Box padding={8} textAlign="center">
+              <CircularProgress size={100} />
+            </Box>
+          )}
           <Box display="flex" marginTop={2} justifyContent="flex-end">
             <Button
               variant="outlined"

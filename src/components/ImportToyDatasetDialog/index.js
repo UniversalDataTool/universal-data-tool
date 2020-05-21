@@ -53,6 +53,7 @@ const ImportToyDatasetDialog = ({ onClose, onAddSamples, open }) => {
                 <TableCell>{dataset.size}</TableCell>
                 <TableCell>
                   <StyledButton
+                    data-import-toy-dataset-name={dataset.name}
                     onClick={async () => {
                       onAddSamples(await getSamples(dataset))
                     }}

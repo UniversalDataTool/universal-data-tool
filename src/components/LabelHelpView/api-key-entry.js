@@ -45,6 +45,7 @@ export default () => {
       >
         <TextField
           onChange={(e) => setTextFieldValue(e.target.value)}
+          data-cypress="label-help-api-key"
           variant="outlined"
           label="API Key"
         />
@@ -58,7 +59,13 @@ export default () => {
             setVerifying(true)
             try {
               // TODO check with labelhelp server and make sure api key is valid
-              await new Promise((resolve) => setTimeout(resolve, 1000))
+              const response = await fetch(
+                "https://labelhelp.universaldatatool.com/api/me",
+                {
+                  headers: { apikey: textFieldValue },
+                }
+              )
+              if (response.status !== 200) throw new Error(response.toString())
             } catch (e) {
               setError(e.toString())
               setVerifying(false)
