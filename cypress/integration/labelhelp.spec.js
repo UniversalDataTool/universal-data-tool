@@ -10,6 +10,8 @@ describe("Create a Label Help ", () => {
     cy.get('[data-import-toy-dataset-name="Cats"]').click()
     cy.contains("Label").click()
     cy.contains("Label Help").click()
+    // This is a special api key that triggers mock functionality from the server
+    // e.g. it always has 100 credits
     cy.get('[data-cypress="label-help-api-key"]').type(
       "7d773e8566102c1f971e1b52254e1749"
     )
