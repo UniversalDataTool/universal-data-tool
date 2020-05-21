@@ -1,7 +1,5 @@
-import React, { createContext, useContext, useMemo, useState } from "react"
+import React, { createContext, useMemo, useState } from "react"
 import { styled } from "@material-ui/core/styles"
-import Box from "@material-ui/core/Box"
-import Grid from "@material-ui/core/Grid"
 import APIKeyEntry from "./api-key-entry.js"
 import PaperContainer from "../PaperContainer"
 import LabelHelpDialogContent from "./label-help-dialog-content"

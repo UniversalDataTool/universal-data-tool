@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react"
 import { styled } from "@material-ui/core/styles"
-import Grid from "@material-ui/core/Grid"
 import Box from "@material-ui/core/Box"
 import Button from "@material-ui/core/Button"
 import Stepper from "@material-ui/core/Stepper"
@@ -11,10 +10,8 @@ import StepLabel from "@material-ui/core/StepLabel"
 import Table from "@material-ui/core/Table"
 import TableBody from "@material-ui/core/TableBody"
 import TableCell from "@material-ui/core/TableCell"
-import TableContainer from "@material-ui/core/TableContainer"
 import TableHead from "@material-ui/core/TableHead"
 import TableRow from "@material-ui/core/TableRow"
-import Divider from "@material-ui/core/Divider"
 import { useAppConfig } from "../AppConfig"
 import { useLabelHelp } from "./"
 import * as colors from "@material-ui/core/colors"
@@ -64,7 +61,7 @@ export default () => {
     if (myCredits === null || myCredits === undefined) {
       loadMyCredits(dataset)
     }
-  }, [myCredits])
+  }, [myCredits, loadMyCredits, dataset])
 
   useEffect(() => {
     if (!collabUrl) return
@@ -83,7 +80,7 @@ export default () => {
       })
     }
     loadJob()
-  }, [collabUrl])
+  }, [collabUrl, fromConfig, dataset.labelHelp])
 
   if (!labelHelpEnabled)
     return (

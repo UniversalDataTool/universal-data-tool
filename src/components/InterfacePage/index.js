@@ -3,8 +3,6 @@
 import React from "react"
 import ConfigureInterface, { Heading } from "../ConfigureInterface"
 import PaperContainer from "../PaperContainer"
-import MuiButton from "@material-ui/core/Button"
-import { styled } from "@material-ui/core/styles"
 import AdvancedOptionsView from "../AdvancedOptionsView"
 
 export default ({ dataset, onChange, onClickEditJSON, onClearLabelData }) => {

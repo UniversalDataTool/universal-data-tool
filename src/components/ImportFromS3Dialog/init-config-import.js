@@ -1,7 +1,7 @@
 import checkInterfaceAndsamples from "./check-interface-and-sample-type"
 export default (file) => {
   return {
-    annotationToKeep: "both",
+    annotationToKeep: "keepAnnotation",
     typeOfFileToLoad: checkInterfaceAndsamples(["Image", "Empty"], file)
       ? "Image"
       : checkInterfaceAndsamples(["Video", "Empty"], file)

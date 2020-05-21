@@ -5,13 +5,42 @@ import RecognizeFileExtension from "./RecognizeFileExtension"
 import isEmpty from "lodash/isEmpty"
 import { setIn } from "seamless-immutable"
 
-export const getSampleName = (sample) => {
-  var sampleName
-  if (!isEmpty(sample.sampleName)) {
-    sampleName = sample.sampleName
+export const getTextFromUrl = async (urlSource) => {
+  var proxyUrl = "https://cors-anywhere.herokuapp.com/"
+  var response
+  var url
+  url = proxyUrl + urlSource
+  response = await fetch(url, {
+    method: "GET",
+  }).catch((error) => {
+    console.log("Looks like there was a problem: \n", error)
+  })
+  const text = await response.text()
+  return text
+}
+export const getTextfromSample = async (sample) => {
+  var text = ""
+  if (isEmpty(sample.document)) {
+    if (!isEmpty(sample.textUrl)) {
+      text = await this.getTextFromUrl(sample.textUrl)
+    }
   } else {
-    sampleName = getSampleNameFromURL(sample)[1]
+    text = sample.document
   }
+  return text
+}
+export const getSampleName = (sample, indexSample) => {
+  var sampleName
+  sampleName = getSampleNameFromURL(sample)
+  if (isEmpty(sampleName))
+    sampleName = [
+      sample.document,
+      "sample" + indexSample.toString() + ".txt",
+      "sample",
+      "txt",
+    ]
+  if (!isEmpty(sample.sampleName))
+    sampleName = setIn(sampleName, [1], sample.sampleName)
   return sampleName
 }
 
@@ -21,11 +50,13 @@ export const getSampleUrl = (sample) => {
     sample.videoUrl ||
     sample.audioUrl ||
     sample.pdfUrl ||
+    sample.textUrl ||
     undefined
   )
 }
 
 export const constructSample = (sampleName, url, annotation) => {
+  // TODO add logic for txt file
   var type = RecognizeFileExtension(url)
   if (type === "Image") {
     return {
@@ -63,9 +94,9 @@ export const getSampleWithName = (dataset, sampleName) => {
   const { samples } = dataset
   for (var i = 0; i < samples.length; i++) {
     if (!isEmpty(samples[i])) {
-      const nameToSearch = getSampleNameFromURL(samples[i])
-      if (typeof samples[i].sampleName !== "undefined") {
-        nameToSearch[1] = samples[i].sampleName
+      var nameToSearch = getSampleNameFromURL(samples[i])
+      if (!isEmpty(samples[i].sampleName)) {
+        nameToSearch = setIn(nameToSearch, [1], samples[i].sampleName)
       }
       if (nameToSearch[1] === sampleName) {
         return samples[i]
@@ -92,7 +123,7 @@ export const addNamesToSamples = (dataset) => {
       ]
     } else {
       sampleName = getSampleNameFromURL(oldsample)
-      sampleName = renameSampleFromUrl(dataset.samples, oldsample, sampleName)
+      sampleName = renameSampleFromUrl(dataset, oldsample, sampleName)
     }
     oldsample = setIn(oldsample, ["sampleName"], sampleName[1])
     dataset = setIn(dataset, ["samples", i], oldsample)
@@ -101,18 +132,21 @@ export const addNamesToSamples = (dataset) => {
 }
 export const setSamplesName = addNamesToSamples
 
-export const renameSampleFromUrl = (samples, sampleToChange, sampleName) => {
+export const renameSampleFromUrl = (dataset, sampleToChange, sampleName) => {
   var boolName = true
   var v = 1
   while (boolName) {
-    var sampletocompare1 = getSampleWithThisSampleName(sampleName[1], samples)
+    var sampletocompare1 = getSampleWithThisSampleName(dataset, sampleName[1])
     if (
       sampletocompare1 !== null &&
       getSampleUrl(sampletocompare1) !== getSampleUrl(sampleToChange)
     ) {
       if (isEmpty(sampleName[2].match("(.*)\\([0-9]*\\)$"))) {
-        sampleName[1] =
+        sampleName = setIn(
+          sampleName,
+          [1],
           sampleName[2] + "(" + v.toString() + ")." + sampleName[3]
+        )
       } else {
         sampleName[1] =
           sampleName[2].match("(.*)\\([0-9]*\\)$")[1] +
@@ -129,28 +163,47 @@ export const renameSampleFromUrl = (samples, sampleToChange, sampleName) => {
   }
   return sampleName
 }
-
-export const eraseAnnotation = (samples) => {
+export const projectHasDataFile = (typeProject) => {
+  if (
+    "text_entity_recognition" === typeProject ||
+    "text_classification" === typeProject
+  )
+    return "none"
+  if (
+    "video_segmentation" === typeProject ||
+    "image_classification" === typeProject ||
+    "image_segmentation" === typeProject ||
+    "audio_transcription" === typeProject ||
+    "composite" === typeProject ||
+    "data_entry" === typeProject
+  )
+    return "file"
+  return ""
+}
+export const eraseAnnotationAllSamples = (samples) => {
   var samplesWithoutAnnotation = []
   for (let i = 0; i < samples.length; i++) {
     let Newsample = samples[i]
     if (!isEmpty(Newsample.annotation)) {
-      Newsample = setIn(Newsample, ["annotation"], null)
+      delete Newsample["annotation"]
     }
     samplesWithoutAnnotation.push(Newsample)
   }
   return samplesWithoutAnnotation
 }
+export const eraseAnnotationOneSample = (sample) => {
+  let Newsample = sample
+  if (!isEmpty(Newsample.annotation)) {
+    delete Newsample["annotation"]
+  }
+  return Newsample
+}
 
 export const concatSample = (actualSamples, newSamples, annotationToKeep) => {
   var Tabsamples = actualSamples
-  if (annotationToKeep === "incoming") {
-    Tabsamples = eraseAnnotation(actualSamples)
-  }
-
   var Tabsamples2 = newSamples
-  if (annotationToKeep === "current") {
-    Tabsamples2 = eraseAnnotation(newSamples)
+  if (annotationToKeep === "dontKeepAnnotation") {
+    Tabsamples2 = eraseAnnotationAllSamples(newSamples)
   }
   var concatSamples = Tabsamples.concat(Tabsamples2)
   return concatSamples

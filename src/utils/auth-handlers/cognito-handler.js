@@ -1,4 +1,3 @@
-import isEmpty from "lodash/isEmpty"
 import Amplify, { Auth } from "aws-amplify"
 
 class CognitoHandler {
