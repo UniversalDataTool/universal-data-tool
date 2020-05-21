@@ -23,5 +23,6 @@ of datasets. All contributions are welcome and appreciated!
 
 * Hhh'watch this [video by one of our maintainers](https://vimeo.com/421285889) explaining how he starts working on a new feature
 * If you don't know [react](https://reactjs.org/), this is an [introduction video](https://egghead.io/courses/the-beginner-s-guide-to-react) that should get you up to speed.
+* Check out [Setup for Development](https://github.com/UniversalDataTool/universal-data-tool/wiki/Setup-for-Development) for instructions on how to run the project locally
 
 > Still feeling like: "hhh'what is going on?" Check out this [sweet guide to contributing to open-source](https://opensource.guide/how-to-contribute/)
