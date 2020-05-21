@@ -120,6 +120,7 @@ export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
         Amplify.configure(config)
       } catch (err) {
         addError("Invalid Cognito config: " + err.toString())
+        return
       }
 
       setAppConfig({

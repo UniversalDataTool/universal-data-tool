@@ -17,7 +17,7 @@ const workingInterfaces = [
   "data_entry",
 ]
 
-export default ({ file, setFile }) => {
+export default ({ file }) => {
   const { isLoggedIn, authProvider, authConfig } = useAuth()
 
   const lastObjectRef = useRef([])
