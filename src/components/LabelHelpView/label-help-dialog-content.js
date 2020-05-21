@@ -25,6 +25,10 @@ import { setIn } from "seamless-immutable"
 const Container = styled("div")({
   fontVariantNumeric: "tabular-nums",
 })
+const Link = styled("a")({
+  color: colors.blue[500],
+  textDecoration: "none",
+})
 
 const usdFormatter = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -54,7 +58,7 @@ export default () => {
   const { dataset, setDataset } = useActiveDataset()
 
   const [labelHelpInfo, setLabelHelpInfo] = useState(dataset.labelHelp || {})
-  const collabUrl = labelHelpInfo.url
+  const collabUrl = labelHelpInfo.url || (dataset.labelHelp || {}).url
 
   useEffect(() => {
     if (myCredits === null || myCredits === undefined) {
@@ -64,21 +68,21 @@ export default () => {
 
   useEffect(() => {
     if (!collabUrl) return
-    const interval = setInterval(async () => {
+    async function loadJob() {
       const response = await fetch(
         `https://labelhelp.universaldatatool.com/api/job?custom_id=${encodeURIComponent(
           collabUrl
         )}&api_key=${fromConfig("labelhelp.apikey")}`
       ).then((r) => r.json())
       // response contains { progress, status }
+      console.log({ response })
       setLabelHelpInfo({
         ...dataset.labelHelp,
-        response,
+        ...response,
+        loaded: true,
       })
-    }, 5000)
-    return () => {
-      clearInterval(interval)
     }
+    loadJob()
   }, [collabUrl])
 
   if (!labelHelpEnabled)
@@ -230,23 +234,27 @@ export default () => {
             <Table>
               <TableBody>
                 <TableRow>
-                  <TableCell>Percent Complete</TableCell>
-                  <TableCell>{labelHelpInfo.progress.toFixed(1)}%</TableCell>
+                  <TableCell>Status</TableCell>
+                  <TableCell>{labelHelpInfo.status}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>Budget Used</TableCell>
+                  <TableCell>Link</TableCell>
                   <TableCell>
-                    ${labelHelpInfo.progress * labelHelpInfo.pice} / $75
+                    <Link href={labelHelpInfo.url}>{labelHelpInfo.url}</Link>
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>Remaining Samples</TableCell>
-                  <TableCell>120</TableCell>
+                  <TableCell>Percent Complete</TableCell>
+                  <TableCell>{labelHelpInfo.progress.toFixed(1)}%</TableCell>
                 </TableRow>
-                <TableRow>
-                  <TableCell>Unsynced Samples</TableCell>
-                  <TableCell>32</TableCell>
-                </TableRow>
+                {labelHelpInfo.price && (
+                  <TableRow>
+                    <TableCell>Budget Used</TableCell>
+                    <TableCell>
+                      ${labelHelpInfo.progress * labelHelpInfo.price} / $75
+                    </TableCell>
+                  </TableRow>
+                )}
               </TableBody>
             </Table>
           ) : (
@@ -255,7 +263,8 @@ export default () => {
             </Box>
           )}
           <Box display="flex" marginTop={2} justifyContent="flex-end">
-            <Button
+            {/* TODO add stop early by calling /api/stop */}
+            {/* <Button
               variant="outlined"
               style={{
                 color: colors.red[500],
@@ -263,11 +272,12 @@ export default () => {
               }}
             >
               Stop Early
-            </Button>
+            </Button> */}
             <Box flexGrow={1} />
-            <Button variant="outlined" color="primary">
+            {/* TODO sync samples merges samples from link */}
+            {/* <Button variant="outlined" color="primary">
               Sync Samples
-            </Button>
+            </Button> */}
           </Box>
         </Box>
       ) : activeStep === "completed" ? (
@@ -278,25 +288,26 @@ export default () => {
                 <TableCell>Percent Complete</TableCell>
                 <TableCell>100%</TableCell>
               </TableRow>
-              <TableRow>
-                <TableCell>Total Cost</TableCell>
-                <TableCell>$75</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Unsynced Samples</TableCell>
-                <TableCell>32</TableCell>
-              </TableRow>
+              {labelHelpInfo.price && (
+                <TableRow>
+                  <TableCell>Total Cost</TableCell>
+                  <TableCell>
+                    {usdFormatter.format(labelHelpInfo.price)}
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
           <Box display="flex" marginTop={2} justifyContent="flex-end">
             <Button variant="outlined">Restart</Button>
-            <Button
+            {/* TODO sync samples merges samples from link */}
+            {/* <Button
               style={{ marginLeft: 12 }}
               variant="outlined"
               color="primary"
             >
               Sync Samples
-            </Button>
+            </Button> */}
           </Box>
         </Box>
       ) : null}

@@ -1,4 +1,4 @@
-import { useContext, useMemo, useState } from "react"
+import { useContext, useMemo, useState, useEffect } from "react"
 
 import useIsLabelOnlyMode from "../../utils/use-is-label-only-mode"
 import { useActiveDataset } from "../FileContext"
@@ -18,28 +18,34 @@ export const useLabelHelp = () => {
     loadMyCredits,
   } = useContext(LabelHelpContext)
   const { fromConfig } = useAppConfig()
+  const labelHelpDisabled = Boolean(fromConfig("labelhelp.disabled"))
+  const hasLabelHelpAPIKey = Boolean(fromConfig("labelhelp.apikey"))
 
-  if (fromConfig("labelhelp.disabled"))
+  useEffect(() => {
+    if (labelHelpDisabled || isLabelOnlyMode) return
+    if (!pricingConfig) loadPricingConfig()
+  }, [pricingConfig, isLabelOnlyMode, labelHelpDisabled])
+
+  if (labelHelpDisabled)
     return { labelHelpEnabled: false, labelHelpError: "Disabled in config" }
-  try {
-    const hasLabelHelpAPIKey = Boolean(fromConfig("labelhelp.apikey"))
-    if (isLabelOnlyMode) return { labelHelpEnabled: false }
-    if (!hasLabelHelpAPIKey && dataset.samples.length < 100)
-      return {
-        labelHelpEnabled: false,
-        labelHelpError: "Less than 100 samples",
-      }
-
-    if (!pricingConfig) {
-      loadPricingConfig()
-      return {
-        labelHelpEnabled: false,
-        labelHelpError: "No pricing config",
-      }
+  if (isLabelOnlyMode) return { labelHelpEnabled: false }
+  if (!hasLabelHelpAPIKey && dataset.samples.length < 100) {
+    return {
+      labelHelpEnabled: false,
+      labelHelpError: "Less than 100 samples",
     }
+  }
+  if (!pricingConfig) {
+    return {
+      labelHelpEnabled: false,
+      labelHelpError: "No pricing config",
+    }
+  }
 
+  try {
     const { formula, variables: variableDescriptions } =
       pricingConfig[dataset.interface.type] || {}
+
     if (!formula)
       return {
         labelHelpEnabled: false,
