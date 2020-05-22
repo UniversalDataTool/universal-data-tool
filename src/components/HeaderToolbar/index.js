@@ -18,6 +18,7 @@ import IconButton from "@material-ui/core/IconButton"
 import packageJSON from "../../../package.json"
 import BrushButton from "../BrushButton"
 import useAuth from "../../utils/auth-handlers/use-auth.js"
+import SlackIcon from './SlackIcon'
 
 const capitalize = (s) => {
   return s.charAt(0).toUpperCase() + s.slice(1)
@@ -156,12 +157,20 @@ const HeaderToolbar = ({
           </Button>
         )}
         {!isSmall && (
-          <IconButton
-            href="https://github.com/openhumanannotation/universal-data-tool"
-            className={c.headerButton}
-          >
-            <GithubIcon />
-          </IconButton>
+          <React.Fragment>
+            <IconButton
+              href="https://github.com/openhumanannotation/universal-data-tool"
+              className={c.headerButton}
+            >
+              <GithubIcon />
+            </IconButton>
+            <IconButton
+              href="https://join.slack.com/t/universaldatatool/shared_invite/zt-d8teykwi-iOSOUfxugKR~M4AJN6VL3g"
+              className={c.headerButton}
+            >
+              <SlackIcon />
+            </IconButton>
+          </React.Fragment>
         )}
       </Toolbar>
     </AppBar>
