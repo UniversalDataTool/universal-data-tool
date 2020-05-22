@@ -18,7 +18,7 @@ import IconButton from "@material-ui/core/IconButton"
 import packageJSON from "../../../package.json"
 import BrushButton from "../BrushButton"
 import useAuth from "../../utils/auth-handlers/use-auth.js"
-import SlackIcon from './SlackIcon'
+import SlackIcon from "./SlackIcon"
 
 const capitalize = (s) => {
   return s.charAt(0).toUpperCase() + s.slice(1)
