@@ -24,7 +24,8 @@ describe("AWS Cognito authentication", () => {
         cy.get("input[type=text]").each(($el, index, $list) => {
             if (index > 0) {
                 const credentialKey = `CYPRESS_AWS_COGNITO_${awsCredentials[index - 1]}`
-                const credential = Cypress.env(credentialKey)
+                const upperCaseCredentialKey = credentialKey.toUpperCase()
+                const credential = Cypress.env(upperCaseCredentialKey)
                 cy.get($el).type(credential)
             }
         })
@@ -39,9 +40,9 @@ describe("AWS Cognito authentication", () => {
     })
 
     it("should be able login to 'Cognito'", () => {
-        const username = Cypress.env("CYPRESS_AWS_COGNITO_username")
+        const username = Cypress.env("CYPRESS_AWS_COGNITO_USERNAME")
         cy.get("input[id=username]").type(username)
-        const password = Cypress.env("CYPRESS_AWS_COGNITO_password")
+        const password = Cypress.env("CYPRESS_AWS_COGNITO_PASSWORD")
         cy.get("input[id=password]").type(password)
         cy.contains("Sign In").click()
     })
