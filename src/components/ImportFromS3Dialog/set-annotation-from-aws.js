@@ -1,12 +1,12 @@
 import { setIn } from "seamless-immutable"
-import * as datasetHelper from "../../utils//dataset-helper"
 import isEmpty from "lodash/isEmpty"
+import concatSample from "../../utils/dataset-helper/concat-sample"
 export default (file, json, configImport) => {
   var contentOldFile = file.content
   contentOldFile = setIn(
     contentOldFile,
     ["samples"],
-    datasetHelper.concatSample(
+    concatSample(
       file.content.samples,
       json.content.samples,
       configImport.annotationToKeep

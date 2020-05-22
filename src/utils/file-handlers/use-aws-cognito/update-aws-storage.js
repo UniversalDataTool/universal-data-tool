@@ -1,15 +1,17 @@
 import { Storage } from "aws-amplify"
 import isEmpty from "lodash/isEmpty"
-import * as datasetHelper from "../../dataset-helper"
 import { setIn } from "seamless-immutable"
-
+import getSampleUrl from "../../dataset-helper/get-sample-url"
+import getTextfromSample from "../../dataset-helper/get-text-from-sample"
+import addNamesToSamples from "../../dataset-helper/add-names-to-samples"
+import getSampleName from "../../dataset-helper/get-sample-name"
 export default (file) => {
   async function fetchAFile(element) {
     var proxyUrl = "https://cors-anywhere.herokuapp.com/"
     var response
     var url
-    if (datasetHelper.getSampleUrl(element) !== undefined)
-      url = proxyUrl + datasetHelper.getSampleUrl(element)
+    if (getSampleUrl(element) !== undefined)
+      url = proxyUrl + getSampleUrl(element)
     response = await fetch(url, {
       method: "GET",
       headers: {
@@ -45,15 +47,15 @@ export default (file) => {
       file.content.samples.forEach(async (element, index) => {
         try {
           var blob
-          if (!isEmpty(datasetHelper.getSampleUrl(element))) {
+          if (!isEmpty(getSampleUrl(element))) {
             blob = await fetchAFile(element)
           } else if (!isEmpty(element.document) || !isEmpty(element.textUrl)) {
-            blob = await datasetHelper.getTextfromSample(element)
+            blob = await getTextfromSample(element)
           }
 
           let imageOrVideoName
           if (isEmpty(element.sampleName)) {
-            imageOrVideoName = datasetHelper.getSampleName(element, index)[1]
+            imageOrVideoName = getSampleName(element, index)[1]
           } else {
             imageOrVideoName = element.sampleName
           }
@@ -71,7 +73,7 @@ export default (file) => {
 
   if (fileNameExist(file)) {
     var dataset = file.content
-    file = setIn(file, ["content"], datasetHelper.setSamplesName(dataset))
+    file = setIn(file, ["content"], addNamesToSamples(dataset))
     var json = JSON.stringify(file)
     createOrReplaceProjectFile(file)
     createOrReplaceAnnotations(file, json)

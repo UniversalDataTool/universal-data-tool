@@ -1,16 +1,14 @@
 // @flow
 import { useEffect, useRef } from "react"
 import { useLocalStorage } from "react-use"
-import * as datasetHelper from "../../utils//dataset-helper"
+import getFileDifferences from "../dataset-helper/get-files-differences"
 export default (file, changeFile) => {
   let [recentItems, changeRecentItems] = useLocalStorage("recentItems", [])
   const oldRecentItems = useRef([])
   if (!recentItems) recentItems = []
   useEffect(() => {
     if (!file || file.fileName === "unnamed") return
-    if (
-      datasetHelper.getFileDifferences(oldRecentItems.current, recentItems).any
-    ) {
+    if (getFileDifferences(oldRecentItems.current, recentItems).any) {
       oldRecentItems.current = recentItems
       return
     }

@@ -20,6 +20,6 @@ export default (UrlOfAFile) => {
   if (fileExtension === "mp4" || fileExtension === "mkv") typeOfFile = "Video"
   if (fileExtension === "mp3") typeOfFile = "Audio"
   if (fileExtension === "pdf") typeOfFile = "PDF"
-  if (fileExtension === "txt") typeOfFile = "Texte"
+  if (fileExtension === "txt") typeOfFile = "Text"
   return typeOfFile
 }

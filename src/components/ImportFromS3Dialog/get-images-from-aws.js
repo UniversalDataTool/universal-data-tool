@@ -36,7 +36,7 @@ async function setUrl(result, configImport) {
       return { pdfUrl: `${result}` }
     } else if (
       RecognizeFileExtension(result) === configImport.typeOfFileToLoad &&
-      configImport.typeOfFileToLoad === "Texte"
+      configImport.typeOfFileToLoad === "Text"
     ) {
       return { textUrl: `${result}` }
     }
@@ -48,12 +48,13 @@ export default async (result, folderToFetch, configImport, authConfig) => {
   for (let i = 0; i < result.length; i++) {
     if (result[i].key.match(`(${folderToFetch}/data).*(\\.).*`)) {
       await Storage.get(result[i].key, {
-        expires: 24 * 60 * 60 * 2000,
+        expires: 24 * 60 * 60,
         level: "private",
       })
         .then(async (result) => {
           var url = await setUrl(result, configImport)
-          if (!isEmpty(url)) samples.push(url)
+          if (isEmpty(url)) return
+          samples.push(url)
         })
         .catch((err) => {
           console.log("error getting link for s3 image", err)
