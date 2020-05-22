@@ -16,15 +16,15 @@ export default (configImport, file) => {
         ? "Audio"
         : checkInterfaceAndsamples(["PDF", "Empty"], file)
         ? "PDF"
-        : checkInterfaceAndsamples(["Texte", "Empty"], file)
-        ? "Texte"
+        : checkInterfaceAndsamples(["Text", "Empty"], file)
+        ? "Text"
         : "None",
     typeOfFileToDisable: {
       Image: checkInterfaceAndsamples(["Image", "Empty"], file) ? false : true,
       Video: checkInterfaceAndsamples(["Video", "Empty"], file) ? false : true,
       Audio: checkInterfaceAndsamples(["Audio", "Empty"], file) ? false : true,
       PDF: checkInterfaceAndsamples(["PDF", "Empty"], file) ? false : true,
-      Texte: checkInterfaceAndsamples(["Texte", "Empty"], file) ? false : true,
+      Text: checkInterfaceAndsamples(["Text", "Empty"], file) ? false : true,
     },
   }
 }

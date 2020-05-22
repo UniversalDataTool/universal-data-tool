@@ -11,7 +11,7 @@ export default (typeAuthorize, file) => {
     if (type === "audio_transcription") return "Audio"
     if (type === "data_entry") return "PDF"
     if (type === "text_entity_recognition" || type === "text_classification")
-      return "Texte"
+      return "Text"
     if (isEmpty(type)) return "Empty"
     return "File"
   }
@@ -22,8 +22,8 @@ export default (typeAuthorize, file) => {
     if (!isEmpty(samples[0].videoUrl)) return "Video"
     if (!isEmpty(samples[0].audioUrl)) return "Audio"
     if (!isEmpty(samples[0].pdfUrl)) return "PDF"
-    if (!isEmpty(samples[0].document)) return "Texte"
-    if (!isEmpty(samples[0].textUrl)) return "Texte"
+    if (!isEmpty(samples[0].document)) return "Text"
+    if (!isEmpty(samples[0].textUrl)) return "Text"
     return "File"
   }
   var result = [null, null]

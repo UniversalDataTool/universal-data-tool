@@ -1,6 +1,10 @@
 import isEmpty from "lodash/isEmpty"
 import Amplify, { Storage } from "aws-amplify"
-import * as datasetHelper from "../../utils//dataset-helper"
+import getSampleName from "../../utils/dataset-helper/get-sample-name"
+import getSampleUrl from "../../utils/dataset-helper/get-sample-url"
+import getSampleWithName from "../../utils/dataset-helper/get-sample-with-name"
+import constructSample from "../../utils/dataset-helper/construct-sample"
+
 function CheckIfAnnotationExist(result, folderToFetch) {
   return result.find(
     (element) => element.key === `${folderToFetch}/annotations/annotations.json`
@@ -11,21 +15,16 @@ function GetSampleFromAnnotation(json, samples) {
   if (isEmpty(json.content.samples)) return
   var newSamples = []
   for (var i = 0; i < json.content.samples.length; i++) {
-    var sampleName = datasetHelper.getSampleName(json.content.samples[i], i)[1]
+    var sampleName = getSampleName(json.content.samples[i], i)[1]
     var annotation = json.content.samples[i].annotation
-    var sampleFound = datasetHelper.getSampleWithThisSampleName(
-      sampleName,
-      samples
-    )
+    var sampleFound = getSampleWithName(sampleName, samples)
     var url
     if (sampleFound === null) {
-      url = datasetHelper.getSampleUrl(samples)
+      url = getSampleUrl(samples)
     } else {
-      url = datasetHelper.getSampleUrl(sampleFound)
+      url = getSampleUrl(sampleFound)
     }
-    newSamples.push(
-      datasetHelper.createOneNewSample(sampleName, url, annotation)
-    )
+    newSamples.push(constructSample(sampleName, url, annotation))
   }
   json.content.samples = newSamples
 }

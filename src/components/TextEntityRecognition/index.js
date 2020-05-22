@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState } from "react"
 import getTaskDescription from "../../utils/get-task-description.js"
 import SampleContainer from "../SampleContainer"
 import NLPAnnotator from "react-nlp-annotate/components/NLPAnnotator"
-import * as datasetHelper from "../../utils/dataset-helper"
+import useSampleText from "../../utils/file-handlers/use-sample-text"
 
 const simpleSequenceToEntitySequence = (simpleSeq) => {
   const entSeq = []
@@ -48,18 +48,7 @@ const entitySequenceToSimpleSeq = (doc, entSeq) => {
 
 export const TextEntityRecognition = (props) => {
   const [currentSampleIndex, changeCurrentSampleIndex] = useState(0)
-  const [textToShow, changeTextToShow] = useState("")
-  const oldText = useRef()
-  useEffect(() => {
-    if (oldText.current !== textToShow) {
-      datasetHelper
-        .getTextfromSample(props.samples[currentSampleIndex])
-        .then((result) => {
-          changeTextToShow(result)
-        })
-      oldText.current = textToShow
-    }
-  }, [props.samples, currentSampleIndex, textToShow])
+  const { textToShow } = useSampleText(props, currentSampleIndex)
 
   const initialSequence = props.samples[currentSampleIndex].annotation
     ? entitySequenceToSimpleSeq(

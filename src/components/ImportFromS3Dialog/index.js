@@ -17,13 +17,13 @@ import Button from "@material-ui/core/Button"
 import GetAnnotationFromAFolderAWS from "./get-annotation-from-aws"
 import GetImageFromAFolderAWS from "./get-images-from-aws"
 import setButtonNameAddSample from "./set-button-add-sample-name"
-import * as datasetHelper from "../../utils//dataset-helper"
 import setTypeOfFileToLoadAndDisable from "./set-type-of-file-to-load-and-disable"
 import initConfigImport from "./init-config-import"
 import setAnnotationFromAws from "./set-annotation-from-aws"
 import useErrors from "../../utils/use-errors.js"
 import ErrorToasts from "../ErrorToasts"
 import useAuth from "../../utils/auth-handlers/use-auth.js"
+import getFilesDifferences from "../../utils/dataset-helper/get-files-differences"
 
 const selectedStyle = { color: "DodgerBlue" }
 const tableStyle = {
@@ -127,7 +127,7 @@ export default ({ file, open, onClose, onAddSamples, onChangeFile }) => {
     if (authProvider !== "cognito") return
     if (file === lastObjectRef.current) return
     var configToSet = configImport
-    var changes = datasetHelper.fileHasChanged(lastObjectRef.current, file)
+    var changes = getFilesDifferences(lastObjectRef.current, file)
     if (changes.content.interface.type || changes.content.samples) {
       if (lastObjectRef.current !== {})
         configToSet = setTypeOfFileToLoadAndDisable(configToSet, file)
@@ -434,11 +434,11 @@ export default ({ file, open, onClose, onAddSamples, onChangeFile }) => {
                         checked={configImport.typeOfFileToLoad === "PDF"}
                       />
                       <FormControlLabel
-                        value="Texte"
+                        value="Text"
                         control={<Radio />}
-                        label="Load texte file"
-                        disabled={configImport.typeOfFileToDisable.Texte}
-                        checked={configImport.typeOfFileToLoad === "Texte"}
+                        label="Load text file"
+                        disabled={configImport.typeOfFileToDisable.Text}
+                        checked={configImport.typeOfFileToLoad === "Text"}
                       />
                     </RadioGroup>
                   </FormControl>
