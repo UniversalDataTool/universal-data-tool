@@ -38,3 +38,11 @@ jobs:
           record: true
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          CYPRESS_AWS_COGNITO_awss3_bucket: ${{ secrets.CYPRESS_AWS_COGNITO_awss3_bucket }}
+          CYPRESS_AWS_COGNITO_awss3_region: ${{ secrets.CYPRESS_AWS_COGNITO_awss3_region }}
+          CYPRESS_AWS_COGNITO_identity_pool_id: ${{ secrets.CYPRESS_AWS_COGNITO_identity_pool_id }}
+          CYPRESS_AWS_COGNITO_password: ${{ secrets.CYPRESS_AWS_COGNITO_password }}
+          CYPRESS_AWS_COGNITO_region: ${{ secrets.CYPRESS_AWS_COGNITO_region }}
+          CYPRESS_AWS_COGNITO_username: ${{ CYPRESS_AWS_COGNITO_username }}
+          CYPRESS_AWS_COGNITO_user_pool_id: ${{ CYPRESS_AWS_COGNITO_user_pool_id }}
+          CYPRESS_AWS_COGNITO_user_pool_web_client_id: ${{ secrets.CYPRESS_AWS_COGNITO_user_pool_web_client_id }}
