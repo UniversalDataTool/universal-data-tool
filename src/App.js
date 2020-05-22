@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Suspense } from "react"
 import Theme from "./components/Theme"
 import LocalStorageApp from "./components/LocalStorageApp"
 import DesktopApp from "./components/DesktopApp"
@@ -10,22 +10,29 @@ import { LabelHelpProvider } from "./components/LabelHelpView"
 import { HotkeyStorageProvider } from "./components/HotkeyStorage"
 import "./App.css"
 
+import Loading from "./components/Loading"
+
+// Importing Internalization file
+import './i18n';
+
 export const App = () => {
   const electron = useElectron()
   return (
-    <Theme>
-      <AppConfigProvider>
-        <AuthProvider>
-          <LabelHelpProvider>
-            <ToastProvider>
-              <HotkeyStorageProvider>
-                {Boolean(electron) ? <DesktopApp /> : <LocalStorageApp />}
-              </HotkeyStorageProvider>
-            </ToastProvider>
-          </LabelHelpProvider>
-        </AuthProvider>
-      </AppConfigProvider>
-    </Theme>
+    <Suspense fallback={Loading}>
+      <Theme>
+        <AppConfigProvider>
+          <AuthProvider>
+            <LabelHelpProvider>
+              <ToastProvider>
+                <HotkeyStorageProvider>
+                  {Boolean(electron) ? <DesktopApp /> : <LocalStorageApp />}
+                </HotkeyStorageProvider>
+              </ToastProvider>
+            </LabelHelpProvider>
+          </AuthProvider>
+        </AppConfigProvider>
+      </Theme>
+    </Suspense>
   )
 }
 

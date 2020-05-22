@@ -15,6 +15,8 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import CircularProgress from "@material-ui/core/CircularProgress"
 import usePosthog from "../../utils/use-posthog"
 
+import { useTranslation } from 'react-i18next';
+
 const Container = styled("div")({ position: "relative", marginLeft: 8 })
 const WIDTH = 300
 const borderColor = colors.grey[500]
@@ -112,6 +114,9 @@ export default ({
   const [userName, changeUserName] = useLocalStorage("userName", "anonymous")
   const posthog = usePosthog()
 
+  // internalization hook
+  const { t, i18n } = useTranslation()
+
   useEffect(() => {
     if (loadingSession) {
       setTimeout(() => {
@@ -130,10 +135,10 @@ export default ({
         <PeopleIcon />
       </IconButton>
       <PopupBox className={sessionBoxOpen ? "" : "hidden"}>
-        <h1>Collaborate</h1>
+        <h1>{t("collobrate")}</h1>
         {!inSession ? (
           <>
-            <h2>Join a Session</h2>
+            <h2>{("join-a-session")}</h2>
             <TextField
               variant="outlined"
               label="URL to Session"
@@ -185,7 +190,7 @@ export default ({
             />
             <ExitButton fullWidth onClick={onLeaveSession}>
               <ExitToAppIcon className="icon" />
-              Leave Session
+              {t("leave-session")}
             </ExitButton>
           </>
         )}

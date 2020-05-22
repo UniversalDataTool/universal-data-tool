@@ -11,6 +11,8 @@ import useEventCallback from "use-event-callback"
 import memoize from "lodash/memoize"
 import getBrushColorPalette from "../../utils/get-brush-color-palette.js"
 
+import { useTranslation } from 'react-i18next';
+
 const Container = styled("div")({ position: "relative" })
 const BrushCircle = styled("div")(({ color }) => ({
   display: "inline",
@@ -66,6 +68,9 @@ export default ({ selectedBrush, onChangeSelectedBrush }) => {
     memoize(() => onChangeSelectedBrush(color))
   )
 
+  // internalization hook
+  const { t, i18n } = useTranslation()
+
   return (
     <Container
       onMouseEnter={() => changeOpen(true)}
@@ -77,7 +82,7 @@ export default ({ selectedBrush, onChangeSelectedBrush }) => {
         />
       </IconButton>
       <HeaderPopupBox open={open}>
-        <h1>Sample Brushes</h1>
+        <h1>{t("sample-brushes")}</h1>
         <StyledButton
           selected={selectedBrush === "complete" || selectedBrush === "blue"}
           iconcolor={colors.blue}
@@ -85,7 +90,7 @@ export default ({ selectedBrush, onChangeSelectedBrush }) => {
           onClick={handleClick("complete")}
         >
           <BrushCircle color={colors.blue} />
-          Complete
+          {t("complete")}
         </StyledButton>
         <StyledButton
           selected={
@@ -96,7 +101,7 @@ export default ({ selectedBrush, onChangeSelectedBrush }) => {
           onClick={handleClick("review")}
         >
           <BrushCircle color={colors.deepOrange} />
-          Review
+          {t("review")}
         </StyledButton>
         <OtherColorContainers>
           <StyledIconButton

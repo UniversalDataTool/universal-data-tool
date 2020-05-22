@@ -6,6 +6,7 @@ import { styled } from "@material-ui/core/styles"
 import useElectron from "../../utils/use-electron"
 import ProgressBar from "../ProgressBar"
 import { setIn, without } from "seamless-immutable"
+import { useTranslation } from 'react-i18next';
 
 const ErrorBox = styled("pre")({
   color: "red",
@@ -27,6 +28,8 @@ export default ({ open, onChangeDataset, onClose, dataset }) => {
   const { remote } = useElectron() || {}
   const [progress, changeProgress] = useState(null)
   const [errors, changeErrors] = useState("")
+  const { t, i18n } = useTranslation()
+
   return (
     <SimpleDialog
       open={open}
@@ -104,10 +107,7 @@ export default ({ open, onChangeDataset, onClose, dataset }) => {
         },
       ]}
     >
-      This transformation will convert samples that reference a video frame into
-      an image. This is a useful step before creating a model. You can only
-      convert videos that are downloaded on your computer. Note: This can take a
-      little while.
+      {t("transform-video-frames-to-images-dialog-explanation-text")}
       <ProgressBar progress={progress || 0} />
       {errors && <ErrorBox>{errors}</ErrorBox>}
     </SimpleDialog>

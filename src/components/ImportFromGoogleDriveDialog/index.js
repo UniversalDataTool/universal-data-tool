@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react"
 import SimpleDialog from "../SimpleDialog"
 import Button from "@material-ui/core/Button"
 import { styled } from "@material-ui/core/styles"
+import { useTranslation } from 'react-i18next';
 
 const ExplainText = styled("div")({
   marginTop: 8,
@@ -30,6 +31,7 @@ const credentials = {
 const scope = "https://www.googleapis.com/auth/drive.readonly"
 
 export default ({ open, onClose, onAddSamples }) => {
+  const { t, i18n } = useTranslation()
   const [googleScriptLoaded, setGoogleScriptLoaded] = useState(false)
   const [pickerApiLoaded, setPickerApiLoaded] = useState(false)
   const [oauthToken, setOAuthToken] = useState(null)
@@ -168,11 +170,11 @@ export default ({ open, onClose, onAddSamples }) => {
       ].filter(Boolean)}
     >
       <Button variant="outlined" onClick={onLoadPicker}>
-        Reopen Google Drive Picker
+        {t("reopen-google-drive-picker")}
       </Button>
       <ExplainText>
-        Make sure your Google Drive files are available via a link.{" "}
-        <b>If you don't, the files will not appear when you're labeling!</b>
+        {t("import-from-google-drive-explanation-text")}.{" "}
+        <b>{t("import-from-google-drive-explanation-bold-text")}!</b>
       </ExplainText>
       <GoogleDriveScreenshot
         src={

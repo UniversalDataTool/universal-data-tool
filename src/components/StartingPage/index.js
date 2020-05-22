@@ -16,6 +16,8 @@ import packageInfo from "../../../package.json"
 import useEventCallback from "use-event-callback"
 import DownloadIcon from "@material-ui/icons/GetApp"
 
+import { useTranslation } from "react-i18next"
+
 const useStyles = makeStyles({
   container: {
     display: "flex",
@@ -108,6 +110,9 @@ export default ({
   const c = useStyles()
   const posthog = usePosthog()
 
+  // internalization hook
+  const { t, i18n } = useTranslation()
+
   //const isDesktop = useIsDesktop()
   const [newVersionAvailable, changeNewVersionAvailable] = useState(false)
   useEffect(() => {
@@ -160,8 +165,7 @@ export default ({
               className={c.headerButton}
               href="https://github.com/OpenHumanAnnotation/universal-data-tool/releases"
             >
-              <DownloadIcon className={c.downloadIcon} /> Download Version v
-              {newVersionAvailable}
+              {t("Download Version")} v{newVersionAvailable}
             </Button>
           ),
           !newVersionAvailable && showDownloadLink && (
@@ -171,7 +175,7 @@ export default ({
               href="https://github.com/OpenHumanAnnotation/universal-data-tool/releases"
               className={c.headerButton}
             >
-              <DownloadIcon className={c.downloadIcon} /> Download
+              {t("download")}
             </Button>
           ),
         ].filter(Boolean)}
@@ -181,7 +185,7 @@ export default ({
           <Grid container>
             <Grid xs={12} item>
               <Title>Universal Data Tool</Title>
-              <Subtitle>Open-Source Data Labeling</Subtitle>
+              <Subtitle>{t("universaldatatool-description")}</Subtitle>
             </Grid>
             <Grid xs={6} item>
               <ActionList>
@@ -194,31 +198,31 @@ export default ({
                     onOpenTemplate(templates.find((t) => t.name === "Empty"))
                   }}
                 >
-                  New File
+                  {t("new-file")}
                 </Action>
                 <Action
                   onClick={() => changeCreateFromTemplateDialogOpen(true)}
                 >
-                  Start from Template
+                  {t("start-from-template")}
                 </Action>
                 <Action {...getRootProps()}>
                   <input {...getInputProps()} />
-                  Open File
+                  {t("open-file")}
                 </Action>
                 {onClickOpenSession && (
                   <Action onClick={onClickOpenSession}>
-                    Open Collaborative Session
+                    {t("open-collabrative-session")}
                   </Action>
                 )}
                 <Action onClick={() => changeAddAuthFromDialogOpen(true)}>
-                  Add Authentication
+                  {t("add-authentication")}
                 </Action>
                 {/* <Action>Open Folder</Action> */}
               </ActionList>
               <ActionList>
                 <ActionTitle>Recent</ActionTitle>
                 {recentItems.length === 0 ? (
-                  <Actionless>No Recent Files</Actionless>
+                  <Actionless>{t("no-recent-files")}</Actionless>
                 ) : (
                   recentItems.map((ri, i) => (
                     <Action key={i} onClick={() => onOpenRecentItem(ri)}>
@@ -230,14 +234,14 @@ export default ({
               <ActionList>
                 <ActionTitle>Help</ActionTitle>
                 <Action href="https://github.com/UniversalDataTool/universal-data-tool/releases">
-                  Downloading and Installing UDT
+                  {t("downloading-and-installing-udt")}
                 </Action>
                 <Action href="https://dev.to/seveibar/make-bounding-boxes-for-artificial-intelligence-with-udt-1kai">
-                  Labeling Images
+                  {t("labelling-images")}
                 </Action>
                 {/* <Action>Custom Data Entry</Action> */}
                 <Action href="https://github.com/UniversalDataTool/universal-data-tool">
-                  Github Repository
+                  Github {t("repository").toUpperCase()}
                 </Action>
                 {/* <Action href="#">
                   How to Collaborate in Real-Time with UDT
@@ -248,22 +252,17 @@ export default ({
               <ActionList>
                 <ActionTitle>About</ActionTitle>
                 <ActionText>
-                  The Universal Data Tool (UDT) is an open-source web or
-                  downloadable tool for labeling data for usage in machine
-                  learning or data processing systems.
+                  {t("start-page-about-first-paragraph")}
                   <br />
                   <br />
-                  The Universal Data Tool supports Computer Vision, Natural
-                  Language Processing (including Named Entity Recognition and
-                  Audio Transcription) workflows.
+                  {t("start-page-about-second-paragraph")}
                   <br />
                   <br />
-                  The UDT uses an{" "}
+                  {t("the-udt-uses-an")}{" "}
                   <a href="https://github.com/UniversalDataTool/udt-format">
                     open-source data format (.udt.json / .udt.csv)
                   </a>{" "}
-                  that can be easily read by programs as a ground-truth dataset
-                  for machine learning algorithms.
+                  {t("start-page-about-third-paragraph")}
                   <br />
                   <br />
                 </ActionText>
@@ -275,9 +274,9 @@ export default ({
                     style={{ display: "inline" }}
                     onClick={() => changeCreateFromTemplateDialogOpen(true)}
                   >
-                    Open a template
+                    {t("open-a-template")}
                   </Action>{" "}
-                  to see how the UDT could work for your data.
+                  {t("to-see-how-the-udt-could-work-for-your-data")}
                 </ActionText>
               </ActionList>
             </Grid>

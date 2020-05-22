@@ -10,6 +10,7 @@ import ExpansionPanel from "@material-ui/core/ExpansionPanel"
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails"
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary"
 import immutable from "seamless-immutable"
+import { useTranslation } from 'react-i18next';
 
 const Code = styled("pre")({
   fontSize: 8,
@@ -27,6 +28,8 @@ const StyledExpansionPanelSummary = styled(ExpansionPanelSummary)({
 })
 
 export default ({ open, onChangeDataset, onClose, dataset }) => {
+  const { t, i18n } = useTranslation()
+  
   return (
     <SimpleDialog
       open={open}
@@ -63,15 +66,12 @@ export default ({ open, onChangeDataset, onClose, dataset }) => {
         },
       ]}
     >
-      This operation will convert keyframes set on a video into individual image
-      segmentation frames. Your interface type will change from
-      "video_segmentation" into "image_segmentation". This is sometimes helpful
-      when preparing video data for a computer vision model.
+      {t("transform-video-keyframes-dialog-explanation-text")}
       {!dataset.samples && (
         <b>
           <br />
           <br />
-          You need to label some keyframes to use this.
+          {t("transform-video-keyframes-dialog-explanation-warning")}
         </b>
       )}
       <StyledExpansionPanel>

@@ -8,6 +8,8 @@ import * as colors from "@material-ui/core/colors"
 import Button from "@material-ui/core/Button"
 import HeaderPopupBox from "../HeaderPopupBox"
 
+import { useTranslation } from 'react-i18next';
+
 const Container = styled("div")({ position: "relative" })
 
 const StyledButton = styled(Button)({
@@ -34,6 +36,7 @@ const StyledButton = styled(Button)({
 
 export default ({ onDownload }) => {
   const [open, changeOpen] = useState(false)
+  const { t, i18n } = useTranslation()
 
   return (
     <Container
@@ -44,14 +47,14 @@ export default ({ onDownload }) => {
         <DownloadIcon />
       </IconButton>
       <HeaderPopupBox open={open}>
-        <h1>Download</h1>
+        <h1>{t("download")}</h1>
         <StyledButton fullWidth onClick={() => onDownload("csv")}>
           <div className="fakeicon green">CSV</div>
-          Download CSV
+          {t("download")} CSV
         </StyledButton>
         <StyledButton fullWidth onClick={() => onDownload("json")}>
           <div className="fakeicon blue">JSON</div>
-          Download JSON
+          {t("download")} JSON
         </StyledButton>
       </HeaderPopupBox>
     </Container>

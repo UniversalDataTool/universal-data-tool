@@ -16,6 +16,7 @@ import templates from "../StartingPage/templates"
 import * as colors from "@material-ui/core/colors"
 import FileIcon from "@material-ui/icons/InsertDriveFile"
 import NoteAddIcon from "@material-ui/icons/NoteAdd"
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles({})
 
@@ -30,6 +31,7 @@ export default ({
   onClickTemplate,
 }) => {
   const c = useStyles()
+  const { t, i18n } = useTranslation()
 
   const onDrop = useCallback(
     (acceptedFiles) => {
@@ -68,7 +70,7 @@ export default ({
             <ListItemText
               style={{ textAlign: "center", color: colors.grey[500] }}
             >
-              No Recent Items
+              {t("no-recent-items")}
             </ListItemText>
           </ListItem>
         ) : (
@@ -111,7 +113,7 @@ export default ({
             <ListItemText>{template.name}</ListItemText>
           </ListItem>
         ))}
-        <ListSubheader>Explore More</ListSubheader>
+        <ListSubheader>{t("explore-more")}</ListSubheader>
         {/* <ListItem button>
       <ListItemIcon>
         <CodeIcon />
