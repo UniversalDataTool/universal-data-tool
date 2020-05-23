@@ -1,5 +1,6 @@
 import React, { useMemo, useContext, createContext } from "react"
 import { useLocalStorage } from "react-use"
+import { defaultHotkeys } from "../HotkeyStorage"
 
 const configKeyNames = [
   "auth.provider",
@@ -13,6 +14,7 @@ const configKeyNames = [
   "auth.cognito.storage.aws_s3.region",
   "labelhelp.disabled",
   "labelhelp.apikey",
+  ...defaultHotkeys.map(({ id }) => `hotkeys.${id}`),
 ]
 
 // NOTE: appConfig should not allow any nested values
