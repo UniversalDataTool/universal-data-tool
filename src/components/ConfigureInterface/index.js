@@ -22,7 +22,39 @@ import useEventCallback from "use-event-callback"
 
 const noop = () => {}
 
-const Container = styled("div")({ padding: 24 })
+const Container = styled("div")({
+  padding: 24,
+  "&.emptyState": {
+    textAlign: "center",
+    backgroundColor: colors.blue[800],
+    minHeight: "70vh",
+    padding: 64,
+    "& .bigText": {
+      textAlign: "left",
+      fontSize: 48,
+      color: "#fff",
+      fontWeight: "bold",
+      marginBottom: 48,
+    },
+  },
+})
+
+const BigButton = styled(Button)({
+  padding: 10,
+  width: 200,
+  height: 150,
+  boxShadow: "0px 3px 5px rgba(0,0,0,0.3)",
+  margin: 12,
+  backgroundColor: "#fff",
+  "& .bigIcon": {
+    marginTop: 16,
+    width: 64,
+    height: 64,
+  },
+  "&:hover": {
+    backgroundColor: "#fff",
+  },
+})
 
 const NoOptions = styled("div")({
   fontSize: 18,
@@ -114,6 +146,30 @@ export const ConfigureInterface = ({
       clearTimeout(timeout)
     }
   }, [previewChangedTime])
+
+  if (!iface.type || iface.type === "empty") {
+    return (
+      <Container className="emptyState">
+        <div className="bigText">Choose an Interface:</div>
+        {templates
+          .filter((t) => t.name !== "Empty")
+          .map((template) => (
+            <BigButton
+              key={template.name}
+              onClick={() => onChange(template.dataset.interface)}
+            >
+              <div>
+                <div>{template.name}</div>
+                <div>
+                  <template.Icon className="bigIcon" />
+                </div>
+              </div>
+            </BigButton>
+          ))}
+      </Container>
+    )
+  }
+
   return (
     <Container>
       <Heading>Interface Type</Heading>
