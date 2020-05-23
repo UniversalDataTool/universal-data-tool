@@ -14,6 +14,8 @@ export const HotkeyContext = createContext({
   changeHotkey: (id, newBinding) => null,
 })
 
+export const useHotkeyStorage = () => useContext(HotkeyContext)
+
 export const HotkeyStorageProvider = ({ children }) => {
   const { fromConfig, setInConfig } = useAppConfig()
 

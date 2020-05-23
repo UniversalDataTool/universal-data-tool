@@ -1,10 +1,12 @@
-import React from "react"
+import React, { useState } from "react"
 import Box from "@material-ui/core/Box"
 import MuiButton from "@material-ui/core/Button"
 import { useUpdate } from "react-use"
 import { styled } from "@material-ui/core/styles"
 import usePosthog from "../../utils/use-posthog"
 import { useAppConfig } from "../AppConfig"
+import { useHotkeyStorage } from "../HotkeyStorage"
+import KeyboardShortcutManagerDialog from "../KeyboardShortcutManagerDialog"
 
 const Button = styled(MuiButton)({
   margin: 8,
@@ -14,6 +16,8 @@ export const AdvancedOptionsView = ({ onClickEditJSON, onClearLabelData }) => {
   const forceUpdate = useUpdate()
   const posthog = usePosthog()
   const { fromConfig, setInConfig } = useAppConfig()
+  const { hotkeys, changeHotkey } = useHotkeyStorage()
+  const [hotkeyDialogOpen, setHotkeyDialogOpen] = useState(false)
 
   return (
     <Box padding={2}>
@@ -89,6 +93,22 @@ export const AdvancedOptionsView = ({ onClickEditJSON, onClearLabelData }) => {
           Label Help API Key
         </Button>
       )}
+      <Button
+        variant="outlined"
+        onClick={() => {
+          setHotkeyDialogOpen(true)
+        }}
+      >
+        Change/View Hotkeys
+      </Button>
+      <KeyboardShortcutManagerDialog
+        open={hotkeyDialogOpen}
+        hotkeyList={hotkeys}
+        onClose={() => setHotkeyDialogOpen(false)}
+        onChangeHotkey={(hotkey, newBinding) =>
+          changeHotkey(hotkey.id, newBinding)
+        }
+      />
     </Box>
   )
 }
