@@ -51,6 +51,15 @@ export default ({ open, onClose, onChangeHotkey, hotkeyList }) => {
   return (
     <SimpleDialog
       title="Manage Keyboard Shortcuts"
+      // TODO
+      // actions={[
+      //           {
+      //     text: "Reset to Default",
+      //     onClick: () => {
+      //       // TODO
+      //     }
+      //   }
+      // ]}
       open={open}
       onClose={onClose}
     >
@@ -82,7 +91,7 @@ export default ({ open, onClose, onChangeHotkey, hotkeyList }) => {
                         ? modifier || key
                           ? `<${modifier ? modifier + "+" : ""}${key || "???"}>`
                           : "<Press Any Key>"
-                        : hotkey.hotkey}
+                        : hotkey.binding}
                     </b>
                     {selectedHotKey === hotkey ? (
                       <EditIcon style={hotkeyIconStyle} />

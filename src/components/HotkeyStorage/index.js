@@ -1,11 +1,20 @@
 import React, { createContext, useContext, useMemo } from "react"
 import { useAppConfig } from "../AppConfig"
+import { HotKeys } from "react-hotkeys"
 
 export const defaultHotkeys = [
   {
-    id: "save_and_next_sample",
-    description: "Save and go to next sample",
-    hotkey: "shift+n",
+    id: "switch_to_label",
+    description: "Go to Labels Tab",
+    binding: "shift+l",
+  },
+  {
+    id: "switch_to_setup",
+    description: "Go to Setup Tab",
+  },
+  {
+    id: "switch_to_samples",
+    description: "Go to Samples Tab",
   },
 ]
 
@@ -23,7 +32,7 @@ export const HotkeyStorageProvider = ({ children }) => {
     () =>
       defaultHotkeys.map((item) => {
         if (fromConfig(`hotkeys.${item.id}`)) {
-          return { ...item, hotkey: fromConfig(`hotkeys.${item.id}`) }
+          return { ...item, binding: fromConfig(`hotkeys.${item.id}`) }
         } else {
           return item
         }
@@ -40,9 +49,15 @@ export const HotkeyStorageProvider = ({ children }) => {
     [setInConfig, hotkeys]
   )
 
+  const keyMap = useMemo(() => {
+    const keyMap = {}
+    for (const { id, binding } of hotkeys) keyMap[id] = binding
+    return keyMap
+  }, [hotkeys])
+
   return (
     <HotkeyContext.Provider value={contextValue}>
-      {children}
+      <HotKeys keyMap={keyMap}>{children}</HotKeys>
     </HotkeyContext.Provider>
   )
 }
