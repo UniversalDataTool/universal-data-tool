@@ -19,7 +19,7 @@ jobs:
           # TODO this takes 1-2 mins to install, run eslint w/o installing
           # everything
           npm install
-          npm run test:list
+          npm run test:lint
   cypress-run:
     needs: iscodeclean
     runs-on: ubuntu-16.04
