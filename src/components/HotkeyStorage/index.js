@@ -6,15 +6,17 @@ export const defaultHotkeys = [
   {
     id: "switch_to_label",
     description: "Go to Labels Tab",
-    binding: "shift+l",
+    binding: "shift+3",
   },
   {
     id: "switch_to_setup",
     description: "Go to Setup Tab",
+    binding: "shift+1",
   },
   {
     id: "switch_to_samples",
     description: "Go to Samples Tab",
+    binding: "shift+2",
   },
   {
     id: "select_tool",
