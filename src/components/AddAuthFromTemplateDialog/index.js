@@ -9,7 +9,7 @@ import isEmpty from "lodash/isEmpty"
 import Survey from "material-survey/components/Survey"
 import ErrorToasts from "../ErrorToasts"
 import useErrors from "../../utils/use-errors.js"
-import Amplify, { Auth as AWSAmplifyAuth } from "aws-amplify"
+import Amplify from "aws-amplify"
 import { useAppConfig } from "../AppConfig"
 import * as colors from "@material-ui/core/colors"
 

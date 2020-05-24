@@ -1,7 +1,7 @@
 // @flow
-import { useRef, useEffect } from "react"
+import { useEffect } from "react"
 import { useLocalStorage } from "react-use"
-import isEmpty from "lodash/isEmpty"
+
 export default (file, changeFile) => {
   let [recentItems, changeRecentItems] = useLocalStorage("recentItems", [])
 

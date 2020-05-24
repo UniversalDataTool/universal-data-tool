@@ -1,15 +1,14 @@
-import { useContext, useMemo, useState, useEffect } from "react"
+import { useContext, useEffect } from "react"
 
 import useIsLabelOnlyMode from "../../utils/use-is-label-only-mode"
 import { useActiveDataset } from "../FileContext"
 import { useAppConfig } from "../AppConfig"
 import { LabelHelpContext } from "./LabelHelpProvider.js"
-import { setIn } from "seamless-immutable"
 import computeDatasetVariable from "../../utils/compute-dataset-variable"
 
 export const useLabelHelp = () => {
   const isLabelOnlyMode = useIsLabelOnlyMode()
-  const { dataset, setDataset } = useActiveDataset()
+  const { dataset } = useActiveDataset()
   const {
     pricingConfig,
     myCredits,
@@ -24,7 +23,7 @@ export const useLabelHelp = () => {
   useEffect(() => {
     if (labelHelpDisabled || isLabelOnlyMode) return
     if (!pricingConfig) loadPricingConfig()
-  }, [pricingConfig, isLabelOnlyMode, labelHelpDisabled])
+  }, [pricingConfig, isLabelOnlyMode, labelHelpDisabled, loadPricingConfig])
 
   if (labelHelpDisabled)
     return { labelHelpEnabled: false, labelHelpError: "Disabled in config" }

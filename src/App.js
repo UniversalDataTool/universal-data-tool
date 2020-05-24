@@ -7,6 +7,7 @@ import useElectron from "./utils/use-electron.js"
 import { AppConfigProvider } from "./components/AppConfig"
 import { AuthProvider } from "./utils/auth-handlers/use-auth.js"
 import { LabelHelpProvider } from "./components/LabelHelpView"
+import { HotkeyStorageProvider } from "./components/HotkeyStorage"
 import "./App.css"
 
 export const App = () => {
@@ -17,7 +18,9 @@ export const App = () => {
         <AuthProvider>
           <LabelHelpProvider>
             <ToastProvider>
-              {Boolean(electron) ? <DesktopApp /> : <LocalStorageApp />}
+              <HotkeyStorageProvider>
+                {Boolean(electron) ? <DesktopApp /> : <LocalStorageApp />}
+              </HotkeyStorageProvider>
             </ToastProvider>
           </LabelHelpProvider>
         </AuthProvider>
