@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react"
+import React, { useState, useEffect } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import SimpleDialog from "../SimpleDialog"
 import Table from "@material-ui/core/Table"

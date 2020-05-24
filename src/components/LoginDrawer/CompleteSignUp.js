@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react"
 import { Typography, TextField, Button } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
-import Amplify, { Auth } from "aws-amplify"
+import { Auth } from "aws-amplify"
 import { useAuth } from "../../utils/auth-handlers/use-auth.js"
 
 const useStyles = makeStyles((theme) => ({
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default ({ requiredAttributes, onUserChange, onClose }) => {
-  const { user, auth } = useAuth()
+  const { user } = useAuth()
   const requiredAttributesDict = {}
   const requiredAttributesErrorDict = {}
   requiredAttributes.forEach((requiredAttribute) => {

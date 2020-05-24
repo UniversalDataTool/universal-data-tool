@@ -1,5 +1,5 @@
 // @flow
-import React, { useState, useRef, useEffect, useCallback } from "react"
+import React, { useState, useCallback } from "react"
 import { HeaderContext } from "../Header"
 import StartingPage from "../StartingPage"
 import DatasetEditor from "../DatasetEditor"

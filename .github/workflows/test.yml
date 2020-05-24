@@ -16,12 +16,10 @@ jobs:
         run: npx prettier --check "src/**/*.js"
       - name: Run Lint Test
         run: |
-          rm package.json
-          rm package-lock.json
-          npm init -y
-          npm install react-scripts
-          echo '{"extends": "react-app"}' > .eslintrc
-          npx eslint src
+          # TODO this takes 1-2 mins to install, run eslint w/o installing
+          # everything
+          npm install
+          npm run test:list
   cypress-run:
     needs: iscodeclean
     runs-on: ubuntu-16.04

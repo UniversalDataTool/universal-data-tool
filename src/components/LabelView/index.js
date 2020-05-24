@@ -16,7 +16,6 @@ import DataUsageIcon from "@material-ui/icons/DataUsage"
 import LabelHelpView, { useLabelHelp } from "../LabelHelpView"
 import ActiveLearningView from "../ActiveLearningView"
 import useIsLabelOnlyMode from "../../utils/use-is-label-only-mode"
-import { useAppConfig } from "../AppConfig"
 
 const OverviewContainer = styled("div")({
   padding: 16,
@@ -38,7 +37,6 @@ export default ({
 }) => {
   const [currentTab, setTab] = useState("label")
   const posthog = usePosthog()
-  const { fromConfig, setInConfig } = useAppConfig()
   const { labelHelpEnabled } = useLabelHelp()
   const labelOnlyMode = useIsLabelOnlyMode()
   let percentComplete = 0

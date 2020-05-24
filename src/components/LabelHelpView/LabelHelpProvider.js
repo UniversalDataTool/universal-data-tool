@@ -57,6 +57,7 @@ export const LabelHelpProvider = ({ children }) => {
       loadingMyTeam,
       myCredits,
       fromConfig,
+      setInConfig,
     ]
   )
   return (

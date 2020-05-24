@@ -22,7 +22,7 @@ const ErrorText = styled("div")({
 })
 
 export default () => {
-  const { fromConfig, setInConfig } = useAppConfig()
+  const { setInConfig } = useAppConfig()
   const [verifying, setVerifying] = useState(false)
   const [textFieldValue, setTextFieldValue] = useState("")
   const [error, setError] = useState("")
