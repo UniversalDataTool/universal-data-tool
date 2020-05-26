@@ -53,7 +53,17 @@ storiesOf("ImageSegmentation", module)
             type: "image_segmentation",
             description: "# Title\n\nLowercase",
             labels: ["valid", "invalid"],
+<<<<<<< HEAD
             regionTypesAllowed: ["bounding-box", "polygon", "point"],
+=======
+            regionTypesAllowed: [
+              "bounding-box",
+              "polygon",
+              "full-segmentation",
+              "point",
+              "pixel-mask",
+            ],
+>>>>>>> f7429f2... fix table view not displaying annotations, fix storybook errors, more
           },
           samples: [
             {
@@ -76,6 +86,7 @@ storiesOf("ImageSegmentation", module)
       />
     </HotKeys>
   ))
+<<<<<<< HEAD
   .add("full image segmentation", () => (
     <ImageSegmentation
       onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
@@ -106,3 +117,5 @@ storiesOf("ImageSegmentation", module)
       }}
     />
   ))
+=======
+>>>>>>> f7429f2... fix table view not displaying annotations, fix storybook errors, more
