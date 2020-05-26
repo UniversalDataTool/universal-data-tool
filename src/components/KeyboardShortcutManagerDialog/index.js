@@ -16,7 +16,13 @@ const useStyles = makeStyles({
 
 const hotkeyIconStyle = { marginLeft: 8, width: 16, height: 16 }
 
-export default ({ open, onClose, onChangeHotkey, hotkeyList }) => {
+export default ({
+  open,
+  onClose,
+  onChangeHotkey,
+  hotkeyList,
+  onClearHotkeys,
+}) => {
   const classes = useStyles()
   const [selectedHotKey, setSelectedHotKey] = useState()
   const [{ modifier, key }, setCurrentKeyCombo] = useState({})
@@ -51,15 +57,12 @@ export default ({ open, onClose, onChangeHotkey, hotkeyList }) => {
   return (
     <SimpleDialog
       title="Manage Keyboard Shortcuts"
-      // TODO
-      // actions={[
-      //           {
-      //     text: "Reset to Default",
-      //     onClick: () => {
-      //       // TODO
-      //     }
-      //   }
-      // ]}
+      actions={[
+        {
+          text: "Clear Hotkeys",
+          onClick: onClearHotkeys,
+        },
+      ]}
       open={open}
       onClose={onClose}
     >

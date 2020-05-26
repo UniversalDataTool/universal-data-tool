@@ -16,7 +16,7 @@ export const AdvancedOptionsView = ({ onClickEditJSON, onClearLabelData }) => {
   const forceUpdate = useUpdate()
   const posthog = usePosthog()
   const { fromConfig, setInConfig } = useAppConfig()
-  const { hotkeys, changeHotkey } = useHotkeyStorage()
+  const { hotkeys, changeHotkey, clearHotkeys } = useHotkeyStorage()
   const [hotkeyDialogOpen, setHotkeyDialogOpen] = useState(false)
 
   return (
@@ -105,6 +105,7 @@ export const AdvancedOptionsView = ({ onClickEditJSON, onClearLabelData }) => {
         open={hotkeyDialogOpen}
         hotkeyList={hotkeys}
         onClose={() => setHotkeyDialogOpen(false)}
+        onClearHotkeys={clearHotkeys}
         onChangeHotkey={(hotkey, newBinding) =>
           changeHotkey(hotkey.id, newBinding)
         }

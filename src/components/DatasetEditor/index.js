@@ -20,6 +20,7 @@ import classnames from "classnames"
 import LabelView from "../LabelView"
 import useIsLabelOnlyMode from "../../utils/use-is-label-only-mode"
 import { HotKeys } from "react-hotkeys"
+import { useHotkeyStorage } from "../HotkeyStorage"
 
 import "brace/mode/javascript"
 import "brace/theme/github"
@@ -121,8 +122,10 @@ export default ({
     [changeMode]
   )
 
+  const { keyMap } = useHotkeyStorage()
+
   return (
-    <HotKeys handlers={shortcutHandlers}>
+    <HotKeys allowChanges handlers={shortcutHandlers} keyMap={keyMap}>
       <div className={classnames(c.container, "universaldatatool")}>
         <Header
           title={

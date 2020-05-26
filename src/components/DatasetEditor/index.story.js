@@ -4,16 +4,17 @@ import React, { useState } from "react"
 
 import { storiesOf } from "@storybook/react"
 import { action } from "@storybook/addon-actions"
+import { HotKeys } from "react-hotkeys"
 
 import DatasetEditor from "./"
 
 const Controller = (props) => {
-  const [dataset, changeOHA] = useState(props.initialOHA)
+  const [dataset, changeDataset] = useState(props.initialDataset)
   return (
     <DatasetEditor
       dataset={dataset}
       onChangeDataset={(...props) => {
-        changeOHA(...props)
+        changeDataset(...props)
         action("onChangeDataset")(...props)
       }}
       {...props}
@@ -21,34 +22,73 @@ const Controller = (props) => {
   )
 }
 
-storiesOf("DatasetEditor", module).add("Basic", () => (
-  <Controller
-    initialOHA={{
-      interface: {
-        type: "image_segmentation",
-        labels: ["valid", "invalid"],
-        regionTypesAllowed: ["bounding-box", "polygon", "point"],
-      },
-      samples: [
-        {
-          imageUrl:
-            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
+storiesOf("DatasetEditor", module)
+  .add("Basic", () => (
+    <Controller
+      initialDataset={{
+        interface: {
+          type: "image_segmentation",
+          labels: ["valid", "invalid"],
+          regionTypesAllowed: ["bounding-box", "polygon", "point"],
         },
-        {
-          imageUrl:
-            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg",
-        },
-      ],
-      taskOutput: [
-        {
-          regionType: "bounding-box",
-          centerX: 0.5,
-          centerY: 0.5,
-          width: 0.25,
-          height: 0.25,
-        },
-      ],
-    }}
-    onChangeFileName={action("onChangeFileName")}
-  />
-))
+        samples: [
+          {
+            imageUrl:
+              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
+          },
+          {
+            imageUrl:
+              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg",
+          },
+        ],
+        taskOutput: [
+          {
+            regionType: "bounding-box",
+            centerX: 0.5,
+            centerY: 0.5,
+            width: 0.25,
+            height: 0.25,
+          },
+        ],
+      }}
+      onChangeFileName={action("onChangeFileName")}
+    />
+  ))
+  .add("Basic with Hotkeys", () => (
+    <HotKeys
+      keyMap={{
+        zoom_tool: "z",
+        pan_tool: "p",
+      }}
+    >
+      <Controller
+        initialDataset={{
+          interface: {
+            type: "image_segmentation",
+            labels: ["valid", "invalid"],
+            regionTypesAllowed: ["bounding-box", "polygon", "point"],
+          },
+          samples: [
+            {
+              imageUrl:
+                "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
+            },
+            {
+              imageUrl:
+                "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg",
+            },
+          ],
+          taskOutput: [
+            {
+              regionType: "bounding-box",
+              centerX: 0.5,
+              centerY: 0.5,
+              width: 0.25,
+              height: 0.25,
+            },
+          ],
+        }}
+        onChangeFileName={action("onChangeFileName")}
+      />
+    </HotKeys>
+  ))
