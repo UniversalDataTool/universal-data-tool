@@ -74,7 +74,7 @@ const ExpandedRow = ({ data }) => {
   )
 }
 
-export default ({
+export const SamplesView = ({
   file,
   dataset,
   openSampleInputEditor,
@@ -111,6 +111,10 @@ export default ({
           columns.push({
             name: key,
             selector: key,
+            cell: (row) =>
+              typeof row[key] !== "object"
+                ? row[key]
+                : JSON.stringify(row[key]).slice(0, 30) + "...",
           })
           knownKeys.add(key)
         }
@@ -228,3 +232,4 @@ export default ({
     </Container>
   )
 }
+export default SamplesView

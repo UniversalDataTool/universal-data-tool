@@ -4,7 +4,7 @@ import { setIn } from "seamless-immutable"
 
 export const useActiveDataset = () => {
   const { file, setFile } = useFileContext()
-  return useMemo(
+  const result = useMemo(
     () =>
       !file || !file.content
         ? null
@@ -16,4 +16,5 @@ export const useActiveDataset = () => {
           },
     [file, setFile]
   )
+  return result || {}
 }

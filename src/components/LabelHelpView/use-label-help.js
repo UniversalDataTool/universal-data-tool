@@ -22,9 +22,15 @@ export const useLabelHelp = () => {
 
   useEffect(() => {
     if (labelHelpDisabled || isLabelOnlyMode) return
+    if (!dataset) return
     if (!pricingConfig) loadPricingConfig()
   }, [pricingConfig, isLabelOnlyMode, labelHelpDisabled, loadPricingConfig])
 
+  if (!dataset)
+    return {
+      labelHelpEnabled: false,
+      labelHelpError: "no active dataset",
+    }
   if (labelHelpDisabled)
     return { labelHelpEnabled: false, labelHelpError: "Disabled in config" }
   if (isLabelOnlyMode) return { labelHelpEnabled: false }
