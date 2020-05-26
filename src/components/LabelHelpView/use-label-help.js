@@ -24,7 +24,13 @@ export const useLabelHelp = () => {
     if (labelHelpDisabled || isLabelOnlyMode) return
     if (!dataset) return
     if (!pricingConfig) loadPricingConfig()
-  }, [pricingConfig, isLabelOnlyMode, labelHelpDisabled, loadPricingConfig])
+  }, [
+    pricingConfig,
+    isLabelOnlyMode,
+    labelHelpDisabled,
+    loadPricingConfig,
+    dataset,
+  ])
 
   if (!dataset)
     return {
