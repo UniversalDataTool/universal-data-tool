@@ -122,6 +122,7 @@ export default ({
 
   return (
     <Container
+      title="collaborate-icon"
       onMouseEnter={() => changeSessionBoxOpen(true)}
       onMouseLeave={() => changeSessionBoxOpen(false)}
     >

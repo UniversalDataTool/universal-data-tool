@@ -132,6 +132,7 @@ export default ({
             inSession ? (
               <TextField
                 label="Share Link"
+                title="share-link"
                 value={url}
                 variant="outlined"
                 size="small"
