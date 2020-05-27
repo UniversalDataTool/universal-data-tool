@@ -91,7 +91,7 @@ const forms = {
 export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
   const c = useStyles()
   const [authProvider, setAuthProvider] = useState(null)
-  const [dialogTitle, setDialogTitle] = useState("Add Authentification")
+  const [dialogTitle, setDialogTitle] = useState("Add Authentication")
   const [errors, addError] = useErrors()
   const { appConfig, setAppConfig, fromConfig, setInConfig } = useAppConfig()
 
@@ -148,7 +148,7 @@ export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
               key={template.name}
               onClick={() => {
                 setAuthProvider(template.provider)
-                setDialogTitle(`Add Authentification for ${template.name}`)
+                setDialogTitle(`Add Authentication for ${template.name}`)
               }}
               className={c.bigButton}
             >
