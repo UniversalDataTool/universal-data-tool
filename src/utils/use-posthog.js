@@ -5,7 +5,7 @@ window.posthogInitialized = false
 export default () => {
   const isDesktop = Boolean(useElectron())
   if (!window.posthogInitialized) {
-    posthog.init("8ieaFOCUBS195OEkGCHl84_DsY03sSPKpzV00JYjf7M", {
+    posthog.init("dSrx1PbFd02XsxlLd7qNbeTxKZwwao2sclVmapyYlT4", {
       api_host: "https://posthog.universaldatatool.com",
       autocapture: false,
     })
