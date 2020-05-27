@@ -118,7 +118,7 @@ export default ({
           onChangeSingleSampleDataset(null)
         }}
         dataset={singleSampleDataset}
-        onClickSetup={() => onClickSetup}
+        onClickSetup={onClickSetup}
       />
     </LabelErrorBoundary>
   ) : (
