@@ -14,7 +14,7 @@ import Survey from "material-survey/components/Survey"
 import Grid from "@material-ui/core/Grid"
 import { setIn } from "seamless-immutable"
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next"
 
 const ButtonsContainer = styled("div")({
   textAlign: "right",

@@ -8,7 +8,7 @@ import { useAppConfig } from "../AppConfig"
 import { useHotkeyStorage } from "../HotkeyStorage"
 import KeyboardShortcutManagerDialog from "../KeyboardShortcutManagerDialog"
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next"
 
 const Button = styled(MuiButton)({
   margin: 8,
@@ -54,7 +54,8 @@ export const AdvancedOptionsView = ({ onClickEditJSON, onClearLabelData }) => {
           forceUpdate()
         }}
       >
-        {posthog.has_opted_out_capturing() ? "Enable" : "Disable"} {t("telemetry")}
+        {posthog.has_opted_out_capturing() ? "Enable" : "Disable"}{" "}
+        {t("telemetry")}
       </Button>
       <Button
         variant="outlined"
@@ -80,7 +81,8 @@ export const AdvancedOptionsView = ({ onClickEditJSON, onClearLabelData }) => {
           )
         }}
       >
-        {fromConfig("labelhelp.disabled") ? "Enable" : "Disable"} {t("label-help")}
+        {fromConfig("labelhelp.disabled") ? "Enable" : "Disable"}{" "}
+        {t("label-help")}
       </Button>
       {!fromConfig("labelhelp.disabled") && (
         <Button

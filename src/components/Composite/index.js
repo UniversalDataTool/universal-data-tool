@@ -10,7 +10,7 @@ import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight"
 import Checkbox from "@material-ui/core/Checkbox"
 import Box from "@material-ui/core/Box"
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next"
 
 const Title = styled("div")({
   fontSize: 18,

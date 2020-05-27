@@ -10,7 +10,7 @@ import Box from "@material-ui/core/Box"
 import TextField from "@material-ui/core/TextField"
 import { setIn } from "seamless-immutable"
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next"
 
 const Fields = styled("div")({})
 const StyledExpansionPanel = styled(ExpansionPanel)({

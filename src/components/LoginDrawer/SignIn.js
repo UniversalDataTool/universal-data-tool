@@ -8,7 +8,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import isEmpty from "lodash/isEmpty"
 import { styled } from "@material-ui/core/styles"
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next"
 
 import Amplify, { Auth } from "aws-amplify"
 import * as colors from "@material-ui/core/colors"
@@ -35,7 +35,6 @@ export default ({ onUserChange, onRequireCompleteSignUp, onClose }) => {
 
   const [error, setError] = useState()
   const { t, i18n } = useTranslation()
-
 
   const [state, setState] = useState({
     username: "",

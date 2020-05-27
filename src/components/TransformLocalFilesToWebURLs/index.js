@@ -3,7 +3,7 @@ import SimpleDialog from "../SimpleDialog"
 import transformFileURLsToWebURLs from "./functions/transform-file-urls-to-web-urls"
 import ProgressBar from "../ProgressBar"
 import useElectron from "../../utils/use-electron"
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next"
 
 const TransformLocalFilesToWebURLs = ({
   open,

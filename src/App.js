@@ -13,7 +13,7 @@ import "./App.css"
 import Loading from "./components/Loading"
 
 // Importing Internalization file
-import './i18n';
+import "./i18n"
 
 export const App = () => {
   const electron = useElectron()

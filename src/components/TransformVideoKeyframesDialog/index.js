@@ -10,7 +10,7 @@ import ExpansionPanel from "@material-ui/core/ExpansionPanel"
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails"
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary"
 import immutable from "seamless-immutable"
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next"
 
 const Code = styled("pre")({
   fontSize: 8,
@@ -29,7 +29,7 @@ const StyledExpansionPanelSummary = styled(ExpansionPanelSummary)({
 
 export default ({ open, onChangeDataset, onClose, dataset }) => {
   const { t, i18n } = useTranslation()
-  
+
   return (
     <SimpleDialog
       open={open}

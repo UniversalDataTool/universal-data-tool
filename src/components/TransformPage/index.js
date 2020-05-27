@@ -23,7 +23,7 @@ import LanguageIcon from "@material-ui/icons/Language"
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank"
 import GridOnIcon from "@material-ui/icons/GridOn"
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next"
 
 const ButtonBase = styled(MuiButton)({
   width: 240,
@@ -59,7 +59,7 @@ const Button = ({ Icon1, Icon2, desktopOnly, children, dialog, disabled }) => {
   const isDesktop = useIsDesktop()
   const posthog = usePosthog()
   const { t, i18n } = useTranslation()
-  
+
   disabled =
     disabled === undefined ? (desktopOnly ? !isDesktop : false) : disabled
   return (
@@ -92,7 +92,7 @@ const Button = ({ Icon1, Icon2, desktopOnly, children, dialog, disabled }) => {
               <div>{children}</div>
               {desktopOnly && (
                 <DesktopOnlyText className={classnames({ disabled })}>
-                  {(t("desktop-only")).toUpperCase()}
+                  {t("desktop-only").toUpperCase()}
                 </DesktopOnlyText>
               )}
             </div>

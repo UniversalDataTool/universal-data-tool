@@ -9,7 +9,7 @@ import md5 from "js-md5"
 import path from "path"
 import { setIn } from "seamless-immutable"
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next"
 
 const ErrorBox = styled("pre")({
   color: "red",

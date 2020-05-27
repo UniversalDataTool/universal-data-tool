@@ -12,7 +12,7 @@ import EmptySampleContainer from "../EmptySampleContainer"
 import Composite from "../Composite"
 import BadOHA from "../BadOHA"
 import Button from "@material-ui/core/Button"
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next"
 
 export const UniversalDataViewer = ({
   dataset,

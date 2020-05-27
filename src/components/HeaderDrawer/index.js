@@ -16,7 +16,7 @@ import templates from "../StartingPage/templates"
 import * as colors from "@material-ui/core/colors"
 import FileIcon from "@material-ui/icons/InsertDriveFile"
 import NoteAddIcon from "@material-ui/icons/NoteAdd"
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next"
 
 const useStyles = makeStyles({})
 

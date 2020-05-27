@@ -2,7 +2,7 @@ import React from "react"
 import { styled } from "@material-ui/core/styles"
 import * as colors from "@material-ui/core/colors"
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next"
 
 const ExplanationTextHeader = styled("div")({
   textAlign: "center",

@@ -10,7 +10,7 @@ import TableCell from "@material-ui/core/TableCell"
 import TableContainer from "@material-ui/core/TableContainer"
 import TableHead from "@material-ui/core/TableHead"
 import TableRow from "@material-ui/core/TableRow"
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next"
 
 const datasets = [
   { name: "Elon Musk Tweets", type: "text", size: 2800 },

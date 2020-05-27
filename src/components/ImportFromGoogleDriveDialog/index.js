@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react"
 import SimpleDialog from "../SimpleDialog"
 import Button from "@material-ui/core/Button"
 import { styled } from "@material-ui/core/styles"
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next"
 
 const ExplainText = styled("div")({
   marginTop: 8,

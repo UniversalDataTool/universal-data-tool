@@ -15,7 +15,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import CircularProgress from "@material-ui/core/CircularProgress"
 import usePosthog from "../../utils/use-posthog"
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next"
 
 const Container = styled("div")({ position: "relative", marginLeft: 8 })
 const WIDTH = 300
@@ -138,7 +138,7 @@ export default ({
         <h1>{t("collobrate")}</h1>
         {!inSession ? (
           <>
-            <h2>{("join-a-session")}</h2>
+            <h2>{"join-a-session"}</h2>
             <TextField
               variant="outlined"
               label="URL to Session"

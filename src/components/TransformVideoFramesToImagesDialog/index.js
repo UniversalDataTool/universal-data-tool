@@ -6,7 +6,7 @@ import { styled } from "@material-ui/core/styles"
 import useElectron from "../../utils/use-electron"
 import ProgressBar from "../ProgressBar"
 import { setIn, without } from "seamless-immutable"
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next"
 
 const ErrorBox = styled("pre")({
   color: "red",

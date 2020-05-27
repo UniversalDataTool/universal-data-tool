@@ -11,7 +11,7 @@ import useEventCallback from "use-event-callback"
 import memoize from "lodash/memoize"
 import getBrushColorPalette from "../../utils/get-brush-color-palette.js"
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next"
 
 const Container = styled("div")({ position: "relative" })
 const BrushCircle = styled("div")(({ color }) => ({

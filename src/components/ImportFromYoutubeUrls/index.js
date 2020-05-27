@@ -7,7 +7,7 @@ import downloadYoutubeVideo from "./download-youtube-video"
 import Progress from "./progress"
 import getYoutubeVideoInformation from "./get-youtube-video-information"
 import splitURLsFromTextArea from "./split-urls-from-text-area"
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next"
 
 const TextArea = styled("textarea")({
   width: "100%",
@@ -57,7 +57,6 @@ const qualityOptions = [
 const ImportFromYoutubeUrls = ({ open, onClose, onAddSamples }) => {
   const { remote } = useElectron() || {}
   const { t, i18n } = useTranslation()
-
 
   const [urlsFromTextArea, setUrlsFromTextArea] = useState([])
   const [videoQuality, setVideoQuality] = useState(qualityOptions[0].value)
