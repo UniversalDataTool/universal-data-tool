@@ -1,6 +1,6 @@
 describe("Create a Label Help ", () => {
   it("should be able to use label help", () => {
-    cy.visit("http://localhost:6001")
+    cy.visit("/")
 
     cy.contains("Start from Template").click()
     cy.contains("Image Classification").click()

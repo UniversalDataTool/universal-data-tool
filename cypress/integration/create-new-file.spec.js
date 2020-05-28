@@ -1,6 +1,6 @@
 describe("Create a new file in the universal data tool", () => {
   it("should be able to create a new file", () => {
-    cy.visit("http://localhost:6001")
+    cy.visit("/")
 
     cy.contains("New File").click()
   })

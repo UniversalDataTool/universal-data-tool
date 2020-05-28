@@ -7,7 +7,7 @@ const times = (howManyTimes) => (functionWillExecute) => {
 
 describe("Import ai generated faces and make image classification with them", () => {
   it("should be able to create", () => {
-    cy.visit("http://localhost:6001")
+    cy.visit("/")
 
     cy.contains("New File").click()
   })

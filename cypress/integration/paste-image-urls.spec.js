@@ -6,7 +6,7 @@ const imageUrls = [
 
 describe("Create a new", () => {
     it('should be able to create', () => {
-        cy.visit("http://localhost:6001")
+        cy.visit("/")
         cy.contains("New File").click()
     })
 
