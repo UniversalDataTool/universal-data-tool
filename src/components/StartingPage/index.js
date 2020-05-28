@@ -195,7 +195,7 @@ export default ({
                   </Action>
                 )}
                 <Action onClick={() => changeAddAuthFromDialogOpen(true)}>
-                  Add Authentification
+                  Add Authentication
                 </Action>
                 {/* <Action>Open Folder</Action> */}
               </ActionList>
