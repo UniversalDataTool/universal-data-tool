@@ -1,6 +1,6 @@
 describe("Test default keyboard shortcuts", () => {
   it.skip("should be able to navigate to label tab with default shortcut", () => {
-    cy.visit("http://localhost:6001")
+    cy.visit("/")
 
     cy.contains("New File").click()
 
