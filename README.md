@@ -93,6 +93,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="http://berupon.hatenablog.com/"><img src="https://avatars1.githubusercontent.com/u/1131125?v=4" width="100px;" alt=""/><br /><sub><b>beru</b></sub></a><br /><a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=beru" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/Ownmarc"><img src="https://avatars0.githubusercontent.com/u/24617457?v=4" width="100px;" alt=""/><br /><sub><b>Marc</b></sub></a><br /><a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=Ownmarc" title="Code">💻</a> <a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=Ownmarc" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/Wafaa-arbash"><img src="https://avatars0.githubusercontent.com/u/59834878?v=4" width="100px;" alt=""/><br /><sub><b>Wafaa-arbash</b></sub></a><br /><a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=Wafaa-arbash" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/pgrimaud"><img src="https://avatars1.githubusercontent.com/u/1866496?v=4" width="100px;" alt=""/><br /><sub><b>Pierre Grimaud</b></sub></a><br /><a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=pgrimaud" title="Documentation">📖</a></td>
   </tr>
 </table>
 
