@@ -19,7 +19,7 @@ export default (file, changeFile) => {
     } else {
       changeRecentItems([file].concat(recentItems).slice(0, 3))
     }
-    oldRecentItems.current = recentItems
-  }, [file, changeRecentItems, recentItems])
+    // eslint-disable-next-line
+  }, [file, changeRecentItems])
   return { recentItems, changeRecentItems }
 }
