@@ -1,3 +1,6 @@
 {
-  "projectId": "w62sqq"
+  "projectId": "w62sqq",
+  "pageLoadTimeout": 6000,
+  "defaultCommandTimeout": 4000,
+  "baseUrl": "http://localhost:6001"
 }
