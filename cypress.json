@@ -1,6 +1,6 @@
 {
   "projectId": "w62sqq",
-  "pageLoadTimeout": 6000,
+  "pageLoadTimeout": 60000,
   "defaultCommandTimeout": 4000,
   "baseUrl": "http://localhost:6001",
   "execTimeout": 60000,
