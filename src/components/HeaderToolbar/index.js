@@ -5,6 +5,7 @@ import AppBar from "@material-ui/core/AppBar"
 import Toolbar from "@material-ui/core/Toolbar"
 import Tabs from "@material-ui/core/Tabs"
 import Tab from "@material-ui/core/Tab"
+import Box from "@material-ui/core/Box"
 import { makeStyles } from "@material-ui/core/styles"
 import SettingsIcon from "@material-ui/icons/Settings"
 import StorageIcon from "@material-ui/icons/Storage"
@@ -19,6 +20,7 @@ import packageJSON from "../../../package.json"
 import BrushButton from "../BrushButton"
 import useAuth from "../../utils/auth-handlers/use-auth.js"
 import SlackIcon from "./SlackIcon"
+import GitHubButton from "react-github-btn"
 
 const capitalize = (s) => {
   return s.charAt(0).toUpperCase() + s.slice(1)
@@ -156,21 +158,34 @@ const HeaderToolbar = ({
             Logout
           </Button>
         )}
-        {!isSmall && (
-          <React.Fragment>
-            <IconButton
-              href="https://github.com/openhumanannotation/universal-data-tool"
-              className={c.headerButton}
+        {!isSmall && !isWelcomePage && (
+          <IconButton
+            href="https://github.com/UniversalDataTool/universal-data-tool"
+            className={c.headerButton}
+          >
+            <GithubIcon />
+          </IconButton>
+        )}
+        {!isSmall && isWelcomePage && (
+          <Box paddingTop="4px" paddingLeft="8px">
+            <GitHubButton
+              href="https://github.com/UniversalDataTool/universal-data-tool"
+              data-icon="octicon-star"
+              data-size="large"
+              data-show-count="true"
+              aria-label="Star UniversalDataTool/universal-data-tool on GitHub"
             >
-              <GithubIcon />
-            </IconButton>
-            <IconButton
-              href="https://join.slack.com/t/universaldatatool/shared_invite/zt-d8teykwi-iOSOUfxugKR~M4AJN6VL3g"
-              className={c.headerButton}
-            >
-              <SlackIcon />
-            </IconButton>
-          </React.Fragment>
+              Star
+            </GitHubButton>
+          </Box>
+        )}
+        {!isSmall && isWelcomePage && (
+          <IconButton
+            href="https://join.slack.com/t/universaldatatool/shared_invite/zt-d8teykwi-iOSOUfxugKR~M4AJN6VL3g"
+            className={c.headerButton}
+          >
+            <SlackIcon />
+          </IconButton>
         )}
       </Toolbar>
     </AppBar>

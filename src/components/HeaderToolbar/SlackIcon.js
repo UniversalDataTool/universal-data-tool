@@ -6,10 +6,10 @@ const SlackIcon = (props) => {
     <SvgIcon>
       <svg
         style={{
-          width: "1.25em",
-          height: "1.25em",
+          width: 32,
+          height: 32,
         }}
-        viewBox="0 0 270 270"
+        viewBox="50 60 160 160"
       >
         <g>
           <g>

@@ -97,6 +97,7 @@
     "react-ace": "^7.0.4",
     "react-data-table-component": "^6.2.2",
     "react-dropzone": "^10.1.8",
+    "react-github-btn": "^1.2.0",
     "react-hotkeys": "^2.0.0",
     "react-icons": "^3.9.0",
     "react-image-annotate": "^1.0.15",
