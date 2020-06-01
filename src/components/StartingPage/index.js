@@ -14,6 +14,7 @@ import { styled } from "@material-ui/core/styles"
 import usePosthog from "../../utils/use-posthog"
 import packageInfo from "../../../package.json"
 import useEventCallback from "use-event-callback"
+import DownloadIcon from "@material-ui/icons/GetApp"
 
 const useStyles = makeStyles({
   container: {
@@ -21,6 +22,18 @@ const useStyles = makeStyles({
     flexDirection: "column",
     backgroundColor: colors.grey[900],
     height: "100vh",
+  },
+  headerButton: {
+    fontSize: 12,
+    backgroundColor: "#fff",
+  },
+  downloadIcon: {
+    marginTop: 2,
+    width: 18,
+    height: 18,
+    marginRight: 4,
+    marginLeft: -6,
+    color: colors.grey[700],
   },
 })
 
@@ -142,20 +155,23 @@ export default ({
         additionalButtons={[
           newVersionAvailable && (
             <Button
+              variant="outlined"
               key="download-latest"
               className={c.headerButton}
               href="https://github.com/OpenHumanAnnotation/universal-data-tool/releases"
             >
-              Download Version v{newVersionAvailable}
+              <DownloadIcon className={c.downloadIcon} /> Download Version v
+              {newVersionAvailable}
             </Button>
           ),
           !newVersionAvailable && showDownloadLink && (
             <Button
+              variant="outlined"
               key="download"
               href="https://github.com/OpenHumanAnnotation/universal-data-tool/releases"
               className={c.headerButton}
             >
-              Download
+              <DownloadIcon className={c.downloadIcon} /> Download
             </Button>
           ),
         ].filter(Boolean)}
