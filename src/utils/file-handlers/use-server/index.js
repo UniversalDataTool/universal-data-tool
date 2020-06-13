@@ -2,6 +2,7 @@
 
 import { useEffect } from "react"
 import CollaborationHandler from "./handler.js"
+import { setIn } from "seamless-immutable"
 
 const serverUrl =
   window.localStorage.CUSTOM_COLLABORATION_SERVER ||
@@ -43,16 +44,15 @@ export default (file, changeFile) => {
 
   useEffect(() => {
     if (!file || file.mode !== "server") return
+    console.log("file changed", file.mode, file.sessionId, collab.sessionId)
     if (file.sessionId !== collab.sessionId) return
 
     const checkForLatestPatch = async () => {
       const applyResult = await collab.applyLatestPatches()
 
       if (applyResult) {
-        changeFile({
-          ...file,
-          content: collab.state,
-        })
+        // TODO apply in a smart, immutable way
+        changeFile(setIn(file, ["content"], collab.state))
       }
 
       if (!timeout) return
@@ -69,7 +69,6 @@ export default (file, changeFile) => {
   // Update the Server State by Sending Patches
   useEffect(() => {
     if (!file || file.mode !== "server") return
-    async function doPatch() {}
-    doPatch()
+    collab.sendPatchIfChanged(file.content)
   }, [file])
 }
