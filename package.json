@@ -16,7 +16,10 @@
     "build:desktop": "cross-env REACT_APP_DESKTOP=true PUBLIC_URL=./ react-scripts build && electron-builder build && cp ./desktop/entitlements.mac.plist ./build/entitlements.mac.plist",
     "start:desktop": "cross-env BROWSER=none USE_DEV_SERVER=yes concurrently 'npm run start' 'electron ./desktop'",
     "start:desktop:build": "electron ./desktop",
+<<<<<<< HEAD
     "postinstall:desktop": "electron-builder install-app-deps",
+=======
+>>>>>>> 7f55ea0... added optional chaining, better start:desktop script, fix for new file
     "release:lib": "npm run build && cd lib && npm publish",
     "release:desktop": "npm run build:desktop && cross-env EP_RELEASE=true electron-builder --linux --publish always",
     "release:all": "npm run release:desktop && npm run release:lib",
@@ -103,11 +106,7 @@
     "react-github-btn": "^1.2.0",
     "react-hotkeys": "^2.0.0",
     "react-icons": "^3.9.0",
-<<<<<<< HEAD
     "react-image-annotate": "^1.2.7",
-=======
-    "react-image-annotate": "^1.0.15",
->>>>>>> f7429f2... fix table view not displaying annotations, fix storybook errors, more
     "react-scripts": "^3.4.1",
     "react-select": "^3.0.8",
     "rfc6902": "^3.0.4",
