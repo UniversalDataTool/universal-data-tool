@@ -44,7 +44,6 @@ export default (file, changeFile) => {
 
   useEffect(() => {
     if (!file || file.mode !== "server") return
-    console.log("file changed", file.mode, file.sessionId, collab.sessionId)
     if (file.sessionId !== collab.sessionId) return
 
     const checkForLatestPatch = async () => {
