@@ -11,7 +11,6 @@ import {
 const regionTypeToTool = {
   "bounding-box": "create-box",
   polygon: "create-polygon",
-  "full-segmentation": "create-polygon",
   point: "create-point",
 }
 
@@ -36,6 +35,7 @@ export default ({
   const { regionTypesAllowed = ["bounding-box"] } = iface
 
   const isClassification = !Boolean(iface.multipleRegionLabels)
+  const isPixel = iface.type === "image_pixel_segmentation"
 
   const saveCurrentIndexAnnotation = useEventCallback((output) => {
     const img = output.images[selectedIndex]
@@ -49,7 +49,13 @@ export default ({
 
   const labelProps = useMemo(
     () =>
-      isClassification
+      isPixel
+        ? {
+            regionClsList: ["background"]
+              .concat(iface.labels || [])
+              .map((l) => (typeof l === "string" ? l : l.id)),
+          }
+        : isClassification
         ? {
             regionClsList: (iface.labels || []).map((l) =>
               typeof l === "string" ? l : l.id
@@ -60,7 +66,7 @@ export default ({
               typeof l === "string" ? l : l.id
             ),
           },
-    [isClassification, iface.labels]
+    [isClassification, iface.labels, isPixel]
   )
 
   const multipleRegions =
@@ -102,13 +108,18 @@ export default ({
     [samples, containerProps.datasetName]
   )
 
-  const enabledTools = useMemo(
-    () =>
-      ["select"].concat(
-        regionTypesAllowed.map((rt) => regionTypeToTool[rt]).filter(Boolean)
-      ),
-    [regionTypesAllowed]
-  )
+  const enabledTools =
+    iface.type === "image_pixel_segmentation"
+      ? undefined
+      : useMemo(
+          () =>
+            ["select"].concat(
+              regionTypesAllowed
+                .map((rt) => regionTypeToTool[rt])
+                .filter(Boolean)
+            ),
+          [regionTypesAllowed]
+        )
 
   return (
     <div
@@ -120,6 +131,7 @@ export default ({
     >
       <Annotator
         key={globalSampleIndex}
+        fullImageSegmentationMode={isPixel}
         selectedImage={samples[selectedIndex].imageUrl}
         taskDescription={iface.description}
         showTags={showTags}
