@@ -121,6 +121,12 @@ export default ({
           [regionTypesAllowed]
         )
 
+  const allowedArea = useMemo(() => {
+    if (!iface.allowedArea) return undefined
+    const { x, y, width: w, height: h } = iface.allowedArea
+    return { x, y, w, h }
+  }, [iface.allowedArea])
+
   return (
     <div
       style={{
@@ -134,6 +140,7 @@ export default ({
         fullImageSegmentationMode={isPixel}
         selectedImage={samples[selectedIndex].imageUrl}
         taskDescription={iface.description}
+        allowedArea={allowedArea}
         showTags={showTags}
         {...labelProps}
         onNextImage={onNextImage}
