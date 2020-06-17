@@ -95,6 +95,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/Wafaa-arbash"><img src="https://avatars0.githubusercontent.com/u/59834878?v=4" width="100px;" alt=""/><br /><sub><b>Wafaa-arbash</b></sub></a><br /><a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=Wafaa-arbash" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/pgrimaud"><img src="https://avatars1.githubusercontent.com/u/1866496?v=4" width="100px;" alt=""/><br /><sub><b>Pierre Grimaud</b></sub></a><br /><a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=pgrimaud" title="Documentation">📖</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/sreevardhanreddi"><img src="https://avatars0.githubusercontent.com/u/31174432?v=4" width="100px;" alt=""/><br /><sub><b>sreevardhanreddi</b></sub></a><br /><a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=sreevardhanreddi" title="Code">💻</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-enable -->
