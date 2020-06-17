@@ -71,31 +71,24 @@ export default ({ open, onClose, onAddSamples }) => {
     },
     [onClose]
   )
+
   const createPicker = useCallback(() => {
     if (pickerApiLoaded && oauthToken) {
-      
       const view = new window.google.picker.DocsView(
-        window.google.picker.ViewId.FOLDERS,
-        window.google.picker.ViewId.Docs
+        window.google.picker.ViewId.Docs,
+        window.google.picker.ViewId.FOLDERS
       ).
-      setIncludeFolders(true)
-      .setMimeTypes(
-        "image/png",
-        "image/jpeg",
-        "image/jpg",
-        "image/gif",
-        "video/mp4",
-        "video/mpeg",
-        'application/vnd.google-apps.folder'
-      ).
+      setIncludeFolders(true).
       setSelectFolderEnabled(true);
-    
+
       const picker = new window.google.picker.PickerBuilder()
+        .enableFeature(window.google.picker.Feature.NAV_HIDDEN)
+        .enableFeature(window.google.picker.Feature.MINE_ONLY)
         .enableFeature(window.google.picker.Feature.MULTISELECT_ENABLED)
         .setAppId(credentials.web.app_id)
         .setOAuthToken(oauthToken)
         .addView(view)
-        //.addView(window.google.picker.ViewId.DocsView)
+        .addView(window.google.picker.ViewId.DOCS)
         .setDeveloperKey(credentials.web.developer_key)
         .setCallback(googlePickerActionCallback)
         .build()
@@ -107,16 +100,6 @@ export default ({ open, onClose, onAddSamples }) => {
   useEffect(() => {
     createPicker()
   }, [pickerApiLoaded, oauthToken, createPicker])
-
-  const handleAuthenticationResponse = useCallback(
-    (authenticationResponse) => {
-      if (authenticationResponse && !authenticationResponse.error) {
-        setOAuthToken(authenticationResponse.access_token)
-        createPicker()
-      }
-    },
-    [createPicker]
-  )
 
   const onAuthApiLoad = useCallback(() => {
     window.gapi.auth.authorize(
