@@ -76,6 +76,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "mrdadah",
+      "name": "Mohammed Eldadah",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/11255121?v=4",
+      "profile": "https://github.com/mrdadah",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
