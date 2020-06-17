@@ -225,6 +225,31 @@ export const templates = [
     },
   },
   {
+    name: "Pixel Segmentation",
+    Icon: ImageSearch,
+    dataset: {
+      interface: {
+        type: "image_pixel_segmentation",
+        labels: ["hair", "mouth", "nose", "eyes"],
+        description: "These are AI-generated faces, not real people.",
+      },
+      samples: [
+        {
+          imageUrl:
+            "https://s3.amazonaws.com/datasets.workaround.online/faces/010041.jpg",
+        },
+        {
+          imageUrl:
+            "https://s3.amazonaws.com/datasets.workaround.online/faces/010026.jpg",
+        },
+        {
+          imageUrl:
+            "https://s3.amazonaws.com/datasets.workaround.online/faces/010025.jpg",
+        },
+      ],
+    },
+  },
+  {
     name: "3D Bounding Box",
     Icon: ThreeDRotation,
     dataset: {

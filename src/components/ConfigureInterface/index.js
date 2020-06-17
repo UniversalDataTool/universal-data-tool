@@ -7,6 +7,7 @@ import Button from "@material-ui/core/Button"
 import Box from "@material-ui/core/Box"
 import * as colors from "@material-ui/core/colors"
 import ConfigureImageSegmentation from "../ConfigureImageSegmentation"
+import ConfigureImagePixelSegmentation from "../ConfigureImagePixelSegmentation"
 import ConfigureImageClassification from "../ConfigureImageClassification"
 import ConfigureTextClassification from "../ConfigureTextClassification"
 import ConfigureAudioTranscription from "../ConfigureAudioTranscription"
@@ -209,6 +210,12 @@ export const ConfigureInterface = ({
           {!iface.type && <NoOptions>Select a Type</NoOptions>}
           {iface.type === "image_segmentation" && (
             <ConfigureImageSegmentation iface={iface} onChange={onChange} />
+          )}
+          {iface.type === "image_pixel_segmentation" && (
+            <ConfigureImagePixelSegmentation
+              iface={iface}
+              onChange={onChange}
+            />
           )}
           {iface.type === "image_classification" && (
             <ConfigureImageClassification iface={iface} onChange={onChange} />
