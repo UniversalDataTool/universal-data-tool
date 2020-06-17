@@ -71,28 +71,31 @@ export default ({ open, onClose, onAddSamples }) => {
     },
     [onClose]
   )
-
   const createPicker = useCallback(() => {
     if (pickerApiLoaded && oauthToken) {
-      const view = new window.google.picker.View(
+      
+      const view = new window.google.picker.DocsView(
+        window.google.picker.ViewId.FOLDERS,
         window.google.picker.ViewId.Docs
-      )
-
-      view.setMimeTypes(
+      ).
+      setIncludeFolders(true)
+      .setMimeTypes(
         "image/png",
         "image/jpeg",
         "image/jpg",
         "image/gif",
         "video/mp4",
-        "video/mpeg"
-      )
+        "video/mpeg",
+        'application/vnd.google-apps.folder'
+      ).
+      setSelectFolderEnabled(true);
+    
       const picker = new window.google.picker.PickerBuilder()
-        .enableFeature(window.google.picker.Feature.NAV_HIDDEN)
         .enableFeature(window.google.picker.Feature.MULTISELECT_ENABLED)
         .setAppId(credentials.web.app_id)
         .setOAuthToken(oauthToken)
         .addView(view)
-        .addView(window.google.picker.ViewId.DOCS)
+        //.addView(window.google.picker.ViewId.DocsView)
         .setDeveloperKey(credentials.web.developer_key)
         .setCallback(googlePickerActionCallback)
         .build()
