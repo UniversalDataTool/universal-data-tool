@@ -89,7 +89,7 @@
     "download-file": "^0.1.5",
     "duration": "^0.2.2",
     "fast-json-patch": "^3.0.0-1",
-    "ffmpeg-static": "^4.0.1",
+    "ffmpeg-static": "^4.2.4",
     "form-data": "^3.0.0",
     "in-browser-download": "^2.0.0",
     "jac-format": "^1.1.3",
