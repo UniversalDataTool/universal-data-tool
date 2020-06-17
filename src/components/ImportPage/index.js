@@ -67,23 +67,26 @@ const Button = ({
   signedInOnly,
   user,
   onlySupportType,
-  type
+  type,
 }) => {
   const posthog = usePosthog()
 
   const isDisabled = () => {
     if (desktopOnly) {
-      return { disabled: !isDesktop, disabledText: 'DESKTOP ONLY' }
+      return { disabled: !isDesktop, disabledText: "DESKTOP ONLY" }
     } else if (onlySupportType && !onlySupportType.includes(type)) {
       return { disabled: true, disabledText: `DOESN'T SUPPORT THIS INTERFACE` }
     } else if (authConfiguredOnly) {
       if (signedInOnly) {
-        return { disabled: isEmpty(user), disabledText: 'MUST BE SIGNED IN' }
+        return { disabled: isEmpty(user), disabledText: "MUST BE SIGNED IN" }
       } else {
-        return { disabled: isEmpty(authConfig), disabledText: 'AUTH MUST BE CONFIGURED' }
+        return {
+          disabled: isEmpty(authConfig),
+          disabledText: "AUTH MUST BE CONFIGURED",
+        }
       }
     } else {
-      return { disabled: false, disabledText: '' }
+      return { disabled: false, disabledText: "" }
     }
   }
 
@@ -107,11 +110,11 @@ const Button = ({
             <div>
               <Icon className={classnames("icon", { disabled })} />
               <div>{children}</div>
-              { disabled &&
+              {disabled && (
                 <DesktopOnlyText className={classnames({ disabled })}>
-                  { disabledText }
+                  {disabledText}
                 </DesktopOnlyText>
-              }
+              )}
             </div>
           </ButtonBase>
         )
@@ -192,7 +195,7 @@ export default ({
         <Button
           dialog="import-text-snippets"
           Icon={TextFieldsIcon}
-          onlySupportType={['text_entity_recognition', 'text_classification']}
+          onlySupportType={["text_entity_recognition", "text_classification"]}
           type={dataset.interface.type}
         >
           Import Text Snippets
