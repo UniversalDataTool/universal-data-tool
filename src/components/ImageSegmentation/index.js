@@ -10,7 +10,7 @@ import {
 
 const regionTypeToTool = {
   "bounding-box": "create-box",
-  polygon: "create-polygon",
+  polygon: ["create-polygon", "create-expanding-line"],
   point: "create-point",
 }
 
@@ -115,17 +115,20 @@ export default ({
           () =>
             ["select"].concat(
               regionTypesAllowed
-                .map((rt) => regionTypeToTool[rt])
+                .flatMap((rt) => regionTypeToTool[rt])
                 .filter(Boolean)
             ),
           [regionTypesAllowed]
         )
 
   const allowedArea = useMemo(() => {
-    if (!iface.allowedArea) return undefined
-    const { x, y, width: w, height: h } = iface.allowedArea
+    if (!iface.allowedArea && !samples[selectedIndex].allowedArea)
+      return undefined
+    const { x, y, width: w, height: h } =
+      samples[selectedIndex].allowedArea || iface.allowedArea
     return { x, y, w, h }
-  }, [iface.allowedArea])
+    // eslint-disable-next-line
+  }, [iface.allowedArea, samples[selectedIndex].allowedArea])
 
   return (
     <div
@@ -140,9 +143,10 @@ export default ({
         fullImageSegmentationMode={isPixel}
         selectedImage={samples[selectedIndex].imageUrl}
         taskDescription={iface.description}
-        allowedArea={allowedArea}
         showTags={showTags}
         {...labelProps}
+        autoSegmentationOptions={iface.autoSegmentationEngine}
+        allowedArea={allowedArea}
         onNextImage={onNextImage}
         onPrevImage={onPrevImage}
         enabledTools={enabledTools}
