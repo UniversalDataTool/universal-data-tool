@@ -19,11 +19,11 @@ const credentials = {
   web: {
     client_id:
       process.env.REACT_APP_GOOGLE_DRIVE_CLIENT_ID ||
-      "294393711342-h5aqqt3pvn8othepvsmi16iakdhi7m6j.apps.googleusercontent.com",
-    app_id: process.env.REACT_APP_GOOGLE_DRIVE_APP_ID || "294393711342",
+      "604137720705-vde9rqj1h6u35g9mr1pl7o4l594j6cl6.apps.googleusercontent.com",
+    app_id: process.env.REACT_APP_GOOGLE_DRIVE_APP_ID || "quickstart-1592363961559",
     developer_key:
       process.env.REACT_APP_GOOGLE_DRIVE_DEVELOPER_KEY ||
-      "AIzaSyCoNoDnfzDBSXpt84Q75LU9UMTzvyLkRhg",
+      "AIzaSyAemSdtGTv3wzRk8OnMuDruC53eLyFtXJQ",
   },
 }
 
@@ -64,6 +64,7 @@ export default ({ open, onClose, onAddSamples }) => {
             id: googleDriveDocument.id,
           }))
         )
+     
         setIsPickerOpen(false)
       } else if (data.action === "cancel") {
         onClose()
@@ -77,9 +78,9 @@ export default ({ open, onClose, onAddSamples }) => {
       const view = new window.google.picker.DocsView(
         window.google.picker.ViewId.Docs,
         window.google.picker.ViewId.FOLDERS
-      ).
-      setIncludeFolders(true).
-      setSelectFolderEnabled(true);
+      )
+        .setIncludeFolders(true)
+        .setSelectFolderEnabled(true)
 
       const picker = new window.google.picker.PickerBuilder()
         .enableFeature(window.google.picker.Feature.NAV_HIDDEN)
@@ -101,6 +102,16 @@ export default ({ open, onClose, onAddSamples }) => {
     createPicker()
   }, [pickerApiLoaded, oauthToken, createPicker])
 
+  const handleAuthenticationResponse = useCallback(
+    (authenticationResponse) => {
+      if (authenticationResponse && !authenticationResponse.error) {
+        setOAuthToken(authenticationResponse.access_token)
+        createPicker()
+      }
+    },
+    [createPicker]
+  )
+
   const onAuthApiLoad = useCallback(() => {
     window.gapi.auth.authorize(
       {
@@ -121,6 +132,7 @@ export default ({ open, onClose, onAddSamples }) => {
     if (googleScriptLoaded === true) {
       window.gapi.load("auth", { callback: onAuthApiLoad })
       window.gapi.load("picker", { callback: onPickerApiLoad })
+      console.log(userSelectedItemsFromDrive)
     }
   }, [googleScriptLoaded, onAuthApiLoad, onPickerApiLoad])
 
@@ -133,12 +145,14 @@ export default ({ open, onClose, onAddSamples }) => {
         samples.push({ videoUrl: `https://drive.google.com/uc?id=${item.id}` })
       }
     }
+
     onAddSamples(samples)
   }
 
   useEffect(() => {
     if (open) {
       onLoadPicker()
+     
     }
   }, [open, googleScriptLoaded, onLoadPicker])
 
