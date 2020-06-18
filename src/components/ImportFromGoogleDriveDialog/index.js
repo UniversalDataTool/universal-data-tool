@@ -20,7 +20,8 @@ const credentials = {
     client_id:
       process.env.REACT_APP_GOOGLE_DRIVE_CLIENT_ID ||
       "604137720705-vde9rqj1h6u35g9mr1pl7o4l594j6cl6.apps.googleusercontent.com",
-    app_id: process.env.REACT_APP_GOOGLE_DRIVE_APP_ID || "quickstart-1592363961559",
+    app_id:
+      process.env.REACT_APP_GOOGLE_DRIVE_APP_ID || "quickstart-1592363961559",
     developer_key:
       process.env.REACT_APP_GOOGLE_DRIVE_DEVELOPER_KEY ||
       "AIzaSyAemSdtGTv3wzRk8OnMuDruC53eLyFtXJQ",
@@ -64,7 +65,7 @@ export default ({ open, onClose, onAddSamples }) => {
             id: googleDriveDocument.id,
           }))
         )
-     
+
         setIsPickerOpen(false)
       } else if (data.action === "cancel") {
         onClose()
@@ -152,7 +153,6 @@ export default ({ open, onClose, onAddSamples }) => {
   useEffect(() => {
     if (open) {
       onLoadPicker()
-     
     }
   }, [open, googleScriptLoaded, onLoadPicker])
 
