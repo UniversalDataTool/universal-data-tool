@@ -3,6 +3,11 @@ import React, { useMemo } from "react"
 import Survey from "material-survey/components/Survey"
 import { setIn } from "seamless-immutable"
 
+const autoSegmentationOptions = {
+  simple: { type: "simple" },
+  autoseg: { type: "autoseg" },
+}
+
 const form = {
   questions: [
     {
@@ -26,6 +31,12 @@ const form = {
       description: "Any instructions or notes in markdown.",
       type: "text",
     },
+    {
+      name: "autoseg",
+      type: "dropdown",
+      title: "Automatic Segmentation Engine",
+      choices: ["simple", "autoseg"],
+    },
   ],
 }
 
@@ -37,18 +48,31 @@ export default ({ iface, onChange }) => {
         (iface.labels || []).map((a) =>
           typeof a === "string" ? { id: a, description: a } : a
         ) || [],
+      autoseg: iface.autoSegmentationEngine?.type,
     }),
     [iface]
   )
   return (
-    <Survey
-      noActions
-      variant="flat"
-      defaultAnswers={defaultAnswers}
-      onQuestionChange={(questionId, newValue, answers) => {
-        onChange(setIn(iface, [questionId], newValue))
-      }}
-      form={form}
-    />
+    <>
+      <Survey
+        noActions
+        variant="flat"
+        defaultAnswers={defaultAnswers}
+        onQuestionChange={(questionId, newValue, answers) => {
+          if (questionId === "autoseg") {
+            onChange(
+              setIn(
+                iface,
+                ["autoSegmentationEngine"],
+                autoSegmentationOptions[newValue]
+              )
+            )
+          } else {
+            onChange(setIn(iface, [questionId], newValue))
+          }
+        }}
+        form={form}
+      />
+    </>
   )
 }

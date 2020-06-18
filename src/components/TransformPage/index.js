@@ -16,9 +16,12 @@ import CollectionsIcon from "@material-ui/icons/Collections"
 import TransformVideoFramesToImagesDialog from "../TransformVideoFramesToImagesDialog"
 import usePosthog from "../../utils/use-posthog"
 import TransformLocalFilesToWebURLs from "../TransformLocalFilesToWebURLs"
+import TransformImageSamplesIntoSegmentsDialog from "../TransformImageSamplesIntoSegmentsDialog"
 
 import ComputerIcon from "@material-ui/icons/Computer"
 import LanguageIcon from "@material-ui/icons/Language"
+import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank"
+import GridOnIcon from "@material-ui/icons/GridOn"
 
 const ButtonBase = styled(MuiButton)({
   width: 240,
@@ -139,6 +142,13 @@ export default ({ dataset, onChangeDataset }) => {
         >
           Convert Video Frames to Images
         </Button>
+        <Button
+          dialog="split-image-samples-into-segments"
+          Icon1={CheckBoxOutlineBlankIcon}
+          Icon2={GridOnIcon}
+        >
+          Split Image Samples into Segments
+        </Button>
         <TransformVideoKeyframesDialog
           open={selectedDialog === "convert-keyframes-to-samples"}
           onClose={closeDialog}
@@ -169,6 +179,12 @@ export default ({ dataset, onChangeDataset }) => {
           desktopOnly
           onChangeDataset={onChangeDataset}
         ></TransformVideoFramesToImagesDialog>
+        <TransformImageSamplesIntoSegmentsDialog
+          dataset={dataset}
+          open={selectedDialog === "split-image-samples-into-segments"}
+          onClose={closeDialog}
+          onChangeDataset={onChangeDataset}
+        ></TransformImageSamplesIntoSegmentsDialog>
       </div>
     </SelectDialogContext.Provider>
   )
