@@ -64,6 +64,7 @@ export default ({ open, onClose, onAddSamples }) => {
             id: googleDriveDocument.id,
           }))
         )
+
         setIsPickerOpen(false)
       } else if (data.action === "cancel") {
         onClose()
@@ -74,20 +75,16 @@ export default ({ open, onClose, onAddSamples }) => {
 
   const createPicker = useCallback(() => {
     if (pickerApiLoaded && oauthToken) {
-      const view = new window.google.picker.View(
-        window.google.picker.ViewId.Docs
+      const view = new window.google.picker.DocsView(
+        window.google.picker.ViewId.Docs,
+        window.google.picker.ViewId.FOLDERS
       )
+        .setIncludeFolders(true)
+        .setSelectFolderEnabled(true)
 
-      view.setMimeTypes(
-        "image/png",
-        "image/jpeg",
-        "image/jpg",
-        "image/gif",
-        "video/mp4",
-        "video/mpeg"
-      )
       const picker = new window.google.picker.PickerBuilder()
         .enableFeature(window.google.picker.Feature.NAV_HIDDEN)
+        .enableFeature(window.google.picker.Feature.MINE_ONLY)
         .enableFeature(window.google.picker.Feature.MULTISELECT_ENABLED)
         .setAppId(credentials.web.app_id)
         .setOAuthToken(oauthToken)
@@ -147,6 +144,7 @@ export default ({ open, onClose, onAddSamples }) => {
         samples.push({ videoUrl: `https://drive.google.com/uc?id=${item.id}` })
       }
     }
+
     onAddSamples(samples)
   }
 
