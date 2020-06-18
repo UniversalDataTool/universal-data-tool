@@ -132,7 +132,6 @@ export default ({ open, onClose, onAddSamples }) => {
     if (googleScriptLoaded === true) {
       window.gapi.load("auth", { callback: onAuthApiLoad })
       window.gapi.load("picker", { callback: onPickerApiLoad })
-      console.log(userSelectedItemsFromDrive)
     }
   }, [googleScriptLoaded, onAuthApiLoad, onPickerApiLoad])
 
