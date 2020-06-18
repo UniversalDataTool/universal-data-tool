@@ -64,7 +64,7 @@ export default ({ open, onClose, onAddSamples }) => {
             id: googleDriveDocument.id,
           }))
         )
-     
+
         setIsPickerOpen(false)
       } else if (data.action === "cancel") {
         onClose()
@@ -152,7 +152,6 @@ export default ({ open, onClose, onAddSamples }) => {
   useEffect(() => {
     if (open) {
       onLoadPicker()
-     
     }
   }, [open, googleScriptLoaded, onLoadPicker])
 
