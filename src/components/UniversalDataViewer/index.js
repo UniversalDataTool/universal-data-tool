@@ -96,6 +96,7 @@ export const UniversalDataViewer = ({
         />
       )
     case "image_segmentation":
+    case "image_pixel_segmentation":
       return (
         <ImageSegmentation
           containerProps={containerProps}

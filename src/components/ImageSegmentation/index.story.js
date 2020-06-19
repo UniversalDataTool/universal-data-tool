@@ -17,13 +17,7 @@ storiesOf("ImageSegmentation", module)
           type: "image_segmentation",
           description: "# Title\n\nLowercase",
           labels: ["valid", "invalid"],
-          regionTypesAllowed: [
-            "bounding-box",
-            "polygon",
-            "full-segmentation",
-            "point",
-            "pixel-mask",
-          ],
+          regionTypesAllowed: ["bounding-box", "polygon", "point"],
         },
         samples: [
           {
@@ -59,13 +53,7 @@ storiesOf("ImageSegmentation", module)
             type: "image_segmentation",
             description: "# Title\n\nLowercase",
             labels: ["valid", "invalid"],
-            regionTypesAllowed: [
-              "bounding-box",
-              "polygon",
-              "full-segmentation",
-              "point",
-              "pixel-mask",
-            ],
+            regionTypesAllowed: ["bounding-box", "polygon", "point"],
           },
           samples: [
             {
@@ -87,4 +75,34 @@ storiesOf("ImageSegmentation", module)
         }}
       />
     </HotKeys>
+  ))
+  .add("full image segmentation", () => (
+    <ImageSegmentation
+      onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
+      {...{
+        interface: {
+          type: "image_pixel_segmentation",
+          description: "# Title\n\nLowercase",
+          labels: ["valid", "invalid"],
+          regionTypesAllowed: ["bounding-box", "polygon", "point"],
+        },
+        samples: [
+          {
+            imageUrl:
+              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
+            annotation: {
+              regionType: "bounding-box",
+              centerX: 0.5,
+              centerY: 0.5,
+              width: 0.25,
+              height: 0.25,
+            },
+          },
+          {
+            imageUrl:
+              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg",
+          },
+        ],
+      }}
+    />
   ))
