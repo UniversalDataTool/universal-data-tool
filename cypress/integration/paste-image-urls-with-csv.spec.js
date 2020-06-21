@@ -5,7 +5,7 @@ const csvRows = [
     "faces/011094.jpg,https://wao.ai/app/api/download/0060b2fa-6f7d-49c3-a965-ab82fe8a9475,female"
 ]
 
-describe("Create a new", () => {
+describe.skip("Create a new", () => {
     it('should be able to create', () => {
         cy.visit("/")
         cy.contains("New File").click()
