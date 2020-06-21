@@ -64,7 +64,6 @@ const Button = ({
   dialog,
   authConfiguredOnly,
   signedInOnly,
-  user,
   onlySupportType,
   type,
 }) => {
