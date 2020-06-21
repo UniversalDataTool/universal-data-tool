@@ -66,15 +66,32 @@ const Button = ({
   authConfig,
   signedInOnly,
   user,
+  onlySupportType,
+  type,
 }) => {
   const posthog = usePosthog()
-  const disabled = desktopOnly
-    ? !isDesktop
-    : authConfiguredOnly
-    ? signedInOnly
-      ? isEmpty(user)
-      : isEmpty(authConfig)
-    : false
+
+  const isDisabled = () => {
+    if (desktopOnly) {
+      return { disabled: !isDesktop, disabledText: "DESKTOP ONLY" }
+    } else if (onlySupportType && !onlySupportType.includes(type)) {
+      return { disabled: true, disabledText: `DOESN'T SUPPORT THIS INTERFACE` }
+    } else if (authConfiguredOnly) {
+      if (signedInOnly) {
+        return { disabled: isEmpty(user), disabledText: "MUST BE SIGNED IN" }
+      } else {
+        return {
+          disabled: isEmpty(authConfig),
+          disabledText: "AUTH MUST BE CONFIGURED",
+        }
+      }
+    } else {
+      return { disabled: false, disabledText: "" }
+    }
+  }
+
+  const { disabled, disabledText } = isDisabled()
+
   return (
     <SelectDialogContext.Consumer>
       {({ onChangeDialog }) => {
@@ -93,19 +110,9 @@ const Button = ({
             <div>
               <Icon className={classnames("icon", { disabled })} />
               <div>{children}</div>
-              {desktopOnly && (
+              {disabled && (
                 <DesktopOnlyText className={classnames({ disabled })}>
-                  DESKTOP ONLY
-                </DesktopOnlyText>
-              )}
-              {authConfiguredOnly && isEmpty(authConfig) && (
-                <DesktopOnlyText className={classnames({ disabled })}>
-                  AUTH MUST BE CONFIGURED
-                </DesktopOnlyText>
-              )}
-              {signedInOnly && isEmpty(user) && (
-                <DesktopOnlyText className={classnames({ disabled })}>
-                  MUST BE SIGNED IN
+                  {disabledText}
                 </DesktopOnlyText>
               )}
             </div>
@@ -185,7 +192,12 @@ export default ({
         >
           Files from Directory
         </Button>
-        <Button dialog="import-text-snippets" Icon={TextFieldsIcon}>
+        <Button
+          dialog="import-text-snippets"
+          Icon={TextFieldsIcon}
+          onlySupportType={["text_entity_recognition", "text_classification"]}
+          type={dataset.interface.type}
+        >
           Import Text Snippets
         </Button>
         <Button
