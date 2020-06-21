@@ -17,7 +17,7 @@ const randomId = () => Math.random().toString().split(".")[1]
 export default () => {
   const {
     file,
-    changeFile,
+    setFile,
     openFile,
     openUrl,
     makeSession,
@@ -31,7 +31,7 @@ export default () => {
   const { remote, ipcRenderer } = useElectron()
 
   const onCreateTemplate = useEventCallback((template) => {
-    changeFile({
+    setFile({
       fileName: "unnamed",
       content: template.dataset,
       id: randomId(),
@@ -39,11 +39,11 @@ export default () => {
     })
   })
 
-  const openRecentItem = useEventCallback((item) => changeFile(item))
-  const onClickHome = useEventCallback(() => changeFile(null))
+  const openRecentItem = useEventCallback((item) => setFile(item))
+  const onClickHome = useEventCallback(() => setFile(null))
 
   useEffect(() => {
-    const onOpenWelcomePage = () => changeFile(null)
+    const onOpenWelcomePage = () => setFile(null)
     const onNewFile = (arg0, { templateName } = {}) => {
       onCreateTemplate(
         templates.find((t) => t.name === templateName) || templates[0]
@@ -81,15 +81,7 @@ export default () => {
       ipcRenderer.removeListener("save-file-as", saveFileAs)
       ipcRenderer.removeListener("export-to-csv", exportToCSV)
     }
-  }, [
-    file,
-    changeFile,
-    ipcRenderer,
-    openFile,
-    onCreateTemplate,
-    remote,
-    saveFile,
-  ])
+  }, [file, setFile, ipcRenderer, openFile, onCreateTemplate, remote, saveFile])
 
   const inSession = file && file.mode === "server"
   const [sessionBoxOpen, changeSessionBoxOpen] = useState(false)
@@ -99,19 +91,18 @@ export default () => {
   })
 
   const onLeaveSession = useEventCallback(() =>
-    changeFile({
+    setFile({
       ...file,
       mode: "local-storage",
       fileName: file.fileName || `copy_of_${file.id}`,
     })
   )
 
-  const collaborateError = (((file || {}).content || {}).samples || []).some(
-    (sample) =>
-      [sample.imageUrl, sample.videoUrl, sample.pdfUrl]
-        .filter(Boolean)
-        .map((a) => a.includes("file://"))
-        .some(Boolean)
+  const collaborateError = (file?.content?.samples || []).some((sample) =>
+    [sample.imageUrl, sample.videoUrl, sample.pdfUrl]
+      .filter(Boolean)
+      .map((a) => a.includes("file://"))
+      .some(Boolean)
   )
     ? "Some URLs (links) in this file are connected to files on your computer. Use the Samples > Transform > Transform Files to Web URLs to upload these files, then collaboration will be available."
     : null
@@ -162,10 +153,10 @@ export default () => {
             selectedBrush={selectedBrush}
             dataset={file.content}
             onChangeFileName={(newName) => {
-              changeFile(setIn(file, ["fileName"], newName))
+              setFile(setIn(file, ["fileName"], newName))
             }}
             onChangeDataset={(newOHA) => {
-              changeFile(setIn(file, ["content"], newOHA))
+              setFile(setIn(file, ["content"], newOHA))
             }}
           />
         )}
