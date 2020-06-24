@@ -19,8 +19,8 @@ describe("Create a new file in the universal data tool", () => {
     });
     
     it('should be able to store session url', () =>{
-        cy.get("div[title='share-link']").children().children().then(elements => {
-            collobrationURL = Cypress.$(elements[0]).val()
+        cy.get('.collobration-session-url').eq(0).click().then((textInput) =>{
+            collobrationURL = textInput[0].children[1].children[0].value
         })
     })
 
@@ -30,5 +30,6 @@ describe("Create a new file in the universal data tool", () => {
 
     it('should be able to navigate to samples', () =>{
         cy.contains("Samples").click()
+        cy.contains(32).click()
     })
 })
