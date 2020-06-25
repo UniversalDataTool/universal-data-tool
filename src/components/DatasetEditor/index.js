@@ -144,6 +144,7 @@ export default ({
                   onChangeFile(setIn(file, ["fileName"], newName))
                   setValueDisplay(newName)
                 }}
+                className="collobration-session-url"
                 value={valueDisplay || ""}
               />
             )
