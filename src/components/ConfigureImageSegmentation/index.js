@@ -42,17 +42,21 @@ const form = {
 
 export default ({ iface, onChange }) => {
   const defaultAnswers = useMemo(
-    () => (asMutable({
-      multipleRegions: Boolean(
-        iface.multipleRegions || iface.multipleRegions === undefined
+    () =>
+      asMutable(
+        {
+          multipleRegions: Boolean(
+            iface.multipleRegions || iface.multipleRegions === undefined
+          ),
+          multipleRegionLabels: Boolean(iface.multipleRegionLabels),
+          regionTypesAllowed: iface.regionTypesAllowed,
+          labels:
+            (iface.labels || []).map((a) =>
+              typeof a === "string" ? { id: a, description: a } : a
+            ) || [],
+        },
+        { deep: true }
       ),
-      multipleRegionLabels: Boolean(iface.multipleRegionLabels),
-      regionTypesAllowed: iface.regionTypesAllowed,
-      labels:
-        (iface.labels || []).map((a) =>
-          typeof a === "string" ? { id: a, description: a } : a
-        ) || [],
-    }, {deep: true})),
     [iface]
   )
   return (
