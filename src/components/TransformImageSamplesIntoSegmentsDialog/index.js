@@ -16,9 +16,13 @@ const ErrorBox = styled("pre")({
 
 const splitOptions = [
   { label: "2x2", value: "2x2" },
+  { label: "1x2 (columns)", value: "1x2" },
   { label: "3x3", value: "3x3" },
+  { label: "1x2 (columns)", value: "1x2" },
+  { label: "1x3 (columns)", value: "1x3" },
+  { label: "2x3 (2 rows)", value: "2x3" },
   { label: "4x4", value: "4x4" },
-  { label: "3x4", value: "3x4" },
+  { label: "3x4 (3 rows)", value: "3x4" },
 ]
 
 export default ({ open, onChangeDataset, onClose, dataset }) => {
