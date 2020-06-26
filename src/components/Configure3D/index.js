@@ -26,7 +26,9 @@ const Configure3D = () => {
   return (
     <ExplanationTextHeader>
       <ExplanationText>
-        {t("Hey, this isn't currently available, but if you'd like this functionality please let us know by leaving a thumbs up on")}{" "}
+        {t(
+          "Hey, this isn't currently available, but if you'd like this functionality please let us know by leaving a thumbs up on"
+        )}{" "}
         <GithubLink
           target="_blank"
           rel="noopener noreferrer"

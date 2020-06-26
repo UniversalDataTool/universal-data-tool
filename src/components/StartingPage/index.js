@@ -252,17 +252,23 @@ export default ({
               <ActionList>
                 <ActionTitle>About</ActionTitle>
                 <ActionText>
-                  {t("The Universal Data Tool (UDT) is an open-source web or downloadable tool for labeling data for usage in machine learning or data processing systems.")}
+                  {t(
+                    "The Universal Data Tool (UDT) is an open-source web or downloadable tool for labeling data for usage in machine learning or data processing systems."
+                  )}
                   <br />
                   <br />
-                  {t("The Universal Data Tool supports Computer Vision, Natural Language Processing (including Named Entity Recognition and Audio Transcription) workflows.")}
+                  {t(
+                    "The Universal Data Tool supports Computer Vision, Natural Language Processing (including Named Entity Recognition and Audio Transcription) workflows."
+                  )}
                   <br />
                   <br />
                   {t("The UDT uses an")}{" "}
                   <a href="https://github.com/UniversalDataTool/udt-format">
                     open-source data format (.udt.json / .udt.csv)
                   </a>{" "}
-                  {t("that can be easily read by programs as a ground-truth dataset for machine learning algorithms.")}
+                  {t(
+                    "that can be easily read by programs as a ground-truth dataset for machine learning algorithms."
+                  )}
                   <br />
                   <br />
                 </ActionText>

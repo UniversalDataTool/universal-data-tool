@@ -66,7 +66,9 @@ export default ({ open, onChangeDataset, onClose, dataset }) => {
         },
       ]}
     >
-      {t("This operation will convert keyframes set on a video into individual image segmentation frames. Your interface type will change from 'video_segmentation' into 'image_segmentation'. This is sometimes helpful when preparing video data for a computer vision model.")}
+      {t(
+        "This operation will convert keyframes set on a video into individual image segmentation frames. Your interface type will change from 'video_segmentation' into 'image_segmentation'. This is sometimes helpful when preparing video data for a computer vision model."
+      )}
       {!dataset.samples && (
         <b>
           <br />

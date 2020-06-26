@@ -174,7 +174,9 @@ export default ({ open, onClose, onAddSamples }) => {
       </Button>
       <ExplainText>
         {t("Make sure your Google Drive files are available via a link")}.{" "}
-        <b>{t("If you don't, the files will not appear when you're labeling")}!</b>
+        <b>
+          {t("If you don't, the files will not appear when you're labeling")}!
+        </b>
       </ExplainText>
       <GoogleDriveScreenshot
         src={

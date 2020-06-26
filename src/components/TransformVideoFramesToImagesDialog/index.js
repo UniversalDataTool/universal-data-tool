@@ -107,7 +107,9 @@ export default ({ open, onChangeDataset, onClose, dataset }) => {
         },
       ]}
     >
-      {t("This transformation will convert samples that reference a video frame into an image. This is a useful step before creating a model. You can only convert videos that are downloaded on your computer. Note: This can take a little while.")}
+      {t(
+        "This transformation will convert samples that reference a video frame into an image. This is a useful step before creating a model. You can only convert videos that are downloaded on your computer. Note: This can take a little while."
+      )}
       <ProgressBar progress={progress || 0} />
       {errors && <ErrorBox>{errors}</ErrorBox>}
     </SimpleDialog>
