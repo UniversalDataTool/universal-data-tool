@@ -5,40 +5,48 @@ const csvRows = [
     "faces/011094.jpg,https://wao.ai/app/api/download/0060b2fa-6f7d-49c3-a965-ab82fe8a9475,female"
 ]
 
-describe.skip("Create a new", () => {
+describe("Create a new file", () => {
     it('should be able to create', () => {
         cy.visit("/")
         cy.contains("New File").click()
     })
 
-    it('should be able to open paste', () => {
+    it('should be able to open import dialog', () => {
         cy.contains("Samples").click()
-        cy.contains("Import").click()
-        cy.contains("Import Text Snippets").click()
-    });
+        cy.contains("Import from CSV / JSON").click()
+    })
 
+    it('should be able to click textarea to paste', () =>{
+        cy.get("textarea").click()
+    })
 
-    it('should be able to paste image urls', () => {
-        const csvText = csvHeader + "{enter}" + csvRows.join("{enter}")
-        cy.get("textarea").type(csvText)
-    });
+    it('should be able to paste csv of image urls', () => {
+        cy.get("textarea")
+            .type(csvHeader)
+            .type("{enter}")
+        for(const csvRow of csvRows){
+            cy.get("textarea")
+                .type(csvRow + "{enter}")
+        }
+    })
 
-    it('should be able to add that samples', () => {
+    it('should be able to add samples from csv', () => {
         cy.contains("Add Samples").click()
-    });
+    })
 
     it('should be able to go to setup', () => {
         cy.contains("Setup").click()
-    });
+    })
 
-    it('should be able to go to Image Classification', () => {
+    it('should be able to go to Image Classification setup', () => {
         cy.contains("Image Classification").click()
-    });
+    })
 
     it('should be able to see samples', () => {
         cy.contains("Samples").click()
         cy.contains("2").click()
-    });
+    })
+
     it('should be able to label image', () => {
         cy.wait(200)
         cy.get("body").click().type("{enter}")
