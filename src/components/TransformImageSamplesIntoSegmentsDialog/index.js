@@ -37,21 +37,21 @@ export default ({ open, onChangeDataset, onClose, dataset }) => {
         {
           text: "Convert Image Samples into Segments",
           onClick: async () => {
-            const [w, h] = splitType.split("x").map((v) => parseInt(v))
+            const [rows, cols] = splitType.split("x").map((v) => parseInt(v))
 
             try {
               onChangeDataset(
                 setIn(
                   dataset,
                   ["samples"],
-                  range(h).flatMap((y) =>
-                    range(w).flatMap((x) =>
+                  range(rows).flatMap((y) =>
+                    range(cols).flatMap((x) =>
                       dataset.samples.map((s) => {
                         return setIn(s, ["allowedArea"], {
-                          x: x / w,
-                          y: y / h,
-                          width: 1 / w,
-                          height: 1 / h,
+                          x: x / cols,
+                          y: y / rows,
+                          width: 1 / cols,
+                          height: 1 / rows,
                         })
                       })
                     )
