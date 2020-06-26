@@ -17,6 +17,7 @@ import TransformVideoFramesToImagesDialog from "../TransformVideoFramesToImagesD
 import usePosthog from "../../utils/use-posthog"
 import TransformLocalFilesToWebURLs from "../TransformLocalFilesToWebURLs"
 import TransformImageSamplesIntoSegmentsDialog from "../TransformImageSamplesIntoSegmentsDialog"
+import TransformSegmentsIntoImageSamplesDialog from "../TransformSegmentsIntoImageSamplesDialog"
 
 import ComputerIcon from "@material-ui/icons/Computer"
 import LanguageIcon from "@material-ui/icons/Language"
@@ -149,6 +150,13 @@ export default ({ dataset, onChangeDataset }) => {
         >
           Split Image Samples into Segments
         </Button>
+        <Button
+          dialog="combine-segments-into-image-samples"
+          Icon1={GridOnIcon}
+          Icon2={CheckBoxOutlineBlankIcon}
+        >
+          Combine Segments into Image Samples
+        </Button>
         <TransformVideoKeyframesDialog
           open={selectedDialog === "convert-keyframes-to-samples"}
           onClose={closeDialog}
@@ -185,6 +193,12 @@ export default ({ dataset, onChangeDataset }) => {
           onClose={closeDialog}
           onChangeDataset={onChangeDataset}
         ></TransformImageSamplesIntoSegmentsDialog>
+        <TransformSegmentsIntoImageSamplesDialog
+          dataset={dataset}
+          open={selectedDialog === "combine-segments-into-image-samples"}
+          onClose={closeDialog}
+          onChangeDataset={onChangeDataset}
+        ></TransformSegmentsIntoImageSamplesDialog>
       </div>
     </SelectDialogContext.Provider>
   )
