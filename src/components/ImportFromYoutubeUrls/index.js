@@ -199,7 +199,7 @@ const ImportFromYoutubeUrls = ({ open, onClose, onAddSamples }) => {
         <React.Fragment>
           <SelectVideoQuality>
             <SelectVideoQualityHeader>
-              {t("select-video-quality")}
+              {t("Select Video Quality")}
             </SelectVideoQualityHeader>
             <Select
               defaultValue={qualityOptions[0]}

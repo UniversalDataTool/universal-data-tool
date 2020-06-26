@@ -103,7 +103,7 @@ export const Composite = (props) => {
         <KeyboardArrowRightIcon
           style={{ color: colors.grey[500], marginRight: 16 }}
         />
-        {t("next")}
+        {t("Next")}
         <Box flexGrow={1} />
         <Box height="42px" />
         <KeyboardArrowRightIcon />

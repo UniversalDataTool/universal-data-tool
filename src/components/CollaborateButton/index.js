@@ -135,10 +135,10 @@ export default ({
         <PeopleIcon />
       </IconButton>
       <PopupBox className={sessionBoxOpen ? "" : "hidden"}>
-        <h1>{t("collobrate")}</h1>
+        <h1>{t("Collaborate")}</h1>
         {!inSession ? (
           <>
-            <h2>{"join-a-session"}</h2>
+            <h2>{"Join a Session"}</h2>
             <TextField
               variant="outlined"
               label="URL to Session"
@@ -190,7 +190,7 @@ export default ({
             />
             <ExitButton fullWidth onClick={onLeaveSession}>
               <ExitToAppIcon className="icon" />
-              {t("leave-session")}
+              {t("Leave Session")}
             </ExitButton>
           </>
         )}

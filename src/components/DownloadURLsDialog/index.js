@@ -110,7 +110,7 @@ export default ({ open, onChangeDataset, onClose, dataset }) => {
         },
       ]}
     >
-      {t("download-urls-dialog")}
+      {t("This transformation will download all the urls from your samples to your computer, and change the paths to filenames. This is usually not a good idea if you're collaborating with others, but is very useful if you're about to build a model.")}
       <ProgressBar progress={progress || 0} />
       {errors && <ErrorBox>{errors}</ErrorBox>}
     </SimpleDialog>

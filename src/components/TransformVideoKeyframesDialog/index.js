@@ -66,12 +66,12 @@ export default ({ open, onChangeDataset, onClose, dataset }) => {
         },
       ]}
     >
-      {t("transform-video-keyframes-dialog-explanation-text")}
+      {t("This operation will convert keyframes set on a video into individual image segmentation frames. Your interface type will change from 'video_segmentation' into 'image_segmentation'. This is sometimes helpful when preparing video data for a computer vision model.")}
       {!dataset.samples && (
         <b>
           <br />
           <br />
-          {t("transform-video-keyframes-dialog-explanation-warning")}
+          {t("You need to label some keyframes to use this.")}
         </b>
       )}
       <StyledExpansionPanel>

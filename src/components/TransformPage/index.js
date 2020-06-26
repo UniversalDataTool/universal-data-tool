@@ -92,7 +92,7 @@ const Button = ({ Icon1, Icon2, desktopOnly, children, dialog, disabled }) => {
               <div>{children}</div>
               {desktopOnly && (
                 <DesktopOnlyText className={classnames({ disabled })}>
-                  {t("desktop-only").toUpperCase()}
+                  {t("Desktop Only").toUpperCase()}
                 </DesktopOnlyText>
               )}
             </div>
@@ -126,7 +126,7 @@ export default ({ dataset, onChangeDataset }) => {
           Icon1={OndemandVideoIcon}
           Icon2={CollectionsIcon}
         >
-          {t("convert-video-keyframes-to-samples")}
+          {t("Convert Video Keyframes to Samples")}
         </Button>
         <Button
           desktopOnly
@@ -134,10 +134,10 @@ export default ({ dataset, onChangeDataset }) => {
           Icon1={ComputerIcon}
           Icon2={LanguageIcon}
         >
-          {t("transform-local-files-to-web-urls")}
+          {t("Transform Local Files to Web URLs")}
         </Button>
         <Button desktopOnly dialog="download-urls" Icon1={GetAppIcon}>
-          {t("download")} URLs
+          {t("Download")} URLs
         </Button>
         <Button
           desktopOnly
@@ -145,7 +145,7 @@ export default ({ dataset, onChangeDataset }) => {
           Icon1={OndemandVideoIcon}
           Icon2={ImageIcon}
         >
-          {t("convert-video-frames-to-images")}
+          {t("Convert Video Frames to Images")}
         </Button>
         <Button
           dialog="split-image-samples-into-segments"

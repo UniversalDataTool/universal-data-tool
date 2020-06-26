@@ -163,7 +163,7 @@ export default ({ iface, onChange }) => {
       <ButtonsContainer>
         <StyledButton onClick={(e) => changeMenuOpen(true)} ref={anchorEl}>
           <AddCircleIcon className="icon" />
-          {t("add-input")}
+          {t("Add Input")}
         </StyledButton>
       </ButtonsContainer>
       <Menu
@@ -189,7 +189,7 @@ export default ({ iface, onChange }) => {
             )
           }}
         >
-          {t("text-input")}
+          {t("Text Input")}
         </MenuItem>
         <MenuItem
           onClick={() => {
@@ -208,7 +208,7 @@ export default ({ iface, onChange }) => {
             )
           }}
         >
-          {t("exclusive-choice")}
+          {t("Exclusive Choice")}
         </MenuItem>
         <MenuItem
           onClick={() => {
@@ -264,7 +264,7 @@ export default ({ iface, onChange }) => {
             )
           }}
         >
-          {t("drop-down-autocomplete")}
+          {t("Dropdown / Autocomplete")}
         </MenuItem>
         <MenuItem
           onClick={() => {
@@ -285,7 +285,7 @@ export default ({ iface, onChange }) => {
             )
           }}
         >
-          {t("multiple-item-dropdown-autocomplete")}
+          {t("Multiple Item Dropdown / Autocomplete")}
         </MenuItem>
       </Menu>
     </div>

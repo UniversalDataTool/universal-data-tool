@@ -82,7 +82,7 @@ export default ({ selectedBrush, onChangeSelectedBrush }) => {
         />
       </IconButton>
       <HeaderPopupBox open={open}>
-        <h1>{t("sample-brushes")}</h1>
+        <h1>{t("Sample Brushes")}</h1>
         <StyledButton
           selected={selectedBrush === "complete" || selectedBrush === "blue"}
           iconcolor={colors.blue}
@@ -90,7 +90,7 @@ export default ({ selectedBrush, onChangeSelectedBrush }) => {
           onClick={handleClick("complete")}
         >
           <BrushCircle color={colors.blue} />
-          {t("complete")}
+          {t("Complete")}
         </StyledButton>
         <StyledButton
           selected={
@@ -101,7 +101,7 @@ export default ({ selectedBrush, onChangeSelectedBrush }) => {
           onClick={handleClick("review")}
         >
           <BrushCircle color={colors.deepOrange} />
-          {t("review")}
+          {t("Review")}
         </StyledButton>
         <OtherColorContainers>
           <StyledIconButton

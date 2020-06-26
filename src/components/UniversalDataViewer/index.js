@@ -52,11 +52,11 @@ export const UniversalDataViewer = ({
         title="Set up your project to begin labeling"
         description={
           <p>
-            {t("universal-data-viewer-warning")}
+            {t("This interface hasn't been set up properly, try selecting an interface in the 'Setup' tab.")}
             <br />
             <br />
             <Button color="primary" variant="contained" onClick={onClickSetup}>
-              {t("setup-project")}
+              {t("Setup Project")}
             </Button>
           </p>
         }

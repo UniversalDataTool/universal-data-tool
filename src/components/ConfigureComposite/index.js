@@ -73,7 +73,7 @@ export default ({ iface, onChange }) => {
                     })
                   }}
                 >
-                  {t("remove-field")}
+                  {t("Remove Field")}
                 </Button>
               </Box>
             </ExpansionPanelDetails>
@@ -96,7 +96,7 @@ export default ({ iface, onChange }) => {
             )
           }}
         >
-          {t("add-new-field")}
+          {t("Add New Field")}
         </StyledButton>
       </Fields>
     </React.Fragment>

@@ -170,11 +170,11 @@ export default ({ open, onClose, onAddSamples }) => {
       ].filter(Boolean)}
     >
       <Button variant="outlined" onClick={onLoadPicker}>
-        {t("reopen-google-drive-picker")}
+        {t("Reopen Google Drive Picker")}
       </Button>
       <ExplainText>
-        {t("import-from-google-drive-explanation-text")}.{" "}
-        <b>{t("import-from-google-drive-explanation-bold-text")}!</b>
+        {t("Make sure your Google Drive files are available via a link")}.{" "}
+        <b>{t("If you don't, the files will not appear when you're labeling")}!</b>
       </ExplainText>
       <GoogleDriveScreenshot
         src={

@@ -26,7 +26,7 @@ const Configure3D = () => {
   return (
     <ExplanationTextHeader>
       <ExplanationText>
-        {t("configure-3d-explanation-text-part-1")}{" "}
+        {t("Hey, this isn't currently available, but if you'd like this functionality please let us know by leaving a thumbs up on")}{" "}
         <GithubLink
           target="_blank"
           rel="noopener noreferrer"
@@ -34,7 +34,7 @@ const Configure3D = () => {
         >
           this
         </GithubLink>{" "}
-        {t("github-issue")}.
+        {t("Github issue")}.
       </ExplanationText>
     </ExplanationTextHeader>
   )

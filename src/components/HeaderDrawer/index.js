@@ -70,7 +70,7 @@ export default ({
             <ListItemText
               style={{ textAlign: "center", color: colors.grey[500] }}
             >
-              {t("no-recent-items")}
+              {t("No Recent Items")}
             </ListItemText>
           </ListItem>
         ) : (
@@ -113,7 +113,7 @@ export default ({
             <ListItemText>{template.name}</ListItemText>
           </ListItem>
         ))}
-        <ListSubheader>{t("explore-more")}</ListSubheader>
+        <ListSubheader>{t("Explore More")}</ListSubheader>
         {/* <ListItem button>
       <ListItemIcon>
         <CodeIcon />

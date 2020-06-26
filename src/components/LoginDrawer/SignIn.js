@@ -110,7 +110,7 @@ export default ({ onUserChange, onRequireCompleteSignUp, onClose }) => {
   return (
     <Fragment>
       <Typography component="h1" variant="h5">
-        {t("sign-in")}
+        {t("Sign in")}
       </Typography>
       {error && <ErrorText>{error}</ErrorText>}
       <form className={classes.form} noValidate>
@@ -156,7 +156,7 @@ export default ({ onUserChange, onRequireCompleteSignUp, onClose }) => {
           color="primary"
           className={classes.submit}
         >
-          {t("sign-in")}
+          {t("Sign in")}
         </Button>
       </form>
     </Fragment>

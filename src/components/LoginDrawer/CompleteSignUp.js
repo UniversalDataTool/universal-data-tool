@@ -139,7 +139,7 @@ export default ({ requiredAttributes, onUserChange, onClose }) => {
   return (
     <Fragment>
       <Typography component="h1" variant="h5">
-        {t("complete-your-sign-up")}
+        {t("Complete your Sign Up")}
       </Typography>
       <form className={classes.form} noValidate>
         <TextField
@@ -208,7 +208,7 @@ export default ({ requiredAttributes, onUserChange, onClose }) => {
           color="primary"
           className={classes.submit}
         >
-          {t("complete-sign-up")}
+          {t("Complete Sign Up")}
         </Button>
       </form>
     </Fragment>

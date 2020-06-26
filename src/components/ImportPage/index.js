@@ -182,7 +182,7 @@ export default ({
           signedInOnly={false}
           user={user}
         >
-          {t("paste-urls")}
+          {t("Paste URLs")}
         </Button>
         <Button
           desktopOnly
@@ -193,7 +193,7 @@ export default ({
           signedInOnly={false}
           user={user}
         >
-          {t("files-from-directory")}
+          {t("Files from Directory")}
         </Button>
         <Button
           dialog="import-text-snippets"
@@ -201,14 +201,14 @@ export default ({
           onlySupportType={["text_entity_recognition", "text_classification"]}
           type={dataset.interface.type}
         >
-          {t("import-text-snippets")}
+          {t("Import Text Snippets")}
         </Button>
         <Button
           isDesktop={isDesktop}
           dialog="import-toy-dataset"
           Icon={PetsIcon}
         >
-          {t("import-toy-dataset")}
+          {t("Import Toy Dataset")}
         </Button>
         <Button
           isDesktop={isDesktop}
@@ -216,7 +216,7 @@ export default ({
           Icon={FaYoutube}
           desktopOnly
         >
-          {t("import-from")} Youtube URLs
+          {t("Import from")} Youtube URLs
         </Button>
         {file && (
           <Button
@@ -228,7 +228,7 @@ export default ({
             signedInOnly={true}
             user={user}
           >
-            {t("import-from")} S3
+            {t("Import from")} S3
           </Button>
         )}
         <Button
@@ -237,10 +237,10 @@ export default ({
           Icon={FaGoogleDrive}
           onAddSamples={onAddSamples}
         >
-          {t("import-from")} Google Drive
+          {t("Import from")} Google Drive
         </Button>
         <Button dialog="import-csv-json" Icon={DescriptionIcon}>
-          {t("import-from")} CSV / JSON
+          {t("Import from")} CSV / JSON
         </Button>
         <ImportTextSnippetsDialog
           open={selectedDialog === "import-text-snippets"}

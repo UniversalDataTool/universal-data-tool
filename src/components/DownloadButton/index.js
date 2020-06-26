@@ -47,14 +47,14 @@ export default ({ onDownload }) => {
         <DownloadIcon />
       </IconButton>
       <HeaderPopupBox open={open}>
-        <h1>{t("download")}</h1>
+        <h1>{t("Download")}</h1>
         <StyledButton fullWidth onClick={() => onDownload("csv")}>
           <div className="fakeicon green">CSV</div>
-          {t("download")} CSV
+          {t("Download")} CSV
         </StyledButton>
         <StyledButton fullWidth onClick={() => onDownload("json")}>
           <div className="fakeicon blue">JSON</div>
-          {t("download")} JSON
+          {t("Download")} JSON
         </StyledButton>
       </HeaderPopupBox>
     </Container>

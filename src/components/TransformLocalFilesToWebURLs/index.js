@@ -34,7 +34,7 @@ const TransformLocalFilesToWebURLs = ({
         },
       ]}
     >
-      {t("transform-local-files-to-web-urls-explanation")}
+      {t("This transformation will upload your local samples to the cloud Note: This can take a little while.")}
       <ProgressBar progress={progress} />
     </SimpleDialog>
   )

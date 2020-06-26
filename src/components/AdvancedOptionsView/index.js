@@ -41,7 +41,7 @@ export const AdvancedOptionsView = ({ onClickEditJSON, onClearLabelData }) => {
         }}
         variant="outlined"
       >
-        {t("clear-labels")}
+        {t("Clear All Labels")}
       </Button>
       <Button
         variant="outlined"
@@ -55,7 +55,7 @@ export const AdvancedOptionsView = ({ onClickEditJSON, onClearLabelData }) => {
         }}
       >
         {posthog.has_opted_out_capturing() ? "Enable" : "Disable"}{" "}
-        {t("telemetry")}
+        {t("Telemetry")}
       </Button>
       <Button
         variant="outlined"
@@ -70,7 +70,7 @@ export const AdvancedOptionsView = ({ onClickEditJSON, onClearLabelData }) => {
           window.location.reload()
         }}
       >
-        {t("custom-collobration-server")}
+        {t("Custom Collaboration Server")}
       </Button>
       <Button
         variant="outlined"
@@ -82,7 +82,7 @@ export const AdvancedOptionsView = ({ onClickEditJSON, onClearLabelData }) => {
         }}
       >
         {fromConfig("labelhelp.disabled") ? "Enable" : "Disable"}{" "}
-        {t("label-help")}
+        {t("Label Help")}
       </Button>
       {!fromConfig("labelhelp.disabled") && (
         <Button
@@ -97,7 +97,7 @@ export const AdvancedOptionsView = ({ onClickEditJSON, onClearLabelData }) => {
             setInConfig("labelhelp.apikey", response)
           }}
         >
-          {t("label-help-api-key")}
+          {t("Label Help API Key")}
         </Button>
       )}
       <Button

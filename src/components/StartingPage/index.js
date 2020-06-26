@@ -175,7 +175,7 @@ export default ({
               href="https://github.com/OpenHumanAnnotation/universal-data-tool/releases"
               className={c.headerButton}
             >
-              {t("download")}
+              {t("Download")}
             </Button>
           ),
         ].filter(Boolean)}
@@ -185,7 +185,7 @@ export default ({
           <Grid container>
             <Grid xs={12} item>
               <Title>Universal Data Tool</Title>
-              <Subtitle>{t("universaldatatool-description")}</Subtitle>
+              <Subtitle>{t("Open-Source Data Labeling")}</Subtitle>
             </Grid>
             <Grid xs={6} item>
               <ActionList>
@@ -198,31 +198,31 @@ export default ({
                     onOpenTemplate(templates.find((t) => t.name === "Empty"))
                   }}
                 >
-                  {t("new-file")}
+                  {t("New File")}
                 </Action>
                 <Action
                   onClick={() => changeCreateFromTemplateDialogOpen(true)}
                 >
-                  {t("start-from-template")}
+                  {t("Start from Template")}
                 </Action>
                 <Action {...getRootProps()}>
                   <input {...getInputProps()} />
-                  {t("open-file")}
+                  {t("Open File")}
                 </Action>
                 {onClickOpenSession && (
                   <Action onClick={onClickOpenSession}>
-                    {t("open-collabrative-session")}
+                    {t("Open Collaborative Session")}
                   </Action>
                 )}
                 <Action onClick={() => changeAddAuthFromDialogOpen(true)}>
-                  {t("add-authentication")}
+                  {t("Add Authentification")}
                 </Action>
                 {/* <Action>Open Folder</Action> */}
               </ActionList>
               <ActionList>
                 <ActionTitle>Recent</ActionTitle>
                 {recentItems.length === 0 ? (
-                  <Actionless>{t("no-recent-files")}</Actionless>
+                  <Actionless>{t("No Recent Files")}</Actionless>
                 ) : (
                   recentItems.map((ri, i) => (
                     <Action key={i} onClick={() => onOpenRecentItem(ri)}>
@@ -234,14 +234,14 @@ export default ({
               <ActionList>
                 <ActionTitle>Help</ActionTitle>
                 <Action href="https://github.com/UniversalDataTool/universal-data-tool/releases">
-                  {t("downloading-and-installing-udt")}
+                  {t("Downloading and Installing UDT")}
                 </Action>
                 <Action href="https://dev.to/seveibar/make-bounding-boxes-for-artificial-intelligence-with-udt-1kai">
-                  {t("labelling-images")}
+                  {t("Labeling Images")}
                 </Action>
                 {/* <Action>Custom Data Entry</Action> */}
                 <Action href="https://github.com/UniversalDataTool/universal-data-tool">
-                  Github {t("repository").toUpperCase()}
+                  Github {t("Repository").toUpperCase()}
                 </Action>
                 {/* <Action href="#">
                   How to Collaborate in Real-Time with UDT
@@ -252,17 +252,17 @@ export default ({
               <ActionList>
                 <ActionTitle>About</ActionTitle>
                 <ActionText>
-                  {t("start-page-about-first-paragraph")}
+                  {t("The Universal Data Tool (UDT) is an open-source web or downloadable tool for labeling data for usage in machine learning or data processing systems.")}
                   <br />
                   <br />
-                  {t("start-page-about-second-paragraph")}
+                  {t("The Universal Data Tool supports Computer Vision, Natural Language Processing (including Named Entity Recognition and Audio Transcription) workflows.")}
                   <br />
                   <br />
-                  {t("the-udt-uses-an")}{" "}
+                  {t("The UDT uses an")}{" "}
                   <a href="https://github.com/UniversalDataTool/udt-format">
                     open-source data format (.udt.json / .udt.csv)
                   </a>{" "}
-                  {t("start-page-about-third-paragraph")}
+                  {t("that can be easily read by programs as a ground-truth dataset for machine learning algorithms.")}
                   <br />
                   <br />
                 </ActionText>
@@ -274,9 +274,9 @@ export default ({
                     style={{ display: "inline" }}
                     onClick={() => changeCreateFromTemplateDialogOpen(true)}
                   >
-                    {t("open-a-template")}
+                    {t("Open a template")}
                   </Action>{" "}
-                  {t("to-see-how-the-udt-could-work-for-your-data")}
+                  {t("to see how the UDT could work for your data.")}
                 </ActionText>
               </ActionList>
             </Grid>

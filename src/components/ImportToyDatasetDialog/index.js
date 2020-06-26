@@ -62,7 +62,7 @@ const ImportToyDatasetDialog = ({ onClose, onAddSamples, open }) => {
                     }}
                     variant="outlined"
                   >
-                    {t("import")}
+                    {t("Import")}
                   </StyledButton>
                 </TableCell>
               </TableRow>
