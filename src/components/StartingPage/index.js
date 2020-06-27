@@ -165,6 +165,7 @@ export default ({
               className={c.headerButton}
               href="https://github.com/OpenHumanAnnotation/universal-data-tool/releases"
             >
+              <DownloadIcon className={c.downloadIcon} />
               {t("Download Version")} v{newVersionAvailable}
             </Button>
           ),
@@ -175,6 +176,7 @@ export default ({
               href="https://github.com/OpenHumanAnnotation/universal-data-tool/releases"
               className={c.headerButton}
             >
+              <DownloadIcon className={c.downloadIcon} />
               {t("download")}
             </Button>
           ),
@@ -237,7 +239,7 @@ export default ({
                   {t("downloading-and-installing-udt")}
                 </Action>
                 <Action href="https://dev.to/seveibar/make-bounding-boxes-for-artificial-intelligence-with-udt-1kai">
-                  {t("labelling-images")}
+                  {t("labeling-images")}
                 </Action>
                 {/* <Action>Custom Data Entry</Action> */}
                 <Action href="https://github.com/UniversalDataTool/universal-data-tool">

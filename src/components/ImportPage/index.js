@@ -92,7 +92,6 @@ const Button = ({
   }
 
   const { disabled, disabledText } = isDisabled()
-  const { t } = useTranslation()
 
   return (
     <SelectDialogContext.Consumer>
