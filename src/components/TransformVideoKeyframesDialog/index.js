@@ -28,7 +28,7 @@ const StyledExpansionPanelSummary = styled(ExpansionPanelSummary)({
 })
 
 export default ({ open, onChangeDataset, onClose, dataset }) => {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   return (
     <SimpleDialog

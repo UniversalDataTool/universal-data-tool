@@ -34,7 +34,7 @@ export default ({ onUserChange, onRequireCompleteSignUp, onClose }) => {
   const classes = useStyles()
 
   const [error, setError] = useState()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   const [state, setState] = useState({
     username: "",

@@ -56,7 +56,7 @@ const qualityOptions = [
 
 const ImportFromYoutubeUrls = ({ open, onClose, onAddSamples }) => {
   const { remote } = useElectron() || {}
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   const [urlsFromTextArea, setUrlsFromTextArea] = useState([])
   const [videoQuality, setVideoQuality] = useState(qualityOptions[0].value)

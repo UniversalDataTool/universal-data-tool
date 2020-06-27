@@ -92,7 +92,7 @@ const Button = ({
   }
 
   const { disabled, disabledText } = isDisabled()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   return (
     <SelectDialogContext.Consumer>
@@ -136,7 +136,7 @@ export default ({
   authConfig,
   user,
 }) => {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const [selectedDialog, changeDialog] = useState()
   const electron = useElectron()
   const onChangeDialog = async (dialog) => {

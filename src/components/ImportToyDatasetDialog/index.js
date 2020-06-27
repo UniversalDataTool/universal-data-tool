@@ -34,7 +34,7 @@ async function getSamples(dataset) {
 const StyledButton = styled(Button)({})
 
 const ImportToyDatasetDialog = ({ onClose, onAddSamples, open }) => {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   return (
     <SimpleDialog onClose={onClose} open={open} title="Import Toy Dataset">

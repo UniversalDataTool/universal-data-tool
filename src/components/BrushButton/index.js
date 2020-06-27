@@ -69,7 +69,7 @@ export default ({ selectedBrush, onChangeSelectedBrush }) => {
   )
 
   // internalization hook
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   return (
     <Container

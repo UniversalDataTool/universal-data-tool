@@ -11,7 +11,7 @@ const TransformLocalFilesToWebURLs = ({
   dataset,
   onChangeDataset,
 }) => {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   const [progress, setProgress] = useState(0)
   const { remote } = useElectron() || {}

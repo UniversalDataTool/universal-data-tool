@@ -24,7 +24,7 @@ const StyledButton = styled(Button)({
 })
 
 export default ({ iface, onChange }) => {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   return (
     <React.Fragment>

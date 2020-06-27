@@ -21,7 +21,7 @@ const GithubLink = styled("a")({
 })
 
 const Configure3D = () => {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   return (
     <ExplanationTextHeader>

@@ -36,7 +36,7 @@ const StyledButton = styled(Button)({
 
 export default ({ onDownload }) => {
   const [open, changeOpen] = useState(false)
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   return (
     <Container

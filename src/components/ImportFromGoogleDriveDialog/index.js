@@ -31,7 +31,7 @@ const credentials = {
 const scope = "https://www.googleapis.com/auth/drive.readonly"
 
 export default ({ open, onClose, onAddSamples }) => {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const [googleScriptLoaded, setGoogleScriptLoaded] = useState(false)
   const [pickerApiLoaded, setPickerApiLoaded] = useState(false)
   const [oauthToken, setOAuthToken] = useState(null)

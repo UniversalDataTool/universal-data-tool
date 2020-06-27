@@ -1,5 +1,6 @@
 // @flow
 
+import "../../i18n"
 import React, { useMemo } from "react"
 import TextClassification from "../TextClassification"
 import TextEntityRecognition from "../TextEntityRecognition"
@@ -26,7 +27,7 @@ export const UniversalDataViewer = ({
   onClickSetup,
 }) => {
   // TODO type check w/ superstruct against dataset
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const containerProps = useMemo(
     () => ({
       hideHeader,
@@ -52,7 +53,7 @@ export const UniversalDataViewer = ({
         title="Set up your project to begin labeling"
         description={
           <p>
-            {t("universal-data-viewer-warning")}
+            {t("universal-data-viewer-interface-warning")}
             <br />
             <br />
             <Button color="primary" variant="contained" onClick={onClickSetup}>

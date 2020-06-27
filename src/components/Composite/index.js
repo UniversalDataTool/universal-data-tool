@@ -35,7 +35,7 @@ export const Composite = (props) => {
   } = props
   const [selectedField, changeSelectedField] = useState()
 
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   if (!fields) throw new Error("No fields defined. Try adding a field in Setup")
 

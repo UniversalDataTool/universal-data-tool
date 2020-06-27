@@ -31,7 +31,7 @@ export default ({
   onClickTemplate,
 }) => {
   const c = useStyles()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   const onDrop = useCallback(
     (acceptedFiles) => {

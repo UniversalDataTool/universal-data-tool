@@ -111,7 +111,7 @@ export default ({
   const posthog = usePosthog()
 
   // internalization hook
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   //const isDesktop = useIsDesktop()
   const [newVersionAvailable, changeNewVersionAvailable] = useState(false)

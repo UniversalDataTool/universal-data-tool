@@ -58,7 +58,7 @@ const SelectDialogContext = createContext()
 const Button = ({ Icon1, Icon2, desktopOnly, children, dialog, disabled }) => {
   const isDesktop = useIsDesktop()
   const posthog = usePosthog()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   disabled =
     disabled === undefined ? (desktopOnly ? !isDesktop : false) : disabled
@@ -104,7 +104,7 @@ const Button = ({ Icon1, Icon2, desktopOnly, children, dialog, disabled }) => {
 }
 
 export default ({ dataset, onChangeDataset }) => {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const [selectedDialog, changeDialog] = useState()
   const onChangeDialog = async (dialog) => {
     switch (dialog) {

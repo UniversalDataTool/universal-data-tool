@@ -66,7 +66,7 @@ export default ({ iface, onChange }) => {
   const [menuOpen, changeMenuOpen] = useState(false)
   const { questions = [] } = iface.surveyjs || {}
 
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   return (
     <div>

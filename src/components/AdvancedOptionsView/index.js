@@ -22,7 +22,7 @@ export const AdvancedOptionsView = ({ onClickEditJSON, onClearLabelData }) => {
   const [hotkeyDialogOpen, setHotkeyDialogOpen] = useState(false)
 
   // internalization hook
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   return (
     <Box padding={2}>

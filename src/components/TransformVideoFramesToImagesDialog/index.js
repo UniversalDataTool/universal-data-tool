@@ -28,7 +28,7 @@ export default ({ open, onChangeDataset, onClose, dataset }) => {
   const { remote } = useElectron() || {}
   const [progress, changeProgress] = useState(null)
   const [errors, changeErrors] = useState("")
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   return (
     <SimpleDialog
