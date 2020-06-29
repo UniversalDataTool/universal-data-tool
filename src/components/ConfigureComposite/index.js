@@ -10,6 +10,8 @@ import Box from "@material-ui/core/Box"
 import TextField from "@material-ui/core/TextField"
 import { setIn } from "seamless-immutable"
 
+import { useTranslation } from "react-i18next"
+
 const Fields = styled("div")({})
 const StyledExpansionPanel = styled(ExpansionPanel)({
   marginTop: 16,
@@ -22,6 +24,8 @@ const StyledButton = styled(Button)({
 })
 
 export default ({ iface, onChange }) => {
+  const { t } = useTranslation()
+
   return (
     <React.Fragment>
       <Fields>
@@ -69,7 +73,7 @@ export default ({ iface, onChange }) => {
                     })
                   }}
                 >
-                  Remove Field
+                  {t("remove-field")}
                 </Button>
               </Box>
             </ExpansionPanelDetails>
@@ -92,7 +96,7 @@ export default ({ iface, onChange }) => {
             )
           }}
         >
-          Add New Field
+          {t("add-new-field")}
         </StyledButton>
       </Fields>
     </React.Fragment>

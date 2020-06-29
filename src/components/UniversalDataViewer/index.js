@@ -1,5 +1,6 @@
 // @flow
 
+import "../../i18n"
 import React, { useMemo } from "react"
 import TextClassification from "../TextClassification"
 import TextEntityRecognition from "../TextEntityRecognition"
@@ -12,6 +13,7 @@ import EmptySampleContainer from "../EmptySampleContainer"
 import Composite from "../Composite"
 import BadOHA from "../BadOHA"
 import Button from "@material-ui/core/Button"
+import { useTranslation } from "react-i18next"
 
 export const UniversalDataViewer = ({
   dataset,
@@ -25,6 +27,7 @@ export const UniversalDataViewer = ({
   onClickSetup,
 }) => {
   // TODO type check w/ superstruct against dataset
+  const { t } = useTranslation()
   const containerProps = useMemo(
     () => ({
       hideHeader,
@@ -50,12 +53,11 @@ export const UniversalDataViewer = ({
         title="Set up your project to begin labeling"
         description={
           <p>
-            This interface hasn't been set up properly, try selecting an
-            interface in the "Setup" tab.
+            {t("universal-data-viewer-interface-warning")}
             <br />
             <br />
             <Button color="primary" variant="contained" onClick={onClickSetup}>
-              Setup Project
+              {t("setup-project")}
             </Button>
           </p>
         }

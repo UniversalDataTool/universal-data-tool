@@ -3,6 +3,7 @@ import SimpleDialog from "../SimpleDialog"
 import transformFileURLsToWebURLs from "./functions/transform-file-urls-to-web-urls"
 import ProgressBar from "../ProgressBar"
 import useElectron from "../../utils/use-electron"
+import { useTranslation } from "react-i18next"
 
 const TransformLocalFilesToWebURLs = ({
   open,
@@ -10,6 +11,8 @@ const TransformLocalFilesToWebURLs = ({
   dataset,
   onChangeDataset,
 }) => {
+  const { t } = useTranslation()
+
   const [progress, setProgress] = useState(0)
   const { remote } = useElectron() || {}
 
@@ -31,8 +34,7 @@ const TransformLocalFilesToWebURLs = ({
         },
       ]}
     >
-      This transformation will upload your local samples to the cloud Note: This
-      can take a little while.
+      {t("transform-local-files-to-web-urls-explanation")}
       <ProgressBar progress={progress} />
     </SimpleDialog>
   )

@@ -14,6 +14,8 @@ import Survey from "material-survey/components/Survey"
 import Grid from "@material-ui/core/Grid"
 import { setIn } from "seamless-immutable"
 
+import { useTranslation } from "react-i18next"
+
 const ButtonsContainer = styled("div")({
   textAlign: "right",
 })
@@ -63,6 +65,9 @@ export default ({ iface, onChange }) => {
   const anchorEl = useRef()
   const [menuOpen, changeMenuOpen] = useState(false)
   const { questions = [] } = iface.surveyjs || {}
+
+  const { t } = useTranslation()
+
   return (
     <div>
       {questions.length === 0 ? (
@@ -158,7 +163,7 @@ export default ({ iface, onChange }) => {
       <ButtonsContainer>
         <StyledButton onClick={(e) => changeMenuOpen(true)} ref={anchorEl}>
           <AddCircleIcon className="icon" />
-          Add Input
+          {t("add-input")}
         </StyledButton>
       </ButtonsContainer>
       <Menu
@@ -184,7 +189,7 @@ export default ({ iface, onChange }) => {
             )
           }}
         >
-          Text Input
+          {t("text-input")}
         </MenuItem>
         <MenuItem
           onClick={() => {
@@ -203,7 +208,7 @@ export default ({ iface, onChange }) => {
             )
           }}
         >
-          Exclusive Choice
+          {t("exclusive-choice")}
         </MenuItem>
         <MenuItem
           onClick={() => {
@@ -259,7 +264,7 @@ export default ({ iface, onChange }) => {
             )
           }}
         >
-          Dropdown / Autocomplete
+          {t("drop-down-autocomplete")}
         </MenuItem>
         <MenuItem
           onClick={() => {
@@ -280,7 +285,7 @@ export default ({ iface, onChange }) => {
             )
           }}
         >
-          Multiple Item Dropdown / Autocomplete
+          {t("multiple-item-dropdown-autocomplete")}
         </MenuItem>
       </Menu>
     </div>

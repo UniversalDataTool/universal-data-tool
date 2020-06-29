@@ -24,6 +24,8 @@ import LanguageIcon from "@material-ui/icons/Language"
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank"
 import GridOnIcon from "@material-ui/icons/GridOn"
 
+import { useTranslation } from "react-i18next"
+
 const ButtonBase = styled(MuiButton)({
   width: 240,
   height: 140,
@@ -57,6 +59,8 @@ const SelectDialogContext = createContext()
 const Button = ({ Icon1, Icon2, desktopOnly, children, dialog, disabled }) => {
   const isDesktop = useIsDesktop()
   const posthog = usePosthog()
+  const { t } = useTranslation()
+
   disabled =
     disabled === undefined ? (desktopOnly ? !isDesktop : false) : disabled
   return (
@@ -89,7 +93,7 @@ const Button = ({ Icon1, Icon2, desktopOnly, children, dialog, disabled }) => {
               <div>{children}</div>
               {desktopOnly && (
                 <DesktopOnlyText className={classnames({ disabled })}>
-                  DESKTOP ONLY
+                  {t("desktop-only").toUpperCase()}
                 </DesktopOnlyText>
               )}
             </div>
@@ -101,6 +105,7 @@ const Button = ({ Icon1, Icon2, desktopOnly, children, dialog, disabled }) => {
 }
 
 export default ({ dataset, onChangeDataset }) => {
+  const { t } = useTranslation()
   const [selectedDialog, changeDialog] = useState()
   const onChangeDialog = async (dialog) => {
     switch (dialog) {
@@ -122,7 +127,7 @@ export default ({ dataset, onChangeDataset }) => {
           Icon1={OndemandVideoIcon}
           Icon2={CollectionsIcon}
         >
-          Convert Video Keyframes to Samples
+          {t("convert-video-keyframes-to-samples")}
         </Button>
         <Button
           desktopOnly
@@ -130,10 +135,10 @@ export default ({ dataset, onChangeDataset }) => {
           Icon1={ComputerIcon}
           Icon2={LanguageIcon}
         >
-          Transform Local Files to Web URLs
+          {t("transform-local-files-to-web-urls")}
         </Button>
         <Button desktopOnly dialog="download-urls" Icon1={GetAppIcon}>
-          Download URLs
+          {t("download")} URLs
         </Button>
         <Button
           desktopOnly
@@ -141,7 +146,7 @@ export default ({ dataset, onChangeDataset }) => {
           Icon1={OndemandVideoIcon}
           Icon2={ImageIcon}
         >
-          Convert Video Frames to Images
+          {t("convert-video-frames-to-images")}
         </Button>
         <Button
           dialog="split-image-samples-into-segments"

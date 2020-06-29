@@ -25,6 +25,7 @@ import ImportFromYoutubeUrls from "../ImportFromYoutubeUrls"
 import { FaGoogleDrive, FaYoutube } from "react-icons/fa"
 import usePosthog from "../../utils/use-posthog"
 import promptAndGetSamplesFromLocalDirectory from "./prompt-and-get-samples-from-local-directory.js"
+import { useTranslation } from "react-i18next"
 
 const ButtonBase = styled(MuiButton)({
   width: 240,
@@ -134,6 +135,7 @@ export default ({
   authConfig,
   user,
 }) => {
+  const { t } = useTranslation()
   const [selectedDialog, changeDialog] = useState()
   const electron = useElectron()
   const onChangeDialog = async (dialog) => {
@@ -179,7 +181,7 @@ export default ({
           signedInOnly={false}
           user={user}
         >
-          Paste URLs
+          {t("paste-urls")}
         </Button>
         <Button
           desktopOnly
@@ -190,7 +192,7 @@ export default ({
           signedInOnly={false}
           user={user}
         >
-          Files from Directory
+          {t("files-from-directory")}
         </Button>
         <Button
           dialog="import-text-snippets"
@@ -198,14 +200,14 @@ export default ({
           onlySupportType={["text_entity_recognition", "text_classification"]}
           type={dataset.interface.type}
         >
-          Import Text Snippets
+          {t("import-text-snippets")}
         </Button>
         <Button
           isDesktop={isDesktop}
           dialog="import-toy-dataset"
           Icon={PetsIcon}
         >
-          Import Toy Dataset
+          {t("import-toy-dataset")}
         </Button>
         <Button
           isDesktop={isDesktop}
@@ -213,7 +215,7 @@ export default ({
           Icon={FaYoutube}
           desktopOnly
         >
-          Import from Youtube URLs
+          {t("import-from")} Youtube URLs
         </Button>
         {file && (
           <Button
@@ -225,7 +227,7 @@ export default ({
             signedInOnly={true}
             user={user}
           >
-            Import from S3
+            {t("import-from")} S3
           </Button>
         )}
         <Button
@@ -234,10 +236,10 @@ export default ({
           Icon={FaGoogleDrive}
           onAddSamples={onAddSamples}
         >
-          Import from Google Drive
+          {t("import-from")} Google Drive
         </Button>
         <Button dialog="import-csv-json" Icon={DescriptionIcon}>
-          Import from CSV / JSON
+          {t("import-from")} CSV / JSON
         </Button>
         <ImportTextSnippetsDialog
           open={selectedDialog === "import-text-snippets"}

@@ -10,6 +10,7 @@ import TableCell from "@material-ui/core/TableCell"
 import TableContainer from "@material-ui/core/TableContainer"
 import TableHead from "@material-ui/core/TableHead"
 import TableRow from "@material-ui/core/TableRow"
+import { useTranslation } from "react-i18next"
 
 const datasets = [
   { name: "Elon Musk Tweets", type: "text", size: 2800 },
@@ -33,16 +34,18 @@ async function getSamples(dataset) {
 const StyledButton = styled(Button)({})
 
 const ImportToyDatasetDialog = ({ onClose, onAddSamples, open }) => {
+  const { t } = useTranslation()
+
   return (
     <SimpleDialog onClose={onClose} open={open} title="Import Toy Dataset">
       <TableContainer>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Type</TableCell>
-              <TableCell>Size</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell>{t("Name")}</TableCell>
+              <TableCell>{t("Type")}</TableCell>
+              <TableCell>{t("Size")}</TableCell>
+              <TableCell>{t("Actions")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -59,7 +62,7 @@ const ImportToyDatasetDialog = ({ onClose, onAddSamples, open }) => {
                     }}
                     variant="outlined"
                   >
-                    Import
+                    {t("import")}
                   </StyledButton>
                 </TableCell>
               </TableRow>
