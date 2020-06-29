@@ -49,7 +49,7 @@ For video tutorials [visit our Youtube channel](https://www.youtube.com/channel/
 
 Just visit [universaldatatool.com](https://universaldatatool.com)!
 
-_Trying to run the web app locally? Run `npm install` then `npm run start` after cloning this repository to start the web server_
+_Trying to run the web app locally? Run `npm install` then `npm run start` after cloning this repository to start the web server. You can also run a server using `docker run -it -p 3000:3000 universaldatatool/universaldatatool`_
 
 ### Desktop Application
 
