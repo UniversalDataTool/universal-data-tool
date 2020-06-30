@@ -9,6 +9,8 @@ import md5 from "js-md5"
 import path from "path"
 import { setIn } from "seamless-immutable"
 
+import { useTranslation } from "react-i18next"
+
 const ErrorBox = styled("pre")({
   color: "red",
   whiteSpace: "prewrap",
@@ -41,6 +43,9 @@ export default ({ open, onChangeDataset, onClose, dataset }) => {
   const { remote } = useElectron() || {}
   const [progress, changeProgress] = useState(null)
   const [errors, changeErrors] = useState("")
+
+  const { t } = useTranslation()
+
   return (
     <SimpleDialog
       open={open}
@@ -105,10 +110,7 @@ export default ({ open, onChangeDataset, onClose, dataset }) => {
         },
       ]}
     >
-      This transformation will download all the urls from your samples to your
-      computer, and change the paths to filenames. This is usually not a good
-      idea if you're collaborating with others, but is very useful if you're
-      about to build a model.
+      {t("download-urls-dialog")}
       <ProgressBar progress={progress || 0} />
       {errors && <ErrorBox>{errors}</ErrorBox>}
     </SimpleDialog>

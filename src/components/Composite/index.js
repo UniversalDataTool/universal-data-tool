@@ -10,6 +10,8 @@ import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight"
 import Checkbox from "@material-ui/core/Checkbox"
 import Box from "@material-ui/core/Box"
 
+import { useTranslation } from "react-i18next"
+
 const Title = styled("div")({
   fontSize: 18,
   fontWeight: "bold",
@@ -32,6 +34,8 @@ export const Composite = (props) => {
     interface: { fields },
   } = props
   const [selectedField, changeSelectedField] = useState()
+
+  const { t } = useTranslation()
 
   if (!fields) throw new Error("No fields defined. Try adding a field in Setup")
 
@@ -99,7 +103,7 @@ export const Composite = (props) => {
         <KeyboardArrowRightIcon
           style={{ color: colors.grey[500], marginRight: 16 }}
         />
-        Next
+        {t("next")}
         <Box flexGrow={1} />
         <Box height="42px" />
         <KeyboardArrowRightIcon />

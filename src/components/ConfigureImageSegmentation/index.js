@@ -1,7 +1,7 @@
 // @flow
 import React, { useMemo } from "react"
 import Survey from "material-survey/components/Survey"
-import { setIn } from "seamless-immutable"
+import { setIn, asMutable } from "seamless-immutable"
 
 const form = {
   questions: [
@@ -42,17 +42,21 @@ const form = {
 
 export default ({ iface, onChange }) => {
   const defaultAnswers = useMemo(
-    () => ({
-      multipleRegions: Boolean(
-        iface.multipleRegions || iface.multipleRegions === undefined
+    () =>
+      asMutable(
+        {
+          multipleRegions: Boolean(
+            iface.multipleRegions || iface.multipleRegions === undefined
+          ),
+          multipleRegionLabels: Boolean(iface.multipleRegionLabels),
+          regionTypesAllowed: iface.regionTypesAllowed,
+          labels:
+            (iface.labels || []).map((a) =>
+              typeof a === "string" ? { id: a, description: a } : a
+            ) || [],
+        },
+        { deep: true }
       ),
-      multipleRegionLabels: Boolean(iface.multipleRegionLabels),
-      regionTypesAllowed: iface.regionTypesAllowed,
-      labels:
-        (iface.labels || []).map((a) =>
-          typeof a === "string" ? { id: a, description: a } : a
-        ) || [],
-    }),
     [iface]
   )
   return (

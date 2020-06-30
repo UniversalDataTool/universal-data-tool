@@ -2,6 +2,8 @@ import React from "react"
 import { styled } from "@material-ui/core/styles"
 import * as colors from "@material-ui/core/colors"
 
+import { useTranslation } from "react-i18next"
+
 const ExplanationTextHeader = styled("div")({
   textAlign: "center",
   paddingTop: 30,
@@ -19,11 +21,12 @@ const GithubLink = styled("a")({
 })
 
 const Configure3D = () => {
+  const { t } = useTranslation()
+
   return (
     <ExplanationTextHeader>
       <ExplanationText>
-        Hey, this isn't currently available, but if you'd like this
-        functionality please let us know by leaving a thumbs up on{" "}
+        {t("configure-3d-explanation-text-part-1")}{" "}
         <GithubLink
           target="_blank"
           rel="noopener noreferrer"
@@ -31,7 +34,7 @@ const Configure3D = () => {
         >
           this
         </GithubLink>{" "}
-        github issue.
+        {t("github-issue")}.
       </ExplanationText>
     </ExplanationTextHeader>
   )

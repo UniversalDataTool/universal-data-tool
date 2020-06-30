@@ -7,6 +7,9 @@ import Checkbox from "@material-ui/core/Checkbox"
 import { makeStyles } from "@material-ui/core/styles"
 import isEmpty from "lodash/isEmpty"
 import { styled } from "@material-ui/core/styles"
+
+import { useTranslation } from "react-i18next"
+
 import Amplify, { Auth } from "aws-amplify"
 import * as colors from "@material-ui/core/colors"
 import { useAuth } from "../../utils/auth-handlers/use-auth.js"
@@ -31,6 +34,7 @@ export default ({ onUserChange, onRequireCompleteSignUp, onClose }) => {
   const classes = useStyles()
 
   const [error, setError] = useState()
+  const { t } = useTranslation()
 
   const [state, setState] = useState({
     username: "",
@@ -106,7 +110,7 @@ export default ({ onUserChange, onRequireCompleteSignUp, onClose }) => {
   return (
     <Fragment>
       <Typography component="h1" variant="h5">
-        Sign in
+        {t("sign-in")}
       </Typography>
       {error && <ErrorText>{error}</ErrorText>}
       <form className={classes.form} noValidate>
@@ -152,7 +156,7 @@ export default ({ onUserChange, onRequireCompleteSignUp, onClose }) => {
           color="primary"
           className={classes.submit}
         >
-          Sign In
+          {t("sign-in")}
         </Button>
       </form>
     </Fragment>
