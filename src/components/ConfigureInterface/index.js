@@ -188,7 +188,9 @@ export const ConfigureInterface = ({
         <Grid item hidden={isNested} xs={12} lg={6}>
           <Heading>Preview</Heading>
           <PreviewContainer>
-            <PreviewContent style={{ opacity: previewLoading ? 0.5 : 1 }}>
+            <PreviewContent
+              style={{ opacity: previewLoading ? 0.5 : 1, height: "100%" }}
+            >
               <LabelErrorBoundary key={previewChangedTime}>
                 <UniversalDataViewer
                   key={previewChangedTime}
