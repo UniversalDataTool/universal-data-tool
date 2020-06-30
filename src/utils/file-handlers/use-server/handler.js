@@ -28,20 +28,62 @@ class CollaborationHandler {
   }
 
   async createSession(initialContent) {
+    // Send an initial udt object without samples (to avoid 5mb payload limit)
     const response = await this.postJSON("/api/session", {
-      udt: initialContent,
+      udt: { ...initialContent, samples: [] },
     })
-
-    this.state = initialContent
     this.sessionId = response.short_id
     this.version = response.version
+
+    // Populate the samples in increments of 100
+    let lastState = { ...initialContent, samples: [] }
+    for (let i = 0; i < initialContent.samples.length; i += 40) {
+      let nextState = {
+        ...initialContent,
+        samples: initialContent.samples.slice(0, i + 40),
+      }
+      const patch = rfc6902.createPatch(lastState, nextState)
+      const { latestVersion } = await this.patchJSON(
+        `/api/session/${encodeURIComponent(this.sessionId)}`,
+        {
+          patch,
+          userName: this.userName,
+        }
+      )
+      lastState = nextState
+      this.version = latestVersion
+    }
+
+    this.state = initialContent
   }
 
   async getLatestState() {
     try {
-      const res = await this.getJSON(
-        `/api/session/${encodeURIComponent(this.sessionId)}`
-      )
+      let res
+      try {
+        res = await this.getJSON(
+          `/api/session/${encodeURIComponent(this.sessionId)}`
+        )
+        throw new Error("always use sample range for now")
+      } catch (e) {
+        // Try to fetch in small increments
+        const samples = []
+        for (let i = 0; ; i += 50) {
+          res = await this.getJSON(
+            `/api/session/${encodeURIComponent(
+              this.sessionId
+            )}?sample_range=${i}-${i + 50}`
+          )
+          if (!res.sampleRange) throw e
+          if (res.udt_json.samples.length === 0) break
+          samples.push(...res.udt_json.samples)
+        }
+        res = { ...res, udt_json: { ...res.udt_json, samples } }
+        console.log({ res })
+        if (hash(res.udt_json) !== res.hashOfLatestState) {
+          console.log("hashes didn't match when combining sample ranges")
+        }
+      }
       return {
         state: res.udt_json,
         version: res.version,

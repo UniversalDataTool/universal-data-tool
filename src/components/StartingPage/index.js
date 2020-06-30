@@ -15,6 +15,8 @@ import usePosthog from "../../utils/use-posthog"
 import packageInfo from "../../../package.json"
 import useEventCallback from "use-event-callback"
 import DownloadIcon from "@material-ui/icons/GetApp"
+import CircularProgress from "@material-ui/core/CircularProgress"
+import Box from "@material-ui/core/Box"
 
 import { useTranslation } from "react-i18next"
 
@@ -59,7 +61,6 @@ const Content = styled("div")(({ theme }) => ({
 }))
 
 const Title = styled("div")({
-  marginTop: 20,
   fontSize: 36,
   fontWeight: 600,
   color: colors.grey[300],
@@ -106,6 +107,7 @@ export default ({
   recentItems = [],
   onOpenRecentItem,
   onClickOpenSession,
+  isLoadingCollaborativeSession,
 }) => {
   const c = useStyles()
   const posthog = usePosthog()
@@ -189,6 +191,21 @@ export default ({
               <Title>Universal Data Tool</Title>
               <Subtitle>{t("universaldatatool-description")}</Subtitle>
             </Grid>
+            {isLoadingCollaborativeSession && (
+              <Grid xs={12} item>
+                <Box
+                  display="flex"
+                  marginTop={8}
+                  marginBottom={4}
+                  alignItems="center"
+                >
+                  <CircularProgress size={100} />
+                  <Box paddingLeft={8}>
+                    <Title>Loading Collaborative Session</Title>
+                  </Box>
+                </Box>
+              </Grid>
+            )}
             <Grid xs={6} item>
               <ActionList>
                 <ActionTitle>Start</ActionTitle>

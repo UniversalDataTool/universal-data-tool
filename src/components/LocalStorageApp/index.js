@@ -39,7 +39,10 @@ export default () => {
   })
 
   const openRecentItem = useEventCallback((item) => setFile(item))
-  const onClickHome = useEventCallback(() => setFile(null))
+  const onClickHome = useEventCallback(() => {
+    setFile(null)
+    window.location.search = ""
+  })
   const onDownload = useEventCallback((format) => {
     if (!file) return
     const outputName = (file.sessionId || file.fileName) + ".udt." + format
@@ -108,6 +111,9 @@ export default () => {
               recentItems={recentItems}
               onOpenRecentItem={openRecentItem}
               onClickOpenSession={() => changeSessionBoxOpen(true)}
+              isLoadingCollaborativeSession={
+                window.location.search.includes("s=") && !inSession
+              }
             />
           ) : (
             <AppErrorBoundary>
