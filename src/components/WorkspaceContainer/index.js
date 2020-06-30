@@ -30,7 +30,7 @@ export default ({
         },
         { name: "Save" },
       ].filter(Boolean),
-    [currentSampleIndex, numberOfSamples]
+    [currentSampleIndex, numberOfSamples, onNext, onPrev]
   )
   return (
     <Workspace

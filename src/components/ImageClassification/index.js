@@ -53,13 +53,6 @@ const Image = styled("img")({
   objectFit: "contain",
 })
 
-const Nav = styled("div")({
-  display: "flex",
-  justifyContent: "center",
-  marginTop: 4,
-  flexShrink: 0,
-})
-
 const ButtonsContainer = styled("div")({
   paddingLeft: 50,
   paddingRight: 50,
