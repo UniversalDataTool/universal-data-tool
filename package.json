@@ -78,7 +78,6 @@
   },
   "dependencies": {
     "@material-ui/styles": "^4.9.0",
-    "@material-ui/utils": "^4.10.2",
     "@semantic-release/git": "^9.0.0",
     "@sentry/browser": "^5.15.4",
     "any-shell-escape": "^0.1.1",
