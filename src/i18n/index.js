@@ -26,10 +26,10 @@ i18n
 
     resources: {
       fr: {
-        translation: frTranslation
+        translation: frTranslation,
       },
       en: {
-        translation: enTranslation
+        translation: enTranslation,
       },
     },
   })
