@@ -107,6 +107,7 @@
     "react-i18next": "^11.4.0",
     "react-icons": "^3.9.0",
     "react-image-annotate": "^1.2.7",
+    "react-material-workspace-layout": "^0.1.6",
     "react-scripts": "^3.4.1",
     "react-select": "^3.0.8",
     "rfc6902": "^3.0.4",
