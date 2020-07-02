@@ -2,6 +2,7 @@ import i18n from "i18next"
 import { initReactI18next } from "react-i18next"
 import enTranslation from "./locales/en/translation.json"
 import frTranslation from "./locales/fr/translations.json"
+import cnTranslation from "./locales/cn/translations.json"
 
 import LanguageDetector from "i18next-browser-languagedetector"
 // not like to use this?
@@ -17,7 +18,7 @@ i18n
   // init i18next
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
-    fallbackLng: "en",
+    fallbackLng: "cn",
     debug: true,
 
     interpolation: {
@@ -30,6 +31,9 @@ i18n
       },
       en: {
         translation: enTranslation,
+      },
+      cn: {
+        translation: cnTranslation,
       },
     },
   })

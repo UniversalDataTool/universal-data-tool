@@ -7,6 +7,7 @@ import Button from "@material-ui/core/Button"
 import * as colors from "@material-ui/core/colors"
 import Checkbox from "@material-ui/core/Checkbox"
 import without from "lodash/without"
+import WorkspaceContainer from "../WorkspaceContainer"
 
 const brightColors = [
   colors.blue[600],
@@ -50,29 +51,6 @@ const Image = styled("img")({
   width: "100%",
   height: "100%",
   objectFit: "contain",
-})
-
-const Nav = styled("div")({
-  display: "flex",
-  justifyContent: "center",
-  marginTop: 4,
-  flexShrink: 0,
-})
-const NavItem = styled("div")({
-  backgroundColor: "#000",
-  color: "#fff",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  "& > span": {
-    padding: 16,
-  },
-})
-const NavButton = styled(Button)({
-  color: "#fff",
-  padding: 8,
-  paddingLeft: 16,
-  paddingRight: 16,
 })
 
 const ButtonsContainer = styled("div")({
@@ -210,56 +188,44 @@ export default ({
   }, [hotkeyMap])
 
   return (
-    <Container
-      style={{
-        height: containerProps.height || "calc(100% - 70px)",
-        minHeight: 600,
-      }}
+    <WorkspaceContainer
+      onNext={onNextNoSave}
+      onPrev={onPrev}
+      onClickHeaderItem={onDone}
+      numberOfSamples={samples.length}
+      currentSampleIndex={sampleIndex}
+      globalSampleIndex={globalSampleIndex}
     >
-      <ImageContainer>
-        <Image src={samples[sampleIndex].imageUrl} />
-      </ImageContainer>
-      <Nav>
-        <NavItem>
-          <NavButton onClick={onPrev}>Prev (backspace)</NavButton>
-        </NavItem>
-        {samples.length > 1 ? (
-          <NavItem>
-            <span>
-              ({sampleIndex + 1}/{samples.length})
-            </span>
-          </NavItem>
-        ) : globalSampleIndex !== undefined ? (
-          <NavItem>
-            <span>[{globalSampleIndex}]</span>
-          </NavItem>
-        ) : null}
-        <NavItem>
-          <NavButton onClick={onNextNoSave}>Next (space)</NavButton>
-        </NavItem>
-        <NavItem>
-          <NavButton onClick={onDone}>Done (enter)</NavButton>
-        </NavItem>
-      </Nav>
-      <ButtonsContainer>
-        {labels.map((label) => (
-          <CheckButton
-            key={label.id}
-            onClick={() => onClickLabel(label)}
-            style={{
-              backgroundColor: getRandomColor(label),
-              transform: enlargedLabel === label ? "scale(1.1,1.1)" : undefined,
-            }}
-          >
-            <Checkbox
-              style={{ color: "#fff" }}
-              checked={currentOutput.includes(label.id)}
-            />
-            {label.id}
-            {labelKeyMap[label.id] ? ` (${labelKeyMap[label.id]})` : ""}
-          </CheckButton>
-        ))}
-      </ButtonsContainer>
-    </Container>
+      <Container
+        style={{
+          height: containerProps.height || "calc(100% - 70px)",
+          minHeight: 600,
+        }}
+      >
+        <ImageContainer>
+          <Image src={samples[sampleIndex].imageUrl} />
+        </ImageContainer>
+        <ButtonsContainer>
+          {labels.map((label) => (
+            <CheckButton
+              key={label.id}
+              onClick={() => onClickLabel(label)}
+              style={{
+                backgroundColor: getRandomColor(label),
+                transform:
+                  enlargedLabel === label ? "scale(1.1,1.1)" : undefined,
+              }}
+            >
+              <Checkbox
+                style={{ color: "#fff" }}
+                checked={currentOutput.includes(label.id)}
+              />
+              {label.id}
+              {labelKeyMap[label.id] ? ` (${labelKeyMap[label.id]})` : ""}
+            </CheckButton>
+          ))}
+        </ButtonsContainer>
+      </Container>
+    </WorkspaceContainer>
   )
 }
