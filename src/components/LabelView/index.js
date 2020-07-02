@@ -49,15 +49,15 @@ export default ({
 
   useEffect(() => {
     if (labelHelpEnabled) {
-      posthog.capture('label_help_showed')
+      posthog.capture("label_help_showed")
     }
-  }, [labelHelpEnabled])
+  }, [labelHelpEnabled, posthog])
 
   useEffect(() => {
-    if (currentTab === 'labelhelp') {
-      posthog.capture('label_help_clicked')
+    if (currentTab === "labelhelp") {
+      posthog.capture("label_help_clicked")
     }
-  }, [currentTab])
+  }, [currentTab, posthog])
 
   return singleSampleDataset ? (
     <LabelErrorBoundary>

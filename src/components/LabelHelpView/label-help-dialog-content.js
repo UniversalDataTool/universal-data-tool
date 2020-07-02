@@ -178,7 +178,7 @@ export default () => {
             <Button
               onClick={() => {
                 setInConfig("labelhelp.apikey", null)
-                posthog.capture('API_key_button_clicked')
+                posthog.capture("API_key_button_clicked")
               }}
               variant="outlined"
             >
@@ -190,7 +190,7 @@ export default () => {
               variant="outlined"
               href="https://labelhelp.universaldatatool.com#addcredits"
               onClick={() => {
-                posthog.capture('add_credits_button_clicked')
+                posthog.capture("add_credits_button_clicked")
               }}
             >
               Add Credits
@@ -226,7 +226,7 @@ export default () => {
                   })
                 )
 
-                posthog.capture('start_label_help_button_clicked')
+                posthog.capture("start_label_help_button_clicked")
               }}
               style={{ marginLeft: 12 }}
               variant="outlined"

@@ -33,7 +33,10 @@ export default () => {
     <Box paddingTop={8} textAlign="center">
       <Title>
         To use Label Help, enter your API key. You can{" "}
-        <a href="https://labelhelp.universaldatatool.com" onClick={() => posthog.capture('get_api_key_link_clicked')}>
+        <a
+          href="https://labelhelp.universaldatatool.com"
+          onClick={() => posthog.capture("get_api_key_link_clicked")}
+        >
           get an API key here
         </a>
         .
@@ -77,7 +80,7 @@ export default () => {
 
             setVerifying(false)
             setInConfig("labelhelp.apikey", textFieldValue)
-            posthog.capture('save_api_key_button_clicked')
+            posthog.capture("save_api_key_button_clicked")
           }}
         >
           {verifying ? (
