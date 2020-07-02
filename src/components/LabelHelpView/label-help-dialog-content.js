@@ -18,6 +18,7 @@ import * as colors from "@material-ui/core/colors"
 import { useActiveDataset } from "../FileContext"
 import CircularProgress from "@material-ui/core/CircularProgress"
 import { setIn } from "seamless-immutable"
+import usePosthog from "../../utils/use-posthog"
 
 const Container = styled("div")({
   fontVariantNumeric: "tabular-nums",
@@ -56,6 +57,8 @@ export default () => {
 
   const [labelHelpInfo, setLabelHelpInfo] = useState(dataset.labelHelp || {})
   const collabUrl = labelHelpInfo.url || (dataset.labelHelp || {}).url
+
+  const posthog = usePosthog()
 
   useEffect(() => {
     if (myCredits === null || myCredits === undefined) {
@@ -173,7 +176,10 @@ export default () => {
             <Box>Credits: {usdFormatter.format(myCredits)}</Box>
             <Box flexGrow={1} />
             <Button
-              onClick={() => setInConfig("labelhelp.apikey", null)}
+              onClick={() => {
+                setInConfig("labelhelp.apikey", null)
+                posthog.capture('API_key_button_clicked')
+              }}
               variant="outlined"
             >
               API Key
@@ -183,6 +189,9 @@ export default () => {
               style={{ marginLeft: 12 }}
               variant="outlined"
               href="https://labelhelp.universaldatatool.com#addcredits"
+              onClick={() => {
+                posthog.capture('add_credits_button_clicked')
+              }}
             >
               Add Credits
             </Button>
@@ -216,6 +225,8 @@ export default () => {
                     url: response.custom_id,
                   })
                 )
+
+                posthog.capture('start_label_help_button_clicked')
               }}
               style={{ marginLeft: 12 }}
               variant="outlined"
