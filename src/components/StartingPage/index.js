@@ -41,7 +41,7 @@ const useStyles = makeStyles({
   languageSelectionWrapper: {
     display: "flex",
     flexDirection: "column",
-    textAlign: "start"
+    textAlign: "center"
   }
 })
 
