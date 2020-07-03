@@ -15,7 +15,8 @@ import usePosthog from "../../utils/use-posthog"
 import packageInfo from "../../../package.json"
 import useEventCallback from "use-event-callback"
 import DownloadIcon from "@material-ui/icons/GetApp"
-
+import Box from "@material-ui/core/Box"
+import Select from "react-select"
 import { useTranslation } from "react-i18next"
 
 const useStyles = makeStyles({
@@ -37,6 +38,11 @@ const useStyles = makeStyles({
     marginLeft: -6,
     color: colors.grey[700],
   },
+  languageSelectionWrapper: {
+    display: "flex",
+    flexDirection: "column",
+    textAlign: "start"
+  }
 })
 
 const ContentContainer = styled("div")(({ theme }) => ({
@@ -97,7 +103,14 @@ const Actionless = styled("div")({
   color: colors.grey[600],
   paddingTop: 16,
 })
+
 const BottomSpacer = styled("div")({ height: 100 })
+
+const languageOptions = [
+  {label: "English", value: "en"},
+  {label: "French", value: "fr"},
+  {label: "Chinese", value: "cn"}
+]
 
 export default ({
   onFileDrop,
@@ -111,7 +124,7 @@ export default ({
   const posthog = usePosthog()
 
   // internalization hook
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
 
   //const isDesktop = useIsDesktop()
   const [newVersionAvailable, changeNewVersionAvailable] = useState(false)
@@ -136,6 +149,10 @@ export default ({
   const onDrop = useEventCallback((acceptedFiles) => {
     onFileDrop(acceptedFiles[0])
   })
+
+  const changeLanguage = (language) =>{
+   i18n.changeLanguage(language)
+  }
 
   let { getRootProps, getInputProps } = useDropzone({ onDrop })
 
@@ -185,9 +202,20 @@ export default ({
       <ContentContainer>
         <Content>
           <Grid container>
-            <Grid xs={12} item>
+            <Grid xs={6} item>
               <Title>Universal Data Tool</Title>
               <Subtitle>{t("universaldatatool-description")}</Subtitle>
+            </Grid>
+            <Grid xs={3} />
+            <Grid xs={3}>        
+              <Box padding={3} className={c.languageSelectionWrapper}>
+              <ActionTitle>Select Language</ActionTitle>
+                <Select
+                  defaultValue={languageOptions[0]}
+                  options={languageOptions}
+                  onChange={({ value }) => changeLanguage(value)}
+                />
+              </Box>
             </Grid>
             <Grid xs={6} item>
               <ActionList>
