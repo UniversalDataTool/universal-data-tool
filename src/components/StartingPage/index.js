@@ -71,6 +71,21 @@ const Title = styled("div")({
   color: colors.grey[300],
 })
 
+const languageSelectionFormStyle = {
+  control: (base, state) => ({
+    ...base,
+    border: '1px solid #9e9e9e',
+    background: "transparent",
+    color: '#e0e0e0',
+  }),
+  menuList: base => ({
+    ...base,
+    padding: 0,
+    margin: 0,
+    color: 'black'
+  })
+}
+
 const Subtitle = styled("div")({
   fontSize: 18,
   // fontWeight: "bold",
@@ -211,6 +226,7 @@ export default ({
               <Box padding={3} className={c.languageSelectionWrapper}>
               <ActionTitle>Select Language</ActionTitle>
                 <Select
+                  styles={languageSelectionFormStyle}
                   defaultValue={languageOptions[0]}
                   options={languageOptions}
                   onChange={({ value }) => changeLanguage(value)}
