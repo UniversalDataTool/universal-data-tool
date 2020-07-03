@@ -41,8 +41,8 @@ const useStyles = makeStyles({
   languageSelectionWrapper: {
     display: "flex",
     flexDirection: "column",
-    textAlign: "center"
-  }
+    textAlign: "center",
+  },
 })
 
 const ContentContainer = styled("div")(({ theme }) => ({
@@ -74,16 +74,16 @@ const Title = styled("div")({
 const languageSelectionFormStyle = {
   control: (base, state) => ({
     ...base,
-    border: '1px solid #9e9e9e',
+    border: "1px solid #9e9e9e",
     background: "transparent",
-    color: '#e0e0e0',
+    color: "#e0e0e0",
   }),
-  menuList: base => ({
+  menuList: (base) => ({
     ...base,
     padding: 0,
     margin: 0,
-    color: 'black'
-  })
+    color: "black",
+  }),
 }
 
 const Subtitle = styled("div")({
@@ -122,9 +122,9 @@ const Actionless = styled("div")({
 const BottomSpacer = styled("div")({ height: 100 })
 
 const languageOptions = [
-  {label: "English", value: "en"},
-  {label: "French", value: "fr"},
-  {label: "Chinese", value: "cn"}
+  { label: "English", value: "en" },
+  { label: "French", value: "fr" },
+  { label: "Chinese", value: "cn" },
 ]
 
 export default ({
@@ -165,8 +165,8 @@ export default ({
     onFileDrop(acceptedFiles[0])
   })
 
-  const changeLanguage = (language) =>{
-   i18n.changeLanguage(language)
+  const changeLanguage = (language) => {
+    i18n.changeLanguage(language)
   }
 
   let { getRootProps, getInputProps } = useDropzone({ onDrop })
@@ -222,9 +222,9 @@ export default ({
               <Subtitle>{t("universaldatatool-description")}</Subtitle>
             </Grid>
             <Grid xs={3} />
-            <Grid xs={3}>        
+            <Grid xs={3}>
               <Box padding={3} className={c.languageSelectionWrapper}>
-              <ActionTitle>Select Language</ActionTitle>
+                <ActionTitle>Select Language</ActionTitle>
                 <Select
                   styles={languageSelectionFormStyle}
                   defaultValue={languageOptions[0]}
