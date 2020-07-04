@@ -178,7 +178,7 @@ export default () => {
             <Button
               onClick={() => {
                 setInConfig("labelhelp.apikey", null)
-                posthog.capture("API_key_button_clicked")
+                posthog.capture("api_key_button_clicked")
               }}
               variant="outlined"
             >
