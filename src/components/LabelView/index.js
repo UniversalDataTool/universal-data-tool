@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import LabelErrorBoundary from "../LabelErrorBoundary"
 import UniversalDataViewer from "../UniversalDataViewer"
 import Stats from "../Stats"
@@ -46,6 +46,19 @@ export default ({
         .map((s) => s.annotation !== undefined && s.annotation !== null)
         .filter(Boolean).length / dataset.samples.length
   }
+
+  useEffect(() => {
+    if (labelHelpEnabled) {
+      posthog.capture("label_help_showed")
+    }
+  }, [labelHelpEnabled, posthog])
+
+  useEffect(() => {
+    if (currentTab === "labelhelp") {
+      posthog.capture("label_help_clicked")
+    }
+  }, [currentTab, posthog])
+
   return singleSampleDataset ? (
     <LabelErrorBoundary>
       <UniversalDataViewer

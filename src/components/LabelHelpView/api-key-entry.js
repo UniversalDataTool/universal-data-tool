@@ -7,6 +7,7 @@ import { styled } from "@material-ui/core/styles"
 import { useAppConfig } from "../AppConfig"
 import SaveIcon from "@material-ui/icons/Save"
 import CircularProgress from "@material-ui/core/CircularProgress"
+import usePosthog from "../../utils/use-posthog"
 
 const Title = styled("div")({
   fontSize: 18,
@@ -26,11 +27,16 @@ export default () => {
   const [verifying, setVerifying] = useState(false)
   const [textFieldValue, setTextFieldValue] = useState("")
   const [error, setError] = useState("")
+  const posthog = usePosthog()
+
   return (
     <Box paddingTop={8} textAlign="center">
       <Title>
         To use Label Help, enter your API key. You can{" "}
-        <a href="https://labelhelp.universaldatatool.com">
+        <a
+          href="https://labelhelp.universaldatatool.com"
+          onClick={() => posthog.capture("get_api_key_link_clicked")}
+        >
           get an API key here
         </a>
         .
@@ -74,6 +80,7 @@ export default () => {
 
             setVerifying(false)
             setInConfig("labelhelp.apikey", textFieldValue)
+            posthog.capture("save_api_key_button_clicked")
           }}
         >
           {verifying ? (
