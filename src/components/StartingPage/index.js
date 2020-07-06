@@ -84,6 +84,10 @@ const languageSelectionFormStyle = {
     margin: 0,
     color: "black",
   }),
+  singleValue: (base) => ({
+    ...base,
+    color: "white",
+  }),
 }
 
 const Subtitle = styled("div")({
