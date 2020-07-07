@@ -16,7 +16,6 @@ const ErrorBox = styled("pre")({
 
 const splitOptions = [
   { label: "2x2", value: "2x2" },
-  { label: "1x2 (columns)", value: "1x2" },
   { label: "3x3", value: "3x3" },
   { label: "1x2 (columns)", value: "1x2" },
   { label: "1x3 (columns)", value: "1x3" },
