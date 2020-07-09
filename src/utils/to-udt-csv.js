@@ -26,6 +26,7 @@ export default (obj) => {
       ...range(obj.samples.length).map((i) => `samples.${i}`),
     ],
     columns: [".", ...sampleKeys],
+    validate: false,
   }
 
   return JAC.toCSV(obj, options)
