@@ -138,7 +138,7 @@ export default ({
         <h1>{t("collobrate")}</h1>
         {!inSession ? (
           <>
-            <h2>{"join-a-session"}</h2>
+            <h2>{t("join-a-session")}</h2>
             <TextField
               variant="outlined"
               label="URL to Session"
