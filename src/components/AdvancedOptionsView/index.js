@@ -27,7 +27,7 @@ export const AdvancedOptionsView = ({ onClickEditJSON, onClearLabelData }) => {
   return (
     <Box padding={2}>
       <Button onClick={onClickEditJSON} variant="outlined">
-        {t("added-json")}
+        {t("edit-json")}
       </Button>
       <Button
         onClick={() => {
