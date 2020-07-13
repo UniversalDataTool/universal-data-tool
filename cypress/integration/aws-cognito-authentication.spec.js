@@ -23,9 +23,9 @@ describe("AWS Cognito authentication", () => {
     it("should be able to fill AWS Cognito credentials", () => {
         cy.get("input[type=text]").each(($el, index, $list) => {
             if (index > 0) {
-                const credentialKey = `CYPRESS_AWS_COGNITO_${awsCredentials[index - 1]}`
+                const credentialKey = `AWS_COGNITO_${awsCredentials[index - 1]}`
                 const upperCaseCredentialKey = credentialKey.toUpperCase()
-                const credential = Cypress.env(upperCaseCredentialKey)
+                const credential = Cypress.env(upperCaseCredentialKey)//[`${upperCaseCredentialKey}`]
                 cy.get($el).type(credential)
             }
         })
