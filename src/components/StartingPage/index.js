@@ -291,7 +291,7 @@ export default ({
                 </Action>
                 {/* <Action>Custom Data Entry</Action> */}
                 <Action href="https://github.com/UniversalDataTool/universal-data-tool">
-                  Github {t("repository").toUpperCase()}
+                  Github {t("repository")}
                 </Action>
                 {/* <Action href="#">
                   How to Collaborate in Real-Time with UDT
