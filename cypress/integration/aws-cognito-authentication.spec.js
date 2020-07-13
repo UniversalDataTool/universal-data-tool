@@ -25,6 +25,7 @@ describe("AWS Cognito authentication", () => {
             if (index > 0) {
                 const credentialKey = `AWS_COGNITO_${awsCredentials[index - 1]}`
                 const upperCaseCredentialKey = credentialKey.toUpperCase()
+                console.log({cypress: Cypress.env(), env: process.env})
                 const credential = Cypress.env(upperCaseCredentialKey)//[`${upperCaseCredentialKey}`]
                 cy.get($el).type(credential)
             }
