@@ -36,9 +36,16 @@ export default ({
   sampleTimeToComplete,
 }) => {
   const [currentTab, setTab] = useState("label")
+  const [showLabelHelpPricing, setShowLabelHelpPricing] = useState(false)
   const posthog = usePosthog()
-  const { labelHelpEnabled } = useLabelHelp()
+  const { labelHelpEnabled, totalCost } = useLabelHelp()
   const labelOnlyMode = useIsLabelOnlyMode()
+
+  useEffect(() => {
+    if (process.env.REACT_APP_SHOW_LABELHELP_PRICING === "true")
+      setShowLabelHelpPricing(true)
+  }, [])
+
   let percentComplete = 0
   if (dataset.samples && dataset.samples.length > 0) {
     percentComplete =
@@ -150,7 +157,11 @@ export default ({
             {labelHelpEnabled && (
               <Tab
                 icon={<SupervisedUserCircleIcon />}
-                label="Label Help"
+                label={
+                  showLabelHelpPricing && totalCost
+                    ? `${totalCost}$`
+                    : "Label Help"
+                }
                 value="labelhelp"
               />
             )}
