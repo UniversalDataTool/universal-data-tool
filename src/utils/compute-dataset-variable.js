@@ -45,7 +45,7 @@ export default (dataset, varName) => {
         if (totalSamplesConsidered > 10) break
         if (typeof annotation === "object" && annotation.length) {
           totalSamplesConsidered += 1
-          for (const { regionType, points } of annotation) {
+          for (const { points } of annotation) {
             if (points) {
               totalInteractions += points.length
             } else {
