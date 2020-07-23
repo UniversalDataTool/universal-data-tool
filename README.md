@@ -10,7 +10,9 @@
 Try it out at [universaldatatool.com](https://universaldatatool.com) or [download it here](https://github.com/UniversalDataTool/universal-data-tool/releases).
 
 The Universal Data Tool is a web/desktop app for editing and annotating images, text, audio, documents and to view and edit any data defined in the extensible [.udt.json and .udt.csv standard](https://github.com/UniversalDataTool/udt-format). 
-For video tutorials [visit our Youtube channel](https://www.youtube.com/channel/UCgFkrRN7CLt7_iTa2WDjf2g).  
+For video tutorials [visit our Youtube channel](https://www.youtube.com/channel/UCgFkrRN7CLt7_iTa2WDjf2g).
+
+* [Community Update July](https://www.youtube.com/watch?v=QW-s4XVK3Ok&feature=youtu.be)
 
 ## Features
 
