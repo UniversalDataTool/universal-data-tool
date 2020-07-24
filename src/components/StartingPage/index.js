@@ -18,6 +18,7 @@ import DownloadIcon from "@material-ui/icons/GetApp"
 import Box from "@material-ui/core/Box"
 import Select from "react-select"
 import { useTranslation } from "react-i18next"
+import getEmbedYoutubeUrl from "./get-embed-youtube-url.js"
 
 const useStyles = makeStyles({
   container: {
@@ -158,6 +159,28 @@ export default ({
       }
     }
     checkNewVersion()
+  }, [])
+
+  const [latestCommunityUpdate, setLatestCommunityUpdate] = useState(null)
+  useEffect(() => {
+    async function getLatestREADME() {
+      const readme = await fetch(
+        "https://raw.githubusercontent.com/UniversalDataTool/universal-data-tool/master/README.md"
+      ).then((r) => r.text())
+      const startCU = readme.search("COMMUNITY-UPDATE:START")
+      const endCU = readme.search("COMMUNITY-UPDATE:END")
+      const communityUpdates = readme
+        .slice(startCU, endCU)
+        .split("\n")
+        .slice(1, -1)
+      const latestYtLink = communityUpdates[0].match(/\((.*)\)/)[1]
+      setLatestCommunityUpdate({
+        name: communityUpdates[0].match(/\[(.*)\]/)[1],
+        ytLink: latestYtLink,
+        embedYTLink: getEmbedYoutubeUrl(latestYtLink),
+      })
+    }
+    getLatestREADME()
   }, [])
 
   const [
@@ -331,16 +354,20 @@ export default ({
                 </ActionText>
               </ActionList>
               <ActionList>
-                <ActionTitle>Community Update July</ActionTitle>
-                <iframe
-                  width="320"
-                  height="178"
-                  src="https://www.youtube.com/embed/QW-s4XVK3Ok"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen="true"
-                ></iframe>
-
+                {latestCommunityUpdate && (
+                  <>
+                    <ActionTitle>{latestCommunityUpdate.name}</ActionTitle>
+                    <iframe
+                      width="320"
+                      height="178"
+                      // src="https://www.youtube.com/embed/QW-s4XVK3Ok"
+                      src={latestCommunityUpdate.embedYTLink}
+                      frameborder="0"
+                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen="true"
+                    ></iframe>
+                  </>
+                )}
                 {/* <ActionText>
                   <Action
                     style={{ display: "inline" }}
