@@ -50,11 +50,11 @@ export default ({ onDownload }) => {
         <h1>{t("download")}</h1>
         <StyledButton fullWidth onClick={() => onDownload("csv")}>
           <div className="fakeicon green">CSV</div>
-          {t("download")} CSV
+          {t("download-csv")}
         </StyledButton>
         <StyledButton fullWidth onClick={() => onDownload("json")}>
           <div className="fakeicon blue">JSON</div>
-          {t("download")} JSON
+          {t("download-json")}
         </StyledButton>
       </HeaderPopupBox>
     </Container>

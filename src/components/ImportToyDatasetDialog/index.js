@@ -42,10 +42,10 @@ const ImportToyDatasetDialog = ({ onClose, onAddSamples, open }) => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>{t("Name")}</TableCell>
-              <TableCell>{t("Type")}</TableCell>
-              <TableCell>{t("Size")}</TableCell>
-              <TableCell>{t("Actions")}</TableCell>
+              <TableCell>{t("name")}</TableCell>
+              <TableCell>{t("type")}</TableCell>
+              <TableCell>{t("size")}</TableCell>
+              <TableCell>{t("actions")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

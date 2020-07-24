@@ -1,6 +1,8 @@
 {
   "starting-page-download-version": "Download Version",
   "download": "Download",
+  "download-json": "Download JSON",
+  "download-csv": "Download CSV",
   "universaldatatool-description": "Open-Source Data Labeling",
   "new-file": "New File",
   "start-from-template": "Start from Template",
@@ -20,7 +22,7 @@
   "edit-json": "Edit JSON",
   "clear-labels": "Clear All Labels",
   "telemetry": "Telemetry",
-  "custom-collobration-server": "Custom Collaboration Server",
+  "custom-collaboration-server": "Custom Collaboration Server",
   "label-help": "Label Help",
   "label-help-api-key": "Label Help API Key",
   "an-error-has-occurred": "An error has occurred",

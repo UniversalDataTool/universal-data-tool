@@ -70,7 +70,7 @@ export const AdvancedOptionsView = ({ onClickEditJSON, onClearLabelData }) => {
           window.location.reload()
         }}
       >
-        {t("custom-collobration-server")}
+        {t("custom-collaboration-server")}
       </Button>
       <Button
         variant="outlined"
