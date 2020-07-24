@@ -225,16 +225,25 @@ export default ({
               <Title>Universal Data Tool</Title>
               <Subtitle>{t("universaldatatool-description")}</Subtitle>
             </Grid>
-            <Grid xs={3} />
-            <Grid xs={3}>
-              <Box padding={3} className={c.languageSelectionWrapper}>
-                <ActionTitle>Select Language</ActionTitle>
-                <Select
-                  styles={languageSelectionFormStyle}
-                  defaultValue={languageOptions[0]}
-                  options={languageOptions}
-                  onChange={({ value }) => changeLanguage(value)}
-                />
+            <Grid xs={6}>
+              <Box
+                display="flex"
+                justifyContent="flex-end"
+                paddingTop={4}
+                paddingTop={3}
+              >
+                <Box
+                  width="100%"
+                  maxWidth={200}
+                  className={c.languageSelectionWrapper}
+                >
+                  <Select
+                    styles={languageSelectionFormStyle}
+                    defaultValue={languageOptions[0]}
+                    options={languageOptions}
+                    onChange={({ value }) => changeLanguage(value)}
+                  />
+                </Box>
               </Box>
             </Grid>
             <Grid xs={6} item>
@@ -291,8 +300,12 @@ export default ({
                 </Action>
                 {/* <Action>Custom Data Entry</Action> */}
                 <Action href="https://github.com/UniversalDataTool/universal-data-tool">
-                  Github {t("repository")}
+                  Github Repository
                 </Action>
+                <Action href="https://www.youtube.com/channel/UCgFkrRN7CLt7_iTa2WDjf2g">
+                  Youtube Channel
+                </Action>
+
                 {/* <Action href="#">
                   How to Collaborate in Real-Time with UDT
                 </Action> */}
@@ -318,8 +331,17 @@ export default ({
                 </ActionText>
               </ActionList>
               <ActionList>
-                <ActionTitle>Instant Try Now</ActionTitle>
-                <ActionText>
+                <ActionTitle>Community Update July</ActionTitle>
+                <iframe
+                  width="320"
+                  height="178"
+                  src="https://www.youtube.com/embed/QW-s4XVK3Ok"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen="true"
+                ></iframe>
+
+                {/* <ActionText>
                   <Action
                     style={{ display: "inline" }}
                     onClick={() => changeCreateFromTemplateDialogOpen(true)}
@@ -327,7 +349,7 @@ export default ({
                     {t("open-a-template")}
                   </Action>{" "}
                   {t("to-see-how-the-udt-could-work-for-your-data")}
-                </ActionText>
+                </ActionText> */}
               </ActionList>
             </Grid>
             <Grid xs={12} item>

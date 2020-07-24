@@ -12,7 +12,6 @@
   "no-recent-files": "No Recent Files",
   "downloading-and-installing-udt": "Downloading and Installing UDT",
   "labeling-images": "Labeling Images",
-  "repository": "Repository",
   "start-page-about-first-paragraph": "The Universal Data Tool (UDT) is an open-source web or downloadable tool for labeling data for usage in machine learning or data processing systems.",
   "start-page-about-second-paragraph": "The Universal Data Tool supports Computer Vision, Natural Language Processing (including Named Entity Recognition and Audio Transcription) workflows.",
   "the-udt-uses-an": "The UDT uses an",
