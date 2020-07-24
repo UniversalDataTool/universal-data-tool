@@ -4,7 +4,6 @@ import React, { useState, useEffect, useMemo } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 
 import Header from "../Header"
-import AceEditor from "react-ace"
 import EditableTitleText from "./EditableTitleText.js"
 import SamplesView from "../SamplesView"
 import InterfacePage from "../InterfacePage"
@@ -21,6 +20,7 @@ import LabelView from "../LabelView"
 import useIsLabelOnlyMode from "../../utils/use-is-label-only-mode"
 import { HotKeys } from "react-hotkeys"
 import { useHotkeyStorage } from "../HotkeyStorage"
+import RawJSONEditor from "../RawJSONEditor"
 
 import "brace/mode/javascript"
 import "brace/theme/github"
@@ -67,7 +67,6 @@ export default ({
   const [mode, changeMode] = useState(labelOnlyMode ? "label" : initialMode)
   const [singleSampleDataset, setSingleSampleDataset] = useState()
   const [sampleInputEditor, changeSampleInputEditor] = useState({})
-  const [jsonText, changeJSONText] = useState()
   const { ipcRenderer } = useElectron() || {}
   const posthog = usePosthog()
 
@@ -100,22 +99,11 @@ export default ({
   }, [sampleTimeToComplete])
 
   useEffect(() => {
-    if (mode === "json") {
-      changeJSONText(JSON.stringify(dataset, null, "  "))
-    }
     if (mode !== "label") {
       setSingleSampleDataset(null)
     }
     posthog.capture("open_editor_tab", { tab: mode })
-  }, [mode, posthog, changeJSONText, dataset])
-
-  useEffect(() => {
-    if (!jsonText || mode !== "json") return
-    try {
-      // TODO schema validation etc.
-      onChangeDataset(JSON.parse(jsonText))
-    } catch (e) {}
-  }, [jsonText, mode, onChangeDataset])
+  }, [mode, posthog])
 
   const onChangeTab = useEventCallback((tab) => changeMode(tab.toLowerCase()))
 
@@ -160,13 +148,12 @@ export default ({
         />
         <div style={{ height: "100%", overflowY: "scroll" }}>
           {mode === "json" && (
-            <AceEditor
-              theme="github"
-              mode="javascript"
-              width="100%"
-              value={jsonText || ""}
-              editorProps={{ $blockScrolling: Infinity }}
-              onChange={(t) => changeJSONText(t)}
+            <RawJSONEditor
+              content={dataset}
+              onSave={(newDataset) => {
+                onChangeDataset(newDataset)
+                changeMode("setup")
+              }}
             />
           )}
           {mode === "setup" && (

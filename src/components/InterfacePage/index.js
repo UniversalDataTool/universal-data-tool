@@ -6,12 +6,10 @@ import PaperContainer from "../PaperContainer"
 import AdvancedOptionsView from "../AdvancedOptionsView"
 
 export default ({ dataset, onChange, onClickEditJSON, onClearLabelData }) => {
-  const { interface: iface } = dataset
-
   return (
     <div>
       <ConfigureInterface
-        iface={iface}
+        dataset={dataset}
         onChange={onChange}
         onClickEditJSON={onClickEditJSON}
         isNotNested

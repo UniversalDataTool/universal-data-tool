@@ -126,11 +126,12 @@ const SelectType = ({ currentlySelected, onChange }) => {
 }
 
 export const ConfigureInterface = ({
-  iface = {},
+  dataset,
   onChange: onChangeProp,
   onClickEditJSON,
   isNested = false,
 }) => {
+  const iface = dataset.interface
   const [previewChangedTime, changePreviewChangedTime] = useState(0)
   const [previewLoading, changePreviewLoading] = useState(false)
   const onChange = useEventCallback((...args) => {
@@ -199,7 +200,9 @@ export const ConfigureInterface = ({
                   onSaveTaskOutputItem={noop}
                   dataset={{
                     interface: iface,
-                    samples: [templateMap[iface.type].dataset.samples[0]],
+                    samples: dataset?.samples?.length
+                      ? [dataset.samples[0]]
+                      : [templateMap[iface.type].dataset.samples[0]],
                   }}
                 />
               </LabelErrorBoundary>
