@@ -13,17 +13,18 @@ export default (udt) => {
   }, [udtInterface])
 
   const udtSamples = udt?.samples
+  const usedToyDataset = udt?.usedToyDataset
   useEffect(() => {
     if (!udtSamples) return
-    const numCompleted = (udt.samples || []).filter((s) => s.annotation).length
+    const numCompleted = (udtSamples || []).filter((s) => s.annotation).length
     posthog.capture("samples_updated", {
-      dataset_size: (udt.samples || []).length,
+      dataset_size: (udtSamples || []).length,
       samples_completed: numCompleted,
-      percent_completed: numCompleted / (udt.samples || []).length,
-      toy_dataset_used: Boolean(udt?.usedToyDataset),
+      percent_completed: numCompleted / (udtSamples || []).length,
+      toy_dataset_used: Boolean(usedToyDataset),
     })
     posthog.people.set({
-      recently_used_toy_dataset: Boolean(udt?.usedToyDataset),
+      recently_used_toy_dataset: Boolean(usedToyDataset),
     })
-  }, [udtSamples])
+  }, [udtSamples, usedToyDataset])
 }

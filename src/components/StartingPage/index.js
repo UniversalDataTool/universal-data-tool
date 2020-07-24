@@ -249,12 +249,7 @@ export default ({
               <Subtitle>{t("universaldatatool-description")}</Subtitle>
             </Grid>
             <Grid xs={6}>
-              <Box
-                display="flex"
-                justifyContent="flex-end"
-                paddingTop={4}
-                paddingTop={3}
-              >
+              <Box display="flex" justifyContent="flex-end" paddingTop={3}>
                 <Box
                   width="100%"
                   maxWidth={200}
@@ -358,6 +353,7 @@ export default ({
                   <>
                     <ActionTitle>{latestCommunityUpdate.name}</ActionTitle>
                     <iframe
+                      title={latestCommunityUpdate.name}
                       width="320"
                       height="178"
                       // src="https://www.youtube.com/embed/QW-s4XVK3Ok"

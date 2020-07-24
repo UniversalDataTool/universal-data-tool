@@ -96,7 +96,7 @@ export default ({
     posthog.people.set({
       average_time_to_complete_sample: sampleTimeToComplete,
     })
-  }, [sampleTimeToComplete])
+  }, [sampleTimeToComplete, posthog.people])
 
   useEffect(() => {
     if (mode !== "label") {
