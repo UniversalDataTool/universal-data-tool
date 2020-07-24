@@ -9,9 +9,10 @@ import ConfigureInterface from "./"
 
 storiesOf("ConfigureInterface", module).add("Data Entry", () => {
   const [iface, changeIFace] = useState({ type: "data_entry" })
+  const dataset = { interface: iface }
   return (
     <ConfigureInterface
-      iface={iface}
+      dataset={dataset}
       onChange={(...args) => {
         action("onChange")(...args)
         changeIFace(args[0])

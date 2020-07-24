@@ -3,6 +3,18 @@
 import seed from "seed-random"
 import * as colors from "@material-ui/core/colors"
 
+const fade = (cmap, amt) => {
+  const newCmap = {}
+  for (let i = 100; i < 1000; i++) {
+    if (i - amt <= 0) {
+      newCmap[i] = "#fff"
+    } else {
+      newCmap[i] = cmap[i - amt]
+    }
+  }
+  return newCmap
+}
+
 const fadedGrey = {
   ...colors.grey,
   // "800": colors.grey[600],
@@ -31,6 +43,9 @@ const colorMap = {
   incomplete: fadedGrey,
   faded: fadedGrey,
   review: colors.deepOrange,
+  ellipsis1: fade(colors.grey, 100),
+  ellipsis2: fade(colors.grey, 200),
+  ellipsis3: fade(colors.grey, 300),
 }
 
 export default (brush) => {

@@ -20,7 +20,6 @@ const [emptyObj, emptyArr] = [{}, []]
 export default ({
   interface: iface,
   samples = emptyArr,
-  taskOutput = emptyObj,
   containerProps = emptyObj,
   onSaveTaskOutputItem,
 }) => {
@@ -71,6 +70,8 @@ export default ({
   if (samples.length === 0) throw new Error("No sample data provided selected")
   if (!samples[0].videoUrl) throw new Error("Sample must have videoUrl")
 
+  const annotation = samples[0].annotation
+
   return (
     <div
       style={{
@@ -83,9 +84,7 @@ export default ({
         taskDescription={iface.description}
         {...labelProps}
         enabledTools={enabledTools}
-        keyframes={convertToRIAKeyframes(
-          ((taskOutput || [])[0] || {}).keyframes
-        )}
+        keyframes={convertToRIAKeyframes(annotation?.keyframes || {})}
         videoName={samples[0].customId || ""}
         videoTime={0}
         videoSrc={samples[0].videoUrl}

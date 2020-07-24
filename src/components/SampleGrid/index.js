@@ -153,6 +153,28 @@ export default ({ count, completed = [], samples, onClick }) => {
             onMouseUp={endSelectRange}
           />
         ))}
+        {sampleOffset + samplesPerPage < count && (
+          <>
+            {range(3).map((i) => (
+              <Sample
+                onClick={() => {
+                  changeSampleOffset(sampleOffset + samplesPerPage)
+                }}
+                key={sampleOffset + samplesPerPage + i}
+                selected={false}
+                brush={`ellipsis${i + 1}`}
+                index={sampleOffset + samplesPerPage + i}
+                completed={false}
+                onMouseEnter={() => {}}
+                onMouseDown={() => {}}
+                onMouseUp={() => {}}
+              />
+            ))}
+            <Box textAlign="center" marginTop="16px" color={colors.grey[700]}>
+              More Samples on Next Page
+            </Box>
+          </>
+        )}
       </Box>
       <TablePagination
         rowsPerPageOptions={[100, 250, 500, 1000, 2000, 10000]}
@@ -164,7 +186,10 @@ export default ({ count, completed = [], samples, onClick }) => {
         onChangePage={(e, newPage) =>
           changeSampleOffset(newPage * samplesPerPage)
         }
-        onChangeRowsPerPage={(e) => changeSamplesPerPage(+e.target.value)}
+        onChangeRowsPerPage={(e) => {
+          changeSampleOffset(0)
+          changeSamplesPerPage(+e.target.value)
+        }}
       />
     </Container>
   )

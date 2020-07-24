@@ -170,6 +170,17 @@ export default ({
     closeDialog()
   })
 
+  const onAddSamplesAsToyDataset = useEventCallback(async (samplesToAdd) => {
+    onChangeDataset(
+      setIn(
+        dataset,
+        ["samples"],
+        (dataset.samples || []).concat(samplesToAdd)
+      ).setIn(["usedToyDataset"], true)
+    )
+    closeDialog()
+  })
+
   return (
     <SelectDialogContext.Provider value={{ onChangeDialog }}>
       <div>
@@ -270,7 +281,7 @@ export default ({
         <ImportToyDataset
           open={selectedDialog === "import-toy-dataset"}
           onClose={closeDialog}
-          onAddSamples={onAddSamples}
+          onAddSamples={onAddSamplesAsToyDataset}
         />
         <ImportFromYoutubeUrls
           open={selectedDialog === "youtube-urls"}
