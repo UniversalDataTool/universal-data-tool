@@ -94,6 +94,12 @@ export default ({
   }, [ipcRenderer])
 
   useEffect(() => {
+    posthog.people.set({
+      average_time_to_complete_sample: sampleTimeToComplete,
+    })
+  }, [sampleTimeToComplete])
+
+  useEffect(() => {
     if (mode === "json") {
       changeJSONText(JSON.stringify(dataset, null, "  "))
     }
