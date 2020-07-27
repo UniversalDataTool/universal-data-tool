@@ -25,9 +25,12 @@ For video tutorials [visit our Youtube channel](https://www.youtube.com/channel/
 - Support for Images, Videos, PDFs, Text, Audio Transcription and many other formats
 - Can be [easily integrated into a React application](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-React)
 - Annotate images or videos with classifications, tags, bounding boxes, polygons and points
+- Fast Automatic Smart Pixel Segmentation using WebWorkers and WebAssembly
 - Import data from Google Drive, Youtube, CSV, Clipboard and more
 - Annotate NLP datasets with Named Entity Recognition (NER), classification and Part of Speech (PoS) tagging.
 - Easily [load into pandas](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-Pandas) or [use with fast.ai](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-Fast.ai)
+
+![Automatic Pixel Segmentation](https://user-images.githubusercontent.com/1910070/88564540-53eff180-d001-11ea-8f51-8e4b316f21fc.png)
 
 ![Universal Data Tool Computer Vision Cat](https://user-images.githubusercontent.com/1910070/75850482-6a2cb500-5db5-11ea-852c-7256463cece8.png)
 
