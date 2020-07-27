@@ -16148,10 +16148,10 @@ react-icons@^3.9.0:
   dependencies:
     camelcase "^5.0.0"
 
-react-image-annotate@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/react-image-annotate/-/react-image-annotate-1.3.0.tgz#f8e03e7ceb98b8dbb5d0c74e3163a503dab2c99f"
-  integrity sha512-WRH4yVmYOjbdHxh4O4Q/NR5IMZYgZOjd0gn6fk2W77qnM0TbUMHQbSCc48CzNvIZSCf+JLnLZ3DTYi+i8eVEZA==
+react-image-annotate@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/react-image-annotate/-/react-image-annotate-1.3.1.tgz#721353966c7a25a7c7d832262a50f9488ab78808"
+  integrity sha512-d3sErEQPmSIjq1ib89PEnIJa6T7eTgpen/fVHBFEJ9e5QyFAF6LQpnAS6s8jZ/wXtBLYTwstavYe2yNmY8kyPw==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.12"
     "@fortawesome/free-solid-svg-icons" "^5.6.3"
