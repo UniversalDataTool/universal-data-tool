@@ -164,6 +164,7 @@ export const ConfigureInterface = ({
     return () => {
       clearTimeout(timeout)
     }
+    // eslint-disable-next-line
   }, [previewChangedTime])
 
   if (!iface.type || iface.type === "empty") {

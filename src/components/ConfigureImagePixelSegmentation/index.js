@@ -1,12 +1,6 @@
 // @flow
 import React, { useMemo } from "react"
 import Survey from "material-survey/components/Survey"
-import { setIn } from "seamless-immutable"
-
-const autoSegmentationOptions = {
-  simple: { type: "simple" },
-  autoseg: { type: "autoseg" },
-}
 
 const maxClusterPresets = {
   low: 1000,
