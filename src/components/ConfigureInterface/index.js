@@ -1,6 +1,6 @@
 // @flow weak
 
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useReducer } from "react"
 import { styled } from "@material-ui/core/styles"
 import templates, { templateMap } from "../StartingPage/templates"
 import Button from "@material-ui/core/Button"
@@ -134,6 +134,16 @@ export const ConfigureInterface = ({
   const iface = dataset.interface
   const [previewChangedTime, changePreviewChangedTime] = useState(0)
   const [previewLoading, changePreviewLoading] = useState(false)
+  const [previewVersion, incPreviewVersion] = useReducer(
+    (state) => state + 1,
+    0
+  )
+  const [previewDataset, setPreviewDataset] = useState({
+    interface: iface,
+    samples: dataset?.samples?.length
+      ? [dataset.samples[0]]
+      : [templateMap[iface.type].dataset.samples[0]],
+  })
   const onChange = useEventCallback((...args) => {
     changePreviewChangedTime(Date.now())
     onChangeProp(...args)
@@ -143,6 +153,13 @@ export const ConfigureInterface = ({
     changePreviewLoading(true)
     let timeout = setTimeout(() => {
       changePreviewLoading(false)
+      incPreviewVersion()
+      setPreviewDataset({
+        interface: iface,
+        samples: dataset?.samples?.length
+          ? [dataset.samples[0]]
+          : [templateMap[iface.type].dataset.samples[0]],
+      })
     }, 1000)
     return () => {
       clearTimeout(timeout)
@@ -192,18 +209,13 @@ export const ConfigureInterface = ({
             <PreviewContent
               style={{ opacity: previewLoading ? 0.5 : 1, height: "100%" }}
             >
-              <LabelErrorBoundary key={previewChangedTime}>
+              <LabelErrorBoundary key={previewVersion}>
                 <UniversalDataViewer
-                  key={previewChangedTime}
+                  key={previewVersion}
                   height={600}
                   onExit={noop}
                   onSaveTaskOutputItem={noop}
-                  dataset={{
-                    interface: iface,
-                    samples: dataset?.samples?.length
-                      ? [dataset.samples[0]]
-                      : [templateMap[iface.type].dataset.samples[0]],
-                  }}
+                  dataset={previewDataset}
                 />
               </LabelErrorBoundary>
             </PreviewContent>

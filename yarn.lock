@@ -4943,6 +4943,11 @@ autoprefixer@^9.6.1, autoprefixer@^9.7.2:
     postcss "^7.0.32"
     postcss-value-parser "^4.1.0"
 
+autoseg@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/autoseg/-/autoseg-0.0.8.tgz#30e900afd41db964c5cdaf93f322211548444620"
+  integrity sha512-Kf6qQXiaxe+J1DrNP4dfWH92tRZ9MMwaO06TtzfKxBR/wtlC745aTP3YmKAP/a2ikpIfPKz9Hf6yR2Y7SeVagg==
+
 ava@^3.7.0:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/ava/-/ava-3.10.1.tgz#a4e68b1a2bb248fa0d96529d23dd83f57082e944"
@@ -16143,10 +16148,10 @@ react-icons@^3.9.0:
   dependencies:
     camelcase "^5.0.0"
 
-react-image-annotate@^1.2.7:
-  version "1.2.7"
-  resolved "https://registry.yarnpkg.com/react-image-annotate/-/react-image-annotate-1.2.7.tgz#e9f050640d8a55474b3b16f8fe9ea98fe324d4e0"
-  integrity sha512-JZGsaTG6AET0IFGZ408/uzWYDtT71SUpG1ghUN+xzXzmP9MZV+oWyET4i7sXBqZA/5hcWghzQrG1TWp0FAjvaw==
+react-image-annotate@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/react-image-annotate/-/react-image-annotate-1.3.0.tgz#f8e03e7ceb98b8dbb5d0c74e3163a503dab2c99f"
+  integrity sha512-WRH4yVmYOjbdHxh4O4Q/NR5IMZYgZOjd0gn6fk2W77qnM0TbUMHQbSCc48CzNvIZSCf+JLnLZ3DTYi+i8eVEZA==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.12"
     "@fortawesome/free-solid-svg-icons" "^5.6.3"
@@ -16154,6 +16159,7 @@ react-image-annotate@^1.2.7:
     "@material-ui/core" "^4.6.0"
     "@material-ui/icons" "^4.9.1"
     "@semantic-release/git" "^9.0.0"
+    autoseg "^0.0.8"
     color-alpha "^1.0.4"
     get-image-data "^3.0.1"
     material-survey "^1.0.34"

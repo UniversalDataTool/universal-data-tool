@@ -8,6 +8,19 @@ const autoSegmentationOptions = {
   autoseg: { type: "autoseg" },
 }
 
+const maxClusterPresets = {
+  low: 1000,
+  medium: 8000,
+  high: 64000,
+}
+const maxClusterPresetsRev = Object.entries(maxClusterPresets).reduce(
+  (acc, curr) => {
+    acc[curr[1]] = curr[0]
+    return acc
+  },
+  {}
+)
+
 const form = {
   questions: [
     {
@@ -32,10 +45,27 @@ const form = {
       type: "text",
     },
     {
-      name: "autoseg",
+      name: "autosegMode",
       type: "dropdown",
       title: "Automatic Segmentation Engine",
       choices: ["simple", "autoseg"],
+    },
+    {
+      name: "autosegPreset",
+      type: "dropdown",
+      visibleIf: "{autosegMode}='autoseg'",
+      title: "Super Pixel Quality",
+      choices: ["low", "medium", "high", "custom"],
+    },
+    {
+      name: "autosegMaxClusters",
+      type: "slider",
+      visibleIf: "{autosegPreset}='custom'",
+      title: "Total Super Pixels",
+      min: 10,
+      max: 100000,
+      step: 10,
+      defaultValue: 1000,
     },
   ],
 }
@@ -48,7 +78,12 @@ export default ({ iface, onChange }) => {
         (iface.labels || []).map((a) =>
           typeof a === "string" ? { id: a, description: a } : a
         ) || [],
-      autoseg: iface.autoSegmentationEngine?.type,
+      autosegMode: iface.autoSegmentationEngine?.mode,
+      autosegPreset:
+        maxClusterPresetsRev[
+          iface.autoSegmentationEngine?.maxClusters || 1000
+        ] || "custom",
+      autosegMaxClusters: iface.autoSegmentationEngine?.maxClusters || 1000,
     }),
     [iface]
   )
@@ -59,17 +94,18 @@ export default ({ iface, onChange }) => {
         variant="flat"
         defaultAnswers={defaultAnswers}
         onQuestionChange={(questionId, newValue, answers) => {
-          if (questionId === "autoseg") {
-            onChange(
-              setIn(
-                iface,
-                ["autoSegmentationEngine"],
-                autoSegmentationOptions[newValue]
-              )
-            )
-          } else {
-            onChange(setIn(iface, [questionId], newValue))
-          }
+          onChange({
+            ...iface,
+            description: answers.description,
+            labels: answers.labels,
+            autoSegmentationEngine: {
+              mode: answers.autosegMode,
+              maxClusters:
+                answers.autosegPreset === "custom"
+                  ? answers.autosegMaxClusters
+                  : maxClusterPresets[answers.autosegPreset],
+            },
+          })
         }}
         form={form}
       />
