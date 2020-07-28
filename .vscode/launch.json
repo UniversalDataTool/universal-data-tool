@@ -1,0 +1,29 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Universal Data Tool in Development Mode",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "runtimeExecutable": "bash",
+            "cwd": "${workspaceFolder}",
+            "runtimeArgs": ["-c", "yarn install && yarn start"],
+            "port": 6001
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Universal Data Tool Storybook",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "runtimeExecutable": "bash",
+            "cwd": "${workspaceFolder}",
+            "runtimeArgs": ["-c", "yarn install && yarn storybook"],
+            "port": 9090
+        }
+    ]
+}
