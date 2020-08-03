@@ -30,6 +30,7 @@ For video tutorials [visit our Youtube channel](https://www.youtube.com/channel/
 - Import data from Google Drive, Youtube, CSV, Clipboard and more
 - Annotate NLP datasets with Named Entity Recognition (NER), classification and Part of Speech (PoS) tagging.
 - Easily [load into pandas](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-Pandas) or [use with fast.ai](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-Fast.ai)
+- Runs [with docker](https://hub.docker.com/r/universaldatatool/universaldatatool) `docker run -p 3000:3000 universaldatatool/universaldatatool`
 
 ![Automatic Pixel Segmentation](https://user-images.githubusercontent.com/1910070/88564540-53eff180-d001-11ea-8f51-8e4b316f21fc.png)
 
