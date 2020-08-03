@@ -6,6 +6,7 @@
 [![GitHub license](https://img.shields.io/github/license/UniversalDataTool/universal-data-tool)](https://github.com/UniversalDataTool/universal-data-tool/blob/master/LICENSE)
 [![Platform Support Web/Win/Linux/Mac](https://img.shields.io/badge/platforms-Web%20Windows%20Linux%20Mac-blueviolet)](https://github.com/UniversalDataTool/universal-data-tool/releases)
 [![Slack Image](https://img.shields.io/badge/slack-Universal%20Data%20Tool-blue.svg?logo=slack)](https://join.slack.com/t/universaldatatool/shared_invite/zt-d8teykwi-iOSOUfxugKR~M4AJN6VL3g)
+[![Twitter Logo](https://img.shields.io/twitter/follow/UniversalDataTl?style=social)](https://twitter.com/UniversalDataTl)
 
 Try it out at [universaldatatool.com](https://universaldatatool.com) or [download it here](https://github.com/UniversalDataTool/universal-data-tool/releases).
 
