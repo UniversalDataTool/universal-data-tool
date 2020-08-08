@@ -20,6 +20,7 @@ export const UniversalDataViewer = ({
   onExit,
   hideHeader,
   hideDescription,
+  disableHotkeys = false,
   datasetName,
   requireCompleteToPressNext,
   onSaveTaskOutputItem,
@@ -36,6 +37,7 @@ export const UniversalDataViewer = ({
       requireCompleteToPressNext,
       onExit,
       height,
+      disableHotkeys,
     }),
     [
       hideHeader,
@@ -44,6 +46,7 @@ export const UniversalDataViewer = ({
       datasetName,
       height,
       onExit,
+      disableHotkeys,
     ]
   )
 
