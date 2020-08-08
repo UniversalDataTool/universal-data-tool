@@ -83,6 +83,8 @@ export default ({
     iface.labels = iface.availableLabels
   }
 
+  const disableHotkeys = containerProps.disableHotkeys
+
   if (!iface.labels)
     throw new Error("No labels defined. Add some labels in Setup to continue.")
   const [sampleIndex, changeSampleIndex] = useState(0)
@@ -154,6 +156,7 @@ export default ({
   }, [sampleIndex, globalSampleIndex, samples])
 
   const [hotkeyMap, labelKeyMap] = useMemo(() => {
+    if (disableHotkeys) return [{}, {}]
     const hotkeyMap = {
       " ": onNext,
       backspace: onPrev,
@@ -172,9 +175,10 @@ export default ({
       labelKeyMap[label.id] = nextAvailableLetter
     }
     return [hotkeyMap, labelKeyMap]
-  }, [labels, onClickLabel, onDone, onNext, onPrev])
+  }, [labels, onClickLabel, onDone, onNext, onPrev, disableHotkeys])
 
   useEffect(() => {
+    if (disableHotkeys) return
     const onKeyDown = (e) => {
       const key = e.key.toLowerCase()
       if (hotkeyMap[key]) {
@@ -185,7 +189,7 @@ export default ({
     return () => {
       window.removeEventListener("keydown", onKeyDown)
     }
-  }, [hotkeyMap])
+  }, [hotkeyMap, disableHotkeys])
 
   return (
     <WorkspaceContainer
