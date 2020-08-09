@@ -1,7 +1,7 @@
 // @flow
 
 import "../../i18n"
-import React, { useMemo, useEffect, useState } from "react"
+import React, { useMemo } from "react"
 import TextClassification from "../TextClassification"
 import TextEntityRecognition from "../TextEntityRecognition"
 import ImageSegmentation from "../ImageSegmentation"
