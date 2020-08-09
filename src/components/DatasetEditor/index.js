@@ -65,10 +65,11 @@ export default ({
   const c = useStyles()
   const { addToast } = useToasts()
   const [mode, changeMode] = useState(labelOnlyMode ? "label" : initialMode)
-  const [singleSampleDataset, setSingleSampleDataset] = useState()
   const [sampleInputEditor, changeSampleInputEditor] = useState({})
   const { ipcRenderer } = useElectron() || {}
   const posthog = usePosthog()
+
+  const [sampleIndex, setSampleIndex] = useState(null)
 
   const headerTabs = labelOnlyMode ? ["Label"] : ["Setup", "Samples", "Label"]
 
@@ -99,9 +100,7 @@ export default ({
   }, [sampleTimeToComplete, posthog.people])
 
   useEffect(() => {
-    if (mode !== "label") {
-      setSingleSampleDataset(null)
-    }
+    if (mode !== "label") setSampleIndex(null)
     posthog.capture("open_editor_tab", { tab: mode })
   }, [mode, posthog])
 
@@ -193,12 +192,7 @@ export default ({
               file={file}
               dataset={dataset}
               openSampleLabelEditor={(sampleIndex) => {
-                setSingleSampleDataset({
-                  ...dataset,
-                  samples: [dataset.samples[sampleIndex]],
-                  sampleIndex,
-                  annotationStartTime: Date.now(),
-                })
+                setSampleIndex(sampleIndex)
                 posthog.capture("open_sample", {
                   interface_type: dataset.interface.type,
                 })
@@ -228,11 +222,11 @@ export default ({
             <LabelView
               selectedBrush={selectedBrush}
               dataset={dataset}
+              sampleIndex={sampleIndex}
+              onChangeSampleIndex={setSampleIndex}
               sampleTimeToComplete={sampleTimeToComplete}
               onChangeSampleTimeToComplete={changeSampleTimeToComplete}
               onChangeDataset={onChangeDataset}
-              singleSampleDataset={singleSampleDataset}
-              onChangeSingleSampleDataset={setSingleSampleDataset}
               onClickSetup={() => changeMode("setup")}
             />
           )}

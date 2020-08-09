@@ -225,7 +225,11 @@ export const ImageClassification = ({
             >
               <Checkbox
                 style={{ color: "#fff" }}
-                checked={currentOutput.includes(label.id)}
+                checked={
+                  typeof currentOutput === "object"
+                    ? currentOutput.includes(label.id)
+                    : currentOutput === label.id
+                }
               />
               {label.id}
               {labelKeyMap[label.id] ? ` (${labelKeyMap[label.id]})` : ""}
