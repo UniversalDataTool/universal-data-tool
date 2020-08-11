@@ -44,15 +44,36 @@ export default ({
     [isClassification, iface.labels]
   )
 
-  const onExit = useEventCallback((output) => {
+  const getUDTKeyFrames = (riaOutput) => {
     const newKeyframes = {}
-    for (const key in output.keyframes) {
+    for (const key in riaOutput.keyframes) {
       newKeyframes[key] = {
-        regions: output.keyframes[key].regions.map(convertFromRIARegionFmt),
+        regions: riaOutput.keyframes[key].regions.map(convertFromRIARegionFmt),
       }
     }
-    onSaveTaskOutputItem(0, { keyframes: newKeyframes })
+    return newKeyframes
+  }
+
+  const onExit = useEventCallback((output) => {
+    const annotation = { keyframes: getUDTKeyFrames(output) }
+    onSaveTaskOutputItem(sampleIndex, annotation)
     if (containerProps.onExit) containerProps.onExit()
+  })
+
+  const onNext = useEventCallback((output) => {
+    const annotation = { keyframes: getUDTKeyFrames(output) }
+    onSaveTaskOutputItem(sampleIndex, annotation)
+    if (containerProps.onExit) {
+      containerProps.onExit("go-to-next")
+    }
+  })
+
+  const onPrev = useEventCallback((output) => {
+    const annotation = { keyframes: getUDTKeyFrames(output) }
+    onSaveTaskOutputItem(sampleIndex, annotation)
+    if (containerProps.onExit) {
+      containerProps.onExit("go-to-previous")
+    }
   })
 
   const enabledTools = useMemo(
@@ -78,10 +99,13 @@ export default ({
       }}
     >
       <Annotator
+        key={sampleIndex}
         taskDescription={iface.description}
         {...labelProps}
         enabledTools={enabledTools}
         keyframes={convertToRIAKeyframes(annotation?.keyframes || {})}
+        onNextImage={onNext}
+        onPrevImage={onPrev}
         videoName={samples[sampleIndex].customId || ""}
         videoTime={0}
         videoSrc={samples[sampleIndex].videoUrl}

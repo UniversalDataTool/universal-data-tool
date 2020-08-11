@@ -36,7 +36,6 @@ export const UniversalDataViewer = ({
   const [sampleIndex, setSampleIndex] = useClobberedState(globalSampleIndex, 0)
 
   const onExit = useEventCallback((...args) => {
-    console.log("onExit", { args, onExitProp })
     if (onExitProp) return onExitProp(...args)
     if (
       args[0] === "go-to-next" &&
