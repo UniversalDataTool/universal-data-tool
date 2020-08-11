@@ -79,7 +79,6 @@ export const ImageClassification = ({
   containerProps = emptyObj,
   onSaveTaskOutputItem,
 }) => {
-  console.log({ globalSampleIndex })
   // TODO remove legacy "availableLabels" support
   if (iface.availableLabels && !iface.labels) {
     iface.labels = iface.availableLabels

@@ -2,9 +2,13 @@ import React, { useState } from "react"
 import Survey from "material-survey/components/Survey"
 import getTaskDescription from "../../utils/get-task-description.js"
 import SampleContainer from "../SampleContainer"
+import useClobberedState from "../../utils/use-clobbered-state"
 
 export const DataEntry = (props) => {
-  const [currentSampleIndex, changeCurrentSampleIndex] = useState(0)
+  const [currentSampleIndex, setCurrentSampleIndex] = useClobberedState(
+    props.sampleIndex,
+    0
+  )
   const form =
     props.samples[currentSampleIndex].surveyjs || props.interface.surveyjs
   if (!form)
@@ -19,7 +23,7 @@ export const DataEntry = (props) => {
         getTaskDescription(props.samples[currentSampleIndex]) ||
         props.interface.description
       }
-      onChangeSample={(sampleIndex) => changeCurrentSampleIndex(sampleIndex)}
+      onChangeSample={(sampleIndex) => setCurrentSampleIndex(sampleIndex)}
     >
       <Survey
         key={(props.sampleIndex || 0) + currentSampleIndex}
