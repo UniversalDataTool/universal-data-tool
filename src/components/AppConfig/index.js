@@ -12,6 +12,8 @@ const configKeyNames = [
   "auth.cognito.authentication_flow_type",
   "auth.cognito.storage.aws_s3.bucket",
   "auth.cognito.storage.aws_s3.region",
+  "auth.s3iam.access_key_id",
+  "auth.s3iam.secret_access_key",
   "labelhelp.disabled",
   "labelhelp.apikey",
   ...defaultHotkeys.map(({ id }) => `hotkeys.${id}`),
