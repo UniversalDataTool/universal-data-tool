@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import Survey from "material-survey/components/Survey"
 import getTaskDescription from "../../utils/get-task-description.js"
 import SampleContainer from "../SampleContainer"
