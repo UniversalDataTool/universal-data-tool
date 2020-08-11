@@ -135,7 +135,7 @@ export default ({
         <PeopleIcon />
       </IconButton>
       <PopupBox className={sessionBoxOpen ? "" : "hidden"}>
-        <h1>{t("collobrate")}</h1>
+        <h1>{t("collaborate")}</h1>
         {!inSession ? (
           <>
             <h2>{t("join-a-session")}</h2>
