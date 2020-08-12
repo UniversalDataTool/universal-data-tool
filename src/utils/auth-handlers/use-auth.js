@@ -4,6 +4,7 @@ import React, {
   createContext,
   useContext,
   useMemo,
+  useReducer,
 } from "react"
 import { useAppConfig } from "../../components/AppConfig"
 import CognitoHandler from "./cognito-handler.js"
@@ -17,7 +18,10 @@ export const AuthProvider = ({ children }) => {
   const { appConfig, fromConfig } = useAppConfig()
   const [handler, setHandler] = useState({ authProvider: "none" })
   const authProvider = fromConfig("auth.provider")
-  const forceUpdate = useUpdate()
+  const [handlerVersion, incHandlerVersion] = useReducer(
+    (state) => state + 1,
+    0
+  )
 
   useEffect(() => {
     if (handler && handler.authProvider === authProvider) return
@@ -30,14 +34,14 @@ export const AuthProvider = ({ children }) => {
     if (!handler) return
     const interval = setInterval(() => {
       if (handler.hasChanged) {
-        forceUpdate()
+        incHandlerVersion()
         handler.hasChanged = false
       }
     }, 1000)
     return () => {
       clearInterval(interval)
     }
-  }, [handler, forceUpdate])
+  }, [handler, handlerVersion])
 
   const contextValue = useMemo(
     () => ({
@@ -47,8 +51,9 @@ export const AuthProvider = ({ children }) => {
       setUser: handler.setUser,
       logout: handler.logout,
       login: handler.login,
+      handlerVersion,
     }),
-    [handler]
+    [handler, handlerVersion]
   )
 
   return (
