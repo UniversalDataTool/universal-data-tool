@@ -35,6 +35,7 @@ export default (file) => {
   }
 
   function createOrReplaceAnnotations(file, json) {
+    console.log({ file, json })
     Storage.put(`${file.fileName}/annotations/annotations.json`, json, {
       level: "private",
     }).catch((err) => console.log(err))

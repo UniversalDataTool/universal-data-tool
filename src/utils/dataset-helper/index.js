@@ -1,9 +1,12 @@
 // @flow weak
 
-import getSampleNameFromURL from "./get-sample-name-from-url"
-import RecognizeFileExtension from "./RecognizeFileExtension"
+import getSampleNameFromURL from "../get-sample-name-from-url"
+import RecognizeFileExtension from "../RecognizeFileExtension"
 import isEmpty from "lodash/isEmpty"
 import { setIn } from "seamless-immutable"
+import getFilesDifferencesImport from "./get-files-differences.js"
+
+export const getFilesDifferences = getFilesDifferencesImport
 
 export const getSampleName = (sample) => {
   var sampleName
