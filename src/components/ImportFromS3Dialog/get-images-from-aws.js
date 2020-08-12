@@ -61,7 +61,7 @@ export default async (result, folderToFetch, configImport, authConfig) => {
   for (let i = 0; i < result.length; i++) {
     if (result[i].key.match(`(${folderToFetch}/data).*(\\.).*`)) {
       await Storage.get(result[i].key, {
-        expires: 24 * 60 * 60 * 2000,
+        expires: 24 * 60 * 60,
         level: "private",
       })
         .then(async (result) => {
