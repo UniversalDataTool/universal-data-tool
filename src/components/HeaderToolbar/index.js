@@ -99,7 +99,6 @@ const HeaderToolbar = ({
   const c = useStyles()
   const { authProvider, isLoggedIn, logout } = useAuth()
 
-  console.log({ isLoggedIn })
   return (
     <AppBar color="default" position="static">
       <Toolbar variant="dense">
