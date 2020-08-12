@@ -14,4 +14,9 @@ export default [
     provider: "s3iam",
     Icon: SdStorageOutlinedIcon,
   },
+  {
+    name: "Proxy",
+    provider: "proxy",
+    Icon: SdStorageOutlinedIcon,
+  },
 ]

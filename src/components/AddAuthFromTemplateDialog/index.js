@@ -104,6 +104,18 @@ const forms = {
       },
     ],
   },
+  proxy: {
+    questions: [
+      {
+        name: "auth.proxy.corsproxy",
+        title: "CORS Proxy",
+        description:
+          "Some requests for images or APIs (like AWS S3) are blocked by browsers for security reasons, this CORs proxy will be used to enable blocked functionality when not using the desktop application.",
+        defaultValue:
+          "https://corsproxy.seve.workers.dev/corsproxy/?apiurl={URL}",
+      },
+    ],
+  },
 }
 
 export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
