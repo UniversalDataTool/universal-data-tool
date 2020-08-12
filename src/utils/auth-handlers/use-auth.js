@@ -8,7 +8,6 @@ import React, {
 } from "react"
 import { useAppConfig } from "../../components/AppConfig"
 import CognitoHandler from "./cognito-handler.js"
-import { useUpdate } from "react-use"
 
 export const authProviders = ["cognito"]
 
