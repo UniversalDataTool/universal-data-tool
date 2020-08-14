@@ -1,7 +1,7 @@
 // @flow
-import React from "react"
 import CognitoIcon from "./cognito-icon.js"
 import SdStorageOutlinedIcon from "@material-ui/icons/SdStorageOutlined"
+import AccountTreeIcon from "@material-ui/icons/AccountTree"
 
 export default [
   {
@@ -17,6 +17,6 @@ export default [
   {
     name: "Proxy",
     provider: "proxy",
-    Icon: SdStorageOutlinedIcon,
+    Icon: AccountTreeIcon,
   },
 ]
