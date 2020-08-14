@@ -108,13 +108,10 @@ const forms = {
     questions: [
       {
         name: "auth.proxy.corsproxy",
+        type: "text",
         title: "CORS Proxy",
         description:
           "Some requests for images or APIs (like AWS S3) are blocked by browsers for security reasons, this CORs proxy will be used to enable blocked functionality when not using the desktop application.",
-        defaultValue:
-          // TODO this is currently deployed on @seveibar's cloudflare, it'd be
-          // better if it was deployed on the organization's cloudflare
-          "https://corsproxy.seve.workers.dev/corsproxy/?apiurl={URL}",
       },
     ],
   },
@@ -131,7 +128,10 @@ export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
     const questionIds = form.questions.map((q) => q.name)
     const defaults = {}
     for (const questionId of questionIds) {
-      defaults[questionId] = fromConfig(questionId)
+      const configValue = fromConfig(questionId)
+      if (configValue !== undefined) {
+        defaults[questionId] = configValue
+      }
     }
     return defaults
   }
