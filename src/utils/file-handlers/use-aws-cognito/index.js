@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useCallback } from "react"
 import UpdateAWSStorage from "./update-aws-storage"
-import * as datasetHelper from "../../dataset-helper"
 import isEmpty from "lodash/isEmpty"
 import useAuth from "../../auth-handlers/use-auth"
+import getFilesDifferences from "../../dataset-helper/get-files-differences.js"
 
 const workingInterfaces = [
   "video_segmentation",
@@ -24,11 +24,11 @@ export default ({ file, setFile }) => {
   const shouldUpdateAWSStorage = useCallback(() => {
     if (!isLoggedIn || authProvider !== "cognito") return
 
-    var changes = datasetHelper.fileHasChanged(lastObjectRef.current, file)
+    var changes = getFilesDifferences(lastObjectRef.current, file)
     if (
       isEmpty(file) ||
       (!changes.content.samples && !changes.fileName) ||
-      !workingInterfaces.includes(file.content.interface.authProvider) ||
+      !workingInterfaces.includes(file.content.interface.type) ||
       file.fileName === "unnamed"
     )
       return false
@@ -38,6 +38,7 @@ export default ({ file, setFile }) => {
   useEffect(() => {
     if (!isLoggedIn || authProvider !== "cognito") return
     if (!isEmpty(authConfig)) {
+      console.log("should update", shouldUpdateAWSStorage())
       if (shouldUpdateAWSStorage()) UpdateAWSStorage(file)
       lastObjectRef.current = file
     }

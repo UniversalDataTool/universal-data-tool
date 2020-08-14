@@ -20,6 +20,16 @@ class CognitoHandler {
       },
     }
     this.isLoggedIn = false
+    this.checkIfLoggedIn()
+  }
+  checkIfLoggedIn = async () => {
+    Amplify.configure(this.authConfig)
+    const userHandle = await Auth.currentAuthenticatedUser()
+    if (userHandle) {
+      this.user = userHandle
+      this.isLoggedIn = true
+      this.hasChanged = true
+    }
   }
   setUser = (userHandle) => {
     this.user = userHandle

@@ -26,6 +26,7 @@ import { FaGoogleDrive, FaYoutube } from "react-icons/fa"
 import usePosthog from "../../utils/use-posthog"
 import promptAndGetSamplesFromLocalDirectory from "./prompt-and-get-samples-from-local-directory.js"
 import { useTranslation } from "react-i18next"
+import useAuth from "../../utils/auth-handlers/use-auth.js"
 
 const ButtonBase = styled(MuiButton)({
   width: 240,
@@ -64,7 +65,6 @@ const Button = ({
   children,
   dialog,
   authConfiguredOnly,
-  authConfig,
   signedInOnly,
   user,
   onlySupportType,
@@ -72,12 +72,14 @@ const Button = ({
 }) => {
   const posthog = usePosthog()
 
+  const { isLoggedIn, authConfig } = useAuth()
+
   const isDisabled = () => {
     if (desktopOnly) {
       return { disabled: !isDesktop, disabledText: "DESKTOP ONLY" }
     } else if (onlySupportType && !onlySupportType.includes(type)) {
       return { disabled: true, disabledText: `DOESN'T SUPPORT THIS INTERFACE` }
-    } else if (authConfiguredOnly) {
+    } else if (authConfiguredOnly && !isLoggedIn) {
       if (signedInOnly) {
         return { disabled: isEmpty(user), disabledText: "MUST BE SIGNED IN" }
       } else {
@@ -234,7 +236,6 @@ export default ({
             dialog="import-from-s3"
             Icon={S3Icon}
             authConfiguredOnly={true}
-            authConfig={authConfig}
             signedInOnly={true}
             user={user}
           >
@@ -265,7 +266,6 @@ export default ({
         {file && (
           <ImportFromS3Dialog
             file={file}
-            authConfig={authConfig}
             open={selectedDialog === "import-from-s3"}
             onChangeFile={onChangeFile}
             onClose={closeDialog}
