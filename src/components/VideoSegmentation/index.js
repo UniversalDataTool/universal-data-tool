@@ -19,6 +19,7 @@ const [emptyObj, emptyArr] = [{}, []]
 
 export default ({
   interface: iface,
+  sampleIndex,
   samples = emptyArr,
   containerProps = emptyObj,
   onSaveTaskOutputItem,
@@ -43,15 +44,36 @@ export default ({
     [isClassification, iface.labels]
   )
 
-  const onExit = useEventCallback((output) => {
+  const getUDTKeyFrames = (riaOutput) => {
     const newKeyframes = {}
-    for (const key in output.keyframes) {
+    for (const key in riaOutput.keyframes) {
       newKeyframes[key] = {
-        regions: output.keyframes[key].regions.map(convertFromRIARegionFmt),
+        regions: riaOutput.keyframes[key].regions.map(convertFromRIARegionFmt),
       }
     }
-    onSaveTaskOutputItem(0, { keyframes: newKeyframes })
+    return newKeyframes
+  }
+
+  const onExit = useEventCallback((output) => {
+    const annotation = { keyframes: getUDTKeyFrames(output) }
+    onSaveTaskOutputItem(sampleIndex, annotation)
     if (containerProps.onExit) containerProps.onExit()
+  })
+
+  const onNext = useEventCallback((output) => {
+    const annotation = { keyframes: getUDTKeyFrames(output) }
+    onSaveTaskOutputItem(sampleIndex, annotation)
+    if (containerProps.onExit) {
+      containerProps.onExit("go-to-next")
+    }
+  })
+
+  const onPrev = useEventCallback((output) => {
+    const annotation = { keyframes: getUDTKeyFrames(output) }
+    onSaveTaskOutputItem(sampleIndex, annotation)
+    if (containerProps.onExit) {
+      containerProps.onExit("go-to-previous")
+    }
   })
 
   const enabledTools = useMemo(
@@ -62,15 +84,11 @@ export default ({
     [regionTypesAllowed]
   )
 
-  // TODO fix by adding some way of going to the "next" video
-  if (samples.length > 1) {
-    return "Video segmentation is currently limited to only a single video per selection"
-  }
-
   if (samples.length === 0) throw new Error("No sample data provided selected")
-  if (!samples[0].videoUrl) throw new Error("Sample must have videoUrl")
+  if (!samples[sampleIndex].videoUrl)
+    throw new Error("Sample must have videoUrl")
 
-  const annotation = samples[0].annotation
+  const annotation = samples[sampleIndex].annotation || {}
 
   return (
     <div
@@ -81,13 +99,16 @@ export default ({
       }}
     >
       <Annotator
+        key={sampleIndex}
         taskDescription={iface.description}
         {...labelProps}
         enabledTools={enabledTools}
         keyframes={convertToRIAKeyframes(annotation?.keyframes || {})}
-        videoName={samples[0].customId || ""}
+        onNextImage={onNext}
+        onPrevImage={onPrev}
+        videoName={samples[sampleIndex].customId || ""}
         videoTime={0}
-        videoSrc={samples[0].videoUrl}
+        videoSrc={samples[sampleIndex].videoUrl}
         onExit={onExit}
       />
     </div>

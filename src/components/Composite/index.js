@@ -9,6 +9,7 @@ import InterfaceIcon from "../InterfaceIcon"
 import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight"
 import Checkbox from "@material-ui/core/Checkbox"
 import Box from "@material-ui/core/Box"
+import useClobberedState from "../../utils/use-clobbered-state"
 
 import { useTranslation } from "react-i18next"
 
@@ -29,7 +30,10 @@ const StyledButton = styled(Button)({
 })
 
 export const Composite = (props) => {
-  const [currentSampleIndex, changeCurrentSampleIndex] = useState(0)
+  const [currentSampleIndex, changeCurrentSampleIndex] = useClobberedState(
+    props.sampleIndex,
+    0
+  )
   const {
     interface: { fields },
   } = props
@@ -53,6 +57,7 @@ export const Composite = (props) => {
             },
           ],
         }}
+        onExit={() => changeSelectedField(null)}
         onSaveTaskOutputItem={(indexZero, output) => {
           props.onSaveTaskOutputItem(currentSampleIndex, {
             ...sample.annotation,
@@ -71,7 +76,15 @@ export const Composite = (props) => {
       totalSamples={props.samples.length}
       taskOutput={props.samples.map((s) => s.annotation)}
       description={getTaskDescription(sample) || props.interface.description}
-      onChangeSample={(sampleIndex) => changeCurrentSampleIndex(sampleIndex)}
+      onChangeSample={(sampleIndex) => {
+        if (props.containerProps.onExit) {
+          props.containerProps.onExit(
+            sampleIndex > currentSampleIndex ? "go-to-next" : "go-to-previous"
+          )
+        } else {
+          changeCurrentSampleIndex(sampleIndex)
+        }
+      }}
     >
       <Title>Fields</Title>
       {fields.map((field, index) => (

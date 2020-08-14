@@ -28,9 +28,9 @@ const OverviewContainer = styled("div")({
 export default ({
   dataset,
   onChangeDataset,
-  singleSampleDataset,
-  onChangeSingleSampleDataset,
   selectedBrush = "complete",
+  sampleIndex,
+  onChangeSampleIndex,
   onClickSetup,
   onChangeSampleTimeToComplete,
   sampleTimeToComplete,
@@ -40,11 +40,14 @@ export default ({
   const posthog = usePosthog()
   const { labelHelpEnabled, totalCost } = useLabelHelp()
   const labelOnlyMode = useIsLabelOnlyMode()
+  const [annotationStartTime, setAnnotationStartTime] = useState(null)
 
   useEffect(() => {
     if (process.env.REACT_APP_SHOW_LABELHELP_PRICING === "true")
       setShowLabelHelpPricing(true)
   }, [])
+
+  const isInOverview = sampleIndex === null
 
   let percentComplete = 0
   if (dataset.samples && dataset.samples.length > 0) {
@@ -66,15 +69,12 @@ export default ({
     }
   }, [currentTab, posthog])
 
-  return singleSampleDataset ? (
+  return !isInOverview ? (
     <LabelErrorBoundary>
       <UniversalDataViewer
-        datasetName={`Sample ${singleSampleDataset.sampleIndex}`}
+        sampleIndex={sampleIndex}
         onSaveTaskOutputItem={(relativeIndex, output) => {
-          const {
-            sampleIndex,
-            samples: [sample],
-          } = singleSampleDataset
+          const sample = dataset.samples[sampleIndex]
 
           let newDataset = dataset
           newDataset = setIn(
@@ -93,51 +93,37 @@ export default ({
               selectedBrush
             )
           }
-
-          onChangeSingleSampleDataset(
-            setIn(singleSampleDataset, ["samples", 0, "annotation"], output)
-          )
           onChangeDataset(newDataset)
         }}
         onExit={(nextAction = "nothing") => {
-          if (singleSampleDataset.startTime) {
-            onChangeSampleTimeToComplete(
-              Date.now() - singleSampleDataset.startTime
-            )
+          if (annotationStartTime) {
+            onChangeSampleTimeToComplete(Date.now() - annotationStartTime)
           }
-          const { sampleIndex } = singleSampleDataset
           switch (nextAction) {
             case "go-to-next":
               if (sampleIndex !== dataset.samples.length - 1) {
                 posthog.capture("next_sample", {
                   interface_type: dataset.interface.type,
                 })
-                onChangeSingleSampleDataset({
-                  ...dataset,
-                  samples: [dataset.samples[sampleIndex + 1]],
-                  sampleIndex: sampleIndex + 1,
-                  startTime: Date.now(),
-                })
+                // TODO reset start time
+                onChangeSampleIndex(sampleIndex + 1)
+                setAnnotationStartTime(Date.now())
                 return
               }
               break
             case "go-to-previous":
               if (sampleIndex !== 0) {
-                onChangeSingleSampleDataset({
-                  ...dataset,
-                  samples: [dataset.samples[sampleIndex - 1]],
-                  sampleIndex: sampleIndex - 1,
-                  startTime: Date.now(),
-                })
+                onChangeSampleIndex(sampleIndex - 1)
+                setAnnotationStartTime(Date.now())
                 return
               }
               break
             default:
               break
           }
-          onChangeSingleSampleDataset(null)
+          onChangeSampleIndex(null)
         }}
-        dataset={singleSampleDataset}
+        dataset={dataset}
         onClickSetup={onClickSetup}
       />
     </LabelErrorBoundary>
@@ -202,16 +188,11 @@ export default ({
             completed={(dataset.samples || []).map((s) =>
               Boolean(s.annotation)
             )}
-            onClick={(sampleIndex) => {
+            onClick={(selectedSampleIndex) => {
               posthog.capture("open_sample", {
                 interface_type: dataset.interface.type,
               })
-              onChangeSingleSampleDataset({
-                ...dataset,
-                samples: [dataset.samples[sampleIndex]],
-                sampleIndex,
-                startTime: Date.now(),
-              })
+              onChangeSampleIndex(selectedSampleIndex)
             }}
           />
         )}

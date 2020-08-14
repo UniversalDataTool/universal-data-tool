@@ -12,10 +12,20 @@ const configKeyNames = [
   "auth.cognito.authentication_flow_type",
   "auth.cognito.storage.aws_s3.bucket",
   "auth.cognito.storage.aws_s3.region",
+  "auth.s3iam.access_key_id",
+  "auth.s3iam.secret_access_key",
+  "auth.proxy.corsproxy",
   "labelhelp.disabled",
   "labelhelp.apikey",
   ...defaultHotkeys.map(({ id }) => `hotkeys.${id}`),
 ]
+
+const defaultAppConfig = {
+  "auth.proxy.corsproxy":
+    // TODO this is currently deployed on @seveibar's cloudflare, it'd be
+    // better if it was deployed on the organization's cloudflare
+    "https://corsproxy.seve.workers.dev/corsproxy/?apiurl={URL}",
+}
 
 // NOTE: appConfig should not allow any nested values
 export const AppConfigContext = createContext({
@@ -36,6 +46,9 @@ export const AppConfigProvider = ({ children }) => {
       fromConfig: (key) => {
         if (!configKeyNames.includes(key)) {
           throw new Error(`Unknown config key name "${key}"`)
+        }
+        if (appConfig[key] === undefined) {
+          return defaultAppConfig[key]
         }
         return appConfig[key]
       },

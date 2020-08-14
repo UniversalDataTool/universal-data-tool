@@ -5032,6 +5032,11 @@ aws-sign2@~0.7.0:
   resolved "https://registry.yarnpkg.com/aws-sign2/-/aws-sign2-0.7.0.tgz#b46e890934a9591f2d2f6f86d7e6a9f1b3fe76a8"
   integrity sha1-tG6JCTSpWR8tL2+G1+ap8bP+dqg=
 
+aws-sign@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/aws-sign/-/aws-sign-1.0.0.tgz#e534f86649499d88b1652d7c005fb5a789a7b505"
+  integrity sha512-NFHET9tpTy34wtiykuXGjO+uHnluWH3VzeSAirJeT2K4TrLLTw2UpGSCqMiENrQARWmMjJJJLwcPSScekU7HUA==
+
 aws4@^1.8.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.10.0.tgz#a17b3a8ea811060e74d47d306122400ad4497ae2"
@@ -16147,10 +16152,10 @@ react-icons@^3.9.0:
   dependencies:
     camelcase "^5.0.0"
 
-react-image-annotate@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/react-image-annotate/-/react-image-annotate-1.5.0.tgz#8e5dc18bcbe9b0c1e3ef239754d9e67f5cba4649"
-  integrity sha512-m1GP0N1fG7LMpRnBvLWtMaAACfwzJ95WldSYTSMDIbSnrFyYI3D0dq1T3r2jZ7CagQizzsBlQzO5FI4w+xdG8A==
+react-image-annotate@^1.5.3:
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/react-image-annotate/-/react-image-annotate-1.5.3.tgz#a001461d5acde342e151db58162c63eeba8aa44c"
+  integrity sha512-UjisZ42IcCE6N9VntYi8L3fHhtdYclX9D/wo5WW79Jr7nJkRjxwkQC6kAUExYcrLS5l6Q76I1/iXqb4ZY1oQHQ==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.12"
     "@fortawesome/free-solid-svg-icons" "^5.6.3"

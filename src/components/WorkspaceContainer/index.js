@@ -36,11 +36,11 @@ export default ({
     <Workspace
       headerLeftSide={
         titleContent === undefined ? (
-          <Box paddingLeft={2} fontWeight="bold">
+          <Box paddingLeft={2}>
             <HeaderLeftSideContainer>
               Sample{" "}
               {numberOfSamples > 1
-                ? `${currentSampleIndex + 1} / ${numberOfSamples}`
+                ? `${currentSampleIndex} / ${numberOfSamples}`
                 : `${globalSampleIndex}`}
             </HeaderLeftSideContainer>
           </Box>

@@ -8,6 +8,7 @@ import * as colors from "@material-ui/core/colors"
 import Checkbox from "@material-ui/core/Checkbox"
 import without from "lodash/without"
 import WorkspaceContainer from "../WorkspaceContainer"
+import useClobberedState from "../../utils/use-clobbered-state"
 
 const brightColors = [
   colors.blue[600],
@@ -71,7 +72,7 @@ const CheckButton = styled(Button)({
 
 const [emptyObj, emptyArr] = [{}, []]
 
-export default ({
+export const ImageClassification = ({
   sampleIndex: globalSampleIndex,
   interface: iface,
   samples = emptyArr,
@@ -87,7 +88,8 @@ export default ({
 
   if (!iface.labels)
     throw new Error("No labels defined. Add some labels in Setup to continue.")
-  const [sampleIndex, changeSampleIndex] = useState(0)
+  const [sampleIndex, setSampleIndex] = useClobberedState(globalSampleIndex, 0)
+
   const [enlargedLabel, changeEnlargedLabel] = useState(null)
   const [currentOutput, changeCurrentOutput] = useState(emptyArr)
   const labels = useMemo(
@@ -108,15 +110,15 @@ export default ({
   })
   const onNext = useEventCallback((newOutput) => {
     onSaveTaskOutputItem(sampleIndex, newOutput || currentOutput)
-    if (sampleIndex !== samples.length - 1) {
-      changeSampleIndex(sampleIndex + 1)
+    if (setSampleIndex && sampleIndex !== samples.length - 1) {
+      setSampleIndex(sampleIndex + 1)
     } else {
       if (containerProps.onExit) containerProps.onExit("go-to-next")
     }
   })
   const onPrev = useEventCallback(() => {
-    if (sampleIndex > 0) {
-      changeSampleIndex(sampleIndex - 1)
+    if (setSampleIndex && sampleIndex > 0) {
+      setSampleIndex(sampleIndex - 1)
     } else {
       if (containerProps.onExit) containerProps.onExit("go-to-previous")
     }
@@ -222,7 +224,11 @@ export default ({
             >
               <Checkbox
                 style={{ color: "#fff" }}
-                checked={currentOutput.includes(label.id)}
+                checked={
+                  typeof currentOutput === "object"
+                    ? currentOutput.includes(label.id)
+                    : currentOutput === label.id
+                }
               />
               {label.id}
               {labelKeyMap[label.id] ? ` (${labelKeyMap[label.id]})` : ""}
@@ -233,3 +239,5 @@ export default ({
     </WorkspaceContainer>
   )
 }
+
+export default ImageClassification
