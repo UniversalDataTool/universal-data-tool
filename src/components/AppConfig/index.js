@@ -14,6 +14,7 @@ const configKeyNames = [
   "auth.cognito.storage.aws_s3.region",
   "auth.s3iam.access_key_id",
   "auth.s3iam.secret_access_key",
+  "auth.s3iam.region",
   "auth.proxy.corsproxy",
   "labelhelp.disabled",
   "labelhelp.apikey",
@@ -27,9 +28,20 @@ const defaultAppConfig = {
     "https://corsproxy.seve.workers.dev/corsproxy/?apiurl={URL}",
 }
 
+const jsonParseOrEmpty = (s) => {
+  try {
+    return JSON.parse(s)
+  } catch (e) {
+    return {}
+  }
+}
+
 // NOTE: appConfig should not allow any nested values
 export const AppConfigContext = createContext({
-  appConfig: {},
+  appConfig: {
+    ...defaultAppConfig,
+    ...jsonParseOrEmpty(window.localStorage.app_config),
+  },
   setAppConfig: (newConfig) => undefined,
   fromConfig: (key) => undefined,
   setInConfig: (key, value) => undefined,

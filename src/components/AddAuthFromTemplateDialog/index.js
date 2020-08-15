@@ -102,6 +102,13 @@ const forms = {
         type: "text",
         isRequired: true,
       },
+      {
+        name: "auth.s3iam.region",
+        title: "Region",
+        placeholder: "us-east-1",
+        type: "text",
+        isRequired: true,
+      },
     ],
   },
   proxy: {
