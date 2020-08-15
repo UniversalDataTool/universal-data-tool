@@ -65,7 +65,7 @@ export const UploadToS3Dialog = ({ open, onClose, onAddSamples }) => {
     loadS3Path()
     // eslint-disable-next-line
   }, [s3Path, listBuckets, listBucketItemsAt])
-  if (!open) return
+  if (!open) return null
   return (
     <SimpleDialog
       onClose={onClose}
