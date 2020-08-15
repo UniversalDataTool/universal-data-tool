@@ -14,6 +14,7 @@ export const ImportFromS3Dialog = ({ open, onClose, onAddSamples }) => {
     optionsLoading: true,
   })
   useEffect(() => {
+    if (!open) return
     if (!listBuckets) return
     async function loadS3Path() {
       if (s3Path === "") {
@@ -41,7 +42,8 @@ export const ImportFromS3Dialog = ({ open, onClose, onAddSamples }) => {
     }
     loadS3Path()
     // eslint-disable-next-line
-  }, [s3Path, listBuckets, listBucketItemsAt])
+  }, [s3Path, listBuckets, listBucketItemsAt, open])
+  if (!open) return null
   return (
     <SimpleDialog
       onClose={onClose}
@@ -71,7 +73,7 @@ export const ImportFromS3Dialog = ({ open, onClose, onAddSamples }) => {
       ]}
     >
       {optionsLoading ? (
-        <Box height={150} width={500} paddingTop={4} textAlign="center">
+        <Box height={300} width={400} paddingTop={4} textAlign="center">
           <CircularProgress size={100} />
         </Box>
       ) : (

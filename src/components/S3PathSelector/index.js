@@ -10,7 +10,7 @@ import BackIcon from "@material-ui/icons/KeyboardArrowUp"
 import IconButton from "@material-ui/core/IconButton"
 
 const Container = styled(Box)({})
-const Items = styled(Box)({ maxHeight: 300, overflowY: "scroll" })
+const Items = styled(Box)({ height: 300, width: 400, overflowY: "scroll" })
 const Path = styled(Box)({
   fontWeight: "bold",
   color: colors.grey[600],
@@ -20,6 +20,7 @@ const Item = styled(Button)({ width: "100%" })
 export const S3BucketSelector = ({
   currentPath,
   options,
+  canCreateNew,
   onChangePath,
   showFiles = true,
 }) => {
@@ -76,6 +77,25 @@ export const S3BucketSelector = ({
               </Box>
             </Item>
           ))}
+        {currentPath !== "" && canCreateNew && (
+          <Item
+            key="create-new"
+            onClick={() => {
+              // TODO switch to MUI dialog
+              const newDirectory = window.prompt(
+                "Enter the name of new directory"
+              )
+              if (newDirectory) {
+                onChangePath(currentPath + newDirectory + "/")
+              }
+            }}
+          >
+            <DirectoryIcon className="icon" />
+            <Box flexGrow={1} className="text" textAlign="left" paddingLeft={1}>
+              Create New
+            </Box>
+          </Item>
+        )}
       </Items>
     </Container>
   )

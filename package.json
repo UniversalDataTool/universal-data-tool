@@ -104,7 +104,7 @@
     "posthog-js": "^1.0.4",
     "react-ace": "^7.0.4",
     "react-data-table-component": "^6.2.2",
-    "react-dropzone": "^10.1.8",
+    "react-dropzone": "^11.0.3",
     "react-github-btn": "^1.2.0",
     "react-hotkeys": "^2.0.0",
     "react-i18next": "^11.4.0",
