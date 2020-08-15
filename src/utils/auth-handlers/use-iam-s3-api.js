@@ -47,7 +47,7 @@ export default () => {
     return xmlParser.parse(response)
   }
 
-  if (!accessKeyId) return null
+  if (!accessKeyId) return {}
 
   return useMemo(
     () => ({

@@ -37,6 +37,7 @@ export const UploadToS3Dialog = ({ open, onClose, onAddSamples }) => {
   })
   useEffect(() => {
     if (!listBuckets) return
+    if (!open) return
     async function loadS3Path() {
       if (s3Path === "") {
         setOptions({
@@ -64,6 +65,7 @@ export const UploadToS3Dialog = ({ open, onClose, onAddSamples }) => {
     loadS3Path()
     // eslint-disable-next-line
   }, [s3Path, listBuckets, listBucketItemsAt])
+  if (!open) return
   return (
     <SimpleDialog
       onClose={onClose}
