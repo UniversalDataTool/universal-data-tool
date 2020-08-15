@@ -38,13 +38,14 @@ export const MultiFileDrop = ({ loadFile, onComplete }) => {
     })
     const errors = []
     for (const [index, file] of acceptedFiles.entries()) {
-      const res = await loadFile(file).catch((err) => {
+      await loadFile(file).catch((err) => {
         errors.push(err.toString())
         setErrors(errors)
       })
       setTotalUploaded(index + 1)
     }
     onComplete()
+    // eslint-disable-next-line
   }, [])
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 

@@ -53,7 +53,6 @@ export const ImportFromS3Dialog = ({ open, onClose, onAddSamples }) => {
         {
           onClick: async () => {
             const bucket = s3Path.match(/s3:\/\/([^/]+)/)[1]
-            const endPath = s3Path.replace(/s3:\/\/[^/]+\//, "")
 
             // TODO support more than 1000 file import by using
             // continuation-token on S3
