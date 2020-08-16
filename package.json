@@ -3,7 +3,7 @@
   "version": "0.11.5",
   "license": "MIT",
   "main": "desktop/main.js",
-  "homepage": "https://universaldatatool.com",
+  "homepage": "https://universaldatatool.com/app/",
   "scripts": {
     "start": "cross-env PORT=6001 react-scripts start",
     "build": "npm run build:web",
@@ -12,7 +12,7 @@
     "build:babel": "cross-env NODE_ENV=production babel ./src --out-dir=./lib --copy-files && cp ./package.json ./lib/package.json && node ./lib/lib/fix-deps.js",
     "build:vanilla": "parcel build -d ./lib -o vanilla.js ./src/vanilla/index.js",
     "build:vanilla:dev": "parcel ./src/vanilla/index.js",
-    "build:web": "react-scripts build",
+    "build:web": "rimraf build && react-scripts build && cp -r build ./build-copy && mv build-copy build/app",
     "build:desktop": "cross-env REACT_APP_DESKTOP=true PUBLIC_URL=./ react-scripts build && electron-builder build && cp ./desktop/entitlements.mac.plist ./build/entitlements.mac.plist",
     "start:desktop": "cross-env BROWSER=none USE_DEV_SERVER=yes concurrently 'npm run start' 'electron ./desktop'",
     "start:desktop:build": "electron ./desktop",
@@ -74,6 +74,7 @@
     "react-dom": "^16.8.6",
     "react-markdown": "^4.1.0",
     "react-nlp-annotate": "^0.1.22",
+    "rimraf": "^3.0.2",
     "spelling": "^2.0.1"
   },
   "dependencies": {
