@@ -155,7 +155,7 @@ export default ({
           electron,
         })
 
-        if (typeof localSamples === 'undefined') {
+        if (typeof localSamples === "undefined") {
           return
         }
 
