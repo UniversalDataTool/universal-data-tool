@@ -14,20 +14,39 @@ import Composite from "../Composite"
 import BadOHA from "../BadOHA"
 import Button from "@material-ui/core/Button"
 import { useTranslation } from "react-i18next"
+import useEventCallback from "use-event-callback"
+import useClobberedState from "../../utils/use-clobbered-state"
 
 export const UniversalDataViewer = ({
   dataset,
-  onExit,
+  onExit: onExitProp,
   hideHeader,
   hideDescription,
+  disableHotkeys = false,
   datasetName,
   requireCompleteToPressNext,
   onSaveTaskOutputItem,
+  sampleIndex: globalSampleIndex,
   height,
   onClickSetup,
 }) => {
   // TODO type check w/ superstruct against dataset
   const { t } = useTranslation()
+
+  const [sampleIndex, setSampleIndex] = useClobberedState(globalSampleIndex, 0)
+
+  const onExit = useEventCallback((...args) => {
+    if (onExitProp) return onExitProp(...args)
+    if (
+      args[0] === "go-to-next" &&
+      sampleIndex !== dataset.samples.length - 1
+    ) {
+      setSampleIndex(sampleIndex + 1)
+    } else if (args[0] === "go-to-previous" && sampleIndex !== 0) {
+      setSampleIndex(sampleIndex - 1)
+    }
+  })
+
   const containerProps = useMemo(
     () => ({
       hideHeader,
@@ -36,6 +55,7 @@ export const UniversalDataViewer = ({
       requireCompleteToPressNext,
       onExit,
       height,
+      disableHotkeys,
     }),
     [
       hideHeader,
@@ -44,6 +64,7 @@ export const UniversalDataViewer = ({
       datasetName,
       height,
       onExit,
+      disableHotkeys,
     ]
   )
 
@@ -74,6 +95,7 @@ export const UniversalDataViewer = ({
       return (
         <DataEntry
           containerProps={containerProps}
+          sampleIndex={sampleIndex}
           {...dataset}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
           onExit={onExit}
@@ -83,6 +105,7 @@ export const UniversalDataViewer = ({
       return (
         <TextClassification
           containerProps={containerProps}
+          sampleIndex={sampleIndex}
           {...dataset}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
           onExit={onExit}
@@ -92,6 +115,7 @@ export const UniversalDataViewer = ({
       return (
         <TextEntityRecognition
           containerProps={containerProps}
+          sampleIndex={sampleIndex}
           {...dataset}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
           onExit={onExit}
@@ -102,6 +126,7 @@ export const UniversalDataViewer = ({
       return (
         <ImageSegmentation
           containerProps={containerProps}
+          sampleIndex={sampleIndex}
           {...dataset}
           onExit={onExit}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
@@ -111,6 +136,7 @@ export const UniversalDataViewer = ({
       return (
         <ImageClassification
           containerProps={containerProps}
+          sampleIndex={sampleIndex}
           {...dataset}
           onExit={onExit}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
@@ -120,6 +146,7 @@ export const UniversalDataViewer = ({
       return (
         <VideoSegmentation
           containerProps={containerProps}
+          sampleIndex={sampleIndex}
           {...dataset}
           onExit={onExit}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
@@ -129,6 +156,7 @@ export const UniversalDataViewer = ({
       return (
         <Composite
           containerProps={containerProps}
+          sampleIndex={sampleIndex}
           {...dataset}
           dataset={dataset}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
@@ -139,6 +167,7 @@ export const UniversalDataViewer = ({
       return (
         <AudioTranscription
           containerProps={containerProps}
+          sampleIndex={sampleIndex}
           {...dataset}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
           onExit={onExit}

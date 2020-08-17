@@ -1,7 +1,8 @@
-import React, { useState } from "react"
+import React from "react"
 import getTaskDescription from "../../utils/get-task-description.js"
 import SampleContainer from "../SampleContainer"
 import NLPAnnotator from "react-nlp-annotate/components/NLPAnnotator"
+import useClobberedState from "../../utils/use-clobbered-state"
 
 const simpleSequenceToEntitySequence = (simpleSeq) => {
   const entSeq = []
@@ -46,7 +47,10 @@ const entitySequenceToSimpleSeq = (doc, entSeq) => {
 }
 
 export const TextEntityRecognition = (props) => {
-  const [currentSampleIndex, changeCurrentSampleIndex] = useState(0)
+  const [currentSampleIndex, setCurrentSampleIndex] = useClobberedState(
+    props.sampleIndex,
+    0
+  )
   const initialSequence = props.samples[currentSampleIndex].annotation
     ? entitySequenceToSimpleSeq(
         props.samples[currentSampleIndex].document,
@@ -68,7 +72,15 @@ export const TextEntityRecognition = (props) => {
         getTaskDescription(props.samples[currentSampleIndex]) ||
         props.interface.description
       }
-      onChangeSample={(sampleIndex) => changeCurrentSampleIndex(sampleIndex)}
+      onChangeSample={(sampleIndex) => {
+        if (props.containerProps.onExit) {
+          props.containerProps.onExit(
+            sampleIndex > currentSampleIndex ? "go-to-next" : "go-to-previous"
+          )
+        } else {
+          setCurrentSampleIndex(sampleIndex)
+        }
+      }}
     >
       <NLPAnnotator
         key={currentSampleIndex}

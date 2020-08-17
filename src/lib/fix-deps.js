@@ -35,6 +35,9 @@ const deps = [
   "react-markdown",
   "react-nlp-annotate",
   "spelling",
+  "i18next",
+  "react-i18next",
+  "i18next-browser-languagedetector",
 ]
 
 const originalPackageJSON = JSON.parse(

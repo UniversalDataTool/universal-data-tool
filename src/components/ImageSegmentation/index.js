@@ -7,6 +7,7 @@ import {
   convertFromRIARegionFmt,
   convertToRIAImageFmt,
 } from "../../utils/ria-format.js"
+import useClobberedState from "../../utils/use-clobbered-state"
 
 const regionTypeToTool = {
   "bounding-box": "create-box",
@@ -19,6 +20,7 @@ const [emptyObj, emptyArr] = [{}, []]
 export default ({
   sampleIndex: globalSampleIndex,
   interface: iface,
+  sampleIndex,
   samples = emptyArr,
   containerProps = emptyObj,
   onSaveTaskOutputItem,
@@ -28,7 +30,10 @@ export default ({
     iface.labels = iface.availableLabels
   }
 
-  const [selectedIndex, changeSelectedIndex] = useState(0)
+  const [selectedIndex, setSelectedIndex] = useClobberedState(
+    globalSampleIndex,
+    0
+  )
   const [showTags, changeShowTags] = useState(true)
   const [selectedTool, changeSelectedTool] = useState("select")
 
@@ -83,7 +88,11 @@ export default ({
       onExit(output, "go-to-next")
     } else {
       saveCurrentIndexAnnotation(output)
-      changeSelectedIndex(selectedIndex + 1)
+      if (setSelectedIndex) {
+        setSelectedIndex(selectedIndex + 1)
+      } else {
+        onExit(output, "go-to-next")
+      }
     }
   })
   const onPrevImage = useEventCallback((output) => {
@@ -91,7 +100,11 @@ export default ({
       onExit(output, "go-to-previous")
     } else {
       saveCurrentIndexAnnotation(output)
-      changeSelectedIndex(selectedIndex - 1)
+      if (setSelectedIndex) {
+        setSelectedIndex(selectedIndex - 1)
+      } else {
+        onExit(output, "go-to-previous")
+      }
     }
   })
 

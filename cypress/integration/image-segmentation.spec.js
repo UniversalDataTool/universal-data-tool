@@ -38,19 +38,18 @@ describe("Create a new", () => {
     cy.get("body").click().type("b")
   })
 
-  // TODO: change coordinates with cat coordinates
   it("should be able to draw a label box on canvas", () => {
     cy.get("canvas")
       .eq(0)
-      .trigger("mousedown", { button: 0, screenX: 0, screenY: 210 })
-      .trigger("mousemove", { button: 0, screenX: 0, screenY: 350 })
-      .trigger("mousemove", { button: 0, screenX: 100, screenY: 350 })
-      .trigger("mouseup", { force: true })
+      .trigger("mousedown", { button: 0, clientX: 0, clientY: 50 })
+      .trigger("mousemove", { button: 0, clientX: 0, clientY: 50 })
+      .trigger("mousemove", { button: 0, clientX: 50, clientY: 50 })
+      .trigger("mouseup", { button: 0 })
     cy.wait(50)
   })
 
   it("should be able to label that box as a cat", () => {
-    cy.contains("#1").click()
+    cy.wait(200)
     cy.contains("Classification").click().type("cat{enter}")
     cy.wait(100)
   })

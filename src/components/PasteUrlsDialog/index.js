@@ -4,6 +4,7 @@ import { styled } from "@material-ui/core/styles"
 import SimpleDialog from "../SimpleDialog"
 import Select from "react-select"
 import * as colors from "@material-ui/core/colors"
+import getSampleFromUrl from "./get-sample-from-url"
 
 const SelectContainer = styled("div")({
   marginTop: 8,
@@ -48,41 +49,11 @@ export default ({ open, onClose, onAddSamples }) => {
                   .split("\n")
                   .map((l) => l.trim())
                   .filter(Boolean)
-                  .map((s) => {
-                    if (urlType === "images") {
-                      return { imageUrl: s }
-                    }
-                    let extension = s
-                      .replace(/\?.*/g, "")
-                      .split(".")
-                      .slice(-1)[0]
-                    if (s.includes("gstatic.com/images")) {
-                      extension = "jpg"
-                    }
-                    switch (extension.toLowerCase()) {
-                      case "png":
-                      case "jpg":
-                      case "gif":
-                      case "jpeg":
-                      case "bmp": {
-                        return { imageUrl: s }
-                      }
-                      case "pdf": {
-                        return { pdfUrl: s }
-                      }
-                      case "mp3":
-                      case "wav": {
-                        return { audioUrl: s }
-                      }
-                      default: {
-                        throw new Error(
-                          `extension not recognized: "${extension}" in "${s}"`
-                        )
-                        // TODO if the user doesn't care, return null (this
-                        // behavior could be enabled with textfield option)
-                      }
-                    }
-                  })
+                  .map((s) =>
+                    urlType === "images"
+                      ? { imageUrl: s }
+                      : getSampleFromUrl(s, { returnNulls: true })
+                  )
                   .filter(Boolean)
               )
             } catch (e) {

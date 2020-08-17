@@ -35,12 +35,14 @@ export default (file) => {
   }
 
   function createOrReplaceAnnotations(file, json) {
+    console.log({ file, json })
     Storage.put(`${file.fileName}/annotations/annotations.json`, json, {
       level: "private",
     }).catch((err) => console.log(err))
   }
 
   function createOrReplaceImages(file) {
+    // TODO you can't have async in a forEach loop
     if (!isEmpty(file.content.samples)) {
       file.content.samples.forEach(async (element) => {
         try {
@@ -71,6 +73,12 @@ export default (file) => {
 
   if (fileNameExist(file)) {
     var dataset = file.content
+    // TODO datasetHelper.setSamplesName is returning an incorrect object, it
+    // should be returning an array of samples
+    console.log(
+      "this should be an array of samples",
+      datasetHelper.setSamplesName(dataset)
+    )
     file = setIn(
       file,
       ["content"],

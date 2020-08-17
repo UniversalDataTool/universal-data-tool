@@ -22,7 +22,7 @@ export const convertToRIARegionFmt = (region) => {
   switch (region.regionType) {
     case "bounding-box": {
       return {
-        id: rid(),
+        id: region.id || rid(),
         cls: region.classification,
         tags: region.labels,
         color: region.color || getRandomColor(),
@@ -35,7 +35,7 @@ export const convertToRIARegionFmt = (region) => {
     }
     case "point": {
       return {
-        id: rid(),
+        id: region.id || rid(),
         type: "point",
         tags: region.labels,
         cls: region.classification,
@@ -46,7 +46,7 @@ export const convertToRIARegionFmt = (region) => {
     }
     case "polygon": {
       return {
-        id: rid(),
+        id: region.id || rid(),
         type: "polygon",
         tags: region.labels,
         cls: region.classification,
@@ -69,6 +69,7 @@ export const convertFromRIARegionFmt = (riaRegion) => {
     case "point": {
       return {
         regionType: "point",
+        id: riaRegion.id,
         x: riaRegion.x,
         y: riaRegion.y,
         classification: riaRegion.cls,
@@ -79,6 +80,7 @@ export const convertFromRIARegionFmt = (riaRegion) => {
     case "box": {
       return {
         regionType: "bounding-box",
+        id: riaRegion.id,
         centerX: riaRegion.x + riaRegion.w / 2,
         centerY: riaRegion.y + riaRegion.h / 2,
         width: riaRegion.w,
@@ -91,6 +93,7 @@ export const convertFromRIARegionFmt = (riaRegion) => {
     case "polygon": {
       return {
         regionType: "polygon",
+        id: riaRegion.id,
         classification: riaRegion.cls,
         labels: riaRegion.tags,
         color: riaRegion.color,

@@ -1,10 +1,14 @@
-import React, { useState } from "react"
+import React from "react"
 import getTaskDescription from "../../utils/get-task-description.js"
 import SampleContainer from "../SampleContainer"
 import NLPAnnotator from "react-nlp-annotate/components/NLPAnnotator"
+import useClobberedState from "../../utils/use-clobbered-state"
 
 export const TextClassification = (props) => {
-  const [currentSampleIndex, changeCurrentSampleIndex] = useState(0)
+  const [currentSampleIndex, changeCurrentSampleIndex] = useClobberedState(
+    props.sampleIndex,
+    0
+  )
   const { annotation } = props.samples[currentSampleIndex]
   // TODO remove legacy support for availableLabels
   if (!props.interface.labels && props.interface.availableLabels) {
@@ -33,7 +37,15 @@ export const TextClassification = (props) => {
         getTaskDescription(props.samples[currentSampleIndex]) ||
         props.interface.description
       }
-      onChangeSample={(sampleIndex) => changeCurrentSampleIndex(sampleIndex)}
+      onChangeSample={(sampleIndex) => {
+        if (props.containerProps.onExit) {
+          props.containerProps.onExit(
+            sampleIndex > currentSampleIndex ? "go-to-next" : "go-to-previous"
+          )
+        } else {
+          changeCurrentSampleIndex(sampleIndex)
+        }
+      }}
     >
       <NLPAnnotator
         key={(props.sampleIndex || 0) + currentSampleIndex}

@@ -5,8 +5,8 @@ import SimpleDialog from "../SimpleDialog"
 import { styled } from "@material-ui/core/styles"
 import { setIn } from "seamless-immutable"
 import Box from "@material-ui/core/Box"
-import Select from "react-select"
 import range from "lodash/range"
+import TextField from "@material-ui/core/TextField"
 
 const ErrorBox = styled("pre")({
   color: "red",
@@ -14,19 +14,10 @@ const ErrorBox = styled("pre")({
   fontSize: 11,
 })
 
-const splitOptions = [
-  { label: "2x2", value: "2x2" },
-  { label: "3x3", value: "3x3" },
-  { label: "1x2 (columns)", value: "1x2" },
-  { label: "1x3 (columns)", value: "1x3" },
-  { label: "2x3 (2 rows)", value: "2x3" },
-  { label: "4x4", value: "4x4" },
-  { label: "3x4 (3 rows)", value: "3x4" },
-]
-
 export default ({ open, onChangeDataset, onClose, dataset }) => {
   const [errors, setErrors] = useState("")
-  const [splitType, setSplitType] = useState(splitOptions[0].value)
+  const [rows, setRows] = useState("2")
+  const [columns, setColumns] = useState("2")
   return (
     <SimpleDialog
       open={open}
@@ -36,21 +27,21 @@ export default ({ open, onChangeDataset, onClose, dataset }) => {
         {
           text: "Convert Image Samples into Segments",
           onClick: async () => {
-            const [rows, cols] = splitType.split("x").map((v) => parseInt(v))
+            const [nRows, nCols] = [parseInt(rows), parseInt(columns)]
 
             try {
               onChangeDataset(
                 setIn(
                   dataset,
                   ["samples"],
-                  range(rows).flatMap((y) =>
-                    range(cols).flatMap((x) =>
+                  range(nRows).flatMap((y) =>
+                    range(nCols).flatMap((x) =>
                       dataset.samples.map((s) => {
                         return setIn(s, ["allowedArea"], {
-                          x: x / cols,
-                          y: y / rows,
-                          width: 1 / cols,
-                          height: 1 / rows,
+                          x: x / nCols,
+                          y: y / nRows,
+                          width: 1 / nCols,
+                          height: 1 / nRows,
                         })
                       })
                     )
@@ -71,10 +62,15 @@ export default ({ open, onChangeDataset, onClose, dataset }) => {
       which limits the labeling to a section of the image. This is useful when
       trying to reduce the amount of work per image sample.
       <Box padding={4}>
-        <Select
-          defaultValue={splitOptions[0]}
-          options={splitOptions}
-          onChange={({ value }) => setSplitType(value)}
+        <TextField
+          label="Rows"
+          value={rows}
+          onChange={(e) => setRows(e.target.value)}
+        />
+        <TextField
+          label="Columns"
+          value={columns}
+          onChange={(e) => setColumns(e.target.value)}
         />
       </Box>
       {errors && <ErrorBox>{errors}</ErrorBox>}

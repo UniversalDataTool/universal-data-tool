@@ -10,7 +10,9 @@ import DescriptionIcon from "@material-ui/icons/Description"
 import PetsIcon from "@material-ui/icons/Pets"
 import * as colors from "@material-ui/core/colors"
 import PasteUrlsDialog from "../PasteUrlsDialog"
+import ImportFromCognitoS3Dialog from "../ImportFromCognitoS3Dialog"
 import ImportFromS3Dialog from "../ImportFromS3Dialog"
+import UploadToS3Dialog from "../UploadToS3Dialog"
 import ImportTextSnippetsDialog from "../ImportTextSnippetsDialog"
 import useElectron from "../../utils/use-electron"
 import classnames from "classnames"
@@ -26,6 +28,8 @@ import { FaGoogleDrive, FaYoutube } from "react-icons/fa"
 import usePosthog from "../../utils/use-posthog"
 import promptAndGetSamplesFromLocalDirectory from "./prompt-and-get-samples-from-local-directory.js"
 import { useTranslation } from "react-i18next"
+import useAuth from "../../utils/auth-handlers/use-auth.js"
+import { useAppConfig } from "../AppConfig"
 
 const ButtonBase = styled(MuiButton)({
   width: 240,
@@ -64,20 +68,24 @@ const Button = ({
   children,
   dialog,
   authConfiguredOnly,
-  authConfig,
   signedInOnly,
+  disabledReason,
   user,
   onlySupportType,
   type,
 }) => {
   const posthog = usePosthog()
 
+  const { isLoggedIn, authConfig } = useAuth()
+
   const isDisabled = () => {
-    if (desktopOnly) {
+    if (disabledReason) {
+      return { disabled: true, disabledText: disabledReason }
+    } else if (desktopOnly) {
       return { disabled: !isDesktop, disabledText: "DESKTOP ONLY" }
     } else if (onlySupportType && !onlySupportType.includes(type)) {
       return { disabled: true, disabledText: `DOESN'T SUPPORT THIS INTERFACE` }
-    } else if (authConfiguredOnly) {
+    } else if (authConfiguredOnly && !isLoggedIn) {
       if (signedInOnly) {
         return { disabled: isEmpty(user), disabledText: "MUST BE SIGNED IN" }
       } else {
@@ -138,6 +146,7 @@ export default ({
   const { t } = useTranslation()
   const [selectedDialog, changeDialog] = useState()
   const electron = useElectron()
+  const { fromConfig } = useAppConfig()
   const onChangeDialog = async (dialog) => {
     switch (dialog) {
       case "upload-directory": {
@@ -233,17 +242,34 @@ export default ({
         >
           {t("import-from")} Youtube URLs
         </Button>
+        <Button
+          Icon={S3Icon}
+          dialog="import-from-s3"
+          disabledReason={
+            fromConfig("auth.s3iam.access_key_id") ? null : "NEED AWS IAM AUTH"
+          }
+        >
+          {t("import-from-s3")}
+        </Button>
+        <Button
+          Icon={S3Icon}
+          dialog="upload-to-s3"
+          disabledReason={
+            fromConfig("auth.s3iam.access_key_id") ? null : "NEED AWS IAM AUTH"
+          }
+        >
+          {t("upload-to-s3")}
+        </Button>
         {file && (
           <Button
             isDesktop={isDesktop}
-            dialog="import-from-s3"
+            dialog="import-from-cognito-s3"
             Icon={S3Icon}
             authConfiguredOnly={true}
-            authConfig={authConfig}
             signedInOnly={true}
             user={user}
           >
-            {t("import-from")} S3
+            {t("import-from-cognito-s3")}
           </Button>
         )}
         <Button
@@ -267,11 +293,24 @@ export default ({
           onClose={closeDialog}
           onAddSamples={onAddSamples}
         />
+        <ImportFromS3Dialog
+          open={selectedDialog === "import-from-s3"}
+          onChangeFile={onChangeFile}
+          onClose={closeDialog}
+          user={user}
+          onAddSamples={onAddSamples}
+        />
+        <UploadToS3Dialog
+          open={selectedDialog === "upload-to-s3"}
+          onChangeFile={onChangeFile}
+          onClose={closeDialog}
+          user={user}
+          onAddSamples={onAddSamples}
+        />
         {file && (
-          <ImportFromS3Dialog
+          <ImportFromCognitoS3Dialog
             file={file}
-            authConfig={authConfig}
-            open={selectedDialog === "import-from-s3"}
+            open={selectedDialog === "import-from-cognito-s3"}
             onChangeFile={onChangeFile}
             onClose={closeDialog}
             user={user}

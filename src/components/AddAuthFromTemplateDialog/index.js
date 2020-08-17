@@ -86,6 +86,42 @@ const forms = {
       },
     ],
   },
+  s3iam: {
+    questions: [
+      {
+        name: "auth.s3iam.access_key_id",
+        title: "Access Key ID",
+        placeholder: "",
+        type: "text",
+        isRequired: true,
+      },
+      {
+        name: "auth.s3iam.secret_access_key",
+        title: "Secret Access Key",
+        placeholder: "",
+        type: "text",
+        isRequired: true,
+      },
+      {
+        name: "auth.s3iam.region",
+        title: "Region",
+        placeholder: "us-east-1",
+        type: "text",
+        isRequired: true,
+      },
+    ],
+  },
+  proxy: {
+    questions: [
+      {
+        name: "auth.proxy.corsproxy",
+        type: "text",
+        title: "CORS Proxy",
+        description:
+          "Some requests for images or APIs (like AWS S3) are blocked by browsers for security reasons, this CORs proxy will be used to enable blocked functionality when not using the desktop application.",
+      },
+    ],
+  },
 }
 
 export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
@@ -94,6 +130,18 @@ export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
   const [dialogTitle, setDialogTitle] = useState("Add Authentication")
   const [errors, addError] = useErrors()
   const { appConfig, setAppConfig, fromConfig, setInConfig } = useAppConfig()
+
+  const getDefaultsFromConfig = (form) => {
+    const questionIds = form.questions.map((q) => q.name)
+    const defaults = {}
+    for (const questionId of questionIds) {
+      const configValue = fromConfig(questionId)
+      if (configValue !== undefined) {
+        defaults[questionId] = configValue
+      }
+    }
+    return defaults
+  }
 
   // TODO useAppConfig to load in existing configuration
 
@@ -121,15 +169,15 @@ export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
       } catch (err) {
         addError("Invalid Cognito config: " + err.toString())
       }
-
-      setAppConfig({
-        ...appConfig,
-        ...answers,
-        "auth.provider": answers.provider,
-      })
-      // TODO some kind of success message
-      onClose()
     }
+    setAppConfig({
+      ...appConfig,
+      ...answers,
+      "auth.provider": answers.provider,
+    })
+    // TODO some kind of success message
+    onClose()
+    setAuthProvider(null)
   }
 
   return (
@@ -181,22 +229,7 @@ export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
               validateAuthProvider(answers)
             }}
             defaultAnswers={{
-              "auth.cognito.identity_pool_id": fromConfig(
-                "auth.cognito.identity_pool_id"
-              ),
-              "auth.cognito.region": fromConfig("auth.cognito.region"),
-              "auth.cognito.user_pool_id": fromConfig(
-                "auth.cognito.user_pool_id"
-              ),
-              "auth.cognito.user_pool_web_client_id": fromConfig(
-                "auth.cognito.user_pool_web_client_id"
-              ),
-              "auth.cognito.storage.aws_s3.bucket": fromConfig(
-                "auth.cognito.storage.aws_s3.bucket"
-              ),
-              "auth.cognito.storage.aws_s3.region": fromConfig(
-                "auth.cognito.storage.aws_s3.region"
-              ),
+              ...getDefaultsFromConfig(forms[authProvider]),
               "auth.provider": fromConfig("auth.provider"),
             }}
           />

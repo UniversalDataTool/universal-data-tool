@@ -6,6 +6,7 @@
 [![GitHub license](https://img.shields.io/github/license/UniversalDataTool/universal-data-tool)](https://github.com/UniversalDataTool/universal-data-tool/blob/master/LICENSE)
 [![Platform Support Web/Win/Linux/Mac](https://img.shields.io/badge/platforms-Web%20Windows%20Linux%20Mac-blueviolet)](https://github.com/UniversalDataTool/universal-data-tool/releases)
 [![Slack Image](https://img.shields.io/badge/slack-Universal%20Data%20Tool-blue.svg?logo=slack)](https://join.slack.com/t/universaldatatool/shared_invite/zt-d8teykwi-iOSOUfxugKR~M4AJN6VL3g)
+[![Twitter Logo](https://img.shields.io/twitter/follow/UniversalDataTl?style=social)](https://twitter.com/UniversalDataTl)
 
 Try it out at [universaldatatool.com](https://universaldatatool.com) or [download it here](https://github.com/UniversalDataTool/universal-data-tool/releases).
 
@@ -13,7 +14,8 @@ The Universal Data Tool is a web/desktop app for editing and annotating images, 
 For video tutorials [visit our Youtube channel](https://www.youtube.com/channel/UCgFkrRN7CLt7_iTa2WDjf2g).
 
 <!-- COMMUNITY-UPDATE:START !-->
-* [Community Update July](https://www.youtube.com/watch?v=QW-s4XVK3Ok&feature=youtu.be)
+* [Community Update Video 2](https://youtu.be/3bq9N08oc-U)
+* [Community Update Video 1](https://www.youtube.com/watch?v=QW-s4XVK3Ok&feature=youtu.be) [(blog version)](https://universaldatatool.substack.com/p/community-update-1)
 <!-- COMMUNITY-UPDATE:END !-->
 
 ## Features
@@ -29,6 +31,7 @@ For video tutorials [visit our Youtube channel](https://www.youtube.com/channel/
 - Import data from Google Drive, Youtube, CSV, Clipboard and more
 - Annotate NLP datasets with Named Entity Recognition (NER), classification and Part of Speech (PoS) tagging.
 - Easily [load into pandas](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-Pandas) or [use with fast.ai](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-Fast.ai)
+- Runs [with docker](https://hub.docker.com/r/universaldatatool/universaldatatool) `docker run -p 3000:3000 universaldatatool/universaldatatool`
 
 ![Automatic Pixel Segmentation](https://user-images.githubusercontent.com/1910070/88564540-53eff180-d001-11ea-8f51-8e4b316f21fc.png)
 
