@@ -154,6 +154,11 @@ export default ({
         const localSamples = await promptAndGetSamplesFromLocalDirectory({
           electron,
         })
+
+        if (typeof localSamples === "undefined") {
+          return
+        }
+
         onChangeDataset(
           setIn(
             dataset,
