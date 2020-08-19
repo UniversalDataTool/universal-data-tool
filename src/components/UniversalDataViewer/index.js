@@ -25,7 +25,7 @@ export const UniversalDataViewer = ({
   disableHotkeys = false,
   datasetName,
   requireCompleteToPressNext,
-  onSaveTaskOutputItem,
+  onSaveTaskOutputItem: onSaveTaskOutputItemProp,
   onModifySample,
   sampleIndex: globalSampleIndex,
   height,
@@ -47,6 +47,12 @@ export const UniversalDataViewer = ({
       setSampleIndex(sampleIndex - 1)
     }
   })
+
+  let onSaveTaskOutputItem = onSaveTaskOutputItemProp
+  if (onModifySample && !onSaveTaskOutputItem) {
+    onSaveTaskOutputItem = (sampleIndex, annotation) =>
+      onModifySample(sampleIndex, { annotation })
+  }
 
   const containerProps = useMemo(
     () => ({
