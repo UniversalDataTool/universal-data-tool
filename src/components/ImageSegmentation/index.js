@@ -24,6 +24,7 @@ export default ({
   sampleIndex,
   samples = emptyArr,
   containerProps = emptyObj,
+  // TODO DEPRECATE onSaveTaskOutputItem
   onSaveTaskOutputItem,
   onModifySample,
 }) => {
@@ -46,16 +47,22 @@ export default ({
 
   const saveCurrentIndexAnnotation = useEventCallback((output) => {
     const img = output.images[selectedIndex]
-    if (onModifySample && regionTypesAllowed.includes("allowed-area")) {
-      const { x, y, w: width, h: height } = output.allowedArea
-      onModifySample(selectedIndex, { allowedArea: { x, y, width, height } })
+    const annotation = multipleRegions
+      ? (img.regions || []).map(convertFromRIARegionFmt)
+      : convertToRIAImageFmt((img.regions || [])[0])
+    if (onModifySample) {
+      const { x, y, w: width, h: height } = output.allowedArea || {}
+      onModifySample(selectedIndex, {
+        annotation,
+        ...(output.allowedArea
+          ? {
+              allowedArea: { x, y, width, height },
+            }
+          : {}),
+      })
+    } else {
+      onSaveTaskOutputItem(selectedIndex, annotation)
     }
-    onSaveTaskOutputItem(
-      selectedIndex,
-      multipleRegions
-        ? (img.regions || []).map(convertFromRIARegionFmt)
-        : convertToRIAImageFmt((img.regions || [])[0])
-    )
   })
 
   const labelProps = useMemo(
