@@ -13,6 +13,7 @@ const regionTypeToTool = {
   "bounding-box": "create-box",
   polygon: ["create-polygon", "create-expanding-line"],
   point: "create-point",
+  "allowed-area": "modify-allowed-area",
 }
 
 const [emptyObj, emptyArr] = [{}, []]
@@ -24,6 +25,7 @@ export default ({
   samples = emptyArr,
   containerProps = emptyObj,
   onSaveTaskOutputItem,
+  onModifySample,
 }) => {
   // TODO remove legacy "availableLabels" support
   if (iface.availableLabels && !iface.labels) {
@@ -44,6 +46,10 @@ export default ({
 
   const saveCurrentIndexAnnotation = useEventCallback((output) => {
     const img = output.images[selectedIndex]
+    if (onModifySample && regionTypesAllowed.includes("allowed-area")) {
+      const { x, y, w: width, h: height } = output.allowedArea
+      onModifySample(selectedIndex, { allowedArea: { x, y, width, height } })
+    }
     onSaveTaskOutputItem(
       selectedIndex,
       multipleRegions

@@ -26,6 +26,7 @@ export const UniversalDataViewer = ({
   datasetName,
   requireCompleteToPressNext,
   onSaveTaskOutputItem,
+  onModifySample,
   sampleIndex: globalSampleIndex,
   height,
   onClickSetup,
@@ -130,6 +131,7 @@ export const UniversalDataViewer = ({
           {...dataset}
           onExit={onExit}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
+          onModifySample={onModifySample}
         />
       )
     case "image_classification":

@@ -6319,6 +6319,11 @@ cipher-base@^1.0.0, cipher-base@^1.0.1, cipher-base@^1.0.3:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
+clamp@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/clamp/-/clamp-1.0.1.tgz#66a0e64011816e37196828fdc8c8c147312c8634"
+  integrity sha1-ZqDmQBGBbjcZaCj9yMjBRzEshjQ=
+
 class-utils@^0.3.5:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/class-utils/-/class-utils-0.3.6.tgz#f93369ae8b9a7ce02fd41faad0ca83033190c463"
@@ -16157,10 +16162,10 @@ react-icons@^3.9.0:
   dependencies:
     camelcase "^5.0.0"
 
-react-image-annotate@^1.5.3:
-  version "1.5.3"
-  resolved "https://registry.yarnpkg.com/react-image-annotate/-/react-image-annotate-1.5.3.tgz#a001461d5acde342e151db58162c63eeba8aa44c"
-  integrity sha512-UjisZ42IcCE6N9VntYi8L3fHhtdYclX9D/wo5WW79Jr7nJkRjxwkQC6kAUExYcrLS5l6Q76I1/iXqb4ZY1oQHQ==
+react-image-annotate@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/react-image-annotate/-/react-image-annotate-1.6.0.tgz#bf7e51a6e04cb81c5df8cbdce9abfe40ab640a29"
+  integrity sha512-010Vee6FcN4V/v9zeFMI9wd6vCZQj5ml28YcgQPwyEd2NgACGKVrVJtIfzAAGxz+hF2Gv/3Soj3qTOtK7jGDXQ==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.12"
     "@fortawesome/free-solid-svg-icons" "^5.6.3"
@@ -16169,6 +16174,7 @@ react-image-annotate@^1.5.3:
     "@material-ui/icons" "^4.9.1"
     "@semantic-release/git" "^9.0.0"
     autoseg "^0.0.8"
+    clamp "^1.0.1"
     color-alpha "^1.0.4"
     get-image-data "^3.0.1"
     material-survey "^1.0.34"
