@@ -24,6 +24,7 @@ For video tutorials [visit our Youtube channel](https://www.youtube.com/channel/
 - Usable on [web](https://universaldatatool.com) or as [Windows,Mac or Linux desktop application](https://github.com/UniversalDataTool/universal-data-tool/wiki/Installation)
 - Collaborate with others in real time
 - Configure your project with an easy-to-use GUI
+- [Easily create courses to train your labelers](https://universaldatatool.com/courses)
 - Download/upload as easy-to-use CSV ([sample.udt.csv](https://github.com/UniversalDataTool/udt-format/blob/master/SAMPLE.udt.csv)) or JSON ([sample.udt.json](https://github.com/UniversalDataTool/udt-format/blob/master/SAMPLE.udt.json))
 - Support for Images, Videos, PDFs, Text, Audio Transcription and many other formats
 - Can be [easily integrated into a React application](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-React)
