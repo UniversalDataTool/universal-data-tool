@@ -19,9 +19,9 @@ of datasets. All contributions are welcome and appreciated!
 * Implement big features in draft PRs, taking breaks for feedback by messaging people on Slack
 * Just fix a bunch of bugs and do a massive pull request with no description but all the tests pass and it looks pretty good so I guess it's fine
 
-# Hhh'what do I need to know to get started
+# What do I need to know to get started
 
-* Hhh'watch this [video by one of our maintainers](https://vimeo.com/421285889) explaining how he starts working on a new feature
+* Watch this [video by one of our maintainers](https://vimeo.com/421285889) explaining how he starts working on a new feature
 * If you don't know [react](https://reactjs.org/), this is an [introduction video](https://egghead.io/courses/the-beginner-s-guide-to-react) that should get you up to speed.
 * Check out [Setup for Development](https://github.com/UniversalDataTool/universal-data-tool/wiki/Setup-for-Development) for instructions on how to run the project locally
 
