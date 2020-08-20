@@ -37,15 +37,17 @@ export const UniversalDataViewer = ({
   const [sampleIndex, setSampleIndex] = useClobberedState(globalSampleIndex, 0)
 
   const onExit = useEventCallback((...args) => {
-    if (onExitProp) return onExitProp(...args)
-    if (
-      args[0] === "go-to-next" &&
-      sampleIndex !== dataset.samples.length - 1
-    ) {
-      setSampleIndex(sampleIndex + 1)
-    } else if (args[0] === "go-to-previous" && sampleIndex !== 0) {
-      setSampleIndex(sampleIndex - 1)
+    if (globalSampleIndex === undefined) {
+      if (
+        args[0] === "go-to-next" &&
+        sampleIndex !== dataset.samples.length - 1
+      ) {
+        setSampleIndex(sampleIndex + 1)
+      } else if (args[0] === "go-to-previous" && sampleIndex !== 0) {
+        setSampleIndex(sampleIndex - 1)
+      }
     }
+    if (onExitProp) return onExitProp(...args)
   })
 
   let onSaveTaskOutputItem = onSaveTaskOutputItemProp
