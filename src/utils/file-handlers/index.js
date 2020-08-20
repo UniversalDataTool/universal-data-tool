@@ -74,7 +74,7 @@ export default () => {
     window.history.replaceState(
       {},
       window.document.title,
-      `/app?s=${encodeURIComponent(sessionId)}${
+      `/app/?s=${encodeURIComponent(sessionId)}${
         labelOnly ? "&mode=labelonly" : ""
       }`
     )
@@ -105,7 +105,7 @@ export default () => {
     window.history.replaceState(
       {},
       window.document.title,
-      `/app?s=${encodeURIComponent(newFile.sessionId)}`
+      `/app/?s=${encodeURIComponent(newFile.sessionId)}`
     )
   })
 

@@ -17,7 +17,7 @@ export const convertToCollaborativeFile = async (file) => {
     fileName: file.fileName,
     id: file.id,
     sessionId: collab.sessionId,
-    url: `${window.location.origin}/app?s=${collab.sessionId}`,
+    url: `${window.location.origin}/app/?s=${collab.sessionId}`,
     content: file.content,
     mode: "server",
   }
