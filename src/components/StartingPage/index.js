@@ -288,11 +288,18 @@ export default ({
                 </Action>
                 {onClickOpenSession && (
                   <Action onClick={onClickOpenSession}>
-                    {t("open-collabrative-session")}
+                    {t("open-collaborative-session")}
                   </Action>
                 )}
                 <Action onClick={() => changeAddAuthFromDialogOpen(true)}>
                   {t("add-authentication")}
+                </Action>
+                <Action
+                  onClick={() => {
+                    window.location.href = "/courses"
+                  }}
+                >
+                  Create a Training Course
                 </Action>
                 {/* <Action>Open Folder</Action> */}
               </ActionList>
