@@ -16,6 +16,10 @@ const useVanillaImageSegmentation = () => {
         imageUrl:
           "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
       },
+      {
+        imageUrl:
+          "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg",
+      },
     ],
   })
 }

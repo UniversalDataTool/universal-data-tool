@@ -13,6 +13,7 @@ const regionTypeToTool = {
   "bounding-box": "create-box",
   polygon: ["create-polygon", "create-expanding-line"],
   point: "create-point",
+  "allowed-area": "modify-allowed-area",
 }
 
 const [emptyObj, emptyArr] = [{}, []]
@@ -23,7 +24,9 @@ export default ({
   sampleIndex,
   samples = emptyArr,
   containerProps = emptyObj,
+  // TODO DEPRECATE onSaveTaskOutputItem
   onSaveTaskOutputItem,
+  onModifySample,
 }) => {
   // TODO remove legacy "availableLabels" support
   if (iface.availableLabels && !iface.labels) {
@@ -44,12 +47,22 @@ export default ({
 
   const saveCurrentIndexAnnotation = useEventCallback((output) => {
     const img = output.images[selectedIndex]
-    onSaveTaskOutputItem(
-      selectedIndex,
-      multipleRegions
-        ? (img.regions || []).map(convertFromRIARegionFmt)
-        : convertToRIAImageFmt((img.regions || [])[0])
-    )
+    const annotation = multipleRegions
+      ? (img.regions || []).map(convertFromRIARegionFmt)
+      : convertToRIAImageFmt((img.regions || [])[0])
+    if (onModifySample) {
+      const { x, y, w: width, h: height } = output.allowedArea || {}
+      onModifySample(selectedIndex, {
+        annotation,
+        ...(output.allowedArea
+          ? {
+              allowedArea: { x, y, width, height },
+            }
+          : {}),
+      })
+    } else {
+      onSaveTaskOutputItem(selectedIndex, annotation)
+    }
   })
 
   const labelProps = useMemo(
