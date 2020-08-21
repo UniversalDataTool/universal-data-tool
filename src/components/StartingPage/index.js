@@ -296,7 +296,8 @@ export default ({
                 </Action>
                 <Action
                   onClick={() => {
-                    window.location.href = "/courses"
+                    window.location.href =
+                      "https://universaldatatool.com/courses"
                   }}
                 >
                   Create a Training Course

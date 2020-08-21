@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from "react"
 import Annotator from "react-image-annotate"
+import { styled } from "@material-ui/core/styles"
 import useEventCallback from "use-event-callback"
 import {
   convertFromRIARegionFmt,
@@ -15,6 +16,10 @@ const regionTypeToTool = {
   point: "create-point",
   "allowed-area": "modify-allowed-area",
 }
+
+const Container = styled("div")({
+  "& .fullscreen": { height: "100%" },
+})
 
 const [emptyObj, emptyArr] = [{}, []]
 
@@ -46,7 +51,7 @@ export default ({
   const isPixel = iface.type === "image_pixel_segmentation"
 
   const saveCurrentIndexAnnotation = useEventCallback((output) => {
-    const img = output.images[selectedIndex]
+    const img = output.images[0]
     const annotation = multipleRegions
       ? (img.regions || []).map(convertFromRIARegionFmt)
       : convertToRIAImageFmt((img.regions || [])[0])
@@ -121,18 +126,17 @@ export default ({
     }
   })
 
-  const images = useMemo(
-    () =>
-      samples.map((taskDatum, index) =>
-        convertToRIAImageFmt({
-          title: containerProps.datasetName,
-          taskDatum,
-          output: samples[index].annotation,
-          index,
-        })
-      ),
-    [samples, containerProps.datasetName]
-  )
+  const singleImageList = useMemo(() => {
+    return [
+      convertToRIAImageFmt({
+        title: containerProps.datasetName || `Sample ${selectedIndex}`,
+        taskDatum: samples[selectedIndex],
+        output: samples[selectedIndex].annotation,
+        selectedIndex,
+      }),
+    ]
+    // eslint-disable-next-line
+  }, [selectedIndex, containerProps.datasetName])
 
   const enabledTools =
     iface.type === "image_pixel_segmentation"
@@ -155,9 +159,8 @@ export default ({
     return { x, y, w, h }
     // eslint-disable-next-line
   }, [iface.allowedArea, samples[selectedIndex].allowedArea])
-
   return (
-    <div
+    <Container
       style={{
         height: containerProps.height || "calc(100% - 70px)",
         minHeight: 600,
@@ -167,7 +170,7 @@ export default ({
       <Annotator
         key={globalSampleIndex}
         fullImageSegmentationMode={isPixel}
-        selectedImage={samples[selectedIndex].imageUrl}
+        selectedImage={0}
         taskDescription={iface.description}
         showTags={showTags}
         {...labelProps}
@@ -177,9 +180,9 @@ export default ({
         onPrevImage={onPrevImage}
         enabledTools={enabledTools}
         selectedTool={selectedTool}
-        images={images}
+        images={singleImageList}
         onExit={onExit}
       />
-    </div>
+    </Container>
   )
 }
