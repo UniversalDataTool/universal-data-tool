@@ -120,6 +120,7 @@ export default () => {
               : file.url
             : "unnamed",
           fileOpen: Boolean(file),
+          interfaceType: file?.content?.interface?.type,
           onOpenRecentItem: openRecentItem,
           isDesktop: true,
           onOpenFile: openFile,
