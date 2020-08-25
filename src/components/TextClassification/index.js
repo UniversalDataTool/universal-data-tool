@@ -1,7 +1,7 @@
 import React from "react"
 import getTaskDescription from "../../utils/get-task-description.js"
 import SampleContainer from "../SampleContainer"
-import NLPAnnotator from "react-nlp-annotate/components/NLPAnnotator"
+import NLPAnnotator from "react-nlp-annotate"
 import useClobberedState from "../../utils/use-clobbered-state"
 
 export const TextClassification = (props) => {

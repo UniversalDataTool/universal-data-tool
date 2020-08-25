@@ -1,13 +1,12 @@
 // @flow weak
 
 import React from "react"
-import getTaskDescription from "../../utils/get-task-description.js"
-import SampleContainer from "../SampleContainer"
-import NLPAnnotator from "react-nlp-annotate/components/NLPAnnotator"
+import NLPAnnotator from "react-nlp-annotate"
 import useClobberedState from "../../utils/use-clobbered-state"
+import Box from "@material-ui/core/Box"
 
 export default (props) => {
-  const [currentSampleIndex, changeCurrentSampleIndex] = useClobberedState(
+  const [currentSampleIndex, setCurrentSampleIndex] = useClobberedState(
     props.sampleIndex,
     0
   )
@@ -15,37 +14,33 @@ export default (props) => {
   const sample = props.samples[currentSampleIndex]
 
   return (
-    <SampleContainer
-      {...props.containerProps}
-      currentSampleIndex={currentSampleIndex}
-      totalSamples={props.samples.length}
-      taskOutput={props.samples.map((s) => s.annotation)}
-      description={
-        getTaskDescription(props.samples[currentSampleIndex]) ||
-        props.interface.description
-      }
-      onChangeSample={(sampleIndex) => {
-        if (props.containerProps.onExit) {
-          props.containerProps.onExit(
-            sampleIndex > currentSampleIndex ? "go-to-next" : "go-to-previous"
-          )
+    <NLPAnnotator
+      key={currentSampleIndex}
+      titleContent={<Box paddingLeft={4}>Sample {currentSampleIndex}</Box>}
+      type="transcribe"
+      audio={sample.audioUrl}
+      phraseBank={props.phraseBank}
+      initialTranscriptionText={sample.annotation || ""}
+      onPrev={(result) => {
+        props.onSaveTaskOutputItem(currentSampleIndex, result)
+        if (setCurrentSampleIndex) {
+          setCurrentSampleIndex(currentSampleIndex - 1)
         } else {
-          changeCurrentSampleIndex(sampleIndex)
+          props.onExit("go-to-previous")
         }
       }}
-    >
-      <NLPAnnotator
-        key={(props.sampleIndex || 0) + currentSampleIndex}
-        type="transcribe"
-        audio={sample.audioUrl}
-        phraseBank={props.phraseBank}
-        initialTranscriptionText={sample.annotation || ""}
-        onFinish={(result) => {
-          props.onSaveTaskOutputItem(currentSampleIndex, result)
-          if (props.containerProps.onExit)
-            props.containerProps.onExit("go-to-next")
-        }}
-      />
-    </SampleContainer>
+      onNext={(result) => {
+        props.onSaveTaskOutputItem(currentSampleIndex, result)
+        if (setCurrentSampleIndex) {
+          setCurrentSampleIndex(currentSampleIndex + 1)
+        } else {
+          props.onExit("go-to-next")
+        }
+      }}
+      onFinish={(result) => {
+        props.onSaveTaskOutputItem(currentSampleIndex, result)
+        if (props.onExit) props.onExit()
+      }}
+    />
   )
 }
