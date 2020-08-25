@@ -1,11 +1,9 @@
 import React from "react"
-import getTaskDescription from "../../utils/get-task-description.js"
-import SampleContainer from "../SampleContainer"
-import NLPAnnotator from "react-nlp-annotate/components/NLPAnnotator"
+import NLPAnnotator from "react-nlp-annotate"
 import useClobberedState from "../../utils/use-clobbered-state"
 
 export const TextClassification = (props) => {
-  const [currentSampleIndex, changeCurrentSampleIndex] = useClobberedState(
+  const [currentSampleIndex, setCurrentSampleIndex] = useClobberedState(
     props.sampleIndex,
     0
   )
@@ -28,39 +26,35 @@ export const TextClassification = (props) => {
     )
     .map((l) => (!l.displayName ? { ...l, displayName: l.id } : l))
   return (
-    <SampleContainer
-      {...props.containerProps}
-      currentSampleIndex={currentSampleIndex}
-      totalSamples={props.samples.length}
-      taskOutput={props.samples}
-      description={
-        getTaskDescription(props.samples[currentSampleIndex]) ||
-        props.interface.description
-      }
-      onChangeSample={(sampleIndex) => {
-        if (props.containerProps.onExit) {
-          props.containerProps.onExit(
-            sampleIndex > currentSampleIndex ? "go-to-next" : "go-to-previous"
-          )
+    <NLPAnnotator
+      key={currentSampleIndex}
+      type="label-document"
+      labels={labels}
+      multipleLabels={props.interface.multiple}
+      document={props.samples[currentSampleIndex].document}
+      initialLabels={initialLabels}
+      hotkeysEnabled={!props.disableHotkeys}
+      onPrev={(result) => {
+        props.onSaveTaskOutputItem(currentSampleIndex, result)
+        if (setCurrentSampleIndex) {
+          setCurrentSampleIndex(currentSampleIndex - 1)
         } else {
-          changeCurrentSampleIndex(sampleIndex)
+          props.onExit("go-to-previous")
         }
       }}
-    >
-      <NLPAnnotator
-        key={(props.sampleIndex || 0) + currentSampleIndex}
-        type="label-document"
-        labels={labels}
-        multipleLabels={props.interface.multiple}
-        document={props.samples[currentSampleIndex].document}
-        initialLabels={initialLabels}
-        onFinish={(result) => {
-          props.onSaveTaskOutputItem(currentSampleIndex, result)
-          if (props.containerProps.onExit)
-            props.containerProps.onExit("go-to-next")
-        }}
-      />
-    </SampleContainer>
+      onNext={(result) => {
+        props.onSaveTaskOutputItem(currentSampleIndex, result)
+        if (setCurrentSampleIndex) {
+          setCurrentSampleIndex(currentSampleIndex + 1)
+        } else {
+          props.onExit("go-to-next")
+        }
+      }}
+      onFinish={(result) => {
+        props.onSaveTaskOutputItem(currentSampleIndex, result)
+        props.onExit()
+      }}
+    />
   )
 }
 

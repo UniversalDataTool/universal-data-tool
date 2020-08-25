@@ -11,7 +11,8 @@ import ConfigureImagePixelSegmentation from "../ConfigureImagePixelSegmentation"
 import ConfigureImageClassification from "../ConfigureImageClassification"
 import ConfigureTextClassification from "../ConfigureTextClassification"
 import ConfigureAudioTranscription from "../ConfigureAudioTranscription"
-import ConfigureNLP from "../ConfigureNLP"
+import ConfigureTextEntityRecognition from "../ConfigureTextEntityRecognition"
+import ConfigureTextEntityRelations from "../ConfigureTextEntityRelations"
 import ConfigureDataEntry from "../ConfigureDataEntry"
 import ConfigureComposite from "../ConfigureComposite"
 import Configure3D from "../Configure3D"
@@ -248,7 +249,10 @@ export const ConfigureInterface = ({
             <ConfigureAudioTranscription iface={iface} onChange={onChange} />
           )}
           {iface.type === "text_entity_recognition" && (
-            <ConfigureNLP iface={iface} onChange={onChange} />
+            <ConfigureTextEntityRecognition iface={iface} onChange={onChange} />
+          )}
+          {iface.type === "text_entity_relations" && (
+            <ConfigureTextEntityRelations iface={iface} onChange={onChange} />
           )}
           {iface.type === "text_classification" && (
             <ConfigureTextClassification iface={iface} onChange={onChange} />

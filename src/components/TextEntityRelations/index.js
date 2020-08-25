@@ -3,11 +3,11 @@ import NLPAnnotator from "react-nlp-annotate"
 import useClobberedState from "../../utils/use-clobbered-state"
 import Box from "@material-ui/core/Box"
 import {
-  simpleSequenceToEntitySequence,
+  simpleSequenceAndRelationsToEntitySequence,
   entitySequenceToSimpleSeq,
-} from "./convert-react-nlp-annotate-types"
+} from "../TextEntityRecognition/convert-react-nlp-annotate-types"
 
-export const TextEntityRecognition = (props) => {
+export const TextEntityRelations = (props) => {
   const [currentSampleIndex, setCurrentSampleIndex] = useClobberedState(
     props.sampleIndex,
     0
@@ -19,23 +19,31 @@ export const TextEntityRecognition = (props) => {
       )
     : undefined
 
-  if (!props.interface.labels && !props.interface.availableLabels) {
-    throw new Error("Labels not defined. Try adding some labels in setup.")
+  const initialRelations =
+    props.samples[currentSampleIndex].annotation?.relations || []
+
+  if (!props.interface.relationLabels) {
+    throw new Error(
+      "Relation labels not defined. Try adding some labels in setup."
+    )
   }
 
   return (
     <NLPAnnotator
       key={currentSampleIndex}
       titleContent={<Box paddingLeft={4}>Sample {currentSampleIndex}</Box>}
-      type="label-sequence"
+      type="label-relationships"
       document={props.samples[currentSampleIndex].document}
-      labels={props.interface.labels || props.interface.availableLabels}
+      entityLabels={props.interface.entityLabels}
+      relationshipLabels={props.interface.relationLabels}
       initialSequence={initialSequence}
+      initialRelationships={initialRelations}
       hotkeysEnabled={!props.disableHotkeys}
       onPrev={(result) => {
-        props.onSaveTaskOutputItem(currentSampleIndex, {
-          entities: simpleSequenceToEntitySequence(result),
-        })
+        props.onSaveTaskOutputItem(
+          currentSampleIndex,
+          simpleSequenceAndRelationsToEntitySequence(result)
+        )
         if (setCurrentSampleIndex) {
           setCurrentSampleIndex(currentSampleIndex - 1)
         } else {
@@ -43,9 +51,10 @@ export const TextEntityRecognition = (props) => {
         }
       }}
       onNext={(result) => {
-        props.onSaveTaskOutputItem(currentSampleIndex, {
-          entities: simpleSequenceToEntitySequence(result),
-        })
+        props.onSaveTaskOutputItem(
+          currentSampleIndex,
+          simpleSequenceAndRelationsToEntitySequence(result)
+        )
         if (setCurrentSampleIndex) {
           setCurrentSampleIndex(currentSampleIndex + 1)
         } else {
@@ -53,13 +62,14 @@ export const TextEntityRecognition = (props) => {
         }
       }}
       onFinish={(result) => {
-        props.onSaveTaskOutputItem(currentSampleIndex, {
-          entities: simpleSequenceToEntitySequence(result),
-        })
+        props.onSaveTaskOutputItem(
+          currentSampleIndex,
+          simpleSequenceAndRelationsToEntitySequence(result)
+        )
         props.onExit()
       }}
     />
   )
 }
 
-export default TextEntityRecognition
+export default TextEntityRelations

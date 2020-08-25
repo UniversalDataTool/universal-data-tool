@@ -4,6 +4,7 @@ import "../../i18n"
 import React, { useMemo } from "react"
 import TextClassification from "../TextClassification"
 import TextEntityRecognition from "../TextEntityRecognition"
+import TextEntityRelations from "../TextEntityRelations"
 import ImageSegmentation from "../ImageSegmentation"
 import ImageClassification from "../ImageClassification"
 import VideoSegmentation from "../VideoSegmentation"
@@ -123,6 +124,16 @@ export const UniversalDataViewer = ({
     case "text_entity_recognition":
       return (
         <TextEntityRecognition
+          containerProps={containerProps}
+          sampleIndex={sampleIndex}
+          {...dataset}
+          onSaveTaskOutputItem={onSaveTaskOutputItem}
+          onExit={onExit}
+        />
+      )
+    case "text_entity_relations":
+      return (
+        <TextEntityRelations
           containerProps={containerProps}
           sampleIndex={sampleIndex}
           {...dataset}

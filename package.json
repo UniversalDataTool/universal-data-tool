@@ -73,7 +73,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-markdown": "^4.1.0",
-    "react-nlp-annotate": "^0.1.22",
+    "react-nlp-annotate": "^0.3.13",
     "rimraf": "^3.0.2",
     "spelling": "^2.0.1"
   },
