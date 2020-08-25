@@ -79,6 +79,7 @@ const HeaderToolbar = ({
   additionalButtons,
   onOpenDrawer,
   title = "Universal Data Tool",
+  interfaceType,
   isDesktop,
   fileOpen,
   sessionBoxOpen,
@@ -124,7 +125,12 @@ const HeaderToolbar = ({
             onChangeSelectedBrush={onChangeSelectedBrush}
           />
         )}
-        {!isDesktop && fileOpen && <DownloadButton onDownload={onDownload} />}
+        {!isDesktop && fileOpen && (
+          <DownloadButton
+            interfaceType={interfaceType}
+            onDownload={onDownload}
+          />
+        )}
         <div className={c.grow} />
         {additionalButtons}
         {tabs.length > 0 && (
