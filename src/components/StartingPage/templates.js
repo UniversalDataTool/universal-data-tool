@@ -1,5 +1,5 @@
 // @flow
-
+import React from "react"
 import ImageSearch from "@material-ui/icons/ImageSearch"
 import Image from "@material-ui/icons/Image"
 import CropFree from "@material-ui/icons/CropFree"
@@ -10,6 +10,7 @@ import Category from "@material-ui/icons/Category"
 import ThreeDRotation from "@material-ui/icons/ThreeDRotation"
 import OndemandVideoIcon from "@material-ui/icons/OndemandVideo"
 import ContactSupport from "@material-ui/icons/ContactSupport"
+import LowPriority from "@material-ui/icons/LowPriority"
 
 export const templates = [
   {
@@ -128,6 +129,47 @@ export const templates = [
             id: "hat",
             displayName: "Hat",
             description: "Something worn on the head.",
+          },
+        ],
+      },
+      samples: [
+        {
+          document:
+            "This strainer makes a great hat, I'll wear it while I serve spaghetti!",
+        },
+        {
+          document: "Why are all these dumpings covered in butter?!",
+        },
+      ],
+    },
+  },
+  {
+    name: "Text Entity Relations",
+    Icon: ({ ...props }) => (
+      <LowPriority
+        {...props}
+        style={{ ...props.style, transform: "rotate(90deg)" }}
+      />
+    ),
+    dataset: {
+      interface: {
+        type: "text_entity_relations",
+        entityLabels: [
+          {
+            id: "food",
+            displayName: "Food",
+            description: "Edible item.",
+          },
+          {
+            id: "hat",
+            displayName: "Hat",
+            description: "Something worn on the head.",
+          },
+        ],
+        relationLabels: [
+          {
+            id: "subject",
+            displayName: "Subject",
           },
         ],
       },

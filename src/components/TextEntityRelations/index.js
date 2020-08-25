@@ -20,7 +20,7 @@ export const TextEntityRecognition = (props) => {
     : undefined
 
   const initialRelations =
-    props.samples[currentSampleIndex].annotation.relations
+    props.samples[currentSampleIndex].annotation?.relations || []
 
   if (!props.interface.relationLabels) {
     throw new Error(
