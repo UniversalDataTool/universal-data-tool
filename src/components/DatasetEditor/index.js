@@ -6,7 +6,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import Header from "../Header"
 import EditableTitleText from "./EditableTitleText.js"
 import SamplesView from "../SamplesView"
-import InterfacePage from "../InterfacePage"
+import SetupPage from "../SetupPage"
 import EditSampleDialog from "../EditSampleDialog"
 import useElectron from "../../utils/use-electron"
 import useTimeToCompleteSample from "../../utils/use-time-to-complete-sample.js"
@@ -156,7 +156,7 @@ export default ({
             />
           )}
           {mode === "setup" && (
-            <InterfacePage
+            <SetupPage
               onClickEditJSON={() => changeMode("json")}
               dataset={dataset}
               onClearLabelData={() => {
@@ -168,7 +168,8 @@ export default ({
                   )
                 )
               }}
-              onChange={(iface) => {
+              onChange={(newDataset) => {
+                const { interface: iface } = newDataset
                 if (
                   iface.type !== dataset.interface.type &&
                   dataset.interface.type !== "empty" &&
@@ -180,10 +181,7 @@ export default ({
                   )
                   return
                 }
-                onChangeDataset({
-                  ...dataset,
-                  interface: iface,
-                })
+                onChangeDataset(newDataset)
               }}
             />
           )}

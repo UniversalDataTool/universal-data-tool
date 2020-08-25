@@ -71,8 +71,8 @@ export default () => {
     })
   )
 
-  const onChangeDataset = useEventCallback((newOHA) => {
-    setFile(setIn(file, ["content"], newOHA))
+  const onChangeDataset = useEventCallback((newDataset) => {
+    setFile(setIn(file, ["content"], newDataset))
   })
 
   return (
@@ -85,6 +85,7 @@ export default () => {
                 ? file.fileName
                 : file.url
               : "unnamed",
+            interfaceType: file?.content?.interface?.type,
             recentItems,
             changeRecentItems,
             onClickTemplate: onCreateTemplate,
