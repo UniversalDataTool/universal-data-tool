@@ -16303,10 +16303,10 @@ react-native-get-random-values@^1.4.0:
   dependencies:
     fast-base64-decode "^1.0.0"
 
-react-nlp-annotate@^0.3.10:
-  version "0.3.10"
-  resolved "https://registry.yarnpkg.com/react-nlp-annotate/-/react-nlp-annotate-0.3.10.tgz#af6ae4a3955a3a0be386cdf009116c64b6c317ad"
-  integrity sha512-4a/I/EPqzlW8q4b97H55d/F0fYeB77HhfG8S3KmLwrp2xtjlwRROgqNA+SFa1kKXlH3nY1QhddmznU/8mbKdrw==
+react-nlp-annotate@^0.3.11:
+  version "0.3.11"
+  resolved "https://registry.yarnpkg.com/react-nlp-annotate/-/react-nlp-annotate-0.3.11.tgz#7f78ffff812cac20f86e157acd5ed638a9a44a17"
+  integrity sha512-9SfKGsVpqsX61icuapSEIiZ7daUdAMVqH7IBfv+HGtwNgAJq23zdwqrYBKzz7wk3ZR5zRuJSRPL8MfBSZjT/6A==
   dependencies:
     "@material-ui/lab" "^4.0.0-alpha.56"
     chroma-js "^2.0.3"
