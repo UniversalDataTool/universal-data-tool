@@ -81,6 +81,16 @@ export default ({ interfaceType, onDownload }) => {
         limitations, however, if you have "npm" installed you can run the line
         below to get all the masks in your file.
         <pre>npx autoseg some_file.udt.json -o output_directory</pre>
+        <div style={{ marginTop: 16 }}>
+          Read more about{" "}
+          <a
+            style={{ color: colors.blue[500] }}
+            href="https://github.com/UniversalDataTool/autoseg/blob/master/README.md"
+          >
+            autoseg
+          </a>
+          .
+        </div>
       </SimpleDialog>
     </Container>
   )
