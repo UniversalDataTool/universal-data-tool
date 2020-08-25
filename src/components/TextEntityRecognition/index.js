@@ -31,6 +31,7 @@ export const TextEntityRecognition = (props) => {
       document={props.samples[currentSampleIndex].document}
       labels={props.interface.labels || props.interface.availableLabels}
       initialSequence={initialSequence}
+      hotkeysEnabled={!props.disableHotkeys}
       onPrev={(result) => {
         props.onSaveTaskOutputItem(currentSampleIndex, {
           entities: simpleSequenceToEntitySequence(result),

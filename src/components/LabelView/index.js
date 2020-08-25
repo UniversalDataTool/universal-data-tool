@@ -183,6 +183,7 @@ export default ({
       <Box flexGrow={1}>
         {currentTab === "label" && (
           <SampleGrid
+            tablePaginationPadding={6}
             count={(dataset.samples || []).length}
             samples={dataset.samples || []}
             completed={(dataset.samples || []).map((s) =>

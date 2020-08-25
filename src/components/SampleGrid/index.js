@@ -86,7 +86,13 @@ const Sample = memo(
   }
 )
 
-export default ({ count, completed = [], samples, onClick }) => {
+export default ({
+  count,
+  completed = [],
+  samples,
+  onClick,
+  tablePaginationPadding = 0,
+}) => {
   const [samplesPerPage, changeSamplesPerPage] = useLocalStorage(
     "samplesPerPage",
     100
@@ -176,21 +182,23 @@ export default ({ count, completed = [], samples, onClick }) => {
           </>
         )}
       </Box>
-      <TablePagination
-        rowsPerPageOptions={[100, 250, 500, 1000, 2000, 10000]}
-        component="div"
-        count={count}
-        rowsPerPage={samplesPerPage}
-        page={Math.floor(sampleOffset / samplesPerPage)}
-        labelRowsPerPage="Samples per Page:"
-        onChangePage={(e, newPage) =>
-          changeSampleOffset(newPage * samplesPerPage)
-        }
-        onChangeRowsPerPage={(e) => {
-          changeSampleOffset(0)
-          changeSamplesPerPage(+e.target.value)
-        }}
-      />
+      <Box paddingRight={tablePaginationPadding}>
+        <TablePagination
+          rowsPerPageOptions={[100, 250, 500, 1000, 2000, 10000]}
+          component="div"
+          count={count}
+          rowsPerPage={samplesPerPage}
+          page={Math.floor(sampleOffset / samplesPerPage)}
+          labelRowsPerPage="Samples per Page:"
+          onChangePage={(e, newPage) =>
+            changeSampleOffset(newPage * samplesPerPage)
+          }
+          onChangeRowsPerPage={(e) => {
+            changeSampleOffset(0)
+            changeSamplesPerPage(+e.target.value)
+          }}
+        />
+      </Box>
     </Container>
   )
 }
