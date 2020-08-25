@@ -7,7 +7,7 @@ import {
   entitySequenceToSimpleSeq,
 } from "../TextEntityRecognition/convert-react-nlp-annotate-types"
 
-export const TextEntityRecognition = (props) => {
+export const TextEntityRelations = (props) => {
   const [currentSampleIndex, setCurrentSampleIndex] = useClobberedState(
     props.sampleIndex,
     0
@@ -38,6 +38,7 @@ export const TextEntityRecognition = (props) => {
       relationshipLabels={props.interface.relationLabels}
       initialSequence={initialSequence}
       initialRelationships={initialRelations}
+      hotkeysEnabled={!props.disableHotkeys}
       onPrev={(result) => {
         props.onSaveTaskOutputItem(
           currentSampleIndex,
@@ -71,4 +72,4 @@ export const TextEntityRecognition = (props) => {
   )
 }
 
-export default TextEntityRecognition
+export default TextEntityRelations

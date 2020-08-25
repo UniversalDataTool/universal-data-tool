@@ -20,13 +20,13 @@ export const simpleSequenceAndRelationsToEntitySequence = ({
   relationships,
 }) => {
   const textIdsInRelation = new Set(
-    simpleSeq.flatMap((seq) => [seq.from, seq.to])
+    (relationships || []).flatMap((r) => [r.from, r.to])
   )
 
   const entSeq = []
   let charsPassed = 0
   for (const seq of simpleSeq) {
-    if (seq.label || textIdsInRelation.has(seq.textId)) {
+    if (seq.label || (seq.textId && textIdsInRelation.has(seq.textId))) {
       entSeq.push({
         text: seq.text,
         textId: seq.textId,
@@ -51,14 +51,18 @@ export const entitySequenceToSimpleSeq = (doc, entSeq) => {
       simpleSeq.push({
         text: entSeq[nextEntity].text,
         label: entSeq[nextEntity].label,
-        textId: entSeq[nextEntity].textId,
+        textId:
+          entSeq[nextEntity].textId || Math.random().toString(36).slice(-6),
       })
       i = entSeq[nextEntity].end
       simpleSeq.push({ text: "" })
       nextEntity += 1
     } else {
       if (simpleSeq.length === 0 || simpleSeq[simpleSeq.length - 1].label) {
-        simpleSeq.push({ text: doc[i] })
+        simpleSeq.push({
+          text: doc[i],
+          textId: Math.random().toString(36).slice(-6),
+        })
       } else {
         simpleSeq[simpleSeq.length - 1].text += doc[i]
       }
