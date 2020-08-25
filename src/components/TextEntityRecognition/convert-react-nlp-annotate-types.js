@@ -1,7 +1,7 @@
 export const simpleSequenceToEntitySequence = (simpleSeq) => {
   const entSeq = []
   let charsPassed = 0
-  for (const seq of simpleSeq) {
+  for (const seq of simpleSeq || []) {
     if (seq.label) {
       entSeq.push({
         text: seq.text,
@@ -25,7 +25,7 @@ export const simpleSequenceAndRelationsToEntitySequence = ({
 
   const entSeq = []
   let charsPassed = 0
-  for (const seq of simpleSeq) {
+  for (const seq of simpleSeq || []) {
     if (seq.label || (seq.textId && textIdsInRelation.has(seq.textId))) {
       entSeq.push({
         text: seq.text,
