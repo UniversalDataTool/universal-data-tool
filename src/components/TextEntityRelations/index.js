@@ -8,6 +8,7 @@ import {
 } from "../TextEntityRecognition/convert-react-nlp-annotate-types"
 
 export const TextEntityRelations = (props) => {
+  console.log(props)
   const [currentSampleIndex, setCurrentSampleIndex] = useClobberedState(
     props.sampleIndex,
     0
@@ -27,6 +28,8 @@ export const TextEntityRelations = (props) => {
       "Relation labels not defined. Try adding some labels in setup."
     )
   }
+
+  console.log({ initialSequence, initialRelations })
 
   return (
     <NLPAnnotator

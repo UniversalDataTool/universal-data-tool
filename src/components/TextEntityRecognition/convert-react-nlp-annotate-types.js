@@ -32,7 +32,7 @@ export const simpleSequenceAndRelationsToEntitySequence = ({
         textId: seq.textId,
         label: seq.label,
         start: charsPassed,
-        end: charsPassed + seq.text.length,
+        end: charsPassed + seq.text.length - 1,
       })
     }
     charsPassed += seq.text.length
@@ -54,7 +54,8 @@ export const entitySequenceToSimpleSeq = (doc, entSeq) => {
         textId:
           entSeq[nextEntity].textId || Math.random().toString(36).slice(-6),
       })
-      i = entSeq[nextEntity].end
+      // i = entSeq[nextEntity].end
+      i += entSeq[nextEntity].text.length - 1
       simpleSeq.push({ text: "" })
       nextEntity += 1
     } else {
@@ -67,6 +68,14 @@ export const entitySequenceToSimpleSeq = (doc, entSeq) => {
         simpleSeq[simpleSeq.length - 1].text += doc[i]
       }
     }
+  }
+  if (simpleSeq.map((s) => s.text).join("") !== doc) {
+    throw new Error(
+      "Combining annotation entities with document didn't match document.\n\n" +
+        simpleSeq.map((s) => s.text).join("") +
+        "\n\nvs\n\n" +
+        doc
+    )
   }
   return simpleSeq.filter((item) => item.text.length > 0)
 }
