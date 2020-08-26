@@ -222,7 +222,11 @@ export default ({
         <Button
           dialog="import-text-snippets"
           Icon={TextFieldsIcon}
-          onlySupportType={["text_entity_recognition", "text_classification"]}
+          onlySupportType={[
+            "text_entity_recognition",
+            "text_classification",
+            "text_entity_relations",
+          ]}
           type={dataset.interface.type}
         >
           {t("import-text-snippets")}
