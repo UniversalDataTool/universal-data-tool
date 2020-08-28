@@ -20,7 +20,7 @@ import Select from "react-select"
 import { useTranslation } from "react-i18next"
 import getEmbedYoutubeUrl from "./get-embed-youtube-url.js"
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     flexDirection: "column",
@@ -44,7 +44,14 @@ const useStyles = makeStyles({
     flexDirection: "column",
     textAlign: "center",
   },
-})
+  languageSelectionBox: {
+    display: "flex",
+    paddingTop: 24,
+    [theme.breakpoints.up("sm")]: {
+      justifyContent: "flex-end",
+    },
+  },
+}))
 
 const ContentContainer = styled("div")(({ theme }) => ({
   display: "flex",
@@ -244,12 +251,12 @@ export default ({
       <ContentContainer>
         <Content>
           <Grid container>
-            <Grid xs={6} item>
+            <Grid xs={12} sm={6} item>
               <Title>Universal Data Tool</Title>
               <Subtitle>{t("universaldatatool-description")}</Subtitle>
             </Grid>
-            <Grid xs={6}>
-              <Box display="flex" justifyContent="flex-end" paddingTop={3}>
+            <Grid xs={12} sm={6} item>
+              <Box className={c.languageSelectionBox}>
                 <Box
                   width="100%"
                   maxWidth={200}
@@ -264,7 +271,7 @@ export default ({
                 </Box>
               </Box>
             </Grid>
-            <Grid xs={6} item>
+            <Grid xs={12} sm={6} item>
               <ActionList>
                 <ActionTitle>Start</ActionTitle>
                 <Action
@@ -337,7 +344,7 @@ export default ({
                 </Action> */}
               </ActionList>
             </Grid>
-            <Grid xs={6} item>
+            <Grid xs={12} sm={6} item>
               <ActionList>
                 <ActionTitle>About</ActionTitle>
                 <ActionText>
@@ -366,9 +373,9 @@ export default ({
                       height="178"
                       // src="https://www.youtube.com/embed/QW-s4XVK3Ok"
                       src={latestCommunityUpdate.embedYTLink}
-                      frameborder="0"
+                      frameBorder="0"
                       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                      allowfullscreen="true"
+                      allowFullScreen
                     ></iframe>
                   </>
                 )}
@@ -383,7 +390,7 @@ export default ({
                 </ActionText> */}
               </ActionList>
             </Grid>
-            <Grid xs={12} item>
+            <Grid xs={12} sm={6} item>
               <BottomSpacer />
             </Grid>
           </Grid>
