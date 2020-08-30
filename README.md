@@ -1,5 +1,9 @@
 # Universal Data Tool
 
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/1910070/91648687-729a3b80-ea38-11ea-92f2-7ce94ae04da6.gif">
+</p>
+
 [![GitHub version](https://badge.fury.io/gh/UniversalDataTool%2Funiversal-data-tool.svg)](https://badge.fury.io/gh/UniversalDataTool%2Funiversal-data-tool)
 ![Master Branch](https://github.com/UniversalDataTool/universal-data-tool/workflows/Test/badge.svg)
 [![npm version](https://badge.fury.io/js/universal-data-tool.svg)](https://badge.fury.io/js/universal-data-tool)
@@ -22,8 +26,8 @@ For video tutorials [visit our Youtube channel](https://www.youtube.com/channel/
 
 ## Features
 
+- **Collaborate with others in real time, no sign up!**
 - Usable on [web](https://universaldatatool.com) or as [Windows,Mac or Linux desktop application](https://github.com/UniversalDataTool/universal-data-tool/wiki/Installation)
-- Collaborate with others in real time
 - Configure your project with an easy-to-use GUI
 - [Easily create courses to train your labelers](https://universaldatatool.com/courses)
 - Download/upload as easy-to-use CSV ([sample.udt.csv](https://github.com/UniversalDataTool/udt-format/blob/master/SAMPLE.udt.csv)) or JSON ([sample.udt.json](https://github.com/UniversalDataTool/udt-format/blob/master/SAMPLE.udt.json))
@@ -36,21 +40,11 @@ For video tutorials [visit our Youtube channel](https://www.youtube.com/channel/
 - Easily [load into pandas](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-Pandas) or [use with fast.ai](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-Fast.ai)
 - Runs [with docker](https://hub.docker.com/r/universaldatatool/universaldatatool) `docker run -p 3000:3000 universaldatatool/universaldatatool`
 
-![Automatic Pixel Segmentation](https://user-images.githubusercontent.com/1910070/88564540-53eff180-d001-11ea-8f51-8e4b316f21fc.png)
-
 ![Universal Data Tool Computer Vision Cat](https://user-images.githubusercontent.com/1910070/75850482-6a2cb500-5db5-11ea-852c-7256463cece8.png)
-
-![Audio Transcription](https://user-images.githubusercontent.com/1910070/76154268-80818c00-60a7-11ea-97de-529fd06d3901.png)
 
 ![Download Formats](https://user-images.githubusercontent.com/1910070/76154066-06033d00-60a4-11ea-9bbd-69a62780769f.png)
 
 ![Data Entry](https://user-images.githubusercontent.com/1910070/76157343-9a39c800-60d5-11ea-8dd6-a67c516fcf63.png)
-
-![Named Entity Recognition](https://user-images.githubusercontent.com/1910070/76154279-a73fc280-60a7-11ea-8965-5de23ad733d6.png)
-
-![Collaboration Screenshot](https://user-images.githubusercontent.com/1910070/76154071-10bdd200-60a4-11ea-8afd-a12f6d77a140.png)
-
-![Collaboration Demo](https://user-images.githubusercontent.com/1910070/76154158-b02f9480-60a5-11ea-9fb5-ec62c9385a51.gif)
 
 ## Sponsors
 
