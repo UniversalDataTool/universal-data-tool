@@ -40,11 +40,11 @@ For video tutorials [visit our Youtube channel](https://www.youtube.com/channel/
 - Easily [load into pandas](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-Pandas) or [use with fast.ai](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-Fast.ai)
 - Runs [with docker](https://hub.docker.com/r/universaldatatool/universaldatatool) `docker run -p 3000:3000 universaldatatool/universaldatatool`
 
-![Download Formats](https://user-images.githubusercontent.com/1910070/76154066-06033d00-60a4-11ea-9bbd-69a62780769f.png)
+<p align="center"><kbd><img width="600" src="https://user-images.githubusercontent.com/1910070/76154066-06033d00-60a4-11ea-9bbd-69a62780769f.png" /></kbd></p>
 
-![Text Relations](https://user-images.githubusercontent.com/1910070/91648815-07516900-ea3a-11ea-9355-70dfbf5c8974.png)
+<p align="center"><kbd><img width="600" src="https://user-images.githubusercontent.com/1910070/91648815-07516900-ea3a-11ea-9355-70dfbf5c8974.png" /></kbd></p>
 
-![Data Entry](https://user-images.githubusercontent.com/1910070/76157343-9a39c800-60d5-11ea-8dd6-a67c516fcf63.png)
+<p align="center"><kbd><img width="600" src="https://user-images.githubusercontent.com/1910070/76157343-9a39c800-60d5-11ea-8dd6-a67c516fcf63.png" /></kbd></p>
 
 ## Sponsors
 
