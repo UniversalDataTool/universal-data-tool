@@ -112,6 +112,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "congdv",
+      "name": "Cong Dao",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/8192210?v=4",
+      "profile": "https://congdv.github.io/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
