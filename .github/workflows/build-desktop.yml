@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - 'buildtest/**'
 
 jobs:
   build:
@@ -24,7 +25,7 @@ jobs:
           echo '${{ secrets.api_key }}' > ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8
       # Helpful reference https://github.com/samuelmeuli/mini-diary/blob/master/.github/workflows/release.yml
       - name: Electron Builder Action
-        uses: samuelmeuli/action-electron-builder@v1.3.0
+        uses: samuelmeuli/action-electron-builder@v1
         # if: contains(github.ref, "v0.")
         with:
           github_token: ${{ secrets.github_token }}
