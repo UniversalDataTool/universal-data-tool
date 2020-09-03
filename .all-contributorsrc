@@ -121,6 +121,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "MrJunato",
+      "name": "Renato Junior",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/47343193?v=4",
+      "profile": "https://www.linkedin.com/in/renato-gonsalves-499317125/",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,
