@@ -17,9 +17,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Remove yarn.lock to prefer npm
+      - name: Install with long network timeout
         run: |
-          rm yarn.lock
+          yarn install --network-timeout 1000000
       - name: Prepare for app notarization
         if: startsWith(matrix.os, 'macos')
         # Import Apple API key for app notarization on macOS
