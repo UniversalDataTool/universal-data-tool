@@ -20,7 +20,6 @@ import LabelView from "../LabelView"
 import useIsLabelOnlyMode from "../../utils/use-is-label-only-mode"
 import { HotKeys } from "react-hotkeys"
 import { useHotkeyStorage } from "../HotkeyStorage"
-import RawJSONEditor from "../RawJSONEditor"
 
 import "brace/mode/javascript"
 import "brace/theme/github"
@@ -146,18 +145,8 @@ export default ({
           tabs={headerTabs}
         />
         <div style={{ height: "100%", overflowY: "scroll" }}>
-          {mode === "json" && (
-            <RawJSONEditor
-              content={dataset}
-              onSave={(newDataset) => {
-                onChangeDataset(newDataset)
-                changeMode("setup")
-              }}
-            />
-          )}
           {mode === "setup" && (
             <SetupPage
-              onClickEditJSON={() => changeMode("json")}
               dataset={dataset}
               onClearLabelData={() => {
                 onChangeDataset(

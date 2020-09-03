@@ -4,10 +4,11 @@ on:
   push:
     branches:
       - master
+      - 'buildtest/**'
 
 jobs:
   build:
-    if: "contains(github.event.head_commit.message, 'chore(release)')"
+    # if: "contains(github.event.head_commit.message, 'chore(release)') || contains(github.ref, 'buildtest')"
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -16,6 +17,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Install with long network timeout
+        run: |
+          yarn install --network-timeout 1000000
       - name: Prepare for app notarization
         if: startsWith(matrix.os, 'macos')
         # Import Apple API key for app notarization on macOS
@@ -24,7 +28,7 @@ jobs:
           echo '${{ secrets.api_key }}' > ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8
       # Helpful reference https://github.com/samuelmeuli/mini-diary/blob/master/.github/workflows/release.yml
       - name: Electron Builder Action
-        uses: samuelmeuli/action-electron-builder@v1.3.0
+        uses: samuelmeuli/action-electron-builder@v1
         # if: contains(github.ref, "v0.")
         with:
           github_token: ${{ secrets.github_token }}

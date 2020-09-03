@@ -64,7 +64,7 @@
     "cypress-file-upload": "^4.0.6",
     "cypress-image-snapshot": "^3.1.1",
     "electron": "^8.0.0",
-    "electron-builder": "^22.3.2",
+    "electron-builder": "^22.8.0",
     "electron-builder-notarize": "^1.1.2",
     "gh-pages": "^2.1.1",
     "material-survey": "^1.0.32",
