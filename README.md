@@ -108,6 +108,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://x8795278.blogspot.com/"><img src="https://avatars3.githubusercontent.com/u/9297254?v=4" width="100px;" alt=""/><br /><sub><b>x213212</b></sub></a><br /><a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=x213212" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/hysios"><img src="https://avatars0.githubusercontent.com/u/103227?v=4" width="100px;" alt=""/><br /><sub><b>hysios </b></sub></a><br /><a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=hysios" title="Code">💻</a></td>
     <td align="center"><a href="https://congdv.github.io/"><img src="https://avatars2.githubusercontent.com/u/8192210?v=4" width="100px;" alt=""/><br /><sub><b>Cong Dao</b></sub></a><br /><a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=congdv" title="Code">💻</a></td>
+    <td align="center"><a href="https://www.linkedin.com/in/renato-gonsalves-499317125/"><img src="https://avatars0.githubusercontent.com/u/47343193?v=4" width="100px;" alt=""/><br /><sub><b>Renato Junior</b></sub></a><br /><a href="#translation-MrJunato" title="Translation">🌍</a></td>
   </tr>
 </table>
 
