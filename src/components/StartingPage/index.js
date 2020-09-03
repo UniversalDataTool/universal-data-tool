@@ -137,6 +137,7 @@ const languageOptions = [
   { label: "English", value: "en" },
   { label: "French", value: "fr" },
   { label: "Chinese", value: "cn" },
+  { label: "Portuguese", value: "pt" },
 ]
 
 export default ({

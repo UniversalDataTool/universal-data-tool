@@ -3,6 +3,7 @@ import { initReactI18next } from "react-i18next"
 import enTranslation from "./locales/en/translation.json"
 import frTranslation from "./locales/fr/translations.json"
 import cnTranslation from "./locales/cn/translations.json"
+import ptBrTranslation from "./locales/pt-br/translation.json"
 
 import LanguageDetector from "i18next-browser-languagedetector"
 // not like to use this?
@@ -34,6 +35,9 @@ i18n
       },
       cn: {
         translation: cnTranslation,
+      },
+      pt: {
+        translation: ptBrTranslation,
       },
     },
   })
