@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-      - 'buildtest/**'
+      - "buildtest/**"
 
 jobs:
   build:
@@ -42,3 +42,8 @@ jobs:
           # macOS notarization API key
           API_KEY_ID: ${{ secrets.api_key_id }}
           API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{matrix.os}}.dist
+          path: dist
