@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    # if: "contains(github.event.head_commit.message, 'chore(release)') || contains(github.ref, 'buildtest')"
+    if: "contains(github.event.head_commit.message, 'chore(release)') || contains(github.ref, 'buildtest')"
     runs-on: ${{ matrix.os }}
     continue-on-error: true
 
@@ -43,6 +43,7 @@ jobs:
           API_KEY_ID: ${{ secrets.api_key_id }}
           API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
       - name: Upload Artifacts
+        if: "contains(github.ref, 'buildtest')"
         uses: actions/upload-artifact@v2
         with:
           name: ${{matrix.os}}.dist
