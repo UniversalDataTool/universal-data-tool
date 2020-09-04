@@ -65,7 +65,7 @@
     "cypress-image-snapshot": "^3.1.1",
     "electron": "^8.0.0",
     "electron-builder": "^22.8.0",
-    "electron-builder-notarize": "^1.1.2",
+    "electron-builder-notarize": "^1.2.0",
     "gh-pages": "^2.1.1",
     "material-survey": "^1.0.32",
     "parcel": "^1.12.4",
