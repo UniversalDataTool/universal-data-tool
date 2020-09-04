@@ -10,6 +10,7 @@ jobs:
   build:
     # if: "contains(github.event.head_commit.message, 'chore(release)') || contains(github.ref, 'buildtest')"
     runs-on: ${{ matrix.os }}
+    continue-on-error: true
 
     strategy:
       matrix:
@@ -32,6 +33,8 @@ jobs:
         # if: contains(github.ref, "v0.")
         with:
           github_token: ${{ secrets.github_token }}
+          max_attempts: 2
+          build_script_name: "build:desktop"
           mac_certs: ${{ secrets.mac_certs }}
           mac_certs_password: ${{ secrets.mac_certs_password }}
           release: true
