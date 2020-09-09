@@ -42,7 +42,6 @@ storiesOf("TextEntityRecognition", module).add("Basic", () => (
   />
 ))
 
-
 storiesOf("TextEntityRecognition", module).add("Long Text", () => (
   <TextEntityRecognition
     onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
