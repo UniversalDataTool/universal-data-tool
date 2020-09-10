@@ -19,8 +19,8 @@ For video tutorials [visit our Youtube channel](https://www.youtube.com/channel/
 
 <!-- COMMUNITY-UPDATE:START !-->
 * [Community Update Video 5](https://youtu.be/Ag5kROqp8e8)
-* [Community Update Video 4](https://youtu.be/aQ-7OShkfIM) ((blog version)[https://universaldatatool.substack.com/p/universal-data-tool-weekly-update-d9c])
-* [Community Update Video 3](https://www.youtube.com/watch?v=uQ1ITe88TM8&feature=youtu.be) ((blog version)[https://universaldatatool.substack.com/p/universal-data-tool-weekly-update])
+* [Community Update Video 4](https://youtu.be/aQ-7OShkfIM) [(blog version)](https://universaldatatool.substack.com/p/universal-data-tool-weekly-update-d9c)
+* [Community Update Video 3](https://www.youtube.com/watch?v=uQ1ITe88TM8&feature=youtu.be) [(blog version)](https://universaldatatool.substack.com/p/universal-data-tool-weekly-update)
 * [Community Update Video 2](https://youtu.be/3bq9N08oc-U) [(blog version)](https://universaldatatool.substack.com/p/universal-data-tool-community-update)
 * [Community Update Video 1](https://www.youtube.com/watch?v=QW-s4XVK3Ok&feature=youtu.be) [(blog version)](https://universaldatatool.substack.com/p/community-update-1)
 <!-- COMMUNITY-UPDATE:END !-->
