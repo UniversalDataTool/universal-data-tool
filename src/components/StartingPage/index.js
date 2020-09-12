@@ -138,6 +138,7 @@ const languageOptions = [
   { label: "French", value: "fr" },
   { label: "Chinese", value: "cn" },
   { label: "Portuguese", value: "pt" },
+  { label: "Dutch", value: "nl" },
 ]
 
 export default ({
@@ -308,7 +309,7 @@ export default ({
                       "https://universaldatatool.com/courses"
                   }}
                 >
-                  Create a Training Course
+                  {t("create-training-course")}
                 </Action>
                 {/* <Action>Open Folder</Action> */}
               </ActionList>
