@@ -14,7 +14,7 @@
 
 Try it out at [universaldatatool.com](https://universaldatatool.com) or [download it here](https://github.com/UniversalDataTool/universal-data-tool/releases).
 
-The Universal Data Tool is a web/desktop app for editing and annotating images, text, audio, documents and to view and edit any data defined in the extensible [.udt.json and .udt.csv standard](https://github.com/UniversalDataTool/udt-format). 
+The Universal Data Tool is a web/desktop app for editing and annotating images, text, audio, documents and to view and edit any data defined in the extensible [.udt.json and .udt.csv standard](https://github.com/UniversalDataTool/udt-format).
 For video tutorials [visit our Youtube channel](https://www.youtube.com/channel/UCgFkrRN7CLt7_iTa2WDjf2g).
 
 <!-- COMMUNITY-UPDATE:START !-->
@@ -40,6 +40,7 @@ For video tutorials [visit our Youtube channel](https://www.youtube.com/channel/
 - Annotate NLP datasets with Named Entity Recognition (NER), classification and Part of Speech (PoS) tagging.
 - Easily [load into pandas](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-Pandas) or [use with fast.ai](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-Fast.ai)
 - Runs [with docker](https://hub.docker.com/r/universaldatatool/universaldatatool) `docker run -p 3000:3000 universaldatatool/universaldatatool`
+- Runs [with singularity](https://singularity-hub.org/) `singularity run universaldatatool/universaldatatool`
 
 <p align="center"><kbd><img width="600" src="https://user-images.githubusercontent.com/1910070/76154066-06033d00-60a4-11ea-9bbd-69a62780769f.png" /></kbd></p>
 
