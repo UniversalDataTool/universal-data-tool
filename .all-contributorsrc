@@ -130,6 +130,16 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "rickstaa",
+      "name": "Rick",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/17570430?v=4",
+      "profile": "https://gitlab.com/rickstaa",
+      "contributions": [
+        "translation",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
