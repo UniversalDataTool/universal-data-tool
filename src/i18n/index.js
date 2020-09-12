@@ -42,7 +42,7 @@ i18n
       },
       nl: {
         translation: nlTranslation,
-      }
+      },
     },
   })
 
