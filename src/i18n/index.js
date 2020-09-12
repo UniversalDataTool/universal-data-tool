@@ -4,6 +4,7 @@ import enTranslation from "./locales/en/translation.json"
 import frTranslation from "./locales/fr/translations.json"
 import cnTranslation from "./locales/cn/translations.json"
 import ptBrTranslation from "./locales/pt-br/translation.json"
+import nlTranslation from "./locales/nl/translation.json"
 
 import LanguageDetector from "i18next-browser-languagedetector"
 // not like to use this?
@@ -38,6 +39,9 @@ i18n
       },
       pt: {
         translation: ptBrTranslation,
+      },
+      nl: {
+        translation: nlTranslation,
       },
     },
   })
