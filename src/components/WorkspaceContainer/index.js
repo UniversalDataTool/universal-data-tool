@@ -23,10 +23,15 @@ export default ({
   const headerItems = useMemo(
     () =>
       [
-        (currentSampleIndex > 0 || onPrev) && { name: "Prev", onClick: onPrev },
+        (currentSampleIndex > 0 || onPrev) && {
+          name: "Prev",
+          onClick: onPrev,
+          disabled: currentSampleIndex === 0,
+        },
         (numberOfSamples > currentSampleIndex + 1 || onNext) && {
           name: "Next",
           onClick: onNext,
+          disabled: currentSampleIndex >= numberOfSamples - 1,
         },
         { name: "Save" },
       ].filter(Boolean),
