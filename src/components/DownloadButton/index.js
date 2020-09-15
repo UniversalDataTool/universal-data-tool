@@ -16,9 +16,10 @@ const Container = styled("div")({ position: "relative" })
 const StyledButton = styled(Button)({
   justifyContent: "flex-start",
   "& .fakeicon": {
-    display: "inline",
+    display: "inline-block",
     marginRight: 8,
     padding: 4,
+    textAlign: "center",
     paddingTop: 5,
     fontSize: 11,
     fontWeight: "bold",
@@ -40,7 +41,6 @@ const StyledButton = styled(Button)({
 
 export default ({ interfaceType, onDownload }) => {
   const [open, changeOpen] = useState(false)
-  const [downloadMaskDialogOpen, setDownloadMaskDialogOpen] = useState(false)
   const { t } = useTranslation()
 
   return (
@@ -61,37 +61,15 @@ export default ({ interfaceType, onDownload }) => {
           <div className="fakeicon blue">JSON</div>
           {t("download-json")}
         </StyledButton>
-        {(interfaceType || "").includes("image") &&
-          (interfaceType || "").includes("segmentation") && (
-            <StyledButton
-              fullWidth
-              onClick={() => setDownloadMaskDialogOpen(true)}
-            >
-              <div className="fakeicon orange">IMG</div>
-              Download Masks
-            </StyledButton>
-          )}
+        <StyledButton
+          fullWidth
+          target="_blank"
+          href="https://universaldatatool.com/convert"
+        >
+          <div className="fakeicon orange">↗</div>
+          {t("other-formats")}
+        </StyledButton>
       </HeaderPopupBox>
-      <SimpleDialog
-        title="How to Download Masks"
-        open={downloadMaskDialogOpen}
-        onClose={() => setDownloadMaskDialogOpen(false)}
-      >
-        We can't process the image masks online because of processing
-        limitations, however, if you have "npm" installed you can run the line
-        below to get all the masks in your file.
-        <pre>npx autoseg some_file.udt.json -o output_directory</pre>
-        <div style={{ marginTop: 16 }}>
-          Read more about{" "}
-          <a
-            style={{ color: colors.blue[500] }}
-            href="https://github.com/UniversalDataTool/autoseg/blob/master/README.md"
-          >
-            autoseg
-          </a>
-          .
-        </div>
-      </SimpleDialog>
     </Container>
   )
 }
