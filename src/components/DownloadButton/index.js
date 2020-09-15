@@ -7,7 +7,6 @@ import { styled } from "@material-ui/core/styles"
 import * as colors from "@material-ui/core/colors"
 import Button from "@material-ui/core/Button"
 import HeaderPopupBox from "../HeaderPopupBox"
-import SimpleDialog from "../SimpleDialog"
 
 import { useTranslation } from "react-i18next"
 
