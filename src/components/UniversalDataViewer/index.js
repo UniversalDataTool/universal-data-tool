@@ -9,6 +9,7 @@ import ImageSegmentation from "../ImageSegmentation"
 import ImageClassification from "../ImageClassification"
 import VideoSegmentation from "../VideoSegmentation"
 import AudioTranscription from "../AudioTranscription"
+import ImageLandmarkAnnotation from "../ImageLandmarkAnnotation"
 import DataEntry from "../DataEntry"
 import EmptySampleContainer from "../EmptySampleContainer"
 import Composite from "../Composite"
@@ -191,6 +192,17 @@ export const UniversalDataViewer = ({
           sampleIndex={sampleIndex}
           {...dataset}
           onSaveTaskOutputItem={onSaveTaskOutputItem}
+          onExit={onExit}
+        />
+      )
+    case "image_landmark_annotation":
+      return (
+        <ImageLandmarkAnnotation
+          containerProps={containerProps}
+          sampleIndex={sampleIndex}
+          {...dataset}
+          onSaveTaskOutputItem={onSaveTaskOutputItem}
+          onModifySample={onModifySample}
           onExit={onExit}
         />
       )
