@@ -18,6 +18,14 @@ const Title = styled("div")({
   },
 })
 
+const LabelHelpIs = styled("div")({
+  fontSize: 18,
+  lineHeight: 1.5,
+  color: colors.grey[800],
+  padding: 16,
+  width: 800,
+})
+
 const ErrorText = styled("div")({
   color: colors.red[600],
 })
@@ -31,6 +39,10 @@ export default () => {
 
   return (
     <Box paddingTop={8} textAlign="center">
+      <LabelHelpIs>
+        Label Help is a UDT-integrated service that crowd-sources your labeling,
+        it's about the same speed as having a team of 5-10 full-time labelers.
+      </LabelHelpIs>
       <Title>
         To use Label Help, enter your API key. You can{" "}
         <a
