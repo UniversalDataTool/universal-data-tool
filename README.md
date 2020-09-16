@@ -18,29 +18,30 @@ The Universal Data Tool is a web/desktop app for editing and annotating images, 
 For video tutorials [visit our Youtube channel](https://www.youtube.com/channel/UCgFkrRN7CLt7_iTa2WDjf2g).
 
 <!-- COMMUNITY-UPDATE:START !-->
-* [Community Update Video 5](https://youtu.be/Ag5kROqp8e8)
-* [Community Update Video 4](https://youtu.be/aQ-7OShkfIM) [(blog version)](https://universaldatatool.substack.com/p/universal-data-tool-weekly-update-d9c)
-* [Community Update Video 3](https://www.youtube.com/watch?v=uQ1ITe88TM8&feature=youtu.be) [(blog version)](https://universaldatatool.substack.com/p/universal-data-tool-weekly-update)
-* [Community Update Video 2](https://youtu.be/3bq9N08oc-U) [(blog version)](https://universaldatatool.substack.com/p/universal-data-tool-community-update)
-* [Community Update Video 1](https://www.youtube.com/watch?v=QW-s4XVK3Ok&feature=youtu.be) [(blog version)](https://universaldatatool.substack.com/p/community-update-1)
-<!-- COMMUNITY-UPDATE:END !-->
+
+-   [Community Update Video 5](https://youtu.be/Ag5kROqp8e8)
+-   [Community Update Video 4](https://youtu.be/aQ-7OShkfIM) [(blog version)](https://universaldatatool.substack.com/p/universal-data-tool-weekly-update-d9c)
+-   [Community Update Video 3](https://www.youtube.com/watch?v=uQ1ITe88TM8&feature=youtu.be) [(blog version)](https://universaldatatool.substack.com/p/universal-data-tool-weekly-update)
+-   [Community Update Video 2](https://youtu.be/3bq9N08oc-U) [(blog version)](https://universaldatatool.substack.com/p/universal-data-tool-community-update)
+-   [Community Update Video 1](https://www.youtube.com/watch?v=QW-s4XVK3Ok&feature=youtu.be) [(blog version)](https://universaldatatool.substack.com/p/community-update-1)
+          <!-- COMMUNITY-UPDATE:END !-->
 
 ## Features
 
-- **Collaborate with others in real time, no sign up!**
-- Usable on [web](https://universaldatatool.com) or as [Windows,Mac or Linux desktop application](https://github.com/UniversalDataTool/universal-data-tool/wiki/Installation)
-- Configure your project with an easy-to-use GUI
-- [Easily create courses to train your labelers](https://universaldatatool.com/courses)
-- Download/upload as easy-to-use CSV ([sample.udt.csv](https://github.com/UniversalDataTool/udt-format/blob/master/SAMPLE.udt.csv)) or JSON ([sample.udt.json](https://github.com/UniversalDataTool/udt-format/blob/master/SAMPLE.udt.json))
-- Support for Images, Videos, PDFs, Text, Audio Transcription and many other formats
-- Can be [easily integrated into a React application](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-React)
-- Annotate images or videos with classifications, tags, bounding boxes, polygons and points
-- Fast Automatic Smart Pixel Segmentation using WebWorkers and WebAssembly
-- Import data from Google Drive, Youtube, CSV, Clipboard and more
-- Annotate NLP datasets with Named Entity Recognition (NER), classification and Part of Speech (PoS) tagging.
-- Easily [load into pandas](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-Pandas) or [use with fast.ai](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-Fast.ai)
-- Runs [with docker](https://hub.docker.com/r/universaldatatool/universaldatatool) `docker run -p 3000:3000 universaldatatool/universaldatatool`
-- Runs [with singularity](https://singularity-hub.org/) `singularity run universaldatatool/universaldatatool`
+-   **Collaborate with others in real time, no sign up!**
+-   Usable on [web](https://universaldatatool.com) or as [Windows,Mac or Linux desktop application](https://github.com/UniversalDataTool/universal-data-tool/wiki/Installation)
+-   Configure your project with an easy-to-use GUI
+-   [Easily create courses to train your labelers](https://universaldatatool.com/courses)
+-   Download/upload as easy-to-use CSV ([sample.udt.csv](https://github.com/UniversalDataTool/udt-format/blob/master/SAMPLE.udt.csv)) or JSON ([sample.udt.json](https://github.com/UniversalDataTool/udt-format/blob/master/SAMPLE.udt.json))
+-   Support for Images, Videos, PDFs, Text, Audio Transcription and many other formats
+-   Can be [easily integrated into a React application](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-React)
+-   Annotate images or videos with classifications, tags, bounding boxes, polygons and points
+-   Fast Automatic Smart Pixel Segmentation using WebWorkers and WebAssembly
+-   Import data from Google Drive, Youtube, CSV, Clipboard and more
+-   Annotate NLP datasets with Named Entity Recognition (NER), classification and Part of Speech (PoS) tagging.
+-   Easily [load into pandas](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-Pandas) or [use with fast.ai](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-Fast.ai)
+-   Runs [with docker](https://hub.docker.com/r/universaldatatool/universaldatatool) `docker run -p 3000:3000 universaldatatool/universaldatatool`
+-   Runs [with singularity](https://singularity-hub.org/collections/4792) `singularity run universaldatatool/universaldatatool`
 
 <p align="center"><kbd><img width="600" src="https://user-images.githubusercontent.com/1910070/76154066-06033d00-60a4-11ea-9bbd-69a62780769f.png" /></kbd></p>
 
@@ -66,16 +67,16 @@ Download the latest release from the [releases page](https://github.com/Universa
 
 ## Principles
 
-- Correctness of implementation of the .udt.json standard.
-- Implement entirety of the `.udt.json` and `.udt.csv` standards
-- Rely on external libraries which specialize in each type of annotation to enable the best tools to be used
-- Easy to use
-- Easy to integrate
+-   Correctness of implementation of the .udt.json standard.
+-   Implement entirety of the `.udt.json` and `.udt.csv` standards
+-   Rely on external libraries which specialize in each type of annotation to enable the best tools to be used
+-   Easy to use
+-   Easy to integrate
 
 ## Contributing
 
-- (Optional) Say hi in the [Slack channel](https://join.slack.com/t/universaldatatool/shared_invite/zt-d8teykwi-iOSOUfxugKR~M4AJN6VL3g)!
-- Read [this guide to get started with development](https://github.com/UniversalDataTool/universal-data-tool/wiki/Setup-for-Development).
+-   (Optional) Say hi in the [Slack channel](https://join.slack.com/t/universaldatatool/shared_invite/zt-d8teykwi-iOSOUfxugKR~M4AJN6VL3g)!
+-   Read [this guide to get started with development](https://github.com/UniversalDataTool/universal-data-tool/wiki/Setup-for-Development).
 
 ## Libraries
 
@@ -83,17 +84,20 @@ The Universal Data Tool is always looking for the best libraries to provide the
 user interface for different types of annotation. Currently, the following
 libraries are used...
 
-- [material-survey](https://github.com/collegeai/material-survey) for data entry.
-- [react-image-annotate](https://github.com/workaroundonline/react-image-annotate) for image annotation.
-- [react-nlp-annotate](https://github.com/workaroundonline/react-nlp-annotate) for entity recognition and NLP tasks.
+-   [material-survey](https://github.com/collegeai/material-survey) for data entry.
+-   [react-image-annotate](https://github.com/workaroundonline/react-image-annotate) for image annotation.
+-   [react-nlp-annotate](https://github.com/workaroundonline/react-nlp-annotate) for entity recognition and NLP tasks.
 
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+
 <!-- prettier-ignore-start -->
+
 <!-- markdownlint-disable -->
+
 <table>
   <tr>
     <td align="center"><a href="https://twitter.com/seveibar"><img src="https://avatars2.githubusercontent.com/u/1910070?v=4" width="100px;" alt=""/><br /><sub><b>Severin Ibarluzea</b></sub></a><br /><a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=seveibar" title="Code">💻</a> <a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=seveibar" title="Documentation">📖</a> <a href="https://github.com/UniversalDataTool/universal-data-tool/pulls?q=is%3Apr+reviewed-by%3Aseveibar" title="Reviewed Pull Requests">👀</a></td>
@@ -116,7 +120,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 </table>
 
 <!-- markdownlint-enable -->
+
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
