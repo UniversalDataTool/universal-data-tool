@@ -18,7 +18,6 @@ The Universal Data Tool is a web/desktop app for editing and annotating images, 
 For video tutorials [visit our Youtube channel](https://www.youtube.com/channel/UCgFkrRN7CLt7_iTa2WDjf2g).
 
 <!-- COMMUNITY-UPDATE:START !-->
-
 - [Community Update Video 5](https://youtu.be/Ag5kROqp8e8)
 - [Community Update Video 4](https://youtu.be/aQ-7OShkfIM) [(blog version)](https://universaldatatool.substack.com/p/universal-data-tool-weekly-update-d9c)
 - [Community Update Video 3](https://www.youtube.com/watch?v=uQ1ITe88TM8&feature=youtu.be) [(blog version)](https://universaldatatool.substack.com/p/universal-data-tool-weekly-update)
