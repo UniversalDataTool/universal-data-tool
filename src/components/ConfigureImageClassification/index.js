@@ -30,13 +30,13 @@ const form = {
 export default ({ iface, onChange }) => {
   const defaultAnswers = useMemo(
     () => ({
-      allowMultiple: false,
+      multiple: iface.multiple ? iface.multiple : false,
       labels:
         (iface.labels || []).map((a) =>
           typeof a === "string" ? { id: a, description: a } : a
         ) || [],
     }),
-    [iface.labels]
+    [iface.labels, iface.multiple]
   )
   return (
     <Survey
