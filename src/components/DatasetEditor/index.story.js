@@ -7,6 +7,7 @@ import { action } from "@storybook/addon-actions"
 import { HotKeys } from "react-hotkeys"
 
 import DatasetEditor from "./"
+import EditableTitleText from "./EditableTitleText"
 
 const Controller = (props) => {
   const [dataset, changeDataset] = useState(props.initialDataset)
@@ -29,17 +30,17 @@ storiesOf("DatasetEditor", module)
         interface: {
           type: "image_segmentation",
           labels: ["valid", "invalid"],
-          regionTypesAllowed: ["bounding-box", "polygon", "point"],
+          regionTypesAllowed: ["bounding-box", "polygon", "point"]
         },
         samples: [
           {
             imageUrl:
-              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
+              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg"
           },
           {
             imageUrl:
-              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg",
-          },
+              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg"
+          }
         ],
         taskOutput: [
           {
@@ -47,9 +48,9 @@ storiesOf("DatasetEditor", module)
             centerX: 0.5,
             centerY: 0.5,
             width: 0.25,
-            height: 0.25,
-          },
-        ],
+            height: 0.25
+          }
+        ]
       }}
       onChangeFileName={action("onChangeFileName")}
     />
@@ -58,7 +59,7 @@ storiesOf("DatasetEditor", module)
     <HotKeys
       keyMap={{
         zoom_tool: "z",
-        pan_tool: "p",
+        pan_tool: "p"
       }}
     >
       <Controller
@@ -66,17 +67,17 @@ storiesOf("DatasetEditor", module)
           interface: {
             type: "image_segmentation",
             labels: ["valid", "invalid"],
-            regionTypesAllowed: ["bounding-box", "polygon", "point"],
+            regionTypesAllowed: ["bounding-box", "polygon", "point"]
           },
           samples: [
             {
               imageUrl:
-                "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
+                "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg"
             },
             {
               imageUrl:
-                "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg",
-            },
+                "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg"
+            }
           ],
           taskOutput: [
             {
@@ -84,11 +85,30 @@ storiesOf("DatasetEditor", module)
               centerX: 0.5,
               centerY: 0.5,
               width: 0.25,
-              height: 0.25,
-            },
-          ],
+              height: 0.25
+            }
+          ]
         }}
         onChangeFileName={action("onChangeFileName")}
       />
     </HotKeys>
   ))
+
+storiesOf("EditableTitleText", module)
+  .add("Basic", () => {
+      const [valueDisplay, setValueDisplay] = useState("unnamed")
+      return <>
+        <div style={{margin: '8px 8px 16px 8px'}}>
+          parent component value: <strong>{valueDisplay}</strong>
+        </div>
+        <EditableTitleText
+          label="File Name"
+          onChange={(newName) => {
+            setValueDisplay(newName)
+          }}
+          value={valueDisplay || ""}
+        />
+      </>
+    }
+  )
+
