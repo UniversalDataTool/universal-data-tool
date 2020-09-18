@@ -48,6 +48,8 @@ For video tutorials [visit our Youtube channel](https://www.youtube.com/channel/
 
 <p align="center"><kbd><img width="600" src="https://user-images.githubusercontent.com/1910070/76157343-9a39c800-60d5-11ea-8dd6-a67c516fcf63.png" /></kbd></p>
 
+<p align="center"><kbd><img width="600" src="https://user-images.githubusercontent.com/1910070/93283916-7b607080-f79f-11ea-838d-683829aff1b3.png" /></kbd></p>
+
 ## Sponsors
 
 [![wao.ai sponsorship image](https://s3.amazonaws.com/asset.workaround.online/sponsorship-banner-1.png)](https://wao.ai)
