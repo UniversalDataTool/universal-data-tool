@@ -14,7 +14,7 @@ export default ({ value, onChange }) => {
   const c = useStyles()
   const [newValue, setNewValue] = useState(value || "")
 
-  const handleBlue = () => {
+  const onBlur = () => {
     if (!isEmpty(newValue) && newValue !== "unnamed") {
       onChange(newValue)
       setNewValue(newValue)
@@ -32,7 +32,7 @@ export default ({ value, onChange }) => {
       InputProps={{
         inputProps: { style: { color: "#000" } },
       }}
-      onBlur={handleBlue}
+      onBlur={onBlur}
       onKeyDown={(e) => {
         if (e.key === "Enter") {
           e.preventDefault()
