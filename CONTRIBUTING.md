@@ -29,6 +29,13 @@ of datasets. All contributions are welcome and appreciated!
 
 # Other stuff that's nice to know / FAQ
 
+## How do I develop the desktop application?
+
+You'll need two terminals. One will run the electron app, the other will run the electron app.
+
+1. Run `yarn start`
+2. Run `yarn start:desktop`
+
 ## How do I run the Cypress Integration Tests
 
 [Cypress integration tests](https://cypress.io) will run the web application and make sure that everything is working.
