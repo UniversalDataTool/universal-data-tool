@@ -14,15 +14,16 @@
 
 Try it out at [universaldatatool.com](https://universaldatatool.com) or [download it here](https://github.com/UniversalDataTool/universal-data-tool/releases).
 
-The Universal Data Tool is a web/desktop app for editing and annotating images, text, audio, documents and to view and edit any data defined in the extensible [.udt.json and .udt.csv standard](https://github.com/UniversalDataTool/udt-format). 
+The Universal Data Tool is a web/desktop app for editing and annotating images, text, audio, documents and to view and edit any data defined in the extensible [.udt.json and .udt.csv standard](https://github.com/UniversalDataTool/udt-format).
 For video tutorials [visit our Youtube channel](https://www.youtube.com/channel/UCgFkrRN7CLt7_iTa2WDjf2g).
 
 <!-- COMMUNITY-UPDATE:START !-->
-* [Community Update Video 4](https://youtu.be/aQ-7OShkfIM)
-* [Community Update Video 3](https://www.youtube.com/watch?v=uQ1ITe88TM8&feature=youtu.be)
-* [Community Update Video 2](https://youtu.be/3bq9N08oc-U) [(blog version)](https://universaldatatool.substack.com/p/universal-data-tool-community-update)
-* [Community Update Video 1](https://www.youtube.com/watch?v=QW-s4XVK3Ok&feature=youtu.be) [(blog version)](https://universaldatatool.substack.com/p/community-update-1)
-<!-- COMMUNITY-UPDATE:END !-->
+- [Community Update Video 5](https://youtu.be/Ag5kROqp8e8)
+- [Community Update Video 4](https://youtu.be/aQ-7OShkfIM) [(blog version)](https://universaldatatool.substack.com/p/universal-data-tool-weekly-update-d9c)
+- [Community Update Video 3](https://www.youtube.com/watch?v=uQ1ITe88TM8&feature=youtu.be) [(blog version)](https://universaldatatool.substack.com/p/universal-data-tool-weekly-update)
+- [Community Update Video 2](https://youtu.be/3bq9N08oc-U) [(blog version)](https://universaldatatool.substack.com/p/universal-data-tool-community-update)
+- [Community Update Video 1](https://www.youtube.com/watch?v=QW-s4XVK3Ok&feature=youtu.be) [(blog version)](https://universaldatatool.substack.com/p/community-update-1)
+  <!-- COMMUNITY-UPDATE:END !-->
 
 ## Features
 
@@ -39,6 +40,7 @@ For video tutorials [visit our Youtube channel](https://www.youtube.com/channel/
 - Annotate NLP datasets with Named Entity Recognition (NER), classification and Part of Speech (PoS) tagging.
 - Easily [load into pandas](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-Pandas) or [use with fast.ai](https://github.com/UniversalDataTool/universal-data-tool/wiki/Usage-with-Fast.ai)
 - Runs [with docker](https://hub.docker.com/r/universaldatatool/universaldatatool) `docker run -p 3000:3000 universaldatatool/universaldatatool`
+- Runs [with singularity](https://singularity-hub.org/collections/4792) `singularity run universaldatatool/universaldatatool`
 
 <p align="center"><kbd><img width="600" src="https://user-images.githubusercontent.com/1910070/76154066-06033d00-60a4-11ea-9bbd-69a62780769f.png" /></kbd></p>
 
@@ -90,8 +92,11 @@ libraries are used...
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+
 <!-- prettier-ignore-start -->
+
 <!-- markdownlint-disable -->
+
 <table>
   <tr>
     <td align="center"><a href="https://twitter.com/seveibar"><img src="https://avatars2.githubusercontent.com/u/1910070?v=4" width="100px;" alt=""/><br /><sub><b>Severin Ibarluzea</b></sub></a><br /><a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=seveibar" title="Code">💻</a> <a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=seveibar" title="Documentation">📖</a> <a href="https://github.com/UniversalDataTool/universal-data-tool/pulls?q=is%3Apr+reviewed-by%3Aseveibar" title="Reviewed Pull Requests">👀</a></td>
@@ -109,11 +114,14 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/hysios"><img src="https://avatars0.githubusercontent.com/u/103227?v=4" width="100px;" alt=""/><br /><sub><b>hysios </b></sub></a><br /><a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=hysios" title="Code">💻</a></td>
     <td align="center"><a href="https://congdv.github.io/"><img src="https://avatars2.githubusercontent.com/u/8192210?v=4" width="100px;" alt=""/><br /><sub><b>Cong Dao</b></sub></a><br /><a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=congdv" title="Code">💻</a></td>
     <td align="center"><a href="https://www.linkedin.com/in/renato-gonsalves-499317125/"><img src="https://avatars0.githubusercontent.com/u/47343193?v=4" width="100px;" alt=""/><br /><sub><b>Renato Junior</b></sub></a><br /><a href="#translation-MrJunato" title="Translation">🌍</a></td>
+    <td align="center"><a href="https://gitlab.com/rickstaa"><img src="https://avatars0.githubusercontent.com/u/17570430?v=4" width="100px;" alt=""/><br /><sub><b>Rick</b></sub></a><br /><a href="#translation-rickstaa" title="Translation">🌍</a> <a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=rickstaa" title="Code">💻</a></td>
   </tr>
 </table>
 
 <!-- markdownlint-enable -->
+
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

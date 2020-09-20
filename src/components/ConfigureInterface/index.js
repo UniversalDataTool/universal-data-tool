@@ -14,6 +14,7 @@ import ConfigureDataEntry from "../ConfigureDataEntry"
 import ConfigureComposite from "../ConfigureComposite"
 import Configure3D from "../Configure3D"
 import ConfigureVideoSegmentation from "../ConfigureVideoSegmentation"
+import ConfigureImageLandmarkAnnotation from "../ConfigureImageLandmarkAnnotation"
 
 const Container = styled("div")({
   padding: 24,
@@ -71,6 +72,9 @@ export const ConfigureInterface = ({
       )}
       {iface.type === "3d_bounding_box" && (
         <Configure3D iface={iface} onChange={onChange} />
+      )}
+      {iface.type === "image_landmark_annotation" && (
+        <ConfigureImageLandmarkAnnotation iface={iface} onChange={onChange} />
       )}
     </Container>
   )

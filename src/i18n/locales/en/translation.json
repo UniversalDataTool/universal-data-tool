@@ -9,6 +9,7 @@
   "open-file": "Open File",
   "open-collaborative-session": "Open Collaborative Session",
   "add-authentication": "Add Authentification",
+  "create-training-course": "Create a Training Course",
   "no-recent-files": "No Recent Files",
   "downloading-and-installing-udt": "Downloading and Installing UDT",
   "labeling-images": "Labeling Images",
@@ -76,5 +77,6 @@
   "transform-video-keyframes-dialog-explanation-text": "This operation will convert keyframes set on a video into individual image segmentation frames. Your interface type will change from 'video_segmentation' into 'image_segmentation'. This is sometimes helpful when preparing video data for a computer vision model.",
   "transform-video-keyframes-dialog-explanation-warning": "You need to label some keyframes to use this.",
   "universal-data-viewer-interface-warning": "This interface hasn't been set up properly, try selecting an interface in the 'Setup' tab.",
-  "setup-project": "Setup Project"
+  "setup-project": "Setup Project",
+  "other-formats": "Other Formats"
 }

@@ -36,16 +36,10 @@ export default ({
   sampleTimeToComplete,
 }) => {
   const [currentTab, setTab] = useState("label")
-  const [showLabelHelpPricing, setShowLabelHelpPricing] = useState(false)
   const posthog = usePosthog()
   const { labelHelpEnabled, totalCost } = useLabelHelp()
   const labelOnlyMode = useIsLabelOnlyMode()
   const [annotationStartTime, setAnnotationStartTime] = useState(null)
-
-  useEffect(() => {
-    if (process.env.REACT_APP_SHOW_LABELHELP_PRICING === "true")
-      setShowLabelHelpPricing(true)
-  }, [])
 
   const isInOverview = sampleIndex === null
 
@@ -140,14 +134,10 @@ export default ({
                 value="activelearning"
               />
             )}
-            {labelHelpEnabled && (
+            {!labelOnlyMode && (
               <Tab
                 icon={<SupervisedUserCircleIcon />}
-                label={
-                  showLabelHelpPricing && totalCost
-                    ? `${totalCost}$`
-                    : "Label Help"
-                }
+                label={totalCost ? `$${totalCost}` : "Label Help"}
                 value="labelhelp"
               />
             )}

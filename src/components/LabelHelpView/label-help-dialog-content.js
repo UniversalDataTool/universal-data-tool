@@ -46,11 +46,11 @@ export default () => {
   const {
     labelHelpEnabled,
     labelHelpError,
-    loadMyCredits,
+    loadMyCredits = () => 0,
     variables,
-    totalCost,
-    formulaFunc,
-    myCredits,
+    totalCost = 0,
+    formulaFunc = () => 0,
+    myCredits = () => 0,
   } = useLabelHelp()
   const [error, setError] = useState()
   const { dataset, setDataset } = useActiveDataset()
@@ -75,7 +75,6 @@ export default () => {
         )}&api_key=${fromConfig("labelhelp.apikey")}`
       ).then((r) => r.json())
       // response contains { progress, status }
-      console.log({ response })
       setLabelHelpInfo({
         ...dataset.labelHelp,
         ...response,
@@ -88,9 +87,14 @@ export default () => {
   if (!labelHelpEnabled)
     return (
       <Container>
-        Label Help is Disabled.
+        Label Help isn't enabled, check the error below. If you can't resolve
+        the error, reach out on{" "}
+        <a href="https://universaldatatool.slack.com">the slack</a> for more
+        help!
         {labelHelpError && (
-          <div style={{ color: colors.red[500] }}>{labelHelpError}</div>
+          <div style={{ color: colors.red[500], marginTop: 24 }}>
+            {labelHelpError}
+          </div>
         )}
       </Container>
     )

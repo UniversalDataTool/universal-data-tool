@@ -59,6 +59,14 @@ export const convertToRIARegionFmt = (region) => {
     case "pixel-mask": {
       throw new Error(`Unsupported region "${JSON.stringify(region)}"`)
     }
+    case "keypoints": {
+      return {
+        id: region.id || rid(),
+        type: "keypoints",
+        keypointsDefinitionId: region.keypointsDefinitionId,
+        points: region.points,
+      }
+    }
     default:
       return null
   }
@@ -98,6 +106,14 @@ export const convertFromRIARegionFmt = (riaRegion) => {
         labels: riaRegion.tags,
         color: riaRegion.color,
         points: riaRegion.points.map(([x, y]) => ({ x, y })),
+      }
+    }
+    case "keypoints": {
+      return {
+        id: riaRegion.id || rid(),
+        keypointsDefinitionId: riaRegion.keypointsDefinitionId,
+        regionType: "keypoints",
+        points: riaRegion.points,
       }
     }
     default:
