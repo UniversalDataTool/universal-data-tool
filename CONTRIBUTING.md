@@ -26,3 +26,13 @@ of datasets. All contributions are welcome and appreciated!
 * Check out [Setup for Development](https://github.com/UniversalDataTool/universal-data-tool/wiki/Setup-for-Development) for instructions on how to run the project locally
 
 > Still feeling like: "hhh'what is going on?" Check out this [sweet guide to contributing to open-source](https://opensource.guide/how-to-contribute/)
+
+# Other stuff that's nice to know / FAQ
+
+## How do I run the Cypress Integration Tests
+
+[Cypress integration tests](https://cypress.io) will run the web application and make sure that everything is working.
+
+You'll need two terminals to run the cypress integration tests. One test needs to run the web server with `yarn start`, the other needs to run `yarn test:integration:dev`. After you run the latter command, you'll see a screen like this that will let you run any of the automated tests!
+
+![](https://user-images.githubusercontent.com/1910070/93691536-92130a00-fab4-11ea-8b18-abaac2cad217.png)
