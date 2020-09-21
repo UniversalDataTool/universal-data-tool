@@ -19,7 +19,7 @@ describe("Create a new file in the universal data tool", () => {
     });
     
     it('should be able to store session url', () =>{
-        cy.get("div[title='share-link']").children().children().then(elements => {
+        cy.get("div[title='share-link']", {timeout: 20000}).children().children().then(elements => {
             collobrationURL = Cypress.$(elements[0]).val()
         })
     })
