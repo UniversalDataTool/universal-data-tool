@@ -7,6 +7,7 @@ import { action } from "@storybook/addon-actions"
 import { HotKeys } from "react-hotkeys"
 
 import DatasetEditor from "./"
+import EditableTitleText from "./EditableTitleText"
 
 const Controller = (props) => {
   const [dataset, changeDataset] = useState(props.initialDataset)
@@ -92,3 +93,21 @@ storiesOf("DatasetEditor", module)
       />
     </HotKeys>
   ))
+
+storiesOf("EditableTitleText", module).add("Basic", () => {
+  const [valueDisplay, setValueDisplay] = useState("unnamed")
+  return (
+    <>
+      <div style={{ margin: "8px 8px 16px 8px" }}>
+        parent component value: <strong>{valueDisplay}</strong>
+      </div>
+      <EditableTitleText
+        label="File Name"
+        onChange={(newName) => {
+          setValueDisplay(newName)
+        }}
+        value={valueDisplay || ""}
+      />
+    </>
+  )
+})

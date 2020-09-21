@@ -1,5 +1,5 @@
 // @flow
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import TextField from "@material-ui/core/TextField"
 import { makeStyles } from "@material-ui/core/styles"
 import isEmpty from "lodash/isEmpty"
@@ -10,53 +10,18 @@ const useStyles = makeStyles({
   },
 })
 
-const SAVE_WAIT = 2000
-
 export default ({ value, onChange }) => {
   const c = useStyles()
-  const [{ editing, newValue }, changeEditing] = useState({
-    editing: false,
-    newValue: value || "",
-  })
+  const [newValue, setNewValue] = useState(value || "")
 
-  useEffect(() => {
+  const onBlur = () => {
     if (!isEmpty(newValue) && newValue !== "unnamed") {
-      changeEditing({ editing, newValue: newValue })
+      onChange(newValue)
+      setNewValue(newValue)
     } else {
-      changeEditing({ editing, newValue: value })
+      setNewValue(value)
     }
-  }, [newValue, editing, value])
-
-  useEffect(() => {
-    if (!editing) return
-    let listener = (e) => {
-      if (e.key === "Enter") {
-        onChange(newValue)
-        changeEditing({ editing: false })
-      }
-    }
-    window.addEventListener("keydown", listener)
-    return () => {
-      window.removeEventListener("keydown", listener)
-    }
-  }, [editing, newValue, onChange])
-
-  useEffect(() => {
-    if (!newValue) return
-    if (editing) {
-      let timeout = setTimeout(
-        () => {
-          onChange(newValue)
-          changeEditing({ editing: false })
-        },
-        value === newValue ? SAVE_WAIT * 5 : SAVE_WAIT
-      )
-
-      return () => clearTimeout(timeout)
-    } else {
-      return () => {}
-    }
-  }, [editing, newValue, value, onChange])
+  }
 
   return (
     <TextField
@@ -67,6 +32,7 @@ export default ({ value, onChange }) => {
       InputProps={{
         inputProps: { style: { color: "#000" } },
       }}
+      onBlur={onBlur}
       onKeyDown={(e) => {
         if (e.key === "Enter") {
           e.preventDefault()
@@ -78,10 +44,7 @@ export default ({ value, onChange }) => {
         e.stopPropagation()
       }}
       onChange={(e) => {
-        changeEditing({
-          editing: true,
-          newValue: e.target.value,
-        })
+        setNewValue(e.target.value)
       }}
       value={newValue || ""}
     />
