@@ -10,7 +10,7 @@ export const HotkeyContext = createContext({
 export const useHotkeyStorage = () => useContext(HotkeyContext)
 
 export const HotkeyStorageProvider = ({ children }) => {
-  const { fromConfig, setInConfig } = useAppConfig()
+  const { fromConfig, setInConfig, clearInConfig } = useAppConfig()
 
   const hotkeys = useMemo(
     () =>
@@ -38,14 +38,12 @@ export const HotkeyStorageProvider = ({ children }) => {
       hotkeys,
       keyMap,
       clearHotkeys: () => {
-        for (const { id } of hotkeys) {
-          setInConfig(`hotkeys.${id}`, null)
-        }
+        clearInConfig(hotkeys.map((key) => `hotkeys.${key.id}`))
       },
       changeHotkey: (id, newBinding) =>
         setInConfig(`hotkeys.${id}`, newBinding),
     }),
-    [setInConfig, hotkeys, keyMap]
+    [hotkeys, keyMap, clearInConfig, setInConfig]
   )
 
   return (

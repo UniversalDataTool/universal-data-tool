@@ -45,6 +45,7 @@ export const AppConfigContext = createContext({
   setAppConfig: (newConfig) => undefined,
   fromConfig: (key) => undefined,
   setInConfig: (key, value) => undefined,
+  clearInConfig: (keys) => undefined,
 })
 
 export const useAppConfig = () => useContext(AppConfigContext)
@@ -82,6 +83,13 @@ export const AppConfigProvider = ({ children }) => {
           throw new Error(`Unknown config key name "${key}"`)
         }
         setAppConfig({ ...appConfig, [key]: value })
+      },
+      clearInConfig: (keys) => {
+        let config = { ...appConfig }
+        for (const key of keys) {
+          config = { ...config, [`${key}`]: null }
+        }
+        setAppConfig(config)
       },
     }
   }, [appConfig, setAppConfig])
