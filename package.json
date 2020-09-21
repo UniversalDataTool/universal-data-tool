@@ -73,7 +73,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-markdown": "^4.1.0",
-    "react-nlp-annotate": "^0.3.14",
+    "react-nlp-annotate": "^1.0.0",
     "rimraf": "^3.0.2",
     "spelling": "^2.0.1"
   },
@@ -110,8 +110,8 @@
     "react-hotkeys": "^2.0.0",
     "react-i18next": "^11.4.0",
     "react-icons": "^3.9.0",
+    "react-material-workspace-layout": "^1.0.1",
     "react-image-annotate": "^1.7.0",
-    "react-material-workspace-layout": "^0.1.6",
     "react-scripts": "^3.4.1",
     "react-select": "^3.0.8",
     "rfc6902": "^3.0.4",

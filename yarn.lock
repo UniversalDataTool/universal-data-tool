@@ -16262,15 +16262,16 @@ react-material-workspace-layout@^0.1.17:
     react-use-dimensions "^1.2.1"
     use-event-callback "^0.1.0"
 
-react-material-workspace-layout@^0.1.6:
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/react-material-workspace-layout/-/react-material-workspace-layout-0.1.6.tgz#38412f8ca2e282ebc169d709cc12137351c8c427"
-  integrity sha512-494vMTYgyPfC5MS7opvRcrWvDyYh3cmKP5uWH8LdSF7oDDVGi9WDEqRQK8eFt0GrBSfNk85eHUEnX74B2cjsDg==
+react-material-workspace-layout@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-material-workspace-layout/-/react-material-workspace-layout-1.0.1.tgz#f67988558eaa370c5f053557f76a0dc837470fcd"
+  integrity sha512-CK3TWkP8bCGMg35V2xTKAzRCQPiHjkO7mpLZDn1eJWbsee1pSGRVirWX2N6qc0CNKEAN8xEYnTWyOIb1BK/rFA==
   dependencies:
     "@material-ui/core" "^4.10.0"
     "@material-ui/icons" "^4.9.1"
     classnames "^2.2.6"
     react "^16.13.1"
+    react-use-dimensions "^1.2.1"
     use-event-callback "^0.1.0"
 
 react-monaco-editor@^0.25.1:
@@ -16289,16 +16290,16 @@ react-native-get-random-values@^1.4.0:
   dependencies:
     fast-base64-decode "^1.0.0"
 
-react-nlp-annotate@^0.3.14:
-  version "0.3.14"
-  resolved "https://registry.yarnpkg.com/react-nlp-annotate/-/react-nlp-annotate-0.3.14.tgz#d96c495d0e5da259a5b02de11b72df3d44157267"
-  integrity sha512-SSg1jsD7rh6WA4OSCcs4VbaTfIibGlRd0qLcADDc8HdioALiodJcCvkPQG5A4nt1NfAZaBEn/QOs9FUoei57rg==
+react-nlp-annotate@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-nlp-annotate/-/react-nlp-annotate-1.0.0.tgz#bda66cf967dd78b79b0ec60afbfd920d6c40cdab"
+  integrity sha512-D01lbuaABLMegccLz9VFjhc8bKviESwAKm3hD3y89pmmLresrInOpAGfk5dS+8dAJAmDEZDYhP6xiFMKN3C1xw==
   dependencies:
     "@material-ui/lab" "^4.0.0-alpha.56"
     chroma-js "^2.0.3"
     color-alpha "^1.0.4"
     react-hotkeys "^2.0.0"
-    react-material-workspace-layout "^0.1.17"
+    react-material-workspace-layout "^1.0.1"
     react-select "^3.0.8"
     react-use "^15.3.3"
     spelling "^2.0.1"
