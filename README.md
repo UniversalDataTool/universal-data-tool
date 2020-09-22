@@ -80,16 +80,6 @@ Download the latest release from the [releases page](https://github.com/Universa
 - (Optional) Say hi in the [Slack channel](https://join.slack.com/t/universaldatatool/shared_invite/zt-d8teykwi-iOSOUfxugKR~M4AJN6VL3g)!
 - Read [this guide to get started with development](https://github.com/UniversalDataTool/universal-data-tool/wiki/Setup-for-Development).
 
-## Libraries
-
-The Universal Data Tool is always looking for the best libraries to provide the
-user interface for different types of annotation. Currently, the following
-libraries are used...
-
-- [material-survey](https://github.com/collegeai/material-survey) for data entry.
-- [react-image-annotate](https://github.com/workaroundonline/react-image-annotate) for image annotation.
-- [react-nlp-annotate](https://github.com/workaroundonline/react-nlp-annotate) for entity recognition and NLP tasks.
-
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
