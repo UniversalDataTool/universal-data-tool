@@ -67,6 +67,17 @@ export default ({
     <LabelErrorBoundary>
       <UniversalDataViewer
         sampleIndex={sampleIndex}
+        onRemoveSample={(sampleIndex) => {
+          if (window.confirm("Are you sure you want to delete this sample?")) {
+            onChangeDataset(
+              setIn(
+                dataset,
+                ["samples"],
+                dataset.samples.filter((s, i) => i !== sampleIndex)
+              )
+            )
+          }
+        }}
         onSaveTaskOutputItem={(relativeIndex, output) => {
           const sample = dataset.samples[sampleIndex]
 

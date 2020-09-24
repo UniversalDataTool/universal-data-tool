@@ -197,6 +197,7 @@ export const ImageClassification = ({
     <WorkspaceContainer
       onNext={onNextNoSave}
       onPrev={onPrev}
+      onRemoveSample={containerProps.onRemoveSample}
       onClickHeaderItem={onDone}
       numberOfSamples={samples.length}
       currentSampleIndex={sampleIndex}
