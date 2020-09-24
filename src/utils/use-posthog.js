@@ -40,7 +40,9 @@ export default () => {
       autocapture: false,
     })
     window.posthog = posthog
-    const domain = isDesktop ? "desktop" : window.location.origin
+    const domain = isDesktop
+      ? "https://desktop.universaldatatool.com"
+      : window.location.origin
     posthog.capture("domain", { domain })
     posthog.capture("is_desktop", { isDesktop: isDesktop })
     posthog.people.set({ is_desktop: isDesktop, domain })

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { styled } from "@material-ui/core/styles"
+import * as colors from "@material-ui/core/colors"
 import SimpleDialog from "../SimpleDialog"
 import CreatableSelect from "react-select/creatable"
 
@@ -13,6 +14,15 @@ const Image = styled("img")({
   width: 100,
   height: 100,
   margin: 8,
+})
+
+const TermsOfUse = styled("div")({
+  padding: 16,
+  margin: 16,
+  backgroundColor: colors.green[200],
+  "& a": {
+    color: colors.blue[600],
+  },
 })
 
 export const ImportFromCOCODialog = ({
@@ -45,7 +55,7 @@ export const ImportFromCOCODialog = ({
       title="Import from COCO"
       onClose={onClose}
       actions={[
-        {
+        importedDataset?.samples.length > 0 && {
           text: "Add Samples",
           disabled: !importedDataset,
           onClick: () => {
@@ -59,8 +69,14 @@ export const ImportFromCOCODialog = ({
             onClose()
           },
         },
-      ]}
+      ].filter(Boolean)}
     >
+      <TermsOfUse>
+        By clicking "Add Samples" you understand that these images are from the{" "}
+        <a href="https://cocodataset.org">Common Objects in Context dataset</a>{" "}
+        and you must abide by{" "}
+        <a href="https://cocodataset.org/#termsofuse">their terms of use</a>.
+      </TermsOfUse>
       <CreatableSelect
         isMulti
         onChange={(labels) => {
