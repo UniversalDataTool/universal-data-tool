@@ -137,7 +137,11 @@ export default ({
             {!labelOnlyMode && (
               <Tab
                 icon={<SupervisedUserCircleIcon />}
-                label={totalCost ? `$${totalCost}` : "Label Help"}
+                label={
+                  totalCost && totalCost >= 100
+                    ? `$${totalCost.toFixed(2)}`
+                    : "Label Help"
+                }
                 value="labelhelp"
               />
             )}
