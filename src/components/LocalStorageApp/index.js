@@ -45,7 +45,11 @@ export default () => {
   const onDownload = useEventCallback((format) => {
     if (!file) return
     posthog.capture("download_file", { file_type: format })
-    const outputName = (file.sessionId || file.fileName) + ".udt." + format
+    const userProvidedFileName = (file.sessionId || file.fileName).replace(
+      /\.udt\.(csv|json)/,
+      ""
+    )
+    const outputName = userProvidedFileName + ".udt." + format
     if (format === "json") {
       download(JSON.stringify(file.content), outputName)
     } else if (format === "csv") {

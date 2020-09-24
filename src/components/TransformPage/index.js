@@ -18,8 +18,10 @@ import usePosthog from "../../utils/use-posthog"
 import TransformLocalFilesToWebURLs from "../TransformLocalFilesToWebURLs"
 import TransformImageSamplesIntoSegmentsDialog from "../TransformImageSamplesIntoSegmentsDialog"
 import TransformSegmentsIntoImageSamplesDialog from "../TransformSegmentsIntoImageSamplesDialog"
+import TransformRemoveInvalidSamplesDialog from "../TransformRemoveInvalidSamplesDialog"
 
 import ComputerIcon from "@material-ui/icons/Computer"
+import HighlightOffIcon from "@material-ui/icons/HighlightOff"
 import LanguageIcon from "@material-ui/icons/Language"
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank"
 import GridOnIcon from "@material-ui/icons/GridOn"
@@ -162,6 +164,22 @@ export default ({ dataset, onChangeDataset }) => {
         >
           Combine Segments into Image Samples
         </Button>
+        <Button
+          dialog="remove-invalid-samples"
+          Icon1={ImageIcon}
+          Icon2={HighlightOffIcon}
+        >
+          Remove Invalid Samples
+        </Button>
+        <TransformRemoveInvalidSamplesDialog
+          open={selectedDialog === "remove-invalid-samples"}
+          onClose={closeDialog}
+          dataset={dataset}
+          onChangeDataset={(...args) => {
+            onChangeDataset(...args)
+            closeDialog()
+          }}
+        />
         <TransformVideoKeyframesDialog
           open={selectedDialog === "convert-keyframes-to-samples"}
           onClose={closeDialog}

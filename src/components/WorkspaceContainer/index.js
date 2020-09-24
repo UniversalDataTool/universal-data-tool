@@ -4,6 +4,7 @@ import React, { useMemo } from "react"
 import Box from "@material-ui/core/Box"
 import Workspace from "react-material-workspace-layout/Workspace"
 import { styled } from "@material-ui/core/styles"
+import DeleteIcon from "@material-ui/icons/Delete"
 
 const HeaderLeftSideContainer = styled("div")({
   fontSize: 24,
@@ -14,6 +15,7 @@ export default ({
   children,
   onNext,
   onPrev,
+  onRemoveSample,
   currentSampleIndex = 0,
   numberOfSamples = 1,
   globalSampleIndex = 1,
@@ -23,6 +25,11 @@ export default ({
   const headerItems = useMemo(
     () =>
       [
+        onRemoveSample && {
+          name: "Delete",
+          icon: <DeleteIcon />,
+          onClick: () => onRemoveSample(globalSampleIndex),
+        },
         (currentSampleIndex > 0 || onPrev) && {
           name: "Prev",
           onClick: onPrev,
@@ -35,7 +42,14 @@ export default ({
         },
         { name: "Save" },
       ].filter(Boolean),
-    [currentSampleIndex, numberOfSamples, onNext, onPrev]
+    [
+      currentSampleIndex,
+      globalSampleIndex,
+      numberOfSamples,
+      onNext,
+      onPrev,
+      onRemoveSample,
+    ]
   )
   return (
     <Workspace

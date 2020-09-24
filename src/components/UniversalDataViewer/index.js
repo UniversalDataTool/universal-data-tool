@@ -22,6 +22,7 @@ import useClobberedState from "../../utils/use-clobbered-state"
 export const UniversalDataViewer = ({
   dataset,
   onExit: onExitProp,
+  onRemoveSample: onRemoveSampleProp,
   hideHeader,
   hideDescription,
   disableHotkeys = false,
@@ -65,6 +66,7 @@ export const UniversalDataViewer = ({
       datasetName,
       requireCompleteToPressNext,
       onExit,
+      onRemoveSample: onRemoveSampleProp,
       height,
       disableHotkeys,
     }),
@@ -76,6 +78,7 @@ export const UniversalDataViewer = ({
       height,
       onExit,
       disableHotkeys,
+      onRemoveSampleProp,
     ]
   )
 

@@ -24,12 +24,14 @@ import ImportFromGoogleDriveDialog from "../ImportFromGoogleDriveDialog"
 import ImportUDTFileDialog from "../ImportUDTFileDialog"
 import ImportToyDataset from "../ImportToyDatasetDialog"
 import ImportFromYoutubeUrls from "../ImportFromYoutubeUrls"
+import ImportFromCOCODialog from "../ImportFromCOCODialog"
 import { FaGoogleDrive, FaYoutube } from "react-icons/fa"
 import usePosthog from "../../utils/use-posthog"
 import promptAndGetSamplesFromLocalDirectory from "./prompt-and-get-samples-from-local-directory.js"
 import { useTranslation } from "react-i18next"
 import useAuth from "../../utils/auth-handlers/use-auth.js"
 import { useAppConfig } from "../AppConfig"
+import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary"
 
 const ButtonBase = styled(MuiButton)({
   width: 240,
@@ -287,6 +289,20 @@ export default ({
         <Button dialog="import-csv-json" Icon={DescriptionIcon}>
           {t("import-from")} CSV / JSON
         </Button>
+        <Button
+          isDesktop={isDesktop}
+          dialog="import-from-coco"
+          Icon={PhotoLibraryIcon}
+        >
+          {t("import-from-coco")}
+        </Button>
+
+        <ImportFromCOCODialog
+          open={selectedDialog === "import-from-coco"}
+          onClose={closeDialog}
+          dataset={dataset}
+          onChangeDataset={onChangeDataset}
+        />
         <ImportTextSnippetsDialog
           open={selectedDialog === "import-text-snippets"}
           onClose={closeDialog}
