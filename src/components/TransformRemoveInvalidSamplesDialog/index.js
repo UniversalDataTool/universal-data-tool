@@ -2,35 +2,26 @@
 
 import React, { useState } from "react"
 import SimpleDialog from "../SimpleDialog"
-import { styled } from "@material-ui/core/styles"
 import { setIn } from "seamless-immutable"
-import Box from "@material-ui/core/Box"
-import range from "lodash/range"
-import TextField from "@material-ui/core/TextField"
 import ProgressBar from "../ProgressBar"
 
-const ErrorBox = styled("pre")({
-  color: "red",
-  whiteSpace: "prewrap",
-  fontSize: 11,
-})
-
 async function isUrlValid(url) {
-  const controller = new AbortController()
-  const { signal } = controller
+  return new Promise((resolve) => {
+    const image = document.createElement("img")
 
-  const resPromise = fetch(url, { signal }).catch((e) => e)
+    image.onload = () => {
+      resolve(true)
+    }
+    image.onerror = () => {
+      resolve(false)
+    }
 
-  setTimeout(() => {
-    controller.abort()
-  }, 100)
+    image.src = url
 
-  const result = await resPromise
-  if (result.toString().includes("AbortError")) {
-    return true
-  } else {
-    return result.status === 200
-  }
+    setTimeout(() => {
+      resolve(true)
+    }, 200)
+  })
 }
 
 export default ({ open, onChangeDataset, onClose, dataset }) => {
@@ -111,7 +102,6 @@ export default ({ open, onChangeDataset, onClose, dataset }) => {
         them do not return a valid status code the sample will be removed from
         the dataset.
       </div>
-      {/* {errors && <ErrorBox>{errors}</ErrorBox>} */}
     </SimpleDialog>
   )
 }

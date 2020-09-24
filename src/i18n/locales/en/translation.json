@@ -78,5 +78,6 @@
   "transform-video-keyframes-dialog-explanation-warning": "You need to label some keyframes to use this.",
   "universal-data-viewer-interface-warning": "This interface hasn't been set up properly, try selecting an interface in the 'Setup' tab.",
   "setup-project": "Setup Project",
-  "other-formats": "Other Formats"
+  "other-formats": "Other Formats",
+  "import-from-coco": "Import from COCO"
 }
