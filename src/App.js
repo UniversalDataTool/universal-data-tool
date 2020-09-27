@@ -1,6 +1,6 @@
 import React, { Suspense } from "react"
 import Theme from "./components/Theme"
-import LocalStorageApp from "./components/LocalStorageApp"
+import WebApp from "./components/WebApp"
 import DesktopApp from "./components/DesktopApp"
 import { ToastProvider } from "./components/Toasts"
 import useElectron from "./utils/use-electron.js"
@@ -25,7 +25,7 @@ export const App = () => {
             <LabelHelpProvider>
               <ToastProvider>
                 <HotkeyStorageProvider>
-                  {Boolean(electron) ? <DesktopApp /> : <LocalStorageApp />}
+                  {Boolean(electron) ? <DesktopApp /> : <WebApp />}
                 </HotkeyStorageProvider>
               </ToastProvider>
             </LabelHelpProvider>

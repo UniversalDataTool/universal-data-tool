@@ -65,6 +65,7 @@ export default ({
         drawerOpen={drawerOpen}
         onCloseDrawer={onCloseDrawer}
         onClickHome={headerContext.onClickHome}
+        onClickManagePlugins={headerContext.onClickManagePlugins}
         recentItems={headerContext.recentItems}
         changeRecentItems={headerContext.changeRecentItems}
         onOpenFile={headerContext.onOpenFile}

@@ -32,9 +32,9 @@ desktop/node_modules
 
 /lib
 
-src/components/LocalStorageApp/myAWSconfig.js
+src/components/WebApp/myAWSconfig.js
 package-lock.json
-src/components/LocalStorageApp/myAWSconfig.js
+src/components/WebApp/myAWSconfig.js
 .env
 .cache
 
