@@ -33,14 +33,17 @@ export default () => {
           } = (await import(/* webpackIgnore: true */ pluginUrl)).default()
 
           plugins.push(
-            transformPlugins.map((p) => ({ ...p, type: "transform" }))
+            ...transformPlugins.map((p) => ({ ...p, type: "transform" }))
           )
-          plugins.push(importPlugins.map((p) => ({ ...p, type: "import" })))
+          plugins.push(...importPlugins.map((p) => ({ ...p, type: "import" })))
           plugins.push(
-            interfacePlugins.map((p) => ({ ...p, type: "interface" }))
+            ...interfacePlugins.map((p) => ({ ...p, type: "interface" }))
           )
           plugins.push(
-            authenticationPlugins.map((p) => ({ ...p, type: "authentication" }))
+            ...authenticationPlugins.map((p) => ({
+              ...p,
+              type: "authentication",
+            }))
           )
         } catch (e) {
           // TODO display broken plugin more nicely, using regex extraction of
@@ -51,8 +54,6 @@ export default () => {
           )
         }
       }
-
-      console.log({ plugins })
       setPlugins(plugins)
     }
     loadPlugins()
