@@ -9,7 +9,7 @@
     "build": "npm run build:web",
     "build:all": "npm run build:babel && npm run build:vanilla && npm run build:desktop",
     "build:lib": "npm run build:babel && npm run build:vanilla",
-    "build:babel": "cross-env NODE_ENV=production babel ./src --out-dir=./lib --copy-files && cp ./package.json ./lib/package.json && node ./lib/lib/fix-deps.js",
+    "build:babel": "cross-env NODE_ENV=production babel ./src --out-dir=./lib --copy-files && cp ./package.json ./lib/package.json && cp ./README.md ./lib/README.md && node ./lib/lib/fix-deps.js",
     "build:vanilla": "parcel build -d ./lib -o vanilla.js ./src/vanilla/index.js",
     "build:vanilla:dev": "parcel ./src/vanilla/index.js",
     "build:web": "rimraf build && react-scripts build && cp -r build ./build-copy && mv build-copy build/app",
