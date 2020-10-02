@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 import { useAppConfig } from "../AppConfig"
 import { atom, useRecoilState, useRecoilValue } from "recoil"
 import { useToasts } from "../Toasts"
@@ -11,6 +11,7 @@ const pluginsState = atom({
 export const usePlugins = () => useRecoilValue(pluginsState)
 
 export default () => {
+  // eslint-disable-next-line
   const [plugins, setPlugins] = useRecoilState(pluginsState)
   const { fromConfig } = useAppConfig()
   const { addToast } = useToasts()

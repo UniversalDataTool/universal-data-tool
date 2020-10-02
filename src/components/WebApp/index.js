@@ -15,7 +15,6 @@ import usePreventNavigation from "../../utils/use-prevent-navigation"
 import { FileContext } from "../FileContext"
 import usePosthog from "../../utils/use-posthog"
 import ManagePluginsDialog from "../ManagePluginsDialog"
-import { RecoilRoot } from "recoil"
 import usePluginProvider from "../PluginProvider"
 const randomId = () => Math.random().toString().split(".")[1]
 

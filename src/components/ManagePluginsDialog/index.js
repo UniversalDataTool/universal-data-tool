@@ -9,6 +9,7 @@ export const ManagePluginsDialog = ({ onClose, open }) => {
   useEffect(() => {
     if (!open) return
     setContent(fromConfig("pluginUrls") || "")
+    //eslint-disable-next-line
   }, [open])
 
   return (

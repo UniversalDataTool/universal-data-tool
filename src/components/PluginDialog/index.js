@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react"
+import React, { useEffect, useState } from "react"
 import SimpleDialog from "../SimpleDialog"
 import { setIn } from "seamless-immutable"
 
@@ -36,6 +36,7 @@ export default ({
         onChangeDataset(setIn(dataset, path, val))
       },
     })
+    //eslint-disable-next-line
   }, [open, ref])
 
   return (
