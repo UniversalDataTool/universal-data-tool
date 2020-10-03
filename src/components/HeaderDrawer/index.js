@@ -16,6 +16,7 @@ import templates from "../StartingPage/templates"
 import * as colors from "@material-ui/core/colors"
 import FileIcon from "@material-ui/icons/InsertDriveFile"
 import NoteAddIcon from "@material-ui/icons/NoteAdd"
+import SettingsInputHdmiIcon from "@material-ui/icons/SettingsInputHdmi"
 import { useTranslation } from "react-i18next"
 
 const useStyles = makeStyles({})
@@ -25,6 +26,7 @@ export default ({
   changeRecentItems,
   onClickHome,
   onCloseDrawer,
+  onClickManagePlugins,
   drawerOpen,
   onOpenFile,
   onOpenRecentItem,
@@ -64,6 +66,20 @@ export default ({
           <ListItemText>Open File</ListItemText>
           <input {...getInputProps()} />
         </ListItem>
+        {onClickManagePlugins && (
+          <ListItem
+            onClick={() => {
+              onClickManagePlugins()
+              onCloseDrawer()
+            }}
+            button
+          >
+            <ListItemIcon>
+              <SettingsInputHdmiIcon />
+            </ListItemIcon>
+            <ListItemText>Manage Plugins</ListItemText>
+          </ListItem>
+        )}
         <ListSubheader>Recent Files</ListSubheader>
         {recentItems.length === 0 ? (
           <ListItem>

@@ -18,6 +18,7 @@ const configKeyNames = [
   "auth.proxy.corsproxy",
   "labelhelp.disabled",
   "labelhelp.apikey",
+  "pluginUrls",
   ...defaultHotkeys.map(({ id }) => `hotkeys.${id}`),
 ]
 

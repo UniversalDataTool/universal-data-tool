@@ -14,6 +14,8 @@ import useEventCallback from "use-event-callback"
 import usePreventNavigation from "../../utils/use-prevent-navigation"
 import { FileContext } from "../FileContext"
 import usePosthog from "../../utils/use-posthog"
+import ManagePluginsDialog from "../ManagePluginsDialog"
+import usePluginProvider from "../PluginProvider"
 const randomId = () => Math.random().toString().split(".")[1]
 
 export default () => {
@@ -27,8 +29,11 @@ export default () => {
     changeRecentItems,
   } = useFileHandler()
   usePreventNavigation(Boolean(file))
+  usePluginProvider()
   const posthog = usePosthog()
   const [errors] = useErrors()
+
+  const [managePluginsDialogOpen, setManagePluginsDialogOpen] = useState(false)
 
   const [selectedBrush, setSelectedBrush] = useState("complete")
   const onCreateTemplate = useEventCallback((template) => {
@@ -42,6 +47,9 @@ export default () => {
 
   const openRecentItem = useEventCallback((item) => setFile(item))
   const onClickHome = useEventCallback(() => setFile(null))
+  const onClickManagePlugins = useEventCallback(() =>
+    setManagePluginsDialogOpen(true)
+  )
   const onDownload = useEventCallback((format) => {
     if (!file) return
     posthog.capture("download_file", { file_type: format })
@@ -94,6 +102,7 @@ export default () => {
             changeRecentItems,
             onClickTemplate: onCreateTemplate,
             onClickHome,
+            onClickManagePlugins,
             onOpenFile: openFile,
             onOpenRecentItem: openRecentItem,
             inSession,
@@ -109,30 +118,36 @@ export default () => {
             isWelcomePage: !file,
           }}
         >
-          {!file ? (
-            <StartingPage
-              onFileDrop={openFile}
-              onOpenTemplate={onCreateTemplate}
-              recentItems={recentItems}
-              onOpenRecentItem={openRecentItem}
-              onClickOpenSession={() => changeSessionBoxOpen(true)}
-            />
-          ) : (
-            <AppErrorBoundary>
-              <DatasetEditor
-                file={file}
-                key={file.id}
-                {...file}
-                selectedBrush={selectedBrush}
-                inSession={inSession}
-                dataset={file.content}
-                onChangeDataset={onChangeDataset}
-                onChangeFile={setFile}
-                authConfig
+          <div>
+            {!file ? (
+              <StartingPage
+                onFileDrop={openFile}
+                onOpenTemplate={onCreateTemplate}
                 recentItems={recentItems}
+                onOpenRecentItem={openRecentItem}
+                onClickOpenSession={() => changeSessionBoxOpen(true)}
               />
-            </AppErrorBoundary>
-          )}
+            ) : (
+              <AppErrorBoundary>
+                <DatasetEditor
+                  file={file}
+                  key={file.id}
+                  {...file}
+                  selectedBrush={selectedBrush}
+                  inSession={inSession}
+                  dataset={file.content}
+                  onChangeDataset={onChangeDataset}
+                  onChangeFile={setFile}
+                  authConfig
+                  recentItems={recentItems}
+                />
+              </AppErrorBoundary>
+            )}
+            <ManagePluginsDialog
+              open={managePluginsDialogOpen}
+              onClose={() => setManagePluginsDialogOpen(false)}
+            />
+          </div>
         </HeaderContext.Provider>
       </FileContext.Provider>
       <ErrorToasts errors={errors} />

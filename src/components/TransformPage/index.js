@@ -19,7 +19,10 @@ import TransformLocalFilesToWebURLs from "../TransformLocalFilesToWebURLs"
 import TransformImageSamplesIntoSegmentsDialog from "../TransformImageSamplesIntoSegmentsDialog"
 import TransformSegmentsIntoImageSamplesDialog from "../TransformSegmentsIntoImageSamplesDialog"
 import TransformRemoveInvalidSamplesDialog from "../TransformRemoveInvalidSamplesDialog"
+import { usePlugins } from "../PluginProvider"
+import PluginDialog from "../PluginDialog"
 
+import PeopleAltIcon from "@material-ui/icons/PeopleAlt"
 import ComputerIcon from "@material-ui/icons/Computer"
 import HighlightOffIcon from "@material-ui/icons/HighlightOff"
 import LanguageIcon from "@material-ui/icons/Language"
@@ -58,7 +61,15 @@ const DesktopOnlyText = styled("div")({
 
 const SelectDialogContext = createContext()
 
-const Button = ({ Icon1, Icon2, desktopOnly, children, dialog, disabled }) => {
+const Button = ({
+  Icon1,
+  Icon2,
+  desktopOnly,
+  children,
+  dialog,
+  disabled,
+  onClick,
+}) => {
   const isDesktop = useIsDesktop()
   const posthog = usePosthog()
   const { t } = useTranslation()
@@ -71,10 +82,11 @@ const Button = ({ Icon1, Icon2, desktopOnly, children, dialog, disabled }) => {
         return (
           <ButtonBase
             onClick={() => {
-              onChangeDialog(dialog)
               posthog.capture("transform_button_clicked", {
-                transform_button: dialog,
+                transform_button: dialog || children,
               })
+              if (onClick) return onClick()
+              onChangeDialog(dialog)
             }}
             className={classnames({ disabled })}
             variant="outlined"
@@ -120,6 +132,8 @@ export default ({ dataset, onChangeDataset }) => {
     }
   }
   const closeDialog = () => changeDialog(null)
+  const [openPlugin, setOpenPlugin] = useState(null)
+  const plugins = usePlugins()
   return (
     <SelectDialogContext.Provider value={{ onChangeDialog }}>
       <div>
@@ -171,6 +185,28 @@ export default ({ dataset, onChangeDataset }) => {
         >
           Remove Invalid Samples
         </Button>
+        {plugins.map((plugin) => (
+          <Button
+            key={plugin.name}
+            Icon1={PeopleAltIcon}
+            Icon2={PeopleAltIcon}
+            onClick={() => setOpenPlugin(plugin)}
+          >
+            {plugin.name}
+          </Button>
+        ))}
+        {openPlugin && (
+          <PluginDialog
+            open={Boolean(openPlugin)}
+            onClose={() => setOpenPlugin(null)}
+            {...openPlugin}
+            dataset={dataset}
+            onChangeDataset={(...args) => {
+              onChangeDataset(...args)
+              closeDialog()
+            }}
+          />
+        )}
         <TransformRemoveInvalidSamplesDialog
           open={selectedDialog === "remove-invalid-samples"}
           onClose={closeDialog}
