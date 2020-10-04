@@ -48,7 +48,9 @@ export default (sampleIndexOrId) => {
       currentSampleIndex: null,
       currentSampleId: null,
       sample: null,
-      updateSample: () => throw new Error("no sample loaded"),
+      updateSample: () => {
+        throw new Error("no sample loaded")
+      },
     }
 
   return {

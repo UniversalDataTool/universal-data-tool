@@ -6,6 +6,7 @@ const getNewSampleRefId = () => Math.random().toString(36).slice(-8)
 
 class LocalStorageDatasetManager implements DatasetManager extends EventEmitter {
   udtJSON: Object
+  type = "local-storage"
 
   constructor() {
     this.udtJSON = seamless({
@@ -78,7 +79,7 @@ class LocalStorageDatasetManager implements DatasetManager extends EventEmitter 
   onUpdateAppConfig(appConfig) {}
 
   // Import an entire UDT JSON file
-  async importDataset(udtObject: Object) {
+  async loadDataset(udtObject: Object) {
     this.udtJSON = seamless({
       name: "Imported Dataset",
       interface: {},
@@ -130,3 +131,5 @@ class LocalStorageDatasetManager implements DatasetManager extends EventEmitter 
     return true
   }
 }
+
+export default LocalStorageDatasetManager

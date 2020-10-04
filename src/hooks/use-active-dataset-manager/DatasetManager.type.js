@@ -3,8 +3,10 @@
 // If you're having trouble, check out the LocalStorageDatasetManager
 
 interface DatasetManager {
+  type: string; // e.g local-storage
+
   // Import an entire UDT JSON file
-  importDataset(udtObject: Object): Promise<void>;
+  loadDataset(udtObject: Object): Promise<void>;
 
   // Called frequently to make sure the dataset is accessible, return true if
   // the dataset can be read. You might return false if there isn't a dataset
