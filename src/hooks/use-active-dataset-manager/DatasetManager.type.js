@@ -17,10 +17,6 @@ interface DatasetManager {
   // https://github.com/UniversalDataTool/udt-format/blob/master/proposals/summary.md
   getSummary(): Promise<Object>;
 
-  // Get or set the dataset interface
-  getInterface(): Promise<Object>;
-  setInterface(newInterface: Object): Promise<Object>;
-
   // Get or set the dataset training, file paths or other top levels keys (not
   // samples). For example, getDatasetProperty('training') returns the labeler
   // training configuration. getDatasetProperty('name') returns the name.
@@ -51,7 +47,7 @@ interface DatasetManager {
 
   on(
     event:
-      | "interface-changed"
+      | "dataset-property-changed" // passes { key: "interface" | "training" | "etc" }
       | "sample-changed" // passes { sampleRefId }
       | "sampled-changed-by-someone-else" // passes { sampleRefId }
       | "error" // passes { message }

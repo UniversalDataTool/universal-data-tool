@@ -1,9 +1,10 @@
 import type { DatasetManager } from "./types"
+import EventEmitter from "events"
 import { from as seamless, set, merge, setIn } from "seamless-immutable"
 
 const getNewSampleRefId = () => Math.random().toString(36).slice(-8)
 
-class LocalStorageDatasetManager implements DatasetManager {
+class LocalStorageDatasetManager implements DatasetManager extends EventEmitter {
   udtJSON: Object
 
   constructor() {
