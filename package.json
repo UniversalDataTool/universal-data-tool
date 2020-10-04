@@ -4,6 +4,7 @@
   "license": "MIT",
   "main": "desktop/main.js",
   "homepage": "https://universaldatatool.com/app/",
+  "proxy": "http://localhost:3000",
   "scripts": {
     "start": "cross-env PORT=6001 react-scripts start",
     "build": "npm run build:web",
@@ -117,6 +118,7 @@
     "recoil": "^0.0.13",
     "rfc6902": "^3.0.4",
     "seamless-immutable": "^7.1.4",
+    "seamless-immutable-patch": "^1.0.4",
     "seed-random": "^2.2.0",
     "seedrandom": "^3.0.5",
     "styled-components": "^5.0.0",

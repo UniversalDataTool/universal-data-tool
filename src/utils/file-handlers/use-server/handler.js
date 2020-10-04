@@ -4,7 +4,7 @@
 import * as rfc6902 from "rfc6902"
 import bent from "bent"
 import getHumanReadableLog from "./get-human-readable-log.js"
-import applySeamlessPatch from "./apply-seamless-patch.js"
+import applySeamlessPatch from "seamless-immutable-patch"
 import hash from "./server-hash.js"
 
 class CollaborationHandler {
