@@ -16,13 +16,16 @@ import BigInterfaceSelect from "../BigInterfaceSelect"
 import { setIn } from "seamless-immutable"
 import UniversalDataViewer from "../UniversalDataViewer"
 import RawJSONEditor from "../RawJSONEditor"
+import useInterface from "../../hooks/use-interface"
+import useSample from "../../hooks/use-sample"
 
 const noop = () => {}
 
-export default ({ dataset, onChange, onClearLabelData }) => {
-  const [currentTab, setTab] = useState(
-    dataset.interface.type ? "configure" : "datatype"
-  )
+export default ({ onChange, onClearLabelData }) => {
+  const { iface, updateInterface } = useInterface()
+  const { sample } = useSample(0)
+
+  const [currentTab, setTab] = useState(iface?.type ? "configure" : "datatype")
 
   return (
     <div>
@@ -41,17 +44,17 @@ export default ({ dataset, onChange, onClearLabelData }) => {
       </Box>
       {currentTab === "datatype" && (
         <BigInterfaceSelect
-          currentInterfaceType={dataset.interface?.type}
-          onChange={(newInterface) => {
-            onChange(setIn(dataset, ["interface"], newInterface))
+          currentInterfaceType={iface?.type}
+          onChange={async (newInterface) => {
+            await updateInterface(newInterface)
             setTab("configure")
           }}
         />
       )}
       {currentTab === "configure" && (
         <ConfigureInterface
-          dataset={dataset}
-          onChange={(iface) => onChange(setIn(dataset, ["interface"], iface))}
+          interface={iface}
+          onChange={updateInterface}
           isNotNested
         />
       )}
@@ -61,24 +64,24 @@ export default ({ dataset, onChange, onClearLabelData }) => {
           onExit={noop}
           onSaveTaskOutputItem={noop}
           dataset={{
-            ...dataset,
-            samples: dataset?.samples?.length
-              ? [dataset.samples[0]]
-              : [templateMap[dataset.interface?.type].dataset.samples[0]],
+            interface: iface,
+            samples: sample
+              ? [sample]
+              : [templateMap[iface?.type].dataset.samples[0]],
           }}
         />
       )}
       {currentTab === "advanced" && (
         <AdvancedOptionsView onClearLabelData={onClearLabelData} />
       )}
-      {currentTab === "json" && (
+      {/* {currentTab === "json" && (
         <RawJSONEditor
           content={dataset}
           onSave={(newDataset) => {
             onChange(newDataset)
           }}
         />
-      )}
+      )} */}
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import useIsDesktop from "./use-is-desktop"
+import useIsDesktop from "./../hooks/use-is-desktop"
 export default () => {
   const isDesktop = useIsDesktop()
   if (isDesktop) return false

@@ -1,14 +1,16 @@
 import type { DatasetManager } from "./types"
-import EventEmitter from "events"
+import { EventEmitter } from "events"
 import { from as seamless, set, merge, setIn } from "seamless-immutable"
 
-const getNewSampleRefId = () => Math.random().toString(36).slice(-8)
+const getNewSampleRefId = () => "s" + Math.random().toString(36).slice(-8)
 
-class LocalStorageDatasetManager implements DatasetManager extends EventEmitter {
+class LocalStorageDatasetManager extends EventEmitter {
+  // implements DatasetManager {
   udtJSON: Object
   type = "local-storage"
 
   constructor() {
+    super()
     this.udtJSON = seamless({
       name: "New Dataset",
       interface: {},
@@ -21,14 +23,14 @@ class LocalStorageDatasetManager implements DatasetManager extends EventEmitter 
   // loaded
   // Protip: If you have a server you should establish a connection here if
   // you can
-  isReady() {
+  isReady = async () => {
     return true
   }
 
   // Gives a summary of the dataset, mostly just indicating if the samples
   // are annotated are not.
   // https://github.com/UniversalDataTool/udt-format/blob/master/proposals/summary.md
-  async getSummary() {
+  getSummary = async () => {
     // TODO cache the summary
     return {
       samples: this.udtJSON.samples.map((s) => ({
@@ -42,10 +44,10 @@ class LocalStorageDatasetManager implements DatasetManager extends EventEmitter 
   // samples). For example, getDatasetProperty('interface') returns the interface.
   // You can and should create a new object here if you have custom stuff you
   // want to store in the dataset for your server
-  async getDatasetProperty(key) {
+  getDatasetProperty = async (key) => {
     return this.udtJSON[key]
   }
-  async setDatasetProperty(key, newValue) {
+  setDatasetProperty = async (key, newValue) => {
     if (typeof newValue === "object") {
       this.udtJSON = set(
         this.udtJSON,
@@ -55,19 +57,20 @@ class LocalStorageDatasetManager implements DatasetManager extends EventEmitter 
     } else {
       this.udtJSON = set(this.udtJSON, key, newValue)
     }
+    this.emit("dataset-property-changed", { key })
   }
 
   // Two ways to get a sample. Using `sampleRefId` will return the sample with
   // an `_id` === sampleRefId
-  async getSampleByIndex(index: number): Promise<Object> {
+  getSampleByIndex = async (index: number) => {
     return this.udtJSON.samples[index]
   }
-  async getSample(sampleRefId: string): Promise<Object> {
+  getSample = async (sampleRefId: string) => {
     return this.udtJSON.samples.find((s) => s._id === sampleRefId)
   }
 
   // Set a new value for a sample
-  async setSample(sampleRefId: string, newSample: Object) {
+  setSample = async (sampleRefId: string, newSample: Object) => {
     const sampleIndex = this.udtJSON.samples.findIndex(
       (s) => s._id === sampleRefId
     )
@@ -76,10 +79,10 @@ class LocalStorageDatasetManager implements DatasetManager extends EventEmitter 
 
   // Called whenever application config is updated. Maybe you need the app config
   // to access some authentication variables
-  onUpdateAppConfig(appConfig) {}
+  onUpdateAppConfig = async (appConfig) => {}
 
   // Import an entire UDT JSON file
-  async loadDataset(udtObject: Object) {
+  loadDataset = async (udtObject) => {
     this.udtJSON = seamless({
       name: "Imported Dataset",
       interface: {},
@@ -92,7 +95,7 @@ class LocalStorageDatasetManager implements DatasetManager extends EventEmitter 
   }
 
   // Add samples to the dataset
-  async addSamples(newSamples: Array<Object>) {
+  addSamples = async (newSamples: Array<Object>) => {
     this.udtJSON = setIn(
       this.udtJSON,
       ["samples"],
@@ -103,15 +106,17 @@ class LocalStorageDatasetManager implements DatasetManager extends EventEmitter 
         }))
       )
     )
+    this.emit("summary-changed")
   }
 
   // Remove samples
-  async removeSamples(sampleIds: Array<string>) {
+  removeSamples = async (sampleIds: Array<string>) => {
     this.udtJSON = setIn(
       this.udtJSON,
       ["samples"],
       this.udtJSON.samples.filter((s) => !sampleIds.includes(s._id))
     )
+    this.emit("summary-changed")
   }
 
   // -------------------------------
@@ -127,7 +132,7 @@ class LocalStorageDatasetManager implements DatasetManager extends EventEmitter 
   // preloadSample(sampleRefId: string) {}
 
   // We assume we can write to the dataset if not specified
-  isWritable(): boolean {
+  isWritable = async () => {
     return true
   }
 }

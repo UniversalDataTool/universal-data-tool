@@ -5,7 +5,7 @@ export default (sampleIndexOrId) => {
   const [
     { currentSampleId, currentSampleIndex, sample },
     setCurrentSample,
-  ] = useState()
+  ] = useState({})
   const [dm] = useActiveDatasetManager()
 
   useEffect(() => {

@@ -32,6 +32,10 @@ import { useTranslation } from "react-i18next"
 import useAuth from "../../utils/auth-handlers/use-auth.js"
 import { useAppConfig } from "../AppConfig"
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary"
+import useInterface from "../../hooks/use-interface"
+import useSummary from "../../hooks/use-summary"
+import useAddSamples from "../../hooks/use-add-samples"
+import useDatasetProperty from "../../hooks/use-dataset-property"
 
 const ButtonBase = styled(MuiButton)({
   width: 240,
@@ -134,21 +138,18 @@ const Button = ({
   )
 }
 
-export default ({
-  // TODO remove file, onChangeFile
-  file,
-  onChangeFile,
-
-  dataset,
-  onChangeDataset,
-  isDesktop,
-  authConfig,
-  user,
-}) => {
+export default ({ isDesktop, authConfig, user }) => {
   const { t } = useTranslation()
   const [selectedDialog, changeDialog] = useState()
   const electron = useElectron()
   const { fromConfig } = useAppConfig()
+  const { iface } = useInterface()
+  const { usedToyDataset, updateUsedToyDataset } = useDatasetProperty(
+    "usedToyDataset"
+  )
+
+  const addSamples = useAddSamples()
+
   const onChangeDialog = async (dialog) => {
     switch (dialog) {
       case "upload-directory": {
@@ -161,14 +162,14 @@ export default ({
           return
         }
 
-        onChangeDataset(
-          setIn(
-            dataset,
-            ["samples"],
-            (dataset.samples || []).concat(localSamples)
-          ),
-          true
-        )
+        // onChangeDataset(
+        //   setIn(
+        //     dataset,
+        //     ["samples"],
+        //     (dataset.samples || []).concat(localSamples)
+        //   ),
+        //   true
+        // )
         return
       }
       default: {
@@ -180,20 +181,13 @@ export default ({
   const closeDialog = () => changeDialog(null)
 
   const onAddSamples = useEventCallback(async (samplesToAdd) => {
-    onChangeDataset(
-      setIn(dataset, ["samples"], (dataset.samples || []).concat(samplesToAdd))
-    )
+    await addSamples(samplesToAdd)
     closeDialog()
   })
 
   const onAddSamplesAsToyDataset = useEventCallback(async (samplesToAdd) => {
-    onChangeDataset(
-      setIn(
-        dataset,
-        ["samples"],
-        (dataset.samples || []).concat(samplesToAdd)
-      ).setIn(["usedToyDataset"], true)
-    )
+    await addSamples(samplesToAdd)
+    await updateUsedToyDataset(true)
     closeDialog()
   })
 
@@ -229,7 +223,7 @@ export default ({
             "text_classification",
             "text_entity_relations",
           ]}
-          type={dataset.interface.type}
+          type={iface?.type}
         >
           {t("import-text-snippets")}
         </Button>
@@ -266,7 +260,7 @@ export default ({
         >
           {t("upload-to-s3")}
         </Button>
-        {file && (
+        {/* {file && (
           <Button
             isDesktop={isDesktop}
             dialog="import-from-cognito-s3"
@@ -277,7 +271,7 @@ export default ({
           >
             {t("import-from-cognito-s3")}
           </Button>
-        )}
+        )} */}
         <Button
           isDesktop={isDesktop}
           dialog="google-drive-file-picker"
@@ -300,8 +294,8 @@ export default ({
         <ImportFromCOCODialog
           open={selectedDialog === "import-from-coco"}
           onClose={closeDialog}
-          dataset={dataset}
-          onChangeDataset={onChangeDataset}
+          // dataset={dataset}
+          // onChangeDataset={onChangeDataset}
         />
         <ImportTextSnippetsDialog
           open={selectedDialog === "import-text-snippets"}
@@ -315,28 +309,28 @@ export default ({
         />
         <ImportFromS3Dialog
           open={selectedDialog === "import-from-s3"}
-          onChangeFile={onChangeFile}
+          // onChangeFile={onChangeFile}
           onClose={closeDialog}
           user={user}
           onAddSamples={onAddSamples}
         />
         <UploadToS3Dialog
           open={selectedDialog === "upload-to-s3"}
-          onChangeFile={onChangeFile}
+          // onChangeFile={onChangeFile}
           onClose={closeDialog}
           user={user}
           onAddSamples={onAddSamples}
         />
-        {file && (
+        {/* {file && (
           <ImportFromCognitoS3Dialog
             file={file}
             open={selectedDialog === "import-from-cognito-s3"}
-            onChangeFile={onChangeFile}
+            // onChangeFile={onChangeFile}
             onClose={closeDialog}
             user={user}
             onAddSamples={onAddSamples}
           />
-        )}
+        )} */}
         <ImportFromGoogleDriveDialog
           open={selectedDialog === "google-drive-file-picker"}
           onClose={closeDialog}

@@ -16,6 +16,10 @@ import DataUsageIcon from "@material-ui/icons/DataUsage"
 import LabelHelpView, { useLabelHelp } from "../LabelHelpView"
 import ActiveLearningView from "../ActiveLearningView"
 import useIsLabelOnlyMode from "../../utils/use-is-label-only-mode"
+import useSummary from "../../hooks/use-summary"
+import useSample from "../../hooks/use-sample"
+import useRemoveSamples from "../../hooks/use-remove-samples"
+import useInterface from "../../hooks/use-interface"
 
 const OverviewContainer = styled("div")({
   padding: 16,
@@ -40,15 +44,17 @@ export default ({
   const { labelHelpEnabled, totalCost } = useLabelHelp()
   const labelOnlyMode = useIsLabelOnlyMode()
   const [annotationStartTime, setAnnotationStartTime] = useState(null)
+  const summary = useSummary()
+  const removeSamples = useRemoveSamples()
+  const [{ sample }, updateSample] = useSample()
 
   const isInOverview = sampleIndex === null
 
   let percentComplete = 0
-  if (dataset.samples && dataset.samples.length > 0) {
+  if (summary.samples && summary.samples.length > 0) {
     percentComplete =
-      dataset.samples
-        .map((s) => s.annotation !== undefined && s.annotation !== null)
-        .filter(Boolean).length / dataset.samples.length
+      summary.samples.filter((s) => s.hasAnnotation).length /
+      dataset.samples.length
   }
 
   useEffect(() => {
@@ -69,13 +75,7 @@ export default ({
         sampleIndex={sampleIndex}
         onRemoveSample={(sampleIndex) => {
           if (window.confirm("Are you sure you want to delete this sample?")) {
-            onChangeDataset(
-              setIn(
-                dataset,
-                ["samples"],
-                dataset.samples.filter((s, i) => i !== sampleIndex)
-              )
-            )
+            removeSamples([summary.samples[sampleIndex]._id])
           }
         }}
         onSaveTaskOutputItem={(relativeIndex, output) => {

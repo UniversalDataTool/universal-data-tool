@@ -6,7 +6,7 @@ import { styled } from "@material-ui/core/styles"
 import ImageIcon from "@material-ui/icons/Image"
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward"
 import * as colors from "@material-ui/core/colors"
-import useIsDesktop from "../../utils/use-is-desktop"
+import useIsDesktop from "../../hooks/use-is-desktop"
 import classnames from "classnames"
 import OndemandVideoIcon from "@material-ui/icons/OndemandVideo"
 import TransformVideoKeyframesDialog from "../TransformVideoKeyframesDialog"
@@ -21,6 +21,8 @@ import TransformSegmentsIntoImageSamplesDialog from "../TransformSegmentsIntoIma
 import TransformRemoveInvalidSamplesDialog from "../TransformRemoveInvalidSamplesDialog"
 import { usePlugins } from "../PluginProvider"
 import PluginDialog from "../PluginDialog"
+import useInterface from "../../hooks/use-interface"
+import useActiveDatasetManager from "../../hooks/use-active-dataset-manager"
 
 import PeopleAltIcon from "@material-ui/icons/PeopleAlt"
 import ComputerIcon from "@material-ui/icons/Computer"
@@ -31,96 +33,12 @@ import GridOnIcon from "@material-ui/icons/GridOn"
 
 import { useTranslation } from "react-i18next"
 
-const ButtonBase = styled(MuiButton)({
-  width: 240,
-  height: 140,
-  display: "inline-flex",
-  flexDirection: "column",
-  "&.disabled": {
-    backgroundColor: colors.grey[200],
-  },
-  margin: 8,
-  "& .icon": {
-    width: 36,
-    height: 36,
-    color: colors.grey[600],
-    "&.disabled": {
-      color: colors.grey[400],
-    },
-  },
-})
+export const SelectDialogContext = createContext()
 
-const DesktopOnlyText = styled("div")({
-  fontSize: 11,
-  fontWeight: "bold",
-  color: colors.grey[600],
-  "&.disabled": {
-    color: colors.grey[500],
-  },
-})
-
-const SelectDialogContext = createContext()
-
-const Button = ({
-  Icon1,
-  Icon2,
-  desktopOnly,
-  children,
-  dialog,
-  disabled,
-  onClick,
-}) => {
-  const isDesktop = useIsDesktop()
-  const posthog = usePosthog()
-  const { t } = useTranslation()
-
-  disabled =
-    disabled === undefined ? (desktopOnly ? !isDesktop : false) : disabled
-  return (
-    <SelectDialogContext.Consumer>
-      {({ onChangeDialog }) => {
-        return (
-          <ButtonBase
-            onClick={() => {
-              posthog.capture("transform_button_clicked", {
-                transform_button: dialog || children,
-              })
-              if (onClick) return onClick()
-              onChangeDialog(dialog)
-            }}
-            className={classnames({ disabled })}
-            variant="outlined"
-            disabled={disabled}
-          >
-            <div>
-              {Icon1 && Icon2 ? (
-                <>
-                  <Icon1 className={classnames("icon", { disabled })} />
-                  <ArrowForwardIcon
-                    className={classnames("icon", { disabled })}
-                  />
-                  <Icon2 className={classnames("icon", { disabled })} />
-                </>
-              ) : (
-                <Icon1 className={classnames("icon", { disabled })} />
-              )}
-              <div>{children}</div>
-              {desktopOnly && (
-                <DesktopOnlyText className={classnames({ disabled })}>
-                  {t("desktop-only").toUpperCase()}
-                </DesktopOnlyText>
-              )}
-            </div>
-          </ButtonBase>
-        )
-      }}
-    </SelectDialogContext.Consumer>
-  )
-}
-
-export default ({ dataset, onChangeDataset }) => {
+export default () => {
   const { t } = useTranslation()
   const [selectedDialog, changeDialog] = useState()
+  const { iface } = useInterface()
   const onChangeDialog = async (dialog) => {
     switch (dialog) {
       case "convert-keyframes-to-samples": {
@@ -134,11 +52,13 @@ export default ({ dataset, onChangeDataset }) => {
   const closeDialog = () => changeDialog(null)
   const [openPlugin, setOpenPlugin] = useState(null)
   const plugins = usePlugins()
+  const [datasetManager] = useActiveDatasetManager()
+
   return (
     <SelectDialogContext.Provider value={{ onChangeDialog }}>
       <div>
         <Button
-          disabled={dataset.interface.type !== "video_segmentation"}
+          disabled={iface?.type !== "video_segmentation"}
           dialog="convert-keyframes-to-samples"
           Icon1={OndemandVideoIcon}
           Icon2={CollectionsIcon}
@@ -200,7 +120,7 @@ export default ({ dataset, onChangeDataset }) => {
             open={Boolean(openPlugin)}
             onClose={() => setOpenPlugin(null)}
             {...openPlugin}
-            dataset={dataset}
+            datasetManager={datasetManager}
             onChangeDataset={(...args) => {
               onChangeDataset(...args)
               closeDialog()

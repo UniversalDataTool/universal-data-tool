@@ -1,7 +1,7 @@
 import { useMemo } from "react"
 import { useAppConfig } from "../../components/AppConfig"
 import xmlParser from "fast-xml-parser"
-import useIsDesktop from "../use-is-desktop"
+import useIsDesktop from "../../hooks/use-is-desktop"
 import { AwsClient } from "aws4fetch"
 
 function parseS3URI(s3Path) {

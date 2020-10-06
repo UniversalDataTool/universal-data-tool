@@ -48,8 +48,9 @@ interface DatasetManager {
   // -------------------------------
 
   on(
-    event:
+    event: 
       | "dataset-property-changed" // passes { key: "interface" | "training" | "etc" }
+      | "summary-changed" // passes { }
       | "sample-changed" // passes { sampleRefId }
       | "sampled-changed-by-someone-else" // passes { sampleRefId }
       | "error" // passes { message }

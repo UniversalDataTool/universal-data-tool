@@ -187,7 +187,7 @@ export default ({
               openSampleLabelEditor={(sampleIndex) => {
                 setSampleIndex(sampleIndex)
                 posthog.capture("open_sample", {
-                  interface_type: dataset.interface.type,
+                  interface_type: iface?.type,
                 })
                 changeMode("label")
               }}

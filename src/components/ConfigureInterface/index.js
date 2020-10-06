@@ -30,13 +30,11 @@ const NoOptions = styled("div")({
 })
 
 export const ConfigureInterface = ({
-  dataset,
+  interface: iface,
   onChange,
   onClickEditJSON,
   isNested = false,
 }) => {
-  const iface = dataset.interface
-
   return (
     <Container>
       {!iface.type && <NoOptions>Select a Type</NoOptions>}

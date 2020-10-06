@@ -7,6 +7,8 @@ import LoginDrawer from "../LoginDrawer"
 import HeaderToolbar from "../HeaderToolbar"
 import HeaderDrawer from "../HeaderDrawer"
 
+import useOpenTemplate from "../../hooks/use-open-template"
+
 export const HeaderContext = createContext({
   recentItems: [],
   changeRecentItems: () => null,
@@ -41,6 +43,7 @@ export default ({
   const [drawerOpen, changeDrawerOpen] = useState(false)
   const [loginDrawerOpen, changeLoginDrawerOpen] = useState(false)
   let headerContext = useContext(HeaderContext)
+  const openTemplate = useOpenTemplate()
   if (!headerContext.recentItems) headerContext.recentItems = []
 
   const isSmall = useMediaQuery("(max-width: 800px)")
@@ -69,7 +72,7 @@ export default ({
         recentItems={headerContext.recentItems}
         changeRecentItems={headerContext.changeRecentItems}
         onOpenFile={headerContext.onOpenFile}
-        onClickTemplate={headerContext.onClickTemplate}
+        onClickTemplate={openTemplate}
         onOpenRecentItem={headerContext.onOpenRecentItem}
       />
       <LoginDrawer

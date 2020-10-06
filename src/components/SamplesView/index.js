@@ -18,8 +18,13 @@ import Box from "@material-ui/core/Box"
 import ImportIcon from "@material-ui/icons/Publish"
 import ImportPage from "../ImportPage"
 import TransformPage from "../TransformPage"
-import useIsDesktop from "../../utils/use-is-desktop.js"
+import useIsDesktop from "../../hooks/use-is-desktop"
 import * as colors from "@material-ui/core/colors"
+import useSample from "../../hooks/use-sample"
+import useSummary from "../../hooks/use-summary"
+import useRemoveSamples from "../../hooks/use-remove-samples"
+import useAddSamples from "../../hooks/use-add-samples"
+import useInterface from "../../hooks/use-interface"
 
 const Container = styled("div")({
   padding: 16,
@@ -75,28 +80,23 @@ const ExpandedRow = ({ data }) => {
 }
 
 export const SamplesView = ({
-  file,
-  dataset,
   openSampleInputEditor,
   openSampleLabelEditor,
-  deleteSample,
-  onChangeDataset,
-  onChangeFile,
   authConfig,
   user,
 }) => {
   const isDesktop = useIsDesktop()
-  const [currentTab, changeTabState] = useState(
-    (dataset.samples || []).length === 0
-      ? "import"
-      : window.localStorage.lastSampleTab || "grid"
-  )
+  const { summary } = useSummary()
+  const [currentTab, changeTabState] = useState("grid")
+  const removeSamples = useRemoveSamples()
+  const addSamples = useAddSamples()
+
   const changeTab = (tab) => {
     changeTabState(tab)
     window.localStorage.lastSampleTab = tab
   }
   const columns = useMemo(() => {
-    if (!dataset.samples) return []
+    if (!summary || (summary?.samples || []).length === 0) return []
     const columns = [
       {
         name: "Index",
@@ -105,7 +105,7 @@ export const SamplesView = ({
       },
     ]
     const knownKeys = new Set()
-    for (const td of dataset.samples) {
+    for (const td of summary.samples) {
       for (const key in td) {
         if (!knownKeys.has(key)) {
           columns.push({
@@ -142,26 +142,32 @@ export const SamplesView = ({
       name: "Delete",
       button: true,
       cell: (row) => (
-        <IconButton raised primary onClick={() => deleteSample(row.index)}>
+        <IconButton raised primary onClick={() => removeSamples([row.index])}>
           <DeleteIcon style={{ width: 20, height: 20 }} />
         </IconButton>
       ),
     })
     return columns
   }, [
-    dataset.samples,
-    deleteSample,
-    openSampleInputEditor,
-    openSampleLabelEditor,
+    summary.samples,
+    // dataset.samples,
+    // deleteSample,
+    // openSampleInputEditor,
+    // openSampleLabelEditor,
   ])
 
-  const data = useMemo(() => {
-    if (!dataset.samples) return []
-    return dataset.samples.map((td, i) => ({
-      ...td,
-      index: i,
-    }))
-  }, [dataset.samples])
+  const data = useMemo(
+    () => {
+      // if (!dataset.samples) return []
+      // return dataset.samples.map((td, i) => ({
+      //   ...td,
+      //   index: i,
+      // }))
+    },
+    [
+      /*dataset.samples*/
+    ]
+  )
   return (
     <Container>
       <Box display="flex">
@@ -172,45 +178,27 @@ export const SamplesView = ({
           <Tab icon={<TableChartIcon />} label="Table" value="table" />
         </Tabs>
         <SampleCounter>
-          {(dataset.samples || []).length} Samples
+          {(summary.samples || []).length} Samples
           <br />
-          {(dataset.samples || []).filter((s) => s.annotation).length} Labels
+          {(summary.samples || []).filter((s) => s.hasAnnotation).length} Labels
         </SampleCounter>
       </Box>
       <Box paddingTop={2} />
       <Box flexGrow={1}>
         {currentTab === "import" && (
           <ImportPage
-            file={file}
             isDesktop={isDesktop}
-            onChangeFile={(file) => onChangeFile(file)}
             onImportPageShouldExit={() => changeTab("grid")}
-            onChangeDataset={(newOHA) => onChangeDataset(newOHA)}
-            dataset={dataset}
             authConfig={authConfig}
             user={user}
           />
         )}
-        {currentTab === "transform" && (
-          <TransformPage
-            isDesktop={isDesktop}
-            dataset={dataset}
-            onChangeDataset={(dataset, shouldViewChange) => {
-              onChangeDataset(dataset)
-              if (shouldViewChange) {
-                changeTab("grid")
-              }
-            }}
-          />
-        )}
+        {currentTab === "transform" && <TransformPage />}
         {currentTab === "grid" && (
           <SampleGrid
             tablePaginationPadding={6}
-            count={(dataset.samples || []).length}
-            samples={dataset.samples || []}
-            completed={(dataset.samples || []).map((s) =>
-              Boolean(s.annotation)
-            )}
+            count={(summary.samples || []).length}
+            samples={summary.samples || []}
             onClick={(sampleIndex) => {
               openSampleLabelEditor(sampleIndex)
             }}

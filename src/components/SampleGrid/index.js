@@ -86,13 +86,7 @@ const Sample = memo(
   }
 )
 
-export default ({
-  count,
-  completed = [],
-  samples,
-  onClick,
-  tablePaginationPadding = 0,
-}) => {
+export default ({ count, samples, onClick, tablePaginationPadding = 0 }) => {
   const [samplesPerPage, changeSamplesPerPage] = useLocalStorage(
     "samplesPerPage",
     100
@@ -151,8 +145,12 @@ export default ({
             onClick={onClickMemo}
             key={i}
             index={i}
-            completed={completed[i]}
-            brush={completed[i] ? samples[i].brush || "complete" : "incomplete"}
+            completed={samples[i].hasAnnotation}
+            brush={
+              samples[i].hasAnnotation
+                ? samples[i].brush || "complete"
+                : "incomplete"
+            }
             selected={selectRange && i >= selectRange[0] && i < selectRange[1]}
             onMouseDown={startSelectRange}
             onMouseEnter={moveSelectRange}

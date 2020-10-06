@@ -30,8 +30,9 @@ export default (datasetPropertyKey: string) => {
   if (!dm || !datasetPropertyKey)
     return {
       [`${datasetPropertyKey}Loading`]: true,
-      [updateFunctionKeyName]: () =>
-        throw new Error(`${datasetPropertyKey} isn't loaded`),
+      [updateFunctionKeyName]: () => {
+        throw new Error(`${datasetPropertyKey} isn't loaded`)
+      },
     }
 
   return {
