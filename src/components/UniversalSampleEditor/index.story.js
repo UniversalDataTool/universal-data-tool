@@ -5,11 +5,11 @@ import React from "react"
 import { storiesOf } from "@storybook/react"
 import { action } from "@storybook/addon-actions"
 
-import UniversalSampleViewer from "./"
+import UniversalSampleEditor from "./"
 
-storiesOf("UniversalSampleViewer", module)
+storiesOf("UniversalSampleEditor", module)
   .add("NLP", () => (
-    <UniversalSampleViewer
+    <UniversalSampleEditor
       onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
       hideHeader
       interface={{
@@ -42,7 +42,7 @@ storiesOf("UniversalSampleViewer", module)
     />
   ))
   .add("Data Entry", () => (
-    <UniversalSampleViewer
+    <UniversalSampleEditor
       onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
       hideHeader
       interface={{
@@ -92,7 +92,7 @@ storiesOf("UniversalSampleViewer", module)
     />
   ))
   .add("Audio Transcription", () => (
-    <UniversalSampleViewer
+    <UniversalSampleEditor
       onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
       hideHeader
       interface={{
@@ -106,7 +106,7 @@ storiesOf("UniversalSampleViewer", module)
     />
   ))
   .add("Composite", () => (
-    <UniversalSampleViewer
+    <UniversalSampleEditor
       onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
       hideHeader
       interface={{
@@ -164,7 +164,7 @@ storiesOf("UniversalSampleViewer", module)
     />
   ))
   .add("Composite No Output", () => (
-    <UniversalSampleViewer
+    <UniversalSampleEditor
       onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
       hideHeader
       interface={{
@@ -219,4 +219,4 @@ storiesOf("UniversalSampleViewer", module)
       }}
     />
   ))
-  .add("Undefined Interface Type", () => <UniversalSampleViewer />)
+  .add("Undefined Interface Type", () => <UniversalSampleEditor />)

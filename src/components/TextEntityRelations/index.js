@@ -1,28 +1,26 @@
 import React from "react"
 import NLPAnnotator from "react-nlp-annotate"
-import useClobberedState from "../../hooks/use-clobbered-state"
 import Box from "@material-ui/core/Box"
 import {
   simpleSequenceAndRelationsToEntitySequence,
   entitySequenceToSimpleSeq,
 } from "../TextEntityRecognition/convert-react-nlp-annotate-types"
 
-export const TextEntityRelations = (props) => {
-  const [currentSampleIndex, setCurrentSampleIndex] = useClobberedState(
-    props.sampleIndex,
-    0
-  )
-  const initialSequence = props.samples[currentSampleIndex].annotation
-    ? entitySequenceToSimpleSeq(
-        props.samples[currentSampleIndex].document,
-        props.samples[currentSampleIndex].annotation.entities
-      )
+export const TextEntityRelations = ({
+  sample,
+  interface: iface,
+  onExit,
+  onModifySample,
+  disableHotkeys,
+  sampleIndex,
+}) => {
+  const initialSequence = sample?.annotation
+    ? entitySequenceToSimpleSeq(sample?.document, sample?.annotation?.entities)
     : undefined
 
-  const initialRelations =
-    props.samples[currentSampleIndex].annotation?.relations || []
+  const initialRelations = sample?.annotation?.relations || []
 
-  if (!props.interface.relationLabels) {
+  if (!iface?.relationLabels) {
     throw new Error(
       "Relation labels not defined. Try adding some labels in setup."
     )
@@ -30,43 +28,35 @@ export const TextEntityRelations = (props) => {
 
   return (
     <NLPAnnotator
-      key={currentSampleIndex}
-      titleContent={<Box paddingLeft={4}>Sample {currentSampleIndex}</Box>}
+      key={sampleIndex}
+      titleContent={<Box paddingLeft={4}>Sample {sampleIndex}</Box>}
       type="label-relationships"
-      document={props.samples[currentSampleIndex].document}
-      entityLabels={props.interface.entityLabels}
-      relationshipLabels={props.interface.relationLabels}
+      document={sample?.document}
+      entityLabels={iface?.entityLabels}
+      relationshipLabels={iface?.relationLabels}
       initialSequence={initialSequence}
       initialRelationships={initialRelations}
-      hotkeysEnabled={!props.disableHotkeys}
+      hotkeysEnabled={!disableHotkeys}
       onPrev={(result) => {
-        props.onSaveTaskOutputItem(
-          currentSampleIndex,
-          simpleSequenceAndRelationsToEntitySequence(result)
-        )
-        if (setCurrentSampleIndex) {
-          setCurrentSampleIndex(currentSampleIndex - 1)
-        } else {
-          props.onExit("go-to-previous")
-        }
+        onModifySample({
+          ...sample,
+          annotation: simpleSequenceAndRelationsToEntitySequence(result),
+        })
+        onExit("go-to-previous")
       }}
       onNext={(result) => {
-        props.onSaveTaskOutputItem(
-          currentSampleIndex,
-          simpleSequenceAndRelationsToEntitySequence(result)
-        )
-        if (setCurrentSampleIndex) {
-          setCurrentSampleIndex(currentSampleIndex + 1)
-        } else {
-          props.onExit("go-to-next")
-        }
+        onModifySample({
+          ...sample,
+          annotation: simpleSequenceAndRelationsToEntitySequence(result),
+        })
+        onExit("go-to-next")
       }}
       onFinish={(result) => {
-        props.onSaveTaskOutputItem(
-          currentSampleIndex,
-          simpleSequenceAndRelationsToEntitySequence(result)
-        )
-        props.onExit()
+        onModifySample({
+          ...sample,
+          annotation: simpleSequenceAndRelationsToEntitySequence(result),
+        })
+        onExit()
       }}
     />
   )

@@ -24,50 +24,36 @@ const Container = styled("div")({
 const [emptyObj, emptyArr] = [{}, []]
 
 export default ({
-  sampleIndex: globalSampleIndex,
-  interface: iface,
   sampleIndex,
-  samples = emptyArr,
+  interface: iface,
+  sample,
   containerProps = emptyObj,
-  // TODO DEPRECATE onSaveTaskOutputItem
-  onSaveTaskOutputItem,
   onModifySample,
 }) => {
-  // TODO remove legacy "availableLabels" support
-  if (iface.availableLabels && !iface.labels) {
-    iface.labels = iface.availableLabels
-  }
-
-  const [selectedIndex, setSelectedIndex] = useClobberedState(
-    globalSampleIndex,
-    0
-  )
   const [showTags, changeShowTags] = useState(true)
   const [selectedTool, changeSelectedTool] = useState("select")
 
   const { regionTypesAllowed = ["bounding-box"] } = iface
 
-  const isClassification = !Boolean(iface.multipleRegionLabels)
-  const isPixel = iface.type === "image_pixel_segmentation"
+  const isClassification = !Boolean(iface?.multipleRegionLabels)
+  const isPixel = iface?.type === "image_pixel_segmentation"
 
   const saveCurrentIndexAnnotation = useEventCallback((output) => {
     const img = output.images[0]
     const annotation = multipleRegions
       ? (img.regions || []).map(convertFromRIARegionFmt)
       : convertToRIAImageFmt((img.regions || [])[0])
-    if (onModifySample) {
-      const { x, y, w: width, h: height } = output.allowedArea || {}
-      onModifySample(selectedIndex, {
-        annotation,
-        ...(output.allowedArea
-          ? {
-              allowedArea: { x, y, width, height },
-            }
-          : {}),
-      })
-    } else {
-      onSaveTaskOutputItem(selectedIndex, annotation)
-    }
+    const { x, y, w: width, h: height } = output.allowedArea || {}
+
+    onModifySample({
+      ...sample,
+      annotation,
+      ...(output.allowedArea
+        ? {
+            allowedArea: { x, y, width, height },
+          }
+        : {}),
+    })
   })
 
   const labelProps = useMemo(
@@ -101,42 +87,23 @@ export default ({
     changeSelectedTool(output.selectedTool)
     if (containerProps.onExit) containerProps.onExit(nextAction)
   })
-  const onNextImage = useEventCallback((output) => {
-    if (selectedIndex + 1 >= samples.length) {
-      onExit(output, "go-to-next")
-    } else {
-      saveCurrentIndexAnnotation(output)
-      if (setSelectedIndex) {
-        setSelectedIndex(selectedIndex + 1)
-      } else {
-        onExit(output, "go-to-next")
-      }
-    }
-  })
-  const onPrevImage = useEventCallback((output) => {
-    if (selectedIndex - 1 < 0) {
-      onExit(output, "go-to-previous")
-    } else {
-      saveCurrentIndexAnnotation(output)
-      if (setSelectedIndex) {
-        setSelectedIndex(selectedIndex - 1)
-      } else {
-        onExit(output, "go-to-previous")
-      }
-    }
-  })
+
+  const onNextImage = useEventCallback((output) => onExit(output, "go-to-next"))
+  const onPrevImage = useEventCallback((output) =>
+    onExit(output, "go-to-previous")
+  )
 
   const singleImageList = useMemo(() => {
     return [
       convertToRIAImageFmt({
-        title: containerProps.datasetName || `Sample ${selectedIndex}`,
-        taskDatum: samples[selectedIndex],
-        output: samples[selectedIndex].annotation,
-        selectedIndex,
+        title: containerProps.title || `Sample ${sampleIndex}`,
+        taskDatum: sample,
+        output: sample.annotation,
+        selectedIndex: sampleIndex,
       }),
     ]
     // eslint-disable-next-line
-  }, [selectedIndex, containerProps.datasetName])
+  }, [sampleIndex, containerProps.title])
 
   const enabledTools =
     iface.type === "image_pixel_segmentation"
@@ -152,13 +119,12 @@ export default ({
         )
 
   const allowedArea = useMemo(() => {
-    if (!iface.allowedArea && !samples[selectedIndex].allowedArea)
-      return undefined
+    if (!iface.allowedArea && !sample?.allowedArea) return undefined
     const { x, y, width: w, height: h } =
-      samples[selectedIndex].allowedArea || iface.allowedArea
+      sample?.allowedArea || iface.allowedArea
     return { x, y, w, h }
     // eslint-disable-next-line
-  }, [iface.allowedArea, samples[selectedIndex].allowedArea])
+  }, [iface.allowedArea, sample?.allowedArea])
   return (
     <Container
       style={{
@@ -168,7 +134,7 @@ export default ({
       }}
     >
       <Annotator
-        key={globalSampleIndex}
+        key={sampleIndex}
         fullImageSegmentationMode={isPixel}
         selectedImage={0}
         taskDescription={iface.description}

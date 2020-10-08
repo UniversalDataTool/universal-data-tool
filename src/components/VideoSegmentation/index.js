@@ -20,13 +20,13 @@ const [emptyObj, emptyArr] = [{}, []]
 export default ({
   interface: iface,
   sampleIndex,
-  samples = emptyArr,
+  sample,
   containerProps = emptyObj,
-  onSaveTaskOutputItem,
+  onModifySample,
 }) => {
   const { regionTypesAllowed = ["bounding-box"] } = iface
 
-  const isClassification = !Boolean(iface.multipleRegionLabels)
+  const isClassification = !Boolean(iface?.multipleRegionLabels)
 
   const labelProps = useMemo(
     () =>
@@ -56,13 +56,13 @@ export default ({
 
   const onExit = useEventCallback((output) => {
     const annotation = { keyframes: getUDTKeyFrames(output) }
-    onSaveTaskOutputItem(sampleIndex, annotation)
+    onModifySample({ ...sample, annotation })
     if (containerProps.onExit) containerProps.onExit()
   })
 
   const onNext = useEventCallback((output) => {
     const annotation = { keyframes: getUDTKeyFrames(output) }
-    onSaveTaskOutputItem(sampleIndex, annotation)
+    onModifySample({ ...sample, annotation })
     if (containerProps.onExit) {
       containerProps.onExit("go-to-next")
     }
@@ -70,7 +70,7 @@ export default ({
 
   const onPrev = useEventCallback((output) => {
     const annotation = { keyframes: getUDTKeyFrames(output) }
-    onSaveTaskOutputItem(sampleIndex, annotation)
+    onModifySample({ ...sample, annotation })
     if (containerProps.onExit) {
       containerProps.onExit("go-to-previous")
     }
@@ -84,11 +84,10 @@ export default ({
     [regionTypesAllowed]
   )
 
-  if (samples.length === 0) throw new Error("No sample data provided selected")
-  if (!samples[sampleIndex].videoUrl)
-    throw new Error("Sample must have videoUrl")
+  if (!sample) throw new Error("No sample data provided selected")
+  if (!sample.videoUrl) throw new Error("Sample must have videoUrl")
 
-  const annotation = samples[sampleIndex].annotation || {}
+  const annotation = sample.annotation || {}
 
   return (
     <div
@@ -106,9 +105,9 @@ export default ({
         keyframes={convertToRIAKeyframes(annotation?.keyframes || {})}
         onNextImage={onNext}
         onPrevImage={onPrev}
-        videoName={samples[sampleIndex].customId || ""}
+        videoName={sample.customId || ""}
         videoTime={0}
-        videoSrc={samples[sampleIndex].videoUrl}
+        videoSrc={sample.videoUrl}
         onExit={onExit}
       />
     </div>

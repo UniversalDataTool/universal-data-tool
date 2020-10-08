@@ -10,30 +10,24 @@ import ImageClassification from "./"
 storiesOf("ImageClassification", module)
   .add("Basic", () => (
     <ImageClassification
-      onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
+      onModifySample={action("onModifySample")}
       {...{
         interface: {
           type: "image_segmentation",
           description: "# Title\n\nLowercase",
           labels: ["valid", "invalid"],
         },
-        samples: [
-          {
-            imageUrl:
-              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
-            annotation: "valid",
-          },
-          {
-            imageUrl:
-              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg",
-          },
-        ],
+        sample: {
+          imageUrl:
+            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
+          annotation: "valid",
+        },
       }}
     />
   ))
   .add("Allow Multiple", () => (
     <ImageClassification
-      onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
+      onModifySample={action("onModifySample")}
       {...{
         interface: {
           type: "image_segmentation",
@@ -41,17 +35,11 @@ storiesOf("ImageClassification", module)
           labels: ["valid", "invalid"],
           allowMultiple: true,
         },
-        samples: [
-          {
-            imageUrl:
-              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
-            annotation: "valid",
-          },
-          {
-            imageUrl:
-              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg",
-          },
-        ],
+        sample: {
+          imageUrl:
+            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
+          annotation: "valid",
+        },
       }}
     />
   ))

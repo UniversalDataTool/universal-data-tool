@@ -10,7 +10,9 @@ import DataEntry from "./"
 storiesOf("DataEntry", module)
   .add("Basic", () => (
     <DataEntry
-      onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
+      sampleIndex={0}
+      containerProps={{ totalSamples: 1 }}
+      onModifySample={action("onModifySample")}
       interface={{
         type: "data_entry",
         description: "Some task description",
@@ -48,25 +50,17 @@ storiesOf("DataEntry", module)
           ],
         },
       }}
-      samples={[
-        {
-          imageUrl:
-            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
-        },
-        {
-          imageUrl:
-            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg",
-        },
-        {
-          imageUrl:
-            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image3.jpg",
-        },
-      ]}
+      sample={{
+        imageUrl:
+          "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
+      }}
     />
   ))
   .add("Prefilled Values", () => (
     <DataEntry
-      onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
+      sampleIndex={0}
+      containerProps={{ totalSamples: 1 }}
+      onModifySample={action("onModifySample")}
       interface={{
         type: "data_entry",
         description: "Some task description",
@@ -104,26 +98,18 @@ storiesOf("DataEntry", module)
           ],
         },
       }}
-      samples={[
-        {
-          imageUrl:
-            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
-          annotation: { group_letter: "A", feedback: "some feedback here" },
-        },
-        {
-          imageUrl:
-            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg",
-        },
-        {
-          imageUrl:
-            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image3.jpg",
-        },
-      ]}
+      sample={{
+        imageUrl:
+          "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
+        annotation: { group_letter: "A", feedback: "some feedback here" },
+      }}
     />
   ))
   .add("PDF Url", () => (
     <DataEntry
-      onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
+      onModifySample={action("onModifySample")}
+      sampleIndex={0}
+      containerProps={{ totalSamples: 1 }}
       interface={{
         type: "data_entry",
         description: "Some task description",
@@ -142,11 +128,9 @@ storiesOf("DataEntry", module)
           ],
         },
       }}
-      samples={[
-        {
-          pdfUrl: "https://arxiv.org/pdf/1608.04481v1.pdf",
-          annotation: { group_letter: "A", feedback: "some feedback here" },
-        },
-      ]}
+      sample={{
+        pdfUrl: "https://arxiv.org/pdf/1608.04481v1.pdf",
+        annotation: { group_letter: "A", feedback: "some feedback here" },
+      }}
     />
   ))

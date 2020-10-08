@@ -22,24 +22,14 @@ export default ({
   sampleIndex: globalSampleIndex,
   interface: iface,
   sampleIndex,
-  samples = emptyArr,
+  sample,
   containerProps = emptyObj,
-  onSaveTaskOutputItem,
   onModifySample,
 }) => {
-  const [selectedIndex, setSelectedIndex] = useClobberedState(
-    globalSampleIndex,
-    0
-  )
-
   const saveCurrentIndexAnnotation = useEventCallback((output) => {
     const img = output.images[0]
     const annotation = (img.regions || []).map(convertFromRIARegionFmt)
-    if (onModifySample) {
-      onModifySample(selectedIndex, { annotation })
-    } else {
-      onSaveTaskOutputItem(selectedIndex, annotation)
-    }
+    onModifySample({ ...sample, annotation })
   })
 
   const onExit = useEventCallback((output, nextAction) => {
@@ -47,41 +37,25 @@ export default ({
     if (containerProps.onExit) containerProps.onExit(nextAction)
   })
   const onNextImage = useEventCallback((output) => {
-    if (selectedIndex + 1 >= samples.length) {
-      onExit(output, "go-to-next")
-    } else {
-      saveCurrentIndexAnnotation(output)
-      if (setSelectedIndex) {
-        setSelectedIndex(selectedIndex + 1)
-      } else {
-        onExit(output, "go-to-next")
-      }
-    }
+    saveCurrentIndexAnnotation(output)
+    onExit(output, "go-to-next")
   })
   const onPrevImage = useEventCallback((output) => {
-    if (selectedIndex - 1 < 0) {
-      onExit(output, "go-to-previous")
-    } else {
-      saveCurrentIndexAnnotation(output)
-      if (setSelectedIndex) {
-        setSelectedIndex(selectedIndex - 1)
-      } else {
-        onExit(output, "go-to-previous")
-      }
-    }
+    saveCurrentIndexAnnotation(output)
+    onExit(output, "go-to-previous")
   })
 
   const singleImageList = useMemo(() => {
+    if (!sample) return []
     return [
       convertToRIAImageFmt({
-        title: containerProps.datasetName || `Sample ${selectedIndex}`,
-        taskDatum: samples[selectedIndex],
-        output: samples[selectedIndex].annotation,
-        selectedIndex,
+        title: containerProps.title || `Sample ${sampleIndex}`,
+        taskDatum: sample,
+        output: sample?.annotation,
       }),
     ]
     // eslint-disable-next-line
-  }, [selectedIndex, containerProps.datasetName])
+  }, [sampleIndex, containerProps.title])
 
   return (
     <Container
@@ -91,17 +65,21 @@ export default ({
         width: "100%",
       }}
     >
-      <Annotator
-        key={globalSampleIndex}
-        keypointDefinitions={iface.keypointDefinitions}
-        selectedImage={0}
-        taskDescription={iface.description}
-        onNextImage={onNextImage}
-        onPrevImage={onPrevImage}
-        enabledTools={posingTools}
-        images={singleImageList}
-        onExit={onExit}
-      />
+      {!sample ? (
+        "loading..."
+      ) : (
+        <Annotator
+          key={sampleIndex}
+          keypointDefinitions={iface.keypointDefinitions}
+          selectedImage={0}
+          taskDescription={iface.description}
+          onNextImage={onNextImage}
+          onPrevImage={onPrevImage}
+          enabledTools={posingTools}
+          images={singleImageList}
+          onExit={onExit}
+        />
+      )}
     </Container>
   )
 }
