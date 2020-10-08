@@ -13,15 +13,14 @@ import LiveTvIcon from "@material-ui/icons/LiveTv"
 import DeveloperBoardIcon from "@material-ui/icons/DeveloperBoard"
 import CodeIcon from "@material-ui/icons/Code"
 import BigInterfaceSelect from "../BigInterfaceSelect"
-import { setIn } from "seamless-immutable"
 import UniversalDataViewer from "../UniversalDataViewer"
-import RawJSONEditor from "../RawJSONEditor"
+import DatasetJSONEditor from "../DatasetJSONEditor"
 import useInterface from "../../hooks/use-interface"
 import useSample from "../../hooks/use-sample"
 
 const noop = () => {}
 
-export default ({ onChange, onClearLabelData }) => {
+export default ({ onClearLabelData }) => {
   const { iface, updateInterface } = useInterface()
   const { sample } = useSample(0)
 
@@ -44,6 +43,7 @@ export default ({ onChange, onClearLabelData }) => {
       </Box>
       {currentTab === "datatype" && (
         <BigInterfaceSelect
+          key="interfaceSelect"
           currentInterfaceType={iface?.type}
           onChange={async (newInterface) => {
             await updateInterface(newInterface)
@@ -53,6 +53,7 @@ export default ({ onChange, onClearLabelData }) => {
       )}
       {currentTab === "configure" && (
         <ConfigureInterface
+          key="configureInterface"
           interface={iface}
           onChange={updateInterface}
           isNotNested
@@ -60,6 +61,7 @@ export default ({ onChange, onClearLabelData }) => {
       )}
       {currentTab === "preview" && (
         <UniversalDataViewer
+          key="preview"
           height={600}
           onExit={noop}
           onSaveTaskOutputItem={noop}
@@ -72,16 +74,12 @@ export default ({ onChange, onClearLabelData }) => {
         />
       )}
       {currentTab === "advanced" && (
-        <AdvancedOptionsView onClearLabelData={onClearLabelData} />
-      )}
-      {/* {currentTab === "json" && (
-        <RawJSONEditor
-          content={dataset}
-          onSave={(newDataset) => {
-            onChange(newDataset)
-          }}
+        <AdvancedOptionsView
+          key="advancedOptionsView"
+          onClearLabelData={onClearLabelData}
         />
-      )} */}
+      )}
+      {currentTab === "json" && <DatasetJSONEditor />}
     </div>
   )
 }

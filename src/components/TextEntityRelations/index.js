@@ -1,6 +1,6 @@
 import React from "react"
 import NLPAnnotator from "react-nlp-annotate"
-import useClobberedState from "../../utils/use-clobbered-state"
+import useClobberedState from "../../hooks/use-clobbered-state"
 import Box from "@material-ui/core/Box"
 import {
   simpleSequenceAndRelationsToEntitySequence,
@@ -8,7 +8,6 @@ import {
 } from "../TextEntityRecognition/convert-react-nlp-annotate-types"
 
 export const TextEntityRelations = (props) => {
-  console.log(props)
   const [currentSampleIndex, setCurrentSampleIndex] = useClobberedState(
     props.sampleIndex,
     0
@@ -28,8 +27,6 @@ export const TextEntityRelations = (props) => {
       "Relation labels not defined. Try adding some labels in setup."
     )
   }
-
-  console.log({ initialSequence, initialRelations })
 
   return (
     <NLPAnnotator

@@ -86,7 +86,7 @@ const Sample = memo(
   }
 )
 
-export default ({ count, samples, onClick, tablePaginationPadding = 0 }) => {
+export default ({ samples, onClick, tablePaginationPadding = 0 }) => {
   const [samplesPerPage, changeSamplesPerPage] = useLocalStorage(
     "samplesPerPage",
     100
@@ -94,10 +94,10 @@ export default ({ count, samples, onClick, tablePaginationPadding = 0 }) => {
   const [sampleOffset, changeSampleOffset] = useLocalStorage("sampleOffset", 0)
 
   useEffect(() => {
-    if (sampleOffset > count) {
+    if (sampleOffset > samples.length) {
       changeSampleOffset(0)
     }
-  }, [changeSampleOffset, sampleOffset, count])
+  }, [changeSampleOffset, sampleOffset, samples.length])
 
   const [selectRange, changeSelectRange] = useReducer((state, newValue) => {
     if (newValue === null) return null
@@ -131,7 +131,7 @@ export default ({ count, samples, onClick, tablePaginationPadding = 0 }) => {
       onMouseUp={checkAndNullifySelectRange}
       onMouseEnter={checkAndNullifySelectRange}
     >
-      {count === 0 && (
+      {samples.length === 0 && (
         <EmptyState>
           No samples, try using "Import Toy Dataset" in Samples > Import
         </EmptyState>
@@ -139,7 +139,7 @@ export default ({ count, samples, onClick, tablePaginationPadding = 0 }) => {
       <Box flexGrow={1}>
         {range(
           sampleOffset,
-          Math.min(count, sampleOffset + samplesPerPage)
+          Math.min(samples.length, sampleOffset + samplesPerPage)
         ).map((i) => (
           <Sample
             onClick={onClickMemo}
@@ -157,7 +157,7 @@ export default ({ count, samples, onClick, tablePaginationPadding = 0 }) => {
             onMouseUp={endSelectRange}
           />
         ))}
-        {sampleOffset + samplesPerPage < count && (
+        {sampleOffset + samplesPerPage < samples.length && (
           <>
             {range(3).map((i) => (
               <Sample
@@ -184,7 +184,7 @@ export default ({ count, samples, onClick, tablePaginationPadding = 0 }) => {
         <TablePagination
           rowsPerPageOptions={[100, 250, 500, 1000, 2000, 10000]}
           component="div"
-          count={count}
+          count={samples.length}
           rowsPerPage={samplesPerPage}
           page={Math.floor(sampleOffset / samplesPerPage)}
           labelRowsPerPage="Samples per Page:"

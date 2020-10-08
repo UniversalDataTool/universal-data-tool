@@ -175,7 +175,6 @@ export const SamplesView = ({
           <Tab icon={<ImportIcon />} label="Import" value="import" />
           <Tab icon={<SlideshowIcon />} label="Transform" value="transform" />
           <Tab icon={<AppsIcon />} label="Grid" value="grid" />
-          <Tab icon={<TableChartIcon />} label="Table" value="table" />
         </Tabs>
         <SampleCounter>
           {(summary.samples || []).length} Samples
@@ -197,24 +196,10 @@ export const SamplesView = ({
         {currentTab === "grid" && (
           <SampleGrid
             tablePaginationPadding={6}
-            count={(summary.samples || []).length}
             samples={summary.samples || []}
             onClick={(sampleIndex) => {
               openSampleLabelEditor(sampleIndex)
             }}
-          />
-        )}
-        {currentTab === "table" && (
-          <DataTable
-            title="Samples"
-            expandableRowsComponent={<ExpandedRow />}
-            expandableRows
-            dense
-            columns={columns}
-            data={data}
-            pagination
-            paginationPerPage={10}
-            paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
           />
         )}
       </Box>

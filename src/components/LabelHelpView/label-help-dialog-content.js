@@ -18,7 +18,7 @@ import * as colors from "@material-ui/core/colors"
 import { useActiveDataset } from "../FileContext"
 import CircularProgress from "@material-ui/core/CircularProgress"
 import { setIn } from "seamless-immutable"
-import usePosthog from "../../utils/use-posthog"
+import usePosthog from "../../hooks/use-posthog"
 
 const Container = styled("div")({
   fontVariantNumeric: "tabular-nums",

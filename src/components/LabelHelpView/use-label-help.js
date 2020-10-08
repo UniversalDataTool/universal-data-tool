@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react"
 
-import useIsLabelOnlyMode from "../../utils/use-is-label-only-mode"
+import useIsLabelOnlyMode from "../../hooks/use-is-label-only-mode"
 import { useActiveDataset } from "../FileContext"
 import { useAppConfig } from "../AppConfig"
 import { LabelHelpContext } from "./LabelHelpProvider.js"

@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react"
 import { styled } from "@material-ui/core/styles"
 import SimpleDialog from "../SimpleDialog"
-import useElectron from "../../utils/use-electron"
+import useElectron from "../../hooks/use-electron"
 import Select from "react-select"
 import downloadYoutubeVideo from "./download-youtube-video"
 import Progress from "./progress"

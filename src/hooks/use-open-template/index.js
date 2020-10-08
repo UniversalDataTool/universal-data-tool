@@ -7,7 +7,7 @@ export default () => {
   const [, setActiveDatasetManager] = useActiveDatasetManager()
   return useEventCallback((template) => {
     const dm = new LocalStorageDatasetManager()
-    dm.loadDataset(template.dataset)
+    dm.setDataset(template.dataset)
     setActiveDatasetManager(dm)
   })
 }

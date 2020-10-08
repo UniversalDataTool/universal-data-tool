@@ -13,7 +13,7 @@ import InputAdornment from "@material-ui/core/InputAdornment"
 import AddBoxTwoTone from "@material-ui/icons/AddBoxTwoTone"
 import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import CircularProgress from "@material-ui/core/CircularProgress"
-import usePosthog from "../../utils/use-posthog"
+import usePosthog from "../../hooks/use-posthog"
 
 import { useTranslation } from "react-i18next"
 

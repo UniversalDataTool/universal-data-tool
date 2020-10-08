@@ -9,19 +9,22 @@ export default (sampleIndexOrId) => {
   const [dm] = useActiveDatasetManager()
 
   useEffect(() => {
+    if (sampleIndexOrId === undefined || sampleIndexOrId === null) {
+      setCurrentSample({ currentSampleId: null })
+      return
+    }
     async function loadSample() {
-      if (!sampleIndexOrId) {
-        setCurrentSample({ currentSampleId: null })
-        return
-      }
-
       const summary = await dm.getSummary()
       let sampleIndex, sampleId
 
       if (typeof sampleIndexOrId === "string") {
         sampleIndex = summary.samples.findIndex((s) => s.id === sampleIndexOrId)
       } else if (typeof sampleIndexOrId === "number") {
-        sampleId = summary.samples[sampleId]._id
+        if (sampleIndexOrId >= summary.samples.length) {
+          setCurrentSample({ currentSampleId: null })
+          return
+        }
+        sampleId = summary.samples[sampleIndexOrId]._id
       }
 
       if (!sampleId) {
@@ -37,9 +40,7 @@ export default (sampleIndexOrId) => {
         sample,
       })
     }
-    if (sampleIndexOrId) {
-      loadSample()
-    }
+    loadSample()
   }, [sampleIndexOrId, dm])
 
   if (!dm)

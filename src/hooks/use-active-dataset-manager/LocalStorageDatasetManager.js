@@ -82,17 +82,26 @@ class LocalStorageDatasetManager extends EventEmitter {
   onUpdateAppConfig = async (appConfig) => {}
 
   // Import an entire UDT JSON file
-  loadDataset = async (udtObject) => {
+  setDataset = async (newUDT) => {
     this.udtJSON = seamless({
-      name: "Imported Dataset",
+      name: "New Dataset",
       interface: {},
-      ...udtObject,
-      samples: (udtObject.samples || []).map((s) => ({
+      ...newUDT,
+      samples: (newUDT.samples || []).map((s) => ({
         _id: getNewSampleRefId(),
         ...s,
       })),
     })
+    this.emit("dataset-reloaded")
+    if (newUDT.samples !== this.udtJSON.samples) this.emit("summary-changed")
+    if (newUDT.name !== this.udtJSON.name)
+      this.emit("dataset-property-changed", { key: "name" })
+    if (newUDT.interface !== this.udtJSON.interface)
+      this.emit("dataset-property-changed", { key: "interface" })
   }
+
+  // Get entire JSON dataset
+  getDataset = async () => this.udtJSON
 
   // Add samples to the dataset
   addSamples = async (newSamples: Array<Object>) => {

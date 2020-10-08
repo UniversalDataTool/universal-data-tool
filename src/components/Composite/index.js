@@ -9,7 +9,7 @@ import InterfaceIcon from "../InterfaceIcon"
 import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight"
 import Checkbox from "@material-ui/core/Checkbox"
 import Box from "@material-ui/core/Box"
-import useClobberedState from "../../utils/use-clobbered-state"
+import useClobberedState from "../../hooks/use-clobbered-state"
 
 import { useTranslation } from "react-i18next"
 

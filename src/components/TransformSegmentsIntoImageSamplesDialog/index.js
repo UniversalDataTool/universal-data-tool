@@ -4,6 +4,7 @@ import React, { useState } from "react"
 import SimpleDialog from "../SimpleDialog"
 import { styled } from "@material-ui/core/styles"
 import { setIn } from "seamless-immutable"
+import useDataset from "../../hooks/use-dataset"
 
 const ErrorBox = styled("pre")({
   color: "red",
@@ -11,8 +12,9 @@ const ErrorBox = styled("pre")({
   fontSize: 11,
 })
 
-export default ({ open, onChangeDataset, onClose, dataset }) => {
+export default ({ open, onClose }) => {
   const [errors, setErrors] = useState("")
+  const [dataset, setDataset] = useDataset()
   return (
     <SimpleDialog
       open={open}
@@ -38,7 +40,7 @@ export default ({ open, onChangeDataset, onClose, dataset }) => {
                     .filter(Boolean),
                 })
               }
-              onChangeDataset(setIn(dataset, ["samples"], newSamples))
+              setDataset(setIn(dataset, ["samples"], newSamples))
               onClose()
             } catch (e) {
               setErrors(e.toString())

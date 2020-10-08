@@ -7,7 +7,7 @@ import { styled } from "@material-ui/core/styles"
 import { useAppConfig } from "../AppConfig"
 import SaveIcon from "@material-ui/icons/Save"
 import CircularProgress from "@material-ui/core/CircularProgress"
-import usePosthog from "../../utils/use-posthog"
+import usePosthog from "../../hooks/use-posthog"
 
 const Title = styled("div")({
   fontSize: 18,

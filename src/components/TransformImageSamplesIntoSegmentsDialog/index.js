@@ -7,6 +7,7 @@ import { setIn } from "seamless-immutable"
 import Box from "@material-ui/core/Box"
 import range from "lodash/range"
 import TextField from "@material-ui/core/TextField"
+import useDataset from "../../hooks/use-dataset"
 
 const ErrorBox = styled("pre")({
   color: "red",
@@ -14,10 +15,11 @@ const ErrorBox = styled("pre")({
   fontSize: 11,
 })
 
-export default ({ open, onChangeDataset, onClose, dataset }) => {
+export default ({ open, onClose }) => {
   const [errors, setErrors] = useState("")
   const [rows, setRows] = useState("2")
   const [columns, setColumns] = useState("2")
+  const [dataset, setDataset] = useDataset()
   return (
     <SimpleDialog
       open={open}
@@ -30,7 +32,7 @@ export default ({ open, onChangeDataset, onClose, dataset }) => {
             const [nRows, nCols] = [parseInt(rows), parseInt(columns)]
 
             try {
-              onChangeDataset(
+              setDataset(
                 setIn(
                   dataset,
                   ["samples"],

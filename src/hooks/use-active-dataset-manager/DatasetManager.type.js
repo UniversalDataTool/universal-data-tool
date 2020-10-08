@@ -5,9 +5,6 @@
 interface DatasetManager {
   type: string; // e.g local-storage
 
-  // Import an entire UDT JSON file
-  loadDataset(udtObject: Object): Promise<void>;
-
   // Called frequently to make sure the dataset is accessible, return true if
   // the dataset can be read. You might return false if there isn't a dataset
   // loaded
@@ -41,6 +38,12 @@ interface DatasetManager {
   // Remove samples
   removeSamples(sampleIds: Array<string>): Promise<void>;
 
+  // Import an entire UDT JSON file
+  setDataset(udtObject: Object): Promise<void>;
+
+  // Get full dataset JSON. Use sparingly if datasets are large.
+  getDataset(): Promise<Object>;
+
   // -------------------------------
   // EVENTS
   // You don't need to implement events, but they may help in collaborative
@@ -48,7 +51,8 @@ interface DatasetManager {
   // -------------------------------
 
   on(
-    event: 
+    event:
+      | "dataset-reloaded"
       | "dataset-property-changed" // passes { key: "interface" | "training" | "etc" }
       | "summary-changed" // passes { }
       | "sample-changed" // passes { sampleRefId }

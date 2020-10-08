@@ -4,7 +4,7 @@ import { HeaderContext } from "../Header"
 import StartingPage from "../StartingPage"
 import DatasetEditor from "../DatasetEditor"
 import ErrorToasts from "../ErrorToasts"
-import useErrors from "../../utils/use-errors.js"
+import useErrors from "../../hooks/use-errors.js"
 import LocalStorageDatasetManager from "../../hooks/use-active-dataset-manager/LocalStorageDatasetManager.js"
 import useActiveDatasetManager from "../../hooks/use-active-dataset-manager"
 import download from "in-browser-download"
@@ -12,9 +12,9 @@ import toUDTCSV from "../../utils/to-udt-csv.js"
 import { setIn } from "seamless-immutable"
 import AppErrorBoundary from "../AppErrorBoundary"
 import useEventCallback from "use-event-callback"
-import usePreventNavigation from "../../utils/use-prevent-navigation"
+import usePreventNavigation from "../../hooks/use-prevent-navigation"
 import { FileContext } from "../FileContext"
-import usePosthog from "../../utils/use-posthog"
+import usePosthog from "../../hooks/use-posthog"
 import ManagePluginsDialog from "../ManagePluginsDialog"
 import usePluginProvider from "../PluginProvider"
 const randomId = () => Math.random().toString().split(".")[1]
@@ -42,7 +42,7 @@ export default () => {
   const [selectedBrush, setSelectedBrush] = useState("complete")
   const onCreateTemplate = useEventCallback(async (template) => {
     const dm = new LocalStorageDatasetManager()
-    await dm.loadDataset({
+    await dm.setDataset({
       ...template.dataset,
       name: `New ${template.dataset.interface.type} Dataset`,
     })

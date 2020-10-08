@@ -4,6 +4,7 @@ import React, { useState } from "react"
 import SimpleDialog from "../SimpleDialog"
 import { setIn } from "seamless-immutable"
 import ProgressBar from "../ProgressBar"
+import useDataset from "../../hooks/use-dataset"
 
 async function isUrlValid(url) {
   return new Promise((resolve) => {
@@ -24,7 +25,8 @@ async function isUrlValid(url) {
   })
 }
 
-export default ({ open, onChangeDataset, onClose, dataset }) => {
+export default ({ open, onClose }) => {
+  const [dataset, setDataset] = useDataset()
   // const [errors, setErrors] = useState("")
   const [filteredSamples, setFilteredSamples] = useState()
   const [
@@ -78,7 +80,7 @@ export default ({ open, onChangeDataset, onClose, dataset }) => {
         complete && {
           text: "Remove Invalid Samples",
           onClick: async () => {
-            onChangeDataset(setIn(dataset, ["samples"], filteredSamples))
+            setDataset(setIn(dataset, ["samples"], filteredSamples))
           },
         },
       ].filter(Boolean)}

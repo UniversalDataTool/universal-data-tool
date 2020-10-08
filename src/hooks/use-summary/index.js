@@ -8,14 +8,17 @@ export default () => {
   useEffect(() => {
     if (!dm) return { summaryLoading: true, summary: {} }
 
-    dm.getSummary().then((summary) => {
-      setRetVal({ summaryLoading: false, summary })
-    })
-    dm.on("summary-changed", () => {
+    function loadSummary() {
       dm.getSummary().then((summary) => {
         setRetVal({ summaryLoading: false, summary })
       })
-    })
+    }
+
+    loadSummary()
+    dm.on("summary-changed", loadSummary)
+    return () => {
+      dm.off("summary-changed", loadSummary)
+    }
   }, [dm])
 
   return retVal

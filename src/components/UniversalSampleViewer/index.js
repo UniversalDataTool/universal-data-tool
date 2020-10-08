@@ -19,70 +19,45 @@ import { useTranslation } from "react-i18next"
 import useEventCallback from "use-event-callback"
 import useClobberedState from "../../hooks/use-clobbered-state"
 
-export const UniversalDataViewer = ({
-  dataset,
-  onExit: onExitProp,
-  onRemoveSample: onRemoveSampleProp,
+export const UniversalSampleViewer = ({
+  interface: iface,
+  sample,
+  onExit,
+  onRemoveSample,
   hideHeader,
   hideDescription,
   disableHotkeys = false,
-  datasetName,
-  requireCompleteToPressNext,
-  onSaveTaskOutputItem: onSaveTaskOutputItemProp,
+  title,
+  sampleIndex,
   onModifySample,
-  sampleIndex: globalSampleIndex,
   height,
   onClickSetup,
 }) => {
   // TODO type check w/ superstruct against dataset
   const { t } = useTranslation()
 
-  const [sampleIndex, setSampleIndex] = useClobberedState(globalSampleIndex, 0)
-
-  const onExit = useEventCallback((...args) => {
-    if (globalSampleIndex === undefined) {
-      if (
-        args[0] === "go-to-next" &&
-        sampleIndex !== dataset.samples.length - 1
-      ) {
-        setSampleIndex(sampleIndex + 1)
-      } else if (args[0] === "go-to-previous" && sampleIndex !== 0) {
-        setSampleIndex(sampleIndex - 1)
-      }
-    }
-    if (onExitProp) return onExitProp(...args)
-  })
-
-  let onSaveTaskOutputItem = onSaveTaskOutputItemProp
-  if (onModifySample && !onSaveTaskOutputItem) {
-    onSaveTaskOutputItem = (sampleIndex, annotation) =>
-      onModifySample(sampleIndex, { annotation })
-  }
-
   const containerProps = useMemo(
     () => ({
       hideHeader,
       hideDescription,
-      datasetName,
-      requireCompleteToPressNext,
+      title,
       onExit,
-      onRemoveSample: onRemoveSampleProp,
+      onRemoveSample,
       height,
       disableHotkeys,
     }),
     [
       hideHeader,
       hideDescription,
-      requireCompleteToPressNext,
-      datasetName,
+      title,
       height,
       onExit,
       disableHotkeys,
-      onRemoveSampleProp,
+      onRemoveSample,
     ]
   )
 
-  if (!dataset || !dataset.interface.type) {
+  if (!iface?.type) {
     return (
       <BadOHA
         title="Set up your project to begin labeling"
@@ -100,18 +75,19 @@ export const UniversalDataViewer = ({
     )
   }
 
-  if (!dataset.samples || dataset.samples.length === 0) {
+  if (!sample) {
     return <EmptySampleContainer />
   }
 
-  switch (dataset.interface.type) {
+  switch (iface?.type) {
     case "data_entry":
       return (
         <DataEntry
           containerProps={containerProps}
           sampleIndex={sampleIndex}
-          {...dataset}
-          onSaveTaskOutputItem={onSaveTaskOutputItem}
+          interface={iface}
+          sample={sample}
+          onModifySample={onModifySample}
           onExit={onExit}
         />
       )
@@ -120,8 +96,9 @@ export const UniversalDataViewer = ({
         <TextClassification
           containerProps={containerProps}
           sampleIndex={sampleIndex}
-          {...dataset}
-          onSaveTaskOutputItem={onSaveTaskOutputItem}
+          interface={iface}
+          sample={sample}
+          onModifySample={onModifySample}
           onExit={onExit}
         />
       )
@@ -130,8 +107,9 @@ export const UniversalDataViewer = ({
         <TextEntityRecognition
           containerProps={containerProps}
           sampleIndex={sampleIndex}
-          {...dataset}
-          onSaveTaskOutputItem={onSaveTaskOutputItem}
+          interface={iface}
+          sample={sample}
+          onModifySample={onModifySample}
           onExit={onExit}
         />
       )
@@ -140,8 +118,9 @@ export const UniversalDataViewer = ({
         <TextEntityRelations
           containerProps={containerProps}
           sampleIndex={sampleIndex}
-          {...dataset}
-          onSaveTaskOutputItem={onSaveTaskOutputItem}
+          interface={iface}
+          sample={sample}
+          onModifySample={onModifySample}
           onExit={onExit}
         />
       )
@@ -151,9 +130,9 @@ export const UniversalDataViewer = ({
         <ImageSegmentation
           containerProps={containerProps}
           sampleIndex={sampleIndex}
-          {...dataset}
+          interface={iface}
+          sample={sample}
           onExit={onExit}
-          onSaveTaskOutputItem={onSaveTaskOutputItem}
           onModifySample={onModifySample}
         />
       )
@@ -162,9 +141,10 @@ export const UniversalDataViewer = ({
         <ImageClassification
           containerProps={containerProps}
           sampleIndex={sampleIndex}
-          {...dataset}
+          interface={iface}
+          sample={sample}
           onExit={onExit}
-          onSaveTaskOutputItem={onSaveTaskOutputItem}
+          onModifySample={onModifySample}
         />
       )
     case "video_segmentation":
@@ -172,9 +152,10 @@ export const UniversalDataViewer = ({
         <VideoSegmentation
           containerProps={containerProps}
           sampleIndex={sampleIndex}
-          {...dataset}
+          interface={iface}
+          sample={sample}
           onExit={onExit}
-          onSaveTaskOutputItem={onSaveTaskOutputItem}
+          onModifySample={onModifySample}
         />
       )
     case "composite":
@@ -182,9 +163,9 @@ export const UniversalDataViewer = ({
         <Composite
           containerProps={containerProps}
           sampleIndex={sampleIndex}
-          {...dataset}
-          dataset={dataset}
-          onSaveTaskOutputItem={onSaveTaskOutputItem}
+          interface={iface}
+          sample={sample}
+          onModifySample={onModifySample}
           onExit={onExit}
         />
       )
@@ -193,8 +174,9 @@ export const UniversalDataViewer = ({
         <AudioTranscription
           containerProps={containerProps}
           sampleIndex={sampleIndex}
-          {...dataset}
-          onSaveTaskOutputItem={onSaveTaskOutputItem}
+          interface={iface}
+          sample={sample}
+          onModifySample={onModifySample}
           onExit={onExit}
         />
       )
@@ -203,15 +185,15 @@ export const UniversalDataViewer = ({
         <ImageLandmarkAnnotation
           containerProps={containerProps}
           sampleIndex={sampleIndex}
-          {...dataset}
-          onSaveTaskOutputItem={onSaveTaskOutputItem}
+          interface={iface}
+          sample={sample}
           onModifySample={onModifySample}
           onExit={onExit}
         />
       )
     default:
-      return `"${dataset.interface.type}" not supported`
+      return `"${iface?.type}" not supported`
   }
 }
 
-export default UniversalDataViewer
+export default UniversalSampleViewer

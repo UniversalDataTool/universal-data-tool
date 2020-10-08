@@ -8,7 +8,7 @@ import {
   convertFromRIARegionFmt,
   convertToRIAImageFmt,
 } from "../../utils/ria-format.js"
-import useClobberedState from "../../utils/use-clobbered-state"
+import useClobberedState from "../../hooks/use-clobbered-state"
 
 const Container = styled("div")({
   "& .fullscreen": { height: "100%" },
