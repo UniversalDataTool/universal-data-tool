@@ -54,6 +54,7 @@ export default ({
   return (
     <>
       <HeaderToolbar
+        key="headerToolbar"
         tabs={tabs}
         currentTab={currentTab}
         onChangeTab={onChangeTab}
@@ -65,6 +66,7 @@ export default ({
         title={title}
       />
       <HeaderDrawer
+        key="headerDrawer"
         drawerOpen={drawerOpen}
         onCloseDrawer={onCloseDrawer}
         onClickHome={headerContext.onClickHome}
@@ -76,6 +78,7 @@ export default ({
         onOpenRecentItem={headerContext.onOpenRecentItem}
       />
       <LoginDrawer
+        key="loginDrawer"
         authConfig={headerContext.authConfig}
         loginDrawerOpen={loginDrawerOpen}
         onClose={() => changeLoginDrawerOpen(false)}

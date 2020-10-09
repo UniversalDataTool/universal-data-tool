@@ -8,9 +8,9 @@ import { action } from "@storybook/addon-actions"
 import UniversalSampleEditor from "./"
 
 storiesOf("UniversalSampleEditor", module)
-  .add("NLP", () => (
+  .add("Text Entity Recognition", () => (
     <UniversalSampleEditor
-      onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
+      onModifySample={action("onModifySample")}
       hideHeader
       interface={{
         type: "text_entity_recognition",
@@ -35,7 +35,7 @@ storiesOf("UniversalSampleEditor", module)
         annotation: {
           entities: [
             { label: "hat", text: "strainer", start: 5, end: 13 },
-            { label: "food", text: "spaghetti", start: 59, end: 68 },
+            { label: "food", text: "spaghetti", start: 60, end: 69 },
           ],
         },
       }}
@@ -43,7 +43,7 @@ storiesOf("UniversalSampleEditor", module)
   ))
   .add("Data Entry", () => (
     <UniversalSampleEditor
-      onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
+      onModifySample={action("onModifySample")}
       hideHeader
       interface={{
         type: "data_entry",
@@ -93,7 +93,7 @@ storiesOf("UniversalSampleEditor", module)
   ))
   .add("Audio Transcription", () => (
     <UniversalSampleEditor
-      onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
+      onModifySample={action("onModifySample")}
       hideHeader
       interface={{
         type: "audio_transcription",
@@ -107,7 +107,7 @@ storiesOf("UniversalSampleEditor", module)
   ))
   .add("Composite", () => (
     <UniversalSampleEditor
-      onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
+      onModifySample={action("onModifySample")}
       hideHeader
       interface={{
         type: "composite",
@@ -165,7 +165,7 @@ storiesOf("UniversalSampleEditor", module)
   ))
   .add("Composite No Output", () => (
     <UniversalSampleEditor
-      onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
+      onModifySample={action("onModifySample")}
       hideHeader
       interface={{
         type: "composite",

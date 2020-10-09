@@ -59,6 +59,12 @@ storiesOf("ImageSegmentation", module)
               width: 0.25,
               height: 0.25,
             },
+            allowedArea: {
+              x: 0.5,
+              y: 0.5,
+              width: 0.5,
+              height: 0.5,
+            },
           },
         }}
       />

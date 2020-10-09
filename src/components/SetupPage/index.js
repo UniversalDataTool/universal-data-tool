@@ -13,7 +13,7 @@ import LiveTvIcon from "@material-ui/icons/LiveTv"
 import DeveloperBoardIcon from "@material-ui/icons/DeveloperBoard"
 import CodeIcon from "@material-ui/icons/Code"
 import BigInterfaceSelect from "../BigInterfaceSelect"
-import UniversalDataViewer from "../UniversalDataViewer"
+import UniversalSampleEditor from "../UniversalSampleEditor"
 import DatasetJSONEditor from "../DatasetJSONEditor"
 import useInterface from "../../hooks/use-interface"
 import useSample from "../../hooks/use-sample"
@@ -60,17 +60,14 @@ export default ({ onClearLabelData }) => {
         />
       )}
       {currentTab === "preview" && (
-        <UniversalDataViewer
+        <UniversalSampleEditor
           key="preview"
           height={600}
           onExit={noop}
-          onSaveTaskOutputItem={noop}
-          dataset={{
-            interface: iface,
-            samples: sample
-              ? [sample]
-              : [templateMap[iface?.type].dataset.samples[0]],
-          }}
+          onModifySample={noop}
+          interface={iface}
+          sampleIndex={0}
+          sample={sample || templateMap[iface?.type].dataset.samples[0]}
         />
       )}
       {currentTab === "advanced" && (

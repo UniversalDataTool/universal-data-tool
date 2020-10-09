@@ -21,8 +21,6 @@ import useIsLabelOnlyMode from "../../hooks/use-is-label-only-mode"
 import { HotKeys } from "react-hotkeys"
 import { useHotkeyStorage } from "../HotkeyStorage"
 import useInterface from "../../hooks/use-interface"
-import useSummary from "../../hooks/use-summary"
-import useDatasetProperty from "../../hooks/use-dataset-property"
 
 import "brace/mode/javascript"
 import "brace/theme/github"
@@ -70,9 +68,7 @@ export default ({
   const [sampleInputEditor, changeSampleInputEditor] = useState({})
   const { ipcRenderer } = useElectron() || {}
   const posthog = usePosthog()
-  const summary = useSummary()
-  const { iface, updateInterface } = useInterface()
-  const { name, updateName } = useDatasetProperty("name")
+  const { iface } = useInterface()
 
   const [sampleIndex, setSampleIndex] = useState(null)
 

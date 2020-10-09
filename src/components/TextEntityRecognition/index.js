@@ -7,56 +7,51 @@ import {
   entitySequenceToSimpleSeq,
 } from "./convert-react-nlp-annotate-types"
 
-export const TextEntityRecognition = (props) => {
-  const [currentSampleIndex, setCurrentSampleIndex] = useClobberedState(
-    props.sampleIndex,
-    0
-  )
-  const initialSequence = props.samples[currentSampleIndex].annotation
-    ? entitySequenceToSimpleSeq(
-        props.samples[currentSampleIndex].document,
-        props.samples[currentSampleIndex].annotation.entities
-      )
-    : undefined
+export const TextEntityRecognition = ({
+  sample,
+  interface: iface,
+  onModifySample,
+  disableHotkeys,
+  sampleIndex,
+  onExit,
+}) => {
+  const initialSequence = sample?.annotation
+    ? entitySequenceToSimpleSeq(sample?.document, sample?.annotation.entities)
+    : []
 
-  if (!props.interface.labels && !props.interface.availableLabels) {
+  if (!iface?.labels) {
     throw new Error("Labels not defined. Try adding some labels in setup.")
   }
 
   return (
     <NLPAnnotator
-      key={currentSampleIndex}
-      titleContent={<Box paddingLeft={4}>Sample {currentSampleIndex}</Box>}
+      key={sampleIndex}
+      titleContent={<Box paddingLeft={4}>Sample {sampleIndex}</Box>}
       type="label-sequence"
-      document={props.samples[currentSampleIndex].document}
-      labels={props.interface.labels || props.interface.availableLabels}
+      document={sample?.document}
+      labels={iface?.labels}
       initialSequence={initialSequence}
-      hotkeysEnabled={!props.disableHotkeys}
+      hotkeysEnabled={!disableHotkeys}
       onPrev={(result) => {
-        props.onSaveTaskOutputItem(currentSampleIndex, {
+        const annotation = {
           entities: simpleSequenceToEntitySequence(result),
-        })
-        if (setCurrentSampleIndex) {
-          setCurrentSampleIndex(currentSampleIndex - 1)
-        } else {
-          props.onExit("go-to-previous")
         }
+        onModifySample({ ...sample, annotation })
+        onExit("go-to-previous")
       }}
       onNext={(result) => {
-        props.onSaveTaskOutputItem(currentSampleIndex, {
+        const annotation = {
           entities: simpleSequenceToEntitySequence(result),
-        })
-        if (setCurrentSampleIndex) {
-          setCurrentSampleIndex(currentSampleIndex + 1)
-        } else {
-          props.onExit("go-to-next")
         }
+        onModifySample({ ...sample, annotation })
+        onExit("go-to-next")
       }}
       onFinish={(result) => {
-        props.onSaveTaskOutputItem(currentSampleIndex, {
+        const annotation = {
           entities: simpleSequenceToEntitySequence(result),
-        })
-        props.onExit()
+        }
+        onModifySample({ ...sample, annotation })
+        onExit()
       }}
     />
   )

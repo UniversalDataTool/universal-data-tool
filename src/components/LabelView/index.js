@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react"
 import LabelErrorBoundary from "../LabelErrorBoundary"
-import UniversalDataViewer from "../UniversalDataViewer"
+// import UniversalDataViewer from "../UniversalDataViewer"
+import UniversalSampleEditor from "../UniversalSampleEditor"
 import Stats from "../Stats"
 import SampleGrid from "../SampleGrid"
 import Box from "@material-ui/core/Box"
-import { setIn } from "seamless-immutable"
 import usePosthog from "../../hooks/use-posthog"
 import duration from "duration"
 import { styled } from "@material-ui/core/styles"
@@ -47,8 +47,6 @@ export default ({
   const { sample, updateSample } = useSample(sampleIndex)
   const { iface } = useInterface()
 
-  console.log({ sample, sampleIndex })
-
   const isInOverview = sampleIndex === null
 
   let percentComplete = 0
@@ -72,19 +70,16 @@ export default ({
 
   return !isInOverview ? (
     <LabelErrorBoundary>
-      <UniversalDataViewer
+      <UniversalSampleEditor
         sampleIndex={sampleIndex}
         onRemoveSample={(sampleIndex) => {
           if (window.confirm("Are you sure you want to delete this sample?")) {
             removeSamples([summary.samples[sampleIndex]._id])
           }
         }}
-        onSaveTaskOutputItem={(relativeIndex, output) => {
-          const sample = summary.samples[sampleIndex]
-
+        onModifySample={(newSample) => {
           updateSample({
-            ...sample,
-            annotation: output,
+            ...newSample,
             brush: selectedBrush,
           })
         }}
@@ -116,10 +111,8 @@ export default ({
           }
           onChangeSampleIndex(null)
         }}
-        dataset={{
-          interface: iface,
-          samples: [sample].filter(Boolean),
-        }}
+        interface={iface}
+        sample={sample}
         onClickSetup={onClickSetup}
       />
     </LabelErrorBoundary>

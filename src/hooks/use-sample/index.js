@@ -9,26 +9,24 @@ export default (sampleIndexOrId) => {
   const [dm] = useActiveDatasetManager()
 
   useEffect(() => {
-    if (sampleIndexOrId === undefined || sampleIndexOrId === null) {
-      setCurrentSample({ currentSampleId: null })
-      return
-    }
+    setCurrentSample({ currentSampleId: null, sampleLoading: true })
     async function loadSample() {
       const summary = await dm.getSummary()
       let sampleIndex, sampleId
 
       if (typeof sampleIndexOrId === "string") {
         sampleIndex = summary.samples.findIndex((s) => s.id === sampleIndexOrId)
+        sampleId = sampleIndexOrId
       } else if (typeof sampleIndexOrId === "number") {
         if (sampleIndexOrId >= summary.samples.length) {
           setCurrentSample({ currentSampleId: null })
           return
         }
+        sampleIndex = sampleIndexOrId
         sampleId = summary.samples[sampleIndexOrId]._id
       }
 
       if (!sampleId) {
-        console.log(`sample index or id is missing "${sampleIndexOrId}"`)
         return
       }
 

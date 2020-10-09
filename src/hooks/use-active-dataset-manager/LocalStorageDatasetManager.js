@@ -75,6 +75,7 @@ class LocalStorageDatasetManager extends EventEmitter {
       (s) => s._id === sampleRefId
     )
     this.udtJSON = setIn(this.udtJSON, ["samples", sampleIndex], newSample)
+    this.emit("summary-changed")
   }
 
   // Called whenever application config is updated. Maybe you need the app config
@@ -83,14 +84,22 @@ class LocalStorageDatasetManager extends EventEmitter {
 
   // Import an entire UDT JSON file
   setDataset = async (newUDT) => {
+    const usedSampleIds = new Set()
     this.udtJSON = seamless({
       name: "New Dataset",
       interface: {},
       ...newUDT,
-      samples: (newUDT.samples || []).map((s) => ({
-        _id: getNewSampleRefId(),
-        ...s,
-      })),
+      samples: (newUDT.samples || []).map((s) => {
+        const newSample = {
+          _id: getNewSampleRefId(),
+          ...s,
+        }
+        if (usedSampleIds.has(newSample._id)) {
+          newSample._id = getNewSampleRefId()
+        }
+        usedSampleIds.add(newSample._id)
+        return newSample
+      }),
     })
     this.emit("dataset-reloaded")
     if (newUDT.samples !== this.udtJSON.samples) this.emit("summary-changed")

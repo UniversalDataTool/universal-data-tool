@@ -1,13 +1,7 @@
 // @flow weak
 
 import React, { useState, createContext } from "react"
-import MuiButton from "@material-ui/core/Button"
-import { styled } from "@material-ui/core/styles"
 import ImageIcon from "@material-ui/icons/Image"
-import ArrowForwardIcon from "@material-ui/icons/ArrowForward"
-import * as colors from "@material-ui/core/colors"
-import useIsDesktop from "../../hooks/use-is-desktop"
-import classnames from "classnames"
 import OndemandVideoIcon from "@material-ui/icons/OndemandVideo"
 import TransformVideoKeyframesDialog from "../TransformVideoKeyframesDialog"
 import DownloadURLsDialog from "../DownloadURLsDialog"

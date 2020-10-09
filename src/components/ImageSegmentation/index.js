@@ -8,7 +8,6 @@ import {
   convertFromRIARegionFmt,
   convertToRIAImageFmt,
 } from "../../utils/ria-format.js"
-import useClobberedState from "../../hooks/use-clobbered-state"
 
 const regionTypeToTool = {
   "bounding-box": "create-box",
@@ -85,7 +84,7 @@ export default ({
     saveCurrentIndexAnnotation(output)
     changeShowTags(output.showTags)
     changeSelectedTool(output.selectedTool)
-    if (containerProps.onExit) containerProps.onExit(nextAction)
+    containerProps.onExit(nextAction)
   })
 
   const onNextImage = useEventCallback((output) => onExit(output, "go-to-next"))
@@ -121,10 +120,11 @@ export default ({
   const allowedArea = useMemo(() => {
     if (!iface.allowedArea && !sample?.allowedArea) return undefined
     const { x, y, width: w, height: h } =
-      sample?.allowedArea || iface.allowedArea
+      sample?.allowedArea || iface?.allowedArea
     return { x, y, w, h }
     // eslint-disable-next-line
   }, [iface.allowedArea, sample?.allowedArea])
+
   return (
     <Container
       style={{
