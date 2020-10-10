@@ -13,16 +13,15 @@ import ImageLandmarkAnnotation from "../ImageLandmarkAnnotation"
 import DataEntry from "../DataEntry"
 import EmptySampleContainer from "../EmptySampleContainer"
 import Composite from "../Composite"
-import BadOHA from "../BadOHA"
+import BadDataset from "../BadDataset"
 import Button from "@material-ui/core/Button"
 import { useTranslation } from "react-i18next"
-import useEventCallback from "use-event-callback"
-import useClobberedState from "../../hooks/use-clobbered-state"
 
 export const UniversalSampleViewer = ({
   interface: iface,
   sample,
   onExit,
+  loading,
   onRemoveSample,
   hideHeader,
   hideDescription,
@@ -57,9 +56,13 @@ export const UniversalSampleViewer = ({
     ]
   )
 
+  if (loading) {
+    return <BadDataset title="Loading Sample..." description="" />
+  }
+
   if (!iface?.type) {
     return (
-      <BadOHA
+      <BadDataset
         title="Set up your project to begin labeling"
         description={
           <p>

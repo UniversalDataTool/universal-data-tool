@@ -3,11 +3,14 @@
 import React, { useState, createContext, useContext, useCallback } from "react"
 import useMediaQuery from "@material-ui/core/useMediaQuery"
 import LoginDrawer from "../LoginDrawer"
+import CollaborativeDatasetManager from "udt-dataset-managers/dist/CollaborationServerDatasetManager"
+import useEventCallback from "use-event-callback"
 
 import HeaderToolbar from "../HeaderToolbar"
 import HeaderDrawer from "../HeaderDrawer"
 
 import useOpenTemplate from "../../hooks/use-open-template"
+import useActiveDatasetManager from "../../hooks/use-active-dataset-manager"
 
 export const HeaderContext = createContext({
   recentItems: [],
@@ -17,9 +20,6 @@ export const HeaderContext = createContext({
   onOpenFile: () => null,
   onOpenRecentItem: () => null,
   isDesktop: false,
-  inSession: false,
-  onJoinSession: () => null,
-  onCreateSession: () => null,
   onLeaveSession: () => null,
   sessionBoxOpen: false,
   changeSessionBoxOpen: () => null,
@@ -50,6 +50,19 @@ export default ({
 
   const onOpenDrawer = useCallback(() => changeDrawerOpen(true), [])
   const onCloseDrawer = useCallback(() => changeDrawerOpen(false), [])
+  const [dm, setActiveDatasetManager] = useActiveDatasetManager()
+  const onCreateSession = useEventCallback(async () => {
+    const previousUDTJSON = dm
+      ? await dm.getDataset()
+      : { interface: {}, samples: [] }
+    const newDM = new CollaborativeDatasetManager()
+    try {
+      await newDM.setDataset(previousUDTJSON)
+    } catch (e) {
+      console.log(`Couldn't create collaborative session: ${e.toString()}`)
+    }
+    setActiveDatasetManager(newDM)
+  })
 
   return (
     <>
@@ -62,6 +75,8 @@ export default ({
         onOpenDrawer={onOpenDrawer}
         isSmall={isSmall}
         {...headerContext}
+        inSession={dm && dm.type === "collaborative-session"}
+        onCreateSession={onCreateSession}
         changeLoginDrawerOpen={changeLoginDrawerOpen}
         title={title}
       />

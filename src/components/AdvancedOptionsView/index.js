@@ -60,11 +60,10 @@ export const AdvancedOptionsView = ({ onClickEditJSON, onClearLabelData }) => {
           // TODO store in appConfig
           const response = window.prompt(
             "Input URL for new collaboration server (empty to use universaldatatool.com):",
-            window.localStorage.getItem("CUSTOM_COLLABORATION_SERVER") || ""
+            fromConfig("collaborationServer.url")
           )
           if (response === null) return
-          window.localStorage.setItem("CUSTOM_COLLABORATION_SERVER", response)
-          window.location.reload()
+          setInConfig("collaborationServer.url", response)
         }}
       >
         {t("custom-collaboration-server")}

@@ -19,6 +19,7 @@ const configKeyNames = [
   "labelhelp.disabled",
   "labelhelp.apikey",
   "pluginUrls",
+  "collaborationServer.url",
   ...defaultHotkeys.map(({ id }) => `hotkeys.${id}`),
 ]
 

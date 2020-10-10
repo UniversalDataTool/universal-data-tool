@@ -2,7 +2,7 @@
 
 import React from "react"
 import Sentry from "../../utils/sentry.js"
-import BadOHA from "../BadOHA"
+import BadDataset from "../BadDataset"
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -35,7 +35,7 @@ class ErrorBoundary extends React.Component {
     if (this.state.hasError) {
       // You can render any custom fallback UI
       return (
-        <BadOHA
+        <BadDataset
           title="An error occurred loading the labeling interface"
           description={this.state.errorString}
         />

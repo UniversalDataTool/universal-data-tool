@@ -44,7 +44,7 @@ export default ({
   const [annotationStartTime, setAnnotationStartTime] = useState(null)
   const { summary } = useSummary()
   const removeSamples = useRemoveSamples()
-  const { sample, updateSample } = useSample(sampleIndex)
+  const { sample, updateSample, sampleLoading } = useSample(sampleIndex)
   const { iface } = useInterface()
 
   const isInOverview = sampleIndex === null
@@ -72,6 +72,7 @@ export default ({
     <LabelErrorBoundary>
       <UniversalSampleEditor
         sampleIndex={sampleIndex}
+        loading={sampleLoading}
         onRemoveSample={(sampleIndex) => {
           if (window.confirm("Are you sure you want to delete this sample?")) {
             removeSamples([summary.samples[sampleIndex]._id])

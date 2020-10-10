@@ -122,6 +122,7 @@
     "seed-random": "^2.2.0",
     "seedrandom": "^3.0.5",
     "styled-components": "^5.0.0",
+    "udt-dataset-managers": "^1.0.5",
     "udt-format": "0.0.1",
     "use-event-callback": "^0.1.0",
     "wavesurfer.js": "^3.3.3",

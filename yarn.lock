@@ -17175,6 +17175,11 @@ rfc6902@^3.0.4:
   resolved "https://registry.yarnpkg.com/rfc6902/-/rfc6902-3.0.4.tgz#82965f13536fd20cb7799ce0376e9ce7cd3ebfe6"
   integrity sha512-OnzreaZXrwT5w2ikKXWr5QcuI7NZpL+J3hIkAwozjOnKVUL7fPsB8Vcmu8YBiiou1/r3V0Jc0T1uQDyfAPvLzA==
 
+rfc6902@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/rfc6902/-/rfc6902-4.0.1.tgz#1a6474e1e9c17a3f812fabc68cb3df9d7e46cc34"
+  integrity sha512-RZOewbzE7AGAAPxxoTg137y4rCzA9w+5F9O+j+JdwnXH9uNNIpDPf8eH4sIViqgjfvOak+nlBRiy17TPDn+PLA==
+
 rgb-regex@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/rgb-regex/-/rgb-regex-1.0.1.tgz#c0e0d6882df0e23be254a475e8edd41915feaeb1"
@@ -17374,6 +17379,13 @@ seamless-immutable-patch@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/seamless-immutable-patch/-/seamless-immutable-patch-1.0.4.tgz#15e32628278d09a3f53e1e86e5247e822ccd069c"
   integrity sha512-ltuANpS8sndvWPqEQ4ILQmO+648dW7SyaZPLBn3vWlQMej/q+oCBgH3k1W+jmtBfu9VvY8sen+24pi5tnyFimw==
+  dependencies:
+    seamless-immutable "^7.1.4"
+
+seamless-immutable-patch@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/seamless-immutable-patch/-/seamless-immutable-patch-1.0.5.tgz#0a8335ad21680ddb9f3b50f9b82c2d6784a34841"
+  integrity sha512-ddqqceYttS9BEl95lqVZA/5XIt2lQKUmxpmrbTsXOih9q+7lrkjkaudYUxeYHgr+90Qz6CfejAvL9IvYdLqSwg==
   dependencies:
     seamless-immutable "^7.1.4"
 
@@ -19062,6 +19074,15 @@ ua-parser-js@^0.7.18:
   version "0.7.21"
   resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.21.tgz#853cf9ce93f642f67174273cc34565ae6f308777"
   integrity sha512-+O8/qh/Qj8CgC6eYBVBykMrNtp5Gebn4dlGD/kKXVkJNDwyrAwSIqwz8CDf+tsAIWVycKcku6gIXJ0qwx/ZXaQ==
+
+udt-dataset-managers@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/udt-dataset-managers/-/udt-dataset-managers-1.0.5.tgz#c4a963cb2547399200066dcf88e8025638982fd2"
+  integrity sha512-VhWgmDFh2h51LWJxCl8skwY1RKCOuTJ1KULJGO2LUpUylEmOtyS+6pbet2UB1hQRmamRNupuD/46OWe2WfPJBg==
+  dependencies:
+    rfc6902 "^4.0.1"
+    seamless-immutable "^7.1.4"
+    seamless-immutable-patch "^1.0.5"
 
 udt-format@0.0.1:
   version "0.0.1"
