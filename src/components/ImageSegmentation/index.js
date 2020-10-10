@@ -20,7 +20,7 @@ const Container = styled("div")({
   "& .fullscreen": { height: "100%" },
 })
 
-const [emptyObj, emptyArr] = [{}, []]
+const emptyObj = {}
 
 export default ({
   sampleIndex,

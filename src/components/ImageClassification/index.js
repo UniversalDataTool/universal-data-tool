@@ -8,7 +8,6 @@ import * as colors from "@material-ui/core/colors"
 import Checkbox from "@material-ui/core/Checkbox"
 import without from "lodash/without"
 import WorkspaceContainer from "../WorkspaceContainer"
-import useClobberedState from "../../hooks/use-clobbered-state"
 
 const brightColors = [
   colors.blue[600],

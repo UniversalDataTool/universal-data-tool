@@ -15,7 +15,7 @@ const regionTypeToTool = {
   point: "create-point",
 }
 
-const [emptyObj, emptyArr] = [{}, []]
+const emptyObj = {}
 
 export default ({
   interface: iface,

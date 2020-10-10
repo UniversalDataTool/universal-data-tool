@@ -1,6 +1,5 @@
 import React from "react"
 import NLPAnnotator from "react-nlp-annotate"
-import useClobberedState from "../../hooks/use-clobbered-state"
 import Box from "@material-ui/core/Box"
 import {
   simpleSequenceToEntitySequence,

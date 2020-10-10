@@ -10,7 +10,7 @@ import DescriptionIcon from "@material-ui/icons/Description"
 import PetsIcon from "@material-ui/icons/Pets"
 import * as colors from "@material-ui/core/colors"
 import PasteUrlsDialog from "../PasteUrlsDialog"
-import ImportFromCognitoS3Dialog from "../ImportFromCognitoS3Dialog"
+// import ImportFromCognitoS3Dialog from "../ImportFromCognitoS3Dialog"
 import ImportFromS3Dialog from "../ImportFromS3Dialog"
 import UploadToS3Dialog from "../UploadToS3Dialog"
 import ImportTextSnippetsDialog from "../ImportTextSnippetsDialog"
@@ -18,7 +18,6 @@ import useElectron from "../../hooks/use-electron"
 import classnames from "classnames"
 import S3Icon from "./S3Icon"
 import isEmpty from "lodash/isEmpty"
-import { setIn } from "seamless-immutable"
 import useEventCallback from "use-event-callback"
 import ImportFromGoogleDriveDialog from "../ImportFromGoogleDriveDialog"
 import ImportUDTFileDialog from "../ImportUDTFileDialog"
@@ -33,7 +32,6 @@ import useAuth from "../../utils/auth-handlers/use-auth.js"
 import { useAppConfig } from "../AppConfig"
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary"
 import useInterface from "../../hooks/use-interface"
-import useSummary from "../../hooks/use-summary"
 import useAddSamples from "../../hooks/use-add-samples"
 import useDatasetProperty from "../../hooks/use-dataset-property"
 
@@ -144,9 +142,7 @@ export default ({ isDesktop, authConfig, user }) => {
   const electron = useElectron()
   const { fromConfig } = useAppConfig()
   const { iface } = useInterface()
-  const { usedToyDataset, updateUsedToyDataset } = useDatasetProperty(
-    "usedToyDataset"
-  )
+  const { updateUsedToyDataset } = useDatasetProperty("usedToyDataset")
 
   const addSamples = useAddSamples()
 
