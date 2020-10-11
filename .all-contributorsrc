@@ -140,6 +140,15 @@
         "translation",
         "code"
       ]
+    },
+    {
+      "login": "miguelcarvalho13",
+      "name": "Miguel Carvalho",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/6718302?v=4",
+      "profile": "https://www.behance.net/MiguelCarvalho13",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,
