@@ -140,6 +140,15 @@
         "translation",
         "code"
       ]
+    },
+    {
+      "login": "anaplian",
+      "name": "anaplian",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/18647401?v=4",
+      "profile": "https://github.com/anaplian",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
