@@ -84,11 +84,8 @@ Download the latest release from the [releases page](https://github.com/Universa
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-
 <!-- prettier-ignore-start -->
-
 <!-- markdownlint-disable -->
-
 <table>
   <tr>
     <td align="center"><a href="https://twitter.com/seveibar"><img src="https://avatars2.githubusercontent.com/u/1910070?v=4" width="100px;" alt=""/><br /><sub><b>Severin Ibarluzea</b></sub></a><br /><a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=seveibar" title="Code">💻</a> <a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=seveibar" title="Documentation">📖</a> <a href="https://github.com/UniversalDataTool/universal-data-tool/pulls?q=is%3Apr+reviewed-by%3Aseveibar" title="Reviewed Pull Requests">👀</a></td>
@@ -108,12 +105,13 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://www.linkedin.com/in/renato-gonsalves-499317125/"><img src="https://avatars0.githubusercontent.com/u/47343193?v=4" width="100px;" alt=""/><br /><sub><b>Renato Junior</b></sub></a><br /><a href="#translation-MrJunato" title="Translation">🌍</a></td>
     <td align="center"><a href="https://gitlab.com/rickstaa"><img src="https://avatars0.githubusercontent.com/u/17570430?v=4" width="100px;" alt=""/><br /><sub><b>Rick</b></sub></a><br /><a href="#translation-rickstaa" title="Translation">🌍</a> <a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=rickstaa" title="Code">💻</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/anaplian"><img src="https://avatars3.githubusercontent.com/u/18647401?v=4" width="100px;" alt=""/><br /><sub><b>anaplian</b></sub></a><br /><a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=anaplian" title="Code">💻</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-enable -->
-
 <!-- prettier-ignore-end -->
-
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
