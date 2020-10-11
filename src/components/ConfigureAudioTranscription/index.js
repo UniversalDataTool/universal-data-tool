@@ -239,6 +239,13 @@ export default ({ iface, onChange }) => {
         }
       }}
       form={form}
+      defaultAnswers={form.questions.reduce(
+        (defaults, question) => ({
+          ...defaults,
+          [question.name]: iface[question.name],
+        }),
+        {}
+      )}
     />
   )
 }
