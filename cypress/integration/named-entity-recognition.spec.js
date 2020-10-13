@@ -5,15 +5,16 @@ const times = (howManyTimes) => (functionWillExecute) => {
   }
 }
 
-describe("Create a new", () => {
+describe("Named Entity Recognition Tests", () => {
   it("should be able to create", () => {
     cy.visit("/")
 
     cy.contains("New File").click()
   })
 
-  it("should be able to import Elon Musk Tweets images dataset", () => {
+  it("should be able to import Elon Musk Tweets dataset", () => {
     cy.contains("Samples").click()
+    cy.contains("Import").click()
     cy.contains("Import Toy Dataset").click()
     cy.contains("Elon Musk Tweets").siblings("td").eq(2).click()
   })

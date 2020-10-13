@@ -50,7 +50,7 @@ export default ({
   const isInOverview = sampleIndex === null
 
   let percentComplete = 0
-  if (summary.samples && summary.samples.length > 0) {
+  if (summary?.samples && summary.samples.length > 0) {
     percentComplete =
       summary.samples.filter((s) => s.hasAnnotation).length /
       summary.samples.length

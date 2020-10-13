@@ -35,6 +35,7 @@ describe("Create a new text entity classification, label that and show that", ()
 
   it("should import Elon Musk tweets from toy datasets", () => {
     cy.contains("Samples").click()
+    cy.contains("Import").click()
     cy.contains("Import Toy Dataset").click()
     cy.contains("Elon Musk Tweets").siblings("td").eq(2).click()
   })
