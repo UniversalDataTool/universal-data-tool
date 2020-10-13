@@ -15,6 +15,7 @@ export const InfoButton = () => {
   window.dm = dm
   return (
     <Container
+      title="info-icon"
       onMouseEnter={() => setSessionBoxOpen(true)}
       onMouseLeave={() => setSessionBoxOpen(false)}
     >

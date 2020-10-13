@@ -43,6 +43,11 @@ export const AppConfigContext = createContext({
   appConfig: {
     ...defaultAppConfig,
     ...jsonParseOrEmpty(window.localStorage.app_config),
+    ...(window.Cypress
+      ? {
+          "collaborationServer.url": "http://localhost:3000",
+        }
+      : null),
   },
   setAppConfig: (newConfig) => undefined,
   fromConfig: (key) => undefined,

@@ -20,6 +20,9 @@ describe("Create and Visit Collaborative Session", () => {
   })
 
   it("should be able to store session url", () => {
+    cy.wait(2000)
+    cy.get("div[title='info-icon']").click()
+    cy.wait(2000)
     cy.get("div[title='share-link']", { timeout: 20000 })
       .children()
       .children()
