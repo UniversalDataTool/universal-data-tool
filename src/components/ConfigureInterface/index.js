@@ -37,41 +37,41 @@ export const ConfigureInterface = ({
 }) => {
   return (
     <Container>
-      {!iface.type && <NoOptions>Select a Type</NoOptions>}
-      {iface.type === "image_segmentation" && (
+      {!iface?.type && <NoOptions>Select a Type</NoOptions>}
+      {iface?.type === "image_segmentation" && (
         <ConfigureImageSegmentation iface={iface} onChange={onChange} />
       )}
-      {iface.type === "image_pixel_segmentation" && (
+      {iface?.type === "image_pixel_segmentation" && (
         <ConfigureImagePixelSegmentation iface={iface} onChange={onChange} />
       )}
-      {iface.type === "image_classification" && (
+      {iface?.type === "image_classification" && (
         <ConfigureImageClassification iface={iface} onChange={onChange} />
       )}
-      {iface.type === "composite" && (
+      {iface?.type === "composite" && (
         <ConfigureComposite iface={iface} onChange={onChange} />
       )}
-      {iface.type === "data_entry" && (
+      {iface?.type === "data_entry" && (
         <ConfigureDataEntry iface={iface} onChange={onChange} />
       )}
-      {iface.type === "audio_transcription" && (
+      {iface?.type === "audio_transcription" && (
         <ConfigureAudioTranscription iface={iface} onChange={onChange} />
       )}
-      {iface.type === "text_entity_recognition" && (
+      {iface?.type === "text_entity_recognition" && (
         <ConfigureTextEntityRecognition iface={iface} onChange={onChange} />
       )}
-      {iface.type === "text_entity_relations" && (
+      {iface?.type === "text_entity_relations" && (
         <ConfigureTextEntityRelations iface={iface} onChange={onChange} />
       )}
-      {iface.type === "text_classification" && (
+      {iface?.type === "text_classification" && (
         <ConfigureTextClassification iface={iface} onChange={onChange} />
       )}
-      {iface.type === "video_segmentation" && (
+      {iface?.type === "video_segmentation" && (
         <ConfigureVideoSegmentation iface={iface} onChange={onChange} />
       )}
-      {iface.type === "3d_bounding_box" && (
+      {iface?.type === "3d_bounding_box" && (
         <Configure3D iface={iface} onChange={onChange} />
       )}
-      {iface.type === "image_landmark_annotation" && (
+      {iface?.type === "image_landmark_annotation" && (
         <ConfigureImageLandmarkAnnotation iface={iface} onChange={onChange} />
       )}
     </Container>
