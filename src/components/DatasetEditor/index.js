@@ -4,12 +4,10 @@ import React, { useState, useEffect, useMemo } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 
 import Header from "../Header"
-import EditableTitleText from "./EditableTitleText.js"
 import SamplesView from "../SamplesView"
 import SetupPage from "../SetupPage"
 import useElectron from "../../hooks/use-electron"
 import useTimeToCompleteSample from "../../hooks/use-time-to-complete-sample.js"
-import TextField from "@material-ui/core/TextField"
 import { useToasts } from "../Toasts"
 import useEventCallback from "use-event-callback"
 import usePosthog from "../../hooks/use-posthog"
@@ -118,26 +116,7 @@ export default ({
     <HotKeys allowChanges handlers={shortcutHandlers} keyMap={keyMap}>
       <div className={classnames(c.container, "universaldatatool")}>
         <Header
-          title={
-            inSession ? (
-              <TextField
-                label="Share Link"
-                title="share-link"
-                value={url}
-                variant="outlined"
-                size="small"
-              />
-            ) : (
-              <EditableTitleText
-                label="File Name"
-                onChange={(newName) => {
-                  // onChangeFile(setIn(file, ["fileName"], newName))
-                  // setValueDisplay(newName)
-                }}
-                value={""}
-              />
-            )
-          }
+          title={null}
           onChangeTab={onChangeTab}
           currentTab={mode}
           tabs={headerTabs}

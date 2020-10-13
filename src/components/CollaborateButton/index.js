@@ -17,7 +17,7 @@ import usePosthog from "../../hooks/use-posthog"
 
 import { useTranslation } from "react-i18next"
 
-const Container = styled("div")({ position: "relative", marginLeft: 8 })
+const Container = styled("div")({ position: "relative" })
 const WIDTH = 300
 const borderColor = colors.grey[500]
 const popupBoxBeforeAndAfter = {

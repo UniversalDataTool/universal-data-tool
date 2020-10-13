@@ -13,6 +13,7 @@ import BorderColorIcon from "@material-ui/icons/BorderColor"
 import MenuIcon from "@material-ui/icons/Menu"
 import CollaborateButton from "../CollaborateButton"
 import DownloadButton from "../DownloadButton"
+import InfoButton from "../InfoButton"
 import Button from "@material-ui/core/Button"
 import GithubIcon from "../Header/GithubIcon"
 import IconButton from "@material-ui/core/IconButton"
@@ -109,6 +110,7 @@ const HeaderToolbar = ({
           </IconButton>
         )}
         {fileOpen ? title : "Universal Data Tool v" + packageJSON.version}
+        {fileOpen && <InfoButton />}
         <CollaborateButton
           sessionBoxOpen={sessionBoxOpen}
           changeSessionBoxOpen={changeSessionBoxOpen}

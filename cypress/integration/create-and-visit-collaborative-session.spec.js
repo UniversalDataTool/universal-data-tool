@@ -1,6 +1,6 @@
 let collobrationURL
 
-describe("Create a new file in the universal data tool", () => {
+describe("Create and Visit Collaborative Session", () => {
   it("should be able to create new file", () => {
     cy.visit("http://localhost:6001")
 
@@ -9,6 +9,7 @@ describe("Create a new file in the universal data tool", () => {
 
   it("should be able to import Elon Musk Tweets images dataset", () => {
     cy.contains("Samples").click()
+    cy.contains("Import").click()
     cy.contains("Import Toy Dataset").click()
     cy.contains("Elon Musk Tweets").siblings("td").eq(2).click()
   })
