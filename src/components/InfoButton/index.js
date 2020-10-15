@@ -6,13 +6,20 @@ import HeaderPopupBox from "../HeaderPopupBox"
 import TextField from "@material-ui/core/TextField"
 import EditableTitleText from "./EditableTitleText.js"
 import useActiveDatasetManager from "../../hooks/use-active-dataset-manager"
+import useDatasetProperty from "../../hooks/use-dataset-property"
 
 const Container = styled("div")({ position: "relative" })
 
 export const InfoButton = () => {
   const [sessionBoxOpen, setSessionBoxOpen] = useState(false)
   const [dm] = useActiveDatasetManager()
-  window.dm = dm
+  const { name, updateName } = useDatasetProperty("name")
+
+  let shareURL
+  if (dm.type === "collaborative-session") {
+    shareURL = `${window.location.origin}?s=${dm.sessionId}`
+  }
+
   return (
     <Container
       title="info-icon"
@@ -28,7 +35,7 @@ export const InfoButton = () => {
           <TextField
             label="Share Link"
             title="share-link"
-            value={dm.sessionId}
+            value={shareURL}
             variant="outlined"
             size="small"
           />
@@ -36,10 +43,9 @@ export const InfoButton = () => {
           <EditableTitleText
             label="File Name"
             onChange={(newName) => {
-              // onChangeFile(setIn(file, ["fileName"], newName))
-              // setValueDisplay(newName)
+              updateName(newName)
             }}
-            value={""}
+            value={name}
           />
         )}
       </HeaderPopupBox>

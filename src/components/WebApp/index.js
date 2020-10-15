@@ -16,6 +16,7 @@ import ManagePluginsDialog from "../ManagePluginsDialog"
 import usePluginProvider from "../PluginProvider"
 import download from "in-browser-download"
 import toUDTCSV from "../../utils/to-udt-csv"
+import useEnterCollaborativeSession from "../../hooks/use-enter-collaborative-session"
 
 export default () => {
   const [datasetManager, setDatasetManager] = useActiveDatasetManager()
@@ -57,6 +58,8 @@ export default () => {
       download(toUDTCSV(ds), outputName)
     }
   })
+
+  useEnterCollaborativeSession()
 
   const [sessionBoxOpen, changeSessionBoxOpen] = useState(false)
 

@@ -1,6 +1,7 @@
 import React, { useMemo, useContext, createContext } from "react"
 import { useLocalStorage } from "react-use"
 import { defaultHotkeys } from "../HotkeyStorage"
+import qs from "qs"
 
 const configKeyNames = [
   "auth.provider",
@@ -38,17 +39,15 @@ const jsonParseOrEmpty = (s) => {
   }
 }
 
+const initialAppConfig = {
+  ...defaultAppConfig,
+  ...jsonParseOrEmpty(window.localStorage.app_config),
+  ...jsonParseOrEmpty(qs.parse(window.location.search.substr(1)).app_config),
+}
+
 // NOTE: appConfig should not allow any nested values
 export const AppConfigContext = createContext({
-  appConfig: {
-    ...defaultAppConfig,
-    ...jsonParseOrEmpty(window.localStorage.app_config),
-    ...(window.Cypress
-      ? {
-          "collaborationServer.url": "http://localhost:3000",
-        }
-      : null),
-  },
+  appConfig: initialAppConfig,
   setAppConfig: (newConfig) => undefined,
   fromConfig: (key) => undefined,
   setInConfig: (key, value) => undefined,
@@ -68,7 +67,7 @@ export const AppConfigProvider = ({ children }) => {
           throw new Error(`Unknown config key name "${key}"`)
         }
         if (appConfig[key] === undefined) {
-          return defaultAppConfig[key]
+          return initialAppConfig[key]
         }
         return appConfig[key]
       },

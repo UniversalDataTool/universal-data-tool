@@ -1,13 +1,15 @@
-let collobrationURL
-
 describe("Create and Visit Collaborative Session", () => {
   it("should be able to create new file", () => {
-    cy.visit("http://localhost:6001")
+    cy.visit(
+      `http://localhost:6001?app_config=${JSON.stringify({
+        "collaborationServer.url": "http://localhost:3000",
+      })}`
+    )
 
     cy.contains("New File").click()
   })
 
-  it("should be able to import Elon Musk Tweets images dataset", () => {
+  it("should be able to import Elon Musk Tweets dataset", () => {
     cy.contains("Samples").click()
     cy.contains("Import").click()
     cy.contains("Import Toy Dataset").click()
@@ -17,22 +19,27 @@ describe("Create and Visit Collaborative Session", () => {
   it("should be able to create new session", () => {
     cy.get("div[title='collaborate-icon']").click()
     cy.contains("Create New Session").click()
+    cy.wait(20000)
+    cy.contains("Leave Session")
+    cy.get("div[title='collaborate-icon']").trigger("mouseleave")
   })
 
+  let collaborationUrl
   it("should be able to store session url", () => {
     cy.wait(2000)
+    // cy.get("div[title='collaborate-icon']").trigger("mouseleave")
     cy.get("div[title='info-icon']").click()
     cy.wait(2000)
     cy.get("div[title='share-link']", { timeout: 20000 })
       .children()
       .children()
       .then((elements) => {
-        collobrationURL = Cypress.$(elements[0]).val()
+        collaborationUrl = Cypress.$(elements[0]).val()
       })
   })
 
   it("should be able to go for session url", () => {
-    cy.visit(collobrationURL)
+    cy.visit(collaborationUrl)
   })
 
   it("should be able to navigate to samples", () => {
