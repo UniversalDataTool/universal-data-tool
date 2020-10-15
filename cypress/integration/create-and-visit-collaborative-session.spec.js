@@ -1,10 +1,6 @@
 describe("Create and Visit Collaborative Session", () => {
   it("should be able to create new file", () => {
-    cy.visit(
-      `http://localhost:6001?app_config=${JSON.stringify({
-        "collaborationServer.url": "http://localhost:3000",
-      })}`
-    )
+    cy.visit(`http://localhost:6001`)
 
     cy.contains("New File").click()
   })
@@ -19,7 +15,7 @@ describe("Create and Visit Collaborative Session", () => {
   it("should be able to create new session", () => {
     cy.get("div[title='collaborate-icon']").click()
     cy.contains("Create New Session").click()
-    cy.wait(20000)
+    cy.wait(5000)
     cy.contains("Leave Session")
     cy.get("div[title='collaborate-icon']").trigger("mouseleave")
   })
@@ -27,7 +23,6 @@ describe("Create and Visit Collaborative Session", () => {
   let collaborationUrl
   it("should be able to store session url", () => {
     cy.wait(2000)
-    // cy.get("div[title='collaborate-icon']").trigger("mouseleave")
     cy.get("div[title='info-icon']").click()
     cy.wait(2000)
     cy.get("div[title='share-link']", { timeout: 20000 })
