@@ -104,7 +104,7 @@ export const SamplesTable = ({ onClickSample }) => {
       name: "Delete",
       button: true,
       cell: (row) => (
-        <IconButton raised primary onClick={() => removeSamples([row.index])}>
+        <IconButton raised primary onClick={() => removeSamples([row._id])}>
           <DeleteIcon style={{ width: 20, height: 20 }} />
         </IconButton>
       ),

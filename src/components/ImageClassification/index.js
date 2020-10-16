@@ -76,7 +76,7 @@ export const ImageClassification = ({
   interface: iface,
   sample,
   containerProps = emptyObj,
-  onSaveTaskOutputItem,
+  onModifySample,
 }) => {
   const disableHotkeys = containerProps.disableHotkeys
 
@@ -93,18 +93,16 @@ export const ImageClassification = ({
     [iface.labels]
   )
 
-  const onDone = useEventCallback(() => {
+  const onDone = useEventCallback((output) => {
+    onModifySample({ ...sample, annotation: currentOutput })
     if (containerProps.onExit) containerProps.onExit()
   })
-  const onNextNoSave = useEventCallback(() => {
-    if (containerProps.onExit) {
-      containerProps.onExit("go-to-next")
-    }
-  })
-  const onNext = useEventCallback((newOutput) => {
+  const onNext = useEventCallback(() => {
+    onModifySample({ ...sample, annotation: currentOutput })
     containerProps.onExit("go-to-next")
   })
   const onPrev = useEventCallback(() => {
+    onModifySample({ ...sample, annotation: currentOutput })
     containerProps.onExit("go-to-previous")
   })
 
@@ -133,7 +131,8 @@ export const ImageClassification = ({
 
     changeCurrentOutput(newOutput)
     if (!iface.allowMultiple && newOutput.length > 0) {
-      onNext(newOutput)
+      onModifySample({ ...sample, annotation: newOutput })
+      containerProps.onExit("go-to-next")
     }
   })
 
@@ -183,7 +182,7 @@ export const ImageClassification = ({
   return (
     <WorkspaceContainer
       {...containerProps}
-      onNext={onNextNoSave}
+      onNext={onNext}
       onPrev={onPrev}
       onRemoveSample={containerProps.onRemoveSample}
       onClickHeaderItem={onDone}

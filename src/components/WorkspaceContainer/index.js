@@ -35,21 +35,13 @@ export default ({
           onClick: onPrev,
           disabled: currentSampleIndex === 0,
         },
-        (numberOfSamples > currentSampleIndex + 1 || onNext) && {
+        {
           name: "Next",
           onClick: onNext,
-          disabled: currentSampleIndex >= numberOfSamples - 1,
         },
         { name: "Save" },
       ].filter(Boolean),
-    [
-      currentSampleIndex,
-      globalSampleIndex,
-      numberOfSamples,
-      onNext,
-      onPrev,
-      onRemoveSample,
-    ]
+    [currentSampleIndex, globalSampleIndex, onNext, onPrev, onRemoveSample]
   )
   return (
     <Workspace

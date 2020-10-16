@@ -13,13 +13,14 @@ import Tab from "@material-ui/core/Tab"
 import BorderColorIcon from "@material-ui/icons/BorderColor"
 import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle"
 import DataUsageIcon from "@material-ui/icons/DataUsage"
-import LabelHelpView, { useLabelHelp } from "../LabelHelpView"
+import LabelHelpView from "../LabelHelpView"
 import ActiveLearningView from "../ActiveLearningView"
 import useIsLabelOnlyMode from "../../hooks/use-is-label-only-mode"
 import useSummary from "../../hooks/use-summary"
 import useSample from "../../hooks/use-sample"
 import useRemoveSamples from "../../hooks/use-remove-samples"
 import useInterface from "../../hooks/use-interface"
+import useAppConfig from "../../hooks/use-app-config"
 
 const OverviewContainer = styled("div")({
   padding: 16,
@@ -39,14 +40,15 @@ export default ({
 }) => {
   const [currentTab, setTab] = useState("label")
   const posthog = usePosthog()
-  const { labelHelpEnabled, totalCost } = useLabelHelp()
   const labelOnlyMode = useIsLabelOnlyMode()
+  const { fromConfig } = useAppConfig()
   const [annotationStartTime, setAnnotationStartTime] = useState(null)
   const { summary } = useSummary()
   const removeSamples = useRemoveSamples()
   const { sample, updateSample, sampleLoading } = useSample(sampleIndex)
   const { iface } = useInterface()
 
+  const labelHelpEnabled = !fromConfig("labelhelp.disabled")
   const isInOverview = sampleIndex === null
 
   let percentComplete = 0
@@ -133,11 +135,7 @@ export default ({
             {!labelOnlyMode && (
               <Tab
                 icon={<SupervisedUserCircleIcon />}
-                label={
-                  totalCost && totalCost >= 100
-                    ? `$${totalCost.toFixed(2)}`
-                    : "Label Help"
-                }
+                label={"Crowd Label"}
                 value="labelhelp"
               />
             )}

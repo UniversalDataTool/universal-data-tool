@@ -17,6 +17,7 @@ import usePluginProvider from "../PluginProvider"
 import download from "in-browser-download"
 import toUDTCSV from "../../utils/to-udt-csv"
 import useEnterCollaborativeSession from "../../hooks/use-enter-collaborative-session"
+import useOpenFile from "../../hooks/use-open-file"
 
 export default () => {
   const [datasetManager, setDatasetManager] = useActiveDatasetManager()
@@ -38,8 +39,12 @@ export default () => {
     setDatasetManager(dm)
   })
 
-  const openRecentItem = useEventCallback((item) => {}) //setFile(item))
-  const onClickHome = useEventCallback(() => {}) // setFile(null))
+  const openRecentItem = useEventCallback((item) => {
+    // TODO, recent items is currently non-functional
+  })
+  const onClickHome = useEventCallback(() => {
+    setDatasetManager(null)
+  })
   const onClickManagePlugins = useEventCallback(() =>
     setManagePluginsDialogOpen(true)
   )
@@ -59,6 +64,8 @@ export default () => {
     }
   })
 
+  const openFile = useOpenFile()
+
   useEnterCollaborativeSession()
 
   const [sessionBoxOpen, changeSessionBoxOpen] = useState(false)
@@ -75,7 +82,7 @@ export default () => {
             onClickTemplate: onCreateTemplate,
             onClickHome,
             onClickManagePlugins,
-            // onOpenFile: openFile,
+            onOpenFile: openFile,
             onOpenRecentItem: openRecentItem,
             sessionBoxOpen,
             changeSessionBoxOpen,
@@ -90,7 +97,7 @@ export default () => {
           <div>
             {isWelcomePage ? (
               <StartingPage
-                // onFileDrop={openFile}
+                onFileDrop={openFile}
                 onOpenTemplate={onCreateTemplate}
                 recentItems={[]}
                 onOpenRecentItem={openRecentItem}
