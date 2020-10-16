@@ -16,7 +16,7 @@ export const TextEntityRecognition = ({
 }) => {
   const initialSequence = sample?.annotation
     ? entitySequenceToSimpleSeq(sample?.document, sample?.annotation.entities)
-    : []
+    : null
 
   if (!iface?.labels) {
     throw new Error("Labels not defined. Try adding some labels in setup.")

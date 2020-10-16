@@ -15,7 +15,7 @@ describe("Create and Visit Collaborative Session", () => {
   it("should be able to create new session", () => {
     cy.get("div[title='collaborate-icon']").click()
     cy.contains("Create New Session").click()
-    cy.wait(5000)
+    cy.wait(10000)
     cy.contains("Leave Session")
     cy.get("div[title='collaborate-icon']").trigger("mouseleave")
   })

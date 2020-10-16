@@ -45,6 +45,7 @@ describe("Named Entity Recognition Tests", () => {
   })
 
   it("should be able to label samples", () => {
+    cy.wait(2000)
     times(4)(() => {
       cy.get("body").click().type("n")
       cy.get("body").click().type("{enter}")
