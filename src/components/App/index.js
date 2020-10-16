@@ -18,12 +18,16 @@ import download from "in-browser-download"
 import toUDTCSV from "../../utils/to-udt-csv"
 import useEnterCollaborativeSession from "../../hooks/use-enter-collaborative-session"
 import useOpenFile from "../../hooks/use-open-file"
+import useDesktopMenuFunctions from "../../hooks/use-desktop-menu-functions"
 
 export default () => {
-  const [datasetManager, setDatasetManager] = useActiveDatasetManager()
-
-  usePreventNavigation(Boolean(datasetManager))
+  useEnterCollaborativeSession()
+  useDesktopMenuFunctions()
   usePluginProvider()
+
+  const [datasetManager, setDatasetManager] = useActiveDatasetManager()
+  usePreventNavigation(Boolean(datasetManager))
+
   const posthog = usePosthog()
   const [errors] = useErrors()
 
@@ -65,8 +69,6 @@ export default () => {
   })
 
   const openFile = useOpenFile()
-
-  useEnterCollaborativeSession()
 
   const [sessionBoxOpen, changeSessionBoxOpen] = useState(false)
 
