@@ -242,7 +242,7 @@ export default ({ isDesktop, authConfig, user }) => {
           Icon={S3Icon}
           dialog="import-from-s3"
           disabledReason={
-            fromConfig("auth.s3iam.access_key_id") ? null : "NEED AWS IAM AUTH"
+            fromConfig("auth.s3iam.accessKeyId") ? null : "NEED AWS IAM AUTH"
           }
         >
           {t("import-from-s3")}
@@ -251,7 +251,7 @@ export default ({ isDesktop, authConfig, user }) => {
           Icon={S3Icon}
           dialog="upload-to-s3"
           disabledReason={
-            fromConfig("auth.s3iam.access_key_id") ? null : "NEED AWS IAM AUTH"
+            fromConfig("auth.s3iam.accessKeyId") ? null : "NEED AWS IAM AUTH"
           }
         >
           {t("upload-to-s3")}

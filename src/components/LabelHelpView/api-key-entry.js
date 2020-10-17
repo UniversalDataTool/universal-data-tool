@@ -47,6 +47,8 @@ export default () => {
         To use Label Help, enter your API key. You can{" "}
         <a
           href="https://labelhelp.universaldatatool.com"
+          // eslint-disable-next-line
+          target="_blank"
           onClick={() => posthog.capture("get_api_key_link_clicked")}
         >
           get an API key here

@@ -14,8 +14,8 @@ export default () => {
   const { appConfig } = useAppConfig()
   const isDesktop = useIsDesktop()
   let {
-    "auth.s3iam.access_key_id": accessKeyId,
-    "auth.s3iam.secret_access_key": secretAccessKey,
+    "auth.s3iam.accessKeyId": accessKeyId,
+    "auth.s3iam.secretAccessKey": secretAccessKey,
     "auth.s3iam.region": region,
     "auth.proxy.corsproxy": corsProxy,
   } = appConfig
