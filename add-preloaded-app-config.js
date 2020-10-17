@@ -13,8 +13,6 @@ for (const key of Object.keys(process.env)) {
   }
 }
 
-console.log(envObject)
-
 const newIndexFileContent = fs
   .readFileSync(path.resolve(__dirname, "build", "index.html"))
   .toString()
