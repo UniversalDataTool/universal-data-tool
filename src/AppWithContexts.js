@@ -1,10 +1,8 @@
 import React, { Suspense } from "react"
 import Theme from "./components/Theme"
-import WebApp from "./components/WebApp"
+import App from "./components/App"
 import { RecoilRoot } from "recoil"
-import DesktopApp from "./components/DesktopApp"
 import { ToastProvider } from "./components/Toasts"
-import useElectron from "./utils/use-electron.js"
 import { AppConfigProvider } from "./components/AppConfig"
 import { AuthProvider } from "./utils/auth-handlers/use-auth.js"
 import { LabelHelpProvider } from "./components/LabelHelpView"
@@ -16,8 +14,7 @@ import Loading from "./components/Loading"
 // Importing Internalization file
 import "./i18n"
 
-export const App = () => {
-  const electron = useElectron()
+export const AppWithContexts = () => {
   return (
     <RecoilRoot>
       <Suspense fallback={Loading}>
@@ -27,7 +24,7 @@ export const App = () => {
               <LabelHelpProvider>
                 <ToastProvider>
                   <HotkeyStorageProvider>
-                    {Boolean(electron) ? <DesktopApp /> : <WebApp />}
+                    <App />
                   </HotkeyStorageProvider>
                 </ToastProvider>
               </LabelHelpProvider>
@@ -39,4 +36,4 @@ export const App = () => {
   )
 }
 
-export default App
+export default AppWithContexts

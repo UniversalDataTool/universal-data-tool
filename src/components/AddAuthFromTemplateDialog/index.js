@@ -8,7 +8,7 @@ import SimpleDialog from "../SimpleDialog"
 import isEmpty from "lodash/isEmpty"
 import Survey from "material-survey/components/Survey"
 import ErrorToasts from "../ErrorToasts"
-import useErrors from "../../utils/use-errors.js"
+import useErrors from "../../hooks/use-errors.js"
 import Amplify from "aws-amplify"
 import { useAppConfig } from "../AppConfig"
 import * as colors from "@material-ui/core/colors"
@@ -43,7 +43,7 @@ const forms = {
   cognito: {
     questions: [
       {
-        name: "auth.cognito.identity_pool_id",
+        name: "auth.cognito.identityPoolId",
         title: "Amazon Cognito Identity Pool ID",
         placeholder: "XX-XXXX-X:XXXXXXXX-XXXX-1234-abcd-1234567890ab",
         type: "text",
@@ -57,28 +57,28 @@ const forms = {
         isRequired: true,
       },
       {
-        name: "auth.cognito.user_pool_id",
+        name: "auth.cognito.userPoolId",
         title: "Amazon Cognito User Pool ID",
         placeholder: "XX-XXXX-X_12ab34cd9",
         type: "text",
         isRequired: true,
       },
       {
-        name: "auth.cognito.user_pool_web_client_id",
+        name: "auth.cognito.userPoolWebClientId",
         title: "Amazon Cognito Web Client ID",
         placeholder: "26-char alphanumeric string",
         type: "text",
         isRequired: true,
       },
       {
-        name: "auth.cognito.storage.aws_s3.bucket",
+        name: "auth.cognito.storage.awsS3.bucket",
         title: "Bucket AWS",
         placeholder: "Name of the bucket",
         type: "text",
         isRequired: true,
       },
       {
-        name: "auth.cognito.storage.aws_s3.region",
+        name: "auth.cognito.storage.awsS3.region",
         title: "Region of the bucket",
         placeholder: "XX-XXXX-X",
         type: "text",
@@ -89,14 +89,14 @@ const forms = {
   s3iam: {
     questions: [
       {
-        name: "auth.s3iam.access_key_id",
+        name: "auth.s3iam.accessKeyId",
         title: "Access Key ID",
         placeholder: "",
         type: "text",
         isRequired: true,
       },
       {
-        name: "auth.s3iam.secret_access_key",
+        name: "auth.s3iam.secretAccessKey",
         title: "Secret Access Key",
         placeholder: "",
         type: "text",
@@ -149,17 +149,17 @@ export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
     if (answers.provider === "cognito") {
       const config = {
         Auth: {
-          identityPoolId: answers["auth.cognito.identity_pool_id"],
+          identityPoolId: answers["auth.cognito.identityPoolId"],
           region: answers["auth.cognito.region"],
-          userPoolId: answers["auth.cognito.user_pool_id"],
-          userPoolWebClientId: answers["auth.cognito.user_pool_web_client_id"],
+          userPoolId: answers["auth.cognito.userPoolId"],
+          userPoolWebClientId: answers["auth.cognito.userPoolWebClientId"],
           mandatorySignIn: true,
           authenticationFlowType: "USER_PASSWORD_AUTH",
         },
         Storage: {
           AWSS3: {
-            bucket: answers["auth.cognito.storage.aws_s3.bucket"],
-            region: answers["auth.cognito.storage.aws_s3.region"],
+            bucket: answers["auth.cognito.storage.awsS3.bucket"],
+            region: answers["auth.cognito.storage.awsS3.region"],
           },
         },
       }

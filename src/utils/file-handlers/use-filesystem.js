@@ -2,11 +2,11 @@
 
 import { useEffect } from "react"
 import useEventCallback from "use-event-callback"
-import useElectron from "../use-electron.js"
+import useElectron from "../../hooks/use-electron.js"
 import { useToasts } from "../../components/Toasts"
 import { setIn } from "seamless-immutable"
 import toUDTCSV from "../to-udt-csv.js"
-import useIsDesktop from "../use-is-desktop"
+import useIsDesktop from "../../hooks/use-is-desktop"
 
 const webReturn = { saveFile: () => null }
 

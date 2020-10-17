@@ -1,9 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-<script>
-  !function(a,t){window.moufette=t;var e=a.getElementsByTagName("script"),n=[];for(var i in e){var o=e[i].src;o&&0<o.indexOf("moufette.js")&&n.push(e[i])}n[n.length-1],window.moufette.init=function(t,o){!function(t,e,n){var i=new Date;i.setTime(i.getTime()+24*n*60*60*1e3);var o="expires="+i.toUTCString();a.cookie=t+"="+e+";"+o+";path=/"}("moufette_token",t,30,o.api_host),window.addEventListener("DOMContentLoaded",function(){var t,e,n,i;(t=a.createElement("div")).setAttribute("id","moufette-widget"),a.body.appendChild(t),e=o.api_host+"/widget/main.js",(i=a.createElement("script")).setAttribute("type","text/javascript"),i.setAttribute("src",e),i.readyState?i.onreadystatechange=function(){"complete"!=this.readyState&&"loaded"!=this.readyState||n()}:i.onload=n,(a.getElementsByTagName("head")[0]||a.documentElement).appendChild(i)});var e=window.moufetteConfig||{};e.api_host=o.api_host,e.token=t,window.moufetteConfig=e}}(document,window.moufette||{});
-  moufette.init("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTc3NTc4NjF9.y_rSQWY5cINMSBTHSPUhuIkrx6GMTI7fbL3J7wPUqAM", { api_host: "https://moufette.universaldatatool.com" })
-</script>
+  <script>
+    !(function (a, t) {
+      window.moufette = t
+      var e = a.getElementsByTagName("script"),
+        n = []
+      for (var i in e) {
+        var o = e[i].src
+        o && 0 < o.indexOf("moufette.js") && n.push(e[i])
+      }
+      n[n.length - 1],
+        (window.moufette.init = function (t, o) {
+          !(function (t, e, n) {
+            var i = new Date()
+            i.setTime(i.getTime() + 24 * n * 60 * 60 * 1e3)
+            var o = "expires=" + i.toUTCString()
+            a.cookie = t + "=" + e + ";" + o + ";path=/"
+          })("moufette_token", t, 30, o.api_host),
+            window.addEventListener("DOMContentLoaded", function () {
+              var t, e, n, i
+              ;(t = a.createElement("div")).setAttribute(
+                "id",
+                "moufette-widget"
+              ),
+                a.body.appendChild(t),
+                (e = o.api_host + "/widget/main.js"),
+                (i = a.createElement("script")).setAttribute(
+                  "type",
+                  "text/javascript"
+                ),
+                i.setAttribute("src", e),
+                i.readyState
+                  ? (i.onreadystatechange = function () {
+                      ;("complete" != this.readyState &&
+                        "loaded" != this.readyState) ||
+                        n()
+                    })
+                  : (i.onload = n),
+                (
+                  a.getElementsByTagName("head")[0] || a.documentElement
+                ).appendChild(i)
+            })
+          var e = window.moufetteConfig || {}
+          ;(e.api_host = o.api_host), (e.token = t), (window.moufetteConfig = e)
+        })
+    })(document, window.moufette || {})
+    moufette.init(
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTc3NTc4NjF9.y_rSQWY5cINMSBTHSPUhuIkrx6GMTI7fbL3J7wPUqAM",
+      { api_host: "https://moufette.universaldatatool.com" }
+    )
+  </script>
   <head>
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
@@ -46,6 +92,9 @@
       gtag("js", new Date())
 
       gtag("config", "UA-130161486-4")
+    </script>
+    <script type="text/javascript">
+      window.preloaded_app_config = {}
     </script>
   </head>
   <body>

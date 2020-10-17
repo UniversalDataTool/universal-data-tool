@@ -42,3 +42,4 @@ src/components/WebApp/myAWSconfig.js
 cypress/snapshots
 
 .idea
+*.db

@@ -120,7 +120,6 @@ export default (objectOfRef, objectToCheck) => {
     else if (objectToCheck.fileName !== objectOfRef.fileName)
       resultSet.fileName = true
   }
-  console.log({ resultSet })
   //Default behavior return false
   return resultSet
 }

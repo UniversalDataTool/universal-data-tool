@@ -51,7 +51,7 @@ export default ({ iface, onChange }) => {
                 />
                 <ConfigureInterface
                   isNested
-                  dataset={{ interface: f.interface }}
+                  interface={f.interface}
                   onChange={(newFieldInterface) => {
                     onChange({
                       ...iface,

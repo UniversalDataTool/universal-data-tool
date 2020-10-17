@@ -1,7 +1,7 @@
 // @flow weak
 
 import { useEffect } from "react"
-import usePosthog from "../../utils/use-posthog"
+import usePosthog from "../../hooks/use-posthog"
 const posthog = usePosthog()
 
 export default (udt) => {

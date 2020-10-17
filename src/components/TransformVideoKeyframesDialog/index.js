@@ -11,6 +11,7 @@ import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails"
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary"
 import immutable from "seamless-immutable"
 import { useTranslation } from "react-i18next"
+import useDataset from "../../hooks/use-dataset"
 
 const Code = styled("pre")({
   fontSize: 8,
@@ -27,7 +28,8 @@ const StyledExpansionPanelSummary = styled(ExpansionPanelSummary)({
   fontWeight: "bold",
 })
 
-export default ({ open, onChangeDataset, onClose, dataset }) => {
+export default ({ open, onClose }) => {
+  const [dataset, setDataset] = useDataset()
   const { t } = useTranslation()
 
   return (
@@ -54,7 +56,7 @@ export default ({ open, onChangeDataset, onClose, dataset }) => {
               }
             })
 
-            onChangeDataset(
+            setDataset(
               immutable(dataset)
                 .setIn(
                   ["samples"],

@@ -1,4 +1,4 @@
-describe("Create a new", () => {
+describe("Image Segmentation Tests", () => {
   it("should be able to create", () => {
     cy.visit("/")
 
@@ -7,6 +7,7 @@ describe("Create a new", () => {
 
   it("should be able to import cat images dataset", () => {
     cy.contains("Samples").click()
+    cy.contains("Import").click()
     cy.contains("Import Toy Dataset").click()
     cy.contains("Cats").siblings("td").eq(2).click()
   })

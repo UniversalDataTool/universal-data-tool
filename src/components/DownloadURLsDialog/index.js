@@ -3,7 +3,7 @@
 import React, { useState } from "react"
 import SimpleDialog from "../SimpleDialog"
 import { styled } from "@material-ui/core/styles"
-import useElectron from "../../utils/use-electron"
+import useElectron from "../../hooks/use-electron"
 import ProgressBar from "../ProgressBar"
 import md5 from "js-md5"
 import path from "path"

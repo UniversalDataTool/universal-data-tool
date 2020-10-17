@@ -5,17 +5,17 @@ class CognitoHandler {
   constructor(appConfig) {
     this.authConfig = {
       Auth: {
-        identityPoolId: appConfig["auth.cognito.identity_pool_id"],
+        identityPoolId: appConfig["auth.cognito.identityPoolId"],
         region: appConfig["auth.cognito.region"],
-        userPoolId: appConfig["auth.cognito.user_pool_id"],
-        userPoolWebClientId: appConfig["auth.cognito.user_pool_web_client_id"],
+        userPoolId: appConfig["auth.cognito.userPoolId"],
+        userPoolWebClientId: appConfig["auth.cognito.userPoolWebClientId"],
         mandatorySignIn: true,
         authenticationFlowType: "USER_PASSWORD_AUTH",
       },
       Storage: {
         AWSS3: {
-          bucket: appConfig["auth.cognito.storage.aws_s3.bucket"],
-          region: appConfig["auth.cognito.storage.aws_s3.region"],
+          bucket: appConfig["auth.cognito.storage.awsS3.bucket"],
+          region: appConfig["auth.cognito.storage.awsS3.region"],
         },
       },
     }

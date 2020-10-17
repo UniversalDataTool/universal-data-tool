@@ -14,6 +14,7 @@ describe("Import ai generated faces and make image classification with them", ()
 
   it("should be able to import cat images dataset", () => {
     cy.contains("Samples").click()
+    cy.contains("Import").click()
     cy.contains("Import Toy Dataset").click()
     cy.contains("AI Generated Faces").siblings("td").eq(2).click()
   })

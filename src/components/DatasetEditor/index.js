@@ -4,22 +4,21 @@ import React, { useState, useEffect, useMemo } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 
 import Header from "../Header"
-import EditableTitleText from "./EditableTitleText.js"
 import SamplesView from "../SamplesView"
 import SetupPage from "../SetupPage"
-import EditSampleDialog from "../EditSampleDialog"
-import useElectron from "../../utils/use-electron"
-import useTimeToCompleteSample from "../../utils/use-time-to-complete-sample.js"
-import TextField from "@material-ui/core/TextField"
+import useElectron from "../../hooks/use-electron"
+import useTimeToCompleteSample from "../../hooks/use-time-to-complete-sample.js"
 import { useToasts } from "../Toasts"
-import { setIn, without } from "seamless-immutable"
 import useEventCallback from "use-event-callback"
-import usePosthog from "../../utils/use-posthog"
+import usePosthog from "../../hooks/use-posthog"
 import classnames from "classnames"
 import LabelView from "../LabelView"
-import useIsLabelOnlyMode from "../../utils/use-is-label-only-mode"
+import useIsLabelOnlyMode from "../../hooks/use-is-label-only-mode"
 import { HotKeys } from "react-hotkeys"
 import { useHotkeyStorage } from "../HotkeyStorage"
+import useInterface from "../../hooks/use-interface"
+import useSummary from "../../hooks/use-summary"
+import useRemoveSamples from "../../hooks/use-remove-samples"
 
 import "brace/mode/javascript"
 import "brace/theme/github"
@@ -43,13 +42,9 @@ const useStyles = makeStyles({
 })
 
 export default ({
-  file,
-  datasetName = "Universal Data Tool",
-  dataset,
   content,
   inSession,
   url,
-  fileName = "unnamed",
   onChangeDataset = () => null,
   onChangeFile,
   onFileDrop,
@@ -60,13 +55,14 @@ export default ({
   selectedBrush,
 }) => {
   const labelOnlyMode = useIsLabelOnlyMode()
-  var [valueDisplay, setValueDisplay] = useState(fileName)
   const c = useStyles()
   const { addToast } = useToasts()
   const [mode, changeMode] = useState(labelOnlyMode ? "label" : initialMode)
-  const [sampleInputEditor, changeSampleInputEditor] = useState({})
   const { ipcRenderer } = useElectron() || {}
   const posthog = usePosthog()
+  const { iface } = useInterface()
+  const { summary } = useSummary()
+  const removeSamples = useRemoveSamples()
 
   const [sampleIndex, setSampleIndex] = useState(null)
 
@@ -120,26 +116,7 @@ export default ({
     <HotKeys allowChanges handlers={shortcutHandlers} keyMap={keyMap}>
       <div className={classnames(c.container, "universaldatatool")}>
         <Header
-          title={
-            inSession ? (
-              <TextField
-                label="Share Link"
-                title="share-link"
-                value={url}
-                variant="outlined"
-                size="small"
-              />
-            ) : (
-              <EditableTitleText
-                label="File Name"
-                onChange={(newName) => {
-                  onChangeFile(setIn(file, ["fileName"], newName))
-                  setValueDisplay(newName)
-                }}
-                value={valueDisplay || ""}
-              />
-            )
-          }
+          title={null}
           onChangeTab={onChangeTab}
           currentTab={mode}
           tabs={headerTabs}
@@ -147,22 +124,14 @@ export default ({
         <div style={{ height: "100%", overflowY: "scroll" }}>
           {mode === "setup" && (
             <SetupPage
-              dataset={dataset}
               onClearLabelData={() => {
-                onChangeDataset(
-                  setIn(
-                    dataset,
-                    ["samples"],
-                    dataset.samples.map((s) => without(s, "annotation"))
-                  )
-                )
+                removeSamples(summary.samples.map((s) => s._id))
               }}
               onChange={(newDataset) => {
-                const { interface: iface } = newDataset
                 if (
-                  iface.type !== dataset.interface.type &&
-                  dataset.interface.type !== "empty" &&
-                  dataset.samples.map((s) => s.annotation).some(Boolean)
+                  iface.type !== newDataset.interface.type &&
+                  iface.type !== "empty" &&
+                  summary.samples.some((s) => s.hasAnnotation)
                 ) {
                   addToast(
                     "Changing label types can cause label data issues. You must clear all label data first.",
@@ -176,39 +145,19 @@ export default ({
           )}
           {mode === "samples" && (
             <SamplesView
-              file={file}
-              dataset={dataset}
               openSampleLabelEditor={(sampleIndex) => {
                 setSampleIndex(sampleIndex)
                 posthog.capture("open_sample", {
-                  interface_type: dataset.interface.type,
+                  interface_type: iface?.type,
                 })
                 changeMode("label")
               }}
-              openSampleInputEditor={(sampleIndex) => {
-                changeSampleInputEditor({ open: true, sampleIndex })
-              }}
-              deleteSample={(sampleIndex) => {
-                const newSamples = [...dataset.samples]
-                newSamples.splice(sampleIndex, 1)
-                onChangeDataset({
-                  ...dataset,
-                  samples: newSamples,
-                })
-              }}
-              onChangeFile={(file) => {
-                onChangeFile(file)
-                setValueDisplay(file.fileName)
-              }}
-              onChangeDataset={onChangeDataset}
-              authConfig={authConfig}
               user={user}
             />
           )}
           {mode === "label" && (
             <LabelView
               selectedBrush={selectedBrush}
-              dataset={dataset}
               sampleIndex={sampleIndex}
               onChangeSampleIndex={setSampleIndex}
               sampleTimeToComplete={sampleTimeToComplete}
@@ -218,26 +167,6 @@ export default ({
             />
           )}
         </div>
-        <EditSampleDialog
-          {...sampleInputEditor}
-          sampleInput={
-            sampleInputEditor.sampleIndex !== undefined
-              ? dataset.samples[sampleInputEditor.sampleIndex]
-              : null
-          }
-          onClose={() => {
-            changeSampleInputEditor({ open: false })
-          }}
-          onChange={(newInput) => {
-            onChangeDataset(
-              setIn(
-                dataset,
-                ["samples", sampleInputEditor.sampleIndex],
-                newInput
-              )
-            )
-          }}
-        />
       </div>
     </HotKeys>
   )

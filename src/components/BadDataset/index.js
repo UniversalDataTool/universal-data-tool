@@ -15,7 +15,7 @@ const useStyles = makeStyles({
   explain: {},
 })
 
-export default ({ title, description, children }) => {
+export const BadDataset = ({ title, description, children }) => {
   const c = useStyles()
   return (
     <div className={c.root}>
@@ -28,3 +28,5 @@ export default ({ title, description, children }) => {
     </div>
   )
 }
+
+export default BadDataset

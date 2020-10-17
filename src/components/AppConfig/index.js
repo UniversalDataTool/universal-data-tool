@@ -1,24 +1,26 @@
 import React, { useMemo, useContext, createContext } from "react"
 import { useLocalStorage } from "react-use"
 import { defaultHotkeys } from "../HotkeyStorage"
+import qs from "qs"
 
 const configKeyNames = [
   "auth.provider",
-  "auth.cognito.identity_pool_id",
+  "auth.cognito.identityPoolId",
   "auth.cognito.region",
-  "auth.cognito.user_pool_id",
-  "auth.cognito.user_pool_web_client_id",
-  "auth.cognito.mandatory_sign_in",
-  "auth.cognito.authentication_flow_type",
-  "auth.cognito.storage.aws_s3.bucket",
-  "auth.cognito.storage.aws_s3.region",
-  "auth.s3iam.access_key_id",
-  "auth.s3iam.secret_access_key",
+  "auth.cognito.userPoolId",
+  "auth.cognito.userPoolWebClientId",
+  "auth.cognito.mandatorySignIn",
+  "auth.cognito.authenticationFlowType",
+  "auth.cognito.storage.awsS3.bucket",
+  "auth.cognito.storage.awsS3.region",
+  "auth.s3iam.accessKeyId",
+  "auth.s3iam.secretAccessKey",
   "auth.s3iam.region",
   "auth.proxy.corsproxy",
   "labelhelp.disabled",
   "labelhelp.apikey",
   "pluginUrls",
+  "collaborationServer.url",
   ...defaultHotkeys.map(({ id }) => `hotkeys.${id}`),
 ]
 
@@ -27,6 +29,7 @@ const defaultAppConfig = {
     // TODO this is currently deployed on @seveibar's cloudflare, it'd be
     // better if it was deployed on the organization's cloudflare
     "https://corsproxy.seve.workers.dev/corsproxy/?apiurl={URL}",
+  ...(window.preloaded_app_config || {}),
 }
 
 const jsonParseOrEmpty = (s) => {
@@ -37,12 +40,15 @@ const jsonParseOrEmpty = (s) => {
   }
 }
 
+const initialAppConfig = {
+  ...defaultAppConfig,
+  ...jsonParseOrEmpty(window.localStorage.app_config),
+  ...jsonParseOrEmpty(qs.parse(window.location.search.substr(1)).app_config),
+}
+
 // NOTE: appConfig should not allow any nested values
 export const AppConfigContext = createContext({
-  appConfig: {
-    ...defaultAppConfig,
-    ...jsonParseOrEmpty(window.localStorage.app_config),
-  },
+  appConfig: initialAppConfig,
   setAppConfig: (newConfig) => undefined,
   fromConfig: (key) => undefined,
   setInConfig: (key, value) => undefined,
@@ -62,7 +68,7 @@ export const AppConfigProvider = ({ children }) => {
           throw new Error(`Unknown config key name "${key}"`)
         }
         if (appConfig[key] === undefined) {
-          return defaultAppConfig[key]
+          return initialAppConfig[key]
         }
         return appConfig[key]
       },
@@ -86,11 +92,7 @@ export const AppConfigProvider = ({ children }) => {
         setAppConfig({ ...appConfig, [key]: value })
       },
       clearInConfig: (keys) => {
-        let config = { ...appConfig }
-        for (const key of keys) {
-          config = { ...config, [`${key}`]: null }
-        }
-        setAppConfig(config)
+        setAppConfig(initialAppConfig)
       },
     }
   }, [appConfig, setAppConfig])

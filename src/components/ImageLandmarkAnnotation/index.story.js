@@ -55,24 +55,22 @@ storiesOf("ImageLandmarkAnnotation", module).add("Basic", () => (
           },
         },
       },
-      samples: [
-        {
-          // URL pointing to image
-          imageUrl:
-            "https://media.gettyimages.com/photos/dog-and-cat-picture-id151350785",
-          annotation: {
-            regionType: "keypoints",
-            keypointsDefinitionId: "human",
-            points: {
-              head: { x: 0.54, y: 0.2 },
-              sternum: { x: 0.57, y: 0.3 },
-              // when "obscured" is set to true, it means something is blocking or obstructing the visibility of this keypoint in the image
-              leftElbow: { x: 0.4, y: 0.39, obscured: true },
-              rightElbow: { x: 0.7, y: 0.32 },
-            },
+      sample: {
+        // URL pointing to image
+        imageUrl:
+          "https://media.gettyimages.com/photos/dog-and-cat-picture-id151350785",
+        annotation: {
+          regionType: "keypoints",
+          keypointsDefinitionId: "human",
+          points: {
+            head: { x: 0.54, y: 0.2 },
+            sternum: { x: 0.57, y: 0.3 },
+            // when "obscured" is set to true, it means something is blocking or obstructing the visibility of this keypoint in the image
+            leftElbow: { x: 0.4, y: 0.39, obscured: true },
+            rightElbow: { x: 0.7, y: 0.32 },
           },
         },
-      ],
+      },
     }}
   />
 ))

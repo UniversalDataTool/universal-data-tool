@@ -1,14 +1,14 @@
 import { useContext, useEffect } from "react"
 
-import useIsLabelOnlyMode from "../../utils/use-is-label-only-mode"
-import { useActiveDataset } from "../FileContext"
+import useIsLabelOnlyMode from "../../hooks/use-is-label-only-mode"
 import { useAppConfig } from "../AppConfig"
 import { LabelHelpContext } from "./LabelHelpProvider.js"
 import computeDatasetVariable from "../../utils/compute-dataset-variable"
+import useDataset from "../../hooks/use-dataset"
 
 export const useLabelHelp = () => {
   const isLabelOnlyMode = useIsLabelOnlyMode()
-  const { dataset } = useActiveDataset()
+  const [dataset] = useDataset()
   const {
     pricingConfig,
     myCredits,
@@ -40,7 +40,7 @@ export const useLabelHelp = () => {
   if (labelHelpDisabled)
     return { labelHelpEnabled: false, labelHelpError: "Disabled in config" }
   if (isLabelOnlyMode) return { labelHelpEnabled: false }
-  if (!hasLabelHelpAPIKey && dataset.samples.length < 100) {
+  if (!hasLabelHelpAPIKey && dataset?.samples?.length < 100) {
     return {
       labelHelpEnabled: false,
       labelHelpError: "Less than 100 samples",

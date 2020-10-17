@@ -9,7 +9,7 @@ import VideoSegmentation from "./"
 
 storiesOf("VideoSegmentation", module).add("Basic", () => (
   <VideoSegmentation
-    onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
+    onModifySample={action("onModifySample")}
     {...{
       interface: {
         type: "image_segmentation",
@@ -17,13 +17,10 @@ storiesOf("VideoSegmentation", module).add("Basic", () => (
         labels: ["valid", "invalid"],
         regionTypesAllowed: ["bounding-box", "polygon", "point"],
       },
-      samples: [
-        {
-          videoUrl:
-            "https://s3.amazonaws.com/asset.workaround.online/SampleVideo_1280x720_1mb.mp4",
-        },
-      ],
-      taskOutput: [],
+      sample: {
+        videoUrl:
+          "https://s3.amazonaws.com/asset.workaround.online/SampleVideo_1280x720_1mb.mp4",
+      },
     }}
   />
 ))

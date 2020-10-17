@@ -10,15 +10,14 @@ import DescriptionIcon from "@material-ui/icons/Description"
 import PetsIcon from "@material-ui/icons/Pets"
 import * as colors from "@material-ui/core/colors"
 import PasteUrlsDialog from "../PasteUrlsDialog"
-import ImportFromCognitoS3Dialog from "../ImportFromCognitoS3Dialog"
+// import ImportFromCognitoS3Dialog from "../ImportFromCognitoS3Dialog"
 import ImportFromS3Dialog from "../ImportFromS3Dialog"
 import UploadToS3Dialog from "../UploadToS3Dialog"
 import ImportTextSnippetsDialog from "../ImportTextSnippetsDialog"
-import useElectron from "../../utils/use-electron"
+import useElectron from "../../hooks/use-electron"
 import classnames from "classnames"
 import S3Icon from "./S3Icon"
 import isEmpty from "lodash/isEmpty"
-import { setIn } from "seamless-immutable"
 import useEventCallback from "use-event-callback"
 import ImportFromGoogleDriveDialog from "../ImportFromGoogleDriveDialog"
 import ImportUDTFileDialog from "../ImportUDTFileDialog"
@@ -26,12 +25,15 @@ import ImportToyDataset from "../ImportToyDatasetDialog"
 import ImportFromYoutubeUrls from "../ImportFromYoutubeUrls"
 import ImportFromCOCODialog from "../ImportFromCOCODialog"
 import { FaGoogleDrive, FaYoutube } from "react-icons/fa"
-import usePosthog from "../../utils/use-posthog"
+import usePosthog from "../../hooks/use-posthog"
 import promptAndGetSamplesFromLocalDirectory from "./prompt-and-get-samples-from-local-directory.js"
 import { useTranslation } from "react-i18next"
 import useAuth from "../../utils/auth-handlers/use-auth.js"
 import { useAppConfig } from "../AppConfig"
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary"
+import useInterface from "../../hooks/use-interface"
+import useAddSamples from "../../hooks/use-add-samples"
+import useDatasetProperty from "../../hooks/use-dataset-property"
 
 const ButtonBase = styled(MuiButton)({
   width: 240,
@@ -134,21 +136,16 @@ const Button = ({
   )
 }
 
-export default ({
-  // TODO remove file, onChangeFile
-  file,
-  onChangeFile,
-
-  dataset,
-  onChangeDataset,
-  isDesktop,
-  authConfig,
-  user,
-}) => {
+export default ({ isDesktop, authConfig, user }) => {
   const { t } = useTranslation()
   const [selectedDialog, changeDialog] = useState()
   const electron = useElectron()
   const { fromConfig } = useAppConfig()
+  const { iface } = useInterface()
+  const { updateUsedToyDataset } = useDatasetProperty("usedToyDataset")
+
+  const addSamples = useAddSamples()
+
   const onChangeDialog = async (dialog) => {
     switch (dialog) {
       case "upload-directory": {
@@ -161,14 +158,14 @@ export default ({
           return
         }
 
-        onChangeDataset(
-          setIn(
-            dataset,
-            ["samples"],
-            (dataset.samples || []).concat(localSamples)
-          ),
-          true
-        )
+        // onChangeDataset(
+        //   setIn(
+        //     dataset,
+        //     ["samples"],
+        //     (dataset.samples || []).concat(localSamples)
+        //   ),
+        //   true
+        // )
         return
       }
       default: {
@@ -180,20 +177,13 @@ export default ({
   const closeDialog = () => changeDialog(null)
 
   const onAddSamples = useEventCallback(async (samplesToAdd) => {
-    onChangeDataset(
-      setIn(dataset, ["samples"], (dataset.samples || []).concat(samplesToAdd))
-    )
+    await addSamples(samplesToAdd)
     closeDialog()
   })
 
   const onAddSamplesAsToyDataset = useEventCallback(async (samplesToAdd) => {
-    onChangeDataset(
-      setIn(
-        dataset,
-        ["samples"],
-        (dataset.samples || []).concat(samplesToAdd)
-      ).setIn(["usedToyDataset"], true)
-    )
+    await addSamples(samplesToAdd)
+    await updateUsedToyDataset(true)
     closeDialog()
   })
 
@@ -229,7 +219,7 @@ export default ({
             "text_classification",
             "text_entity_relations",
           ]}
-          type={dataset.interface.type}
+          type={iface?.type}
         >
           {t("import-text-snippets")}
         </Button>
@@ -252,7 +242,7 @@ export default ({
           Icon={S3Icon}
           dialog="import-from-s3"
           disabledReason={
-            fromConfig("auth.s3iam.access_key_id") ? null : "NEED AWS IAM AUTH"
+            fromConfig("auth.s3iam.accessKeyId") ? null : "NEED AWS IAM AUTH"
           }
         >
           {t("import-from-s3")}
@@ -261,12 +251,12 @@ export default ({
           Icon={S3Icon}
           dialog="upload-to-s3"
           disabledReason={
-            fromConfig("auth.s3iam.access_key_id") ? null : "NEED AWS IAM AUTH"
+            fromConfig("auth.s3iam.accessKeyId") ? null : "NEED AWS IAM AUTH"
           }
         >
           {t("upload-to-s3")}
         </Button>
-        {file && (
+        {/* {file && (
           <Button
             isDesktop={isDesktop}
             dialog="import-from-cognito-s3"
@@ -277,7 +267,7 @@ export default ({
           >
             {t("import-from-cognito-s3")}
           </Button>
-        )}
+        )} */}
         <Button
           isDesktop={isDesktop}
           dialog="google-drive-file-picker"
@@ -300,8 +290,8 @@ export default ({
         <ImportFromCOCODialog
           open={selectedDialog === "import-from-coco"}
           onClose={closeDialog}
-          dataset={dataset}
-          onChangeDataset={onChangeDataset}
+          // dataset={dataset}
+          // onChangeDataset={onChangeDataset}
         />
         <ImportTextSnippetsDialog
           open={selectedDialog === "import-text-snippets"}
@@ -315,28 +305,28 @@ export default ({
         />
         <ImportFromS3Dialog
           open={selectedDialog === "import-from-s3"}
-          onChangeFile={onChangeFile}
+          // onChangeFile={onChangeFile}
           onClose={closeDialog}
           user={user}
           onAddSamples={onAddSamples}
         />
         <UploadToS3Dialog
           open={selectedDialog === "upload-to-s3"}
-          onChangeFile={onChangeFile}
+          // onChangeFile={onChangeFile}
           onClose={closeDialog}
           user={user}
           onAddSamples={onAddSamples}
         />
-        {file && (
+        {/* {file && (
           <ImportFromCognitoS3Dialog
             file={file}
             open={selectedDialog === "import-from-cognito-s3"}
-            onChangeFile={onChangeFile}
+            // onChangeFile={onChangeFile}
             onClose={closeDialog}
             user={user}
             onAddSamples={onAddSamples}
           />
-        )}
+        )} */}
         <ImportFromGoogleDriveDialog
           open={selectedDialog === "google-drive-file-picker"}
           onClose={closeDialog}

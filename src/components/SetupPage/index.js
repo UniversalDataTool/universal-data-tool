@@ -13,16 +13,18 @@ import LiveTvIcon from "@material-ui/icons/LiveTv"
 import DeveloperBoardIcon from "@material-ui/icons/DeveloperBoard"
 import CodeIcon from "@material-ui/icons/Code"
 import BigInterfaceSelect from "../BigInterfaceSelect"
-import { setIn } from "seamless-immutable"
-import UniversalDataViewer from "../UniversalDataViewer"
-import RawJSONEditor from "../RawJSONEditor"
+import UniversalSampleEditor from "../UniversalSampleEditor"
+import DatasetJSONEditor from "../DatasetJSONEditor"
+import useInterface from "../../hooks/use-interface"
+import useSample from "../../hooks/use-sample"
 
 const noop = () => {}
 
-export default ({ dataset, onChange, onClearLabelData }) => {
-  const [currentTab, setTab] = useState(
-    dataset.interface.type ? "configure" : "datatype"
-  )
+export default ({ onClearLabelData }) => {
+  const { iface, updateInterface } = useInterface()
+  const { sample } = useSample(0)
+
+  const [currentTab, setTab] = useState(iface?.type ? "configure" : "datatype")
 
   return (
     <div>
@@ -41,44 +43,40 @@ export default ({ dataset, onChange, onClearLabelData }) => {
       </Box>
       {currentTab === "datatype" && (
         <BigInterfaceSelect
-          currentInterfaceType={dataset.interface?.type}
-          onChange={(newInterface) => {
-            onChange(setIn(dataset, ["interface"], newInterface))
+          key="interfaceSelect"
+          currentInterfaceType={iface?.type}
+          onChange={async (newInterface) => {
+            await updateInterface(newInterface)
             setTab("configure")
           }}
         />
       )}
       {currentTab === "configure" && (
         <ConfigureInterface
-          dataset={dataset}
-          onChange={(iface) => onChange(setIn(dataset, ["interface"], iface))}
+          key="configureInterface"
+          interface={iface}
+          onChange={updateInterface}
           isNotNested
         />
       )}
       {currentTab === "preview" && (
-        <UniversalDataViewer
+        <UniversalSampleEditor
+          key="preview"
           height={600}
           onExit={noop}
-          onSaveTaskOutputItem={noop}
-          dataset={{
-            ...dataset,
-            samples: dataset?.samples?.length
-              ? [dataset.samples[0]]
-              : [templateMap[dataset.interface?.type].dataset.samples[0]],
-          }}
+          onModifySample={noop}
+          interface={iface}
+          sampleIndex={0}
+          sample={sample || templateMap[iface?.type].dataset.samples[0]}
         />
       )}
       {currentTab === "advanced" && (
-        <AdvancedOptionsView onClearLabelData={onClearLabelData} />
-      )}
-      {currentTab === "json" && (
-        <RawJSONEditor
-          content={dataset}
-          onSave={(newDataset) => {
-            onChange(newDataset)
-          }}
+        <AdvancedOptionsView
+          key="advancedOptionsView"
+          onClearLabelData={onClearLabelData}
         />
       )}
+      {currentTab === "json" && <DatasetJSONEditor />}
     </div>
   )
 }

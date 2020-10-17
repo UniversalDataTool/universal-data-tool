@@ -8,7 +8,6 @@ import * as colors from "@material-ui/core/colors"
 import Checkbox from "@material-ui/core/Checkbox"
 import without from "lodash/without"
 import WorkspaceContainer from "../WorkspaceContainer"
-import useClobberedState from "../../utils/use-clobbered-state"
 
 const brightColors = [
   colors.blue[600],
@@ -73,22 +72,16 @@ const CheckButton = styled(Button)({
 const [emptyObj, emptyArr] = [{}, []]
 
 export const ImageClassification = ({
-  sampleIndex: globalSampleIndex,
+  sampleIndex,
   interface: iface,
-  samples = emptyArr,
+  sample,
   containerProps = emptyObj,
-  onSaveTaskOutputItem,
+  onModifySample,
 }) => {
-  // TODO remove legacy "availableLabels" support
-  if (iface.availableLabels && !iface.labels) {
-    iface.labels = iface.availableLabels
-  }
-
   const disableHotkeys = containerProps.disableHotkeys
 
   if (!iface.labels)
     throw new Error("No labels defined. Add some labels in Setup to continue.")
-  const [sampleIndex, setSampleIndex] = useClobberedState(globalSampleIndex, 0)
 
   const [enlargedLabel, changeEnlargedLabel] = useState(null)
   const [currentOutput, changeCurrentOutput] = useState(emptyArr)
@@ -100,28 +93,17 @@ export const ImageClassification = ({
     [iface.labels]
   )
 
-  const onDone = useEventCallback(() => {
+  const onDone = useEventCallback((output) => {
+    onModifySample({ ...sample, annotation: currentOutput })
     if (containerProps.onExit) containerProps.onExit()
   })
-  const onNextNoSave = useEventCallback(() => {
-    if (containerProps.onExit) {
-      containerProps.onExit("go-to-next")
-    }
-  })
-  const onNext = useEventCallback((newOutput) => {
-    onSaveTaskOutputItem(sampleIndex, newOutput || currentOutput)
-    if (setSampleIndex && sampleIndex !== samples.length - 1) {
-      setSampleIndex(sampleIndex + 1)
-    } else {
-      if (containerProps.onExit) containerProps.onExit("go-to-next")
-    }
+  const onNext = useEventCallback(() => {
+    onModifySample({ ...sample, annotation: currentOutput })
+    containerProps.onExit("go-to-next")
   })
   const onPrev = useEventCallback(() => {
-    if (setSampleIndex && sampleIndex > 0) {
-      setSampleIndex(sampleIndex - 1)
-    } else {
-      if (containerProps.onExit) containerProps.onExit("go-to-previous")
-    }
+    onModifySample({ ...sample, annotation: currentOutput })
+    containerProps.onExit("go-to-previous")
   })
 
   useEffect(() => {
@@ -134,7 +116,10 @@ export const ImageClassification = ({
   const onClickLabel = useEventCallback((label) => {
     changeEnlargedLabel(label)
     let newOutput
-    if ((currentOutput || []).includes(label.id)) {
+    if (
+      typeof currentOutput !== "string" &&
+      (currentOutput || []).includes(label.id)
+    ) {
       newOutput = without(currentOutput, label.id)
     } else {
       if (iface.allowMultiple) {
@@ -146,16 +131,17 @@ export const ImageClassification = ({
 
     changeCurrentOutput(newOutput)
     if (!iface.allowMultiple && newOutput.length > 0) {
-      onNext(newOutput)
+      onModifySample({ ...sample, annotation: newOutput })
+      containerProps.onExit("go-to-next")
     }
   })
 
   useEffect(() => {
-    let newOutput = samples[sampleIndex].annotation
+    let newOutput = sample?.annotation
     if (!newOutput) newOutput = []
     if (typeof newOutput === "string") newOutput = [newOutput]
     changeCurrentOutput(newOutput)
-  }, [sampleIndex, globalSampleIndex, samples])
+  }, [sampleIndex, sample])
 
   const [hotkeyMap, labelKeyMap] = useMemo(() => {
     if (disableHotkeys) return [{}, {}]
@@ -195,13 +181,12 @@ export const ImageClassification = ({
 
   return (
     <WorkspaceContainer
-      onNext={onNextNoSave}
+      {...containerProps}
+      onNext={onNext}
       onPrev={onPrev}
       onRemoveSample={containerProps.onRemoveSample}
       onClickHeaderItem={onDone}
-      numberOfSamples={samples.length}
       currentSampleIndex={sampleIndex}
-      globalSampleIndex={globalSampleIndex}
     >
       <Container
         style={{
@@ -210,7 +195,7 @@ export const ImageClassification = ({
         }}
       >
         <ImageContainer>
-          <Image src={samples[sampleIndex].imageUrl} />
+          <Image src={sample?.imageUrl} />
         </ImageContainer>
         <ButtonsContainer>
           {labels.map((label) => (

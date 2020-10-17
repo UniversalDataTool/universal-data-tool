@@ -15,10 +15,11 @@ import TableRow from "@material-ui/core/TableRow"
 import { useAppConfig } from "../AppConfig"
 import { useLabelHelp } from "./"
 import * as colors from "@material-ui/core/colors"
-import { useActiveDataset } from "../FileContext"
 import CircularProgress from "@material-ui/core/CircularProgress"
 import { setIn } from "seamless-immutable"
-import usePosthog from "../../utils/use-posthog"
+import usePosthog from "../../hooks/use-posthog"
+import useDatasetProperty from "../../hooks/use-dataset-property"
+import useDataset from "../../hooks/use-dataset"
 
 const Container = styled("div")({
   fontVariantNumeric: "tabular-nums",
@@ -43,6 +44,7 @@ const steps = ["setup", "running", "completed"]
 
 export default () => {
   const { fromConfig, setInConfig } = useAppConfig()
+  const [dataset, setDataset] = useDataset()
   const {
     labelHelpEnabled,
     labelHelpError,
@@ -53,10 +55,12 @@ export default () => {
     myCredits = () => 0,
   } = useLabelHelp()
   const [error, setError] = useState()
-  const { dataset, setDataset } = useActiveDataset()
+  const { labelHelp } = useDatasetProperty("labelHelp")
 
-  const [labelHelpInfo, setLabelHelpInfo] = useState(dataset.labelHelp || {})
-  const collabUrl = labelHelpInfo.url || (dataset.labelHelp || {}).url
+  const [labelHelpInfo, setLabelHelpInfo] = useState(labelHelp)
+  const collabUrl = labelHelpInfo?.url || (labelHelp || {}).url
+
+  console.log({ collabUrl })
 
   const posthog = usePosthog()
 

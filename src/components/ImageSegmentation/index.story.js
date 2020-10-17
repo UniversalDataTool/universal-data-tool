@@ -11,7 +11,7 @@ import ImageSegmentation from "./"
 storiesOf("ImageSegmentation", module)
   .add("Basic", () => (
     <ImageSegmentation
-      onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
+      onModifySample={action("onModifySample")}
       {...{
         interface: {
           type: "image_segmentation",
@@ -19,23 +19,17 @@ storiesOf("ImageSegmentation", module)
           labels: ["valid", "invalid"],
           regionTypesAllowed: ["bounding-box", "polygon", "point"],
         },
-        samples: [
-          {
-            imageUrl:
-              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
-            annotation: {
-              regionType: "bounding-box",
-              centerX: 0.5,
-              centerY: 0.5,
-              width: 0.25,
-              height: 0.25,
-            },
+        sample: {
+          imageUrl:
+            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
+          annotation: {
+            regionType: "bounding-box",
+            centerX: 0.5,
+            centerY: 0.5,
+            width: 0.25,
+            height: 0.25,
           },
-          {
-            imageUrl:
-              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg",
-          },
-        ],
+        },
       }}
     />
   ))
@@ -47,7 +41,7 @@ storiesOf("ImageSegmentation", module)
       }}
     >
       <ImageSegmentation
-        onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
+        onModifySample={action("onModifySample")}
         {...{
           interface: {
             type: "image_segmentation",
@@ -55,39 +49,7 @@ storiesOf("ImageSegmentation", module)
             labels: ["valid", "invalid"],
             regionTypesAllowed: ["bounding-box", "polygon", "point"],
           },
-          samples: [
-            {
-              imageUrl:
-                "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
-              annotation: {
-                regionType: "bounding-box",
-                centerX: 0.5,
-                centerY: 0.5,
-                width: 0.25,
-                height: 0.25,
-              },
-            },
-            {
-              imageUrl:
-                "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg",
-            },
-          ],
-        }}
-      />
-    </HotKeys>
-  ))
-  .add("full image segmentation", () => (
-    <ImageSegmentation
-      onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
-      {...{
-        interface: {
-          type: "image_pixel_segmentation",
-          description: "# Title\n\nLowercase",
-          labels: ["valid", "invalid"],
-          regionTypesAllowed: ["bounding-box", "polygon", "point"],
-        },
-        samples: [
-          {
+          sample: {
             imageUrl:
               "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
             annotation: {
@@ -97,12 +59,38 @@ storiesOf("ImageSegmentation", module)
               width: 0.25,
               height: 0.25,
             },
+            allowedArea: {
+              x: 0.5,
+              y: 0.5,
+              width: 0.5,
+              height: 0.5,
+            },
           },
-          {
-            imageUrl:
-              "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg",
+        }}
+      />
+    </HotKeys>
+  ))
+  .add("full image segmentation", () => (
+    <ImageSegmentation
+      onModifySample={action("onModifySample")}
+      {...{
+        interface: {
+          type: "image_pixel_segmentation",
+          description: "# Title\n\nLowercase",
+          labels: ["valid", "invalid"],
+          regionTypesAllowed: ["bounding-box", "polygon", "point"],
+        },
+        sample: {
+          imageUrl:
+            "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg",
+          annotation: {
+            regionType: "bounding-box",
+            centerX: 0.5,
+            centerY: 0.5,
+            width: 0.25,
+            height: 0.25,
           },
-        ],
+        },
       }}
     />
   ))

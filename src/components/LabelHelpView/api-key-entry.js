@@ -7,7 +7,7 @@ import { styled } from "@material-ui/core/styles"
 import { useAppConfig } from "../AppConfig"
 import SaveIcon from "@material-ui/icons/Save"
 import CircularProgress from "@material-ui/core/CircularProgress"
-import usePosthog from "../../utils/use-posthog"
+import usePosthog from "../../hooks/use-posthog"
 
 const Title = styled("div")({
   fontSize: 18,
@@ -47,6 +47,8 @@ export default () => {
         To use Label Help, enter your API key. You can{" "}
         <a
           href="https://labelhelp.universaldatatool.com"
+          // eslint-disable-next-line
+          target="_blank"
           onClick={() => posthog.capture("get_api_key_link_clicked")}
         >
           get an API key here

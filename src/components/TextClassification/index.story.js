@@ -11,7 +11,7 @@ storiesOf("TextClassification", module)
   .add("Basic", () => (
     <TextClassification
       containerProps={{ requireCompleteToPressNext: true }}
-      onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
+      onModifySample={action("onModifySample")}
       interface={{
         type: "text_classification",
         description: "Classify the person name into the correct house.",
@@ -28,16 +28,13 @@ storiesOf("TextClassification", module)
           },
         ],
       }}
-      samples={[
-        { document: "Harry", annotation: "gryffindor" },
-        { document: "Malfoy" },
-      ]}
+      sample={{ document: "Harry", annotation: "gryffindor" }}
     />
   ))
   .add("Multi", () => (
     <TextClassification
       containerProps={{ requireCompleteToPressNext: true }}
-      onSaveTaskOutputItem={action("onSaveTaskOutputItem")}
+      onModifySample={action("onModifySample")}
       interface={{
         type: "text_classification",
         description: "Classify the person name into the correct house.",
@@ -55,9 +52,6 @@ storiesOf("TextClassification", module)
           },
         ],
       }}
-      samples={[
-        { document: "Harry", annotation: ["slytherin", "gryffindor"] },
-        { document: "Malfoy" },
-      ]}
+      sample={{ document: "Harry", annotation: ["slytherin", "gryffindor"] }}
     />
   ))

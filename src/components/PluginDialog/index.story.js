@@ -15,7 +15,6 @@ storiesOf("PluginDialog", module).add("Basic", () => {
     removeAction,
     onSuccess,
   }) => {
-    console.log({ elm })
     elm.innerHTML = `
 
       Click the "Delete All Samples" button to delete all of your samples!

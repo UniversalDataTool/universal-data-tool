@@ -1,5 +1,5 @@
 import posthog from "posthog-js"
-import useElectron from "./use-electron"
+import useElectron from "../use-electron"
 
 const posthogMock = {
   opt_in_capturing: () => null,

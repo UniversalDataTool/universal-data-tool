@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import getTaskDescription from "../../utils/get-task-description.js"
 import SampleContainer from "../SampleContainer"
-import UniversalDataViewer from "../UniversalDataViewer"
+import UniversalSampleEditor from "../UniversalSampleEditor"
 import Button from "@material-ui/core/Button"
 import * as colors from "@material-ui/core/colors"
 import { styled } from "@material-ui/core/styles"
@@ -9,7 +9,6 @@ import InterfaceIcon from "../InterfaceIcon"
 import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight"
 import Checkbox from "@material-ui/core/Checkbox"
 import Box from "@material-ui/core/Box"
-import useClobberedState from "../../utils/use-clobbered-state"
 
 import { useTranslation } from "react-i18next"
 
@@ -29,39 +28,36 @@ const StyledButton = styled(Button)({
   marginTop: 8,
 })
 
-export const Composite = (props) => {
-  const [currentSampleIndex, changeCurrentSampleIndex] = useClobberedState(
-    props.sampleIndex,
-    0
-  )
-  const {
-    interface: { fields },
-  } = props
+export const Composite = ({
+  sample,
+  interface: iface,
+  onModifySample,
+  containerProps,
+  sampleIndex,
+}) => {
+  const { fields } = iface
   const [selectedField, changeSelectedField] = useState()
 
   const { t } = useTranslation()
 
   if (!fields) throw new Error("No fields defined. Try adding a field in Setup")
 
-  const sample = props.samples[currentSampleIndex]
-
   if (selectedField) {
     return (
-      <UniversalDataViewer
-        dataset={{
-          interface: selectedField.interface,
-          samples: [
-            {
-              ...sample,
-              annotation: (sample.annotation || {})[selectedField.fieldName],
-            },
-          ],
+      <UniversalSampleEditor
+        interface={selectedField.interface}
+        sample={{
+          ...sample,
+          annotation: (sample.annotation || {})[selectedField.fieldName],
         }}
         onExit={() => changeSelectedField(null)}
-        onSaveTaskOutputItem={(indexZero, output) => {
-          props.onSaveTaskOutputItem(currentSampleIndex, {
-            ...sample.annotation,
-            [selectedField.fieldName]: output,
+        onModifySample={(output) => {
+          onModifySample({
+            ...sample,
+            annotation: {
+              ...sample.annotation,
+              [selectedField.fieldName]: output,
+            },
           })
           changeSelectedField(null)
         }}
@@ -71,20 +67,9 @@ export const Composite = (props) => {
 
   return (
     <SampleContainer
-      {...props.containerProps}
-      currentSampleIndex={currentSampleIndex}
-      totalSamples={props.samples.length}
-      taskOutput={props.samples.map((s) => s.annotation)}
-      description={getTaskDescription(sample) || props.interface.description}
-      onChangeSample={(sampleIndex) => {
-        if (props.containerProps.onExit) {
-          props.containerProps.onExit(
-            sampleIndex > currentSampleIndex ? "go-to-next" : "go-to-previous"
-          )
-        } else {
-          changeCurrentSampleIndex(sampleIndex)
-        }
-      }}
+      {...containerProps}
+      currentSampleIndex={sampleIndex}
+      description={getTaskDescription(sample) || iface.description}
     >
       <Title>Fields</Title>
       {fields.map((field, index) => (
@@ -109,7 +94,7 @@ export const Composite = (props) => {
         </StyledButton>
       ))}
       <StyledButton
-        onClick={() => props.containerProps.onExit("go-to-next")}
+        onClick={() => containerProps.onExit("go-to-next")}
         fullWidth
         variant="outlined"
       >
