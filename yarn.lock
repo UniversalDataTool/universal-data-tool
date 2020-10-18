@@ -19739,10 +19739,10 @@ udt-collaboration-server@^1.0.7:
     rfc6902 "^4.0.1"
     yargs "^16.0.3"
 
-udt-dataset-managers@^1.0.9:
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/udt-dataset-managers/-/udt-dataset-managers-1.0.9.tgz#169c674bc14c58a4e791573165eb95c77080fd49"
-  integrity sha512-ubZWWp4JrgUB30i2kRD/bFpX5T8u6mI9MXPPWTfOEFi7e8UJc5coH7NOc3f2MfjbdD7kUdQMSn/zGEIMMDVlmA==
+udt-dataset-managers@^1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/udt-dataset-managers/-/udt-dataset-managers-1.0.10.tgz#eb98ff916a13c549139df23175e43dbfdaf90506"
+  integrity sha512-B/lvr7kR63HJZ2lnNyTxpyuqd/Ht5O1IGGTYJkmdCXiQMujt+olyKg5FM+ii10UFUVq9Jr8wX7Ic25bpjlwhEA==
   dependencies:
     axios "^0.20.0"
     rfc6902 "^4.0.1"
