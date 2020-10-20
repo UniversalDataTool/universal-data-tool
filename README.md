@@ -41,10 +41,10 @@ The Universal Data Tool is a web/desktop app for editing and annotating images, 
 [Follow our development on Youtube!](https://www.youtube.com/channel/UCgFkrRN7CLt7_iTa2WDjf2g)
 
 <!-- COMMUNITY-UPDATE:START !-->
-- [Community Update Video 7](https://youtu.be/glPPFgXibdw)
+- [Community Update Video 8](https://www.youtube.com/watch?v=IBWOaw0jMmM)
+- [Community Update Video 7](https://youtu.be/glPPFgXibdw) [(blog version)](https://universaldatatool.substack.com/p/build-your-dataset-from-coco)
 - [Community Update Video 6](https://youtu.be/a1EVx4nHLRs) [(blog version)](https://universaldatatool.substack.com/p/new-skeletalposelandmark-annotation)
 - [Community Update Video 5](https://youtu.be/Ag5kROqp8e8) [(blog version)](https://universaldatatool.substack.com/p/universal-data-tool-weekly-update-d77)
-- [Community Update Video 4](https://youtu.be/aQ-7OShkfIM) [(blog version)](https://universaldatatool.substack.com/p/universal-data-tool-weekly-update-d9c)
   <!-- COMMUNITY-UPDATE:END !-->
 
 ## Features
