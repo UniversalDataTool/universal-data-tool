@@ -1,9 +1,5 @@
 # Universal Data Tool
 
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/1910070/91648687-729a3b80-ea38-11ea-92f2-7ce94ae04da6.gif">
-</p>
-
 [![GitHub version](https://badge.fury.io/gh/UniversalDataTool%2Funiversal-data-tool.svg)](https://badge.fury.io/gh/UniversalDataTool%2Funiversal-data-tool)
 ![Master Branch](https://github.com/UniversalDataTool/universal-data-tool/workflows/Test/badge.svg)
 [![npm version](https://badge.fury.io/js/universal-data-tool.svg)](https://badge.fury.io/js/universal-data-tool)
@@ -14,15 +10,41 @@
 
 Try it out at [universaldatatool.com](https://universaldatatool.com) or [download it here](https://github.com/UniversalDataTool/universal-data-tool/releases).
 
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/1910070/91648687-729a3b80-ea38-11ea-92f2-7ce94ae04da6.gif">
+</p>
+
+<p align="center">
+  <b>
+  <a href="https://docs.universaldatatool.com">Docs</a> • <a href="https://universaldatatool.com">Website</a> • <a href="https://udt.dev">Playground</a> • <a href="https://docs.universaldatatool.com/integrate-with-any-web-page/integrate-with-the-javascript-library">Library Usage</a> • <a href="https://docs.universaldatatool.com/running-on-premise">On-Premise</a>
+  </b>
+</p>
+
 The Universal Data Tool is a web/desktop app for editing and annotating images, text, audio, documents and to view and edit any data defined in the extensible [.udt.json and .udt.csv standard](https://github.com/UniversalDataTool/udt-format).
-For video tutorials [visit our Youtube channel](https://www.youtube.com/channel/UCgFkrRN7CLt7_iTa2WDjf2g).
+
+## Supported Data
+
+<p align="center">
+    <a href="https://docs.universaldatatool.com/building-and-labeling-datasets/image-segmentation">Image Segmentation</a> • 
+    <a href="https://docs.universaldatatool.com/building-and-labeling-datasets/image-classification">Image Classification</a> • 
+    <a href="https://docs.universaldatatool.com/building-and-labeling-datasets/text-classification">Text Classification</a> • 
+    <a href="https://docs.universaldatatool.com/building-and-labeling-datasets/named-entity-recognition">Named Entity Recognition</a> • 
+    <a href="https://docs.universaldatatool.com/building-and-labeling-datasets/entity-relations-part-of-speech-tagging">Named Entity Relations / Part of Speech Tagging</a> • 
+    <a href="https://docs.universaldatatool.com/building-and-labeling-datasets/audio-transcription">Audio Transcription</a> • 
+    <a href="https://docs.universaldatatool.com/building-and-labeling-datasets/data-entry">Data Entry</a> • 
+    <a href="https://docs.universaldatatool.com/building-and-labeling-datasets/video-segmentation">Video Segmentation</a> • 
+    <a href="https://docs.universaldatatool.com/building-and-labeling-datasets/landmark-annotation">Landmark / Pose Annotation</a>
+</p>
+
+## Recent Updates
+
+[Follow our development on Youtube!](https://www.youtube.com/channel/UCgFkrRN7CLt7_iTa2WDjf2g)
 
 <!-- COMMUNITY-UPDATE:START !-->
 - [Community Update Video 7](https://youtu.be/glPPFgXibdw)
 - [Community Update Video 6](https://youtu.be/a1EVx4nHLRs) [(blog version)](https://universaldatatool.substack.com/p/new-skeletalposelandmark-annotation)
 - [Community Update Video 5](https://youtu.be/Ag5kROqp8e8) [(blog version)](https://universaldatatool.substack.com/p/universal-data-tool-weekly-update-d77)
 - [Community Update Video 4](https://youtu.be/aQ-7OShkfIM) [(blog version)](https://universaldatatool.substack.com/p/universal-data-tool-weekly-update-d9c)
-- [Community Update Video 3](https://www.youtube.com/watch?v=uQ1ITe88TM8&feature=youtu.be) [(blog version)](https://universaldatatool.substack.com/p/universal-data-tool-weekly-update)
   <!-- COMMUNITY-UPDATE:END !-->
 
 ## Features
@@ -60,19 +82,11 @@ For video tutorials [visit our Youtube channel](https://www.youtube.com/channel/
 
 Just visit [universaldatatool.com](https://universaldatatool.com)!
 
-_Trying to run the web app locally? Run `npm install` then `npm run start` after cloning this repository to start the web server. You can also run a server using `docker run -it -p 3000:3000 universaldatatool/universaldatatool`_
+_Trying to run the web app locally? Run `npm install` then `npm run start` after cloning this repository to start the web server.
 
 ### Desktop Application
 
 Download the latest release from the [releases page](https://github.com/UniversalDataTool/universal-data-tool/releases) and run the executable you downloaded.
-
-## Principles
-
-- Correctness of implementation of the .udt.json standard.
-- Implement entirety of the `.udt.json` and `.udt.csv` standards
-- Rely on external libraries which specialize in each type of annotation to enable the best tools to be used
-- Easy to use
-- Easy to integrate
 
 ## Contributing
 
