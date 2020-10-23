@@ -8,6 +8,7 @@ import getSampleFromUrl from "../PasteUrlsDialog/get-sample-from-url.js"
 import useIAMS3API from "../../utils/auth-handlers/use-iam-s3-api"
 
 export const ImportFromS3Dialog = ({ open, onClose, onAddSamples }) => {
+  const [error, setError] = useState()
   const { listBuckets, listBucketItemsAt } = useIAMS3API()
   const [s3Path, setS3Path] = useState("")
   const [{ options, optionsLoading }, setOptions] = useState({
@@ -17,26 +18,39 @@ export const ImportFromS3Dialog = ({ open, onClose, onAddSamples }) => {
     if (!open) return
     if (!listBuckets) return
     async function loadS3Path() {
+      const listedBuckets = await listBuckets()
+      if (listedBuckets.Error) {
+        setError(
+          `Error listing buckets: \nS3 Said: ${listedBuckets.Error.Message}`
+        )
+        return
+      }
       if (s3Path === "") {
         setOptions({
           optionsLoading: false,
-          options: (
-            await listBuckets()
-          ).ListAllMyBucketsResult.Buckets.Bucket.map((b) => ({
-            name: b.Name,
-            type: "bucket",
-          })),
+          options: listedBuckets.ListAllMyBucketsResult.Buckets.Bucket.map(
+            (b) => ({
+              name: b.Name,
+              type: "bucket",
+            })
+          ),
         })
       } else {
+        const itemsAtPathRes = await listBucketItemsAt(s3Path)
+        if (itemsAtPathRes.Error) {
+          setError(
+            `Error listing buckets at path: \nS3 Said: ${itemsAtPathRes.Error.Message}`
+          )
+          return
+        }
         setOptions({
           optionsLoading: false,
-          options: (
-            (await listBucketItemsAt(s3Path)).ListBucketResult.CommonPrefixes ||
-            []
-          ).map((a) => ({
-            name: a.Prefix.split("/").slice(-2).join("/"),
-            type: "directory",
-          })),
+          options: (itemsAtPathRes.ListBucketResult.CommonPrefixes || []).map(
+            (a) => ({
+              name: a.Prefix.split("/").slice(-2).join("/"),
+              type: "directory",
+            })
+          ),
         })
       }
     }
@@ -44,6 +58,21 @@ export const ImportFromS3Dialog = ({ open, onClose, onAddSamples }) => {
     // eslint-disable-next-line
   }, [s3Path, listBuckets, listBucketItemsAt, open])
   if (!open) return null
+
+  if (error) {
+    return (
+      <SimpleDialog
+        onClose={() => {
+          setError(null)
+        }}
+        open
+        title="Error"
+      >
+        <pre>{error}</pre>
+      </SimpleDialog>
+    )
+  }
+
   return (
     <SimpleDialog
       onClose={onClose}

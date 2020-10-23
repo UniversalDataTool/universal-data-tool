@@ -126,7 +126,7 @@
     "serve": "^11.3.2",
     "styled-components": "^5.0.0",
     "udt-collaboration-server": "^1.0.7",
-    "udt-dataset-managers": "^1.0.10",
+    "udt-dataset-managers": "^1.0.12",
     "udt-format": "0.0.1",
     "use-event-callback": "^0.1.0",
     "wavesurfer.js": "^3.3.3",
