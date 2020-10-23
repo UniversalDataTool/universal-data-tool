@@ -14,6 +14,7 @@ import Button from "@material-ui/core/Button"
 import { grey, blue, red } from "@material-ui/core/colors"
 import ReactMarkdown from "react-markdown"
 import { styled } from "@material-ui/core/styles"
+import { useTranslation } from "react-i18next"
 
 const StyledDialogTitle = styled(DialogTitle)({
   backgroundColor: grey[100],
@@ -40,6 +41,7 @@ export default ({
   actions = [],
 }) => {
   const [fullScreen, changeFullScreen] = useState(false)
+  const { t } = useTranslation()
   return (
     <Dialog open={open} onClose={onClose} fullScreen={fullScreen}>
       <StyledDialogTitle>
@@ -66,7 +68,7 @@ export default ({
       {!noActionBar && (
         <StyledDialogActions>
           <Button onClick={() => onClose()}>
-            <span style={{ color: grey[700], fontWeight: 500 }}>Close</span>
+          <span style={{ color: grey[700], fontWeight: 500 }}>{t("close")}</span>
           </Button>
           {actions.map((action, i) => (
             <Button disabled={action.disabled} key={i} onClick={action.onClick}>

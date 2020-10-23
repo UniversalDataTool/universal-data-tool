@@ -12,6 +12,7 @@ import useErrors from "../../hooks/use-errors.js"
 import Amplify from "aws-amplify"
 import { useAppConfig } from "../AppConfig"
 import * as colors from "@material-ui/core/colors"
+import { useTranslation } from "react-i18next"
 
 const useStyles = makeStyles({
   bigButton: {
@@ -126,8 +127,9 @@ const forms = {
 
 export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
   const c = useStyles()
+  const { t } = useTranslation()
   const [authProvider, setAuthProvider] = useState(null)
-  const [dialogTitle, setDialogTitle] = useState("Add Authentication")
+  const [dialogTitle, setDialogTitle] = useState(t("add-authentication"))
   const [errors, addError] = useErrors()
   const { appConfig, setAppConfig, fromConfig, setInConfig } = useAppConfig()
 
@@ -196,7 +198,7 @@ export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
               key={template.name}
               onClick={() => {
                 setAuthProvider(template.provider)
-                setDialogTitle(`Add Authentication for ${template.name}`)
+                setDialogTitle(`${t("add-authentication")} ${template.name}`)
               }}
               className={c.bigButton}
             >
@@ -210,9 +212,9 @@ export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
           ))}
         {authProvider === "cognito" && (
           <div className={c.howToSetupText}>
-            Check this wiki{" "}
+            {t("check-this-wiki")}{" "}
             <a href="https://github.com/UniversalDataTool/universal-data-tool/wiki/Cognito---Amplify-Authentication-Setup-Instructions">
-              guide for setting up AWS Cognito with the Universal Data Tool
+              {t("guide-to-set-up-cognito")}
             </a>
             .
           </div>
@@ -224,6 +226,7 @@ export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
             onQuestionChange={(questionId, newValue) => {
               setInConfig(questionId, newValue)
             }}
+            completeText={ t("complete") }
             onFinish={(answers) => {
               answers["provider"] = authProvider
               validateAuthProvider(answers)

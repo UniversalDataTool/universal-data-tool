@@ -22,6 +22,7 @@ import BrushButton from "../BrushButton"
 import useAuth from "../../utils/auth-handlers/use-auth.js"
 import SlackIcon from "./SlackIcon"
 import GitHubButton from "react-github-btn"
+import { useTranslation } from "react-i18next"
 
 const capitalize = (s) => {
   return s.charAt(0).toUpperCase() + s.slice(1)
@@ -100,6 +101,7 @@ const HeaderToolbar = ({
 }) => {
   const c = useStyles()
   const { authProvider, isLoggedIn, logout } = useAuth()
+  const { t } = useTranslation()
 
   return (
     <AppBar color="default" position="static">
@@ -159,12 +161,12 @@ const HeaderToolbar = ({
             }}
             className={c.headerButton}
           >
-            Login with {capitalize(authProvider)}
+            {t("login-with")}{" "}{capitalize(authProvider)}
           </Button>
         )}
         {isLoggedIn && (
           <Button onClick={logout} className={c.headerButton}>
-            Logout
+            {t("logout")}
           </Button>
         )}
         {!isSmall && !isWelcomePage && (
@@ -184,7 +186,7 @@ const HeaderToolbar = ({
               data-show-count="true"
               aria-label="Star UniversalDataTool/universal-data-tool on GitHub"
             >
-              Star
+              {t("star")}
             </GitHubButton>
           </Box>
         )}
