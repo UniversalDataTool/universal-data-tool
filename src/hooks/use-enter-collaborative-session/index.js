@@ -20,5 +20,7 @@ export default () => {
     if (queryParams.s) {
       goIntoCollaborativeSession(queryParams.s)
     }
-  }, [setActiveDatasetManager, fromConfig])
+    // Only run on first call (or when the dataset manager can be sent)
+    // eslint-disable-next-line
+  }, [setActiveDatasetManager])
 }
