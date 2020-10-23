@@ -266,7 +266,7 @@ export default ({
                 >
                   <Select
                     styles={languageSelectionFormStyle}
-                    defaultValue={languageOptions[0]}
+                    defaultValue={ languageOptions.filter((lang) => lang.value == i18n.language) }
                     options={languageOptions}
                     onChange={({ value }) => changeLanguage(value)}
                   />
@@ -275,7 +275,7 @@ export default ({
             </Grid>
             <Grid xs={12} sm={6} item>
               <ActionList>
-                <ActionTitle>Start</ActionTitle>
+                <ActionTitle>{t("start")}</ActionTitle>
                 <Action
                   onClick={() => {
                     posthog.capture("template_clicked", {
@@ -314,7 +314,7 @@ export default ({
                 {/* <Action>Open Folder</Action> */}
               </ActionList>
               <ActionList>
-                <ActionTitle>Recent</ActionTitle>
+                <ActionTitle>{t("recent")}</ActionTitle>
                 {recentItems.length === 0 ? (
                   <Actionless>{t("no-recent-files")}</Actionless>
                 ) : (
@@ -326,7 +326,7 @@ export default ({
                 )}
               </ActionList>
               <ActionList>
-                <ActionTitle>Help</ActionTitle>
+                <ActionTitle>{t("help")}</ActionTitle>
                 <Action href="https://github.com/UniversalDataTool/universal-data-tool/releases">
                   {t("downloading-and-installing-udt")}
                 </Action>
@@ -335,10 +335,10 @@ export default ({
                 </Action>
                 {/* <Action>Custom Data Entry</Action> */}
                 <Action href="https://github.com/UniversalDataTool/universal-data-tool">
-                  Github Repository
+                  {t("github-repository")}
                 </Action>
                 <Action href="https://www.youtube.com/channel/UCgFkrRN7CLt7_iTa2WDjf2g">
-                  Youtube Channel
+                  {t("youtube-channel")}
                 </Action>
 
                 {/* <Action href="#">
@@ -348,7 +348,7 @@ export default ({
             </Grid>
             <Grid xs={12} sm={6} item>
               <ActionList>
-                <ActionTitle>About</ActionTitle>
+                <ActionTitle>{t("about")}</ActionTitle>
                 <ActionText>
                   {t("start-page-about-first-paragraph")}
                   <br />

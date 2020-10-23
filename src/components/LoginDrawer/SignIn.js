@@ -121,7 +121,7 @@ export default ({ onUserChange, onRequireCompleteSignUp, onClose }) => {
           required
           fullWidth
           id="username"
-          label="Username"
+          label={t("username")}
           name="username"
           autoComplete="username"
           helperText={
@@ -138,7 +138,7 @@ export default ({ onUserChange, onRequireCompleteSignUp, onClose }) => {
           required
           fullWidth
           name="password"
-          label="Password"
+          label={t("password")}
           type="password"
           id="password"
           autoComplete="current-password"
@@ -147,7 +147,7 @@ export default ({ onUserChange, onRequireCompleteSignUp, onClose }) => {
         />
         <FormControlLabel
           control={<Checkbox value="remember" color="primary" />}
-          label="Remember me"
+          label={t("remember-me")}
         />
         <Button
           onClick={handleSignInClick}
