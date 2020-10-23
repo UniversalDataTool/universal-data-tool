@@ -6,8 +6,9 @@ import qs from "qs"
 
 export default () => {
   const { fromConfig } = useAppConfig()
-  const [, setActiveDatasetManager] = useActiveDatasetManager()
+  const [dm, setActiveDatasetManager] = useActiveDatasetManager()
   useEffect(() => {
+    if (dm) return
     const queryParams = qs.parse(window.location.search.substr(1))
     async function goIntoCollaborativeSession(sessionId) {
       const dm = new CollaborativeDatasetManager({
