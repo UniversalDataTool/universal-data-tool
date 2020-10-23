@@ -266,7 +266,9 @@ export default ({
                 >
                   <Select
                     styles={languageSelectionFormStyle}
-                    defaultValue={ languageOptions.filter((lang) => lang.value == i18n.language) }
+                    defaultValue={languageOptions.filter(
+                      (lang) => lang.value == i18n.language
+                    )}
                     options={languageOptions}
                     onChange={({ value }) => changeLanguage(value)}
                   />

@@ -161,7 +161,7 @@ const HeaderToolbar = ({
             }}
             className={c.headerButton}
           >
-            {t("login-with")}{" "}{capitalize(authProvider)}
+            {t("login-with")} {capitalize(authProvider)}
           </Button>
         )}
         {isLoggedIn && (
