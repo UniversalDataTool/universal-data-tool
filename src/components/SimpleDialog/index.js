@@ -68,7 +68,9 @@ export default ({
       {!noActionBar && (
         <StyledDialogActions>
           <Button onClick={() => onClose()}>
-          <span style={{ color: grey[700], fontWeight: 500 }}>{t("close")}</span>
+            <span style={{ color: grey[700], fontWeight: 500 }}>
+              {t("close")}
+            </span>
           </Button>
           {actions.map((action, i) => (
             <Button disabled={action.disabled} key={i} onClick={action.onClick}>

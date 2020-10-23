@@ -226,7 +226,7 @@ export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
             onQuestionChange={(questionId, newValue) => {
               setInConfig(questionId, newValue)
             }}
-            completeText={ t("complete") }
+            completeText={t("complete")}
             onFinish={(answers) => {
               answers["provider"] = authProvider
               validateAuthProvider(answers)
