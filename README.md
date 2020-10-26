@@ -8,7 +8,7 @@
 [![Slack Image](https://img.shields.io/badge/slack-Universal%20Data%20Tool-blue.svg?logo=slack)](https://join.slack.com/t/universaldatatool/shared_invite/zt-d8teykwi-iOSOUfxugKR~M4AJN6VL3g)
 [![Twitter Logo](https://img.shields.io/twitter/follow/UniversalDataTl?style=social)](https://twitter.com/UniversalDataTl)
 
-Try it out at [universaldatatool.com](https://universaldatatool.com) or [download it here](https://github.com/UniversalDataTool/universal-data-tool/releases).
+Try it out at [udt.dev](https://udt.dev), [download the desktop app](https://github.com/UniversalDataTool/universal-data-tool/releases) or [run on-premise](https://docs.universaldatatool.com/running-on-premise).
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/1910070/91648687-729a3b80-ea38-11ea-92f2-7ce94ae04da6.gif">
