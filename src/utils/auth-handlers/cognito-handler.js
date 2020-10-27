@@ -40,7 +40,6 @@ class CognitoHandler {
   setUser = (userHandle) => {
     this.user = userHandle
     if (userHandle.challengeName === "NEW_PASSWORD_REQUIRED") {
-      console.log('CHALL')
       this.isChallenged = true
     } else {
       this.isLoggedIn = Boolean(userHandle)
@@ -84,7 +83,7 @@ class CognitoHandler {
     isLoggedIn: this.isLoggedIn,
     authConfig: this.authConfig,
     isChallenged: this.isChallenged,
-    error: this.error
+    error: this.error,
   })
   handleCognitoError = (err) => {
     if (err.code === "UserNotConfirmedException") {
@@ -108,8 +107,7 @@ class CognitoHandler {
       this.error = err.code
       console.log("User not found message")
       // The error happens when the supplied username/username does not exist in the Cognito user pool
-    }
-    else if (err.code === "InvalidPasswordException") {
+    } else if (err.code === "InvalidPasswordException") {
       this.error = err.code
       console.log("Invalid password")
       // The error happens when the password is not conforming to Cognito Policy
@@ -123,97 +121,97 @@ class CognitoHandler {
   passwordValidator = (password) => {
     const validations = {
       isValid: true,
-      validationsMessages: []
+      validationsMessages: [],
     }
-    if(this.authConfig.Auth.requireLowercase){
+    if (this.authConfig.Auth.requireLowercase) {
       const lowercaseReg = new RegExp(/.*[a-z].*/)
-      if (lowercaseReg.test(password)){
+      if (lowercaseReg.test(password)) {
         validations.validationsMessages.push({
           isValid: true,
           key: "requireLowercase",
-          message: `Password must contain a lower case letter`
+          message: `Password must contain a lower case letter`,
         })
       } else {
         validations.isValid = false
         validations.validationsMessages.push({
           isValid: false,
           key: "requireLowercase",
-          message: `Password must contain a lower case letter`
+          message: `Password must contain a lower case letter`,
         })
       }
     }
-    if(this.authConfig.Auth.requireUppercase){
+    if (this.authConfig.Auth.requireUppercase) {
       const uppercaseReg = new RegExp(/.*[A-Z].*/)
-      if (uppercaseReg.test(password)){
+      if (uppercaseReg.test(password)) {
         validations.validationsMessages.push({
           isValid: true,
           key: "requireUppercase",
-          message: `Password must contain an upper case letter`
+          message: `Password must contain an upper case letter`,
         })
       } else {
         validations.isValid = false
         validations.validationsMessages.push({
           isValid: false,
           key: "requireUppercase",
-          message: `Password must contain an upper case letter`
+          message: `Password must contain an upper case letter`,
         })
       }
     }
-    if(this.authConfig.Auth.requireNumbers){
+    if (this.authConfig.Auth.requireNumbers) {
       const numbersReg = new RegExp(/.*[0-9].*/)
-      if (numbersReg.test(password)){
+      if (numbersReg.test(password)) {
         validations.validationsMessages.push({
           isValid: true,
           key: "requireNumbers",
-          message: `Password must contain a number`
+          message: `Password must contain a number`,
         })
       } else {
         validations.isValid = false
         validations.validationsMessages.push({
           isValid: false,
           key: "requireNumbers",
-          message: `Password must contain a number`
+          message: `Password must contain a number`,
         })
       }
     }
-    if(this.authConfig.Auth.requireSymbols){
+    if (this.authConfig.Auth.requireSymbols) {
       const symbolsReg = new RegExp(/.*[=+\-^$*.[\]{}()?"!@#%&/\\,><':;|_~`].*/)
-      if (symbolsReg.test(password)){
+      if (symbolsReg.test(password)) {
         validations.validationsMessages.push({
           isValid: true,
           key: "requireSymbols",
-          message: `Password must contain a special character`
+          message: `Password must contain a special character`,
         })
       } else {
         validations.isValid = false
         validations.validationsMessages.push({
           isValid: false,
           key: "requireSymbols",
-          message: `Password must contain a special character`
+          message: `Password must contain a special character`,
         })
       }
     }
-    if(Boolean(this.authConfig.Auth.minimumLength)){
-      if (password.length >= parseInt(this.authConfig.Auth.minimumLength)){
+    if (Boolean(this.authConfig.Auth.minimumLength)) {
+      if (password.length >= parseInt(this.authConfig.Auth.minimumLength)) {
         validations.validationsMessages.push({
           isValid: true,
           key: "minimumLength",
-          message: `Password must contain at least ${this.authConfig.Auth.minimumLength} characters`
+          message: `Password must contain at least ${this.authConfig.Auth.minimumLength} characters`,
         })
       } else {
         validations.isValid = false
         validations.validationsMessages.push({
           isValid: false,
           key: "minimumLength",
-          message: `Password must contain at least ${this.authConfig.Auth.minimumLength} characters`
+          message: `Password must contain at least ${this.authConfig.Auth.minimumLength} characters`,
         })
       }
-      if (password.length > 99){
+      if (password.length > 99) {
         validations.isValid = false
         validations.validationsMessages.push({
           isValid: false,
           key: "maximum",
-          message: `Password must not contain more than 99 characters`
+          message: `Password must not contain more than 99 characters`,
         })
       }
     }

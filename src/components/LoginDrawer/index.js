@@ -72,7 +72,7 @@ export default ({ loginDrawerOpen, onClose }) => {
     setState((prevState) => ({
       ...prevState,
       signingIn: true,
-      completeSignUp: false
+      completeSignUp: false,
     }))
   }
 
@@ -98,14 +98,10 @@ export default ({ loginDrawerOpen, onClose }) => {
               <LockOutlinedIcon />
             </Avatar>
             {state.signingIn && (
-              <SignIn
-                onRequireCompleteSignUp={() => toggleCompleteSignUp()}
-              />
+              <SignIn onRequireCompleteSignUp={() => toggleCompleteSignUp()} />
             )}
             {state.completeSignUp && (
-              <CompleteSignUp
-                toggleSignIn={toggleSignIn}
-              />
+              <CompleteSignUp toggleSignIn={toggleSignIn} />
             )}
           </div>
         </Grid>

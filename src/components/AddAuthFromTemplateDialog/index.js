@@ -95,9 +95,9 @@ const forms = {
             maxValue: 99,
             minValue: 6,
             text: "Cognito allows password length to be between 6 and 99",
-            type: "numeric"
-          }
-        ]
+            type: "numeric",
+          },
+        ],
       },
       {
         name: "auth.cognito.password.requireLowercase",

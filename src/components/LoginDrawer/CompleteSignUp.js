@@ -15,7 +15,13 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default () => {
-  const { user, completeSignUp, error, authConfig, handlerErrorVersion, passwordValidator } = useAuth()
+  const {
+    user,
+    completeSignUp,
+    error,
+    handlerErrorVersion,
+    passwordValidator,
+  } = useAuth()
   const requiredAttributesDict = {}
   const requiredAttributesErrorDict = {}
   user.challengeParam.requiredAttributes.forEach((requiredAttribute) => {
@@ -37,10 +43,10 @@ export default () => {
 
   useEffect(() => {
     if (error === "InvalidPasswordException") {
-      setState( prevState => ({
+      setState((prevState) => ({
         ...prevState,
         newPasswordNotValid: true,
-        newPasswordError: "Password does not conform to policy"
+        newPasswordError: "Password does not conform to policy",
       }))
     }
   }, [handlerErrorVersion, error, setState])
@@ -55,8 +61,6 @@ export default () => {
       _handleCantBeNull("checkAll")
     ) {
       completeSignUp(state.newPassword, state.requiredAttributesDict)
-    } else {
-      console.log("Something missing")
     }
   }
 
@@ -79,7 +83,7 @@ export default () => {
       [event.target.name]: event.target.value,
     })
 
-    if (event.target.name === "newPassword"){
+    if (event.target.name === "newPassword") {
       setPasswordValidation(passwordValidator(event.target.value))
     }
   }
@@ -153,20 +157,22 @@ export default () => {
           onChange={_handleTextFieldChange}
           helperText={state.newPasswordError || ""}
         />
-        {Boolean(passwordValidation) && (
-          passwordValidation.validationsMessages.map((message) => {
-            if (message.isValid){
-              return(
-                <div style={{color: "#19BF00"}} key={message.key}>✓ {message.message}</div>
+        {Boolean(passwordValidation) &&
+          passwordValidation.validationsMessages.map((message) => {
+            if (message.isValid) {
+              return (
+                <div style={{ color: "#19BF00" }} key={message.key}>
+                  ✓ {message.message}
+                </div>
               )
             } else {
-              return(
-                <div style={{color: "#DF3312"}} key={message.key}>✖ {message.message}</div>
+              return (
+                <div style={{ color: "#DF3312" }} key={message.key}>
+                  ✖ {message.message}
+                </div>
               )
             }
-            
-          })
-        )}
+          })}
         <TextField
           error={state.newPasswordNotEqualsConfirmation}
           variant="outlined"

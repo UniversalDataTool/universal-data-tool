@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }) => {
       completeSignUp: handler.completeSignUp,
       passwordValidator: handler.passwordValidator,
       handlerVersion,
-      handlerErrorVersion
+      handlerErrorVersion,
     }),
     [handler, handlerVersion, handlerErrorVersion]
   )
