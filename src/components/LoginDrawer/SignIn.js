@@ -44,7 +44,6 @@ export default ({ onRequireCompleteSignUp }) => {
   useEffect(() => {
     if (Boolean(user) && user.challengeName) {
       onRequireCompleteSignUp()
-      console.log(user)
     }
   }, [user, onRequireCompleteSignUp])
 
