@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Drawer from "@material-ui/core/Drawer"
 
@@ -9,6 +9,8 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward"
 import SignIn from "./SignIn"
 import CompleteSignUp from "./CompleteSignUp"
+
+import { useAuth } from "../../utils/auth-handlers/use-auth.js"
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -35,21 +37,42 @@ const useStyles = makeStyles((theme) => ({
 
 export default ({ loginDrawerOpen, onClose }) => {
   const classes = useStyles()
-  const [user, setUser] = useState({})
+
+  const { user, isLoggedIn, error, handlerErrorVersion } = useAuth()
 
   const [state, setState] = useState({
     signingIn: true,
     completeSignUp: false,
-    user: "",
+    user: user,
   })
 
-  const toggleCompleteSignUp = (user) => {
+  useEffect(() => {
+    if (isLoggedIn) {
+      onClose()
+      toggleSignIn()
+    }
+  }, [isLoggedIn, onClose])
+
+  useEffect(() => {
+    if (error === "NotAuthorizedException") {
+      toggleSignIn()
+    }
+  }, [error, handlerErrorVersion])
+
+  const toggleCompleteSignUp = () => {
     setState((prevState) => ({
       ...prevState,
       signingIn: false,
       completeSignUp: true,
-      user: user,
       requiredAttributes: user.challengeParam.requiredAttributes,
+    }))
+  }
+
+  const toggleSignIn = () => {
+    setState((prevState) => ({
+      ...prevState,
+      signingIn: true,
+      completeSignUp: false
     }))
   }
 
@@ -76,21 +99,12 @@ export default ({ loginDrawerOpen, onClose }) => {
             </Avatar>
             {state.signingIn && (
               <SignIn
-                onRequireCompleteSignUp={(user) => toggleCompleteSignUp(user)}
-                onUserChange={(user) => {
-                  setUser(user)
-                }}
-                onClose={onClose}
+                onRequireCompleteSignUp={() => toggleCompleteSignUp()}
               />
             )}
             {state.completeSignUp && (
               <CompleteSignUp
-                requiredAttributes={state.requiredAttributes}
-                user={user}
-                onClose={onClose}
-                onUserChange={(user) => {
-                  setUser(user)
-                }}
+                toggleSignIn={toggleSignIn}
               />
             )}
           </div>

@@ -21,6 +21,10 @@ export const AuthProvider = ({ children }) => {
     (state) => state + 1,
     0
   )
+  const [handlerErrorVersion, incHandlerErrorVersion] = useReducer(
+    (state) => state + 1,
+    0
+  )
 
   useEffect(() => {
     if (handler && handler.authProvider === authProvider) return
@@ -36,11 +40,15 @@ export const AuthProvider = ({ children }) => {
         incHandlerVersion()
         handler.hasChanged = false
       }
-    }, 1000)
+      if (handler.errorOccured) {
+        incHandlerErrorVersion()
+        handler.errorOccured = false
+      }
+    }, 100)
     return () => {
       clearInterval(interval)
     }
-  }, [handler, handlerVersion])
+  }, [handler, handlerVersion, handlerErrorVersion])
 
   const contextValue = useMemo(
     () => ({
@@ -50,9 +58,12 @@ export const AuthProvider = ({ children }) => {
       setUser: handler.setUser,
       logout: handler.logout,
       login: handler.login,
+      completeSignUp: handler.completeSignUp,
+      passwordValidator: handler.passwordValidator,
       handlerVersion,
+      handlerErrorVersion
     }),
-    [handler, handlerVersion]
+    [handler, handlerVersion, handlerErrorVersion]
   )
 
   return (
