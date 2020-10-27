@@ -85,6 +85,44 @@ const forms = {
         type: "text",
         isRequired: true,
       },
+      {
+        name: "auth.cognito.password.minimumLength",
+        title: "Minimum lenght of password",
+        type: "text",
+        isRequired: true,
+        validators: [
+          {
+            maxValue: 99,
+            minValue: 6,
+            text: "Cognito allows password length to be between 6 and 99",
+            type: "numeric"
+          }
+        ]
+      },
+      {
+        name: "auth.cognito.password.requireLowercase",
+        title: "Require a lowercase letter in password",
+        type: "boolean",
+        isRequired: true,
+      },
+      {
+        name: "auth.cognito.password.requireUppercase",
+        title: "Require a uppercase letter in password",
+        type: "boolean",
+        isRequired: true,
+      },
+      {
+        name: "auth.cognito.password.requireNumbers",
+        title: "Require a number in password",
+        type: "boolean",
+        isRequired: true,
+      },
+      {
+        name: "auth.cognito.password.requireSymbols",
+        title: "Require a symbol in password",
+        type: "boolean",
+        isRequired: true,
+      },
     ],
   },
   s3iam: {
@@ -157,6 +195,11 @@ export default ({ open, onClose, onSelect, onFinish, onAuthConfigured }) => {
           userPoolWebClientId: answers["auth.cognito.userPoolWebClientId"],
           mandatorySignIn: true,
           authenticationFlowType: "USER_PASSWORD_AUTH",
+          minimumLength: answers["auth.cognito.password.minimumLength"],
+          requireNumbers: answers["auth.cognito.password.requireNumbers"],
+          requireSymbols: answers["auth.cognito.password.requireSymbols"],
+          requireUppercase: answers["auth.cognito.password.requireUppercase"],
+          requireLowercase: answers["auth.cognito.password.requireLowercase"],
         },
         Storage: {
           AWSS3: {

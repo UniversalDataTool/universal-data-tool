@@ -1,7 +1,6 @@
-import React, { Fragment, useState } from "react"
+import React, { Fragment, useState, useEffect } from "react"
 import { Typography, TextField, Button } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
-import { Auth } from "aws-amplify"
 import { useAuth } from "../../utils/auth-handlers/use-auth.js"
 import { useTranslation } from "react-i18next"
 
@@ -15,11 +14,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default ({ requiredAttributes, onUserChange, onClose }) => {
-  const { user } = useAuth()
+export default () => {
+  const { user, completeSignUp, error, authConfig, handlerErrorVersion, passwordValidator } = useAuth()
   const requiredAttributesDict = {}
   const requiredAttributesErrorDict = {}
-  requiredAttributes.forEach((requiredAttribute) => {
+  user.challengeParam.requiredAttributes.forEach((requiredAttribute) => {
     requiredAttributesDict[requiredAttribute] = ""
     requiredAttributesErrorDict[requiredAttribute] = false
   })
@@ -32,8 +31,19 @@ export default ({ requiredAttributes, onUserChange, onClose }) => {
     requiredAttributesDict: requiredAttributesDict,
     requiredAttributesErrorDict: requiredAttributesErrorDict,
   })
+  const [passwordValidation, setPasswordValidation] = useState(null)
 
   const classes = useStyles()
+
+  useEffect(() => {
+    if (error === "InvalidPasswordException") {
+      setState( prevState => ({
+        ...prevState,
+        newPasswordNotValid: true,
+        newPasswordError: "Password does not conform to policy"
+      }))
+    }
+  }, [handlerErrorVersion, error, setState])
 
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1)
@@ -44,12 +54,10 @@ export default ({ requiredAttributes, onUserChange, onClose }) => {
       checkIfPasswordEqualsConfirmationPassword() &&
       _handleCantBeNull("checkAll")
     ) {
-      completeNewPassword()
+      completeSignUp(state.newPassword, state.requiredAttributesDict)
     } else {
       console.log("Something missing")
     }
-
-    /// completeNewPassword();
   }
 
   const _handleAttributesTextFieldChange = (event) => {
@@ -70,6 +78,10 @@ export default ({ requiredAttributes, onUserChange, onClose }) => {
       newPasswordNotEqualsConfirmation: false,
       [event.target.name]: event.target.value,
     })
+
+    if (event.target.name === "newPassword"){
+      setPasswordValidation(passwordValidator(event.target.value))
+    }
   }
 
   const checkIfPasswordEqualsConfirmationPassword = () => {
@@ -85,7 +97,7 @@ export default ({ requiredAttributes, onUserChange, onClose }) => {
   const _handleCantBeNull = (e) => {
     let allGood = true
     if (e === "checkAll") {
-      requiredAttributes.forEach((requiredAttribute) => {
+      user.challengeParam.requiredAttributes.forEach((requiredAttribute) => {
         if (state.requiredAttributesDict[requiredAttribute] === "") {
           setState({
             ...state,
@@ -119,21 +131,6 @@ export default ({ requiredAttributes, onUserChange, onClose }) => {
     return allGood
   }
 
-  function completeNewPassword() {
-    Auth.completeNewPassword(
-      user, // the Cognito User Object
-      state.newPassword, // the new password
-      state.requiredAttributesDict
-    )
-      .then((user) => {
-        onUserChange(user)
-        onClose()
-      })
-      .catch((err) => {
-        setState({ ...state, newPasswordError: err.toString() })
-      })
-  }
-
   const { t } = useTranslation()
 
   return (
@@ -156,6 +153,20 @@ export default ({ requiredAttributes, onUserChange, onClose }) => {
           onChange={_handleTextFieldChange}
           helperText={state.newPasswordError || ""}
         />
+        {Boolean(passwordValidation) && (
+          passwordValidation.validationsMessages.map((message) => {
+            if (message.isValid){
+              return(
+                <div style={{color: "#19BF00"}} key={message.key}>✓ {message.message}</div>
+              )
+            } else {
+              return(
+                <div style={{color: "#DF3312"}} key={message.key}>✖ {message.message}</div>
+              )
+            }
+            
+          })
+        )}
         <TextField
           error={state.newPasswordNotEqualsConfirmation}
           variant="outlined"
@@ -175,7 +186,7 @@ export default ({ requiredAttributes, onUserChange, onClose }) => {
               : ""
           }
         />
-        {requiredAttributes.map((requiredAttribute) => {
+        {user.challengeParam.requiredAttributes.map((requiredAttribute) => {
           return (
             <TextField
               error={state.requiredAttributesErrorDict[requiredAttribute]}
@@ -195,7 +206,7 @@ export default ({ requiredAttributes, onUserChange, onClose }) => {
                 state.requiredAttributesErrorDict[requiredAttribute]
                   ? `${capitalizeFirstLetter(
                       requiredAttribute.toString()
-                    )} can't be null`
+                    )} can't be empty`
                   : ""
               }
             />
