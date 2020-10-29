@@ -82,7 +82,7 @@ The Universal Data Tool is a web/desktop app for editing and annotating images, 
 
 Just visit [universaldatatool.com](https://universaldatatool.com)!
 
-_Trying to run the web app locally? Run `npm install` then `npm run start` after cloning this repository to start the web server.
+_Trying to run the web app locally? Run `npm install` then `npm run start` after cloning this repository to start the web server._
 
 ### Desktop Application
 
