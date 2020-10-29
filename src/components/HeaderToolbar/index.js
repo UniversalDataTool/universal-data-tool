@@ -154,7 +154,7 @@ const HeaderToolbar = ({
             ))}
           </Tabs>
         )}
-        {authProvider !== "none" && isWelcomePage && !isLoggedIn && (
+        {authProvider !== "none" && !isLoggedIn && (
           <Button
             onClick={() => {
               changeLoginDrawerOpen(true)
@@ -173,6 +173,7 @@ const HeaderToolbar = ({
           <IconButton
             href="https://github.com/UniversalDataTool/universal-data-tool"
             className={c.headerButton}
+            target="_blank"
           >
             <GithubIcon />
           </IconButton>
