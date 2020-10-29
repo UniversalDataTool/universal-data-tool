@@ -15,6 +15,7 @@ import ConfigureComposite from "../ConfigureComposite"
 import Configure3D from "../Configure3D"
 import ConfigureVideoSegmentation from "../ConfigureVideoSegmentation"
 import ConfigureImageLandmarkAnnotation from "../ConfigureImageLandmarkAnnotation"
+import ConfigureTimeSeries from "../ConfigureTimeSeries"
 
 const Container = styled("div")({
   padding: 24,
@@ -73,6 +74,9 @@ export const ConfigureInterface = ({
       )}
       {iface?.type === "image_landmark_annotation" && (
         <ConfigureImageLandmarkAnnotation iface={iface} onChange={onChange} />
+      )}
+      {iface?.type === "time_series" && (
+        <ConfigureTimeSeries iface={iface} onChange={onChange} />
       )}
     </Container>
   )
