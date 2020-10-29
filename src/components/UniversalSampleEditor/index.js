@@ -44,6 +44,7 @@ export const UniversalSampleViewer = ({
       onRemoveSample,
       height,
       disableHotkeys,
+      globalSampleIndex: sampleIndex
     }),
     [
       hideHeader,
@@ -53,6 +54,7 @@ export const UniversalSampleViewer = ({
       onExit,
       disableHotkeys,
       onRemoveSample,
+      sampleIndex
     ]
   )
 
