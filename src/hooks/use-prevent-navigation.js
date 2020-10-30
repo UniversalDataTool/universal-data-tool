@@ -1,6 +1,7 @@
 // @flow weak
 
 import { useEffect } from "react"
+import useIsDesktop from "../hooks/use-is-desktop"
 
 function preventNavigation(e) {
   var confirmationMessage =
@@ -12,12 +13,15 @@ function preventNavigation(e) {
 }
 
 export default (shouldPreventNavigation = true) => {
+  const isDesktop = useIsDesktop()
+
   useEffect(() => {
+    if (isDesktop) return
     if (!shouldPreventNavigation) return
     if (window.location.origin.includes("localhost")) return
     window.addEventListener("beforeunload", preventNavigation)
     return () => {
       window.removeEventListener("beforeunload", preventNavigation)
     }
-  }, [shouldPreventNavigation])
+  }, [shouldPreventNavigation, isDesktop])
 }

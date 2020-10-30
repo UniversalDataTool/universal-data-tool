@@ -31,6 +31,7 @@ export const TextEntityRelations = ({
       key={sampleIndex}
       titleContent={<Box paddingLeft={4}>Sample {sampleIndex}</Box>}
       type="label-relationships"
+      separatorRegex={iface?.wordSplitRegex}
       document={sample?.document}
       entityLabels={iface?.entityLabels}
       relationshipLabels={iface?.relationLabels}

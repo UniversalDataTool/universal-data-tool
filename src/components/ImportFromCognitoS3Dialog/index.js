@@ -1,39 +1,40 @@
-// @flow weak
-import React, { useState, useEffect, useRef, useCallback } from "react"
+import React, { useEffect, useRef, useState, useCallback } from "react"
 import SimpleDialog from "../SimpleDialog"
 import DataTable from "react-data-table-component"
-import Radio from "@material-ui/core/Radio"
-import FormControl from "@material-ui/core/FormControl"
-import FormLabel from "@material-ui/core/FormLabel"
-import RadioGroup from "@material-ui/core/RadioGroup"
-import FormControlLabel from "@material-ui/core/FormControlLabel"
-import { Storage } from "aws-amplify"
+import useDataset from "../../hooks/use-dataset"
 import isEmpty from "lodash/isEmpty"
-import { useLocalStorage } from "react-use"
-import IconButton from "@material-ui/core/IconButton"
-import SettingsIcon from "@material-ui/icons/Settings"
-import StorageIcon from "@material-ui/icons/Storage"
-import Button from "@material-ui/core/Button"
-import GetAnnotationFromAFolderAWS from "./get-annotation-from-aws"
-import GetImageFromAFolderAWS from "./get-images-from-aws"
-import setButtonNameAddSample from "./set-button-add-sample-name"
-import * as datasetHelper from "../../utils//dataset-helper"
+import datasetManagerCognito from "udt-dataset-managers/dist/CognitoDatasetManager"
+import useAuth from "../../utils/auth-handlers/use-auth"
 import setTypeOfFileToLoadAndDisable from "./set-type-of-file-to-load-and-disable"
 import initConfigImport from "./init-config-import"
-import setAnnotationFromAws from "./set-annotation-from-aws"
-import useAuth from "../../utils/auth-handlers/use-auth.js"
+import datasetHasChanged from "../../utils//dataset-helper/get-files-differences"
+import setUrl from "./set-url"
+import { setIn } from "seamless-immutable"
+import {
+  Settings as SettingsIcon,
+  Storage as StorageIcon,
+} from "@material-ui/icons/"
+import {
+  Radio,
+  RadioGroup,
+  FormControl,
+  FormControlLabel,
+  Button,
+  FormLabel,
+  IconButton,
+} from "@material-ui/core/"
 
 const selectedStyle = { color: "DodgerBlue" }
+
 const tableStyle = {
   marginLeft: "auto",
   marginRight: "auto",
   width: "100%",
 }
-const expandedDataColumns = [
-  { name: "Data", selector: "data", sortable: true },
+const expandedAssetsColumns = [
+  { name: "Assets", selector: "assets", sortable: true },
   { name: "Last Modified", selector: "lastModified", sortable: true },
 ]
-
 const expandedAnnotationsColumns = [
   { name: "Annotations", selector: "annotation" },
   { name: "Last Modified", selector: "lastModified", sortable: true },
@@ -56,7 +57,7 @@ const customStyles = {
 }
 
 const ExpandedRow = ({ data }) => {
-  const { rowData, rowAnnotations } = data
+  const { rowAssets, rowAnnotations } = data
   return (
     <>
       <DataTable
@@ -70,8 +71,8 @@ const ExpandedRow = ({ data }) => {
         noHeader
         columns={expandedAnnotationsColumns}
         data={rowAnnotations}
-        noDataComponent='Make sure the project has "annotations" folder'
-        pagination={rowData.length > 10}
+        noDataComponent='Make sure the project has "samples" folder'
+        pagination={rowAnnotations.length > 10}
         paginationPerPage={10}
         paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
         customStyles={customStyles}
@@ -85,10 +86,10 @@ const ExpandedRow = ({ data }) => {
         dense
         striped
         noHeader
-        columns={expandedDataColumns}
-        data={rowData}
+        columns={expandedAssetsColumns}
+        data={rowAssets}
         noDataComponent={'Make sure the project has "data" folder'}
-        pagination={rowData.length > 10}
+        pagination={rowAssets.length > 10}
         paginationPerPage={10}
         paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
         customStyles={customStyles}
@@ -97,83 +98,46 @@ const ExpandedRow = ({ data }) => {
   )
 }
 
-export default ({ file, open, onClose, onAddSamples, onChangeFile }) => {
-  const { authProvider, user, authConfig } = useAuth()
-  const [textButtonAdd, changetextButtonAdd] = useState("Add Samples")
-  const [s3Content, changeS3Content] = useState(null)
-  const [dataForTable, changeDataForTable] = useState(null)
-  const [folderToFetch, setFolderToFetch] = useState("")
-
-  const [configImport, setConfigImport] = useLocalStorage(
-    "configImport",
-    initConfigImport(file)
-  )
+export default ({ open, onClose, onAddSamples }) => {
+  const [dm, setDm] = useState(null)
+  const [oldData] = useDataset()
+  const { authConfig } = useAuth()
+  const [projects, setProjects] = useState(null)
+  const [projectToFetch, setProjectToFetch] = useState("")
+  const [configImport, setConfigImport] = useState(initConfigImport(oldData))
   const lastObjectRef = useRef({})
+
   const hasProjectStarted = useCallback(() => {
-    if (authProvider !== "cognito") return
+    if (!open) return
     if (
-      isEmpty(file) ||
-      isEmpty(file.content) ||
-      (isEmpty(file.content.interface) && isEmpty(file.content.samples))
+      isEmpty(oldData) ||
+      (isEmpty(oldData.interface) && isEmpty(oldData.samples))
     )
       return false
     return true
-  }, [file, authProvider])
+  }, [oldData, open])
 
   useEffect(() => {
-    if (authProvider !== "cognito") return
-    if (file === lastObjectRef.current) return
+    if (oldData === lastObjectRef.current) return
     var configToSet = configImport
-    var changes = datasetHelper.fileHasChanged(lastObjectRef.current, file)
-    if (changes.content.interface.type || changes.content.samples) {
-      if (lastObjectRef.current !== {})
-        configToSet = setTypeOfFileToLoadAndDisable(configToSet, file)
+    const changes = datasetHasChanged(lastObjectRef.current, oldData)
+    if (changes.interface.type || changes.samples) {
+      configToSet = setTypeOfFileToLoadAndDisable(configToSet, oldData)
     }
     setConfigImport({
       ...configToSet,
       projectStarted: hasProjectStarted(),
-      loadProjectIsSelected: hasProjectStarted()
-        ? false
-        : setConfigImport.loadProjectIsSelected,
     })
-    lastObjectRef.current = file
-  }, [file, configImport, setConfigImport, hasProjectStarted, authProvider])
-
-  const handleAddSample = async () => {
-    var samples = await GetImageFromAFolderAWS(
-      s3Content,
-      folderToFetch,
-      configImport,
-      authConfig
-    )
-    var json = null
-    if (configImport.loadProjectIsSelected) {
-      json = await GetAnnotationFromAFolderAWS(
-        s3Content,
-        samples,
-        folderToFetch,
-        authConfig
-      )
-    }
-
-    if (
-      isEmpty(json) ||
-      isEmpty(json.content) ||
-      isEmpty(json.content.samples) ||
-      isEmpty(json.fileName)
-    ) {
-      onAddSamples(samples)
-    } else {
-      file = setAnnotationFromAws(file, json, configImport)
-      onChangeFile(file, true)
-      onAddSamples([])
-    }
-  }
+    console.log("changes")
+    console.log(configImport)
+    lastObjectRef.current = oldData
+  }, [oldData, configImport, setConfigImport, hasProjectStarted])
 
   const handleRowSelected = (whatsChanging) => {
+    if (!open) return
     if (!isEmpty(whatsChanging.selectedRows[0])) {
-      setFolderToFetch(whatsChanging.selectedRows[0].folder)
-      changeDataForTable((prevState) =>
+      setProjectToFetch(whatsChanging.selectedRows[0])
+      setProjects((prevState) =>
         prevState.map((row) => {
           if (whatsChanging.selectedRows[0].id === row.id) {
             row.isSelected = true
@@ -184,87 +148,100 @@ export default ({ file, open, onClose, onAddSamples, onChangeFile }) => {
         })
       )
     } else {
-      setFolderToFetch(null)
-      changeDataForTable((prevState) =>
-        prevState.map((row) => {
-          row.isSelected = false
-          return row
-        })
-      )
+      setProjectToFetch(null)
     }
   }
-  function changeLoadProjectIsSelected() {
+
+  const loadAssetsOrAnnotations = () => {
     setConfigImport({
       ...configImport,
-      loadProjectIsSelected: !configImport.loadProjectIsSelected,
+      loadAssetsIsSelected: !configImport.loadAssetsIsSelected,
     })
   }
 
-  useEffect(() => {
-    var textToSet = setButtonNameAddSample(
-      configImport.loadProjectIsSelected,
-      configImport.typeOfFileToLoad,
-      dataForTable
+  const getProjects = async () => {
+    if (!open) return
+    if (!dm) return
+    if (!(await dm.isReady())) return
+    var dataFolder = Array.from(await dm.getProjects())
+
+    var data = await Promise.all(
+      dataFolder.map(async (obj, index) => {
+        const folder = obj
+        const rowAnnotationsContent = await dm.getListSamples({
+          projectName: obj,
+        })
+        const rowAssetsContent = await dm.getListAssets({
+          projectName: obj,
+        })
+        return {
+          id: `${index}`,
+          folder: folder,
+          rowAnnotations: rowAnnotationsContent.map((obj) => {
+            return {
+              annotation: obj.split("/samples/")[1],
+            }
+          }),
+          rowAssets: rowAssetsContent.map((obj) => {
+            return {
+              assets: obj.split("/assets/")[1],
+            }
+          }),
+          rowAnnotationsUrl: rowAnnotationsContent,
+          rowAssetsUrl: rowAssetsContent,
+          isSelected: false,
+        }
+      })
     )
-    changetextButtonAdd(textToSet)
-  }, [
-    configImport.loadProjectIsSelected,
-    configImport.typeOfFileToLoad,
-    dataForTable,
-  ])
+    setProjects(data)
+  }
+  const setProject = async () => {
+    if (!open) return
+    if (!dm) return
+    if (!(await dm.isReady())) return
+    dm.setProject(projectToFetch.folder)
+  }
+  useEffect(() => {
+    if (!open) return
+    if (!authConfig) return
+    if (!dm) setDm(new datasetManagerCognito({ authConfig }))
+  }, [open, authConfig, dm])
 
   useEffect(() => {
-    if (isEmpty(user)) {
-      changeS3Content(null)
-    } else if (!isEmpty(authConfig)) {
-      Storage.list("", { level: "private" })
-        .then((result) => {
-          changeS3Content(result)
-          let _dataForTable = result
-            .filter((obj) => {
-              return obj.key.endsWith("/") & (obj.key.split("/").length === 2)
-            })
-            .map((obj, index) => {
-              const folder = obj.key.split("/")[0]
-              const rowDataContent = result
-                .filter((obj) => {
-                  return (
-                    obj.key.startsWith(`${folder}/data/`) &
-                    !obj.key.endsWith("/")
-                  )
-                })
-                .map((obj) => {
-                  return {
-                    data: obj.key.split("/data/")[1],
-                    lastModified: obj.lastModified.toDateString(),
-                  }
-                })
-              const rowAnnotationsContent = result
-                .filter((obj) => {
-                  return (
-                    obj.key.startsWith(`${folder}/annotations/`) &
-                    !obj.key.endsWith("/")
-                  )
-                })
-                .map((obj) => {
-                  return {
-                    annotation: obj.key.split("/annotations/")[1],
-                    lastModified: obj.lastModified.toDateString(),
-                  }
-                })
-              return {
-                id: `${index}`,
-                folder: folder,
-                rowData: rowDataContent,
-                rowAnnotations: rowAnnotationsContent,
-                isSelected: true,
-              }
-            })
-          changeDataForTable(_dataForTable)
-        })
-        .catch((err) => console.log(err))
+    getProjects()
+    // eslint-disable-next-line
+  }, [dm])
+
+  useEffect(() => {
+    setProject()
+    // eslint-disable-next-line
+  }, [projectToFetch])
+  const createJsonFromAsset = async () => {
+    var jsons = await Promise.all(
+      projectToFetch.rowAssetsUrl.map(async (obj) => {
+        var url = await dm.getDataUrl(obj.split("/assets/")[1])
+        var json = setUrl(url, configImport)
+        if (json) json = setIn(json, ["_id"], obj.split("/assets/")[1])
+        return json
+      })
+    )
+    onAddSamples(jsons)
+  }
+
+  const createJsonFromAnnotation = async () => {
+    var jsons = await dm.readJSONAllSample(projectToFetch.rowAnnotationsUrl)
+    onAddSamples(jsons)
+  }
+
+  const handleAddSample = async () => {
+    if (!projectToFetch) return
+    if (configImport.loadAssetsIsSelected) {
+      createJsonFromAsset()
+    } else {
+      createJsonFromAnnotation()
     }
-  }, [user, authConfig])
+  }
+
   return (
     <SimpleDialog
       title="Select Project"
@@ -272,45 +249,40 @@ export default ({ file, open, onClose, onAddSamples, onChangeFile }) => {
       onClose={onClose}
       actions={[
         {
-          text: textButtonAdd,
+          text: "Take samples from project",
           onClick: () => {
             handleAddSample()
           },
-          disabled: configImport.contentDialogBoxIsSetting,
         },
       ]}
     >
+      {console.log("render")}
       <table style={tableStyle}>
         <tbody>
           <tr>
             <th>
-              {configImport.loadProjectIsSelected ? (
+              {configImport.loadAssetsIsSelected ? (
                 <Button
                   style={selectedStyle}
-                  onClick={changeLoadProjectIsSelected}
+                  onClick={loadAssetsOrAnnotations}
                   disabled
                 >
-                  Load Project
+                  Load Assets
                 </Button>
               ) : (
-                <Button
-                  onClick={changeLoadProjectIsSelected}
-                  disabled={configImport.projectStarted}
-                >
-                  Load Project
-                </Button>
+                <Button onClick={loadAssetsOrAnnotations}>Load Assets</Button>
               )}
-              {configImport.loadProjectIsSelected ? (
-                <Button onClick={changeLoadProjectIsSelected}>
-                  Load Samples
+              {configImport.loadAssetsIsSelected ? (
+                <Button onClick={loadAssetsOrAnnotations}>
+                  Load Annotations
                 </Button>
               ) : (
                 <Button
                   style={selectedStyle}
-                  onClick={changeLoadProjectIsSelected}
+                  onClick={loadAssetsOrAnnotations}
                   disabled
                 >
-                  Load Samples
+                  Load Annotations
                 </Button>
               )}
               <IconButton
@@ -331,7 +303,7 @@ export default ({ file, open, onClose, onAddSamples, onChangeFile }) => {
           </tr>
 
           {!configImport.contentDialogBoxIsSetting ? (
-            !isEmpty(dataForTable) && (
+            !isEmpty(projects) && (
               <tr>
                 <th>
                   <DataTable
@@ -347,8 +319,8 @@ export default ({ file, open, onClose, onAddSamples, onChangeFile }) => {
                     columns={columns}
                     onSelectedRowsChange={handleRowSelected}
                     selectableRowSelected={(row) => row.isSelected}
-                    data={dataForTable}
-                    pagination={dataForTable.length > 10}
+                    data={projects}
+                    pagination={projects.length > 10}
                     paginationPerPage={10}
                     paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
                   />
@@ -358,7 +330,7 @@ export default ({ file, open, onClose, onAddSamples, onChangeFile }) => {
           ) : (
             <tr>
               <th>
-                {configImport.loadProjectIsSelected ? (
+                {!configImport.loadAssetsIsSelected ? (
                   <FormControl component="fieldset">
                     <FormLabel component="legend">
                       Annotation processing
