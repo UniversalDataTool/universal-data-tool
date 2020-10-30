@@ -23,5 +23,5 @@ export default (shouldPreventNavigation = true) => {
     return () => {
       window.removeEventListener("beforeunload", preventNavigation)
     }
-  }, [shouldPreventNavigation])
+  }, [shouldPreventNavigation, isDesktop])
 }
