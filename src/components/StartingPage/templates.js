@@ -12,6 +12,7 @@ import OndemandVideoIcon from "@material-ui/icons/OndemandVideo"
 import ContactSupport from "@material-ui/icons/ContactSupport"
 import LowPriority from "@material-ui/icons/LowPriority"
 import AccessibilityNewIcon from "@material-ui/icons/AccessibilityNew"
+import TimelineIcon from "@material-ui/icons/Timeline"
 
 export const templates = [
   {
@@ -418,6 +419,32 @@ export const templates = [
         {
           imageUrl:
             "https://media.istockphoto.com/photos/businesswoman-picture-id918002786",
+        },
+      ],
+    },
+  },
+  {
+    name: "Time Series",
+    Icon: TimelineIcon,
+    dataset: {
+      interface: {
+        type: "time_series",
+        timeFormat: "dates",
+        enabledTools: ["create-durations", "label-durations"],
+        durationLabels: ["@seveibar is speaking"],
+      },
+      samples: [
+        {
+          timeData: [
+            { time: 0, value: 0 },
+            { time: 500, value: 0.75 },
+            { time: 1000, value: 1 },
+          ],
+          annotation: {
+            durations: [
+              { start: 500, end: 2000, label: "@seveibar is speaking" },
+            ],
+          },
         },
       ],
     },

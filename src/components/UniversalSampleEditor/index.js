@@ -10,6 +10,7 @@ import ImageClassification from "../ImageClassification"
 import VideoSegmentation from "../VideoSegmentation"
 import AudioTranscription from "../AudioTranscription"
 import ImageLandmarkAnnotation from "../ImageLandmarkAnnotation"
+import TimeSeries from "../TimeSeries"
 import DataEntry from "../DataEntry"
 import EmptySampleContainer from "../EmptySampleContainer"
 import Composite from "../Composite"
@@ -188,6 +189,17 @@ export const UniversalSampleViewer = ({
     case "image_landmark_annotation":
       return (
         <ImageLandmarkAnnotation
+          containerProps={containerProps}
+          sampleIndex={sampleIndex}
+          interface={iface}
+          sample={sample}
+          onModifySample={onModifySample}
+          onExit={onExit}
+        />
+      )
+    case "time_series":
+      return (
+        <TimeSeries
           containerProps={containerProps}
           sampleIndex={sampleIndex}
           interface={iface}
