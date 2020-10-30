@@ -131,7 +131,7 @@ export default ({
                 if (
                   iface.type !== newDataset.interface.type &&
                   iface.type !== "empty" &&
-                  summary.samples.some((s) => s.hasAnnotation)
+                  summary.samples.some((s) => s?.hasAnnotation)
                 ) {
                   addToast(
                     "Changing label types can cause label data issues. You must clear all label data first.",
