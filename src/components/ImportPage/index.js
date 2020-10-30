@@ -158,14 +158,7 @@ export default ({ isDesktop, authConfig, user }) => {
           return
         }
 
-        // onChangeDataset(
-        //   setIn(
-        //     dataset,
-        //     ["samples"],
-        //     (dataset.samples || []).concat(localSamples)
-        //   ),
-        //   true
-        // )
+        addSamples(localSamples)
         return
       }
       default: {
