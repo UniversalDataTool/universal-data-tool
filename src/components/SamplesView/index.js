@@ -60,7 +60,8 @@ export const SamplesView = ({
         <SampleCounter>
           {(summary.samples || []).length} Samples
           <br />
-          {(summary.samples || []).filter((s) => s.hasAnnotation).length} Labels
+          {(summary.samples || []).filter((s) => s?.hasAnnotation).length}{" "}
+          Labels
         </SampleCounter>
       </Box>
       <Box paddingTop={2} />

@@ -145,9 +145,9 @@ export default ({ samples, onClick, tablePaginationPadding = 0 }) => {
             onClick={onClickMemo}
             key={i}
             index={i}
-            completed={samples[i].hasAnnotation}
+            completed={samples[i]?.hasAnnotation}
             brush={
-              samples[i].hasAnnotation
+              samples[i]?.hasAnnotation
                 ? samples[i].brush || "complete"
                 : "incomplete"
             }
