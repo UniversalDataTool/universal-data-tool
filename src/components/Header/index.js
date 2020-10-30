@@ -65,6 +65,11 @@ export default ({
     } catch (e) {
       console.log(`Couldn't create collaborative session: ${e.toString()}`)
     }
+    window.history.replaceState(
+      null,
+      null,
+      `?s=${encodeURIComponent(newDM.sessionId)}`
+    )
     setActiveDatasetManager(newDM)
   })
 
