@@ -122,7 +122,7 @@ export const ImageClassification = ({
     ) {
       newOutput = without(currentOutput, label.id)
     } else {
-      if (iface.allowMultiple) {
+      if (iface.multiple) {
         newOutput = currentOutput.concat([label.id])
       } else {
         newOutput = label.id
@@ -130,7 +130,7 @@ export const ImageClassification = ({
     }
 
     changeCurrentOutput(newOutput)
-    if (!iface.allowMultiple && newOutput.length > 0) {
+    if (!iface.multiple && newOutput.length > 0) {
       onModifySample({ ...sample, annotation: newOutput })
       containerProps.onExit("go-to-next")
     }
