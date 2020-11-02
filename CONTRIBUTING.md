@@ -6,7 +6,7 @@ of datasets. All contributions are welcome and appreciated!
 > **Contributing to open-source is fun!**
 > * Together, we can build some awesome software and enable people to build awesome AI!
 > * Tons of people will appreciate the work you do
-> * The issues and slack are a great place for discussing design, architectures, and new helpful technologies
+> * The issues and [slack](https://join.slack.com/t/universaldatatool/shared_invite/zt-d8teykwi-iOSOUfxugKR~M4AJN6VL3g) are a great place for discussing design, architectures, and new helpful technologies
 > * If you have a good idea and put in some effort, it can be a part of a package used by thousands of people
 > * You'll be credited for the work you do in the README, which you should use to get a cushy job!
 
@@ -16,7 +16,7 @@ of datasets. All contributions are welcome and appreciated!
 * Create issues for features or bugs you find
 * Solve UI bugs in existing issues
 * Create react components for new UI features ("stories")
-* Implement big features in draft PRs, taking breaks for feedback by messaging people on Slack
+* Implement big features in draft PRs, taking breaks for feedback by messaging people on [Slack](https://join.slack.com/t/universaldatatool/shared_invite/zt-d8teykwi-iOSOUfxugKR~M4AJN6VL3g)
 * Just fix a bunch of bugs and do a massive pull request with no description but all the tests pass and it looks pretty good so I guess it's fine
 
 # What do I need to know to get started
