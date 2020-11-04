@@ -93,3 +93,5 @@ export const useLabelHelp = () => {
     return { labelHelpEnabled: false, labelHelpError: e.toString() }
   }
 }
+
+export default useLabelHelp

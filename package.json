@@ -129,6 +129,7 @@
     "udt-collaboration-server": "^1.0.7",
     "udt-dataset-managers": "^1.0.12",
     "udt-format": "0.0.1",
+    "use-async-effect": "^2.2.2",
     "use-event-callback": "^0.1.0",
     "wavesurfer.js": "^3.3.3",
     "ytdl-core": "^2.0.1"

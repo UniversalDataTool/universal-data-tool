@@ -20622,6 +20622,11 @@ url@0.11.0, url@^0.11.0:
     punycode "1.3.2"
     querystring "0.2.0"
 
+use-async-effect@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/use-async-effect/-/use-async-effect-2.2.2.tgz#a937b6d71e7623406bb85a4d3434be2ced9087b6"
+  integrity sha512-zFas5h1jm4FNCk+txUzfMUAQhIFJGdrhAmg2lSA+Q6BZKYFen/yZlHEx5RGWSUV1USjLFZ+yg989fFyzJHW3Zw==
+
 use-async-memo@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/use-async-memo/-/use-async-memo-1.2.2.tgz#6549579335c00afc0fff6f18eafc4a9d29596ece"
