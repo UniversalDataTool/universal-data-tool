@@ -117,7 +117,7 @@
     "react-material-workspace-layout": "^1.0.1",
     "react-scripts": "^3.4.1",
     "react-select": "^3.0.8",
-    "react-time-series": "^1.0.17",
+    "react-time-series": "^1.0.18",
     "recoil": "^0.0.13",
     "rfc6902": "^3.0.4",
     "seamless-immutable": "^7.1.4",
