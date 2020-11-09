@@ -38,6 +38,7 @@ const deps = [
   "i18next",
   "react-i18next",
   "i18next-browser-languagedetector",
+  "react-time-series",
 ]
 
 const originalPackageJSON = JSON.parse(
