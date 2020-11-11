@@ -72,7 +72,7 @@
     "material-survey": "^1.0.32",
     "parcel": "^1.12.4",
     "prettier": "^2.0.2",
-    "react": "^16.8.6",
+    "react": "^17.0.1",
     "react-dom": "^16.8.6",
     "react-markdown": "^4.1.0",
     "react-nlp-annotate": "^1.0.1",
