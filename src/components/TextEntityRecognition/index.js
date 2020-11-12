@@ -27,6 +27,7 @@ export const TextEntityRecognition = ({
       key={sampleIndex}
       titleContent={<Box paddingLeft={4}>Sample {sampleIndex}</Box>}
       type="label-sequence"
+      separatorRegex={iface?.wordSplitRegex}
       document={sample?.document}
       labels={iface?.labels}
       initialSequence={initialSequence}
