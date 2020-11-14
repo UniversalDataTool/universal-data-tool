@@ -121,6 +121,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/anaplian"><img src="https://avatars3.githubusercontent.com/u/18647401?v=4" width="100px;" alt=""/><br /><sub><b>anaplian</b></sub></a><br /><a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=anaplian" title="Code">💻</a></td>
     <td align="center"><a href="https://www.behance.net/MiguelCarvalho13"><img src="https://avatars2.githubusercontent.com/u/6718302?v=4" width="100px;" alt=""/><br /><sub><b>Miguel Carvalho</b></sub></a><br /><a href="#translation-miguelcarvalho13" title="Translation">🌍</a></td>
+    <td align="center"><a href="https://kyleo.io"><img src="https://avatars2.githubusercontent.com/u/27719893?v=4" width="100px;" alt=""/><br /><sub><b>Kyle OBrien</b></sub></a><br /><a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=obrien-k" title="Code">💻</a></td>
   </tr>
 </table>
 

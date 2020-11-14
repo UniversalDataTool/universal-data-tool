@@ -158,6 +158,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "obrien-k",
+      "name": "Kyle OBrien",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/27719893?v=4",
+      "profile": "https://kyleo.io",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
