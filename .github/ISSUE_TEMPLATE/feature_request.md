@@ -3,7 +3,12 @@ name: Feature request
 about: Suggest an idea for this project
 title: "[FEATURE]"
 labels: enhancement
+<<<<<<< HEAD
 assignees: ""
+=======
+assignees: ''
+
+>>>>>>> fdbf9ad (propose a github issue templage for bug and feature request)
 ---
 
 **Is your feature request related to a problem? Please describe.**
