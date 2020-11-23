@@ -435,11 +435,13 @@ export const templates = [
       },
       samples: [
         {
-          timeData: [
-            { time: 0, value: 0 },
-            { time: 500, value: 0.75 },
-            { time: 1000, value: 1 },
-          ],
+          // timeData: [
+          //   { time: 0, value: 0 },
+          //   { time: 500, value: 0.75 },
+          //   { time: 1000, value: 1 },
+          // ],
+          audioUrl:
+            "https://s3.amazonaws.com/datasets.workaround.online/voice-samples/001/voice.mp3",
           annotation: {
             durations: [
               { start: 500, end: 2000, label: "@seveibar is speaking" },
