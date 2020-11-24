@@ -73,6 +73,10 @@ export default ({
     setActiveDatasetManager(newDM)
   })
 
+  const onJoinSession = useEventCallback(async (sessionName) => {
+    window.location.href=sessionName
+  })
+
   const onLeaveSession = useEventCallback(async () => {
     if (dm) {
       const ds = await dm.getDataset()
@@ -94,6 +98,7 @@ export default ({
         isSmall={isSmall}
         {...headerContext}
         inSession={dm && dm.type === "collaborative-session"}
+        onJoinSession={onJoinSession}
         onCreateSession={onCreateSession}
         onLeaveSession={onLeaveSession}
         changeLoginDrawerOpen={changeLoginDrawerOpen}
