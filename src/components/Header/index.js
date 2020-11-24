@@ -74,7 +74,7 @@ export default ({
   })
 
   const onJoinSession = useEventCallback(async (sessionName) => {
-    window.location.href=sessionName
+    window.location.href = sessionName
   })
 
   const onLeaveSession = useEventCallback(async () => {
