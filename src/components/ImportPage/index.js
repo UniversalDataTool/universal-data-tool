@@ -10,7 +10,7 @@ import DescriptionIcon from "@material-ui/icons/Description"
 import PetsIcon from "@material-ui/icons/Pets"
 import * as colors from "@material-ui/core/colors"
 import PasteUrlsDialog from "../PasteUrlsDialog"
-// import ImportFromCognitoS3Dialog from "../ImportFromCognitoS3Dialog"
+import ImportFromCognitoS3Dialog from "../ImportFromCognitoS3Dialog"
 import ImportFromS3Dialog from "../ImportFromS3Dialog"
 import UploadToS3Dialog from "../UploadToS3Dialog"
 import ImportTextSnippetsDialog from "../ImportTextSnippetsDialog"
@@ -249,7 +249,7 @@ export default ({ isDesktop, authConfig, user }) => {
         >
           {t("upload-to-s3")}
         </Button>
-        {/* {file && (
+        { (
           <Button
             isDesktop={isDesktop}
             dialog="import-from-cognito-s3"
@@ -258,9 +258,9 @@ export default ({ isDesktop, authConfig, user }) => {
             signedInOnly={true}
             user={user}
           >
-            {t("import-from-cognito-s3")}
+            {t("import-from-cognito-s3")} Commenté
           </Button>
-        )} */}
+        )} 
         <Button
           isDesktop={isDesktop}
           dialog="google-drive-file-picker"
@@ -310,16 +310,14 @@ export default ({ isDesktop, authConfig, user }) => {
           user={user}
           onAddSamples={onAddSamples}
         />
-        {/* {file && (
+        {  (
           <ImportFromCognitoS3Dialog
-            file={file}
             open={selectedDialog === "import-from-cognito-s3"}
-            // onChangeFile={onChangeFile}
             onClose={closeDialog}
             user={user}
             onAddSamples={onAddSamples}
           />
-        )} */}
+        )} 
         <ImportFromGoogleDriveDialog
           open={selectedDialog === "google-drive-file-picker"}
           onClose={closeDialog}
