@@ -14,8 +14,6 @@ import HeaderDrawer from "../HeaderDrawer"
 import useOpenTemplate from "../../hooks/use-open-template"
 import useActiveDatasetManager from "../../hooks/use-active-dataset-manager"
 
-import qs from "qs"
-
 export const HeaderContext = createContext({
   recentItems: [],
   changeRecentItems: () => null,
