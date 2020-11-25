@@ -2,10 +2,10 @@
 
 You could want to create a plugin for many reasons:
 
-* Create a way to import data
-* Create a way to transform samples
-* Create a way to label data (or a new data type)
-* Create a way to authenticate with a service
+- Create a way to import data
+- Create a way to transform samples
+- Create a way to label data (or a new data type)
+- Create a way to authenticate with a service
 
 ## Create a way to import data
 
@@ -27,10 +27,8 @@ new way to view samples in the `Label` page.
 This will add a new Authentication Method on the home page of the Universal Data Tool. After the user configures the Authentication
 method, it will be saved, and the authentication can be used to access samples, import data etc.
 
-
 # Discoverability
 
 [npm](https://npmjs.org) is automatically scanned for packages that start with "udt-", so a package like "udt-transform-delete-samples" would be
 automatically discovered. If the package is valid, it will be automatically available under the "Community Plugins" in the appropriate locations in the
 Universal Data Tool.
-

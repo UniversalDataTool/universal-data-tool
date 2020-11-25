@@ -10,6 +10,7 @@ import DescriptionIcon from "@material-ui/icons/Description"
 import PetsIcon from "@material-ui/icons/Pets"
 import * as colors from "@material-ui/core/colors"
 import PasteUrlsDialog from "../PasteUrlsDialog"
+import ExportToCognitoS3Dialog from "../ExportToCognitoS3Dialog"
 // import ImportFromCognitoS3Dialog from "../ImportFromCognitoS3Dialog"
 import ImportFromS3Dialog from "../ImportFromS3Dialog"
 import UploadToS3Dialog from "../UploadToS3Dialog"
@@ -249,6 +250,14 @@ export default ({ isDesktop, authConfig, user }) => {
         >
           {t("upload-to-s3")}
         </Button>
+        <Button
+          dialog="export-to-cognito-s3"
+          Icon={S3Icon}
+          authConfiguredOnly={true}
+          signedInOnly={true}
+        >
+          {t("export-to-cognito-s3")}
+        </Button>
         {/* {file && (
           <Button
             isDesktop={isDesktop}
@@ -308,6 +317,11 @@ export default ({ isDesktop, authConfig, user }) => {
           // onChangeFile={onChangeFile}
           onClose={closeDialog}
           user={user}
+          onAddSamples={onAddSamples}
+        />
+        <ExportToCognitoS3Dialog
+          open={selectedDialog === "export-to-cognito-s3"}
+          onClose={closeDialog}
           onAddSamples={onAddSamples}
         />
         {/* {file && (
