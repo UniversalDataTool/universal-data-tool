@@ -80,6 +80,11 @@ export default ({
         serverUrl: fromConfig("collaborationServer.url"),
       })
       await dm.loadSession(sessionId)
+      window.history.replaceState(
+        null,
+        null,
+        `?s=${encodeURIComponent(dm.sessionId)}`
+      )
       setActiveDatasetManager(dm)
     }
     if (sessionUrl.searchParams.get("s")) {
