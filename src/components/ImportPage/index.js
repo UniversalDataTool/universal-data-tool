@@ -249,7 +249,7 @@ export default ({ isDesktop, authConfig, user }) => {
         >
           {t("upload-to-s3")}
         </Button>
-        { (
+        {
           <Button
             isDesktop={isDesktop}
             dialog="import-from-cognito-s3"
@@ -260,7 +260,7 @@ export default ({ isDesktop, authConfig, user }) => {
           >
             {t("import-from-cognito-s3")} Commenté
           </Button>
-        )} 
+        }
         <Button
           isDesktop={isDesktop}
           dialog="google-drive-file-picker"
@@ -310,14 +310,14 @@ export default ({ isDesktop, authConfig, user }) => {
           user={user}
           onAddSamples={onAddSamples}
         />
-        {  (
+        {
           <ImportFromCognitoS3Dialog
             open={selectedDialog === "import-from-cognito-s3"}
             onClose={closeDialog}
             user={user}
             onAddSamples={onAddSamples}
           />
-        )} 
+        }
         <ImportFromGoogleDriveDialog
           open={selectedDialog === "google-drive-file-picker"}
           onClose={closeDialog}
