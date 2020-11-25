@@ -251,13 +251,13 @@ export default ({ isDesktop, authConfig, user }) => {
           {t("upload-to-s3")}
         </Button>
         <Button
-            dialog="export-to-cognito-s3"
-            Icon={S3Icon}
-            authConfiguredOnly={true}
-            signedInOnly={true}
-          >
-            {t("export-to-cognito-s3")}
-          </Button>
+          dialog="export-to-cognito-s3"
+          Icon={S3Icon}
+          authConfiguredOnly={true}
+          signedInOnly={true}
+        >
+          {t("export-to-cognito-s3")}
+        </Button>
         {/* {file && (
           <Button
             isDesktop={isDesktop}
@@ -320,10 +320,10 @@ export default ({ isDesktop, authConfig, user }) => {
           onAddSamples={onAddSamples}
         />
         <ExportToCognitoS3Dialog
-            open={selectedDialog === "import-from-cognito-s3"}
-            onClose={closeDialog}
-            onAddSamples={onAddSamples}
-          />
+          open={selectedDialog === "import-from-cognito-s3"}
+          onClose={closeDialog}
+          onAddSamples={onAddSamples}
+        />
         {/* {file && (
           <ImportFromCognitoS3Dialog
             file={file}
