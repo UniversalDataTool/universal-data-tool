@@ -14,6 +14,8 @@ import HeaderDrawer from "../HeaderDrawer"
 import useOpenTemplate from "../../hooks/use-open-template"
 import useActiveDatasetManager from "../../hooks/use-active-dataset-manager"
 
+import qs from "qs"
+
 export const HeaderContext = createContext({
   recentItems: [],
   changeRecentItems: () => null,
@@ -73,8 +75,18 @@ export default ({
     setActiveDatasetManager(newDM)
   })
 
-  const onJoinSession = useEventCallback(async (sessionName) => {
-    window.location.href = sessionName
+  const onJoinSession = useEventCallback(async (sessionId) => {
+    const sessionUrl = new URL(sessionId)
+    async function goIntoCollaborativeSession(sessionId) {
+      const dm = new CollaborativeDatasetManager({
+        serverUrl: fromConfig("collaborationServer.url"),
+      })
+      await dm.loadSession(sessionId)
+      setActiveDatasetManager(dm)
+    }
+    if (sessionUrl.searchParams.get("s")) {
+      goIntoCollaborativeSession(sessionUrl.searchParams.get("s"))
+    }
   })
 
   const onLeaveSession = useEventCallback(async () => {
