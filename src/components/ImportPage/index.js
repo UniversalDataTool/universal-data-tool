@@ -258,7 +258,7 @@ export default ({ isDesktop, authConfig, user }) => {
             signedInOnly={true}
             user={user}
           >
-            {t("import-from-cognito-s3")} Commenté
+            {t("import-from-cognito-s3")}
           </Button>
         }
         <Button

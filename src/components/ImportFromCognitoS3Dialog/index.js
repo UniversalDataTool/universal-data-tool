@@ -2,15 +2,7 @@ import React, { useEffect, useState } from "react"
 import SimpleDialog from "../SimpleDialog"
 import DataTable from "react-data-table-component"
 import Radio from "@material-ui/core/Radio"
-import FormControl from "@material-ui/core/FormControl"
-import FormLabel from "@material-ui/core/FormLabel"
-import RadioGroup from "@material-ui/core/RadioGroup"
-import FormControlLabel from "@material-ui/core/FormControlLabel"
 import isEmpty from "lodash/isEmpty"
-import IconButton from "@material-ui/core/IconButton"
-import SettingsIcon from "@material-ui/icons/Settings"
-import StorageIcon from "@material-ui/icons/Storage"
-import Button from "@material-ui/core/Button"
 import datasetManagerCognito from "udt-dataset-managers/dist/CognitoDatasetManager"
 import useAuth from "../../utils/auth-handlers/use-auth"
 
@@ -47,7 +39,6 @@ const customStyles = {
 }
 
 const ExpandedRow = ({ data }) => {
-  console.log(data)
   const { rowData, rowAnnotations } = data
   return (
     <>
@@ -101,7 +92,6 @@ export default ({ open, onClose, onAddSamples }) => {
     if (!dm) return
     if (!(await dm.isReady())) return
     var dataFolder = Array.from(await dm.getProjects())
-    console.log(dataFolder)
 
     var data = await Promise.all(
       dataFolder.map(async (obj, index) => {
@@ -109,7 +99,6 @@ export default ({ open, onClose, onAddSamples }) => {
         const rowAnnotationsContent = await dm.getListSamples({
           projectName: obj,
         })
-        console.log(rowAnnotationsContent)
         return {
           id: `${index}`,
           folder: folder,
@@ -123,10 +112,7 @@ export default ({ open, onClose, onAddSamples }) => {
         }
       })
     )
-    console.log(data)
     setProjects(data)
-
-    console.log(projects)
   }
   const setProject = async () => {
     if (!open) return
@@ -137,10 +123,6 @@ export default ({ open, onClose, onAddSamples }) => {
   useEffect(() => {
     if (!open) return
     if (!authConfig) return
-    console.log(authProvider)
-    console.log(isLoggedIn)
-    console.log(authConfig)
-    console.log(user)
     if (!dm) setDm(new datasetManagerCognito({ authConfig }))
   }, [open, authConfig])
 
@@ -154,9 +136,7 @@ export default ({ open, onClose, onAddSamples }) => {
 
   const handleAddSample = async () => {
     if (!projectToFetch) return
-    console.log(projectToFetch)
     var jsons = await dm.readJSONAllSample(projectToFetch.rowAnnotationsUrl)
-    console.log(jsons)
     onAddSamples(jsons)
   }
 
