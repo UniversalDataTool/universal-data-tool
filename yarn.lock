@@ -17117,10 +17117,10 @@ react-textarea-autosize@^7.1.0:
     "@babel/runtime" "^7.1.2"
     prop-types "^15.6.0"
 
-react-time-series@^1.0.18:
-  version "1.0.18"
-  resolved "https://registry.yarnpkg.com/react-time-series/-/react-time-series-1.0.18.tgz#b02330129af5f3e699b616c16954a45c7f23f34c"
-  integrity sha512-QhhgtuBhslYDbhm4ib+trpcOQ9K9v0YzGkqDa61gXvbRvXH0ZK6r5hJg4duNqOHGGQjSjbt6iL4wuiPTkB2b5Q==
+react-time-series@^1.0.19:
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/react-time-series/-/react-time-series-1.0.19.tgz#14c78be31adcaaf8dfd897dcd44be0ba29c33d0b"
+  integrity sha512-JHc82vQs1bEzecpqj6PR2IPZUSv64SZS2lu3c3e4el/xnI9WcmTWCWuY/3babFHEjMjjXnmHeWqMC06SQtwUnQ==
   dependencies:
     "@material-ui/core" "^4.11.0"
     "@material-ui/icons" "^4.9.1"
