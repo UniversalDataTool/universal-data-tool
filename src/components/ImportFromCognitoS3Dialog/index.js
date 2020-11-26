@@ -6,16 +6,11 @@ import isEmpty from "lodash/isEmpty"
 import datasetManagerCognito from "udt-dataset-managers/dist/CognitoDatasetManager"
 import useAuth from "../../utils/auth-handlers/use-auth"
 
-const selectedStyle = { color: "DodgerBlue" }
 const tableStyle = {
   marginLeft: "auto",
   marginRight: "auto",
   width: "100%",
 }
-const expandedDataColumns = [
-  { name: "Data", selector: "data", sortable: true },
-  { name: "Last Modified", selector: "lastModified", sortable: true },
-]
 
 const expandedAnnotationsColumns = [
   { name: "Annotations", selector: "annotation" },
@@ -39,7 +34,7 @@ const customStyles = {
 }
 
 const ExpandedRow = ({ data }) => {
-  const { rowData, rowAnnotations } = data
+  const { rowAnnotations } = data
   return (
     <>
       <DataTable
@@ -65,7 +60,7 @@ const ExpandedRow = ({ data }) => {
 
 export default ({ open, onClose, onAddSamples }) => {
   var [dm, setDm] = useState(null)
-  const { authProvider, isLoggedIn, authConfig, user } = useAuth()
+  const { authConfig } = useAuth()
   var [projects, setProjects] = useState(null)
   const [projectToFetch, setProjectToFetch] = useState("")
 
@@ -124,15 +119,15 @@ export default ({ open, onClose, onAddSamples }) => {
     if (!open) return
     if (!authConfig) return
     if (!dm) setDm(new datasetManagerCognito({ authConfig }))
-  }, [open, authConfig])
+  }, [open, authConfig, dm])
 
   useEffect(() => {
     getProjects()
-  }, [dm])
+  }, [dm, getProjects])
 
   useEffect(() => {
     setProject()
-  }, [projectToFetch])
+  }, [projectToFetch, setProject])
 
   const handleAddSample = async () => {
     if (!projectToFetch) return
