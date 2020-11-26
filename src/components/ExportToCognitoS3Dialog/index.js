@@ -6,7 +6,7 @@ import isEmpty from "lodash/isEmpty"
 import datasetManagerCognito from "udt-dataset-managers/dist/CognitoDatasetManager"
 import useAuth from "../../utils/auth-handlers/use-auth"
 import { TextField } from "@material-ui/core"
-const redText={color: "orange"}
+const redText = { color: "orange" }
 const tableStyle = {
   marginLeft: "auto",
   marginRight: "auto",
@@ -67,9 +67,9 @@ export default ({ open, onClose }) => {
   const [nameProjectToCreate, setNameProjectToCreate] = useState("")
   const [nameProjectExist, setNameProjectExist] = useState(false)
   const getCurrentDataset = async () => {
-    var ds =await activeDatasetManager.getDataset()
-    if(!ds)return
-    if(!ds.name)return 
+    var ds = await activeDatasetManager.getDataset()
+    if (!ds) return
+    if (!ds.name) return
     setNameProjectToCreate(ds.name)
     return ds
   }
@@ -125,16 +125,15 @@ export default ({ open, onClose }) => {
   }, [dm])
 
   useEffect(() => {
-    if(!projects)return
-    var exist =false
-    for(var i =0; i< projects.length;i++)
-      if(projects[i].folder === nameProjectToCreate)
-        exist = true
-      setNameProjectExist(exist)
+    if (!projects) return
+    var exist = false
+    for (var i = 0; i < projects.length; i++)
+      if (projects[i].folder === nameProjectToCreate) exist = true
+    setNameProjectExist(exist)
   }, [nameProjectToCreate, projects])
-  
+
   const handleCreateProject = async () => {
-    if(nameProjectExist) await dm.removeProject(nameProjectToCreate)
+    if (nameProjectExist) await dm.removeProject(nameProjectToCreate)
     dm.setDataset(await activeDatasetManager.getDataset())
     onClose()
   }
@@ -152,20 +151,37 @@ export default ({ open, onClose }) => {
           },
         },
       ]}
-    >{
+    >
+      {
         <table style={tableStyle}>
           <tbody>
-            {nameProjectExist ?
+            {nameProjectExist ? (
               <tr>
                 <th>
-                  <p style={redText}>Warning : This project name already exist. If you continue the existing project with the same name will be replaced</p>
+                  <p style={redText}>
+                    Warning : This project name already exist. If you continue
+                    the existing project with the same name will be replaced
+                  </p>
                 </th>
-              </tr> : <tr><th><p></p></th></tr>
-            }
+              </tr>
+            ) : (
+              <tr>
+                <th>
+                  <p></p>
+                </th>
+              </tr>
+            )}
             <tr>
               <th>
-              <TextField id="ProjectName" label="Project Name" variant="outlined" onChange={(event) => { 
-                    setNameProjectToCreate(event.target.value) }} value={nameProjectToCreate} />
+                <TextField
+                  id="ProjectName"
+                  label="Project Name"
+                  variant="outlined"
+                  onChange={(event) => {
+                    setNameProjectToCreate(event.target.value)
+                  }}
+                  value={nameProjectToCreate}
+                />
               </th>
             </tr>
             {!isEmpty(projects) && (
@@ -188,7 +204,8 @@ export default ({ open, onClose }) => {
               </tr>
             )}
           </tbody>
-        </table>}
+        </table>
+      }
     </SimpleDialog>
   )
 }
