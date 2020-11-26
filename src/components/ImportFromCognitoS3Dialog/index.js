@@ -123,11 +123,13 @@ export default ({ open, onClose, onAddSamples }) => {
 
   useEffect(() => {
     getProjects()
-  }, [dm, getProjects])
+     // eslint-disable-next-line
+  },[dm])
 
   useEffect(() => {
     setProject()
-  }, [projectToFetch, setProject])
+     // eslint-disable-next-line
+  },[projectToFetch])
 
   const handleAddSample = async () => {
     if (!projectToFetch) return
