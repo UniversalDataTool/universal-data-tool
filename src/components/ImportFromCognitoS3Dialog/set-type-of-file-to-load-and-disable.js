@@ -1,30 +1,38 @@
 import isEmpty from "lodash/isEmpty"
-import checkInterfaceAndsamples from "./check-interface-and-sample-type"
-export default (configImport, file) => {
+import checkInterfaceAndAssets from "./check-interface-and-sample-type"
+export default (configImport, dataset) => {
   return {
     ...configImport,
     typeOfFileToLoad:
       !isEmpty(configImport) &&
       !isEmpty(configImport.typeOfFileToLoad) &&
-      checkInterfaceAndsamples([configImport.typeOfFileToLoad, "Empty"], file)
+      checkInterfaceAndAssets([configImport.typeOfFileToLoad, "Empty"], dataset)
         ? configImport.typeOfFileToLoad
-        : checkInterfaceAndsamples(["Image", "Empty"], file)
+        : checkInterfaceAndAssets(["Image", "Empty"], dataset)
         ? "Image"
-        : checkInterfaceAndsamples(["Video", "Empty"], file)
+        : checkInterfaceAndAssets(["Video", "Empty"], dataset)
         ? "Video"
-        : checkInterfaceAndsamples(["Audio", "Empty"], file)
+        : checkInterfaceAndAssets(["Audio", "Empty"], dataset)
         ? "Audio"
-        : checkInterfaceAndsamples(["PDF", "Empty"], file)
+        : checkInterfaceAndAssets(["PDF", "Empty"], dataset)
         ? "PDF"
-        : checkInterfaceAndsamples(["Texte", "Empty"], file)
+        : checkInterfaceAndAssets(["Texte", "Empty"], dataset)
         ? "Texte"
         : "None",
     typeOfFileToDisable: {
-      Image: checkInterfaceAndsamples(["Image", "Empty"], file) ? false : true,
-      Video: checkInterfaceAndsamples(["Video", "Empty"], file) ? false : true,
-      Audio: checkInterfaceAndsamples(["Audio", "Empty"], file) ? false : true,
-      PDF: checkInterfaceAndsamples(["PDF", "Empty"], file) ? false : true,
-      Texte: checkInterfaceAndsamples(["Texte", "Empty"], file) ? false : true,
+      Image: checkInterfaceAndAssets(["Image", "Empty"], dataset)
+        ? false
+        : true,
+      Video: checkInterfaceAndAssets(["Video", "Empty"], dataset)
+        ? false
+        : true,
+      Audio: checkInterfaceAndAssets(["Audio", "Empty"], dataset)
+        ? false
+        : true,
+      PDF: checkInterfaceAndAssets(["PDF", "Empty"], dataset) ? false : true,
+      Texte: checkInterfaceAndAssets(["Texte", "Empty"], dataset)
+        ? false
+        : true,
     },
   }
 }

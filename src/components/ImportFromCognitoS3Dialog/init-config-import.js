@@ -20,7 +20,7 @@ export default (file) => {
       PDF: checkInterfaceAndsamples(["PDF", "Empty"], file) ? false : true,
       Texte: checkInterfaceAndsamples(["Texte", "Empty"], file) ? false : true,
     },
-    loadProjectIsSelected: true,
+    loadAssetsIsSelected: true,
     contentDialogBoxIsSetting: false,
     projectStarted: false,
   }

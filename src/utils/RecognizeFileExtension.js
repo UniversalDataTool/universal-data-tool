@@ -13,7 +13,9 @@ export default (UrlOfAFile) => {
     fileExtension === "png" ||
     fileExtension === "ico" ||
     fileExtension === "jpe" ||
-    fileExtension === "gif"
+    fileExtension === "gif" ||
+    fileExtension === "webp" ||
+    fileExtension === "jfif"
   )
     typeOfFile = "Image"
   if (fileExtension === "mp4" || fileExtension === "mkv") typeOfFile = "Video"
