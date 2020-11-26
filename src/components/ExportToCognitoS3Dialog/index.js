@@ -129,8 +129,11 @@ export default ({ open, onClose }) => {
   const handleCreateProject = async () => {
     if (nameProjectExist) await dm.removeProject(nameProjectToCreate)
     var dataset = await activeDatasetManager.getDataset()
-    dataset=dataset.setIn(["name"], nameProjectToCreate)
-    await dm.createProject({name: nameProjectToCreate,interface: dataset.interface})
+    dataset = dataset.setIn(["name"], nameProjectToCreate)
+    await dm.createProject({
+      name: nameProjectToCreate,
+      interface: dataset.interface,
+    })
     await dm.setDataset(dataset)
     await activeDatasetManager.setDataset(dataset)
     await getProjects()
