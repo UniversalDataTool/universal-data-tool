@@ -100,12 +100,6 @@ export default ({ open, onClose }) => {
     )
     setProjects(data)
   }
-  /*const setProject = async () => {
-    if (!open) return
-    if (!dm) return
-    if (!(await dm.isReady())) return
-    dm.setProject(projectToFetch.folder)
-  }*/
   useEffect(() => {
     if (!open) return
     if (!authConfig) return
@@ -134,7 +128,12 @@ export default ({ open, onClose }) => {
 
   const handleCreateProject = async () => {
     if (nameProjectExist) await dm.removeProject(nameProjectToCreate)
-    dm.setDataset(await activeDatasetManager.getDataset())
+    var dataset = await activeDatasetManager.getDataset()
+    dataset=dataset.setIn(["name"], nameProjectToCreate)
+    await dm.createProject({name: nameProjectToCreate,interface: dataset.interface})
+    await dm.setDataset(dataset)
+    await activeDatasetManager.setDataset(dataset)
+    await getProjects()
     onClose()
   }
 
