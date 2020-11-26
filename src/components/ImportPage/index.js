@@ -320,7 +320,7 @@ export default ({ isDesktop, authConfig, user }) => {
           onAddSamples={onAddSamples}
         />
         <ExportToCognitoS3Dialog
-          open={selectedDialog === "import-from-cognito-s3"}
+          open={selectedDialog === "export-to-cognito-s3"}
           onClose={closeDialog}
           onAddSamples={onAddSamples}
         />
