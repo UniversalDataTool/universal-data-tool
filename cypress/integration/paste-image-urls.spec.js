@@ -7,7 +7,10 @@ const imageUrls = [
 describe("Paste Image URLs", () => {
   it("should be able to create", () => {
     cy.visit("/")
-    cy.get("input[id=\"react-select-2-input\"]").focus().type("English",{force:true}).type("{enter}")
+    cy.get('input[id="react-select-2-input"]')
+      .focus()
+      .type("English", { force: true })
+      .type("{enter}")
     cy.contains("New File").click()
   })
 
