@@ -265,6 +265,7 @@ export default ({
                   className={c.languageSelectionWrapper}
                 >
                   <Select
+                    id="language-list"
                     styles={languageSelectionFormStyle}
                     defaultValue={languageOptions.filter(
                       (lang) => lang.value === i18n.language

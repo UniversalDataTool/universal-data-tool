@@ -1,7 +1,7 @@
 describe("Create a Label Help ", () => {
   it("should be able to use label help", () => {
     cy.visit("/")
-
+    cy.get("input[id=\"react-select-2-input\"]").focus().type("English",{force:true}).type("{enter}")
     cy.contains("Start from Template").click()
     cy.contains("Image Classification").click()
     cy.contains("Samples").click()
