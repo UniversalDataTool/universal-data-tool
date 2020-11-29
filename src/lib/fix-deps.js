@@ -62,6 +62,7 @@ fs.writeFileSync(
         originalPackageJSON.dependencies
       ),
       dependencies: newDependencies,
+      main: "components/UniversalSampleEditor/index.js",
     }),
     null,
     "  "

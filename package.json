@@ -30,7 +30,8 @@
     "test:prettier": "prettier --check \"src/**/*.js\"",
     "test:lint": "eslint src --max-warnings=0",
     "test:integration:dev": "./node_modules/cypress/bin/cypress open",
-    "test:integration": "./node_modules/cypress/bin/cypress run --env failOnSnapshotDiff=false"
+    "test:integration": "./node_modules/cypress/bin/cypress run --env failOnSnapshotDiff=false",
+    "test:react-lib": "react-install-render ./lib --props '{}'"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -74,6 +75,7 @@
     "prettier": "^2.0.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-install-render": "^1.0.9",
     "react-markdown": "^4.1.0",
     "react-nlp-annotate": "^1.0.1",
     "rimraf": "^3.0.2",
