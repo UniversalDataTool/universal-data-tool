@@ -178,13 +178,11 @@ export default ({
       ).then((r) => r.text())
       const startCU = readme.search("COMMUNITY-UPDATE:START")
       const endCU = readme.search("COMMUNITY-UPDATE:END")
-      var communityUpdates = readme
+      const communityUpdates = readme
         .slice(startCU, endCU)
         .split("\n")
         .slice(1, -1)
-      for (var i = communityUpdates.length; i >= 0; i--) {
-        if (communityUpdates[i] === "") communityUpdates.splice(i, 1)
-      }
+        .filter((line) => line.trim() !== "")
       const latestYtLink = communityUpdates[0].match(/\((.*)\)/)[1]
       setLatestCommunityUpdate({
         name: communityUpdates[0].match(/\[(.*)\]/)[1],
