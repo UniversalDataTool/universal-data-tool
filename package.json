@@ -1,6 +1,6 @@
 {
   "name": "universal-data-tool",
-  "version": "0.14.9",
+  "version": "0.14.10",
   "license": "MIT",
   "main": "desktop/main.js",
   "homepage": "https://universaldatatool.com/app/",
@@ -117,7 +117,7 @@
     "react-material-workspace-layout": "^1.0.1",
     "react-scripts": "^3.4.1",
     "react-select": "^3.0.8",
-    "react-time-series": "^1.0.18",
+    "react-time-series": "^1.0.19",
     "recoil": "^0.0.13",
     "rfc6902": "^3.0.4",
     "seamless-immutable": "^7.1.4",
