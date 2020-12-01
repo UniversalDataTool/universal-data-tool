@@ -178,10 +178,13 @@ export default ({
       ).then((r) => r.text())
       const startCU = readme.search("COMMUNITY-UPDATE:START")
       const endCU = readme.search("COMMUNITY-UPDATE:END")
-      const communityUpdates = readme
+      var communityUpdates = readme
         .slice(startCU, endCU)
         .split("\n")
         .slice(1, -1)
+      for (var i = communityUpdates.length; i >= 0; i--) {
+        if (communityUpdates[i] === "") communityUpdates.splice(i, 1)
+      }
       const latestYtLink = communityUpdates[0].match(/\((.*)\)/)[1]
       setLatestCommunityUpdate({
         name: communityUpdates[0].match(/\[(.*)\]/)[1],
@@ -265,6 +268,7 @@ export default ({
                   className={c.languageSelectionWrapper}
                 >
                   <Select
+                    id="language-list"
                     styles={languageSelectionFormStyle}
                     defaultValue={languageOptions.filter(
                       (lang) => lang.value === i18n.language
