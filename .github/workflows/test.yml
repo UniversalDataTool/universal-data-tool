@@ -21,8 +21,8 @@ jobs:
           npm install
           npm run test:lint
   cypress-run:
-    needs: iscodeclean
-    runs-on: ubuntu-16.04
+#     needs: iscodeclean
+    runs-on: ubuntu-18.04
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -34,5 +34,5 @@ jobs:
           start: npm run start
           wait-on: http://localhost:6001
           record: true
-          env:
-            CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
