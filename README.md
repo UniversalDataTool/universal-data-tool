@@ -41,6 +41,7 @@ The Universal Data Tool is a web/desktop app for editing and annotating images, 
 [Follow our development on Youtube!](https://www.youtube.com/channel/UCgFkrRN7CLt7_iTa2WDjf2g)
 
 <!-- COMMUNITY-UPDATE:START !-->
+
 - [Community Update Video 9](https://youtu.be/q20WrCRcG4k)
 - [Community Update Video 8](https://www.youtube.com/watch?v=IBWOaw0jMmM)
 - [Community Update Video 7](https://youtu.be/glPPFgXibdw) [(blog version)](https://universaldatatool.substack.com/p/build-your-dataset-from-coco)
@@ -127,6 +128,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
