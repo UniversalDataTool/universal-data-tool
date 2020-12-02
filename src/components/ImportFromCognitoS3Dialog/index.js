@@ -12,12 +12,8 @@ import setUrl from "./set-url"
 import { setIn } from "seamless-immutable"
 import ExpandedRow from "./table-expanded-row"
 import SettingImport from "./interface-setting-import"
-import {
-  Settings as SettingsIcon,
-  Storage as StorageIcon,
-} from "@material-ui/icons/"
-import { Radio, Button, IconButton } from "@material-ui/core/"
-const selectedStyle = { color: "DodgerBlue" }
+import HeaderTableImport from "./header-table-import"
+import { Radio } from "@material-ui/core/"
 const tableStyle = {
   marginLeft: "auto",
   marginRight: "auto",
@@ -189,48 +185,10 @@ export default ({ open, onClose, onAddSamples }) => {
     >
       <table style={tableStyle}>
         <tbody>
-          <tr>
-            <th>
-              {configImport.loadAssetsIsSelected ? (
-                <Button
-                  style={selectedStyle}
-                  onClick={loadAssetsOrAnnotations}
-                  disabled
-                >
-                  Load Assets
-                </Button>
-              ) : (
-                <Button onClick={loadAssetsOrAnnotations}>Load Assets</Button>
-              )}
-              {configImport.loadAssetsIsSelected ? (
-                <Button onClick={loadAssetsOrAnnotations}>
-                  Load Annotations
-                </Button>
-              ) : (
-                <Button
-                  style={selectedStyle}
-                  onClick={loadAssetsOrAnnotations}
-                  disabled
-                >
-                  Load Annotations
-                </Button>
-              )}
-              <IconButton
-                onClick={() => {
-                  setConfigImport({
-                    ...configImport,
-                    contentDialogBoxIsSetting: !configImport.contentDialogBoxIsSetting,
-                  })
-                }}
-              >
-                {configImport.contentDialogBoxIsSetting ? (
-                  <StorageIcon></StorageIcon>
-                ) : (
-                  <SettingsIcon></SettingsIcon>
-                )}
-              </IconButton>
-            </th>
-          </tr>
+          <HeaderTableImport
+            configImport={configImport}
+            setConfigImport={setConfigImport}
+          />
 
           {!configImport.contentDialogBoxIsSetting ? (
             !isEmpty(projects) && (
