@@ -7,8 +7,6 @@ import {
   FormLabel,
 } from "@material-ui/core/"
 const setting = ({ configImport, setConfigImport }) => {
-  console.log(configImport)
-  console.log(setConfigImport)
   return (
     <tr>
       <th>
