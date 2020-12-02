@@ -5,8 +5,7 @@ import useActiveDatasetManager from "../../hooks/use-active-dataset-manager"
 import isEmpty from "lodash/isEmpty"
 import datasetManagerCognito from "udt-dataset-managers/dist/CognitoDatasetManager"
 import useAuth from "../../utils/auth-handlers/use-auth"
-import { TextField, Grid } from "@material-ui/core"
-
+import { Grid, TextField } from "@material-ui/core"
 const redText = { color: "orange" }
 
 const expandedAnnotationsColumns = [
@@ -133,15 +132,11 @@ export default ({ open, onClose }) => {
   }, [nameProjectToCreate, projects])
 
   const handleCreateProject = async () => {
-    if (nameProjectExist) await dm.removeProject(nameProjectToCreate)
-    var dataset = currentDataset
+    var dataset = await activeDatasetManager.getDataset()
     dataset = dataset.setIn(["name"], nameProjectToCreate)
-    await dm.createProject({
-      name: nameProjectToCreate,
-      interface: dataset.interface,
-    })
+    if (nameProjectExist) await dm.removeSamplesFolder(nameProjectToCreate)
     await dm.setDataset(dataset)
-    await activeDatasetManager.setDatasetProperty("name", nameProjectToCreate)
+    await activeDatasetManager.setDataset(dataset)
     await getProjects()
     onClose()
   }
