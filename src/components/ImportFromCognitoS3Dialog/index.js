@@ -74,13 +74,6 @@ export default ({ open, onClose, onAddSamples }) => {
     }
   }
 
-  const loadAssetsOrAnnotations = () => {
-    setConfigImport({
-      ...configImport,
-      loadAssetsIsSelected: !configImport.loadAssetsIsSelected,
-    })
-  }
-
   const getProjects = async () => {
     if (!open) return
     if (!dm) return
