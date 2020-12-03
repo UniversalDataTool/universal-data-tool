@@ -15,47 +15,46 @@ const headerTable = ({ configImport, setConfigImport }) => {
       loadAssetsIsSelected: !configImport.loadAssetsIsSelected,
     })
   }
+
   return (
-    <tr>
-      <th>
-        {configImport.loadAssetsIsSelected ? (
-          <Button
-            style={selectedStyle}
-            onClick={loadAssetsOrAnnotations}
-            disabled
-          >
-            Load Assets
-          </Button>
-        ) : (
-          <Button onClick={loadAssetsOrAnnotations}>Load Assets</Button>
-        )}
-        {configImport.loadAssetsIsSelected ? (
-          <Button onClick={loadAssetsOrAnnotations}>Load Annotations</Button>
-        ) : (
-          <Button
-            style={selectedStyle}
-            onClick={loadAssetsOrAnnotations}
-            disabled
-          >
-            Load Annotations
-          </Button>
-        )}
-        <IconButton
-          onClick={() => {
-            setConfigImport({
-              ...configImport,
-              contentDialogBoxIsSetting: !configImport.contentDialogBoxIsSetting,
-            })
-          }}
+    <div>
+      {configImport.loadAssetsIsSelected ? (
+        <Button
+          style={selectedStyle}
+          onClick={loadAssetsOrAnnotations}
+          disabled
         >
-          {configImport.contentDialogBoxIsSetting ? (
-            <StorageIcon></StorageIcon>
-          ) : (
-            <SettingsIcon></SettingsIcon>
-          )}
-        </IconButton>
-      </th>
-    </tr>
+          Load Assets
+        </Button>
+      ) : (
+        <Button onClick={loadAssetsOrAnnotations}>Load Assets</Button>
+      )}
+      {configImport.loadAssetsIsSelected ? (
+        <Button onClick={loadAssetsOrAnnotations}>Load Annotations</Button>
+      ) : (
+        <Button
+          style={selectedStyle}
+          onClick={loadAssetsOrAnnotations}
+          disabled
+        >
+          Load Annotations
+        </Button>
+      )}
+      <IconButton
+        onClick={() => {
+          setConfigImport({
+            ...configImport,
+            contentDialogBoxIsSetting: !configImport.contentDialogBoxIsSetting,
+          })
+        }}
+      >
+        {configImport.contentDialogBoxIsSetting ? (
+          <StorageIcon></StorageIcon>
+        ) : (
+          <SettingsIcon></SettingsIcon>
+        )}
+      </IconButton>
+    </div>
   )
 }
 export default headerTable

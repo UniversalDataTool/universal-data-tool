@@ -11,7 +11,7 @@ import { TextField, Grid } from "@material-ui/core"
 const redText = { color: "orange" }
 =======
 import { TextField } from "@material-ui/core"
-const redText = { color: "orange" }
+const orangeText = { color: "orange" }
 const tableStyle = {
   marginLeft: "auto",
   marginRight: "auto",
@@ -251,7 +251,7 @@ export default ({ open, onClose }) => {
             {nameProjectExist ? (
               <tr>
                 <th>
-                  <p style={redText}>
+                  <p style={orangeText}>
                     Warning : This project name already exist. If you continue
                     the existing project with the same name will be replaced
                   </p>

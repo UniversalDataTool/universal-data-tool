@@ -14,6 +14,8 @@ import ExpandedRow from "./table-expanded-row"
 import SettingImport from "./interface-setting-import"
 import HeaderTableImport from "./header-table-import"
 import { Radio } from "@material-ui/core/"
+import importConfigIsReady from "./config-import-is-ready"
+import WarningHeader from "./warning-header"
 const tableStyle = {
   marginLeft: "auto",
   marginRight: "auto",
@@ -28,7 +30,8 @@ export default ({ open, onClose, onAddSamples }) => {
   const { authConfig } = useAuth()
   const [projects, setProjects] = useState(null)
   const [projectToFetch, setProjectToFetch] = useState("")
-  const [configImport, setConfigImport] = useState(initConfigImport(oldData))
+  const [configImport, setConfigImport] = useState({})
+  console.log(configImport)
   const lastObjectRef = useRef({})
 
   const hasProjectStarted = useCallback(() => {
@@ -42,18 +45,39 @@ export default ({ open, onClose, onAddSamples }) => {
   }, [oldData, open])
 
   useEffect(() => {
-    if (oldData === lastObjectRef.current) return
     var configToSet = configImport
-    const changes = datasetHasChanged(lastObjectRef.current, oldData)
-    if (changes.interface.type || changes.samples) {
-      configToSet = setTypeOfFileToLoadAndDisable(configToSet, oldData)
+
+    var hasChanged = false
+    if (oldData === lastObjectRef.current) {
+      const changes = datasetHasChanged(lastObjectRef.current, oldData)
+      if (changes.interface.type || changes.samples) {
+        configToSet = setTypeOfFileToLoadAndDisable(configToSet, oldData)
+        hasChanged = true
+      }
     }
-    setConfigImport({
-      ...configToSet,
-      projectStarted: hasProjectStarted(),
-    })
-    lastObjectRef.current = oldData
-  }, [oldData, configImport, setConfigImport, hasProjectStarted])
+    if (
+      importConfigIsReady(projectToFetch, configImport) !== configImport.isReady
+    ) {
+      configToSet = {
+        ...configToSet,
+        isReady: importConfigIsReady(projectToFetch, configImport),
+      }
+      hasChanged = true
+    }
+    if (hasChanged) {
+      setConfigImport({
+        ...configToSet,
+        projectStarted: hasProjectStarted(),
+      })
+      lastObjectRef.current = oldData
+    }
+  }, [
+    oldData,
+    configImport,
+    setConfigImport,
+    hasProjectStarted,
+    projectToFetch,
+  ])
 
   const handleRowSelected = (whatsChanging) => {
     if (!open) return
@@ -121,8 +145,11 @@ export default ({ open, onClose, onAddSamples }) => {
   useEffect(() => {
     if (!open) return
     if (!authConfig) return
-    if (!dm) setDm(new datasetManagerCognito({ authConfig }))
-  }, [open, authConfig, dm])
+    if (!dm) {
+      setDm(new datasetManagerCognito({ authConfig }))
+      setConfigImport(initConfigImport(oldData))
+    }
+  }, [open, authConfig, dm, oldData])
 
   useEffect(() => {
     if (!open) return
@@ -146,14 +173,12 @@ export default ({ open, onClose, onAddSamples }) => {
     )
     onAddSamples(jsons)
   }
-
   const createJsonFromAnnotation = async () => {
     var jsons = await dm.readJSONAllSample(projectToFetch.rowAnnotationsUrl)
     onAddSamples(jsons)
   }
 
   const handleAddSample = async () => {
-    if (!projectToFetch) return
     if (configImport.loadAssetsIsSelected) {
       createJsonFromAsset()
     } else {
@@ -172,17 +197,28 @@ export default ({ open, onClose, onAddSamples }) => {
           onClick: () => {
             handleAddSample()
           },
-          disabled: configImport.contentDialogBoxIsSetting,
+          disabled: !configImport.isReady,
         },
       ]}
     >
       <table style={tableStyle}>
         <tbody>
-          <HeaderTableImport
-            configImport={configImport}
-            setConfigImport={setConfigImport}
-          />
-
+          <tr>
+            <th>
+              <WarningHeader
+                configImport={configImport}
+                projectToFetch={projectToFetch}
+              />
+            </th>
+          </tr>
+          <tr>
+            <th>
+              <HeaderTableImport
+                configImport={configImport}
+                setConfigImport={setConfigImport}
+              />
+            </th>
+          </tr>
           {!configImport.contentDialogBoxIsSetting ? (
             !isEmpty(projects) && (
               <tr>
