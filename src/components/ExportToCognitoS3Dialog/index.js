@@ -6,7 +6,7 @@ import isEmpty from "lodash/isEmpty"
 import datasetManagerCognito from "udt-dataset-managers/dist/CognitoDatasetManager"
 import useAuth from "../../utils/auth-handlers/use-auth"
 import { TextField } from "@material-ui/core"
-const redText = { color: "orange" }
+const orangeText = { color: "orange" }
 const tableStyle = {
   marginLeft: "auto",
   marginRight: "auto",
@@ -160,7 +160,7 @@ export default ({ open, onClose }) => {
             {nameProjectExist ? (
               <tr>
                 <th>
-                  <p style={redText}>
+                  <p style={orangeText}>
                     Warning : This project name already exist. If you continue
                     the existing project with the same name will be replaced
                   </p>
