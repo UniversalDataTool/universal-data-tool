@@ -10,12 +10,8 @@ import DescriptionIcon from "@material-ui/icons/Description"
 import PetsIcon from "@material-ui/icons/Pets"
 import * as colors from "@material-ui/core/colors"
 import PasteUrlsDialog from "../PasteUrlsDialog"
-<<<<<<< HEAD
-// import ImportFromCognitoS3Dialog from "../ImportFromCognitoS3Dialog"
 import ExportToCognitoS3Dialog from "../ExportToCognitoS3Dialog"
-=======
 import ImportFromCognitoS3Dialog from "../ImportFromCognitoS3Dialog"
->>>>>>> 93fcd67 (prettier, refactor cognito, and import from aws)
 import ImportFromS3Dialog from "../ImportFromS3Dialog"
 import UploadToS3Dialog from "../UploadToS3Dialog"
 import ImportTextSnippetsDialog from "../ImportTextSnippetsDialog"
