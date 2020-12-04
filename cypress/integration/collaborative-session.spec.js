@@ -1,5 +1,5 @@
-import clickOn100SamplesInACollaborativeSession from "../utils/test/click-on-100-samples-in-a-collaborative-session.spec"
-import createAndVisitCollaborativeSession from "../utils/test/create-and-visit-collaborative-session.spec"
+import clickOn100SamplesInACollaborativeSession from "../utils/interface-test/click-on-100-samples-in-a-collaborative-session.spec"
+import createAndVisitCollaborativeSession from "../utils/interface-test/create-and-visit-collaborative-session.spec"
 Cypress.config("defaultCommandTimeout", 3000)
 describe("Create and Visit Collaborative Session", () => {
   beforeEach("Prepare test", () => {

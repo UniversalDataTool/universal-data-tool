@@ -1,6 +1,6 @@
 import isEmpty from "lodash/isEmpty"
 export default (typeAuthorize, file) => {
-  function interfaceFileType(type) {
+  const interfaceFileType = (type) => {
     if (
       type === "image_classification" ||
       type === "image_segmentation" ||
@@ -16,19 +16,20 @@ export default (typeAuthorize, file) => {
     return "File"
   }
 
-  function typesamplesSample(samples) {
-    if (isEmpty(samples) || isEmpty(samples[0])) return "Empty"
-    if (!isEmpty(samples[0].imageUrl)) return "Image"
-    if (!isEmpty(samples[0].videoUrl)) return "Video"
-    if (!isEmpty(samples[0].audioUrl)) return "Audio"
-    if (!isEmpty(samples[0].pdfUrl)) return "PDF"
-    if (!isEmpty(samples[0].document)) return "Texte"
+  const typeAssetsFromSample = (assets) => {
+    if (isEmpty(assets) || isEmpty(assets[0])) return "Empty"
+    if (!isEmpty(assets[0].imageUrl)) return "Image"
+    if (!isEmpty(assets[0].videoUrl)) return "Video"
+    if (!isEmpty(assets[0].audioUrl)) return "Audio"
+    if (!isEmpty(assets[0].pdfUrl)) return "PDF"
+    if (!isEmpty(assets[0].document)) return "Texte"
     return "File"
   }
+
   var result = [null, null]
   if (isEmpty(file)) return false
-  result[0] = interfaceFileType(file.content.interface.type)
-  result[1] = typesamplesSample(file.content.samples)
+  result[0] = interfaceFileType(file.interface.type)
+  result[1] = typeAssetsFromSample(file.samples)
   if (typeAuthorize.includes(result[0]) && typeAuthorize.includes(result[1]))
     return true
   return false

@@ -289,69 +289,80 @@ export default ({ isDesktop, authConfig, user }) => {
         >
           {t("import-from-coco")}
         </Button>
-
-        <ImportFromCOCODialog
-          open={selectedDialog === "import-from-coco"}
-          onClose={closeDialog}
-          // dataset={dataset}
-          // onChangeDataset={onChangeDataset}
-        />
-        <ImportTextSnippetsDialog
-          open={selectedDialog === "import-text-snippets"}
-          onClose={closeDialog}
-          onAddSamples={onAddSamples}
-        />
-        <PasteUrlsDialog
-          open={selectedDialog === "paste-image-urls"}
-          onClose={closeDialog}
-          onAddSamples={onAddSamples}
-        />
-        <ImportFromS3Dialog
-          open={selectedDialog === "import-from-s3"}
-          // onChangeFile={onChangeFile}
-          onClose={closeDialog}
-          user={user}
-          onAddSamples={onAddSamples}
-        />
-        <UploadToS3Dialog
-          open={selectedDialog === "upload-to-s3"}
-          // onChangeFile={onChangeFile}
-          onClose={closeDialog}
-          user={user}
-          onAddSamples={onAddSamples}
-        />
-
-        <ExportToCognitoS3Dialog
-          open={selectedDialog === "export-to-cognito-s3"}
-          onClose={closeDialog}
-          onAddSamples={onAddSamples}
-        />
-
-        <ImportFromCognitoS3Dialog
-          open={selectedDialog === "import-from-cognito-s3"}
-          onClose={closeDialog}
-          onAddSamples={onAddSamples}
-        />
-        <ImportFromGoogleDriveDialog
-          open={selectedDialog === "google-drive-file-picker"}
-          onClose={closeDialog}
-          onAddSamples={onAddSamples}
-        />
-        <ImportToyDataset
-          open={selectedDialog === "import-toy-dataset"}
-          onClose={closeDialog}
-          onAddSamples={onAddSamplesAsToyDataset}
-        />
-        <ImportFromYoutubeUrls
-          open={selectedDialog === "youtube-urls"}
-          onClose={closeDialog}
-          onAddSamples={onAddSamples}
-        />
-        <ImportUDTFileDialog
-          open={selectedDialog === "import-csv-json"}
-          onClose={closeDialog}
-          onAddSamples={onAddSamples}
-        />
+        {selectedDialog === "import-from-coco" ? (
+          <ImportFromCOCODialog
+            open={selectedDialog === "import-from-coco"}
+            onClose={closeDialog}
+            // dataset={dataset}
+            // onChangeDataset={onChangeDataset}
+          />
+        ) : selectedDialog === "import-text-snippets" ? (
+          <ImportTextSnippetsDialog
+            open={selectedDialog === "import-text-snippets"}
+            onClose={closeDialog}
+            onAddSamples={onAddSamples}
+          />
+        ) : selectedDialog === "paste-image-urls" ? (
+          <PasteUrlsDialog
+            open={selectedDialog === "paste-image-urls"}
+            onClose={closeDialog}
+            onAddSamples={onAddSamples}
+          />
+        ) : selectedDialog === "import-from-s3" ? (
+          <ImportFromS3Dialog
+            open={selectedDialog === "import-from-s3"}
+            // onChangeFile={onChangeFile}
+            onClose={closeDialog}
+            user={user}
+            onAddSamples={onAddSamples}
+          />
+        ) : selectedDialog === "upload-to-s3" ? (
+          <UploadToS3Dialog
+            open={selectedDialog === "upload-to-s3"}
+            // onChangeFile={onChangeFile}
+            onClose={closeDialog}
+            user={user}
+            onAddSamples={onAddSamples}
+          />
+        ) : selectedDialog === "export-to-cognito-s3" ? (
+          <ExportToCognitoS3Dialog
+            open={selectedDialog === "export-to-cognito-s3"}
+            onClose={closeDialog}
+            onAddSamples={onAddSamples}
+          />
+        ) : selectedDialog === "import-from-cognito-s3" ? (
+          <ImportFromCognitoS3Dialog
+            open={selectedDialog === "import-from-cognito-s3"}
+            onClose={closeDialog}
+            onAddSamples={onAddSamples}
+          />
+        ) : selectedDialog === "google-drive-file-picker" ? (
+          <ImportFromGoogleDriveDialog
+            open={selectedDialog === "google-drive-file-picker"}
+            onClose={closeDialog}
+            onAddSamples={onAddSamples}
+          />
+        ) : selectedDialog === "import-toy-dataset" ? (
+          <ImportToyDataset
+            open={selectedDialog === "import-toy-dataset"}
+            onClose={closeDialog}
+            onAddSamples={onAddSamplesAsToyDataset}
+          />
+        ) : selectedDialog === "youtube-urls" ? (
+          <ImportFromYoutubeUrls
+            open={selectedDialog === "youtube-urls"}
+            onClose={closeDialog}
+            onAddSamples={onAddSamples}
+          />
+        ) : selectedDialog === "import-csv-json" ? (
+          <ImportUDTFileDialog
+            open={selectedDialog === "import-csv-json"}
+            onClose={closeDialog}
+            onAddSamples={onAddSamples}
+          />
+        ) : (
+          <p></p>
+        )}
       </div>
     </SelectDialogContext.Provider>
   )
