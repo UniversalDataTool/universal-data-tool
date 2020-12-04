@@ -182,6 +182,7 @@ export default ({
         .slice(startCU, endCU)
         .split("\n")
         .slice(1, -1)
+        .filter((line) => line.trim() !== "")
       const latestYtLink = communityUpdates[0].match(/\((.*)\)/)[1]
       setLatestCommunityUpdate({
         name: communityUpdates[0].match(/\[(.*)\]/)[1],
@@ -265,6 +266,7 @@ export default ({
                   className={c.languageSelectionWrapper}
                 >
                   <Select
+                    id="language-list"
                     styles={languageSelectionFormStyle}
                     defaultValue={languageOptions.filter(
                       (lang) => lang.value === i18n.language
