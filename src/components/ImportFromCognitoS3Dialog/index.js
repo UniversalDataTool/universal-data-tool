@@ -14,6 +14,7 @@ import ExpandedRow from "./table-expanded-row"
 import SettingImport from "./interface-setting-import"
 import HeaderTableImport from "./header-table-import"
 import { Radio } from "@material-ui/core/"
+import getSources from "./get-sources"
 const tableStyle = {
   marginLeft: "auto",
   marginRight: "auto",
@@ -134,17 +135,35 @@ export default ({ open, onClose, onAddSamples }) => {
   const createJsonFromAsset = async () => {
     var jsons = await Promise.all(
       projectToFetch.rowAssetsUrl.map(async (obj) => {
-        var url = await dm.getDataUrl(obj.split("/assets/")[1])
-        var json = setUrl(url, configImport)
-        if (json) json = setIn(json, ["_id"], obj.split("/assets/")[1])
-        return json
+        return await createJsonFromUrlAWS(
+          dm.projectName,
+          obj.split("/assets/")[1]
+        )
       })
     )
     onAddSamples(jsons)
   }
 
+  const createJsonFromUrlAWS = async (projectName, imageName) => {
+    var url = await dm.getAssetUrl(imageName, projectName)
+    var json = setUrl(url, configImport)
+    if (json) json = setIn(json, ["_id"], imageName)
+    if (json) json = setIn(json, ["source"], projectName)
+    return json
+  }
+
   const createJsonFromAnnotation = async () => {
-    var jsons = await dm.readJSONAllSample(projectToFetch.rowAnnotationsUrl)
+    var jsons = await dm.readJSONAllSamples(projectToFetch.rowAnnotationsUrl)
+    var sources = getSources(jsons)
+    if (sources) {
+      jsons = await Promise.all(
+        jsons.map(async (json) => {
+          if (json.source)
+            json = await createJsonFromUrlAWS(json.source, json._id)
+          return json
+        })
+      )
+    }
     onAddSamples(jsons)
   }
 
@@ -185,7 +204,12 @@ export default ({ open, onClose, onAddSamples }) => {
                 <th>
                   <DataTable
                     expandableRows
-                    expandableRowsComponent={<ExpandedRow />}
+                    expandableRowsComponent={
+                      <ExpandedRow
+                        projects={projects}
+                        loadAssetIsSelected={configImport.loadAssetsIsSelected}
+                      />
+                    }
                     selectableRows
                     selectableRowsHighlight
                     selectableRowsNoSelectAll

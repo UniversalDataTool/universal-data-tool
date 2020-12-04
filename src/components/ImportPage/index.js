@@ -258,16 +258,16 @@ export default ({ isDesktop, authConfig, user }) => {
         >
           {t("export-to-cognito-s3")}
         </Button>
-          <Button
-            isDesktop={isDesktop}
-            dialog="import-from-cognito-s3"
-            Icon={S3Icon}
-            authConfiguredOnly={true}
-            signedInOnly={true}
-            user={user}
-          >
-            {t("import-from-cognito-s3")}
-          </Button>
+        <Button
+          isDesktop={isDesktop}
+          dialog="import-from-cognito-s3"
+          Icon={S3Icon}
+          authConfiguredOnly={true}
+          signedInOnly={true}
+          user={user}
+        >
+          {t("import-from-cognito-s3")}
+        </Button>
         <Button
           isDesktop={isDesktop}
           dialog="google-drive-file-picker"
