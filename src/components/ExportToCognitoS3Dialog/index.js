@@ -5,19 +5,9 @@ import useActiveDatasetManager from "../../hooks/use-active-dataset-manager"
 import isEmpty from "lodash/isEmpty"
 import datasetManagerCognito from "udt-dataset-managers/dist/CognitoDatasetManager"
 import useAuth from "../../utils/auth-handlers/use-auth"
-<<<<<<< HEAD
 import { TextField, Grid } from "@material-ui/core"
 
 const redText = { color: "orange" }
-=======
-import { TextField } from "@material-ui/core"
-const orangeText = { color: "orange" }
-const tableStyle = {
-  marginLeft: "auto",
-  marginRight: "auto",
-  width: "100%",
-}
->>>>>>> 9d9d732 (ExportCognitoFeature)
 
 const expandedAnnotationsColumns = [
   { name: "Annotations", selector: "annotation" },
@@ -72,7 +62,6 @@ export default ({ open, onClose }) => {
   const [activeDatasetManager] = useActiveDatasetManager()
   const [nameProjectToCreate, setNameProjectToCreate] = useState("")
   const [nameProjectExist, setNameProjectExist] = useState(false)
-<<<<<<< HEAD
   const [currentDataset, setCurrentDataset] = useState()
 
   const getCurrentDataset = async () => {
@@ -88,15 +77,6 @@ export default ({ open, onClose }) => {
     return currentDataset.name
   }
 
-=======
-  const getCurrentDataset = async () => {
-    var ds = await activeDatasetManager.getDataset()
-    if (!ds) return
-    if (!ds.name) return
-    setNameProjectToCreate(ds.name)
-    return ds
-  }
->>>>>>> 9d9d732 (ExportCognitoFeature)
   const getProjects = async () => {
     if (!open) return
     if (!dm) return
@@ -128,15 +108,10 @@ export default ({ open, onClose }) => {
     if (!open) return
     if (!authConfig) return
     if (!dm) setDm(new datasetManagerCognito({ authConfig }))
-<<<<<<< HEAD
-=======
-    getCurrentDataset()
->>>>>>> 9d9d732 (ExportCognitoFeature)
     // eslint-disable-next-line
   }, [dm, open, authConfig])
 
   useEffect(() => {
-<<<<<<< HEAD
     if (!open) return
     getCurrentDataset()
     getProjectName()
@@ -148,16 +123,6 @@ export default ({ open, onClose }) => {
     getProjects()
     // eslint-disable-next-line
   }, [open, dm])
-=======
-    getCurrentDataset()
-    // eslint-disable-next-line
-  }, [activeDatasetManager])
-
-  useEffect(() => {
-    getProjects()
-    // eslint-disable-next-line
-  }, [dm])
->>>>>>> 9d9d732 (ExportCognitoFeature)
 
   useEffect(() => {
     if (!projects) return
@@ -167,26 +132,12 @@ export default ({ open, onClose }) => {
     setNameProjectExist(exist)
   }, [nameProjectToCreate, projects])
 
-  const handleCreateProject = async () => {
-    if (nameProjectExist) await dm.removeProject(nameProjectToCreate)
-<<<<<<< HEAD
-    var dataset = currentDataset
-=======
-    var dataset = await activeDatasetManager.getDataset()
->>>>>>> 9d9d732 (ExportCognitoFeature)
-    dataset = dataset.setIn(["name"], nameProjectToCreate)
-    await dm.createProject({
-      name: nameProjectToCreate,
-      interface: dataset.interface,
-    })
-    await dm.setDataset(dataset)
-<<<<<<< HEAD
-    await activeDatasetManager.setDatasetProperty("name", nameProjectToCreate)
-=======
-    await activeDatasetManager.setDataset(dataset)
->>>>>>> 9d9d732 (ExportCognitoFeature)
-    await getProjects()
-    onClose()
+  const handleAddSample = async () => {
+    if (configImport.loadAssetsIsSelected) {
+      createJsonFromAsset()
+    } else {
+      createJsonFromAnnotation()
+    }
   }
 
   return (
@@ -204,7 +155,6 @@ export default ({ open, onClose }) => {
       ]}
     >
       {
-<<<<<<< HEAD
         <Grid container spacing={0}>
           <Grid container item xs={12} spacing={0} justify="center">
             {nameProjectExist ? (
@@ -245,60 +195,6 @@ export default ({ open, onClose }) => {
             )}
           </Grid>
         </Grid>
-=======
-        <table style={tableStyle}>
-          <tbody>
-            {nameProjectExist ? (
-              <tr>
-                <th>
-                  <p style={orangeText}>
-                    Warning : This project name already exist. If you continue
-                    the existing project with the same name will be replaced
-                  </p>
-                </th>
-              </tr>
-            ) : (
-              <tr>
-                <th>
-                  <p></p>
-                </th>
-              </tr>
-            )}
-            <tr>
-              <th>
-                <TextField
-                  id="ProjectName"
-                  label="Project Name"
-                  variant="outlined"
-                  onChange={(event) => {
-                    setNameProjectToCreate(event.target.value)
-                  }}
-                  value={nameProjectToCreate}
-                />
-              </th>
-            </tr>
-            {!isEmpty(projects) && (
-              <tr>
-                <th>
-                  <DataTable
-                    expandableRows
-                    expandableRowsComponent={<ExpandedRow />}
-                    dense
-                    noHeader
-                    noTableHead
-                    columns={columns}
-                    selectableRowSelected={(row) => row.isSelected}
-                    data={projects}
-                    pagination={projects.length > 10}
-                    paginationPerPage={10}
-                    paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
-                  />
-                </th>
-              </tr>
-            )}
-          </tbody>
-        </table>
->>>>>>> 9d9d732 (ExportCognitoFeature)
       }
     </SimpleDialog>
   )

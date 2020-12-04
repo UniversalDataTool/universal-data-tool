@@ -1,6 +1,6 @@
 import RecognizeFileExtension from "../../utils/RecognizeFileExtension"
 const setUrl = (result, configImport) => {
-  if (configImport.loadProjectIsSelected) {
+  if (!configImport.loadAssetIsSelected) {
     if (RecognizeFileExtension(result) === "Image") {
       return { imageUrl: `${result}` }
     } else if (RecognizeFileExtension(result) === "Video") {
@@ -9,6 +9,9 @@ const setUrl = (result, configImport) => {
       return { audioUrl: `${result}` }
     } else if (RecognizeFileExtension(result) === "PDF") {
       return { pdfUrl: `${result}` }
+    } else if (RecognizeFileExtension(result) === "Texte") {
+      //var texte = await fetchTextInFile(result)
+      return { document: `Is not supported` /*${texte}`*/ }
     }
   } else {
     if (
