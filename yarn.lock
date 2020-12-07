@@ -19805,9 +19805,9 @@ udt-collaboration-server@^1.0.7:
     yargs "^16.0.3"
 
 udt-dataset-managers@^1.0.12:
-  version "1.0.14"
-  resolved "https://registry.yarnpkg.com/udt-dataset-managers/-/udt-dataset-managers-1.0.14.tgz#318a8fb8e63488fc971f8e54672ba41e71e36734"
-  integrity sha512-Apb5IZWZj2yd58mVtPI9SGN50gDVUZAk9dkUFwyUaXRWAEa98GF/DmdTSZkQ6TUubnuW5QKtQcxL5NrS+foolg==
+  version "1.0.15"
+  resolved "https://registry.yarnpkg.com/udt-dataset-managers/-/udt-dataset-managers-1.0.15.tgz#93b2fda2377589f3152bad081e2aad859add0c59"
+  integrity sha512-67q4lWQj42bRucr/e1Z34HxGxAe+07M/lKIlG4cOcdbUKhpcgNtQZRwuJ5Qa4hz8dXKER8HlLWsNfn8Qjbgu+A==
   dependencies:
     aws-amplify "^3.3.4"
     axios "^0.20.0"
