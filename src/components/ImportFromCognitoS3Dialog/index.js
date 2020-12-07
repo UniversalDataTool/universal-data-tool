@@ -158,6 +158,11 @@ export default ({ open, onClose, onAddSamples }) => {
       loadAssetsIsSelected: !configImport.loadAssetsIsSelected,
     })
   }
+  useEffect(() => {
+    if (!open) return
+    if (!authConfig) return
+    if (!dm) setDm(new datasetManagerCognito({ authConfig }))
+  }, [open, authConfig, dm])
 
   const getProjects = async () => {
     if (!open) return
