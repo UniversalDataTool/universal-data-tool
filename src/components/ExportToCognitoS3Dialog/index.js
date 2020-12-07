@@ -5,13 +5,9 @@ import useActiveDatasetManager from "../../hooks/use-active-dataset-manager"
 import isEmpty from "lodash/isEmpty"
 import datasetManagerCognito from "udt-dataset-managers/dist/CognitoDatasetManager"
 import useAuth from "../../utils/auth-handlers/use-auth"
-import { TextField } from "@material-ui/core"
+import { TextField, Grid } from "@material-ui/core"
+
 const redText = { color: "orange" }
-const tableStyle = {
-  marginLeft: "auto",
-  marginRight: "auto",
-  width: "100%",
-}
 
 const expandedAnnotationsColumns = [
   { name: "Annotations", selector: "annotation" },
@@ -66,13 +62,21 @@ export default ({ open, onClose }) => {
   const [activeDatasetManager] = useActiveDatasetManager()
   const [nameProjectToCreate, setNameProjectToCreate] = useState("")
   const [nameProjectExist, setNameProjectExist] = useState(false)
+  const [currentDataset, setCurrentDataset] = useState()
+
   const getCurrentDataset = async () => {
-    var ds = await activeDatasetManager.getDataset()
-    if (!ds) return
-    if (!ds.name) return
-    setNameProjectToCreate(ds.name)
-    return ds
+    if (currentDataset) return currentDataset
+    setCurrentDataset(await activeDatasetManager.getDataset())
+    return currentDataset
   }
+
+  const getProjectName = () => {
+    if (!currentDataset) return
+    if (!currentDataset.name) return
+    setNameProjectToCreate(currentDataset.name)
+    return currentDataset.name
+  }
+
   const getProjects = async () => {
     if (!open) return
     if (!dm) return
@@ -104,19 +108,21 @@ export default ({ open, onClose }) => {
     if (!open) return
     if (!authConfig) return
     if (!dm) setDm(new datasetManagerCognito({ authConfig }))
-    getCurrentDataset()
     // eslint-disable-next-line
   }, [dm, open, authConfig])
 
   useEffect(() => {
+    if (!open) return
     getCurrentDataset()
+    getProjectName()
     // eslint-disable-next-line
-  }, [activeDatasetManager])
+  }, [open, activeDatasetManager])
 
   useEffect(() => {
+    if (!open) return
     getProjects()
     // eslint-disable-next-line
-  }, [dm])
+  }, [open, dm])
 
   useEffect(() => {
     if (!projects) return
@@ -128,7 +134,7 @@ export default ({ open, onClose }) => {
 
   const handleCreateProject = async () => {
     if (nameProjectExist) await dm.removeProject(nameProjectToCreate)
-    var dataset = await activeDatasetManager.getDataset()
+    var dataset = currentDataset
     dataset = dataset.setIn(["name"], nameProjectToCreate)
     await dm.createProject({
       name: nameProjectToCreate,
@@ -155,58 +161,46 @@ export default ({ open, onClose }) => {
       ]}
     >
       {
-        <table style={tableStyle}>
-          <tbody>
+        <Grid container spacing={0}>
+          <Grid container item xs={12} spacing={0} justify="center">
             {nameProjectExist ? (
-              <tr>
-                <th>
-                  <p style={redText}>
-                    Warning : This project name already exist. If you continue
-                    the existing project with the same name will be replaced
-                  </p>
-                </th>
-              </tr>
+              <p style={redText}>
+                Warning : This project name already exist. If you continue the
+                existing project with the same name will be replaced
+              </p>
             ) : (
-              <tr>
-                <th>
-                  <p></p>
-                </th>
-              </tr>
+              <p></p>
             )}
-            <tr>
-              <th>
-                <TextField
-                  id="ProjectName"
-                  label="Project Name"
-                  variant="outlined"
-                  onChange={(event) => {
-                    setNameProjectToCreate(event.target.value)
-                  }}
-                  value={nameProjectToCreate}
-                />
-              </th>
-            </tr>
+          </Grid>
+          <Grid container item xs={12} spacing={0} justify="center">
+            <TextField
+              id="ProjectName"
+              label="Project Name"
+              variant="outlined"
+              onChange={(event) => {
+                setNameProjectToCreate(event.target.value)
+              }}
+              value={nameProjectToCreate}
+            />
+          </Grid>
+          <Grid container item xs={12} spacing={0} justify="center">
             {!isEmpty(projects) && (
-              <tr>
-                <th>
-                  <DataTable
-                    expandableRows
-                    expandableRowsComponent={<ExpandedRow />}
-                    dense
-                    noHeader
-                    noTableHead
-                    columns={columns}
-                    selectableRowSelected={(row) => row.isSelected}
-                    data={projects}
-                    pagination={projects.length > 10}
-                    paginationPerPage={10}
-                    paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
-                  />
-                </th>
-              </tr>
+              <DataTable
+                expandableRows
+                expandableRowsComponent={<ExpandedRow />}
+                dense
+                noHeader
+                noTableHead
+                columns={columns}
+                selectableRowSelected={(row) => row.isSelected}
+                data={projects}
+                pagination={projects.length > 10}
+                paginationPerPage={10}
+                paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
+              />
             )}
-          </tbody>
-        </table>
+          </Grid>
+        </Grid>
       }
     </SimpleDialog>
   )
