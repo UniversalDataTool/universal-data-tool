@@ -134,7 +134,7 @@ export default ({ open, onClose }) => {
   }, [nameProjectToCreate, projects])
 
   const handleCreateProject = async () => {
-    if(!currentDataset)return
+    if (!currentDataset) return
     var dataset = currentDataset
     dataset = dataset.setIn(["name"], nameProjectToCreate)
     if (nameProjectExist) await dm.removeSamplesFolder(nameProjectToCreate)
