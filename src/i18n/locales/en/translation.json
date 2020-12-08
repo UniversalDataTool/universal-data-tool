@@ -59,6 +59,7 @@
   "import-toy-dataset": "Import Toy Dataset",
   "import-from": "Import from",
   "import-from-cognito-s3": "Import from S3 (Cognito)",
+  "export-to-cognito-s3": "Export to S3 (Cognito)",
   "import-from-s3": "Import from S3 (IAM)",
   "upload-to-s3": "Upload via S3",
   "name": "Name",

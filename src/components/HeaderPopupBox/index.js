@@ -7,8 +7,8 @@ import * as colors from "@material-ui/core/colors"
 const WIDTH = 300
 const borderColor = colors.grey[500]
 const popupBoxBeforeAndAfter = {
-  bottom: "100%",
-  left: "25%",
+  right: "100%",
+  top: 43,
   border: "solid transparent",
   content: '" "',
   height: 0,
@@ -19,11 +19,12 @@ const popupBoxBeforeAndAfter = {
 const PopupBox = styled("div")({
   position: "absolute",
   zIndex: 10,
-  top: 45,
+  top: -20,
   padding: 16,
   boxSizing: "border-box",
   borderRadius: 4,
-  left: -WIDTH / 4 + 22,
+  // left: -WIDTH / 4 + 22,
+  left: 48,
   backgroundColor: "#fff",
   border: `1px solid ${borderColor}`,
   width: WIDTH,
@@ -32,16 +33,16 @@ const PopupBox = styled("div")({
   "&:before": {
     ...popupBoxBeforeAndAfter,
     borderColor: "rgba(0,0,0, 0)",
-    borderBottomColor: borderColor,
+    borderRightColor: borderColor,
     borderWidth: 12,
-    marginLeft: -12,
+    marginTop: -12,
   },
   "&:after": {
     ...popupBoxBeforeAndAfter,
     borderColor: "rgba(255,255,255, 0)",
-    borderBottomColor: "#fff",
+    borderRightColor: "#fff",
     borderWidth: 10,
-    marginLeft: -10,
+    marginTop: -10,
   },
   "& h1": {
     fontSize: 18,

@@ -1,40 +1,67 @@
 // @flow weak
 
 import React, { memo } from "react"
-import AppBar from "@material-ui/core/AppBar"
-import Toolbar from "@material-ui/core/Toolbar"
 import Tabs from "@material-ui/core/Tabs"
 import Tab from "@material-ui/core/Tab"
-import Box from "@material-ui/core/Box"
 import { makeStyles } from "@material-ui/core/styles"
 import SettingsIcon from "@material-ui/icons/Settings"
-import StorageIcon from "@material-ui/icons/Storage"
+import AppsIcon from "@material-ui/icons/Apps"
 import BorderColorIcon from "@material-ui/icons/BorderColor"
-import MenuIcon from "@material-ui/icons/Menu"
 import CollaborateButton from "../CollaborateButton"
-import DownloadButton from "../DownloadButton"
 import InfoButton from "../InfoButton"
 import Button from "@material-ui/core/Button"
+import Box from "@material-ui/core/Box"
 import GithubIcon from "../Header/GithubIcon"
 import IconButton from "@material-ui/core/IconButton"
-import packageJSON from "../../../package.json"
 import BrushButton from "../BrushButton"
 import useAuth from "../../utils/auth-handlers/use-auth.js"
 import SlackIcon from "./SlackIcon"
-import GitHubButton from "react-github-btn"
 import { useTranslation } from "react-i18next"
+import classnames from "classnames"
+import { colors } from "@material-ui/core"
+import ExitToAppIcon from "@material-ui/icons/ExitToApp"
+import Tooltip from "@material-ui/core/Tooltip"
 
 const capitalize = (s) => {
   return s.charAt(0).toUpperCase() + s.slice(1)
 }
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    paddingTop: 0,
+    flexShrink: 0,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    width: 72,
+    height: "100vh",
+    "&.hasTabTitle": {
+      paddingBottom: 42,
+    },
+    boxSizing: "border-box",
+    backgroundColor: colors.grey[900],
+  },
+  belowTabButtons: {
+    flexGrow: 1,
+    // paddingRight: 8,
+    "& > *": {
+      marginTop: 8,
+    },
+  },
   headerButton: {
-    marginLeft: 16,
+    color: colors.grey[300],
   },
   grow: { flexGrow: 1 },
   list: {
     width: 300,
+  },
+  tabContainer: {
+    width: "100%",
+    boxSizing: "border-box",
+    textAlign: "right",
+    "& .MuiTab-wrapper": {
+      paddingLeft: 8,
+    },
   },
   tab: {
     color: "#000",
@@ -42,21 +69,19 @@ const useStyles = makeStyles((theme) => ({
   },
   fullHeightTab: {
     ...theme.mixins.toolbar,
-    [theme.breakpoints.down("sm")]: {
-      minWidth: 20,
-    },
+    minWidth: 20,
   },
   tabWrapper: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     textTransform: "none",
-    color: "#000",
+    color: colors.grey[300],
     "&&& svg": {
       marginBottom: 0,
       marginRight: 8,
-      width: 18,
-      height: 18,
+      width: 24,
+      height: 24,
     },
   },
 }))
@@ -68,7 +93,7 @@ const getIcon = (t) => {
     case "Label":
       return <BorderColorIcon className="icon" />
     case "Samples":
-      return <StorageIcon className="icon" />
+      return <AppsIcon className="icon" />
     default:
       return <div></div>
   }
@@ -80,7 +105,6 @@ const HeaderToolbar = ({
   onChangeTab,
   additionalButtons,
   onOpenDrawer,
-  title = "Universal Data Tool",
   interfaceType,
   isDesktop,
   fileOpen,
@@ -90,6 +114,7 @@ const HeaderToolbar = ({
   onCreateSession,
   onLeaveSession,
   onJoinSession,
+  onClickHome,
   onDownload,
   selectedBrush,
   onChangeSelectedBrush,
@@ -104,14 +129,36 @@ const HeaderToolbar = ({
   const { t } = useTranslation()
 
   return (
-    <AppBar color="default" position="static">
-      <Toolbar variant="dense">
-        {!isDesktop && (
-          <IconButton onClick={onOpenDrawer} className={c.headerButton}>
-            <MenuIcon />
-          </IconButton>
+    <div
+      className={classnames(c.container, { hasTabTitle: Boolean(currentTab) })}
+    >
+      {/* {!isDesktop && (
+        <IconButton onClick={onOpenDrawer} className={c.headerButton}>
+          <MenuIcon />
+        </IconButton>
+      )} */}
+      <div className={c.tabContainer}>
+        {tabs.length > 0 && (
+          <Tabs
+            orientation="vertical"
+            onChange={(e, newTab) => onChangeTab(newTab.toLowerCase())}
+            value={currentTab}
+          >
+            {tabs.map((t) => (
+              <Tab
+                id={`tab-${t.toLowerCase()}`}
+                key={t}
+                classes={{ root: c.fullHeightTab, wrapper: c.tabWrapper }}
+                className={c.tab}
+                icon={getIcon(t)}
+                // label={isSmall ? "" : t}
+                value={t.toLowerCase()}
+              />
+            ))}
+          </Tabs>
         )}
-        {fileOpen ? title : "Universal Data Tool v" + packageJSON.version}
+      </div>
+      <div className={c.belowTabButtons}>
         {fileOpen && <InfoButton />}
         <CollaborateButton
           sessionBoxOpen={sessionBoxOpen}
@@ -129,31 +176,7 @@ const HeaderToolbar = ({
             onChangeSelectedBrush={onChangeSelectedBrush}
           />
         )}
-        {!isDesktop && fileOpen && (
-          <DownloadButton
-            interfaceType={interfaceType}
-            onDownload={onDownload}
-          />
-        )}
-        <div className={c.grow} />
         {additionalButtons}
-        {tabs.length > 0 && (
-          <Tabs
-            onChange={(e, newTab) => onChangeTab(newTab.toLowerCase())}
-            value={currentTab}
-          >
-            {tabs.map((t) => (
-              <Tab
-                key={t}
-                classes={{ root: c.fullHeightTab, wrapper: c.tabWrapper }}
-                className={c.tab}
-                icon={getIcon(t)}
-                label={isSmall ? "" : t}
-                value={t.toLowerCase()}
-              />
-            ))}
-          </Tabs>
-        )}
         {authProvider !== "none" && !isLoggedIn && (
           <Button
             onClick={() => {
@@ -169,38 +192,30 @@ const HeaderToolbar = ({
             {t("logout")}
           </Button>
         )}
-        {!isSmall && !isWelcomePage && (
-          <IconButton
-            href="https://github.com/UniversalDataTool/universal-data-tool"
-            className={c.headerButton}
-            target="_blank"
-          >
-            <GithubIcon />
+      </div>
+      {!isWelcomePage && (
+        <Tooltip placement="right" title={t("Exit to Welcome Page")}>
+          <IconButton onClick={onClickHome} className={c.headerButton}>
+            <ExitToAppIcon style={{ transform: "rotate(180deg)" }} />
           </IconButton>
-        )}
-        {!isSmall && isWelcomePage && (
-          <Box paddingTop="4px" paddingLeft="8px">
-            <GitHubButton
-              href="https://github.com/UniversalDataTool/universal-data-tool"
-              data-icon="octicon-star"
-              data-size="large"
-              data-show-count="true"
-              aria-label="Star UniversalDataTool/universal-data-tool on GitHub"
-            >
-              {t("star")}
-            </GitHubButton>
-          </Box>
-        )}
-        {!isSmall && isWelcomePage && (
-          <IconButton
-            href="https://join.slack.com/t/universaldatatool/shared_invite/zt-d8teykwi-iOSOUfxugKR~M4AJN6VL3g"
-            className={c.headerButton}
-          >
-            <SlackIcon />
-          </IconButton>
-        )}
-      </Toolbar>
-    </AppBar>
+        </Tooltip>
+      )}
+      <IconButton
+        href="https://github.com/UniversalDataTool/universal-data-tool"
+        className={c.headerButton}
+        target="_blank"
+      >
+        <GithubIcon />
+      </IconButton>
+      {!isSmall && isWelcomePage && (
+        <IconButton
+          href="https://join.slack.com/t/universaldatatool/shared_invite/zt-d8teykwi-iOSOUfxugKR~M4AJN6VL3g"
+          className={c.headerButton}
+        >
+          <SlackIcon />
+        </IconButton>
+      )}
+    </div>
   )
 }
 
