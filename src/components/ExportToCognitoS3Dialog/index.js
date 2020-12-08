@@ -64,7 +64,9 @@ export default ({ open, onClose }) => {
   const [currentDataset, setCurrentDataset] = useState()
 
   const getCurrentDataset = async () => {
+    console.log(currentDataset)
     if (currentDataset) return currentDataset
+    console.log("in")
     setCurrentDataset(await activeDatasetManager.getDataset())
     return currentDataset
   }
@@ -132,7 +134,8 @@ export default ({ open, onClose }) => {
   }, [nameProjectToCreate, projects])
 
   const handleCreateProject = async () => {
-    var dataset = getCurrentDataset()
+    if(!currentDataset)return
+    var dataset = currentDataset
     dataset = dataset.setIn(["name"], nameProjectToCreate)
     if (nameProjectExist) await dm.removeSamplesFolder(nameProjectToCreate)
     await dm.setDataset(dataset)
@@ -159,7 +162,7 @@ export default ({ open, onClose }) => {
         <Grid container spacing={0}>
           <Grid container item xs={12} spacing={0} justify="center">
             {nameProjectExist ? (
-              <p style={redText}>
+              <p style={orangeText}>
                 Warning : This project name already exist. If you continue the
                 existing project with the same name will be replaced
               </p>

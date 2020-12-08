@@ -32,7 +32,6 @@ export default ({ open, onClose, onAddSamples }) => {
   const [projects, setProjects] = useState(null)
   const [projectToFetch, setProjectToFetch] = useState("")
   const [configImport, setConfigImport] = useState({})
-  console.log(configImport)
   const lastObjectRef = useRef({})
 
   const hasProjectStarted = useCallback(() => {
@@ -46,6 +45,7 @@ export default ({ open, onClose, onAddSamples }) => {
   }, [oldData, open])
 
   useEffect(() => {
+    if(!open)return
     var configToSet = configImport
 
     var hasChanged = false
@@ -78,6 +78,7 @@ export default ({ open, onClose, onAddSamples }) => {
     setConfigImport,
     hasProjectStarted,
     projectToFetch,
+    open,
   ])
 
   const handleRowSelected = (whatsChanging) => {
