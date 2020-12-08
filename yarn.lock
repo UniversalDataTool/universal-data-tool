@@ -864,6 +864,13 @@
   dependencies:
     tslib "^1.8.0"
 
+"@aws-sdk/is-array-buffer@1.0.0-gamma.6":
+  version "1.0.0-gamma.6"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/is-array-buffer/-/is-array-buffer-1.0.0-gamma.6.tgz#07e994d6661504246dedd9fc5015c89fe63b8b10"
+  integrity sha512-F80N+xct+ZFhtvwVCAq2IugjL5KrhzkYLl/q/A3qGLTTCsDsh4sbL8KxRbp8OQZyuq8OCcrlRPlt1fvFBjQJ9w==
+  dependencies:
+    tslib "^1.8.0"
+
 "@aws-sdk/is-array-buffer@1.0.0-rc.3":
   version "1.0.0-rc.3"
   resolved "https://registry.yarnpkg.com/@aws-sdk/is-array-buffer/-/is-array-buffer-1.0.0-rc.3.tgz#47e47b7e5eb7e0ac9e7fa24f56a78550fbae63bc"
@@ -1054,6 +1061,15 @@
     "@aws-sdk/types" "1.0.0-rc.3"
     tslib "^1.8.0"
 
+"@aws-sdk/querystring-builder@1.0.0-gamma.7":
+  version "1.0.0-gamma.7"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/querystring-builder/-/querystring-builder-1.0.0-gamma.7.tgz#f3d0208ff57b24f081ff75d5a643f3d02518920c"
+  integrity sha512-eOb1z8DtSD3/z9bbAEcRvVI4a1H/Jnv+PlsBarUo6skonlRbyK/wH73DsIJg4tZCGc87mFJq+8e2z1V7w3Isbw==
+  dependencies:
+    "@aws-sdk/types" "1.0.0-gamma.6"
+    "@aws-sdk/util-uri-escape" "1.0.0-gamma.6"
+    tslib "^1.8.0"
+
 "@aws-sdk/querystring-builder@1.0.0-rc.3":
   version "1.0.0-rc.3"
   resolved "https://registry.yarnpkg.com/@aws-sdk/querystring-builder/-/querystring-builder-1.0.0-rc.3.tgz#d24135a0523a8d9645d874deeb0ba5a6f6c15428"
@@ -1116,6 +1132,11 @@
     "@aws-sdk/types" "1.0.0-rc.3"
     tslib "^1.8.0"
 
+"@aws-sdk/types@1.0.0-gamma.6":
+  version "1.0.0-gamma.6"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/types/-/types-1.0.0-gamma.6.tgz#ec2bbf8abe05632a1fb2468dbd76096691dcfb89"
+  integrity sha512-5mQGLqXw269oXH4bxA3iK+Pnhy72wjIa6ccsLJVypyk1ZYiJq8Xk/ratosvZ4CDAnSwnUS1BibtxP8zrY14HnA==
+
 "@aws-sdk/types@1.0.0-rc.3":
   version "1.0.0-rc.3"
   resolved "https://registry.yarnpkg.com/@aws-sdk/types/-/types-1.0.0-rc.3.tgz#98466080e07244d8f7406cc61ae7918d02b339a2"
@@ -1172,7 +1193,6 @@
   resolved "https://registry.yarnpkg.com/@aws-sdk/util-body-length-browser/-/util-body-length-browser-1.0.0-rc.3.tgz#f3052599445e06081002788693ada1fb99ea4a51"
   integrity sha512-xvMrCo+5DshN4Fu3zar2RxaqPJ/QRAEOChyWEGUqjE+9/cow+uWsqBX3FdeY84mV6dkdcAJLQvP8aVH+v+w+lw==
   dependencies:
-    "@aws-sdk/util-buffer-from" "1.0.0-rc.3"
     tslib "^1.8.0"
 
 "@aws-sdk/util-body-length-node@1.0.0-rc.3":
@@ -1180,6 +1200,14 @@
   resolved "https://registry.yarnpkg.com/@aws-sdk/util-body-length-node/-/util-body-length-node-1.0.0-rc.3.tgz#e7068c9feff896a3720f71eab5ca44c76e587764"
   integrity sha512-q7n3IP5s9TIMao9sK4an+xxBubHqWXoeqCQ5haeDmqQTBiZQYcyQQq61YJRghj2/53SH5MMS1ACncw3kvnO92g==
   dependencies:
+    tslib "^1.8.0"
+
+"@aws-sdk/util-buffer-from@1.0.0-gamma.6":
+  version "1.0.0-gamma.6"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/util-buffer-from/-/util-buffer-from-1.0.0-gamma.6.tgz#bc2bd1d4ab217975c1872cc5e7f23b3250d89d73"
+  integrity sha512-VRfP8B1Uduf9fpnUynVA9D61RZWLoy8cWcZheuLaR2CWLEzh3Sq9NeHmybMeSEFXWrgrMNkZ8TccRH3qL3goDA==
+  dependencies:
+    "@aws-sdk/is-array-buffer" "1.0.0-gamma.6"
     tslib "^1.8.0"
 
 "@aws-sdk/util-buffer-from@1.0.0-rc.3":
@@ -1214,14 +1242,19 @@
   resolved "https://registry.yarnpkg.com/@aws-sdk/util-hex-encoding/-/util-hex-encoding-1.0.0-rc.3.tgz#4229f2495f3a5ef32c8c7ada7ab14bd6f983d269"
   integrity sha512-GXHBBGdAH2HPn18RFMsvXAvBtO8pG0I2PlGHfKhn+ym+UT1lHHYpCd3/PawUVUYnFZrqIj+j48IjFFJ3XMPXyQ==
   dependencies:
-    "@aws-sdk/querystring-builder" "1.0.0-rc.3"
-    "@aws-sdk/types" "1.0.0-rc.3"
     tslib "^1.8.0"
 
 "@aws-sdk/util-locate-window@^1.0.0-rc.1":
   version "1.0.0-rc.8"
   resolved "https://registry.yarnpkg.com/@aws-sdk/util-locate-window/-/util-locate-window-1.0.0-rc.8.tgz#d28175aeb9c8ad3940242e615b1503632d3be33d"
   integrity sha512-TvqeA4fgmZ0A0x3K+qVj/OSWEFHGZjzpVuyXlm1EYOf7NQ9VWRlokEn1MYKuL+t7al9ZeQyi16D8Dn7DW1eidw==
+  dependencies:
+    tslib "^1.8.0"
+
+"@aws-sdk/util-uri-escape@1.0.0-gamma.6":
+  version "1.0.0-gamma.6"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/util-uri-escape/-/util-uri-escape-1.0.0-gamma.6.tgz#27e5576a087a96482880527621a0dc5065d26af9"
+  integrity sha512-U11YFhWSwyobmWF03Q5QRxLjG6sN/mfss58ue0KTKFhuTJxdrQ/Y+Aj/7TNSnVBNfHZqz7aETGz5HHD4ccgSAA==
   dependencies:
     tslib "^1.8.0"
 
@@ -1253,7 +1286,6 @@
   resolved "https://registry.yarnpkg.com/@aws-sdk/util-utf8-browser/-/util-utf8-browser-1.0.0-rc.3.tgz#ca2f1ee3c3774203675455e6cf6a52256d40849d"
   integrity sha512-ypEJ2zsfm844dPSnES5lvS80Jb6hQ7D9iu0TUKQfIVu0LernJaAiSM05UEbktN+bEAoQBi9S64l8JjHVKFWu1Q==
   dependencies:
-    "@aws-sdk/types" "1.0.0-rc.3"
     tslib "^1.8.0"
 
 "@aws-sdk/util-utf8-browser@^1.0.0-alpha.0", "@aws-sdk/util-utf8-browser@^1.0.0-rc.1":
@@ -1796,48 +1828,6 @@
     "@babel/helper-plugin-utils" "^7.8.0"
 
 "@babel/plugin-syntax-jsx@7.12.1", "@babel/plugin-syntax-jsx@^7.12.1":
-  version "7.12.1"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-jsx/-/plugin-syntax-jsx-7.12.1.tgz#9d9d357cc818aa7ae7935917c1257f67677a0926"
-  integrity sha512-1yRi7yAtB0ETgxdY9ti/p2TivUxJkTdhu/ZbF9MshVGqOx1TdB3b7xCXs49Fupgg50N45KcAsRP/ZqWjs9SRjg==
-  dependencies:
-    "@babel/helper-plugin-utils" "^7.10.4"
-
-"@babel/plugin-syntax-logical-assignment-operators@^7.10.4":
-  version "7.10.4"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-logical-assignment-operators/-/plugin-syntax-logical-assignment-operators-7.10.4.tgz#ca91ef46303530448b906652bac2e9fe9941f699"
-  integrity sha512-d8waShlpFDinQ5MtvGU9xDAOzKH47+FFoney2baFIoMr952hKOLp1HR7VszoZvOsV/4+RRszNY7D17ba0te0ig==
-  dependencies:
-    "@babel/helper-plugin-utils" "^7.10.4"
-
-"@babel/plugin-syntax-jsx@^7.12.1":
-  version "7.12.1"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-jsx/-/plugin-syntax-jsx-7.12.1.tgz#9d9d357cc818aa7ae7935917c1257f67677a0926"
-  integrity sha512-1yRi7yAtB0ETgxdY9ti/p2TivUxJkTdhu/ZbF9MshVGqOx1TdB3b7xCXs49Fupgg50N45KcAsRP/ZqWjs9SRjg==
-  dependencies:
-    "@babel/helper-plugin-utils" "^7.10.4"
-
-"@babel/plugin-syntax-logical-assignment-operators@^7.10.4":
-  version "7.10.4"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-logical-assignment-operators/-/plugin-syntax-logical-assignment-operators-7.10.4.tgz#ca91ef46303530448b906652bac2e9fe9941f699"
-  integrity sha512-d8waShlpFDinQ5MtvGU9xDAOzKH47+FFoney2baFIoMr952hKOLp1HR7VszoZvOsV/4+RRszNY7D17ba0te0ig==
-  dependencies:
-    "@babel/helper-plugin-utils" "^7.10.4"
-
-"@babel/plugin-syntax-jsx@^7.12.1":
-  version "7.12.1"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-jsx/-/plugin-syntax-jsx-7.12.1.tgz#9d9d357cc818aa7ae7935917c1257f67677a0926"
-  integrity sha512-1yRi7yAtB0ETgxdY9ti/p2TivUxJkTdhu/ZbF9MshVGqOx1TdB3b7xCXs49Fupgg50N45KcAsRP/ZqWjs9SRjg==
-  dependencies:
-    "@babel/helper-plugin-utils" "^7.10.4"
-
-"@babel/plugin-syntax-logical-assignment-operators@^7.10.4":
-  version "7.10.4"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-logical-assignment-operators/-/plugin-syntax-logical-assignment-operators-7.10.4.tgz#ca91ef46303530448b906652bac2e9fe9941f699"
-  integrity sha512-d8waShlpFDinQ5MtvGU9xDAOzKH47+FFoney2baFIoMr952hKOLp1HR7VszoZvOsV/4+RRszNY7D17ba0te0ig==
-  dependencies:
-    "@babel/helper-plugin-utils" "^7.10.4"
-
-"@babel/plugin-syntax-jsx@^7.12.1":
   version "7.12.1"
   resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-jsx/-/plugin-syntax-jsx-7.12.1.tgz#9d9d357cc818aa7ae7935917c1257f67677a0926"
   integrity sha512-1yRi7yAtB0ETgxdY9ti/p2TivUxJkTdhu/ZbF9MshVGqOx1TdB3b7xCXs49Fupgg50N45KcAsRP/ZqWjs9SRjg==
@@ -19850,10 +19840,10 @@ udt-collaboration-server@^1.0.7:
     rfc6902 "^4.0.1"
     yargs "^16.0.3"
 
-udt-dataset-managers@^1.0.12:
-  version "1.0.14"
-  resolved "https://registry.yarnpkg.com/udt-dataset-managers/-/udt-dataset-managers-1.0.14.tgz#318a8fb8e63488fc971f8e54672ba41e71e36734"
-  integrity sha512-Apb5IZWZj2yd58mVtPI9SGN50gDVUZAk9dkUFwyUaXRWAEa98GF/DmdTSZkQ6TUubnuW5QKtQcxL5NrS+foolg==
+udt-dataset-managers@^1.0.15:
+  version "1.0.15"
+  resolved "https://registry.yarnpkg.com/udt-dataset-managers/-/udt-dataset-managers-1.0.15.tgz#93b2fda2377589f3152bad081e2aad859add0c59"
+  integrity sha512-67q4lWQj42bRucr/e1Z34HxGxAe+07M/lKIlG4cOcdbUKhpcgNtQZRwuJ5Qa4hz8dXKER8HlLWsNfn8Qjbgu+A==
   dependencies:
     aws-amplify "^3.3.4"
     axios "^0.20.0"

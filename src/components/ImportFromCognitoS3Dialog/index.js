@@ -29,7 +29,7 @@ export default ({ open, onClose, onAddSamples }) => {
   const [dm, setDm] = useState(null)
   const [oldData] = useDataset()
   const { authConfig } = useAuth()
-  const [projects, setProjects] = useState(null)
+  const [projects, setProjects] = useState()
   const [projectToFetch, setProjectToFetch] = useState("")
   const [configImport, setConfigImport] = useState({})
   const lastObjectRef = useRef({})
@@ -96,7 +96,7 @@ export default ({ open, onClose, onAddSamples }) => {
         })
       )
     } else {
-      setProjectToFetch(null)
+      setProjectToFetch("")
     }
   }
 
@@ -109,12 +109,15 @@ export default ({ open, onClose, onAddSamples }) => {
     var data = await Promise.all(
       dataFolder.map(async (obj, index) => {
         const folder = obj
+        var isSelected = false
         const rowAnnotationsContent = await dm.getListSamples({
           projectName: obj,
         })
         const rowAssetsContent = await dm.getListAssets({
           projectName: obj,
         })
+        if (projectToFetch && projectToFetch.folder === folder)
+          isSelected = true
         return {
           id: `${index}`,
           folder: folder,
@@ -130,7 +133,7 @@ export default ({ open, onClose, onAddSamples }) => {
           }),
           rowAnnotationsUrl: rowAnnotationsContent,
           rowAssetsUrl: rowAssetsContent,
-          isSelected: false,
+          isSelected: isSelected,
         }
       })
     )
@@ -140,6 +143,7 @@ export default ({ open, onClose, onAddSamples }) => {
     if (!open) return
     if (!dm) return
     if (!(await dm.isReady())) return
+    if (!projectToFetch) return
     dm.setProject(projectToFetch.folder)
   }
   useEffect(() => {

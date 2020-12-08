@@ -139,7 +139,7 @@ export default ({ open, onClose }) => {
     dataset = dataset.setIn(["name"], nameProjectToCreate)
     if (nameProjectExist) await dm.removeSamplesFolder(nameProjectToCreate)
     await dm.setDataset(dataset)
-    await activeDatasetManager.setDataset(dataset)
+    await activeDatasetManager.setDatasetProperty("name", nameProjectToCreate)
     await getProjects()
     onClose()
   }
