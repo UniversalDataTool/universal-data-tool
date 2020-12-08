@@ -53,10 +53,10 @@ const ExpandedRow = ({ data }) => {
 }
 
 export default ({ open, onClose, onAddSamples }) => {
-  var [dm, setDm] = useState(null)
+  const [dm, setDm] = useState(null)
   const { authConfig } = useAuth()
-  var [projects, setProjects] = useState(null)
-  const [projectToFetch, setProjectToFetch] = useState("")
+  const [projects, setProjects] = useState()
+  const [projectToFetch, setProjectToFetch] = useState()
 
   const handleRowSelected = (whatsChanging) => {
     if (!isEmpty(whatsChanging.selectedRows[0])) {
@@ -72,7 +72,7 @@ export default ({ open, onClose, onAddSamples }) => {
         })
       )
     } else {
-      setProjectToFetch(null)
+      setProjectToFetch("")
     }
   }
 
@@ -85,9 +85,12 @@ export default ({ open, onClose, onAddSamples }) => {
     var data = await Promise.all(
       dataFolder.map(async (obj, index) => {
         const folder = obj
+        var isSelected = false
         const rowAnnotationsContent = await dm.getListSamples({
           projectName: obj,
         })
+        if (projectToFetch && projectToFetch.folder === folder)
+          isSelected = true
         return {
           id: `${index}`,
           folder: folder,
@@ -97,7 +100,7 @@ export default ({ open, onClose, onAddSamples }) => {
             }
           }),
           rowAnnotationsUrl: rowAnnotationsContent,
-          isSelected: false,
+          isSelected: isSelected,
         }
       })
     )
@@ -107,6 +110,7 @@ export default ({ open, onClose, onAddSamples }) => {
     if (!open) return
     if (!dm) return
     if (!(await dm.isReady())) return
+    if (!projectToFetch) return
     dm.setProject(projectToFetch.folder)
   }
   useEffect(() => {
