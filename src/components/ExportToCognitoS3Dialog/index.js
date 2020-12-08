@@ -141,7 +141,7 @@ export default ({ open, onClose }) => {
       interface: dataset.interface,
     })
     await dm.setDataset(dataset)
-    await activeDatasetManager.setDataset(dataset)
+    await activeDatasetManager.setDatasetProperty("name", nameProjectToCreate)
     await getProjects()
     onClose()
   }
