@@ -10,6 +10,7 @@ import DescriptionIcon from "@material-ui/icons/Description"
 import PetsIcon from "@material-ui/icons/Pets"
 import * as colors from "@material-ui/core/colors"
 import PasteUrlsDialog from "../PasteUrlsDialog"
+import ExportToCognitoS3Dialog from "../ExportToCognitoS3Dialog"
 import ImportFromCognitoS3Dialog from "../ImportFromCognitoS3Dialog"
 import ExportToCognitoS3Dialog from "../ExportToCognitoS3Dialog"
 import ImportFromS3Dialog from "../ImportFromS3Dialog"
@@ -317,6 +318,13 @@ export default ({ isDesktop, authConfig, user }) => {
           user={user}
           onAddSamples={onAddSamples}
         />
+
+        <ExportToCognitoS3Dialog
+          open={selectedDialog === "export-to-cognito-s3"}
+          onClose={closeDialog}
+          onAddSamples={onAddSamples}
+        />
+
         <ImportFromCognitoS3Dialog
           open={selectedDialog === "import-from-cognito-s3"}
           onClose={closeDialog}

@@ -16,11 +16,11 @@ import HeaderTableImport from "./header-table-import"
 import { Radio } from "@material-ui/core/"
 import importConfigIsReady from "./config-import-is-ready"
 import WarningHeader from "./warning-header"
-const tableStyle = {
-  marginLeft: "auto",
-  marginRight: "auto",
-  width: "100%",
-}
+
+const expandedAnnotationsColumns = [
+  { name: "Annotations", selector: "annotation" },
+  { name: "Last Modified", selector: "lastModified", sortable: true },
+]
 
 const columns = [{ name: "Projects", selector: "folder", sortable: true }]
 
@@ -150,14 +150,17 @@ export default ({ open, onClose, onAddSamples }) => {
   }, [open, authConfig, dm, oldData])
 
   useEffect(() => {
+    if (!open) return
     getProjects()
     // eslint-disable-next-line
-  }, [dm])
+  }, [dm, open])
 
   useEffect(() => {
+    if (!open) return
     setProject()
     // eslint-disable-next-line
   }, [projectToFetch])
+  
   const createJsonFromAsset = async () => {
     var jsons = await Promise.all(
       projectToFetch.rowAssetsUrl.map(async (obj) => {
