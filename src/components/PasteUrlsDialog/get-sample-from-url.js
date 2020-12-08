@@ -1,5 +1,4 @@
 export default (s, opts = {}) => {
-  console.log(s)
   let extension = s.replace(/\?.*/g, "").split(".").slice(-1)[0]
   if (s.includes("gstatic.com/images")) {
     extension = "jpg"
