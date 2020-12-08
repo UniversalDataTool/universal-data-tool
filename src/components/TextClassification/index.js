@@ -30,6 +30,7 @@ export const TextClassification = ({
       type="label-document"
       labels={labels}
       multipleLabels={iface?.multiple}
+      separatorRegex={iface?.wordSplitRegex}
       document={sample?.document}
       initialLabels={initialLabels}
       hotkeysEnabled={!disableHotkeys}
