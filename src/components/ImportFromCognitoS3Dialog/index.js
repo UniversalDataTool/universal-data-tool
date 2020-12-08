@@ -13,18 +13,10 @@ import { setIn } from "seamless-immutable"
 import ExpandedRow from "./table-expanded-row"
 import SettingImport from "./interface-setting-import"
 import HeaderTableImport from "./header-table-import"
-import { Radio } from "@material-ui/core/"
-<<<<<<< HEAD
+import { Radio, Grid } from "@material-ui/core/"
 import importConfigIsReady from "./config-import-is-ready"
 import WarningHeader from "./warning-header"
-=======
 import getSources from "./get-sources"
->>>>>>> 916e9ca (Export Cognito Stable with Import Cognito)
-const tableStyle = {
-  marginLeft: "auto",
-  marginRight: "auto",
-  width: "100%",
-}
 
 const columns = [{ name: "Projects", selector: "folder", sortable: true }]
 
@@ -48,7 +40,7 @@ export default ({ open, onClose, onAddSamples }) => {
   }, [oldData, open])
 
   useEffect(() => {
-    if(!open)return
+    if (!open) return
     var configToSet = configImport
 
     var hasChanged = false
@@ -167,6 +159,7 @@ export default ({ open, onClose, onAddSamples }) => {
     setProject()
     // eslint-disable-next-line
   }, [projectToFetch])
+
   const createJsonFromAsset = async () => {
     var jsons = await Promise.all(
       projectToFetch.rowAssetsUrl.map(async (obj) => {
@@ -225,62 +218,54 @@ export default ({ open, onClose, onAddSamples }) => {
         },
       ]}
     >
-      <table style={tableStyle}>
-        <tbody>
-          <tr>
-            <th>
-              <WarningHeader
-                configImport={configImport}
-                projectToFetch={projectToFetch}
-              />
-            </th>
-          </tr>
-          <tr>
-            <th>
-              <HeaderTableImport
-                configImport={configImport}
-                setConfigImport={setConfigImport}
-              />
-            </th>
-          </tr>
-          {!configImport.contentDialogBoxIsSetting ? (
-            !isEmpty(projects) && (
-              <tr>
-                <th>
-                  <DataTable
-                    expandableRows
-                    expandableRowsComponent={
-                      <ExpandedRow
-                        projects={projects}
-                        loadAssetIsSelected={configImport.loadAssetsIsSelected}
-                      />
-                    }
-                    selectableRows
-                    selectableRowsHighlight
-                    selectableRowsNoSelectAll
-                    selectableRowsComponent={Radio}
-                    dense
-                    noHeader
-                    noTableHead
-                    columns={columns}
-                    onSelectedRowsChange={handleRowSelected}
-                    selectableRowSelected={(row) => row.isSelected}
-                    data={projects}
-                    pagination={projects.length > 10}
-                    paginationPerPage={10}
-                    paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
+      <Grid container spacing={0}>
+        <Grid container item xs={12} spacing={0} justify="center">
+          <WarningHeader
+            configImport={configImport}
+            projectToFetch={projectToFetch}
+          />
+        </Grid>
+        <Grid container item xs={12} spacing={0} justify="center">
+          <HeaderTableImport
+            configImport={configImport}
+            setConfigImport={setConfigImport}
+          />
+        </Grid>
+        {!configImport.contentDialogBoxIsSetting ? (
+          !isEmpty(projects) && (
+            <Grid container item xs={12} spacing={0} justify="center">
+              <DataTable
+                expandableRows
+                expandableRowsComponent={
+                  <ExpandedRow
+                    projects={projects}
+                    loadAssetIsSelected={configImport.loadAssetsIsSelected}
                   />
-                </th>
-              </tr>
-            )
-          ) : (
-            <SettingImport
-              configImport={configImport}
-              setConfigImport={setConfigImport}
-            />
-          )}
-        </tbody>
-      </table>
+                }
+                selectableRows
+                selectableRowsHighlight
+                selectableRowsNoSelectAll
+                selectableRowsComponent={Radio}
+                dense
+                noHeader
+                noTableHead
+                columns={columns}
+                onSelectedRowsChange={handleRowSelected}
+                selectableRowSelected={(row) => row.isSelected}
+                data={projects}
+                pagination={projects.length > 10}
+                paginationPerPage={10}
+                paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
+              />
+            </Grid>
+          )
+        ) : (
+          <SettingImport
+            configImport={configImport}
+            setConfigImport={setConfigImport}
+          />
+        )}
+      </Grid>
     </SimpleDialog>
   )
 }
