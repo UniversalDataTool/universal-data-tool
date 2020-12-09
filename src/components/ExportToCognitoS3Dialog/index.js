@@ -62,12 +62,12 @@ export default ({ open, onClose }) => {
   const [nameProjectToCreate, setNameProjectToCreate] = useState("")
   const [nameProjectExist, setNameProjectExist] = useState(false)
   const [currentDataset, setCurrentDataset] = useState()
+  const [refreshInterface, setRefreshInterface] = useState(false)
 
   const getCurrentDataset = async () => {
-    console.log(currentDataset)
     if (currentDataset) return currentDataset
-    console.log("in")
     setCurrentDataset(await activeDatasetManager.getDataset())
+    setRefreshInterface(true)
     return currentDataset
   }
 
@@ -117,7 +117,7 @@ export default ({ open, onClose }) => {
     getCurrentDataset()
     getProjectName()
     // eslint-disable-next-line
-  }, [open, activeDatasetManager])
+  }, [open, refreshInterface])
 
   useEffect(() => {
     if (!open) return

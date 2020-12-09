@@ -74,10 +74,7 @@ export default (file) => {
     var dataset = file.content
     // TODO datasetHelper.setSamplesName is returning an incorrect object, it
     // should be returning an array of samples
-    console.log(
-      "this should be an array of samples",
-      datasetHelper.setSamplesName(dataset)
-    )
+    datasetHelper.setSamplesName(dataset)
     file = setIn(
       file,
       ["content"],
