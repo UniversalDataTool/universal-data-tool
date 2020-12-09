@@ -43,3 +43,4 @@ cypress/snapshots
 
 .idea
 *.db
+cypress/fixtures/credentials,json
