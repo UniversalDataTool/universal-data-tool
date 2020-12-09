@@ -30,7 +30,6 @@ export const LabelHelpRunning = ({ onChangeActiveStep }) => {
 
   useAsyncEffect(async () => {
     if (!labelHelpUrl) return
-    console.log("Loading job...")
     const response = await fetch(
       `https://labelhelp.universaldatatool.com/api/job?custom_id=${encodeURIComponent(
         labelHelpUrl
