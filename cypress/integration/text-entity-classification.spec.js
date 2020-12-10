@@ -1,3 +1,4 @@
+import setLanguage from "../utils/set-language"
 const times = (howManyTimes) => (functionWillExecute) => {
   if (howManyTimes > 0) {
     functionWillExecute()
@@ -29,10 +30,7 @@ const inputValues = [positive, negative, neutral]
 describe("Create a new text entity classification, label that and show that", () => {
   it("should be able to create new file", () => {
     cy.visit("/")
-    cy.get('input[id="react-select-2-input"]')
-      .focus()
-      .type("English", { force: true })
-      .type("{enter}")
+    setLanguage()
     cy.contains("New File").click()
   })
 

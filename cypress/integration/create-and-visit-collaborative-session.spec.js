@@ -1,10 +1,8 @@
+import setLanguage from "../utils/set-language"
 describe("Create and Visit Collaborative Session", () => {
   it("should be able to create new file", () => {
     cy.visit(`http://localhost:6001`)
-    cy.get('input[id="react-select-2-input"]')
-      .focus()
-      .type("English", { force: true })
-      .type("{enter}")
+    setLanguage()
     cy.contains("New File").click()
   })
 
