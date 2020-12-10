@@ -329,11 +329,6 @@ export default ({ isDesktop, authConfig, user }) => {
           onClose={closeDialog}
           onAddSamples={onAddSamples}
         />
-        <ExportToCognitoS3Dialog
-          open={selectedDialog === "export-to-cognito-s3"}
-          onClose={closeDialog}
-          onAddSamples={onAddSamples}
-        />
 
         <ImportFromGoogleDriveDialog
           open={selectedDialog === "google-drive-file-picker"}
