@@ -56,32 +56,25 @@ const enterCredentialsCognito = (credentials) => {
 
 describe("Try to export a natif project to aws", () => {
   it("", () => {
-
     cy.log("should be able to join the web site")
     cy.visit(`http://localhost:6001`)
 
     cy.log("should be able to set the language to english")
     cy.get('input[id="react-select-2-input"]')
-    .focus()
-    .type("English", { force: true })
-    .type("{enter}")
+      .focus()
+      .type("English")
+      .type("{enter}")
 
     cy.log("should be able to set s3 config")
     cy.contains("Add Authentification").click()
-    cy.get(
-      'button[class="MuiButtonBase-root MuiButton-root MuiButton-text makeStyles-bigButton-10"]'
-    )
-      .first()
-      .click()
+    cy.contains("AWS - Cognito").click()
     cy.fixture("credentials.json").then((credentials) =>
       enterCredentialsS3(credentials)
     )
-    cy.get("div[class='sc-eHgmQL JxKOU']").children().click()
+    cy.contains("Complete").click()
 
     cy.log("should be able to set user cognito config")
-    cy.get(
-      'button[class="MuiButtonBase-root MuiButton-root MuiButton-text makeStyles-headerButton-14"]'
-    ).click()
+    cy.contains("Cognito").click()
     cy.fixture("credentials.json").then((credentials) =>
       enterCredentialsCognito(credentials)
     )
@@ -94,43 +87,35 @@ describe("Try to export a natif project to aws", () => {
     cy.get(
       "button[class='MuiButtonBase-root MuiIconButton-root makeStyles-headerButton-14']"
     ).click()
-    cy.get("span[class='MuiTouchRipple-root']")
-      .eq(9)
-      .trigger("mousedown", { force: true })
-      .children()
-      .click({ force: true })
-    cy.get("span[class='MuiTouchRipple-root']")
-      .eq(18)
-      .trigger("mousedown", { force: true })
-      .children()
-      .click({ force: true })
-    cy.get("span[class='MuiTouchRipple-root']")
-      .eq(22)
-      .trigger("mousedown", { force: true })
-      .children()
-      .click({ force: true })
+    cy.wait(200)
+    cy.contains("Image Segmentation").click({ force: true })
+    cy.wait(200)
+    cy.contains("Samples").click()
+    cy.wait(200)
+    cy.contains("Import").click()
 
     cy.log("should be able to use export project")
-    cy.get("span[class='MuiTouchRipple-root']")
-      .eq(28)
-      .trigger("mousedown", { force: true })
-      .children()
-      .click({ force: true })
+    cy.wait(200)
+    cy.get(
+      "button[class='MuiButtonBase-root MuiButton-root MuiButton-outlined WithStyles(ForwardRef(Button))-root-110']"
+    )
+      .eq(2)
+      .click()
     cy.get("input[id='ProjectName']")
       .clear()
-      .type("CypherTest1", { force: true })
+      .type("CypressTest1")
       .type("{enter}")
-    cy.get("button[class='MuiButtonBase-root MuiButton-root MuiButton-text']").last()
+    cy.get("button[class='MuiButtonBase-root MuiButton-root MuiButton-text']")
+      .last()
       .click()
 
     cy.log("should be able to see the new project")
-    cy.wait(1000)
-    cy.get("span[class='MuiTouchRipple-root']")
-      .eq(28)
-      .trigger("mousedown", { force: true })
-      .children()
-      .first()
-      .trigger("mousedown", { force: true })
-    cy.contains("CypherTest1")
+    cy.wait(4000)
+    cy.get(
+      "button[class='MuiButtonBase-root MuiButton-root MuiButton-outlined WithStyles(ForwardRef(Button))-root-110']"
+    )
+      .eq(2)
+      .click()
+    cy.contains("CypressTest1")
   })
 })
