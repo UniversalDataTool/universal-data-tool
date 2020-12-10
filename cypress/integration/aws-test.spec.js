@@ -1,26 +1,17 @@
-import enterCredentialsCognitoS3 from "../../utils/credentials-test/enter-credentials-cognito-s3"
-import enterCredentialsUser from "../../utils/credentials-test/enter-credentials-user"
-import setLanguage from "../../utils/set-language"
+import enterCredentialsCognitoS3 from "../utils/credentials-test/enter-credentials-cognito-s3"
+import enterCredentialsUser from "../utils/credentials-test/enter-credentials-user"
+import setLanguage from "../utils/set-language"
+import goToImportPage from "../utils/go-to-import-page"
 
-describe("Try to export a natif project to aws", () => {
-  it("", () => {
+describe("aws test", () => {
+  it("Try to export a natif project to aws", () => {
     cy.log("should be able to join the web site")
     cy.visit(`http://localhost:6001`)
 
     setLanguage()
     enterCredentialsCognitoS3()
     enterCredentialsUser()
-
-    cy.log("should be able to go to the import page")
-    cy.get(
-      "button[class='MuiButtonBase-root MuiIconButton-root makeStyles-headerButton-14']"
-    ).click()
-    cy.wait(200)
-    cy.contains("Image Segmentation").click({ force: true })
-    cy.wait(200)
-    cy.contains("Samples").click()
-    cy.wait(200)
-    cy.contains("Import").click()
+    goToImportPage()
 
     cy.log("should be able to use export project")
     cy.wait(200)
