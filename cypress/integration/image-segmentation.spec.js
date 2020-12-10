@@ -1,10 +1,8 @@
+import setLanguage from "../utils/set-language"
 describe("Image Segmentation Tests", () => {
   it("should be able to create", () => {
     cy.visit("/")
-    cy.get('input[id="react-select-2-input"]')
-      .focus()
-      .type("English", { force: true })
-      .type("{enter}")
+    setLanguage()
     cy.contains("New File").click()
   })
 

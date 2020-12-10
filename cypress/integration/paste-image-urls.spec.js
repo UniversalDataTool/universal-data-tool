@@ -1,3 +1,4 @@
+import setLanguage from "../utils/set-language"
 const imageUrls = [
   "https://wao.ai/app/api/download/fef3ee4d-f841-42f5-ba22-a7c8eb214628",
   "https://wao.ai/app/api/download/f80f660f-6641-4241-9c9d-7c3ac26c5a17",
@@ -7,10 +8,7 @@ const imageUrls = [
 describe("Paste Image URLs", () => {
   it("should be able to create", () => {
     cy.visit("/")
-    cy.get('input[id="react-select-2-input"]')
-      .focus()
-      .type("English", { force: true })
-      .type("{enter}")
+    setLanguage()
     cy.contains("New File").click()
   })
 

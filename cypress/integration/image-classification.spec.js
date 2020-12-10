@@ -1,3 +1,4 @@
+import setLanguage from "../utils/set-language"
 const times = (howManyTimes) => (functionWillExecute) => {
   if (howManyTimes > 0) {
     functionWillExecute()
@@ -8,10 +9,7 @@ const times = (howManyTimes) => (functionWillExecute) => {
 describe("Import ai generated faces and make image classification with them", () => {
   it("should be able to create", () => {
     cy.visit("/")
-    cy.get('input[id="react-select-2-input"]')
-      .focus()
-      .type("English", { force: true })
-      .type("{enter}")
+    setLanguage()
     cy.contains("New File").click()
   })
 

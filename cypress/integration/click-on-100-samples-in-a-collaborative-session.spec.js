@@ -1,7 +1,7 @@
 describe.skip("Create and Visit Collaborative Session", () => {
   it("should be able to create new file", () => {
     cy.visit(`http://localhost:6001`)
-
+    cy.wait(200)
     cy.contains("New File").click()
     cy.contains("Setup").click()
     cy.contains("Image Classification").click()

@@ -1,10 +1,8 @@
+import setLanguage from "../utils/set-language"
 describe("Test default keyboard shortcuts", () => {
   it.skip("should be able to navigate to label tab with default shortcut", () => {
     cy.visit("/")
-    cy.get('input[id="react-select-2-input"]')
-      .focus()
-      .type("English", { force: true })
-      .type("{enter}")
+    setLanguage()
     cy.contains("New File").click()
 
     cy.wait(500)
