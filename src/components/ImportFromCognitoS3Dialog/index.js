@@ -1,3 +1,4 @@
+  
 import React, { useEffect, useRef, useState, useCallback } from "react"
 import SimpleDialog from "../SimpleDialog"
 import DataTable from "react-data-table-component"
@@ -24,7 +25,7 @@ export default ({ open, onClose, onAddSamples }) => {
   const [dm, setDm] = useState(null)
   const [oldData] = useDataset()
   const { authConfig } = useAuth()
-  const [projects, setProjects] = useState(null)
+  const [projects, setProjects] = useState()
   const [projectToFetch, setProjectToFetch] = useState("")
   const [configImport, setConfigImport] = useState({})
   const lastObjectRef = useRef({})
@@ -111,6 +112,8 @@ export default ({ open, onClose, onAddSamples }) => {
         const rowAssetsContent = await dm.getListAssets({
           projectName: obj,
         })
+        if (projectToFetch && projectToFetch.folder === folder)
+          isSelected = true
         return {
           id: `${index}`,
           folder: folder,
@@ -126,7 +129,7 @@ export default ({ open, onClose, onAddSamples }) => {
           }),
           rowAnnotationsUrl: rowAnnotationsContent,
           rowAssetsUrl: rowAssetsContent,
-          isSelected: false,
+          isSelected: isSelected,
         }
       })
     )
