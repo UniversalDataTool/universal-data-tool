@@ -6,12 +6,6 @@ import isEmpty from "lodash/isEmpty"
 import datasetManagerCognito from "udt-dataset-managers/dist/CognitoDatasetManager"
 import useAuth from "../../utils/auth-handlers/use-auth"
 
-const tableStyle = {
-  marginLeft: "auto",
-  marginRight: "auto",
-  width: "100%",
-}
-
 const expandedAnnotationsColumns = [
   { name: "Annotations", selector: "annotation" },
   { name: "Last Modified", selector: "lastModified", sortable: true },
@@ -59,10 +53,10 @@ const ExpandedRow = ({ data }) => {
 }
 
 export default ({ open, onClose, onAddSamples }) => {
-  var [dm, setDm] = useState(null)
+  const [dm, setDm] = useState(null)
   const { authConfig } = useAuth()
-  var [projects, setProjects] = useState(null)
-  const [projectToFetch, setProjectToFetch] = useState("")
+  const [projects, setProjects] = useState()
+  const [projectToFetch, setProjectToFetch] = useState()
 
   const handleRowSelected = (whatsChanging) => {
     if (!isEmpty(whatsChanging.selectedRows[0])) {
@@ -78,7 +72,7 @@ export default ({ open, onClose, onAddSamples }) => {
         })
       )
     } else {
-      setProjectToFetch(null)
+      setProjectToFetch("")
     }
   }
 
@@ -91,9 +85,12 @@ export default ({ open, onClose, onAddSamples }) => {
     var data = await Promise.all(
       dataFolder.map(async (obj, index) => {
         const folder = obj
+        var isSelected = false
         const rowAnnotationsContent = await dm.getListSamples({
           projectName: obj,
         })
+        if (projectToFetch && projectToFetch.folder === folder)
+          isSelected = true
         return {
           id: `${index}`,
           folder: folder,
@@ -103,7 +100,7 @@ export default ({ open, onClose, onAddSamples }) => {
             }
           }),
           rowAnnotationsUrl: rowAnnotationsContent,
-          isSelected: false,
+          isSelected: isSelected,
         }
       })
     )
@@ -113,6 +110,7 @@ export default ({ open, onClose, onAddSamples }) => {
     if (!open) return
     if (!dm) return
     if (!(await dm.isReady())) return
+    if (!projectToFetch) return
     dm.setProject(projectToFetch.folder)
   }
   useEffect(() => {
@@ -122,14 +120,16 @@ export default ({ open, onClose, onAddSamples }) => {
   }, [open, authConfig, dm])
 
   useEffect(() => {
+    if (!open) return
     getProjects()
     // eslint-disable-next-line
-  }, [dm])
+  }, [dm, open])
 
   useEffect(() => {
+    if (!open) return
     setProject()
     // eslint-disable-next-line
-  }, [projectToFetch])
+  }, [projectToFetch, open])
 
   const handleAddSample = async () => {
     if (!projectToFetch) return
@@ -151,34 +151,26 @@ export default ({ open, onClose, onAddSamples }) => {
         },
       ]}
     >
-      <table style={tableStyle}>
-        <tbody>
-          {!isEmpty(projects) && (
-            <tr>
-              <th>
-                <DataTable
-                  expandableRows
-                  expandableRowsComponent={<ExpandedRow />}
-                  selectableRows
-                  selectableRowsHighlight
-                  selectableRowsNoSelectAll
-                  selectableRowsComponent={Radio}
-                  dense
-                  noHeader
-                  noTableHead
-                  columns={columns}
-                  onSelectedRowsChange={handleRowSelected}
-                  selectableRowSelected={(row) => row.isSelected}
-                  data={projects}
-                  pagination={projects.length > 10}
-                  paginationPerPage={10}
-                  paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
-                />
-              </th>
-            </tr>
-          )}
-        </tbody>
-      </table>
+      {!isEmpty(projects) && (
+        <DataTable
+          expandableRows
+          expandableRowsComponent={<ExpandedRow />}
+          selectableRows
+          selectableRowsHighlight
+          selectableRowsNoSelectAll
+          selectableRowsComponent={Radio}
+          dense
+          noHeader
+          noTableHead
+          columns={columns}
+          onSelectedRowsChange={handleRowSelected}
+          selectableRowSelected={(row) => row.isSelected}
+          data={projects}
+          pagination={projects.length > 10}
+          paginationPerPage={10}
+          paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
+        />
+      )}
     </SimpleDialog>
   )
 }
