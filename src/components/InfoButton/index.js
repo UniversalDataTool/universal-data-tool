@@ -7,8 +7,12 @@ import TextField from "@material-ui/core/TextField"
 import EditableTitleText from "./EditableTitleText.js"
 import useActiveDatasetManager from "../../hooks/use-active-dataset-manager"
 import useDatasetProperty from "../../hooks/use-dataset-property"
+import { colors } from "@material-ui/core"
 
 const Container = styled("div")({ position: "relative" })
+const IconButtonStyle = styled(IconButton)({
+  color: colors.grey[300],
+})
 
 export const InfoButton = () => {
   const [sessionBoxOpen, setSessionBoxOpen] = useState(false)
@@ -26,9 +30,9 @@ export const InfoButton = () => {
       onMouseEnter={() => setSessionBoxOpen(true)}
       onMouseLeave={() => setSessionBoxOpen(false)}
     >
-      <IconButton>
+      <IconButtonStyle>
         <InfoIcon />
-      </IconButton>
+      </IconButtonStyle>
       <HeaderPopupBox open={sessionBoxOpen}>
         <h1>Info</h1>
         {dm.type === "collaborative-session" ? (

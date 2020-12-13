@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useMemo } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 
-import Header from "../Header"
+import { HeaderWithContainer } from "../Header"
 import SamplesView from "../SamplesView"
 import SetupPage from "../SetupPage"
 import useElectron from "../../hooks/use-electron"
@@ -115,58 +115,59 @@ export default ({
   return (
     <HotKeys allowChanges handlers={shortcutHandlers} keyMap={keyMap}>
       <div className={classnames(c.container, "universaldatatool")}>
-        <Header
+        <HeaderWithContainer
           title={null}
           onChangeTab={onChangeTab}
           currentTab={mode}
           tabs={headerTabs}
-        />
-        <div style={{ height: "100%", overflowY: "scroll" }}>
-          {mode === "setup" && (
-            <SetupPage
-              onClearLabelData={() => {
-                removeSamples(summary.samples.map((s) => s._id))
-              }}
-              onChange={(newDataset) => {
-                if (
-                  iface.type !== newDataset.interface.type &&
-                  iface.type !== "empty" &&
-                  summary.samples.some((s) => s?.hasAnnotation)
-                ) {
-                  addToast(
-                    "Changing label types can cause label data issues. You must clear all label data first.",
-                    "error"
-                  )
-                  return
-                }
-                onChangeDataset(newDataset)
-              }}
-            />
-          )}
-          {mode === "samples" && (
-            <SamplesView
-              openSampleLabelEditor={(sampleIndex) => {
-                setSampleIndex(sampleIndex)
-                posthog.capture("open_sample", {
-                  interface_type: iface?.type,
-                })
-                changeMode("label")
-              }}
-              user={user}
-            />
-          )}
-          {mode === "label" && (
-            <LabelView
-              selectedBrush={selectedBrush}
-              sampleIndex={sampleIndex}
-              onChangeSampleIndex={setSampleIndex}
-              sampleTimeToComplete={sampleTimeToComplete}
-              onChangeSampleTimeToComplete={changeSampleTimeToComplete}
-              onChangeDataset={onChangeDataset}
-              onClickSetup={() => changeMode("setup")}
-            />
-          )}
-        </div>
+        >
+          <div style={{ height: "100%", overflowY: "scroll" }}>
+            {mode === "setup" && (
+              <SetupPage
+                onClearLabelData={() => {
+                  removeSamples(summary.samples.map((s) => s._id))
+                }}
+                onChange={(newDataset) => {
+                  if (
+                    iface.type !== newDataset.interface.type &&
+                    iface.type !== "empty" &&
+                    summary.samples.some((s) => s?.hasAnnotation)
+                  ) {
+                    addToast(
+                      "Changing label types can cause label data issues. You must clear all label data first.",
+                      "error"
+                    )
+                    return
+                  }
+                  onChangeDataset(newDataset)
+                }}
+              />
+            )}
+            {mode === "samples" && (
+              <SamplesView
+                openSampleLabelEditor={(sampleIndex) => {
+                  setSampleIndex(sampleIndex)
+                  posthog.capture("open_sample", {
+                    interface_type: iface?.type,
+                  })
+                  changeMode("label")
+                }}
+                user={user}
+              />
+            )}
+            {mode === "label" && (
+              <LabelView
+                selectedBrush={selectedBrush}
+                sampleIndex={sampleIndex}
+                onChangeSampleIndex={setSampleIndex}
+                sampleTimeToComplete={sampleTimeToComplete}
+                onChangeSampleTimeToComplete={changeSampleTimeToComplete}
+                onChangeDataset={onChangeDataset}
+                onClickSetup={() => changeMode("setup")}
+              />
+            )}
+          </div>
+        </HeaderWithContainer>
       </div>
     </HotKeys>
   )

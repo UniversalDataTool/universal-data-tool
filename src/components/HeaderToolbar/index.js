@@ -1,6 +1,6 @@
 // @flow weak
 
-import React, { memo, useCallback } from "react"
+import React, { memo } from "react"
 import Tabs from "@material-ui/core/Tabs"
 import Tab from "@material-ui/core/Tab"
 import Box from "@material-ui/core/Box"
@@ -26,11 +26,22 @@ const capitalize = (s) => {
 
 const useStyles = makeStyles((theme) => ({
   container: {
+    paddingTop: 8,
+    flexShrink: 0,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    width: 80,
-    maxHeight: "100vh",
+    width: 72,
+    height: "100vh",
+    boxSizing: "border-box",
+    backgroundColor: colors.grey[900],
+  },
+  belowTabButtons: {
+    flexGrow: 1,
+    // paddingRight: 8,
+    "& > *": {
+      marginTop: 8,
+    },
   },
   headerButton: {
     color: colors.grey[300],
@@ -38,6 +49,14 @@ const useStyles = makeStyles((theme) => ({
   grow: { flexGrow: 1 },
   list: {
     width: 300,
+  },
+  tabContainer: {
+    width: "100%",
+    boxSizing: "border-box",
+    textAlign: "right",
+    "& .MuiTab-wrapper": {
+      paddingLeft: 8,
+    },
   },
   tab: {
     color: "#000",
@@ -54,12 +73,12 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     alignItems: "center",
     textTransform: "none",
-    color: "#000",
+    color: colors.grey[300],
     "&&& svg": {
       marginBottom: 0,
       marginRight: 8,
-      width: 18,
-      height: 18,
+      width: 24,
+      height: 24,
     },
   },
 }))
@@ -106,10 +125,6 @@ const HeaderToolbar = ({
   const { authProvider, isLoggedIn, logout } = useAuth()
   const { t } = useTranslation()
 
-  const onClickSettings = useCallback(() => {
-    onChangeTab("Setup")
-  }, [onChangeTab])
-
   return (
     <div className={c.container}>
       {/* {!isDesktop && (
@@ -117,61 +132,61 @@ const HeaderToolbar = ({
           <MenuIcon />
         </IconButton>
       )} */}
-      {fileOpen && <InfoButton />}
-      <CollaborateButton
-        sessionBoxOpen={sessionBoxOpen}
-        changeSessionBoxOpen={changeSessionBoxOpen}
-        fileOpen={fileOpen}
-        inSession={inSession}
-        onCreateSession={onCreateSession}
-        onLeaveSession={onLeaveSession}
-        onJoinSession={onJoinSession}
-        error={collaborateError}
-      />
-      {fileOpen && (
-        <BrushButton
-          selectedBrush={selectedBrush}
-          onChangeSelectedBrush={onChangeSelectedBrush}
+      <div className={c.tabContainer}>
+        {tabs.length > 0 && (
+          <Tabs
+            orientation="vertical"
+            onChange={(e, newTab) => onChangeTab(newTab.toLowerCase())}
+            value={currentTab}
+          >
+            {tabs.map((t) => (
+              <Tab
+                key={t}
+                classes={{ root: c.fullHeightTab, wrapper: c.tabWrapper }}
+                className={c.tab}
+                icon={getIcon(t)}
+                // label={isSmall ? "" : t}
+                value={t.toLowerCase()}
+              />
+            ))}
+          </Tabs>
+        )}
+      </div>
+      <div className={c.belowTabButtons}>
+        {fileOpen && <InfoButton />}
+        <CollaborateButton
+          sessionBoxOpen={sessionBoxOpen}
+          changeSessionBoxOpen={changeSessionBoxOpen}
+          fileOpen={fileOpen}
+          inSession={inSession}
+          onCreateSession={onCreateSession}
+          onLeaveSession={onLeaveSession}
+          onJoinSession={onJoinSession}
+          error={collaborateError}
         />
-      )}
-      <div className={c.grow} />
-      {additionalButtons}
-      {tabs.length > 0 && (
-        <Tabs
-          onChange={(e, newTab) => onChangeTab(newTab.toLowerCase())}
-          value={currentTab}
-        >
-          {tabs.map((t) => (
-            <Tab
-              key={t}
-              classes={{ root: c.fullHeightTab, wrapper: c.tabWrapper }}
-              className={c.tab}
-              icon={getIcon(t)}
-              label={isSmall ? "" : t}
-              value={t.toLowerCase()}
-            />
-          ))}
-        </Tabs>
-      )}
-      {authProvider !== "none" && !isLoggedIn && (
-        <Button
-          onClick={() => {
-            changeLoginDrawerOpen(true)
-          }}
-          className={c.headerButton}
-        >
-          {t("login-with")} {capitalize(authProvider)}
-        </Button>
-      )}
-      {isLoggedIn && (
-        <Button onClick={logout} className={c.headerButton}>
-          {t("logout")}
-        </Button>
-      )}
-      <Box flexGrow={1} />
-      <IconButton onClick={onClickSettings} className={c.headerButton}>
-        <GearIcon />
-      </IconButton>
+        {fileOpen && (
+          <BrushButton
+            selectedBrush={selectedBrush}
+            onChangeSelectedBrush={onChangeSelectedBrush}
+          />
+        )}
+        {additionalButtons}
+        {authProvider !== "none" && !isLoggedIn && (
+          <Button
+            onClick={() => {
+              changeLoginDrawerOpen(true)
+            }}
+            className={c.headerButton}
+          >
+            {t("login-with")} {capitalize(authProvider)}
+          </Button>
+        )}
+        {isLoggedIn && (
+          <Button onClick={logout} className={c.headerButton}>
+            {t("logout")}
+          </Button>
+        )}
+      </div>
       <IconButton
         href="https://github.com/UniversalDataTool/universal-data-tool"
         className={c.headerButton}
