@@ -47,7 +47,13 @@ export default () => {
     // TODO, recent items is currently non-functional
   })
   const onClickHome = useEventCallback(() => {
-    setDatasetManager(null)
+    if (
+      window.confirm(
+        "Are you sure you want to leave this dataset? Changes may not be saved!"
+      )
+    ) {
+      setDatasetManager(null)
+    }
   })
   const onClickManagePlugins = useEventCallback(() =>
     setManagePluginsDialogOpen(true)

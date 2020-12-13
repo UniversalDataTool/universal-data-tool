@@ -7,11 +7,11 @@ describe("Create a Label Help ", () => {
       .type("{enter}")
     cy.contains("Start from Template").click()
     cy.contains("Image Classification").click()
-    cy.contains("Samples").click()
+    cy.get("#tab-samples").click()
     cy.contains("Import").click()
     cy.contains("Import Toy Dataset").click()
     cy.get('[data-import-toy-dataset-name="Cats"]').click()
-    cy.contains("Label").click()
+    cy.get("#tab-label").click()
     cy.contains("Crowd Label").click()
     // This is a special api key that triggers mock functionality from the server
     // e.g. it always has 100 credits

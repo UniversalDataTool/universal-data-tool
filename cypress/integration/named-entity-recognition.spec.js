@@ -16,14 +16,14 @@ describe("Named Entity Recognition Tests", () => {
   })
 
   it("should be able to import Elon Musk Tweets dataset", () => {
-    cy.contains("Samples").click()
+    cy.get("#tab-samples").click()
     cy.contains("Import").click()
     cy.contains("Import Toy Dataset").click()
     cy.contains("Elon Musk Tweets").siblings("td").eq(2).click()
   })
 
   it("should be able to setup Named Entity Recognition", () => {
-    cy.contains("Setup").click()
+    cy.get("#tab-setup").click()
     cy.contains("Named Entity Recognition").click()
     cy.get("input[value=food]").focus().clear().type("mars")
     cy.get("input[value=Food]").focus().clear().type("About Mars")
@@ -40,7 +40,7 @@ describe("Named Entity Recognition Tests", () => {
   })
 
   it("should be able to see samples", () => {
-    cy.contains("Samples").click()
+    cy.get("#tab-samples").click()
   })
 
   it("should be able start labeling images from 21st sample", () => {
@@ -56,11 +56,11 @@ describe("Named Entity Recognition Tests", () => {
   })
 
   it("should be able to return samples tab", () => {
-    cy.contains("Samples").click()
+    cy.get("#tab-samples").click()
     cy.wait(30)
   })
 
   it("should be able to show label tab", () => {
-    cy.contains("Label").click()
+    cy.get("#tab-label").click()
   })
 })
