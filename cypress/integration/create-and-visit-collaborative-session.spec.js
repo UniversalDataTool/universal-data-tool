@@ -9,7 +9,7 @@ describe("Create and Visit Collaborative Session", () => {
   })
 
   it("should be able to import Elon Musk Tweets dataset", () => {
-    cy.contains("Samples").click()
+    cy.get("#tab-samples").click()
     cy.contains("Import").click()
     cy.contains("Import Toy Dataset").click()
     cy.contains("Elon Musk Tweets").siblings("td").eq(2).click()
@@ -41,6 +41,6 @@ describe("Create and Visit Collaborative Session", () => {
   })
 
   it("should be able to navigate to samples", () => {
-    cy.contains("Samples").click()
+    cy.get("#tab-samples").click()
   })
 })

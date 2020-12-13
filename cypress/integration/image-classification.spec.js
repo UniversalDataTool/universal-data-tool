@@ -15,15 +15,15 @@ describe("Import ai generated faces and make image classification with them", ()
     cy.contains("New File").click()
   })
 
-  it("should be able to import cat images dataset", () => {
-    cy.contains("Samples").click()
+  it("should be able to import face image dataset", () => {
+    cy.get("#tab-samples").click()
     cy.contains("Import").click()
     cy.contains("Import Toy Dataset").click()
     cy.contains("AI Generated Faces").siblings("td").eq(2).click()
   })
 
   it("should be able to setup image classification", () => {
-    cy.contains("Setup").click()
+    cy.get("#tab-setup").click()
     cy.contains("Image Classification").click()
     cy.get("input[value=valid]").eq(0).focus().clear().type("ai generated")
     cy.get("input[value=invalid]")
@@ -34,7 +34,7 @@ describe("Import ai generated faces and make image classification with them", ()
   })
 
   it("should be able to see samples", () => {
-    cy.contains("Samples").click()
+    cy.get("#tab-samples").click()
   })
 
   it("should be able to open 21st sample", () => {
@@ -49,11 +49,11 @@ describe("Import ai generated faces and make image classification with them", ()
   })
 
   it("should be able to return samples tab", () => {
-    cy.contains("Samples").click()
+    cy.get("#tab-samples").click()
     cy.wait(30)
   })
 
   it("should be able to show label tab", () => {
-    cy.contains("Label").click()
+    cy.get("#tab-label").click()
   })
 })

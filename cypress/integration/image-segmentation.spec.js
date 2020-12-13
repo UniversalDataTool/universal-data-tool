@@ -9,14 +9,14 @@ describe("Image Segmentation Tests", () => {
   })
 
   it("should be able to import cat images dataset", () => {
-    cy.contains("Samples").click()
+    cy.get("#tab-samples").click()
     cy.contains("Import").click()
     cy.contains("Import Toy Dataset").click()
     cy.contains("Cats").siblings("td").eq(2).click()
   })
 
   it("should be able to setup image segmentation", () => {
-    cy.contains("Setup").click()
+    cy.get("#tab-setup").click()
     cy.contains("Image Segmentation").click()
     cy.contains("bounding-box").click()
     cy.get("li[data-value=polygon]").click()
@@ -31,7 +31,7 @@ describe("Image Segmentation Tests", () => {
   })
 
   it("should be able to see samples", () => {
-    cy.contains("Samples").click()
+    cy.get("#tab-samples").click()
   })
 
   it("should be able start labeling images", () => {

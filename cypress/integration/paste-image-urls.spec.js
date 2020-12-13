@@ -15,7 +15,7 @@ describe("Paste Image URLs", () => {
   })
 
   it("should be able to open paste", () => {
-    cy.contains("Samples").click()
+    cy.get("#tab-samples").click()
     cy.contains("Import").click()
     cy.contains("Paste URLs").click()
   })
@@ -32,7 +32,7 @@ describe("Paste Image URLs", () => {
   })
 
   it("should be able to go to setup", () => {
-    cy.contains("Setup").click()
+    cy.get("#tab-setup").click()
   })
 
   it("should be able to go to Image Classification", () => {
@@ -40,7 +40,7 @@ describe("Paste Image URLs", () => {
   })
 
   it("should be able to see samples", () => {
-    cy.contains("Samples").click()
+    cy.get("#tab-samples").click()
     cy.contains("2").click()
   })
   it("should be able to label image", () => {

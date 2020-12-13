@@ -138,6 +138,7 @@ const HeaderToolbar = ({
           >
             {tabs.map((t) => (
               <Tab
+                id={`tab-${t.toLowerCase()}`}
                 key={t}
                 classes={{ root: c.fullHeightTab, wrapper: c.tabWrapper }}
                 className={c.tab}
