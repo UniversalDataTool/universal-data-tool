@@ -108,6 +108,7 @@ export default ({
   onLeaveSession,
   sessionBoxOpen,
   changeSessionBoxOpen,
+  className,
 }) => {
   const [loadingSession, changeLoadingSession] = useState(false)
   const [sessionUrl, changeSessionUrl] = useState("")
@@ -131,7 +132,9 @@ export default ({
       onMouseEnter={() => changeSessionBoxOpen(true)}
       onMouseLeave={() => changeSessionBoxOpen(false)}
     >
-      <IconButton style={{ color: inSession ? colors.blue[500] : undefined }}>
+      <IconButton
+        style={{ color: inSession ? colors.blue[500] : colors.grey[300] }}
+      >
         <PeopleIcon />
       </IconButton>
       <PopupBox className={sessionBoxOpen ? "" : "hidden"}>
