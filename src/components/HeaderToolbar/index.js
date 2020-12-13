@@ -18,7 +18,6 @@ import useAuth from "../../utils/auth-handlers/use-auth.js"
 import SlackIcon from "./SlackIcon"
 import { useTranslation } from "react-i18next"
 import { colors } from "@material-ui/core"
-import Tooltip from "@material-ui/core/Tooltip"
 
 const capitalize = (s) => {
   return s.charAt(0).toUpperCase() + s.slice(1)
