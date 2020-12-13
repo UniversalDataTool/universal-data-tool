@@ -864,13 +864,6 @@
   dependencies:
     tslib "^1.8.0"
 
-"@aws-sdk/is-array-buffer@1.0.0-gamma.6":
-  version "1.0.0-gamma.6"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/is-array-buffer/-/is-array-buffer-1.0.0-gamma.6.tgz#07e994d6661504246dedd9fc5015c89fe63b8b10"
-  integrity sha512-F80N+xct+ZFhtvwVCAq2IugjL5KrhzkYLl/q/A3qGLTTCsDsh4sbL8KxRbp8OQZyuq8OCcrlRPlt1fvFBjQJ9w==
-  dependencies:
-    tslib "^1.8.0"
-
 "@aws-sdk/is-array-buffer@1.0.0-rc.3":
   version "1.0.0-rc.3"
   resolved "https://registry.yarnpkg.com/@aws-sdk/is-array-buffer/-/is-array-buffer-1.0.0-rc.3.tgz#47e47b7e5eb7e0ac9e7fa24f56a78550fbae63bc"
@@ -1061,15 +1054,6 @@
     "@aws-sdk/types" "1.0.0-rc.3"
     tslib "^1.8.0"
 
-"@aws-sdk/querystring-builder@1.0.0-gamma.7":
-  version "1.0.0-gamma.7"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/querystring-builder/-/querystring-builder-1.0.0-gamma.7.tgz#f3d0208ff57b24f081ff75d5a643f3d02518920c"
-  integrity sha512-eOb1z8DtSD3/z9bbAEcRvVI4a1H/Jnv+PlsBarUo6skonlRbyK/wH73DsIJg4tZCGc87mFJq+8e2z1V7w3Isbw==
-  dependencies:
-    "@aws-sdk/types" "1.0.0-gamma.6"
-    "@aws-sdk/util-uri-escape" "1.0.0-gamma.6"
-    tslib "^1.8.0"
-
 "@aws-sdk/querystring-builder@1.0.0-rc.3":
   version "1.0.0-rc.3"
   resolved "https://registry.yarnpkg.com/@aws-sdk/querystring-builder/-/querystring-builder-1.0.0-rc.3.tgz#d24135a0523a8d9645d874deeb0ba5a6f6c15428"
@@ -1131,11 +1115,6 @@
     "@aws-sdk/middleware-stack" "1.0.0-rc.4"
     "@aws-sdk/types" "1.0.0-rc.3"
     tslib "^1.8.0"
-
-"@aws-sdk/types@1.0.0-gamma.6":
-  version "1.0.0-gamma.6"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/types/-/types-1.0.0-gamma.6.tgz#ec2bbf8abe05632a1fb2468dbd76096691dcfb89"
-  integrity sha512-5mQGLqXw269oXH4bxA3iK+Pnhy72wjIa6ccsLJVypyk1ZYiJq8Xk/ratosvZ4CDAnSwnUS1BibtxP8zrY14HnA==
 
 "@aws-sdk/types@1.0.0-rc.3":
   version "1.0.0-rc.3"
@@ -1202,14 +1181,6 @@
   dependencies:
     tslib "^1.8.0"
 
-"@aws-sdk/util-buffer-from@1.0.0-gamma.6":
-  version "1.0.0-gamma.6"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/util-buffer-from/-/util-buffer-from-1.0.0-gamma.6.tgz#bc2bd1d4ab217975c1872cc5e7f23b3250d89d73"
-  integrity sha512-VRfP8B1Uduf9fpnUynVA9D61RZWLoy8cWcZheuLaR2CWLEzh3Sq9NeHmybMeSEFXWrgrMNkZ8TccRH3qL3goDA==
-  dependencies:
-    "@aws-sdk/is-array-buffer" "1.0.0-gamma.6"
-    tslib "^1.8.0"
-
 "@aws-sdk/util-buffer-from@1.0.0-rc.3":
   version "1.0.0-rc.3"
   resolved "https://registry.yarnpkg.com/@aws-sdk/util-buffer-from/-/util-buffer-from-1.0.0-rc.3.tgz#6a18955cb422b5649c9675d64bc2defa6e1175ac"
@@ -1248,13 +1219,6 @@
   version "1.0.0-rc.8"
   resolved "https://registry.yarnpkg.com/@aws-sdk/util-locate-window/-/util-locate-window-1.0.0-rc.8.tgz#d28175aeb9c8ad3940242e615b1503632d3be33d"
   integrity sha512-TvqeA4fgmZ0A0x3K+qVj/OSWEFHGZjzpVuyXlm1EYOf7NQ9VWRlokEn1MYKuL+t7al9ZeQyi16D8Dn7DW1eidw==
-  dependencies:
-    tslib "^1.8.0"
-
-"@aws-sdk/util-uri-escape@1.0.0-gamma.6":
-  version "1.0.0-gamma.6"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/util-uri-escape/-/util-uri-escape-1.0.0-gamma.6.tgz#27e5576a087a96482880527621a0dc5065d26af9"
-  integrity sha512-U11YFhWSwyobmWF03Q5QRxLjG6sN/mfss58ue0KTKFhuTJxdrQ/Y+Aj/7TNSnVBNfHZqz7aETGz5HHD4ccgSAA==
   dependencies:
     tslib "^1.8.0"
 
@@ -6364,6 +6328,11 @@ caseless@^0.12.0, caseless@~0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
+
+cash-dom@^4.1.5:
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/cash-dom/-/cash-dom-4.1.5.tgz#0ef0cf205bc7603aa4e2dfada5808442a7a0e6ca"
+  integrity sha512-E6MO0A6ms5iZPtexznQXWRkFEvqdPqCmdx/SiJr2PnhOQNhZNfALkLG5t83Hk3J5JELzED7PJuzhMoS2tT64XA==
 
 ccount@^1.0.0:
   version "1.1.0"
@@ -16806,10 +16775,10 @@ react-icons@^3.9.0:
   dependencies:
     camelcase "^5.0.0"
 
-react-image-annotate@^1.7.0:
-  version "1.7.6"
-  resolved "https://registry.yarnpkg.com/react-image-annotate/-/react-image-annotate-1.7.6.tgz#63b40374b0c201c773f35e16ff11233143ab88d0"
-  integrity sha512-5WUzwEegiqJwGIC4MjXNu2jajdkC1yW0sWZj6OVLVwDPwYzg38QBrKqTfo7AMZVp8hSU5rIM34kEWy/AmcczQQ==
+react-image-annotate@^1.7.8:
+  version "1.7.8"
+  resolved "https://registry.yarnpkg.com/react-image-annotate/-/react-image-annotate-1.7.8.tgz#57171de90997343c13b16f118fffd020a6e83494"
+  integrity sha512-aUmVt+AoEDCNcacQU+m30l8WGgsco9tvGBqqkORlcjYflbi3ER+qOVVVGPLCtdQZplyXsN9RRNifn/iJwTx+HA==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.12"
     "@fortawesome/free-solid-svg-icons" "^5.6.3"
@@ -16828,7 +16797,7 @@ react-image-annotate@^1.7.0:
     react-hotkeys "^2.0.0"
     react-json-view "^1.19.1"
     react-markdown "^4.0.6"
-    react-material-workspace-layout "^0.1.17"
+    react-material-workspace-layout "^1.0.4"
     react-monaco-editor "^0.25.1"
     react-remove-scroll "^2.0.4"
     react-select "^3.0.8"
@@ -16897,18 +16866,6 @@ react-markdown@^4.0.6, react-markdown@^4.1.0:
     unist-util-visit "^1.3.0"
     xtend "^4.0.1"
 
-react-material-workspace-layout@^0.1.17:
-  version "0.1.17"
-  resolved "https://registry.yarnpkg.com/react-material-workspace-layout/-/react-material-workspace-layout-0.1.17.tgz#98a997e7d8671444fafe53caa4298b6643d1b9cb"
-  integrity sha512-GY+jFZ14IYKyzIW/KI8/R0Mttb5dTRdYDKdj++YAU/Z3HSQ7kZJ678mv5Nl7X0o081IpMFg5CRiBvvdozUmBtQ==
-  dependencies:
-    "@material-ui/core" "^4.10.0"
-    "@material-ui/icons" "^4.9.1"
-    classnames "^2.2.6"
-    react "^16.13.1"
-    react-use-dimensions "^1.2.1"
-    use-event-callback "^0.1.0"
-
 react-material-workspace-layout@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/react-material-workspace-layout/-/react-material-workspace-layout-1.0.2.tgz#259d7da18a15768841b44b5c504153fbe6c158f8"
@@ -16918,6 +16875,19 @@ react-material-workspace-layout@^1.0.1:
     "@material-ui/icons" "^4.9.1"
     classnames "^2.2.6"
     react "^16.13.1"
+    react-use-dimensions "^1.2.1"
+    use-event-callback "^0.1.0"
+
+react-material-workspace-layout@^1.0.4, react-material-workspace-layout@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/react-material-workspace-layout/-/react-material-workspace-layout-1.0.5.tgz#47332001f0edc09b610fa27897085e8429f6dee7"
+  integrity sha512-MGUlJ7JsC+Z28W9jgtmaHei4B5fhsAE06S3lQ+7hpBOeWt1yAskmrUKMpvyGkR6urV492SCbfds5QnwNMuACBA==
+  dependencies:
+    "@material-ui/core" "^4.10.0"
+    "@material-ui/icons" "^4.9.1"
+    classnames "^2.2.6"
+    react "^16.13.1"
+    react-resize-panel "^0.3.5"
     react-use-dimensions "^1.2.1"
     use-event-callback "^0.1.0"
 
@@ -17001,6 +16971,16 @@ react-remove-scroll@^2.0.4:
     tslib "^1.0.0"
     use-callback-ref "^1.2.3"
     use-sidecar "^1.0.1"
+
+react-resize-panel@^0.3.5:
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/react-resize-panel/-/react-resize-panel-0.3.5.tgz#43aa3450bf5b5a2566b40c4201445ced96c2a905"
+  integrity sha512-iyHOFTrSt+WV4Ilzi81x6KH3FU7VsGP736rmxepwGrgAEATmCvXzZdluTm3NpsptP7aC3hLODmXwnxusyA393A==
+  dependencies:
+    cash-dom "^4.1.5"
+    classnames "^2.2.6"
+    lodash.debounce "^4.0.8"
+    react-draggable "^4.0.3"
 
 react-scripts@^3.4.1:
   version "3.4.4"

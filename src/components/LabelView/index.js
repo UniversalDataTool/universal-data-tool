@@ -23,7 +23,8 @@ import useInterface from "../../hooks/use-interface"
 import useAppConfig from "../../hooks/use-app-config"
 
 const OverviewContainer = styled("div")({
-  padding: 16,
+  padding: 8,
+  paddingBottom: 0,
   height: "100%",
   display: "flex",
   flexDirection: "column",

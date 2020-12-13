@@ -18,8 +18,9 @@ import * as colors from "@material-ui/core/colors"
 import SamplesTable from "../SamplesTable"
 
 const Container = styled("div")({
-  padding: 16,
   height: "100%",
+  padding: 8,
+  paddingBottom: 0,
   display: "flex",
   flexDirection: "column",
   boxSizing: "border-box",
