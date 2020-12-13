@@ -18,6 +18,9 @@ import Select from "react-select"
 import { useTranslation } from "react-i18next"
 import getEmbedYoutubeUrl from "./get-embed-youtube-url.js"
 import packageJSON from "../../../package.json"
+import Button from "@material-ui/core/Button"
+import GetAppIcon from "@material-ui/icons/GetApp"
+import useIsDesktop from "../../hooks/use-is-desktop"
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -154,7 +157,7 @@ export default ({
   // internalization hook
   const { t, i18n } = useTranslation()
 
-  //const isDesktop = useIsDesktop()
+  const isDesktop = useIsDesktop()
   // eslint-disable-next-line
   const [newVersionAvailable, changeNewVersionAvailable] = useState(false)
   useEffect(() => {
@@ -312,6 +315,17 @@ export default ({
                 </ActionList>
               </Grid>
               <Grid xs={12} sm={6} item>
+                {newVersionAvailable && isDesktop && (
+                  <Button
+                    variant="outlined"
+                    key="download-latest"
+                    className={c.headerButton}
+                    href="https://github.com/OpenHumanAnnotation/universal-data-tool/releases"
+                  >
+                    <GetAppIcon className={c.downloadIcon} />
+                    {t("Download Version")} v{newVersionAvailable}
+                  </Button>
+                )}
                 <ActionList>
                   <ActionTitle>{t("about")}</ActionTitle>
                   <ActionText>
