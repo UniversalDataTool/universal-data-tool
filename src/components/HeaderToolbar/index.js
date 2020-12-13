@@ -6,7 +6,7 @@ import Tab from "@material-ui/core/Tab"
 import Box from "@material-ui/core/Box"
 import { makeStyles } from "@material-ui/core/styles"
 import SettingsIcon from "@material-ui/icons/Settings"
-import StorageIcon from "@material-ui/icons/Storage"
+import AppsIcon from "@material-ui/icons/Apps"
 import BorderColorIcon from "@material-ui/icons/BorderColor"
 import CollaborateButton from "../CollaborateButton"
 import InfoButton from "../InfoButton"
@@ -18,7 +18,7 @@ import useAuth from "../../utils/auth-handlers/use-auth.js"
 import SlackIcon from "./SlackIcon"
 import { useTranslation } from "react-i18next"
 import { colors } from "@material-ui/core"
-import GearIcon from "@material-ui/icons/Settings"
+import Tooltip from "@material-ui/core/Tooltip"
 
 const capitalize = (s) => {
   return s.charAt(0).toUpperCase() + s.slice(1)
@@ -26,7 +26,7 @@ const capitalize = (s) => {
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    paddingTop: 8,
+    paddingTop: 0,
     flexShrink: 0,
     display: "flex",
     flexDirection: "column",
@@ -90,7 +90,7 @@ const getIcon = (t) => {
     case "Label":
       return <BorderColorIcon className="icon" />
     case "Samples":
-      return <StorageIcon className="icon" />
+      return <AppsIcon className="icon" />
     default:
       return <div></div>
   }
