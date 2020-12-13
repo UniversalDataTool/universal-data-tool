@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Grid from "@material-ui/core/Grid"
 import { HeaderWithContainer } from "../Header"
-import Button from "@material-ui/core/Button"
 import templates from "./templates"
 import * as colors from "@material-ui/core/colors"
 import { useDropzone } from "react-dropzone"
@@ -14,7 +13,6 @@ import { styled } from "@material-ui/core/styles"
 import usePosthog from "../../hooks/use-posthog"
 import packageInfo from "../../../package.json"
 import useEventCallback from "use-event-callback"
-import DownloadIcon from "@material-ui/icons/GetApp"
 import Box from "@material-ui/core/Box"
 import Select from "react-select"
 import { useTranslation } from "react-i18next"
@@ -157,6 +155,7 @@ export default ({
   const { t, i18n } = useTranslation()
 
   //const isDesktop = useIsDesktop()
+  // eslint-disable-next-line
   const [newVersionAvailable, changeNewVersionAvailable] = useState(false)
   useEffect(() => {
     // if (!isDesktop) return

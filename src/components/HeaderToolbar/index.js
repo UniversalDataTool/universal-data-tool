@@ -3,7 +3,6 @@
 import React, { memo } from "react"
 import Tabs from "@material-ui/core/Tabs"
 import Tab from "@material-ui/core/Tab"
-import Box from "@material-ui/core/Box"
 import { makeStyles } from "@material-ui/core/styles"
 import SettingsIcon from "@material-ui/icons/Settings"
 import AppsIcon from "@material-ui/icons/Apps"
