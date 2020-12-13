@@ -3,7 +3,10 @@ import { styled } from "@material-ui/core/styles"
 import { colors } from "@material-ui/core"
 import { Header } from "./"
 
-const Container = styled("div")({})
+const Container = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+})
 const Body = styled("div")({
   display: "flex",
 })
@@ -15,7 +18,9 @@ const Title = styled("div")({
     textTransform: "uppercase",
   },
 })
-const Content = styled("div")({})
+const Content = styled("div")({
+  flexGrow: 1,
+})
 
 export const HeaderWithContainer = (props) => {
   return (
