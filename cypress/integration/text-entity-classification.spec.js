@@ -65,8 +65,9 @@ describe("Create a new text entity classification, label that and show that", ()
     cy.get("#tab-samples").click()
   })
 
-  it("should be able to start labelling texts", () => {
-    cy.contains("div", "21").click()
+  it("should be able to start labeling texts", () => {
+    cy.get("div").contains("21").click()
+    cy.get("div").contains("21").click()
   })
 
   it("should be able to show button descriptions on hover", () => {

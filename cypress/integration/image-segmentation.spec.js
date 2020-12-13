@@ -35,10 +35,11 @@ describe("Image Segmentation Tests", () => {
   })
 
   it("should be able start labeling images", () => {
-    cy.contains("div", "21").click()
+    cy.get("div").contains("21").click()
+    cy.get("div").contains("21").click()
   })
 
-  it('should be able to select add bounding box with "b" which is a shortcut key', () => {
+  it('should be able to select bounding box tool with "b" key', () => {
     cy.get("body").click().type("b")
   })
 
