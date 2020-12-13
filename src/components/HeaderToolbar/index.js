@@ -17,7 +17,10 @@ import BrushButton from "../BrushButton"
 import useAuth from "../../utils/auth-handlers/use-auth.js"
 import SlackIcon from "./SlackIcon"
 import { useTranslation } from "react-i18next"
+import classnames from "classnames"
 import { colors } from "@material-ui/core"
+import ExitToAppIcon from "@material-ui/icons/ExitToApp"
+import Tooltip from "@material-ui/core/Tooltip"
 
 const capitalize = (s) => {
   return s.charAt(0).toUpperCase() + s.slice(1)
@@ -32,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     width: 72,
     height: "100vh",
+    "&.hasTabTitle": {
+      paddingBottom: 42,
+    },
     boxSizing: "border-box",
     backgroundColor: colors.grey[900],
   },
@@ -99,7 +105,6 @@ const HeaderToolbar = ({
   onChangeTab,
   additionalButtons,
   onOpenDrawer,
-  title = "Universal Data Tool",
   interfaceType,
   isDesktop,
   fileOpen,
@@ -109,6 +114,7 @@ const HeaderToolbar = ({
   onCreateSession,
   onLeaveSession,
   onJoinSession,
+  onClickHome,
   onDownload,
   selectedBrush,
   onChangeSelectedBrush,
@@ -123,7 +129,9 @@ const HeaderToolbar = ({
   const { t } = useTranslation()
 
   return (
-    <div className={c.container}>
+    <div
+      className={classnames(c.container, { hasTabTitle: Boolean(currentTab) })}
+    >
       {/* {!isDesktop && (
         <IconButton onClick={onOpenDrawer} className={c.headerButton}>
           <MenuIcon />
@@ -185,6 +193,13 @@ const HeaderToolbar = ({
           </Button>
         )}
       </div>
+      {!isWelcomePage && (
+        <Tooltip placement="right" title={t("Exit to Welcome Page")}>
+          <IconButton onClick={onClickHome} className={c.headerButton}>
+            <ExitToAppIcon style={{ transform: "rotate(180deg)" }} />
+          </IconButton>
+        </Tooltip>
+      )}
       <IconButton
         href="https://github.com/UniversalDataTool/universal-data-tool"
         className={c.headerButton}
