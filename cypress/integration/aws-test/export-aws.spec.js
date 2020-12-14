@@ -19,11 +19,7 @@ describe("aws test", () => {
   it("Try to export a natif project to aws", () => {
     cy.log("should be able to use export project")
     cy.wait(200)
-    cy.get(
-      "button[class='MuiButtonBase-root MuiButton-root MuiButton-outlined WithStyles(ForwardRef(Button))-root-110']"
-    )
-      .eq(2)
-      .click()
+    cy.contains("Export to S3 (Cognito)").click()
     cy.get("input[id='ProjectName']")
       .clear()
       .type("CypressTest1")
@@ -32,11 +28,7 @@ describe("aws test", () => {
 
     cy.log("should be able to see the new project")
     cy.wait(2000)
-    cy.get(
-      "button[class='MuiButtonBase-root MuiButton-root MuiButton-outlined WithStyles(ForwardRef(Button))-root-110']"
-    )
-      .eq(2)
-      .click()
+    cy.contains("Export to S3 (Cognito)").click()
     cy.wait(200)
     cy.contains("CypressTest1")
     cy.contains("Close").click()
@@ -47,11 +39,7 @@ describe("aws test", () => {
 
     cy.log("should not be able to see the new project")
     cy.wait(200)
-    cy.get(
-      "button[class='MuiButtonBase-root MuiButton-root MuiButton-outlined WithStyles(ForwardRef(Button))-root-110']"
-    )
-      .eq(2)
-      .click()
+    cy.contains("Export to S3 (Cognito)").click()
     cy.wait(200)
     cy.contains("CypressTest1").should("not.exist")
     cy.contains("Close").click()

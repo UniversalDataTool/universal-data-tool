@@ -1,4 +1,4 @@
-import setLanguage from "../utils/set-language"
+import setLanguage from "../utils/set-language.spec"
 const csvHeader = "customId,imageUrl,male_or_female.value"
 const csvRows = [
   "faces/010260.jpg,https://wao.ai/app/api/download/0031a48c-635a-4ea9-833f-9381c88836d2,female",

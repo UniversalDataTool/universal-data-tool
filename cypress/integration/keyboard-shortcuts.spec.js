@@ -1,4 +1,4 @@
-import setLanguage from "../utils/set-language"
+import setLanguage from "../utils/set-language.spec"
 describe("Test default keyboard shortcuts", () => {
   it.skip("should be able to navigate to label tab with default shortcut", () => {
     cy.visit("/")

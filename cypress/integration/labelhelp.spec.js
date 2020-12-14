@@ -1,4 +1,4 @@
-import setLanguage from "../utils/set-language"
+import setLanguage from "../utils/set-language.spec"
 describe("Create a Label Help ", () => {
   it("should be able to use label help", () => {
     cy.visit("/")

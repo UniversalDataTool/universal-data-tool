@@ -13,7 +13,7 @@ const test = () => {
     enterCredentialsUser(credentials)
   )
   cy.get(
-    'button[class="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-submit-62 MuiButton-containedPrimary MuiButton-fullWidth"]'
+    'button[class="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-submit-67 MuiButton-containedPrimary MuiButton-fullWidth"]'
   ).click()
   cy.wait(2000)
 }

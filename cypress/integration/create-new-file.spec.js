@@ -1,4 +1,4 @@
-import setLanguage from "../utils/set-language"
+import setLanguage from "../utils/set-language.spec"
 describe("Create a new file in the universal data tool", () => {
   it("should be able to create a new file", () => {
     cy.visit("/")

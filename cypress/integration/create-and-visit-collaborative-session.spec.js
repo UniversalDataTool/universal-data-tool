@@ -1,4 +1,4 @@
-import setLanguage from "../utils/set-language"
+import setLanguage from "../utils/set-language.spec"
 describe("Create and Visit Collaborative Session", () => {
   it("should be able to create new file", () => {
     cy.visit(`http://localhost:6001`)

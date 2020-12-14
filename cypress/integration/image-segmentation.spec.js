@@ -1,4 +1,4 @@
-import setLanguage from "../utils/set-language"
+import setLanguage from "../utils/set-language.spec"
 describe("Image Segmentation Tests", () => {
   it("should be able to create", () => {
     cy.visit("/")

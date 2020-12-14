@@ -24,24 +24,24 @@ const enterCredentialsCognitoS3 = (credentials) => {
     .focus()
     .type(credentials.CYPRESS_COGNITO_USER_PASS_LENGTH)
   if (credentials.CYPRESS_COGNITO_USER_PASS_REQUIRE_LOWERCASE) {
-    cy.get('input[class="PrivateSwitchBase-input-57"]').eq(0).click()
+    cy.get('input[class="PrivateSwitchBase-input-62"]').eq(0).click()
   } else {
-    cy.get('input[class="PrivateSwitchBase-input-57"]').eq(1).click()
+    cy.get('input[class="PrivateSwitchBase-input-62"]').eq(1).click()
   }
   if (credentials.CYPRESS_COGNITO_USER_PASS_REQUIRE_UPPERCASE) {
-    cy.get('input[class="PrivateSwitchBase-input-57"]').eq(2).click()
+    cy.get('input[class="PrivateSwitchBase-input-62"]').eq(2).click()
   } else {
-    cy.get('input[class="PrivateSwitchBase-input-57"]').eq(3).click()
+    cy.get('input[class="PrivateSwitchBase-input-62"]').eq(3).click()
   }
   if (credentials.CYPRESS_COGNITO_USER_PASS_REQUIRE_NUMBER) {
-    cy.get('input[class="PrivateSwitchBase-input-57"]').eq(4).click()
+    cy.get('input[class="PrivateSwitchBase-input-62"]').eq(4).click()
   } else {
-    cy.get('input[class="PrivateSwitchBase-input-57"]').eq(5).click()
+    cy.get('input[class="PrivateSwitchBase-input-62"]').eq(5).click()
   }
   if (credentials.CYPRESS_COGNITO_USER_PASS_REQUIRE_SYMBOL) {
-    cy.get('input[class="PrivateSwitchBase-input-57"]').eq(6).click()
+    cy.get('input[class="PrivateSwitchBase-input-62"]').eq(6).click()
   } else {
-    cy.get('input[class="PrivateSwitchBase-input-57"]').eq(7).click()
+    cy.get('input[class="PrivateSwitchBase-input-62"]').eq(7).click()
   }
 }
 
