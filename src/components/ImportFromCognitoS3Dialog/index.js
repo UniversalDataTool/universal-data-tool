@@ -1,4 +1,3 @@
-  
 import React, { useEffect, useRef, useState, useCallback } from "react"
 import SimpleDialog from "../SimpleDialog"
 import DataTable from "react-data-table-component"
