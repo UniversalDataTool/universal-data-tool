@@ -10,7 +10,8 @@ import DescriptionIcon from "@material-ui/icons/Description"
 import PetsIcon from "@material-ui/icons/Pets"
 import * as colors from "@material-ui/core/colors"
 import PasteUrlsDialog from "../PasteUrlsDialog"
-// import ImportFromCognitoS3Dialog from "../ImportFromCognitoS3Dialog"
+import ExportToCognitoS3Dialog from "../ExportToCognitoS3Dialog"
+import ImportFromCognitoS3Dialog from "../ImportFromCognitoS3Dialog"
 import ImportFromS3Dialog from "../ImportFromS3Dialog"
 import UploadToS3Dialog from "../UploadToS3Dialog"
 import ImportTextSnippetsDialog from "../ImportTextSnippetsDialog"
@@ -249,7 +250,16 @@ export default ({ isDesktop, authConfig, user }) => {
         >
           {t("upload-to-s3")}
         </Button>
-        {/* {file && (
+        <Button
+          dialog="export-to-cognito-s3"
+          Icon={S3Icon}
+          authConfiguredOnly={true}
+          signedInOnly={true}
+        >
+          {t("export-to-cognito-s3")}
+        </Button>
+
+        {
           <Button
             isDesktop={isDesktop}
             dialog="import-from-cognito-s3"
@@ -260,7 +270,7 @@ export default ({ isDesktop, authConfig, user }) => {
           >
             {t("import-from-cognito-s3")}
           </Button>
-        )} */}
+        }
         <Button
           isDesktop={isDesktop}
           dialog="google-drive-file-picker"
@@ -310,16 +320,18 @@ export default ({ isDesktop, authConfig, user }) => {
           user={user}
           onAddSamples={onAddSamples}
         />
-        {/* {file && (
-          <ImportFromCognitoS3Dialog
-            file={file}
-            open={selectedDialog === "import-from-cognito-s3"}
-            // onChangeFile={onChangeFile}
-            onClose={closeDialog}
-            user={user}
-            onAddSamples={onAddSamples}
-          />
-        )} */}
+
+        <ExportToCognitoS3Dialog
+          open={selectedDialog === "export-to-cognito-s3"}
+          onClose={closeDialog}
+          onAddSamples={onAddSamples}
+        />
+
+        <ImportFromCognitoS3Dialog
+          open={selectedDialog === "import-from-cognito-s3"}
+          onClose={closeDialog}
+          onAddSamples={onAddSamples}
+        />
         <ImportFromGoogleDriveDialog
           open={selectedDialog === "google-drive-file-picker"}
           onClose={closeDialog}

@@ -3,8 +3,7 @@
 import React, { useState, useEffect } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Grid from "@material-ui/core/Grid"
-import Header from "../Header"
-import Button from "@material-ui/core/Button"
+import { HeaderWithContainer } from "../Header"
 import templates from "./templates"
 import * as colors from "@material-ui/core/colors"
 import { useDropzone } from "react-dropzone"
@@ -14,11 +13,14 @@ import { styled } from "@material-ui/core/styles"
 import usePosthog from "../../hooks/use-posthog"
 import packageInfo from "../../../package.json"
 import useEventCallback from "use-event-callback"
-import DownloadIcon from "@material-ui/icons/GetApp"
 import Box from "@material-ui/core/Box"
 import Select from "react-select"
 import { useTranslation } from "react-i18next"
 import getEmbedYoutubeUrl from "./get-embed-youtube-url.js"
+import packageJSON from "../../../package.json"
+import Button from "@material-ui/core/Button"
+import GetAppIcon from "@material-ui/icons/GetApp"
+import useIsDesktop from "../../hooks/use-is-desktop"
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -155,7 +157,8 @@ export default ({
   // internalization hook
   const { t, i18n } = useTranslation()
 
-  //const isDesktop = useIsDesktop()
+  const isDesktop = useIsDesktop()
+  // eslint-disable-next-line
   const [newVersionAvailable, changeNewVersionAvailable] = useState(false)
   useEffect(() => {
     // if (!isDesktop) return
@@ -182,6 +185,7 @@ export default ({
         .slice(startCU, endCU)
         .split("\n")
         .slice(1, -1)
+        .filter((line) => line.trim() !== "")
       const latestYtLink = communityUpdates[0].match(/\((.*)\)/)[1]
       setLatestCommunityUpdate({
         name: communityUpdates[0].match(/\[(.*)\]/)[1],
@@ -209,6 +213,171 @@ export default ({
 
   return (
     <div className={c.container}>
+      <HeaderWithContainer>
+        <ContentContainer>
+          <Content>
+            <Grid container>
+              <Grid xs={12} sm={6} item>
+                <Title>Universal Data Tool</Title>
+                <Subtitle>{t("universaldatatool-description")}</Subtitle>
+                <Subtitle>v{packageJSON.version}</Subtitle>
+              </Grid>
+              <Grid xs={12} sm={6} item>
+                <Box className={c.languageSelectionBox}>
+                  <Box
+                    width="100%"
+                    maxWidth={200}
+                    className={c.languageSelectionWrapper}
+                  >
+                    <Select
+                      id="language-list"
+                      styles={languageSelectionFormStyle}
+                      defaultValue={languageOptions.filter(
+                        (lang) => lang.value === i18n.language
+                      )}
+                      options={languageOptions}
+                      onChange={({ value }) => changeLanguage(value)}
+                    />
+                  </Box>
+                </Box>
+              </Grid>
+              <Grid xs={12} sm={6} item>
+                <ActionList>
+                  <ActionTitle>{t("start")}</ActionTitle>
+                  <Action
+                    onClick={() => {
+                      posthog.capture("template_clicked", {
+                        clicked_template: "empty",
+                      })
+                      onOpenTemplate(templates.find((t) => t.name === "Empty"))
+                    }}
+                  >
+                    {t("new-file")}
+                  </Action>
+                  <Action
+                    onClick={() => changeCreateFromTemplateDialogOpen(true)}
+                  >
+                    {t("start-from-template")}
+                  </Action>
+                  <Action {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    {t("open-file")}
+                  </Action>
+                  {onClickOpenSession && (
+                    <Action onClick={onClickOpenSession}>
+                      {t("open-collaborative-session")}
+                    </Action>
+                  )}
+                  <Action onClick={() => changeAddAuthFromDialogOpen(true)}>
+                    {t("add-authentication")}
+                  </Action>
+                  <Action
+                    onClick={() => {
+                      window.location.href =
+                        "https://universaldatatool.com/courses"
+                    }}
+                  >
+                    {t("create-training-course")}
+                  </Action>
+                  {/* <Action>Open Folder</Action> */}
+                </ActionList>
+                <ActionList>
+                  <ActionTitle>{t("recent")}</ActionTitle>
+                  {recentItems.length === 0 ? (
+                    <Actionless>{t("no-recent-files")}</Actionless>
+                  ) : (
+                    recentItems.map((ri, i) => (
+                      <Action key={i} onClick={() => onOpenRecentItem(ri)}>
+                        {ri.fileName}
+                      </Action>
+                    ))
+                  )}
+                </ActionList>
+                <ActionList>
+                  <ActionTitle>{t("help")}</ActionTitle>
+                  <Action href="https://github.com/UniversalDataTool/universal-data-tool/releases">
+                    {t("downloading-and-installing-udt")}
+                  </Action>
+                  <Action href="https://dev.to/seveibar/make-bounding-boxes-for-artificial-intelligence-with-udt-1kai">
+                    {t("labeling-images")}
+                  </Action>
+                  {/* <Action>Custom Data Entry</Action> */}
+                  <Action href="https://github.com/UniversalDataTool/universal-data-tool">
+                    {t("github-repository")}
+                  </Action>
+                  <Action href="https://www.youtube.com/channel/UCgFkrRN7CLt7_iTa2WDjf2g">
+                    {t("youtube-channel")}
+                  </Action>
+
+                  {/* <Action href="#">
+                  How to Collaborate in Real-Time with UDT
+                </Action> */}
+                </ActionList>
+              </Grid>
+              <Grid xs={12} sm={6} item>
+                {newVersionAvailable && isDesktop && (
+                  <Button
+                    variant="outlined"
+                    key="download-latest"
+                    className={c.headerButton}
+                    href="https://github.com/OpenHumanAnnotation/universal-data-tool/releases"
+                  >
+                    <GetAppIcon className={c.downloadIcon} />
+                    {t("Download Version")} v{newVersionAvailable}
+                  </Button>
+                )}
+                <ActionList>
+                  <ActionTitle>{t("about")}</ActionTitle>
+                  <ActionText>
+                    {t("start-page-about-first-paragraph")}
+                    <br />
+                    <br />
+                    {t("start-page-about-second-paragraph")}
+                    <br />
+                    <br />
+                    {t("the-udt-uses-an")}{" "}
+                    <a href="https://github.com/UniversalDataTool/udt-format">
+                      open-source data format (.udt.json / .udt.csv)
+                    </a>{" "}
+                    {t("start-page-about-third-paragraph")}
+                    <br />
+                    <br />
+                  </ActionText>
+                </ActionList>
+                <ActionList>
+                  {latestCommunityUpdate && (
+                    <>
+                      <ActionTitle>{latestCommunityUpdate.name}</ActionTitle>
+                      <iframe
+                        title={latestCommunityUpdate.name}
+                        width="320"
+                        height="178"
+                        // src="https://www.youtube.com/embed/QW-s4XVK3Ok"
+                        src={latestCommunityUpdate.embedYTLink}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      ></iframe>
+                    </>
+                  )}
+                  {/* <ActionText>
+                  <Action
+                    style={{ display: "inline" }}
+                    onClick={() => changeCreateFromTemplateDialogOpen(true)}
+                  >
+                    {t("open-a-template")}
+                  </Action>{" "}
+                  {t("to-see-how-the-udt-could-work-for-your-data")}
+                </ActionText> */}
+                </ActionList>
+              </Grid>
+              <Grid xs={12} sm={6} item>
+                <BottomSpacer />
+              </Grid>
+            </Grid>
+          </Content>
+        </ContentContainer>
+      </HeaderWithContainer>
       <CreateFromTemplateDialog
         open={createFromTemplateDialogOpen}
         onSelect={(template) => {
@@ -224,182 +393,6 @@ export default ({
         onSelect={(template) => onOpenTemplate(template)}
         onClose={() => changeAddAuthFromDialogOpen(false)}
       />
-      <Header
-        additionalButtons={[
-          newVersionAvailable && (
-            <Button
-              variant="outlined"
-              key="download-latest"
-              className={c.headerButton}
-              href="https://github.com/OpenHumanAnnotation/universal-data-tool/releases"
-            >
-              <DownloadIcon className={c.downloadIcon} />
-              {t("Download Version")} v{newVersionAvailable}
-            </Button>
-          ),
-          !newVersionAvailable && showDownloadLink && (
-            <Button
-              variant="outlined"
-              key="download"
-              href="https://github.com/OpenHumanAnnotation/universal-data-tool/releases"
-              className={c.headerButton}
-            >
-              <DownloadIcon className={c.downloadIcon} />
-              {t("download")}
-            </Button>
-          ),
-        ].filter(Boolean)}
-      />
-      <ContentContainer>
-        <Content>
-          <Grid container>
-            <Grid xs={12} sm={6} item>
-              <Title>Universal Data Tool</Title>
-              <Subtitle>{t("universaldatatool-description")}</Subtitle>
-            </Grid>
-            <Grid xs={12} sm={6} item>
-              <Box className={c.languageSelectionBox}>
-                <Box
-                  width="100%"
-                  maxWidth={200}
-                  className={c.languageSelectionWrapper}
-                >
-                  <Select
-                    styles={languageSelectionFormStyle}
-                    defaultValue={languageOptions.filter(
-                      (lang) => lang.value === i18n.language
-                    )}
-                    options={languageOptions}
-                    onChange={({ value }) => changeLanguage(value)}
-                  />
-                </Box>
-              </Box>
-            </Grid>
-            <Grid xs={12} sm={6} item>
-              <ActionList>
-                <ActionTitle>{t("start")}</ActionTitle>
-                <Action
-                  onClick={() => {
-                    posthog.capture("template_clicked", {
-                      clicked_template: "empty",
-                    })
-                    onOpenTemplate(templates.find((t) => t.name === "Empty"))
-                  }}
-                >
-                  {t("new-file")}
-                </Action>
-                <Action
-                  onClick={() => changeCreateFromTemplateDialogOpen(true)}
-                >
-                  {t("start-from-template")}
-                </Action>
-                <Action {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  {t("open-file")}
-                </Action>
-                {onClickOpenSession && (
-                  <Action onClick={onClickOpenSession}>
-                    {t("open-collaborative-session")}
-                  </Action>
-                )}
-                <Action onClick={() => changeAddAuthFromDialogOpen(true)}>
-                  {t("add-authentication")}
-                </Action>
-                <Action
-                  onClick={() => {
-                    window.location.href =
-                      "https://universaldatatool.com/courses"
-                  }}
-                >
-                  {t("create-training-course")}
-                </Action>
-                {/* <Action>Open Folder</Action> */}
-              </ActionList>
-              <ActionList>
-                <ActionTitle>{t("recent")}</ActionTitle>
-                {recentItems.length === 0 ? (
-                  <Actionless>{t("no-recent-files")}</Actionless>
-                ) : (
-                  recentItems.map((ri, i) => (
-                    <Action key={i} onClick={() => onOpenRecentItem(ri)}>
-                      {ri.fileName}
-                    </Action>
-                  ))
-                )}
-              </ActionList>
-              <ActionList>
-                <ActionTitle>{t("help")}</ActionTitle>
-                <Action href="https://github.com/UniversalDataTool/universal-data-tool/releases">
-                  {t("downloading-and-installing-udt")}
-                </Action>
-                <Action href="https://dev.to/seveibar/make-bounding-boxes-for-artificial-intelligence-with-udt-1kai">
-                  {t("labeling-images")}
-                </Action>
-                {/* <Action>Custom Data Entry</Action> */}
-                <Action href="https://github.com/UniversalDataTool/universal-data-tool">
-                  {t("github-repository")}
-                </Action>
-                <Action href="https://www.youtube.com/channel/UCgFkrRN7CLt7_iTa2WDjf2g">
-                  {t("youtube-channel")}
-                </Action>
-
-                {/* <Action href="#">
-                  How to Collaborate in Real-Time with UDT
-                </Action> */}
-              </ActionList>
-            </Grid>
-            <Grid xs={12} sm={6} item>
-              <ActionList>
-                <ActionTitle>{t("about")}</ActionTitle>
-                <ActionText>
-                  {t("start-page-about-first-paragraph")}
-                  <br />
-                  <br />
-                  {t("start-page-about-second-paragraph")}
-                  <br />
-                  <br />
-                  {t("the-udt-uses-an")}{" "}
-                  <a href="https://github.com/UniversalDataTool/udt-format">
-                    open-source data format (.udt.json / .udt.csv)
-                  </a>{" "}
-                  {t("start-page-about-third-paragraph")}
-                  <br />
-                  <br />
-                </ActionText>
-              </ActionList>
-              <ActionList>
-                {latestCommunityUpdate && (
-                  <>
-                    <ActionTitle>{latestCommunityUpdate.name}</ActionTitle>
-                    <iframe
-                      title={latestCommunityUpdate.name}
-                      width="320"
-                      height="178"
-                      // src="https://www.youtube.com/embed/QW-s4XVK3Ok"
-                      src={latestCommunityUpdate.embedYTLink}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
-                  </>
-                )}
-                {/* <ActionText>
-                  <Action
-                    style={{ display: "inline" }}
-                    onClick={() => changeCreateFromTemplateDialogOpen(true)}
-                  >
-                    {t("open-a-template")}
-                  </Action>{" "}
-                  {t("to-see-how-the-udt-could-work-for-your-data")}
-                </ActionText> */}
-              </ActionList>
-            </Grid>
-            <Grid xs={12} sm={6} item>
-              <BottomSpacer />
-            </Grid>
-          </Grid>
-        </Content>
-      </ContentContainer>
     </div>
   )
 }

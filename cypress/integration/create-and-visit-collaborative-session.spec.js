@@ -1,12 +1,15 @@
 describe("Create and Visit Collaborative Session", () => {
   it("should be able to create new file", () => {
     cy.visit(`http://localhost:6001`)
-
+    cy.get('input[id="react-select-2-input"]')
+      .focus()
+      .type("English", { force: true })
+      .type("{enter}")
     cy.contains("New File").click()
   })
 
   it("should be able to import Elon Musk Tweets dataset", () => {
-    cy.contains("Samples").click()
+    cy.get("#tab-samples").click()
     cy.contains("Import").click()
     cy.contains("Import Toy Dataset").click()
     cy.contains("Elon Musk Tweets").siblings("td").eq(2).click()
@@ -38,6 +41,6 @@ describe("Create and Visit Collaborative Session", () => {
   })
 
   it("should be able to navigate to samples", () => {
-    cy.contains("Samples").click()
+    cy.get("#tab-samples").click()
   })
 })

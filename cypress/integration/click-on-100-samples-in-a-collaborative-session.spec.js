@@ -3,12 +3,12 @@ describe.skip("Create and Visit Collaborative Session", () => {
     cy.visit(`http://localhost:6001`)
 
     cy.contains("New File").click()
-    cy.contains("Setup").click()
+    cy.get("#tab-setup").click()
     cy.contains("Image Classification").click()
   })
 
   it("should be able to import cats dataset", () => {
-    cy.contains("Samples").click()
+    cy.get("#tab-samples").click()
     cy.contains("Import").click()
     cy.contains("Import Toy Dataset").click()
     cy.contains("Cats").siblings("td").eq(2).click()
@@ -18,7 +18,7 @@ describe.skip("Create and Visit Collaborative Session", () => {
 
   it("click on 100 samples", () => {
     cy.wait(2000)
-    cy.contains("Label").click()
+    cy.get("#tab-label").click()
     cy.wait(2000)
     cy.contains("16").click()
     for (let i = 0; i < 50; i++) {

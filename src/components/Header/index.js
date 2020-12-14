@@ -7,6 +7,7 @@ import CollaborativeDatasetManager from "udt-dataset-managers/dist/Collaboration
 import LocalStorageDatasetManager from "udt-dataset-managers/dist/LocalStorageDatasetManager"
 import useEventCallback from "use-event-callback"
 import { useAppConfig } from "../AppConfig"
+import HeaderWithContainer from "./HeaderWithContainer"
 
 import HeaderToolbar from "../HeaderToolbar"
 import HeaderDrawer from "../HeaderDrawer"
@@ -34,7 +35,7 @@ export const HeaderContext = createContext({
 
 const emptyArray = []
 
-export default ({
+export const Header = ({
   additionalButtons = emptyArray,
   title,
   currentTab,
@@ -142,3 +143,7 @@ export default ({
     </>
   )
 }
+
+export { HeaderWithContainer }
+
+export default Header

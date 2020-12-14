@@ -41,6 +41,7 @@ The Universal Data Tool is a web/desktop app for editing and annotating images, 
 [Follow our development on Youtube!](https://www.youtube.com/channel/UCgFkrRN7CLt7_iTa2WDjf2g)
 
 <!-- COMMUNITY-UPDATE:START !-->
+
 - [Community Update Video 9](https://youtu.be/q20WrCRcG4k)
 - [Community Update Video 8](https://www.youtube.com/watch?v=IBWOaw0jMmM)
 - [Community Update Video 7](https://youtu.be/glPPFgXibdw) [(blog version)](https://universaldatatool.substack.com/p/build-your-dataset-from-coco)
@@ -122,6 +123,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/anaplian"><img src="https://avatars3.githubusercontent.com/u/18647401?v=4" width="100px;" alt=""/><br /><sub><b>anaplian</b></sub></a><br /><a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=anaplian" title="Code">💻</a></td>
     <td align="center"><a href="https://www.behance.net/MiguelCarvalho13"><img src="https://avatars2.githubusercontent.com/u/6718302?v=4" width="100px;" alt=""/><br /><sub><b>Miguel Carvalho</b></sub></a><br /><a href="#translation-miguelcarvalho13" title="Translation">🌍</a></td>
     <td align="center"><a href="https://kyleo.io"><img src="https://avatars2.githubusercontent.com/u/27719893?v=4" width="100px;" alt=""/><br /><sub><b>Kyle OBrien</b></sub></a><br /><a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=obrien-k" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/hakkiyagiz"><img src="https://avatars2.githubusercontent.com/u/12295562?v=4" width="100px;" alt=""/><br /><sub><b>Hakkı Yağız ERDİNÇ</b></sub></a><br /><a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=hakkiyagiz" title="Code">💻</a></td>
   </tr>
 </table>
 
