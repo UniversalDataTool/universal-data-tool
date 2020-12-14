@@ -30,6 +30,14 @@ of datasets. All contributions are welcome and appreciated!
 
 # Other stuff that's nice to know / FAQ
 
+## How to I avoid git merging all the time?
+
+Your git history will be messy and hard to maintain if you don't rebase from the latest version of UDT when you're working on features. There are
+two ways to do this easily that we recommend:
+
+1. When you want to update your branch/fork, do `git pull origin master --rebase`. The `--rebase` flag will make sure that your changes are on top of the latest version of UDT and not jumbled around.
+2. If you want to do (1) by default without having to use the `--rebase` flag, just execute `git config --global pull.rebase true` one time on your computer.
+
 ## How do I develop the desktop application?
 
 You'll need two terminals. One will run the electron app, the other will run the electron app.
