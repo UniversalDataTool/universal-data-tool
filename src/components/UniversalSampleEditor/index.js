@@ -25,6 +25,9 @@ export const UniversalSampleViewer = ({
   loading,
   onRemoveSample,
   hideHeader,
+  hideHeaderText,
+  hideNext,
+  hidePrev,
   hideDescription,
   disableHotkeys = false,
   title,
@@ -39,6 +42,9 @@ export const UniversalSampleViewer = ({
   const containerProps = useMemo(
     () => ({
       hideHeader,
+      hideHeaderText,
+      hideNext,
+      hidePrev,
       hideDescription,
       title,
       onExit,
@@ -49,6 +55,9 @@ export const UniversalSampleViewer = ({
     }),
     [
       hideHeader,
+      hideHeaderText,
+      hideNext,
+      hidePrev,
       hideDescription,
       title,
       height,

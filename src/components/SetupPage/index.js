@@ -28,7 +28,7 @@ export default ({ onClearLabelData }) => {
 
   return (
     <div>
-      <Box padding="16px">
+      <Box padding="8px" paddingBottom="0px">
         <Tabs value={currentTab} onChange={(e, newTab) => setTab(newTab)}>
           <Tab icon={<CategoryIcon />} label="Data Type" value="datatype" />
           <Tab icon={<BuildIcon />} label="Configure" value="configure" />
