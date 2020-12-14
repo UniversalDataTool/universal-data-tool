@@ -138,10 +138,10 @@ export default ({
         fullImageSegmentationMode={isPixel}
         selectedImage={0}
         taskDescription={iface.description}
-        hideNext={containersProps.hideNext}
-        hidePrev={containersProps.hidePrev}
-        hideHeader={containersProps.hideHeader}
-        hideHeaderText={containersProps.hideHeaderText}
+        hideNext={containerProps.hideNext}
+        hidePrev={containerProps.hidePrev}
+        hideHeader={containerProps.hideHeader}
+        hideHeaderText={containerProps.hideHeaderText}
         showTags={showTags}
         {...labelProps}
         autoSegmentationOptions={iface.autoSegmentationEngine}
