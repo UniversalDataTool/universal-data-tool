@@ -3182,6 +3182,16 @@
     "@sentry/types" "5.29.0"
     tslib "^1.9.3"
 
+"@seveibar/react-resize-panel@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@seveibar/react-resize-panel/-/react-resize-panel-0.3.7.tgz#7c7bf449b0f2d83697e23008a5bc869c033fcc4c"
+  integrity sha512-oglctCuyCb04Ps4f1nY+IRmy5IyoGPjCv42rNAWdfDHzGb/wf81mvwTegHbouuaKWbmRH2E/c76ypSl2aGZFzQ==
+  dependencies:
+    cash-dom "^4.1.5"
+    classnames "^2.2.6"
+    lodash.debounce "^4.0.8"
+    react-draggable "^4.0.3"
+
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
@@ -16775,10 +16785,10 @@ react-icons@^3.9.0:
   dependencies:
     camelcase "^5.0.0"
 
-react-image-annotate@^1.7.8:
-  version "1.7.8"
-  resolved "https://registry.yarnpkg.com/react-image-annotate/-/react-image-annotate-1.7.8.tgz#57171de90997343c13b16f118fffd020a6e83494"
-  integrity sha512-aUmVt+AoEDCNcacQU+m30l8WGgsco9tvGBqqkORlcjYflbi3ER+qOVVVGPLCtdQZplyXsN9RRNifn/iJwTx+HA==
+react-image-annotate@^1.7.9:
+  version "1.7.9"
+  resolved "https://registry.yarnpkg.com/react-image-annotate/-/react-image-annotate-1.7.9.tgz#6982a6993cd8030a6aafe4c38fe47b63ef368892"
+  integrity sha512-qtdZObAYKZEr8OkmRvLSY4wcLuU9WTpyNd5KA6qHpRD9eItAHxaQm0iWYsvKH/s186Jyg9aM+L4GyWD3Qq5iLA==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.12"
     "@fortawesome/free-solid-svg-icons" "^5.6.3"
@@ -16797,7 +16807,7 @@ react-image-annotate@^1.7.8:
     react-hotkeys "^2.0.0"
     react-json-view "^1.19.1"
     react-markdown "^4.0.6"
-    react-material-workspace-layout "^1.0.4"
+    react-material-workspace-layout "^1.0.6"
     react-monaco-editor "^0.25.1"
     react-remove-scroll "^2.0.4"
     react-select "^3.0.8"
@@ -16878,16 +16888,16 @@ react-material-workspace-layout@^1.0.1:
     react-use-dimensions "^1.2.1"
     use-event-callback "^0.1.0"
 
-react-material-workspace-layout@^1.0.4, react-material-workspace-layout@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/react-material-workspace-layout/-/react-material-workspace-layout-1.0.5.tgz#47332001f0edc09b610fa27897085e8429f6dee7"
-  integrity sha512-MGUlJ7JsC+Z28W9jgtmaHei4B5fhsAE06S3lQ+7hpBOeWt1yAskmrUKMpvyGkR6urV492SCbfds5QnwNMuACBA==
+react-material-workspace-layout@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/react-material-workspace-layout/-/react-material-workspace-layout-1.0.6.tgz#d4495bb62bdc764ee3ccc77cdd1f7c33e4022c92"
+  integrity sha512-CiqdpivEC9ZEELDpJFrrzwfnZgtz2Ijl465bf1ehU7tflJ3Z9Dhm2cYXzGPzeNrqJ0pdmKQoCn27Ht943oHefQ==
   dependencies:
     "@material-ui/core" "^4.10.0"
     "@material-ui/icons" "^4.9.1"
+    "@seveibar/react-resize-panel" "^0.3.7"
     classnames "^2.2.6"
     react "^16.13.1"
-    react-resize-panel "^0.3.5"
     react-use-dimensions "^1.2.1"
     use-event-callback "^0.1.0"
 
@@ -16971,16 +16981,6 @@ react-remove-scroll@^2.0.4:
     tslib "^1.0.0"
     use-callback-ref "^1.2.3"
     use-sidecar "^1.0.1"
-
-react-resize-panel@^0.3.5:
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/react-resize-panel/-/react-resize-panel-0.3.5.tgz#43aa3450bf5b5a2566b40c4201445ced96c2a905"
-  integrity sha512-iyHOFTrSt+WV4Ilzi81x6KH3FU7VsGP736rmxepwGrgAEATmCvXzZdluTm3NpsptP7aC3hLODmXwnxusyA393A==
-  dependencies:
-    cash-dom "^4.1.5"
-    classnames "^2.2.6"
-    lodash.debounce "^4.0.8"
-    react-draggable "^4.0.3"
 
 react-scripts@^3.4.1:
   version "3.4.4"
