@@ -5,21 +5,20 @@ import goToImportPage from "../../utils/go-to-import-page.spec"
 import removeAWSFile from "../../utils/remove-cypress-file-in-aws.spec"
 import addFileToAWS from "../../utils/add-cypress-file-to-aws.spec"
 import "regenerator-runtime/runtime"
-describe("Export aws test", () => {
+describe("Import aws test", () => {
   before("Prepare tests", () => {
     cy.log("should be able to join the web site")
     cy.visit(`http://localhost:6001`)
     cy.wait(400)
-
     setLanguage()
     enterCredentialsCognitoS3()
     enterCredentialsUser()
     goToImportPage()
-    addFileToAWS("CypressTest1")
+    addFileToAWS()
   })
 
   it("Try to import a project from aws", () => {
-    cy.log("should not be able to see the new project")
+    cy.log("Import project")
     cy.wait(400)
     cy.contains("Import from S3 (Cognito)").click()
     cy.contains("CypressTest1").click()
@@ -28,6 +27,7 @@ describe("Export aws test", () => {
     cy.contains("Take samples from project").click()
     cy.wait(8000)
 
+    cy.log("Check if project imported")
     cy.contains("Grid").click()
     cy.contains("0")
     cy.contains("Import").click()
@@ -35,12 +35,5 @@ describe("Export aws test", () => {
 
   after("Clean AWS", () => {
     removeAWSFile("CypressTest1")
-
-    cy.log("should not be able to see the new project")
-    cy.wait(200)
-    cy.contains("Import from S3 (Cognito)").click()
-    cy.wait(2000)
-    cy.contains("CypressTest1").should("not.exist")
-    cy.contains("Close").click()
   })
 })
