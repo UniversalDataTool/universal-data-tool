@@ -20,6 +20,7 @@ import classnames from "classnames"
 import { colors } from "@material-ui/core"
 import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import Tooltip from "@material-ui/core/Tooltip"
+import DownloadButton from "../DownloadButton"
 
 const capitalize = (s) => {
   return s.charAt(0).toUpperCase() + s.slice(1)
@@ -169,6 +170,12 @@ const HeaderToolbar = ({
           onJoinSession={onJoinSession}
           error={collaborateError}
         />
+        {!isDesktop && fileOpen && (
+          <DownloadButton
+            interfaceType={interfaceType}
+            onDownload={onDownload}
+          />
+        )}
         {fileOpen && (
           <BrushButton
             selectedBrush={selectedBrush}

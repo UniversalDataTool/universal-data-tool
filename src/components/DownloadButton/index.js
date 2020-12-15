@@ -10,7 +10,12 @@ import HeaderPopupBox from "../HeaderPopupBox"
 
 import { useTranslation } from "react-i18next"
 
-const Container = styled("div")({ position: "relative" })
+const Container = styled("div")({
+  position: "relative",
+  "& .icon": {
+    color: colors.grey[300],
+  },
+})
 
 const StyledButton = styled(Button)({
   justifyContent: "flex-start",
@@ -48,7 +53,7 @@ export default ({ interfaceType, onDownload }) => {
       onMouseLeave={() => changeOpen(false)}
     >
       <IconButton>
-        <DownloadIcon />
+        <DownloadIcon className="icon" />
       </IconButton>
       <HeaderPopupBox open={open}>
         <h1>{t("download")}</h1>
