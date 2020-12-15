@@ -198,6 +198,7 @@ export default ({ open, onClose, onAddSamples }) => {
   }
 
   const handleAddSample = async () => {
+    if (!dm) return
     if (configImport.loadAssetsIsSelected) {
       createJsonFromAsset()
     } else {

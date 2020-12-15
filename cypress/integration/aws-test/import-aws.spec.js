@@ -21,11 +21,7 @@ describe("Export aws test", () => {
   it("Try to import a project from aws", () => {
     cy.log("should not be able to see the new project")
     cy.wait(400)
-    cy.get(
-      "button[class='MuiButtonBase-root MuiButton-root MuiButton-outlined WithStyles(ForwardRef(Button))-root-110']"
-    )
-      .eq(3)
-      .click()
+    cy.contains("Import from S3 (Cognito)").click()
     cy.contains("CypressTest1").click()
     cy.contains("Load Annotations").click()
     cy.get("input[name='select-row-0']").click()
@@ -42,11 +38,7 @@ describe("Export aws test", () => {
 
     cy.log("should not be able to see the new project")
     cy.wait(200)
-    cy.get(
-      "button[class='MuiButtonBase-root MuiButton-root MuiButton-outlined WithStyles(ForwardRef(Button))-root-160']"
-    )
-      .eq(3)
-      .click()
+    cy.contains("Import from S3 (Cognito)").click()
     cy.wait(2000)
     cy.contains("CypressTest1").should("not.exist")
     cy.contains("Close").click()
