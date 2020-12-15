@@ -49,9 +49,9 @@ const headerTable = ({ configImport, setConfigImport }) => {
         }}
       >
         {configImport.contentDialogBoxIsSetting ? (
-          <StorageIcon></StorageIcon>
+          <StorageIcon id="StorageIcon" />
         ) : (
-          <SettingsIcon></SettingsIcon>
+          <SettingsIcon id="SettingIcon" />
         )}
       </IconButton>
     </div>
