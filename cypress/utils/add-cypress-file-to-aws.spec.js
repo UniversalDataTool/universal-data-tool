@@ -5,7 +5,7 @@ const addAWSFile = (nameDummies) => {
   console.log(credentials)
   cy.log("Add test files")
   cy.then({ timeout: 10000 }, async () => {
-    cy.fixture(nameDummies).then(async (dummies) => {
+    cy.fixture(nameDummies).then({ timeout: 10000 },async (dummies) => {
       const authConfig = {
         Auth: {
           identityPoolId: credentials.AWS_IDENTITY_POOL_ID,
