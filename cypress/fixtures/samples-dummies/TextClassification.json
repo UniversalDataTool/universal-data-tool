@@ -1,0 +1,18 @@
+{
+  "name": "Text Classification",
+  "interface": {
+    "type": "text_classification",
+    "labels": ["positive_sentiment", "negative_sentiment"]
+  },
+  "samples": [
+    { "_id": "slohyn137", "document": "Wow this is terrible. I hated it." },
+    {
+      "_id": "svkw5i7ci",
+      "document": "This has made me so happy. I love this."
+    },
+    {
+      "_id": "spsd5ta7s",
+      "document": "At first I wasn't sure. Then I thought, oh it's not very good."
+    }
+  ]
+}

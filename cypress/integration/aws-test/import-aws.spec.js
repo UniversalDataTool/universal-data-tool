@@ -14,14 +14,14 @@ describe("Import aws test", () => {
     enterCredentialsCognitoS3()
     enterCredentialsUser()
     goToImportPage()
-    addFileToAWS()
+    addFileToAWS("samples-dummies/ImageClassification.json")
   })
 
   it("Try to import a project from aws", () => {
     cy.log("Import project")
     cy.wait(400)
     cy.contains("Import from S3 (Cognito)").click()
-    cy.contains("CypressTest1").click()
+    cy.contains("Image Classification").click()
     cy.contains("Load Annotations").click()
     cy.get("input[name='select-row-0']").click()
     cy.contains("Take samples from project").click()
@@ -34,6 +34,6 @@ describe("Import aws test", () => {
   })
 
   after("Clean AWS", () => {
-    removeAWSFile("CypressTest1")
+    removeAWSFile("Image Classification")
   })
 })

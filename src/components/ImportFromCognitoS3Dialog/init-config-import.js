@@ -10,8 +10,8 @@ export default (dataset) => {
       ? "Audio"
       : checkInterfaceAndsamples(["PDF", "Empty"], dataset)
       ? "PDF"
-      : checkInterfaceAndsamples(["Texte", "Empty"], dataset)
-      ? "Texte"
+      : checkInterfaceAndsamples(["Text", "Empty"], dataset)
+      ? "Text"
       : "None",
     typeOfFileToDisable: {
       Image: checkInterfaceAndsamples(["Image", "Empty"], dataset)
@@ -24,9 +24,7 @@ export default (dataset) => {
         ? false
         : true,
       PDF: checkInterfaceAndsamples(["PDF", "Empty"], dataset) ? false : true,
-      Texte: checkInterfaceAndsamples(["Texte", "Empty"], dataset)
-        ? false
-        : true,
+      Text: checkInterfaceAndsamples(["Text", "Empty"], dataset) ? false : true,
     },
     loadAssetsIsSelected: true,
     contentDialogBoxIsSetting: false,

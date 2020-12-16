@@ -11,7 +11,7 @@ export default (typeAuthorize, file) => {
     if (type === "audio_transcription") return "Audio"
     if (type === "data_entry") return "PDF"
     if (type === "text_entity_recognition" || type === "text_classification")
-      return "Texte"
+      return "Text"
     if (isEmpty(type)) return "Empty"
     return "File"
   }
@@ -22,7 +22,7 @@ export default (typeAuthorize, file) => {
     if (!isEmpty(assets[0].videoUrl)) return "Video"
     if (!isEmpty(assets[0].audioUrl)) return "Audio"
     if (!isEmpty(assets[0].pdfUrl)) return "PDF"
-    if (!isEmpty(assets[0].document)) return "Texte"
+    if (!isEmpty(assets[0].document)) return "Text"
     return "File"
   }
 

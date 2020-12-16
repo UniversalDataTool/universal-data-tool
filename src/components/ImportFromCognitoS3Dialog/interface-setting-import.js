@@ -83,11 +83,11 @@ const setting = ({ configImport, setConfigImport, tableStyle }) => {
               checked={configImport.typeOfFileToLoad === "PDF"}
             />
             <FormControlLabel
-              value="Texte"
+              value="Text"
               control={<Radio />}
-              label="Load texte file"
-              disabled={configImport.typeOfFileToDisable.Texte}
-              checked={configImport.typeOfFileToLoad === "Texte"}
+              label="Load text file"
+              disabled={configImport.typeOfFileToDisable.Text}
+              checked={configImport.typeOfFileToLoad === "Text"}
             />
           </RadioGroup>
         </FormControl>

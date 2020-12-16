@@ -9,9 +9,9 @@ const setUrl = (result, configImport) => {
       return { audioUrl: `${result}` }
     } else if (RecognizeFileExtension(result) === "PDF") {
       return { pdfUrl: `${result}` }
-    } else if (RecognizeFileExtension(result) === "Texte") {
-      //var texte = await fetchTextInFile(result)
-      return { document: `Is not supported` /*${texte}`*/ }
+    } else if (RecognizeFileExtension(result) === "Text") {
+      //var text = await fetchTextInFile(result)
+      return { document: `Is not supported` /*${text}`*/ }
     }
   } else {
     if (
@@ -36,10 +36,10 @@ const setUrl = (result, configImport) => {
       return { pdfUrl: `${result}` }
     } else if (
       RecognizeFileExtension(result) === configImport.typeOfFileToLoad &&
-      configImport.typeOfFileToLoad === "Texte"
+      configImport.typeOfFileToLoad === "Text"
     ) {
-      //var texte = await fetchTextInFile(result)
-      return { document: `Is not supported` /*${texte}`*/ }
+      //var text = await fetchTextInFile(result)
+      return { document: `Is not supported` /*${text}`*/ }
     }
   }
 }

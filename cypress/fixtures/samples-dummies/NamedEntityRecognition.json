@@ -1,0 +1,25 @@
+{
+  "name": "Named Entity Recognition",
+  "interface": {
+    "type": "text_entity_recognition",
+    "overlapAllowed": false,
+    "labels": [
+      { "id": "food", "displayName": "Food", "description": "Edible item." },
+      {
+        "id": "hat",
+        "displayName": "Hat",
+        "description": "Something worn on the head."
+      }
+    ]
+  },
+  "samples": [
+    {
+      "_id": "sa6l4bt9n",
+      "document": "This strainer makes a great hat, I'll wear it while I serve spaghetti!"
+    },
+    {
+      "_id": "s95oxk8n4",
+      "document": "Why are all these dumpings covered in butter?!"
+    }
+  ]
+}
