@@ -20,9 +20,7 @@ const removeAWSFile = async (name) => {
         },
       },
     }
-    console.log(authConfig)
     const ds = await new datasetManagerCognito({ authConfig })
-    console.log(ds)
     await ds.removeProject(name)
   })
 }

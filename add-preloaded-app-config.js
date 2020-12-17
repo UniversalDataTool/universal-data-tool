@@ -14,7 +14,6 @@ for (const key of Object.keys(process.env)) {
 }
 
 if (Object.keys(envObject).length > 0) {
-  console.log("Running the UDT with the following settings...")
   console.table(envObject)
 }
 
