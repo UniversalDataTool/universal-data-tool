@@ -6,7 +6,7 @@ import isEmpty from "lodash/isEmpty"
 import datasetManagerCognito from "udt-dataset-managers/dist/CognitoDatasetManager"
 import useAuth from "../../utils/auth-handlers/use-auth"
 import { TextField, Grid } from "@material-ui/core"
-const orangeText = { color: "orange" }
+const orangeText = { color: "orange", "text-align": "center" }
 
 const expandedAnnotationsColumns = [
   { name: "Annotations", selector: "annotation" },
