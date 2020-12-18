@@ -1,6 +1,6 @@
 import React from "react"
 const WarningHeader = ({ configImport, projectToFetch }) => {
-  const orangeText = { color: "orange", "text-align": "center" }
+  const orangeText = { color: "orange", textAlign: "center" }
   var text = ``
   if (!configImport.isReady) text += `Warning :`
   else return <p style={orangeText}>{text}</p>

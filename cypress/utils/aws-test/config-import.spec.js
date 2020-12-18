@@ -1,7 +1,6 @@
 const configImport = () => {
   it("Check behavior Load Assets/Annotations", () => {
     cy.log("check initial config")
-    cy.wait(200)
     cy.contains("Import from S3 (Cognito)").click()
     cy.contains("Load Assets").should("be.disabled")
     cy.contains("Load Annotations").should("not.be.disabled")
@@ -20,7 +19,6 @@ const configImport = () => {
 
   it("Check behavior setting/storage panel", () => {
     cy.log("Check if open on Storage panel")
-    cy.wait(200)
     cy.contains("Import from S3 (Cognito)").click()
     cy.contains("Annotation processing").should("not.exist")
     cy.contains("Choose file type").should("not.exist")

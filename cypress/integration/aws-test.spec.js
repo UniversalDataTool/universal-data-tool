@@ -26,12 +26,11 @@ Cypress.Commands.add("restoreLocalStorage", () => {
   })
 })
 //////////When the issue is resolved change for the cypress solution////////////
-
+Cypress.config("defaultCommandTimeout", 3000)
 describe("Import aws test", () => {
   before("Prepare tests", () => {
     cy.log("should be able to join the web site")
     cy.visit(`http://localhost:6001`)
-    cy.wait(400)
     setLanguage()
     //the following are very long processus try to keep them here so they execute only once
     enterCredentialsCognitoS3()
