@@ -1,13 +1,6 @@
-describe("Create a new file in the universal data tool", () => {
-  it("should be able to select all the interfaces", () => {
-    cy.log("should be able to create a new file")
-    cy.visit("/")
-    cy.get('input[id="react-select-2-input"]')
-      .focus()
-      .type("English", { force: true })
-      .type("{enter}")
+const createNewFile = () => {
+  it("Should be able to select all the interfaces", () => {
     cy.contains("New File").click()
-
     cy.contains("Image Segmentation").click()
     cy.matchImageSnapshot("image_segmentation", {
       failureThresholdType: "percent",
@@ -57,4 +50,5 @@ describe("Create a new file in the universal data tool", () => {
       failureThresholdType: "percent",
     })
   })
-})
+}
+export default createNewFile

@@ -4,14 +4,8 @@ const times = (howManyTimes) => (functionWillExecute) => {
     times(howManyTimes - 1)(functionWillExecute)
   }
 }
-
-describe("Import ai generated faces and make image classification with them", () => {
-  it("should be able to create", () => {
-    cy.visit("/")
-    cy.get('input[id="react-select-2-input"]')
-      .focus()
-      .type("English", { force: true })
-      .type("{enter}")
+const imageClassification = () => {
+  it("Should be able to use image classification", () => {
     cy.contains("New File").click()
 
     cy.log("should be able to import face image dataset")
@@ -21,7 +15,7 @@ describe("Import ai generated faces and make image classification with them", ()
     cy.contains("AI Generated Faces").siblings("td").eq(2).click()
 
     cy.log("should be able to setup image classification")
-    cy.get("#tab-setup").click()
+    cy.get("#tab-setup", { timeout: 5000 }).click()
     cy.contains("Image Classification").click()
     cy.get("input[value=valid]").eq(0).focus().clear().type("ai generated")
     cy.get("input[value=invalid]")
@@ -47,4 +41,6 @@ describe("Import ai generated faces and make image classification with them", ()
     cy.log("should be able to show label tab")
     cy.get("#tab-label").click()
   })
-})
+}
+
+export default imageClassification

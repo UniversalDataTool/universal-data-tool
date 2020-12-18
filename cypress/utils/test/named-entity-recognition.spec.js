@@ -4,14 +4,8 @@ const times = (howManyTimes) => (functionWillExecute) => {
     times(howManyTimes - 1)(functionWillExecute)
   }
 }
-
-describe("Named Entity Recognition Tests", () => {
-  it("should be able to create", () => {
-    cy.visit("/")
-    cy.get('input[id="react-select-2-input"]')
-      .focus()
-      .type("English", { force: true })
-      .type("{enter}")
+const namedEntityRecognition = () => {
+  it("Should be able to use named entity recognition", () => {
     cy.contains("New File").click()
 
     cy.log("should be able to import Elon Musk Tweets dataset")
@@ -54,4 +48,6 @@ describe("Named Entity Recognition Tests", () => {
     cy.log("should be able to show label tab")
     cy.get("#tab-label").click()
   })
-})
+}
+
+export default namedEntityRecognition

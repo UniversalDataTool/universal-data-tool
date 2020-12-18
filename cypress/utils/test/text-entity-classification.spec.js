@@ -25,14 +25,8 @@ const positive = {
 
 const inputValues = [positive, negative, neutral]
 
-// You need to ```npm start```
-describe("Create a new text entity classification, label that and show that", () => {
-  it("should be able to create new file", () => {
-    cy.visit("/")
-    cy.get('input[id="react-select-2-input"]')
-      .focus()
-      .type("English", { force: true })
-      .type("{enter}")
+const textEntityClassification = () => {
+  it("should be able to use text entity classification", () => {
     cy.contains("New File").click()
 
     cy.log("should import Elon Musk tweets from toy datasets")
@@ -81,4 +75,6 @@ describe("Create a new text entity classification, label that and show that", ()
     cy.log("should be able to show label tab")
     cy.get("#tab-label").click()
   })
-})
+}
+
+export default textEntityClassification

@@ -1,9 +1,5 @@
-Cypress.config("defaultCommandTimeout",3000)
-describe.skip("Create and Visit Collaborative Session", () => {
-  it("should be able to create new file", () => {
-    cy.visit(`http://localhost:6001`)
-
-    cy.contains("New File").click()
+const clickOn100SamplesInACollaborativeSession = () => {
+  it.skip("Should be able to click on 100 samples in a collaborative session", () => {
     cy.get("#tab-setup").click()
     cy.contains("Image Classification").click()
 
@@ -21,4 +17,6 @@ describe.skip("Create and Visit Collaborative Session", () => {
       cy.contains("invalid").click()
     }
   })
-})
+}
+
+export default clickOn100SamplesInACollaborativeSession

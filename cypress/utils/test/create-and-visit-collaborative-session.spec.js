@@ -1,15 +1,8 @@
-describe("Create and Visit Collaborative Session", () => {
+const createAndVisitCollaborativeSession = () => {
   let collaborationUrl
-  it("should be able to create new file", () => {
-    cy.visit(`http://localhost:6001`)
-    cy.get('input[id="react-select-2-input"]')
-      .focus()
-      .type("English", { force: true })
-      .type("{enter}")
-    cy.contains("New File").click()
-    
+  it("Should be able to create and visit collaborative session", () => {
     cy.log("should be able to import Elon Musk Tweets dataset")
-    cy.get("#tab-samples").click()
+    cy.get("#tab-samples", { timeout: 5000 }).click()
     cy.contains("Import").click()
     cy.contains("Import Toy Dataset").click()
     cy.contains("Elon Musk Tweets").siblings("td").eq(2).click()
@@ -17,11 +10,11 @@ describe("Create and Visit Collaborative Session", () => {
     cy.log("should be able to create new session")
     cy.get("div[title='collaborate-icon']").click()
     cy.contains("Create New Session").click()
-    cy.contains("Leave Session",{timeout: 10000})
+    cy.contains("Leave Session", { timeout: 10000 })
     cy.get("div[title='collaborate-icon']").trigger("mouseleave")
 
     cy.log("should be able to store session url")
-    cy.get("div[title='info-icon']").click()
+    cy.get("div[title='info-icon']", { timeout: 5000 }).click()
     cy.get("div[title='share-link']", { timeout: 20000 })
       .children()
       .children()
@@ -30,9 +23,10 @@ describe("Create and Visit Collaborative Session", () => {
 
         cy.log("should be able to go for session url")
         cy.visit(collaborationUrl)
-    
+
         cy.log("should be able to navigate to samples")
         cy.get("#tab-samples").click()
       })
   })
-})
+}
+export default createAndVisitCollaborativeSession

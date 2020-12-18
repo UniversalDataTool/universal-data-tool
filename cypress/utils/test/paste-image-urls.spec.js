@@ -4,13 +4,8 @@ const imageUrls = [
   "https://wao.ai/app/api/download/ff03593a-6b7e-46dd-91bf-9e741c35c227",
 ]
 
-describe("Paste Image URLs", () => {
-  it("should be able to create", () => {
-    cy.visit("/")
-    cy.get('input[id="react-select-2-input"]')
-      .focus()
-      .type("English", { force: true })
-      .type("{enter}")
+const pasteImageUrls = () => {
+  it("should be able to paste image urls", () => {
     cy.contains("New File").click()
 
     cy.log("should be able to open paste")
@@ -41,4 +36,6 @@ describe("Paste Image URLs", () => {
     cy.get("body").click().type("{enter}")
     cy.get("body").click().type("{enter}")
   })
-})
+}
+
+export default pasteImageUrls

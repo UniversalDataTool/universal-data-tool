@@ -5,13 +5,8 @@ const csvRows = [
   "faces/011094.jpg,https://wao.ai/app/api/download/0060b2fa-6f7d-49c3-a965-ab82fe8a9475,female",
 ]
 
-describe("Paste Image URLs with CSVs", () => {
-  it("should be able to create", () => {
-    cy.visit("/")
-    cy.get('input[id="react-select-2-input"]')
-      .focus()
-      .type("English", { force: true })
-      .type("{enter}")
+const pasteImageUrlsWithCSV = () => {
+  it("Should be able to paste images urls with CSV", () => {
     cy.contains("New File").click()
 
     cy.log("should be able to open import dialog")
@@ -45,4 +40,6 @@ describe("Paste Image URLs with CSVs", () => {
     cy.get("body").click().type("{enter}")
     cy.get("body").click().type("{enter}")
   })
-})
+}
+
+export default pasteImageUrlsWithCSV

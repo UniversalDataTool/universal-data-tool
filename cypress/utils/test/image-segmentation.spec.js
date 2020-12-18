@@ -1,12 +1,6 @@
-describe("Image Segmentation Tests", () => {
-  it("should be able to create", () => {
-    cy.visit("/")
-    cy.get('input[id="react-select-2-input"]')
-      .focus()
-      .type("English", { force: true })
-      .type("{enter}")
+const imageSegmentation = () => {
+  it("Should be able to use image segmentation", () => {
     cy.contains("New File").click()
-
     cy.log("should be able to import cat images dataset")
     cy.get("#tab-samples").click()
     cy.contains("Import").click()
@@ -51,4 +45,6 @@ describe("Image Segmentation Tests", () => {
     cy.log("should be able to go to next image")
     cy.contains("Next").click()
   })
-})
+}
+
+export default imageSegmentation
