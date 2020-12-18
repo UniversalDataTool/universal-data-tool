@@ -44,7 +44,7 @@ const configImport = () => {
     cy.contains("Close").click()
   })
 
-  /* to uncomment when the asset will added on import
+  /* to uncomment when the asset will added on export
         it("Check if disable non compatible type of file", () => {
         cy.wait(2000)
         cy.log("For Empty")
