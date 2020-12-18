@@ -7,8 +7,6 @@ describe("Test default keyboard shortcuts", () => {
       .type("{enter}")
     cy.contains("New File").click()
 
-    cy.wait(500)
-
     // TODO this doesn't trigger hot keys for some reason, I'm not sure how
     // good the support for testing keyboard shortcuts in cypress is
     cy.get("body").trigger("keydown", {

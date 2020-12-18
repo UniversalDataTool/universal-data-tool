@@ -50,13 +50,10 @@ describe("Image Segmentation Tests", () => {
       .trigger("mousemove", { button: 0, clientX: 0, clientY: 50 })
       .trigger("mousemove", { button: 0, clientX: 50, clientY: 50 })
       .trigger("mouseup", { button: 0 })
-    cy.wait(50)
   })
 
   it("should be able to label that box as a cat", () => {
-    cy.wait(200)
     cy.contains("Classification").click().type("cat{enter}")
-    cy.wait(100)
   })
 
   it("should be able to go to next image", () => {

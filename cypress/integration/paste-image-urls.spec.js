@@ -44,9 +44,7 @@ describe("Paste Image URLs", () => {
     cy.contains("2").click()
   })
   it("should be able to label image", () => {
-    cy.wait(200)
     cy.get("body").click().type("{enter}")
-    cy.wait(200)
     cy.get("body").click().type("{enter}")
   })
 })

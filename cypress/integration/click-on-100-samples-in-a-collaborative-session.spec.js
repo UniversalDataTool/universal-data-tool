@@ -1,3 +1,4 @@
+Cypress.config("defaultCommandTimeout",3000)
 describe.skip("Create and Visit Collaborative Session", () => {
   it("should be able to create new file", () => {
     cy.visit(`http://localhost:6001`)

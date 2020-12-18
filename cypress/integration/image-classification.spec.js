@@ -44,13 +44,11 @@ describe("Import ai generated faces and make image classification with them", ()
   it("should be able to label images", () => {
     times(4)(() => {
       cy.get("body").click().type("n")
-      cy.wait(250)
     })
   })
 
   it("should be able to return samples tab", () => {
     cy.get("#tab-samples").click()
-    cy.wait(30)
   })
 
   it("should be able to show label tab", () => {

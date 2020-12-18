@@ -18,16 +18,13 @@ describe("Create and Visit Collaborative Session", () => {
   it("should be able to create new session", () => {
     cy.get("div[title='collaborate-icon']").click()
     cy.contains("Create New Session").click()
-    cy.wait(10000)
-    cy.contains("Leave Session")
+    cy.contains("Leave Session",{timeout: 10000})
     cy.get("div[title='collaborate-icon']").trigger("mouseleave")
   })
 
   let collaborationUrl
   it("should be able to store session url", () => {
-    cy.wait(2000)
     cy.get("div[title='info-icon']").click()
-    cy.wait(2000)
     cy.get("div[title='share-link']", { timeout: 20000 })
       .children()
       .children()

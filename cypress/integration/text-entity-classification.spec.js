@@ -72,24 +72,19 @@ describe("Create a new text entity classification, label that and show that", ()
 
   it("should be able to show button descriptions on hover", () => {
     cy.contains("lovely").trigger("mouseover")
-    cy.wait(100)
     cy.contains("offensive").trigger("mouseover")
-    cy.wait(100)
     cy.contains("neutral").trigger("mouseover")
-    cy.wait(100)
   })
 
   it("should be able to label texts entities", () => {
     times(4)(() => {
       cy.get("body").click().type("n")
       cy.get("body").click().type("{enter}")
-      cy.wait(100)
     })
   })
 
   it("should be able to return samples tab", () => {
     cy.get("#tab-samples").click()
-    cy.wait(30)
   })
 
   it("should be able to show label tab", () => {

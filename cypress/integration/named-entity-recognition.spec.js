@@ -48,7 +48,6 @@ describe("Named Entity Recognition Tests", () => {
   })
 
   it("should be able to label samples", () => {
-    cy.wait(2000)
     times(4)(() => {
       cy.get("body").click().type("n")
       cy.get("body").click().type("{enter}")
@@ -57,7 +56,6 @@ describe("Named Entity Recognition Tests", () => {
 
   it("should be able to return samples tab", () => {
     cy.get("#tab-samples").click()
-    cy.wait(30)
   })
 
   it("should be able to show label tab", () => {
