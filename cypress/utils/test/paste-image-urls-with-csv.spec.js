@@ -5,54 +5,41 @@ const csvRows = [
   "faces/011094.jpg,https://wao.ai/app/api/download/0060b2fa-6f7d-49c3-a965-ab82fe8a9475,female",
 ]
 
-describe("Paste Image URLs with CSVs", () => {
-  it("should be able to create", () => {
-    cy.visit("/")
-    cy.get('input[id="react-select-2-input"]')
-      .focus()
-      .type("English", { force: true })
-      .type("{enter}")
+const pasteImageUrlsWithCSV = () => {
+  it("Should be able to paste images urls with CSV", () => {
     cy.contains("New File").click()
-  })
 
-  it("should be able to open import dialog", () => {
+    cy.log("should be able to open import dialog")
     cy.get("#tab-samples").click()
     cy.contains("Import").click()
     cy.contains("Import from CSV / JSON").click()
-  })
 
-  it("should be able to click textarea to paste", () => {
+    cy.log("should be able to click textarea to paste")
     cy.get("textarea").click()
-  })
 
-  it("should be able to paste csv of image urls", () => {
+    cy.log("should be able to paste csv of image urls")
     cy.get("textarea").type(csvHeader).type("{enter}")
     for (const csvRow of csvRows) {
       cy.get("textarea").type(csvRow + "{enter}")
     }
-  })
 
-  it("should be able to add samples from csv", () => {
+    cy.log("should be able to add samples from csv")
     cy.contains("Add Samples").click()
-  })
 
-  it("should be able to go to setup", () => {
+    cy.log("should be able to go to setup")
     cy.get("#tab-setup").click()
-  })
 
-  it("should be able to go to Image Classification setup", () => {
+    cy.log("should be able to go to Image Classification setup")
     cy.contains("Image Classification").click()
-  })
 
-  it("should be able to see samples", () => {
+    cy.log("should be able to see samples")
     cy.get("#tab-samples").click()
     cy.contains("2").click()
-  })
 
-  it("should be able to label image", () => {
-    cy.wait(200)
+    cy.log("should be able to label image")
     cy.get("body").click().type("{enter}")
-    cy.wait(200)
     cy.get("body").click().type("{enter}")
   })
-})
+}
+
+export default pasteImageUrlsWithCSV
