@@ -31,9 +31,13 @@ describe("Import aws test", () => {
     setLanguage()
     enterCredentialsCognitoS3()
     enterCredentialsUser()
-    addFileToAWS("ImageClassification.json")
-    addAssetsToAWS("Image Classification", "image1.jpg")
-    addAssetsToAWS("Image Classification", "image2.jpg")
+    try {
+      addFileToAWS("ImageClassification.json")
+      addAssetsToAWS("Image Classification", "image1.jpg")
+      addAssetsToAWS("Image Classification", "image2.jpg")
+    } catch (err) {
+      console.log(err)
+    }
   })
 
   beforeEach("Go to import page", () => {
@@ -73,6 +77,6 @@ describe("Import aws test", () => {
   })
 
   after("Clean AWS", () => {
-    //removeAWSFile("Image Classification")
+    removeAWSFile("Image Classification")
   })
 })
