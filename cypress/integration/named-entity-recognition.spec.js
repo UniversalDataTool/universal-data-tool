@@ -13,16 +13,14 @@ describe("Named Entity Recognition Tests", () => {
       .type("English", { force: true })
       .type("{enter}")
     cy.contains("New File").click()
-  })
 
-  it("should be able to import Elon Musk Tweets dataset", () => {
+    cy.log("should be able to import Elon Musk Tweets dataset")
     cy.get("#tab-samples").click()
     cy.contains("Import").click()
     cy.contains("Import Toy Dataset").click()
     cy.contains("Elon Musk Tweets").siblings("td").eq(2).click()
-  })
 
-  it("should be able to setup Named Entity Recognition", () => {
+    cy.log("should be able to setup Named Entity Recognition")
     cy.get("#tab-setup").click()
     cy.contains("Named Entity Recognition").click()
     cy.get("input[value=food]").focus().clear().type("mars")
@@ -37,28 +35,23 @@ describe("Named Entity Recognition Tests", () => {
       .focus()
       .clear()
       .type("not about Elon Musk's obsession")
-  })
 
-  it("should be able to see samples", () => {
+    cy.log("should be able to see samples")
     cy.get("#tab-samples").click()
-  })
 
-  it("should be able start labeling images from 21st sample", () => {
+    cy.log("should be able start labeling images from 21st sample")
     cy.contains("div", "21").click()
-  })
 
-  it("should be able to label samples", () => {
+    cy.log("should be able to label samples")
     times(4)(() => {
       cy.get("body").click().type("n")
       cy.get("body").click().type("{enter}")
     })
-  })
 
-  it("should be able to return samples tab", () => {
+    cy.log("should be able to return samples tab")
     cy.get("#tab-samples").click()
-  })
 
-  it("should be able to show label tab", () => {
+    cy.log("should be able to show label tab")
     cy.get("#tab-label").click()
   })
 })

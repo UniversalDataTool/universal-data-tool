@@ -13,43 +13,35 @@ describe("Paste Image URLs with CSVs", () => {
       .type("English", { force: true })
       .type("{enter}")
     cy.contains("New File").click()
-  })
 
-  it("should be able to open import dialog", () => {
+    cy.log("should be able to open import dialog")
     cy.get("#tab-samples").click()
     cy.contains("Import").click()
     cy.contains("Import from CSV / JSON").click()
-  })
 
-  it("should be able to click textarea to paste", () => {
+    cy.log("should be able to click textarea to paste")
     cy.get("textarea").click()
-  })
 
-  it("should be able to paste csv of image urls", () => {
+    cy.log("should be able to paste csv of image urls")
     cy.get("textarea").type(csvHeader).type("{enter}")
     for (const csvRow of csvRows) {
       cy.get("textarea").type(csvRow + "{enter}")
     }
-  })
 
-  it("should be able to add samples from csv", () => {
+    cy.log("should be able to add samples from csv")
     cy.contains("Add Samples").click()
-  })
 
-  it("should be able to go to setup", () => {
+    cy.log("should be able to go to setup")
     cy.get("#tab-setup").click()
-  })
 
-  it("should be able to go to Image Classification setup", () => {
+    cy.log("should be able to go to Image Classification setup")
     cy.contains("Image Classification").click()
-  })
 
-  it("should be able to see samples", () => {
+    cy.log("should be able to see samples")
     cy.get("#tab-samples").click()
     cy.contains("2").click()
-  })
 
-  it("should be able to label image", () => {
+    cy.log("should be able to label image")
     cy.get("body").click().type("{enter}")
     cy.get("body").click().type("{enter}")
   })

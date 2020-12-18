@@ -12,38 +12,32 @@ describe("Paste Image URLs", () => {
       .type("English", { force: true })
       .type("{enter}")
     cy.contains("New File").click()
-  })
 
-  it("should be able to open paste", () => {
+    cy.log("should be able to open paste")
     cy.get("#tab-samples").click()
     cy.contains("Import").click()
     cy.contains("Paste URLs").click()
-  })
 
-  it("should be able to paste image urls", () => {
+    cy.log("should be able to paste image urls")
     const imagesWithNewLines = imageUrls.join("{enter}")
     cy.get("textarea").type(imagesWithNewLines)
-  })
 
-  it("should be able to add that samples", () => {
+    cy.log("should be able to add that samples")
     cy.contains("Auto Detect File Type").click({ force: true })
     cy.contains("Image URLs").click({ force: true })
     cy.contains("Add Samples").click()
-  })
 
-  it("should be able to go to setup", () => {
+    cy.log("should be able to go to setup")
     cy.get("#tab-setup").click()
-  })
 
-  it("should be able to go to Image Classification", () => {
+    cy.log("should be able to go to Image Classification")
     cy.contains("Image Classification").click()
-  })
 
-  it("should be able to see samples", () => {
+    cy.log("should be able to see samples")
     cy.get("#tab-samples").click()
     cy.contains("2").click()
-  })
-  it("should be able to label image", () => {
+
+    cy.log("should be able to label image")
     cy.get("body").click().type("{enter}")
     cy.get("body").click().type("{enter}")
   })
