@@ -18,7 +18,7 @@ import BadDataset from "../BadDataset"
 import Button from "@material-ui/core/Button"
 import { useTranslation } from "react-i18next"
 
-export const UniversalSampleViewer = ({
+export const UniversalSampleEditor = ({
   interface: iface,
   sample,
   onExit,
@@ -222,4 +222,4 @@ export const UniversalSampleViewer = ({
   }
 }
 
-export default UniversalSampleViewer
+export default UniversalSampleEditor

@@ -31,7 +31,6 @@ const deps = [
   "styled-components",
   "use-event-callback",
   "material-survey",
-  "react",
   "react-markdown",
   "react-nlp-annotate",
   "spelling",
