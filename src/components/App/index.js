@@ -52,6 +52,7 @@ export default () => {
         "Are you sure you want to leave this dataset? Changes may not be saved!"
       )
     ) {
+      window.history.replaceState(null, null, `?`)
       setDatasetManager(null)
     }
   })

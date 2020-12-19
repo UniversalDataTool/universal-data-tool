@@ -17,6 +17,7 @@ import UniversalSampleEditor from "../UniversalSampleEditor"
 import DatasetJSONEditor from "../DatasetJSONEditor"
 import useInterface from "../../hooks/use-interface"
 import useSample from "../../hooks/use-sample"
+import Protip from "./Protip"
 
 const noop = () => {}
 
@@ -52,12 +53,17 @@ export default ({ onClearLabelData }) => {
         />
       )}
       {currentTab === "configure" && (
-        <ConfigureInterface
-          key="configureInterface"
-          interface={iface}
-          onChange={updateInterface}
-          isNotNested
-        />
+        <>
+          <ConfigureInterface
+            key="configureInterface"
+            interface={iface}
+            onChange={updateInterface}
+            isNotNested
+          />
+          <Box textAlign="center">
+            <Protip tip="All done? Try clicking the Samples icon on the dark sidebar on the left to import samples!" />
+          </Box>
+        </>
       )}
       {currentTab === "preview" && (
         <UniversalSampleEditor
