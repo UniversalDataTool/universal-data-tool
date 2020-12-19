@@ -66,6 +66,11 @@ const useStyles = makeStyles((theme) => ({
   tab: {
     color: "#000",
     "& .icon": {},
+    "&.Mui-selected": {
+      "& .icon": {
+        color: colors.blue[500],
+      },
+    },
   },
   fullHeightTab: {
     ...theme.mixins.toolbar,
