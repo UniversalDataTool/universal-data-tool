@@ -3,7 +3,7 @@ on: ["pull_request"]
 jobs:
   iscodeclean:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
-    name: Test
+    name: Code Cleanliness
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout
@@ -21,6 +21,7 @@ jobs:
           npm install
           npm run test:lint
   cypress-run:
+    name: Cypress Integration Tests (Browser Tests)
     needs: iscodeclean
     runs-on: ubuntu-16.04
     steps:
@@ -33,7 +34,7 @@ jobs:
         with:
           start: npm run start
           wait-on: http://localhost:6001
+          wait-on-timeout: 120
           record: true
-          config: pageLoadTimeout=120000
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
