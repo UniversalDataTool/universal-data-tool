@@ -17,6 +17,7 @@ import UniversalSampleEditor from "../UniversalSampleEditor"
 import DatasetJSONEditor from "../DatasetJSONEditor"
 import useInterface from "../../hooks/use-interface"
 import useSample from "../../hooks/use-sample"
+import Protip from "./Protip"
 
 const noop = () => {}
 
@@ -31,8 +32,18 @@ export default ({ onClearLabelData }) => {
       <Box padding="8px" paddingBottom="0px">
         <Tabs value={currentTab} onChange={(e, newTab) => setTab(newTab)}>
           <Tab icon={<CategoryIcon />} label="Data Type" value="datatype" />
-          <Tab icon={<BuildIcon />} label="Configure" value="configure" />
-          <Tab icon={<LiveTvIcon />} label="Preview" value="preview" />
+          <Tab
+            disabled={!iface?.type}
+            icon={<BuildIcon />}
+            label="Configure"
+            value="configure"
+          />
+          <Tab
+            disabled={!iface?.type}
+            icon={<LiveTvIcon />}
+            label="Preview"
+            value="preview"
+          />
           <Tab icon={<CodeIcon />} label="JSON" value="json" />
           <Tab
             icon={<DeveloperBoardIcon />}
@@ -52,12 +63,17 @@ export default ({ onClearLabelData }) => {
         />
       )}
       {currentTab === "configure" && (
-        <ConfigureInterface
-          key="configureInterface"
-          interface={iface}
-          onChange={updateInterface}
-          isNotNested
-        />
+        <>
+          <ConfigureInterface
+            key="configureInterface"
+            interface={iface}
+            onChange={updateInterface}
+            isNotNested
+          />
+          <Box textAlign="center">
+            <Protip tip="All done? Try clicking the Samples icon on the dark sidebar on the left to import samples!" />
+          </Box>
+        </>
       )}
       {currentTab === "preview" && (
         <UniversalSampleEditor

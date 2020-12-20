@@ -31,7 +31,6 @@ const deps = [
   "styled-components",
   "use-event-callback",
   "material-survey",
-  "react",
   "react-markdown",
   "react-nlp-annotate",
   "spelling",
@@ -62,6 +61,7 @@ fs.writeFileSync(
         originalPackageJSON.dependencies
       ),
       dependencies: newDependencies,
+      main: "components/UniversalSampleEditor/index.js",
     }),
     null,
     "  "

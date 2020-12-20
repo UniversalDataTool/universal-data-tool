@@ -17,10 +17,10 @@ import useAuth from "../../utils/auth-handlers/use-auth.js"
 import SlackIcon from "./SlackIcon"
 import { useTranslation } from "react-i18next"
 import classnames from "classnames"
-import { colors } from "@material-ui/core"
+import { colors, Tooltip } from "@material-ui/core"
 import ExitToAppIcon from "@material-ui/icons/ExitToApp"
-import Tooltip from "@material-ui/core/Tooltip"
 import DownloadButton from "../DownloadButton"
+import PowerIcon from "@material-ui/icons/Power"
 
 const capitalize = (s) => {
   return s.charAt(0).toUpperCase() + s.slice(1)
@@ -29,17 +29,22 @@ const capitalize = (s) => {
 const useStyles = makeStyles((theme) => ({
   container: {
     paddingTop: 0,
-    flexShrink: 0,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     width: 72,
     height: "100vh",
-    "&.hasTabTitle": {
-      paddingBottom: 42,
-    },
     boxSizing: "border-box",
+    position: "fixed",
+    zIndex: 10,
+    top: 0,
+    left: 0,
     backgroundColor: colors.grey[900],
+  },
+  fakeContainer: {
+    flexShrink: 0,
+    width: 72,
+    height: "100vh",
   },
   belowTabButtons: {
     flexGrow: 1,
@@ -66,6 +71,11 @@ const useStyles = makeStyles((theme) => ({
   tab: {
     color: "#000",
     "& .icon": {},
+    "&.Mui-selected": {
+      "& .icon": {
+        color: colors.blue[500],
+      },
+    },
   },
   fullHeightTab: {
     ...theme.mixins.toolbar,
@@ -86,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const getIcon = (t) => {
+const getIcon = (t, tooltip) => {
   switch (t) {
     case "Setup":
       return <SettingsIcon className="icon" />
@@ -121,6 +131,7 @@ const HeaderToolbar = ({
   isSmall,
   authConfig,
   changeLoginDrawerOpen,
+  onClickManagePlugins,
   collaborateError,
   isWelcomePage,
 }) => {
@@ -129,99 +140,109 @@ const HeaderToolbar = ({
   const { t } = useTranslation()
 
   return (
-    <div
-      className={classnames(c.container, { hasTabTitle: Boolean(currentTab) })}
-    >
-      {/* {!isDesktop && (
-        <IconButton onClick={onOpenDrawer} className={c.headerButton}>
-          <MenuIcon />
+    <>
+      <div className={c.fakeContainer} />
+      <div className={classnames(c.container)}>
+        <div className={c.tabContainer}>
+          {tabs.length > 0 && (
+            <Tabs
+              orientation="vertical"
+              onChange={(e, newTab) => onChangeTab(newTab.toLowerCase())}
+              value={currentTab}
+            >
+              {tabs.map((name) => (
+                <Tab
+                  id={`tab-${name.toLowerCase()}`}
+                  key={name}
+                  classes={{ root: c.fullHeightTab, wrapper: c.tabWrapper }}
+                  className={c.tab}
+                  icon={
+                    <Tooltip title={t(name)} placement="right">
+                      {getIcon(name)}
+                    </Tooltip>
+                  }
+                  // label={isSmall ? "" : t}
+                  value={name.toLowerCase()}
+                />
+              ))}
+            </Tabs>
+          )}
+        </div>
+        <div className={c.belowTabButtons}>
+          {fileOpen && <InfoButton />}
+          <CollaborateButton
+            sessionBoxOpen={sessionBoxOpen}
+            changeSessionBoxOpen={changeSessionBoxOpen}
+            fileOpen={fileOpen}
+            inSession={inSession}
+            onCreateSession={onCreateSession}
+            onLeaveSession={onLeaveSession}
+            onJoinSession={onJoinSession}
+            error={collaborateError}
+          />
+          {!isDesktop && fileOpen && (
+            <DownloadButton
+              interfaceType={interfaceType}
+              onDownload={onDownload}
+            />
+          )}
+          {fileOpen && (
+            <BrushButton
+              selectedBrush={selectedBrush}
+              onChangeSelectedBrush={onChangeSelectedBrush}
+            />
+          )}
+          {additionalButtons}
+          {authProvider !== "none" && !isLoggedIn && (
+            <Button
+              onClick={() => {
+                changeLoginDrawerOpen(true)
+              }}
+              className={c.headerButton}
+            >
+              {t("login-with")} {capitalize(authProvider)}
+            </Button>
+          )}
+          {isLoggedIn && (
+            <Button onClick={logout} className={c.headerButton}>
+              {t("logout")}
+            </Button>
+          )}
+        </div>
+        {isWelcomePage && (
+          <Tooltip placement="right" title={t("Manage Plugins")}>
+            <IconButton
+              onClick={onClickManagePlugins}
+              className={c.headerButton}
+            >
+              <PowerIcon />
+            </IconButton>
+          </Tooltip>
+        )}
+        {!isWelcomePage && (
+          <Tooltip placement="right" title={t("Exit to Welcome Page")}>
+            <IconButton onClick={onClickHome} className={c.headerButton}>
+              <ExitToAppIcon style={{ transform: "rotate(180deg)" }} />
+            </IconButton>
+          </Tooltip>
+        )}
+        <IconButton
+          href="https://github.com/UniversalDataTool/universal-data-tool"
+          className={c.headerButton}
+          target="_blank"
+        >
+          <GithubIcon />
         </IconButton>
-      )} */}
-      <div className={c.tabContainer}>
-        {tabs.length > 0 && (
-          <Tabs
-            orientation="vertical"
-            onChange={(e, newTab) => onChangeTab(newTab.toLowerCase())}
-            value={currentTab}
-          >
-            {tabs.map((t) => (
-              <Tab
-                id={`tab-${t.toLowerCase()}`}
-                key={t}
-                classes={{ root: c.fullHeightTab, wrapper: c.tabWrapper }}
-                className={c.tab}
-                icon={getIcon(t)}
-                // label={isSmall ? "" : t}
-                value={t.toLowerCase()}
-              />
-            ))}
-          </Tabs>
-        )}
-      </div>
-      <div className={c.belowTabButtons}>
-        {fileOpen && <InfoButton />}
-        <CollaborateButton
-          sessionBoxOpen={sessionBoxOpen}
-          changeSessionBoxOpen={changeSessionBoxOpen}
-          fileOpen={fileOpen}
-          inSession={inSession}
-          onCreateSession={onCreateSession}
-          onLeaveSession={onLeaveSession}
-          onJoinSession={onJoinSession}
-          error={collaborateError}
-        />
-        {!isDesktop && fileOpen && (
-          <DownloadButton
-            interfaceType={interfaceType}
-            onDownload={onDownload}
-          />
-        )}
-        {fileOpen && (
-          <BrushButton
-            selectedBrush={selectedBrush}
-            onChangeSelectedBrush={onChangeSelectedBrush}
-          />
-        )}
-        {additionalButtons}
-        {authProvider !== "none" && !isLoggedIn && (
-          <Button
-            onClick={() => {
-              changeLoginDrawerOpen(true)
-            }}
+        {!isSmall && isWelcomePage && (
+          <IconButton
+            href="https://join.slack.com/t/universaldatatool/shared_invite/zt-d8teykwi-iOSOUfxugKR~M4AJN6VL3g"
             className={c.headerButton}
           >
-            {t("login-with")} {capitalize(authProvider)}
-          </Button>
-        )}
-        {isLoggedIn && (
-          <Button onClick={logout} className={c.headerButton}>
-            {t("logout")}
-          </Button>
+            <SlackIcon />
+          </IconButton>
         )}
       </div>
-      {!isWelcomePage && (
-        <Tooltip placement="right" title={t("Exit to Welcome Page")}>
-          <IconButton onClick={onClickHome} className={c.headerButton}>
-            <ExitToAppIcon style={{ transform: "rotate(180deg)" }} />
-          </IconButton>
-        </Tooltip>
-      )}
-      <IconButton
-        href="https://github.com/UniversalDataTool/universal-data-tool"
-        className={c.headerButton}
-        target="_blank"
-      >
-        <GithubIcon />
-      </IconButton>
-      {!isSmall && isWelcomePage && (
-        <IconButton
-          href="https://join.slack.com/t/universaldatatool/shared_invite/zt-d8teykwi-iOSOUfxugKR~M4AJN6VL3g"
-          className={c.headerButton}
-        >
-          <SlackIcon />
-        </IconButton>
-      )}
-    </div>
+    </>
   )
 }
 

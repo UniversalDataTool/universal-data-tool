@@ -60,14 +60,16 @@ export default ({ iface, onChange }) => {
     [iface]
   )
   return (
-    <Survey
-      noActions
-      variant="flat"
-      defaultAnswers={defaultAnswers}
-      onQuestionChange={(questionId, newValue, answers) => {
-        onChange(setIn(iface, [questionId], newValue))
-      }}
-      form={form}
-    />
+    <div style={{ display: "block" }}>
+      <Survey
+        noActions
+        variant="flat"
+        defaultAnswers={defaultAnswers}
+        onQuestionChange={(questionId, newValue, answers) => {
+          onChange(setIn(iface, [questionId], newValue))
+        }}
+        form={form}
+      />
+    </div>
   )
 }
