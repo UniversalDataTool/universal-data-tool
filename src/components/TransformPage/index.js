@@ -99,16 +99,18 @@ export default () => {
         >
           Remove Invalid Samples
         </Button>
-        {plugins.map((plugin) => (
-          <Button
-            key={plugin.name}
-            Icon1={PeopleAltIcon}
-            Icon2={PeopleAltIcon}
-            onClick={() => setOpenPlugin(plugin)}
-          >
-            {plugin.name}
-          </Button>
-        ))}
+        {plugins
+          .filter((plugin) => plugin.type === "transform")
+          .map((plugin) => (
+            <Button
+              key={plugin.name}
+              Icon1={PeopleAltIcon}
+              Icon2={PeopleAltIcon}
+              onClick={() => setOpenPlugin(plugin)}
+            >
+              {plugin.name}
+            </Button>
+          ))}
         {openPlugin && (
           <PluginDialog
             open={Boolean(openPlugin)}

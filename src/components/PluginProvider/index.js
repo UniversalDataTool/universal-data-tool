@@ -17,6 +17,9 @@ export default () => {
   const { addToast } = useToasts()
 
   useEffect(() => {
+    let pluginChangeWatcherInterval
+    const lastReloadTime = new Date().toGMTString()
+    const pluginUrlsToWatch = []
     async function loadPlugins() {
       const pluginUrls = (fromConfig("pluginUrls") || "")
         .split("\n")
@@ -31,21 +34,45 @@ export default () => {
             importPlugins,
             interfacePlugins,
             authenticationPlugins,
+            tabPlugins,
+            autoReload,
           } = (await import(/* webpackIgnore: true */ pluginUrl)).default()
 
           plugins.push(
-            ...transformPlugins.map((p) => ({ ...p, type: "transform" }))
+            ...transformPlugins.map((p) => ({
+              ...p,
+              type: "transform",
+              pluginUrl,
+            }))
           )
-          plugins.push(...importPlugins.map((p) => ({ ...p, type: "import" })))
           plugins.push(
-            ...interfacePlugins.map((p) => ({ ...p, type: "interface" }))
+            ...importPlugins.map((p) => ({ ...p, type: "import", pluginUrl }))
+          )
+          plugins.push(
+            ...interfacePlugins.map((p) => ({
+              ...p,
+              type: "interface",
+              pluginUrl,
+            }))
           )
           plugins.push(
             ...authenticationPlugins.map((p) => ({
               ...p,
               type: "authentication",
+              pluginUrl,
             }))
           )
+          plugins.push(
+            ...tabPlugins.map((p) => ({
+              ...p,
+              type: "tab",
+              pluginUrl,
+            }))
+          )
+
+          if (autoReload) {
+            pluginUrlsToWatch.push(pluginUrl)
+          }
         } catch (e) {
           // TODO display broken plugin more nicely, using regex extraction of
           // package and version
@@ -56,8 +83,19 @@ export default () => {
         }
       }
       setPlugins(plugins)
+
+      if (pluginUrlsToWatch.length > 0) {
+        pluginChangeWatcherInterval = setInterval(() => {
+          // TODO check for 304s against the plugin and reload if necessary
+        }, 1000)
+      }
     }
     loadPlugins()
+
+    return () => {
+      clearInterval(pluginChangeWatcherInterval)
+    }
+
     // eslint-disable-next-line
   }, [fromConfig("pluginUrls")])
 }
