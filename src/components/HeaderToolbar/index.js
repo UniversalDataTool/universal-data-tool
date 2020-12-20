@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
     boxSizing: "border-box",
     position: "fixed",
+    zIndex: 10,
     top: 0,
     left: 0,
     backgroundColor: colors.grey[900],
