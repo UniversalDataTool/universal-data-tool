@@ -10,6 +10,6 @@ describe("Create and Visit Collaborative Session", () => {
       .type("{enter}")
     cy.contains("New File").click()
   })
-  clickOn100SamplesInACollaborativeSession()
   createAndVisitCollaborativeSession()
+  clickOn100SamplesInACollaborativeSession()
 })

@@ -32,8 +32,18 @@ export default ({ onClearLabelData }) => {
       <Box padding="8px" paddingBottom="0px">
         <Tabs value={currentTab} onChange={(e, newTab) => setTab(newTab)}>
           <Tab icon={<CategoryIcon />} label="Data Type" value="datatype" />
-          <Tab icon={<BuildIcon />} label="Configure" value="configure" />
-          <Tab icon={<LiveTvIcon />} label="Preview" value="preview" />
+          <Tab
+            disabled={!iface?.type}
+            icon={<BuildIcon />}
+            label="Configure"
+            value="configure"
+          />
+          <Tab
+            disabled={!iface?.type}
+            icon={<LiveTvIcon />}
+            label="Preview"
+            value="preview"
+          />
           <Tab icon={<CodeIcon />} label="JSON" value="json" />
           <Tab
             icon={<DeveloperBoardIcon />}
