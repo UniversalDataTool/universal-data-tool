@@ -5,5 +5,5 @@
   "baseUrl": "http://localhost:6001",
   "execTimeout": 60000,
   "requestTimeout": 60000,
-  "responseTimeout": 30000
+  "responseTimeout": 60000
 }
