@@ -21,6 +21,7 @@ import { colors, Tooltip } from "@material-ui/core"
 import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import DownloadButton from "../DownloadButton"
 import PowerIcon from "@material-ui/icons/Power"
+import RateReviewIcon from "@material-ui/icons/RateReview"
 
 const capitalize = (s) => {
   return s.charAt(0).toUpperCase() + s.slice(1)
@@ -104,6 +105,8 @@ const getIcon = (t, tooltip) => {
       return <BorderColorIcon className="icon" />
     case "Samples":
       return <AppsIcon className="icon" />
+    case "Review":
+      return <RateReviewIcon className="icon" />
     default:
       return <div></div>
   }
@@ -161,10 +164,21 @@ const HeaderToolbar = ({
                       {getIcon(name)}
                     </Tooltip>
                   }
-                  // label={isSmall ? "" : t}
                   value={name.toLowerCase()}
                 />
               ))}
+              <Tab
+                id={`tab-review`}
+                key="review"
+                classes={{ root: c.fullHeightTab, wrapper: c.tabWrapper }}
+                className={c.tab}
+                icon={
+                  <Tooltip title={"review"} placement="right">
+                    {getIcon("Review")}
+                  </Tooltip>
+                }
+                value={"review".toLowerCase()}
+              />
             </Tabs>
           )}
         </div>

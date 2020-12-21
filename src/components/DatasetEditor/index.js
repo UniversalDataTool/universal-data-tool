@@ -19,6 +19,7 @@ import { useHotkeyStorage } from "../HotkeyStorage"
 import useInterface from "../../hooks/use-interface"
 import useSummary from "../../hooks/use-summary"
 import useRemoveSamples from "../../hooks/use-remove-samples"
+import ReviewPluginContent from "../ReviewPluginContent"
 
 import "brace/mode/javascript"
 import "brace/theme/github"
@@ -166,6 +167,7 @@ export default ({
                 onClickSetup={() => changeMode("setup")}
               />
             )}
+            {mode === "review" && <ReviewPluginContent />}
           </div>
         </HeaderWithContainer>
       </div>
