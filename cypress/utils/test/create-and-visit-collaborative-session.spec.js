@@ -9,7 +9,7 @@ const createAndVisitCollaborativeSession = () => {
 
     cy.log("should be able to create new session")
     cy.get("div[title='collaborate-icon']").click()
-    cy.contains("Create New Session").click()
+    cy.contains("Create New Session", { timeout: 5000 }).click()
     cy.contains("Leave Session", { timeout: 10000 })
     cy.get("div[title='collaborate-icon']").trigger("mouseleave")
 
