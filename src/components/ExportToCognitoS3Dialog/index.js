@@ -5,8 +5,14 @@ import useActiveDatasetManager from "../../hooks/use-active-dataset-manager"
 import isEmpty from "lodash/isEmpty"
 import datasetManagerCognito from "udt-dataset-managers/dist/CognitoDatasetManager"
 import useAuth from "../../utils/auth-handlers/use-auth"
-import { TextField, Grid } from "@material-ui/core"
+import { TextField, Grid, IconButton } from "@material-ui/core"
 import WarningHeader from "./warning-header"
+import initConfigExport from "./init-config-export"
+import SettingDialog from "./interface-setting-export.js"
+import {
+  Settings as SettingsIcon,
+  Storage as StorageIcon,
+} from "@material-ui/icons/"
 
 const expandedAnnotationsColumns = [
   { name: "Annotations", selector: "annotation" },
@@ -63,6 +69,7 @@ export default ({ open, onClose }) => {
   const [nameProjectExist, setNameProjectExist] = useState(false)
   const [currentDataset, setCurrentDataset] = useState()
   const [refreshInterface, setRefreshInterface] = useState(false)
+  const [configExport, setConfigExport] = useState(initConfigExport)
 
   const getCurrentDataset = async () => {
     if (currentDataset) return currentDataset
@@ -165,13 +172,13 @@ export default ({ open, onClose }) => {
     >
       {
         <Grid container spacing={0}>
-          <Grid container item xs={12} spacing={0} justify="center">
+          <Grid container item xs={12} spacing={-1} justify="center">
             <WarningHeader
               nameProjectToCreate={nameProjectToCreate}
               nameProjectExist={nameProjectExist}
             />
           </Grid>
-          <Grid container item xs={12} spacing={0} justify="center">
+          <Grid container item xs={12} spacing={-1} justify="center">
             <TextField
               id="ProjectName"
               label="Project Name"
@@ -181,21 +188,42 @@ export default ({ open, onClose }) => {
               }}
               value={nameProjectToCreate}
             />
+            <IconButton
+              onClick={() => {
+                setConfigExport({
+                  ...configExport,
+                  contentDialogBoxIsSetting: !configExport.contentDialogBoxIsSetting,
+                })
+              }}
+            >
+              {configExport.contentDialogBoxIsSetting ? (
+                <StorageIcon id="StorageIcon" />
+              ) : (
+                <SettingsIcon id="SettingIcon" />
+              )}
+            </IconButton>
           </Grid>
-          <Grid container item xs={12} spacing={0} justify="center">
-            {!isEmpty(projects) && (
-              <DataTable
-                expandableRows
-                expandableRowsComponent={<ExpandedRow />}
-                dense
-                noHeader
-                noTableHead
-                columns={columns}
-                selectableRowSelected={(row) => row.isSelected}
-                data={projects}
-                pagination={projects.length > 10}
-                paginationPerPage={10}
-                paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
+          <Grid container item xs={12} spacing={-1} justify="center">
+            {!configExport.contentDialogBoxIsSetting ? (
+              !isEmpty(projects) && (
+                <DataTable
+                  expandableRows
+                  expandableRowsComponent={<ExpandedRow />}
+                  dense
+                  noHeader
+                  noTableHead
+                  columns={columns}
+                  selectableRowSelected={(row) => row.isSelected}
+                  data={projects}
+                  pagination={projects.length > 10}
+                  paginationPerPage={10}
+                  paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
+                />
+              )
+            ) : (
+              <SettingDialog
+                configExport={configExport}
+                setConfigExport={setConfigExport}
               />
             )}
           </Grid>

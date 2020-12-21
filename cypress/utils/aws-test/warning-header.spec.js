@@ -1,9 +1,7 @@
 const warningHeader = () => {
-  it("Warning project name not set", () =>{
+  it("Warning project name not set", () => {
     cy.contains("Export to S3 (Cognito)").click()
-    cy.contains(
-      "Warning : Please enter a project name."
-    )
+    cy.contains("Warning : Please enter a project name.")
     cy.contains("Close").click()
   })
   it("Warning project already exist", () => {
