@@ -74,6 +74,25 @@ export const Header = ({
     setActiveDatasetManager(newDM)
   })
 
+  const onJoinSession = useEventCallback(async (sessionId) => {
+    const sessionUrl = new URL(sessionId)
+    async function goIntoCollaborativeSession(sessionId) {
+      const dm = new CollaborativeDatasetManager({
+        serverUrl: fromConfig("collaborationServer.url"),
+      })
+      await dm.loadSession(sessionId)
+      window.history.replaceState(
+        null,
+        null,
+        `?s=${encodeURIComponent(dm.sessionId)}`
+      )
+      setActiveDatasetManager(dm)
+    }
+    if (sessionUrl.searchParams.get("s")) {
+      goIntoCollaborativeSession(sessionUrl.searchParams.get("s"))
+    }
+  })
+
   const onLeaveSession = useEventCallback(async () => {
     if (dm) {
       const ds = await dm.getDataset()
@@ -95,6 +114,7 @@ export const Header = ({
         isSmall={isSmall}
         {...headerContext}
         inSession={dm && dm.type === "collaborative-session"}
+        onJoinSession={onJoinSession}
         onCreateSession={onCreateSession}
         onLeaveSession={onLeaveSession}
         changeLoginDrawerOpen={changeLoginDrawerOpen}

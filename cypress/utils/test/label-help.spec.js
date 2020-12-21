@@ -1,8 +1,5 @@
-import setLanguage from "../utils/set-language.spec"
-describe("Create a Label Help ", () => {
-  it("should be able to use label help", () => {
-    cy.visit("/")
-    setLanguage()
+const labelHelp = () => {
+  it("Should be able to use label help", () => {
     cy.contains("Start from Template").click()
     cy.contains("Image Classification").click()
     cy.get("#tab-samples").click()
@@ -17,6 +14,9 @@ describe("Create a Label Help ", () => {
       "7d773e8566102c1f971e1b52254e1749"
     )
     cy.contains("Save").click()
+    cy.wait(1000)
     cy.contains("Start Label Help").click()
   })
-})
+}
+
+export default labelHelp

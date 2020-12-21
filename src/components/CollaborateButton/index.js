@@ -15,6 +15,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import CircularProgress from "@material-ui/core/CircularProgress"
 import usePosthog from "../../hooks/use-posthog"
 import HeaderPopupBox from "../HeaderPopupBox"
+import useActiveDatasetManager from "../../hooks/use-active-dataset-manager"
 
 import { useTranslation } from "react-i18next"
 
@@ -62,6 +63,13 @@ export default ({
 
   // internalization hook
   const { t } = useTranslation()
+
+  const [dm] = useActiveDatasetManager()
+
+  let shareUrl
+  if (dm?.type === "collaborative-session") {
+    shareUrl = `${window.location.origin}?s=${dm.sessionId}`
+  }
 
   useEffect(() => {
     if (loadingSession) {
@@ -129,6 +137,13 @@ export default ({
           </>
         ) : (
           <>
+            <TextField
+              style={{ marginTop: 12 }}
+              readOnly
+              variant="outlined"
+              label="Share Link"
+              value={shareUrl}
+            />
             <TextField
               style={{ marginTop: 12 }}
               variant="outlined"

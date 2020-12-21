@@ -18,13 +18,16 @@ import BadDataset from "../BadDataset"
 import Button from "@material-ui/core/Button"
 import { useTranslation } from "react-i18next"
 
-export const UniversalSampleViewer = ({
+export const UniversalSampleEditor = ({
   interface: iface,
   sample,
   onExit,
   loading,
   onRemoveSample,
   hideHeader,
+  hideHeaderText,
+  hideNext,
+  hidePrev,
   hideDescription,
   disableHotkeys = false,
   title,
@@ -39,6 +42,9 @@ export const UniversalSampleViewer = ({
   const containerProps = useMemo(
     () => ({
       hideHeader,
+      hideHeaderText,
+      hideNext,
+      hidePrev,
       hideDescription,
       title,
       onExit,
@@ -49,6 +55,9 @@ export const UniversalSampleViewer = ({
     }),
     [
       hideHeader,
+      hideHeaderText,
+      hideNext,
+      hidePrev,
       hideDescription,
       title,
       height,
@@ -213,4 +222,4 @@ export const UniversalSampleViewer = ({
   }
 }
 
-export default UniversalSampleViewer
+export default UniversalSampleEditor

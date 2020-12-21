@@ -6,10 +6,11 @@ import * as colors from "@material-ui/core/colors"
 
 const Container = styled("div")({
   padding: 24,
+  boxSizing: "border-box",
   "&.emptyState": {
     textAlign: "center",
     backgroundColor: colors.blue[800],
-    minHeight: "71vh",
+    minHeight: "85vh",
     padding: 64,
     "& .bigText": {
       textAlign: "left",

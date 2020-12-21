@@ -1,11 +1,6 @@
-import setLanguage from "../utils/set-language.spec"
-describe("Create a new file in the universal data tool", () => {
-  it("should be able to create a new file", () => {
-    cy.visit("/")
-    setLanguage()
+const createNewFile = () => {
+  it("Should be able to select all the interfaces", () => {
     cy.contains("New File").click()
-  })
-  it("should be able to select all the interfaces", () => {
     cy.contains("Image Segmentation").click()
     cy.wait(200)
     cy.matchImageSnapshot("image_segmentation", {
@@ -56,4 +51,5 @@ describe("Create a new file in the universal data tool", () => {
       failureThresholdType: "percent",
     })
   })
-})
+}
+export default createNewFile

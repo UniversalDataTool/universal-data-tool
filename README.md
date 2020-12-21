@@ -124,6 +124,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://www.behance.net/MiguelCarvalho13"><img src="https://avatars2.githubusercontent.com/u/6718302?v=4" width="100px;" alt=""/><br /><sub><b>Miguel Carvalho</b></sub></a><br /><a href="#translation-miguelcarvalho13" title="Translation">🌍</a></td>
     <td align="center"><a href="https://kyleo.io"><img src="https://avatars2.githubusercontent.com/u/27719893?v=4" width="100px;" alt=""/><br /><sub><b>Kyle OBrien</b></sub></a><br /><a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=obrien-k" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/hakkiyagiz"><img src="https://avatars2.githubusercontent.com/u/12295562?v=4" width="100px;" alt=""/><br /><sub><b>Hakkı Yağız ERDİNÇ</b></sub></a><br /><a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=hakkiyagiz" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/jvdavim"><img src="https://avatars2.githubusercontent.com/u/16657663?v=4" width="100px;" alt=""/><br /><sub><b>João Victor Davim</b></sub></a><br /><a href="https://github.com/UniversalDataTool/universal-data-tool/commits?author=jvdavim" title="Code">💻</a></td>
   </tr>
 </table>
 
