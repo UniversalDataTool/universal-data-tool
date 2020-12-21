@@ -9,7 +9,7 @@ import pasteImageUrls from "../utils/test/paste-image-urls.spec"
 import textEntityClassification from "../utils/test/text-entity-classification.spec"
 Cypress.config("defaultCommandTimeout", 3000)
 describe("Udt test", () => {
-  before("Prepare test", () => {
+  beforeEach("Prepare test", () => {
     cy.visit(`http://localhost:6001`)
     cy.get('input[id="react-select-2-input"]')
       .focus()
@@ -25,8 +25,4 @@ describe("Udt test", () => {
   pasteImageUrlsWithCSV()
   pasteImageUrls()
   textEntityClassification()
-
-  afterEach("Return home page", () => {
-    cy.get("button[title='Exit to Welcome Page']").click()
-  })
 })
