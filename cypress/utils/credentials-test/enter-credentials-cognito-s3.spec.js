@@ -24,24 +24,24 @@ const enterCredentialsCognitoS3 = () => {
     .focus()
     .type(Cypress.env().COGNITO_USER_PASS_LENGTH)
   if (Cypress.env().COGNITO_USER_PASS_REQUIRE_LOWERCASE === "TRUE") {
-    cy.get('input[class="PrivateSwitchBase-input-62"]').eq(0).click()
+    cy.get("div[class='sc-bdVaJa MFCMP']").eq(0).click()
   } else {
-    cy.get('input[class="PrivateSwitchBase-input-62"]').eq(1).click()
+    cy.get("div[class='sc-bdVaJa MFCMP']").eq(1).click()
   }
   if (Cypress.env().COGNITO_USER_PASS_REQUIRE_UPPERCASE === "TRUE") {
-    cy.get('input[class="PrivateSwitchBase-input-62"]').eq(2).click()
+    cy.get("div[class='sc-bdVaJa MFCMP']").eq(2).click()
   } else {
-    cy.get('input[class="PrivateSwitchBase-input-62"]').eq(3).click()
+    cy.get("div[class='sc-bdVaJa MFCMP']").eq(3).click()
   }
   if (Cypress.env().COGNITO_USER_PASS_REQUIRE_NUMBER === "TRUE") {
-    cy.get('input[class="PrivateSwitchBase-input-62"]').eq(4).click()
+    cy.get("div[class='sc-bdVaJa MFCMP']").eq(4).click()
   } else {
-    cy.get('input[class="PrivateSwitchBase-input-62"]').eq(5).click()
+    cy.get("div[class='sc-bdVaJa MFCMP']").eq(5).click()
   }
   if (Cypress.env().COGNITO_USER_PASS_REQUIRE_SYMBOL === "TRUE") {
-    cy.get('input[class="PrivateSwitchBase-input-62"]').eq(6).click()
+    cy.get("div[class='sc-bdVaJa MFCMP']").eq(6).click()
   } else {
-    cy.get('input[class="PrivateSwitchBase-input-62"]').eq(7).click()
+    cy.get("div[class='sc-bdVaJa MFCMP']").eq(7).click()
   }
 }
 

@@ -1,4 +1,3 @@
-import setLanguage from "../utils/set-language.spec"
 const imageUrls = [
   "https://wao.ai/app/api/download/fef3ee4d-f841-42f5-ba22-a7c8eb214628",
   "https://wao.ai/app/api/download/f80f660f-6641-4241-9c9d-7c3ac26c5a17",
