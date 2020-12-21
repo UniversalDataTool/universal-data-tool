@@ -6,7 +6,7 @@ import isEmpty from "lodash/isEmpty"
 import datasetManagerCognito from "udt-dataset-managers/dist/CognitoDatasetManager"
 import useAuth from "../../utils/auth-handlers/use-auth"
 import { TextField, Grid } from "@material-ui/core"
-const orangeText = { color: "orange", textAlign: "center" }
+import WarningHeader from "./warning-header"
 
 const expandedAnnotationsColumns = [
   { name: "Annotations", selector: "annotation" },
@@ -74,7 +74,12 @@ export default ({ open, onClose }) => {
   const getProjectName = () => {
     if (!currentDataset) return
     if (!currentDataset.name) return
+    if (currentDataset.name === "New undefined Dataset") {
+      setNameProjectToCreate("")
+      return ""
+    }
     setNameProjectToCreate(currentDataset.name)
+    console.log(nameProjectToCreate)
     return currentDataset.name
   }
 
@@ -161,14 +166,10 @@ export default ({ open, onClose }) => {
       {
         <Grid container spacing={0}>
           <Grid container item xs={12} spacing={0} justify="center">
-            {nameProjectExist ? (
-              <p style={orangeText}>
-                Warning : This project name already exist. If you continue the
-                existing project with the same name will be replaced
-              </p>
-            ) : (
-              <p></p>
-            )}
+            <WarningHeader
+              nameProjectToCreate={nameProjectToCreate}
+              nameProjectExist={nameProjectExist}
+            />
           </Grid>
           <Grid container item xs={12} spacing={0} justify="center">
             <TextField
