@@ -32,8 +32,7 @@ const sidebarItems = [
 ]
 
 export const Review = () => {
-  // const [selectedItem, setSelectedItem] = useState("All Samples")
-  const [selectedItem, setSelectedItem] = useState("Sample 3")
+  const [selectedItem, setSelectedItem] = useState("All Samples")
   return (
     <SimpleSidebar
       sidebarItems={sidebarItems.concat(
