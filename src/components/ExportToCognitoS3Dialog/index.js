@@ -9,6 +9,7 @@ import { TextField, Grid, IconButton } from "@material-ui/core"
 import WarningHeader from "./warning-header"
 import initConfigExport from "./init-config-export"
 import SettingDialog from "./interface-setting-export.js"
+import createAssets from "./create-assets"
 import {
   Settings as SettingsIcon,
   Storage as StorageIcon,
@@ -68,13 +69,11 @@ export default ({ open, onClose }) => {
   const [nameProjectToCreate, setNameProjectToCreate] = useState("")
   const [nameProjectExist, setNameProjectExist] = useState(false)
   const [currentDataset, setCurrentDataset] = useState()
-  const [refreshInterface, setRefreshInterface] = useState(false)
   const [configExport, setConfigExport] = useState(initConfigExport)
 
   const getCurrentDataset = async () => {
     if (currentDataset) return currentDataset
     setCurrentDataset(await activeDatasetManager.getDataset())
-    setRefreshInterface(true)
     return currentDataset
   }
 
@@ -86,7 +85,6 @@ export default ({ open, onClose }) => {
       return ""
     }
     setNameProjectToCreate(currentDataset.name)
-    console.log(nameProjectToCreate)
     return currentDataset.name
   }
 
@@ -129,7 +127,7 @@ export default ({ open, onClose }) => {
     getCurrentDataset()
     getProjectName()
     // eslint-disable-next-line
-  }, [open, refreshInterface])
+  }, [open])
 
   useEffect(() => {
     if (!open) return
@@ -150,6 +148,8 @@ export default ({ open, onClose }) => {
     var dataset = currentDataset
     dataset = dataset.setIn(["name"], nameProjectToCreate)
     if (nameProjectExist) await dm.removeSamplesFolder(nameProjectToCreate)
+    if (nameProjectExist && configExport.typeAssetExport==="withProxy")await dm.removeAssetsFolder(nameProjectToCreate)
+    if(configExport.typeAssetExport==="withProxy") createAssets(dataset,configExport,dm)
     await dm.setDataset(dataset)
     await activeDatasetManager.setDatasetProperty("name", nameProjectToCreate)
     await getProjects()
@@ -171,14 +171,14 @@ export default ({ open, onClose }) => {
       ]}
     >
       {
-        <Grid container spacing={0}>
-          <Grid container item xs={12} spacing={-1} justify="center">
+        <Grid container spacing={1}>
+          <Grid container item xs={12} spacing={0} justify="center">
             <WarningHeader
               nameProjectToCreate={nameProjectToCreate}
               nameProjectExist={nameProjectExist}
             />
           </Grid>
-          <Grid container item xs={12} spacing={-1} justify="center">
+          <Grid container item xs={12} spacing={0} justify="center">
             <TextField
               id="ProjectName"
               label="Project Name"
@@ -203,7 +203,7 @@ export default ({ open, onClose }) => {
               )}
             </IconButton>
           </Grid>
-          <Grid container item xs={12} spacing={-1} justify="center">
+          <Grid container item xs={12} spacing={0} justify="center">
             {!configExport.contentDialogBoxIsSetting ? (
               !isEmpty(projects) && (
                 <DataTable

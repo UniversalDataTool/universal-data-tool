@@ -11,7 +11,7 @@ import {
 const settingDialog = ({ configExport, setConfigExport }) => {
   return (
     <Grid container spacing={0}>
-      <Grid container item xs={12} spacing={0} justify="center">
+      <Grid container item xs={12} spacing={1} justify="center">
         <FormControl component="fieldset">
           <FormLabel component="legend">Assets processing</FormLabel>
           <RadioGroup
