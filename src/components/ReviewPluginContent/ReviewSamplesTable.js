@@ -72,7 +72,7 @@ const samples = [
   lastActivity: Date.now() - (i / 16) ** 2 * 3 * 1000 * 60 * 60 * 48,
 }))
 
-export const ReviewSamplesTable = ({ selectedItem }) => {
+export const ReviewSamplesTable = ({ selectedItem, onClickSample }) => {
   return (
     <>
       <Title>Samples</Title>
@@ -122,7 +122,7 @@ export const ReviewSamplesTable = ({ selectedItem }) => {
                 </TableCell>
                 <TableCell>{moment(s.lastActivity).fromNow()}</TableCell>
                 <TableCell>
-                  <Button>View</Button>
+                  <Button onClick={() => onClickSample(s)}>View</Button>
                 </TableCell>
               </TableRow>
             ))}

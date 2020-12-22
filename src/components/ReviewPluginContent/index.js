@@ -37,7 +37,7 @@ const getIcon = (s) => {
 }
 
 export const ReviewPluginContent = () => {
-  const [tab, setTab] = useState("settings")
+  const [tab, setTab] = useState("review")
   const onChangeTab = useEventCallback((e, newTab) => {
     setTab(newTab)
   })

@@ -32,18 +32,25 @@ const sidebarItems = [
 ]
 
 export const Review = () => {
-  const [selectedItem, setSelectedItem] = useState("All Samples")
+  // const [selectedItem, setSelectedItem] = useState("All Samples")
+  const [selectedItem, setSelectedItem] = useState("Sample 3")
   return (
     <SimpleSidebar
-      sidebarItems={sidebarItems}
+      sidebarItems={sidebarItems.concat(
+        [
+          selectedItem.includes("Sample ") && {
+            name: selectedItem,
+          },
+        ].filter(Boolean)
+      )}
       onSelectItem={setSelectedItem}
       selectedItem={selectedItem}
     >
       {!selectedItem.startsWith("Sample ") && (
         <ReviewSamplesTable
           selectedItem={selectedItem}
-          onClickSample={(sampleIndex) => {
-            setSelectedItem(`Sample ${sampleIndex}`)
+          onClickSample={(sample) => {
+            setSelectedItem(`Sample ${sample.index}`)
           }}
         />
       )}
