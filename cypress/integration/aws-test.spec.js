@@ -47,6 +47,8 @@ describe("Import aws test", () => {
     addAWSFile("TimeSeries.json")
     addAWSFile("DataEntry.json")
     addAWSFile("NotSupported.json")*/
+    removeAWSFile("CypressTest1")
+    removeAWSFile("CypressTest2")
   })
 
   beforeEach("Go to import page", () => {
