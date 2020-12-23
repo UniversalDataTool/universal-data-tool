@@ -26,46 +26,70 @@ const enterCredentialsCognitoS3 = () => {
   if (Cypress.env().COGNITO_USER_PASS_REQUIRE_LOWERCASE === "TRUE") {
     cy.get(
       "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
-    ).eq(0)
-      .click().focus().blur()
+    )
+      .eq(0)
+      .click()
+      .focus()
+      .blur()
   } else {
     cy.get(
       "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
-    ).eq(1)
-      .click().focus().blur()
+    )
+      .eq(1)
+      .click()
+      .focus()
+      .blur()
   }
   if (Cypress.env().COGNITO_USER_PASS_REQUIRE_UPPERCASE === "TRUE") {
     cy.get(
       "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
-    ).eq(2)
-      .click().focus().blur()
+    )
+      .eq(2)
+      .click()
+      .focus()
+      .blur()
   } else {
     cy.get(
       "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
-    ).eq(3)
-      .click().focus().blur()
+    )
+      .eq(3)
+      .click()
+      .focus()
+      .blur()
   }
   if (Cypress.env().COGNITO_USER_PASS_REQUIRE_NUMBER === "TRUE") {
     cy.get(
       "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
-    ).eq(4)
-      .click().focus().blur()
+    )
+      .eq(4)
+      .click()
+      .focus()
+      .blur()
   } else {
     cy.get(
       "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
-    ).eq(5)
-      .click().focus().blur()
+    )
+      .eq(5)
+      .click()
+      .focus()
+      .blur()
   }
   if (Cypress.env().COGNITO_USER_PASS_REQUIRE_SYMBOL === "TRUE") {
     cy.get(
       "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
-    ).eq(6)
-      .click().focus().blur()
+    )
+      .eq(6)
+      .click()
+      .focus()
+      .blur()
   } else {
     cy.get(
       "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
-    ).eq(7)
-      .click().focus().blur()
+    )
+      .eq(7)
+      .click()
+      .focus()
+      .blur()
   }
 }
 

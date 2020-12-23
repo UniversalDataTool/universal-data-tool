@@ -10,6 +10,8 @@ import WarningHeader from "./warning-header"
 import initConfigExport from "./init-config-export"
 import SettingDialog from "./interface-setting-export.js"
 import createAssets from "./create-assets"
+import setSourcesAndIds from "./set-sources-and-ids.js"
+import { setIn } from "seamless-immutable"
 import {
   Settings as SettingsIcon,
   Storage as StorageIcon,
@@ -150,10 +152,17 @@ export default ({ open, onClose }) => {
     if (nameProjectExist) await dm.removeSamplesFolder(nameProjectToCreate)
     if (nameProjectExist && configExport.typeAssetExport === "withProxy")
       await dm.removeAssetsFolder(nameProjectToCreate)
-    if (configExport.typeAssetExport === "withProxy")
+    if (configExport.typeAssetExport === "withProxy") {
       createAssets(dataset, configExport, dm)
+      dataset = setIn(
+        dataset,
+        ["samples"],
+        await setSourcesAndIds(nameProjectToCreate, dataset.samples, dm)
+      )
+    }
+    console.log(dataset)
     await dm.setDataset(dataset)
-    await activeDatasetManager.setDatasetProperty("name", nameProjectToCreate)
+    await activeDatasetManager.setDataset(dataset)
     await getProjects()
     onClose()
   }
