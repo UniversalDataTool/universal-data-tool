@@ -9,6 +9,7 @@ import warningHeader from "../utils/aws-test/warning-header.spec"
 import exportAWS from "../utils/aws-test/export-aws.spec"
 import importAWS from "../utils/aws-test/import-aws.spec"
 import configImport from "../utils/aws-test/config-import.spec"
+import configExport from "../utils/aws-test/config-export.spec"
 import "regenerator-runtime/runtime"
 
 //https://github.com/cypress-io/cypress/issues/461#issuecomment-325402086
@@ -56,6 +57,7 @@ describe("Import aws test", () => {
   warningHeader()
   importAWS()
   configImport() //The comments in before/after goes with the one existing in this test
+  configExport()
   exportAWS() //Always the last test aws change after this
 
   afterEach("Check if project imported", () => {
@@ -65,6 +67,7 @@ describe("Import aws test", () => {
   after("Clean AWS", () => {
     removeAWSFile("Image Classification")
     removeAWSFile("CypressTest1")
+    removeAWSFile("CypressTest2")
     /*removeAWSFile("Not Supported")
     removeAWSFile("Time Series")
     removeAWSFile("Data Entry")

@@ -24,24 +24,56 @@ const enterCredentialsCognitoS3 = () => {
     .focus()
     .type(Cypress.env().COGNITO_USER_PASS_LENGTH)
   if (Cypress.env().COGNITO_USER_PASS_REQUIRE_LOWERCASE === "TRUE") {
-    cy.get("div[class='sc-bdVaJa MFCMP']").eq(0).click()
+    cy.get(
+      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
+    )
+      .eq(0)
+      .click()
   } else {
-    cy.get("div[class='sc-bdVaJa MFCMP']").eq(1).click()
+    cy.get(
+      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
+    )
+      .eq(1)
+      .click()
   }
   if (Cypress.env().COGNITO_USER_PASS_REQUIRE_UPPERCASE === "TRUE") {
-    cy.get("div[class='sc-bdVaJa MFCMP']").eq(2).click()
+    cy.get(
+      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
+    )
+      .eq(2)
+      .click()
   } else {
-    cy.get("div[class='sc-bdVaJa MFCMP']").eq(3).click()
+    cy.get(
+      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
+    )
+      .eq(3)
+      .click()
   }
   if (Cypress.env().COGNITO_USER_PASS_REQUIRE_NUMBER === "TRUE") {
-    cy.get("div[class='sc-bdVaJa MFCMP']").eq(4).click()
+    cy.get(
+      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
+    )
+      .eq(4)
+      .click()
   } else {
-    cy.get("div[class='sc-bdVaJa MFCMP']").eq(5).click()
+    cy.get(
+      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
+    )
+      .eq(5)
+      .click()
   }
   if (Cypress.env().COGNITO_USER_PASS_REQUIRE_SYMBOL === "TRUE") {
-    cy.get("div[class='sc-bdVaJa MFCMP']").eq(6).click()
+    cy.get(
+      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
+    )
+      .eq(6)
+      .click()
   } else {
-    cy.get("div[class='sc-bdVaJa MFCMP']").eq(7).click()
+    cy.get(
+      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
+    )
+      .eq(7)
+      .click()
   }
 }
 

@@ -148,8 +148,10 @@ export default ({ open, onClose }) => {
     var dataset = currentDataset
     dataset = dataset.setIn(["name"], nameProjectToCreate)
     if (nameProjectExist) await dm.removeSamplesFolder(nameProjectToCreate)
-    if (nameProjectExist && configExport.typeAssetExport==="withProxy")await dm.removeAssetsFolder(nameProjectToCreate)
-    if(configExport.typeAssetExport==="withProxy") createAssets(dataset,configExport,dm)
+    if (nameProjectExist && configExport.typeAssetExport === "withProxy")
+      await dm.removeAssetsFolder(nameProjectToCreate)
+    if (configExport.typeAssetExport === "withProxy")
+      createAssets(dataset, configExport, dm)
     await dm.setDataset(dataset)
     await activeDatasetManager.setDatasetProperty("name", nameProjectToCreate)
     await getProjects()
