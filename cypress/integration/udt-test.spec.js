@@ -10,7 +10,7 @@ import textEntityClassification from "../utils/test/text-entity-classification.s
 import setLanguage from "../utils/set-language.spec"
 Cypress.config("defaultCommandTimeout", 3000)
 describe("Udt test", () => {
-  before("Prepare test", () => {
+  beforeEach("Prepare test", () => {
     cy.visit(`http://localhost:6001`)
     setLanguage()
   })
@@ -23,8 +23,4 @@ describe("Udt test", () => {
   pasteImageUrlsWithCSV()
   pasteImageUrls()
   textEntityClassification()
-
-  afterEach("Return home page", () => {
-    cy.get("button[title='Exit to Welcome Page']").click()
-  })
 })
