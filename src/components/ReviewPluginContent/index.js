@@ -6,6 +6,7 @@ import RateReviewIcon from "@material-ui/icons/RateReview"
 import CreateIcon from "@material-ui/icons/Create"
 import PollIcon from "@material-ui/icons/Poll"
 import Settings from "./Settings"
+import Analytics from "./Analytics"
 import Review from "./Review"
 import Label from "./Label"
 
@@ -56,6 +57,7 @@ export const ReviewPluginContent = () => {
       {tab === "settings" && <Settings />}
       {tab === "review" && <Review />}
       {tab === "label" && <Label />}
+      {tab === "analytics" && <Analytics />}
     </Box>
   )
 }
