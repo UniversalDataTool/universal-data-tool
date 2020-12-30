@@ -4,11 +4,9 @@ import React, { useState, useEffect } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Grid from "@material-ui/core/Grid"
 import { HeaderWithContainer } from "../Header"
-import templates from "./templates"
+import templates from "../StartingPage/templates"
 import * as colors from "@material-ui/core/colors"
 import { useDropzone } from "react-dropzone"
-import CreateFromTemplateDialog from "../CreateFromTemplateDialog"
-import AddAuthFromTemplateDialog from "../AddAuthFromTemplateDialog"
 import { styled } from "@material-ui/core/styles"
 import usePosthog from "../../hooks/use-posthog"
 import packageInfo from "../../../package.json"
@@ -16,22 +14,70 @@ import useEventCallback from "use-event-callback"
 import Box from "@material-ui/core/Box"
 import Select from "react-select"
 import { useTranslation } from "react-i18next"
+import getEmbedYoutubeUrl from "../StartingPage/get-embed-youtube-url.js"
 import packageJSON from "../../../package.json"
 import Button from "@material-ui/core/Button"
-import RightSideContent from "./RightSideContent"
-import {
-  ContentContainer,
-  Content,
-  Title,
-  Subtitle,
-  ActionList,
-  Action,
-  ActionTitle,
-  ActionText,
-  Actionless,
-  BottomSpacer,
-  useStyles,
-} from "./parts"
+import GetAppIcon from "@material-ui/icons/GetApp"
+import useIsDesktop from "../../hooks/use-is-desktop"
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    backgroundColor: colors.grey[900],
+    height: "100vh",
+  },
+  headerButton: {
+    fontSize: 12,
+    backgroundColor: "#fff",
+  },
+  downloadIcon: {
+    marginTop: 2,
+    width: 18,
+    height: 18,
+    marginRight: 4,
+    marginLeft: -6,
+    color: colors.grey[700],
+  },
+  languageSelectionWrapper: {
+    display: "flex",
+    flexDirection: "column",
+    textAlign: "center",
+  },
+  languageSelectionBox: {
+    display: "flex",
+    paddingTop: 24,
+    [theme.breakpoints.up("sm")]: {
+      justifyContent: "flex-end",
+    },
+  },
+}))
+
+const ContentContainer = styled("div")(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  flexGrow: 1,
+  color: "#fff",
+  overflowY: "scroll",
+  padding: 100,
+  [theme.breakpoints.down("sm")]: {
+    padding: 50,
+  },
+}))
+const Content = styled("div")(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  width: "calc(100% - 32px)",
+  marginLeft: 16,
+  maxWidth: 1000,
+}))
+
+const Title = styled("div")({
+  marginTop: 20,
+  fontSize: 36,
+  fontWeight: 600,
+  color: colors.grey[300],
+})
 
 const languageSelectionFormStyle = {
   control: (base, state) => ({
@@ -51,6 +97,41 @@ const languageSelectionFormStyle = {
     color: "white",
   }),
 }
+
+const Subtitle = styled("div")({
+  fontSize: 18,
+  // fontWeight: "bold",
+  marginTop: 8,
+  color: colors.grey[500],
+})
+const ActionList = styled("div")({ marginTop: 48 })
+const Action = styled("a")({
+  display: "block",
+  color: colors.blue[500],
+  marginTop: 4,
+  cursor: "pointer",
+  textDecoration: "none",
+})
+const ActionTitle = styled("div")({
+  // fontWeight: "bold",
+  fontSize: 24,
+  marginBottom: 8,
+  color: colors.grey[500],
+})
+const ActionText = styled("div")({
+  color: colors.grey[300],
+  "& a": {
+    cursor: "pointer",
+    color: colors.blue[500],
+    textDecoration: "none",
+  },
+})
+const Actionless = styled("div")({
+  color: colors.grey[600],
+  paddingTop: 16,
+})
+
+const BottomSpacer = styled("div")({ height: 100 })
 
 const languageOptions = [
   { label: "English", value: "en" },
@@ -73,6 +154,45 @@ export default ({
 
   // internalization hook
   const { t, i18n } = useTranslation()
+
+  const isDesktop = useIsDesktop()
+  // eslint-disable-next-line
+  const [newVersionAvailable, changeNewVersionAvailable] = useState(false)
+  useEffect(() => {
+    // if (!isDesktop) return
+    async function checkNewVersion() {
+      const newPackage = await fetch(
+        "https://raw.githubusercontent.com/UniversalDataTool/universal-data-tool/master/package.json"
+      ).then((r) => r.json())
+      if (newPackage.version !== packageInfo.version) {
+        changeNewVersionAvailable(newPackage.version)
+      }
+    }
+    checkNewVersion()
+  }, [])
+
+  const [latestCommunityUpdate, setLatestCommunityUpdate] = useState(null)
+  useEffect(() => {
+    async function getLatestREADME() {
+      const readme = await fetch(
+        "https://raw.githubusercontent.com/UniversalDataTool/universal-data-tool/master/README.md"
+      ).then((r) => r.text())
+      const startCU = readme.search("COMMUNITY-UPDATE:START")
+      const endCU = readme.search("COMMUNITY-UPDATE:END")
+      const communityUpdates = readme
+        .slice(startCU, endCU)
+        .split("\n")
+        .slice(1, -1)
+        .filter((line) => line.trim() !== "")
+      const latestYtLink = communityUpdates[0].match(/\((.*)\)/)[1]
+      setLatestCommunityUpdate({
+        name: communityUpdates[0].match(/\[(.*)\]/)[1],
+        ytLink: latestYtLink,
+        embedYTLink: getEmbedYoutubeUrl(latestYtLink),
+      })
+    }
+    getLatestREADME()
+  }, [])
 
   const [
     createFromTemplateDialogOpen,
@@ -186,14 +306,20 @@ export default ({
                   <Action href="https://www.youtube.com/channel/UCgFkrRN7CLt7_iTa2WDjf2g">
                     {t("youtube-channel")}
                   </Action>
-
-                  {/* <Action href="#">
-                  How to Collaborate in Real-Time with UDT
-                </Action> */}
                 </ActionList>
               </Grid>
               <Grid xs={12} sm={6} item>
-                <RightSideContent />
+                {newVersionAvailable && isDesktop && (
+                  <Button
+                    variant="outlined"
+                    key="download-latest"
+                    className={c.headerButton}
+                    href="https://github.com/OpenHumanAnnotation/universal-data-tool/releases"
+                  >
+                    <GetAppIcon className={c.downloadIcon} />
+                    {t("Download Version")} v{newVersionAvailable}
+                  </Button>
+                )}
               </Grid>
               <Grid xs={12} sm={6} item>
                 <BottomSpacer />
@@ -202,21 +328,6 @@ export default ({
           </Content>
         </ContentContainer>
       </HeaderWithContainer>
-      <CreateFromTemplateDialog
-        open={createFromTemplateDialogOpen}
-        onSelect={(template) => {
-          posthog.capture("template_clicked", {
-            clicked_template: template.name,
-          })
-          onOpenTemplate(template)
-        }}
-        onClose={() => changeCreateFromTemplateDialogOpen(false)}
-      />
-      <AddAuthFromTemplateDialog
-        open={addAuthFromDialogOpen}
-        onSelect={(template) => onOpenTemplate(template)}
-        onClose={() => changeAddAuthFromDialogOpen(false)}
-      />
     </div>
   )
 }
