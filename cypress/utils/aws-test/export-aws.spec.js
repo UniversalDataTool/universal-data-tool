@@ -1,5 +1,7 @@
+import goToImportPage from "../go-to-import-page.spec"
 const exportAWS = () => {
   it("Try to export a natif project to aws", () => {
+    goToImportPage("Image Segmentation")
     cy.log("Create project")
     cy.contains("Export to S3 (Cognito)").click()
     cy.get("input[id='ProjectName']")
@@ -14,6 +16,7 @@ const exportAWS = () => {
     cy.contains("Close").click()
   })
   it("Try to export with assets", () => {
+    goToImportPage("Image Segmentation")
     cy.log("Create project")
     cy.contains("Export to S3 (Cognito)").click()
     cy.get("input[id='ProjectName']")

@@ -1,5 +1,7 @@
+import goToImportPage from "../go-to-import-page.spec"
 const configImport = () => {
   it("Check behavior Load Assets/Annotations", () => {
+    goToImportPage("Image Segmentation")
     cy.log("check initial config")
     cy.contains("Import from S3 (Cognito)").click()
     cy.contains("Load Assets").should("be.disabled")
@@ -18,6 +20,7 @@ const configImport = () => {
   })
 
   it("Check behavior setting/storage panel", () => {
+    goToImportPage("Image Segmentation")
     cy.log("Check if open on Storage panel")
     cy.contains("Import from S3 (Cognito)").click()
     cy.contains("Annotation processing").should("not.exist")
@@ -42,191 +45,198 @@ const configImport = () => {
     cy.contains("Close").click()
   })
 
-  /* to uncomment when the asset will added on export
-        it("Check if disable non compatible type of file", () => {
-        cy.wait(2000)
-        cy.log("For Empty")
-        cy.contains("Import from S3 (Cognito)").click()
-        cy.contains("Empty")
-        cy.get("input[name='select-row-3']").click()
-        cy.get("svg[id='SettingIcon']").click()
-    
-        cy.get("input[value='Image']").should("be.checked")
-        cy.get("input[value='Image']").should("not.be.disabled")
-    
-        cy.get("input[value='Video']").should("not.be.checked")
-        cy.get("input[value='Video']").should("not.be.disabled")
-    
-        cy.get("input[value='Audio']").should("not.be.checked")
-        cy.get("input[value='Audio']").should("not.be.disabled")
-    
-        cy.get("input[value='PDF']").should("not.be.checked")
-        cy.get("input[value='PDF']").should("not.be.disabled")
-    
-        cy.get("input[value='Text']").should("not.be.checked")
-        cy.get("input[value='Text']").should("not.be.disabled")
-    
-        cy.get("svg[id='StorageIcon']").click()
-        cy.contains("Close").click()
-      })
-    
-      it("Check if disable non compatible type of file", () => {
-        cy.log("For Image")
-        cy.contains("Import from S3 (Cognito)").click()
-        cy.contains("Image Classification")
-        cy.get("input[name='select-row-4']").click()
-        cy.get("svg[id='SettingIcon']").click()
-    
-        cy.get("input[value='Image']").should("be.checked")
-        cy.get("input[value='Image']").should("not.be.disabled")
-    
-        cy.get("input[value='Video']").should("not.be.checked")
-        cy.get("input[value='Video']").should("be.disabled")
-    
-        cy.get("input[value='Audio']").should("not.be.checked")
-        cy.get("input[value='Audio']").should("be.disabled")
-    
-        cy.get("input[value='PDF']").should("not.be.checked")
-        cy.get("input[value='PDF']").should("be.disabled")
-        
-        cy.get("input[value='Text']").should("not.be.checked")
-        cy.get("input[value='Text']").should("be.disabled")
-    
-        cy.get("svg[id='StorageIcon']").click()
-        cy.contains("Close").click()
-      })
-    
-      it("Check if disable non compatible type of file", () => {
-        cy.log("For Audio")
-        cy.contains("Import from S3 (Cognito)").click()
-        cy.contains("Audio Transcription")
-        cy.get("input[name='select-row-0']").click()
-        cy.get("svg[id='SettingIcon']").click()
-    
-        cy.get("input[value='Image']").should("not.be.checked")
-        cy.get("input[value='Image']").should("be.disabled")
-    
-        cy.get("input[value='Video']").should("not.be.checked")
-        cy.get("input[value='Video']").should("be.disabled")
-    
-        cy.get("input[value='Audio']").should("be.checked")
-        cy.get("input[value='Audio']").should("not.be.disabled")
-    
-        cy.get("input[value='PDF']").should("not.be.checked")
-        cy.get("input[value='PDF']").should("be.disabled")
-        
-        cy.get("input[value='Text']").should("not.be.checked")
-        cy.get("input[value='Text']").should("be.disabled")
-    
-        cy.get("svg[id='StorageIcon']").click()
-        cy.contains("Close").click()
-      })
-    
-      it("Check if disable non compatible type of file", () => {
-        cy.log("For Video")
-        cy.contains("Import from S3 (Cognito)").click()
-        cy.contains("Video Segmentation")
-        cy.get("input[name='select-row-7']").click()
-        cy.get("svg[id='SettingIcon']").click()
-    
-        cy.get("input[value='Image']").should("not.be.checked")
-        cy.get("input[value='Image']").should("be.disabled")
-    
-        cy.get("input[value='Video']").should("be.checked")
-        cy.get("input[value='Video']").should("not.be.disabled")
-    
-        cy.get("input[value='Audio']").should("not.be.checked")
-        cy.get("input[value='Audio']").should("be.disabled")
-    
-        cy.get("input[value='PDF']").should("not.be.checked")
-        cy.get("input[value='PDF']").should("be.disabled")
-        
-        cy.get("input[value='Text']").should("not.be.checked")
-        cy.get("input[value='Text']").should("be.disabled")
-    
-        cy.get("svg[id='StorageIcon']").click()
-        cy.contains("Close").click()
-      })
-    
-      it("Check if disable non compatible type of file", () => {
-        cy.log("For Text")
-        cy.contains("Import from S3 (Cognito)").click()
-        cy.contains("Text Classification")
-        cy.get("input[name='select-row-5']").click()
-        cy.get("svg[id='SettingIcon']").click()
-    
-        cy.get("input[value='Image']").should("not.be.checked")
-        cy.get("input[value='Image']").should("be.disabled")
-    
-        cy.get("input[value='Video']").should("not.be.checked")
-        cy.get("input[value='Video']").should("be.disabled")
-    
-        cy.get("input[value='Audio']").should("not.be.checked")
-        cy.get("input[value='Audio']").should("be.disabled")
-    
-        cy.get("input[value='PDF']").should("not.be.checked")
-        cy.get("input[value='PDF']").should("be.disabled")
-        
-        cy.get("input[value='Text']").should("be.checked")
-        cy.get("input[value='Text']").should("not.be.disabled")
-    
-        cy.get("svg[id='StorageIcon']").click()
-        cy.contains("Close").click()
-      })
-    
-      it("Check if disable non compatible type of file", () => {
-        cy.log("For PDF")
-        cy.contains("Import from S3 (Cognito)").click()
-        cy.contains("Data Entry")
-        cy.get("input[name='select-row-1']").click()
-        cy.get("svg[id='SettingIcon']").click()
-    
-        cy.get("input[value='Image']").should("not.be.checked")
-        cy.get("input[value='Image']").should("be.disabled")
-    
-        cy.get("input[value='Video']").should("not.be.checked")
-        cy.get("input[value='Video']").should("be.disabled")
-    
-        cy.get("input[value='Audio']").should("not.be.checked")
-        cy.get("input[value='Audio']").should("be.disabled")
-    
-        cy.get("input[value='PDF']").should("be.checked")
-        cy.get("input[value='PDF']").should("not.be.disabled")
-        
-        cy.get("input[value='Text']").should("not.be.checked")
-        cy.get("input[value='Text']").should("be.disabled")
-    
-        cy.get("svg[id='StorageIcon']").click()
-        cy.contains("Close").click()
-      })
-    
-      it("Check if disable non compatible type of file", () => {
-        cy.log("For Time")
-        cy.contains("Import from S3 (Cognito)").click()
-        cy.contains("Time Series")
-        cy.get("input[name='select-row-6']").click()
-        cy.get("svg[id='SettingIcon']").click()
-    
-        cy.get("input[value='Image']").should("not.be.checked")
-        cy.get("input[value='Image']").should("be.disabled")
-    
-        cy.get("input[value='Video']").should("not.be.checked")
-        cy.get("input[value='Video']").should("be.disabled")
-    
-        cy.get("input[value='Audio']").should("not.be.checked")
-        cy.get("input[value='Audio']").should("be.disabled")
-    
-        cy.get("input[value='PDF']").should("not.be.checked")
-        cy.get("input[value='PDF']").should("be.disabled")
-        
-        cy.get("input[value='Text']").should("not.be.checked")
-        cy.get("input[value='Text']").should("be.disabled")
-    
-        cy.get("svg[id='StorageIcon']").click()
-        cy.contains("Close").click()
-      })
-    
-      it("Check if disable non compatible type of file", () => {
+  it("Check if disable non compatible type of file", () => {
+    goToImportPage()
+    cy.wait(2000)
+    cy.log("For Empty")
+    cy.contains("Import from S3 (Cognito)").click()
+    cy.contains("Empty")
+    cy.get("input[name='select-row-2']").click()
+    cy.get("svg[id='SettingIcon']").click()
+
+    cy.get("input[value='Image']").should("be.checked")
+    cy.get("input[value='Image']").should("not.be.disabled")
+
+    cy.get("input[value='Video']").should("not.be.checked")
+    cy.get("input[value='Video']").should("not.be.disabled")
+
+    cy.get("input[value='Audio']").should("not.be.checked")
+    cy.get("input[value='Audio']").should("not.be.disabled")
+
+    cy.get("input[value='PDF']").should("not.be.checked")
+    cy.get("input[value='PDF']").should("not.be.disabled")
+
+    cy.get("input[value='Text']").should("not.be.checked")
+    cy.get("input[value='Text']").should("not.be.disabled")
+
+    cy.get("svg[id='StorageIcon']").click()
+    cy.contains("Close").click()
+  })
+
+  it("Check if disable non compatible type of file", () => {
+    goToImportPage("Image Segmentation")
+    cy.log("For Image")
+    cy.contains("Import from S3 (Cognito)").click()
+    cy.contains("Image Classification")
+    cy.get("input[name='select-row-3']").click()
+    cy.get("svg[id='SettingIcon']").click()
+
+    cy.get("input[value='Image']").should("be.checked")
+    cy.get("input[value='Image']").should("not.be.disabled")
+
+    cy.get("input[value='Video']").should("not.be.checked")
+    cy.get("input[value='Video']").should("be.disabled")
+
+    cy.get("input[value='Audio']").should("not.be.checked")
+    cy.get("input[value='Audio']").should("be.disabled")
+
+    cy.get("input[value='PDF']").should("not.be.checked")
+    cy.get("input[value='PDF']").should("be.disabled")
+
+    cy.get("input[value='Text']").should("not.be.checked")
+    cy.get("input[value='Text']").should("be.disabled")
+
+    cy.get("svg[id='StorageIcon']").click()
+    cy.contains("Close").click()
+  })
+
+  it("Check if disable non compatible type of file", () => {
+    goToImportPage("Audio Transcription")
+    cy.log("For Audio")
+    cy.contains("Import from S3 (Cognito)").click()
+    cy.contains("Audio Transcription")
+    cy.get("input[name='select-row-0']").click()
+    cy.get("svg[id='SettingIcon']").click()
+
+    cy.get("input[value='Image']").should("not.be.checked")
+    cy.get("input[value='Image']").should("be.disabled")
+
+    cy.get("input[value='Video']").should("not.be.checked")
+    cy.get("input[value='Video']").should("be.disabled")
+
+    cy.get("input[value='Audio']").should("be.checked")
+    cy.get("input[value='Audio']").should("not.be.disabled")
+
+    cy.get("input[value='PDF']").should("not.be.checked")
+    cy.get("input[value='PDF']").should("be.disabled")
+
+    cy.get("input[value='Text']").should("not.be.checked")
+    cy.get("input[value='Text']").should("be.disabled")
+
+    cy.get("svg[id='StorageIcon']").click()
+    cy.contains("Close").click()
+  })
+
+  it("Check if disable non compatible type of file", () => {
+    goToImportPage("Video Segmentation")
+    cy.log("For Video")
+    cy.contains("Import from S3 (Cognito)").click()
+    cy.contains("Video Segmentation")
+    cy.get("input[name='select-row-7']").click()
+    cy.get("svg[id='SettingIcon']").click()
+
+    cy.get("input[value='Image']").should("not.be.checked")
+    cy.get("input[value='Image']").should("be.disabled")
+
+    cy.get("input[value='Video']").should("be.checked")
+    cy.get("input[value='Video']").should("not.be.disabled")
+
+    cy.get("input[value='Audio']").should("not.be.checked")
+    cy.get("input[value='Audio']").should("be.disabled")
+
+    cy.get("input[value='PDF']").should("not.be.checked")
+    cy.get("input[value='PDF']").should("be.disabled")
+
+    cy.get("input[value='Text']").should("not.be.checked")
+    cy.get("input[value='Text']").should("be.disabled")
+
+    cy.get("svg[id='StorageIcon']").click()
+    cy.contains("Close").click()
+  })
+
+  it("Check if disable non compatible type of file", () => {
+    goToImportPage("Text Classification")
+    cy.log("For Text")
+    cy.contains("Import from S3 (Cognito)").click()
+    cy.contains("Text Classification")
+    cy.get("input[name='select-row-5']").click()
+    cy.get("svg[id='SettingIcon']").click()
+
+    cy.get("input[value='Image']").should("not.be.checked")
+    cy.get("input[value='Image']").should("be.disabled")
+
+    cy.get("input[value='Video']").should("not.be.checked")
+    cy.get("input[value='Video']").should("be.disabled")
+
+    cy.get("input[value='Audio']").should("not.be.checked")
+    cy.get("input[value='Audio']").should("be.disabled")
+
+    cy.get("input[value='PDF']").should("not.be.checked")
+    cy.get("input[value='PDF']").should("be.disabled")
+
+    cy.get("input[value='Text']").should("be.checked")
+    cy.get("input[value='Text']").should("not.be.disabled")
+
+    cy.get("svg[id='StorageIcon']").click()
+    cy.contains("Close").click()
+  })
+
+  it("Check if disable non compatible type of file", () => {
+    goToImportPage("Data Entry")
+    cy.log("For PDF")
+    cy.contains("Import from S3 (Cognito)").click()
+    cy.contains("Data Entry")
+    cy.get("input[name='select-row-1']").click()
+    cy.get("svg[id='SettingIcon']").click()
+
+    cy.get("input[value='Image']").should("not.be.checked")
+    cy.get("input[value='Image']").should("be.disabled")
+
+    cy.get("input[value='Video']").should("not.be.checked")
+    cy.get("input[value='Video']").should("be.disabled")
+
+    cy.get("input[value='Audio']").should("not.be.checked")
+    cy.get("input[value='Audio']").should("be.disabled")
+
+    cy.get("input[value='PDF']").should("be.checked")
+    cy.get("input[value='PDF']").should("not.be.disabled")
+
+    cy.get("input[value='Text']").should("not.be.checked")
+    cy.get("input[value='Text']").should("be.disabled")
+
+    cy.get("svg[id='StorageIcon']").click()
+    cy.contains("Close").click()
+  })
+
+  it("Check if disable non compatible type of file", () => {
+    goToImportPage("Time Series")
+    cy.log("For Time")
+    cy.contains("Import from S3 (Cognito)").click()
+    cy.contains("Time Series")
+    cy.get("input[name='select-row-6']").click()
+    cy.get("svg[id='SettingIcon']").click()
+
+    cy.get("input[value='Image']").should("not.be.checked")
+    cy.get("input[value='Image']").should("be.disabled")
+
+    cy.get("input[value='Video']").should("not.be.checked")
+    cy.get("input[value='Video']").should("be.disabled")
+
+    cy.get("input[value='Audio']").should("not.be.checked")
+    cy.get("input[value='Audio']").should("be.disabled")
+
+    cy.get("input[value='PDF']").should("not.be.checked")
+    cy.get("input[value='PDF']").should("be.disabled")
+
+    cy.get("input[value='Text']").should("not.be.checked")
+    cy.get("input[value='Text']").should("be.disabled")
+
+    cy.get("svg[id='StorageIcon']").click()
+    cy.contains("Close").click()
+  })
+
+  /*it("Check if disable non compatible type of file", () => {
+        goToImportPage("Image Segmentation")
         cy.log("For Other File(unsupported)")
         cy.contains("Import from S3 (Cognito)").click()
         cy.contains("Not Supported")
@@ -253,6 +263,7 @@ const configImport = () => {
       })*/
 
   it("Check if disable import when project not selected", () => {
+    goToImportPage("Image Segmentation")
     cy.contains("Import from S3 (Cognito)").click()
     cy.contains("Take samples from project").should("be.disabled")
     cy.get("input[name='select-row-0']").click()

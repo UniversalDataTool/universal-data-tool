@@ -1,10 +1,13 @@
+import goToImportPage from "../go-to-import-page.spec"
 const warningHeader = () => {
   it("Warning project name not set", () => {
+    goToImportPage("Image Segmentation")
     cy.contains("Export to S3 (Cognito)").click()
     cy.contains("Warning : Please enter a project name.")
     cy.contains("Close").click()
   })
   it("Warning project already exist", () => {
+    goToImportPage("Image Segmentation")
     cy.contains("Export to S3 (Cognito)").click()
     cy.get("input[id='ProjectName']")
       .focus()
@@ -16,6 +19,7 @@ const warningHeader = () => {
     cy.contains("Close").click()
   })
   it("Warning select a project", () => {
+    goToImportPage("Image Segmentation")
     cy.contains("Import from S3 (Cognito)").click()
     cy.contains("Warning : You need to select a project.")
     cy.contains("Close").click()

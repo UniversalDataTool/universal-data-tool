@@ -1,5 +1,7 @@
+import goToImportPage from "../go-to-import-page.spec"
 const exportConfig = () => {
   it("Verification storage/setting panel", () => {
+    goToImportPage("Image Segmentation")
     cy.contains("Export to S3 (Cognito)").click()
     cy.contains("Assets processing").should("not.be")
     cy.get("svg[id='SettingIcon']").click()

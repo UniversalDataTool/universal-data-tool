@@ -1,7 +1,6 @@
 import enterCredentialsCognitoS3 from "../utils/credentials-test/enter-credentials-cognito-s3.spec"
 import enterCredentialsUser from "../utils/credentials-test/enter-credentials-user.spec"
 import setLanguage from "../utils/set-language.spec"
-import goToImportPage from "../utils/go-to-import-page.spec"
 import removeAWSFile from "../utils/remove-cypress-file-in-aws.spec"
 import addFileToAWS from "../utils/add-cypress-file-to-aws.spec"
 import addAssetsToAWS from "../utils/add-cypress-assets-to-aws.spec"
@@ -40,20 +39,19 @@ describe("Import aws test", () => {
     addFileToAWS("ImageClassification.json")
     addAssetsToAWS("Image Classification", "image1.jpg")
     addAssetsToAWS("Image Classification", "image2.jpg")
-    /*addAWSFile("Empty.json")
-    addAWSFile("AudioTranscription.json")
-    addAWSFile("VideoSegmentation.json")
-    addAWSFile("TextClassification.json")
-    addAWSFile("TimeSeries.json")
-    addAWSFile("DataEntry.json")
-    addAWSFile("NotSupported.json")*/
+    addFileToAWS("Empty.json")
+    addFileToAWS("AudioTranscription.json")
+    addFileToAWS("VideoSegmentation.json")
+    addFileToAWS("TextClassification.json")
+    addFileToAWS("TimeSeries.json")
+    addFileToAWS("DataEntry.json")
+    addFileToAWS("NotSupported.json")
     removeAWSFile("CypressTest1")
     removeAWSFile("CypressTest2")
   })
 
   beforeEach("Go to import page", () => {
     cy.restoreLocalStorage()
-    goToImportPage()
   })
 
   warningHeader()
@@ -70,12 +68,12 @@ describe("Import aws test", () => {
     removeAWSFile("Image Classification")
     removeAWSFile("CypressTest1")
     removeAWSFile("CypressTest2")
-    /*removeAWSFile("Not Supported")
+    removeAWSFile("Not Supported")
     removeAWSFile("Time Series")
     removeAWSFile("Data Entry")
     removeAWSFile("Text Classification")
     removeAWSFile("Video Segmentation")
     removeAWSFile("Audio Transcription")
-    removeAWSFile("Empty")*/
+    removeAWSFile("Empty")
   })
 })
