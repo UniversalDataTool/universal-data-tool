@@ -246,10 +246,26 @@ export default ({
                   <ActionTitle>{t("start")}</ActionTitle>
                   <Action
                     onClick={() => {
-                      posthog.capture("template_clicked", {
-                        clicked_template: "empty",
-                      })
-                      onOpenTemplate(templates.find((t) => t.name === "Empty"))
+                      var appConfig = JSON.parse(
+                        localStorage.getItem("app_config")
+                      )
+                      if (appConfig.defaultTemplate) {
+                        posthog.capture("template_clicked", {
+                          clicked_template: "default",
+                        })
+                        onOpenTemplate(
+                          templates.find(
+                            (t) => t.name === appConfig.defaultTemplate
+                          )
+                        )
+                      } else {
+                        posthog.capture("template_clicked", {
+                          clicked_template: "empty",
+                        })
+                        onOpenTemplate(
+                          templates.find((t) => t.name === "Empty")
+                        )
+                      }
                     }}
                   >
                     {t("new-file")}

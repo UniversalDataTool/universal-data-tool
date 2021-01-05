@@ -8,12 +8,16 @@ import pasteImageUrlsWithCSV from "../utils/test/paste-image-urls-with-csv.spec"
 import pasteImageUrls from "../utils/test/paste-image-urls.spec"
 import textEntityClassification from "../utils/test/text-entity-classification.spec"
 import setLanguage from "../utils/set-language.spec"
+import defaultTemplate from "../utils/test/default-template.spec"
+import setTemplate from "../utils/set-template.spec"
 Cypress.config("defaultCommandTimeout", 3000)
 describe("Udt test", () => {
   beforeEach("Prepare test", () => {
     cy.visit(`http://localhost:6001`)
     setLanguage()
+    setTemplate("Empty")
   })
+  defaultTemplate()
   createNewFile()
   imageClassification()
   imageSegmentation()
