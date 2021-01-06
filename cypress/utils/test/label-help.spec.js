@@ -14,8 +14,7 @@ const labelHelp = () => {
       "7d773e8566102c1f971e1b52254e1749"
     )
     cy.contains("Save").click()
-    cy.wait(1000)
-    cy.contains("Start Label Help").click()
+    cy.contains("Start Label Help",{timeout:2000}).click()
   })
 }
 

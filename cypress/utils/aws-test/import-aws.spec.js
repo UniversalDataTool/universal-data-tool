@@ -17,7 +17,7 @@ const importAWS = () => {
     goToImportPage("Image Segmentation")
     cy.log("Import project")
     cy.contains("Import from S3 (Cognito)").click()
-    cy.contains("Image Classification", { timeout: 5000 }).click()
+    cy.contains("Image Classification", { timeout: 10000 }).click()
     cy.get("input[name='select-row-3']").click()
     cy.contains("Take samples from project").click()
     cy.contains("Grid", { timeout: 10000 }).click()

@@ -154,11 +154,11 @@ export default ({ open, onClose }) => {
       await dm.removeAssetsFolder(nameProjectToCreate)
     if (configExport.typeAssetExport === "withProxy") {
       createAssets(dataset, configExport, dm)
-      dataset = setIn(
+      /*dataset = setIn(
         dataset,
         ["samples"],
         await setSourcesAndIds(nameProjectToCreate, dataset.samples, dm)
-      )
+      )*/
     }
     console.log(dataset)
     await dm.setDataset(dataset)

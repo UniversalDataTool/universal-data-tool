@@ -48,6 +48,10 @@ describe("Import aws test", () => {
     addFileToAWS("NotSupported.json")
     removeAWSFile("CypressTest1")
     removeAWSFile("CypressTest2")
+    removeAWSFile("CypressTestExportAssetsImage")
+    removeAWSFile("CypressTestExportAssetsVideo")
+    removeAWSFile("CypressTestExportAssetsPDF")
+    removeAWSFile("CypressTestExportAssetsAudio")
   })
 
   beforeEach("Go to import page", () => {
@@ -61,13 +65,16 @@ describe("Import aws test", () => {
   exportAWS() //Always the last test aws change after this
 
   afterEach("Check if project imported", () => {
-    cy.get("button[title='Exit to Welcome Page']").click()
+    cy.get("button[title='Exit to Welcome Page']").click({force: true})
   })
 
   after("Clean AWS", () => {
     removeAWSFile("Image Classification")
     removeAWSFile("CypressTest1")
-    removeAWSFile("CypressTest2")
+    /*removeAWSFile("CypressTestExportAssetsImage")
+    removeAWSFile("CypressTestExportAssetsVideo")
+    removeAWSFile("CypressTestExportAssetsPDF")
+    removeAWSFile("CypressTestExportAssetsAudio")*/
     removeAWSFile("Not Supported")
     removeAWSFile("Time Series")
     removeAWSFile("Data Entry")

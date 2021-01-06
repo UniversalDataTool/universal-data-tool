@@ -47,11 +47,8 @@ const configImport = () => {
 
   it("Check if disable non compatible type of file", () => {
     goToImportPage()
-    cy.wait(2000)
-    cy.log("For Empty")
+    cy.log("For Empty",{timeout: 2000})
     cy.contains("Import from S3 (Cognito)").click()
-    cy.contains("Empty")
-    cy.get("input[name='select-row-2']").click()
     cy.get("svg[id='SettingIcon']").click()
 
     cy.get("input[value='Image']").should("be.checked")
@@ -77,8 +74,6 @@ const configImport = () => {
     goToImportPage("Image Segmentation")
     cy.log("For Image")
     cy.contains("Import from S3 (Cognito)").click()
-    cy.contains("Image Classification")
-    cy.get("input[name='select-row-3']").click()
     cy.get("svg[id='SettingIcon']").click()
 
     cy.get("input[value='Image']").should("be.checked")
@@ -104,8 +99,6 @@ const configImport = () => {
     goToImportPage("Audio Transcription")
     cy.log("For Audio")
     cy.contains("Import from S3 (Cognito)").click()
-    cy.contains("Audio Transcription")
-    cy.get("input[name='select-row-0']").click()
     cy.get("svg[id='SettingIcon']").click()
 
     cy.get("input[value='Image']").should("not.be.checked")
@@ -131,8 +124,6 @@ const configImport = () => {
     goToImportPage("Video Segmentation")
     cy.log("For Video")
     cy.contains("Import from S3 (Cognito)").click()
-    cy.contains("Video Segmentation")
-    cy.get("input[name='select-row-7']").click()
     cy.get("svg[id='SettingIcon']").click()
 
     cy.get("input[value='Image']").should("not.be.checked")
@@ -158,8 +149,6 @@ const configImport = () => {
     goToImportPage("Text Classification")
     cy.log("For Text")
     cy.contains("Import from S3 (Cognito)").click()
-    cy.contains("Text Classification")
-    cy.get("input[name='select-row-5']").click()
     cy.get("svg[id='SettingIcon']").click()
 
     cy.get("input[value='Image']").should("not.be.checked")
@@ -185,8 +174,6 @@ const configImport = () => {
     goToImportPage("Data Entry")
     cy.log("For PDF")
     cy.contains("Import from S3 (Cognito)").click()
-    cy.contains("Data Entry")
-    cy.get("input[name='select-row-1']").click()
     cy.get("svg[id='SettingIcon']").click()
 
     cy.get("input[value='Image']").should("not.be.checked")
@@ -212,8 +199,6 @@ const configImport = () => {
     goToImportPage("Time Series")
     cy.log("For Time")
     cy.contains("Import from S3 (Cognito)").click()
-    cy.contains("Time Series")
-    cy.get("input[name='select-row-6']").click()
     cy.get("svg[id='SettingIcon']").click()
 
     cy.get("input[value='Image']").should("not.be.checked")
@@ -239,8 +224,6 @@ const configImport = () => {
         goToImportPage("Image Segmentation")
         cy.log("For Other File(unsupported)")
         cy.contains("Import from S3 (Cognito)").click()
-        cy.contains("Not Supported")
-        cy.get("input[name='select-row-4']").click()
         cy.get("svg[id='SettingIcon']").click()
     
         cy.get("input[value='Image']").should("not.be.checked")
