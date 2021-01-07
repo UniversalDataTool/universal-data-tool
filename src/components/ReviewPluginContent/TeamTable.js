@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import {
   colors,
   Box,
@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core"
 import EditIcon from "@material-ui/icons/Edit"
 import moment from "moment"
+import AddUserDialog from "./AddUserDialog"
 
 const people = [
   { name: "Billy Acosta", email: "billyaacoasta@rhyta.com", role: "Admin" },
@@ -29,6 +30,7 @@ const people = [
 }))
 
 export const TeamTable = () => {
+  const [openAddUserDialog, setOpenAddUserDialog] = useState(false)
   return (
     <>
       <Table>
@@ -57,7 +59,11 @@ export const TeamTable = () => {
         </TableBody>
       </Table>
       <Box padding={2} textAlign="right">
-        <Button color="primary" variant="outlined">
+        <Button
+          color="primary"
+          variant="outlined"
+          onClick={() => setOpenAddUserDialog(true)}
+        >
           Add Team Member
         </Button>
         <Button
@@ -71,6 +77,10 @@ export const TeamTable = () => {
           Remove Team Member
         </Button>
       </Box>
+      <AddUserDialog
+        open={openAddUserDialog}
+        onClose={() => setOpenAddUserDialog(false)}
+      />
     </>
   )
 }
