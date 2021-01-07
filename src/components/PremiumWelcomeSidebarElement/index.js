@@ -1,6 +1,11 @@
 import React, { useEffect } from "react"
 import { styled, colors, TextField, Button, Box } from "@material-ui/core"
-import { useRecoilState, atom } from "recoil"
+import { useRecoilState, useSetRecoilState, atom } from "recoil"
+import {
+  useLogin,
+  useDatasets,
+  activeDatasetAtom,
+} from "udt-premium-api-hook-lib"
 
 const Title = styled("div")({
   marginTop: 24,
@@ -59,15 +64,34 @@ const DatasetCol = styled("div")({
 })
 
 export const PremiumWelcomeSidebarElement = () => {
-  const [login, setLoginState] = useRecoilState(loginState)
+  const [email, setEmail] = React.useState("")
+  const [password, setPassword] = React.useState("")
+  const { login, loginError, isLoggedIn } = useLogin()
+  const { datasets } = useDatasets()
+  const setActiveDataset = useSetRecoilState(activeDatasetAtom)
 
-  if (!login.loggedIn) {
+  if (!isLoggedIn) {
     return (
       <Box width="280px" paddingTop="32px">
-        <StyledTextField variant="filled" label="Username" />
-        <StyledTextField variant="filled" type="password" label="Password" />
+        {loginError && <Box color="red">{loginError}</Box>}
+        <StyledTextField
+          onChange={(e) => setEmail(e.target.value)}
+          variant="filled"
+          label="Email"
+        />
+        <StyledTextField
+          onChange={(e) => setPassword(e.target.value)}
+          variant="filled"
+          type="password"
+          label="Password"
+        />
         <Box display="flex" justifyContent="flex-end" marginTop="12px">
-          <StyledButton variant="filled">Login</StyledButton>
+          <StyledButton
+            onClick={() => login({ email, password })}
+            variant="filled"
+          >
+            Login
+          </StyledButton>
         </Box>
       </Box>
     )
@@ -77,21 +101,13 @@ export const PremiumWelcomeSidebarElement = () => {
     <Box paddingTop="32px">
       <Title>Datasets</Title>
       <Box paddingTop="16px">
-        <DatasetRow>
-          <DatasetCol>Dataset 1</DatasetCol>
-          <DatasetCol>16,789 Samples</DatasetCol>
-          <DatasetCol>3 hours ago</DatasetCol>
-        </DatasetRow>
-        <DatasetRow>
-          <DatasetCol>Dataset 2</DatasetCol>
-          <DatasetCol>531 Samples</DatasetCol>
-          <DatasetCol>12 hours ago</DatasetCol>
-        </DatasetRow>
-        <DatasetRow>
-          <DatasetCol>Dataset 3</DatasetCol>
-          <DatasetCol>6,542 Samples</DatasetCol>
-          <DatasetCol>5 weeks ago</DatasetCol>
-        </DatasetRow>
+        {(datasets || []).map((ds) => (
+          <DatasetRow onClick={() => setActiveDataset(ds)} key={ds.dataset_id}>
+            <DatasetCol>{ds.display_name}</DatasetCol>
+            <DatasetCol>{ds.num_samples} Samples</DatasetCol>
+            <DatasetCol>{ds.last_activity}</DatasetCol>
+          </DatasetRow>
+        ))}
       </Box>
     </Box>
   )
