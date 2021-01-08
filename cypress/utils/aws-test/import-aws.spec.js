@@ -49,6 +49,10 @@ const importAWS = () => {
     importFromAnnotation("Text Classification", "Text Classification", 3, 5)
   })
 
+  it("Try to import a project from annotations(Time)", () => {
+    importFromAnnotation("Time Series", "Time Series", 1, 6)
+  })
+
   it("Try to import a project from assets(Image)", () => {
     importFromAssets("Image Classification", "Image Classification", 2, 3)
   })
@@ -64,5 +68,11 @@ const importAWS = () => {
   it("Try to import a project from assets(Text)", () => {
     importFromAssets("Text Classification", "Text Classification", 3, 5)
   })
+
+
+  //Uncomment when the assets for time samples will managed
+  /*it("Try to import a project from assets(Time)", () => {
+    importFromAssets("Time Series", "Time Series", 1, 6)
+  })*/
 }
 export default importAWS
