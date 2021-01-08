@@ -39,6 +39,13 @@ describe("Import aws test", () => {
     addFileToAWS("ImageClassification.json")
     addAssetsToAWS("Image Classification", "image1.jpg")
     addAssetsToAWS("Image Classification", "image2.jpg")
+    addAssetsToAWS("Audio Transcription", "audio.mp3")
+    addAssetsToAWS("Video Segmentation", "video.mp4")
+    addAssetsToAWS("Data Entry", "pdf1.pdf")
+    addAssetsToAWS("Data Entry", "pdf2.pdf")
+    addAssetsToAWS("Text Classification", "text1.txt")
+    addAssetsToAWS("Text Classification", "text2.txt")
+    addAssetsToAWS("Text Classification", "text3.txt")
     addFileToAWS("Empty.json")
     addFileToAWS("AudioTranscription.json")
     addFileToAWS("VideoSegmentation.json")
@@ -70,7 +77,7 @@ describe("Import aws test", () => {
   })
 
   after("Clean AWS", () => {
-    removeAWSFile("Image Classification")
+    /*removeAWSFile("Image Classification")
     removeAWSFile("CypressTest1")
     removeAWSFile("CypressTestExportAssetsImage")
     removeAWSFile("CypressTestExportAssetsVideo")
@@ -83,6 +90,6 @@ describe("Import aws test", () => {
     removeAWSFile("Text Classification")
     removeAWSFile("Video Segmentation")
     removeAWSFile("Audio Transcription")
-    removeAWSFile("Empty")
+    removeAWSFile("Empty")*/
   })
 })
