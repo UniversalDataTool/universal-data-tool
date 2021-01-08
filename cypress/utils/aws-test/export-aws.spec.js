@@ -24,10 +24,14 @@ const testExportAssets = (name, lineToExpand, extensionToFind) => {
     "not.be.visible"
   )
   cy.contains(extensionToFind)
+  cy.contains("Load Annotations").click()
+  cy.contains('Make sure the project has "samples" folder').should(
+    "not.be.visible"
+  )
   cy.contains("Close").click()
 }
 
-const testExportWithoutAssets = (nameProject) => {
+const testExportWithoutAssets = (nameProject, lineToExpand) => {
   goToImportPage()
   cy.log("Create project")
   cy.contains("Export to S3 (Cognito)").click()
@@ -35,8 +39,14 @@ const testExportWithoutAssets = (nameProject) => {
   cy.contains("Create project").click()
 
   cy.log("Check if project created/list updated")
-  cy.contains("Export to S3 (Cognito)", { timeout: 5000 }).click()
-  cy.contains(nameProject)
+  cy.contains("Import from S3 (Cognito)", { timeout: 10000 }).click()
+  cy.contains(nameProject, { timeout: 20000 })
+  cy.get("button[data-testid='expander-button-" + lineToExpand + "']").click()
+  cy.contains('Make sure the project has "data" folder').should("be.visible")
+  cy.contains("Load Annotations").click()
+  cy.contains('Make sure the project has "samples" folder').should(
+    "not.be.visible"
+  )
   cy.contains("Close").click()
 }
 const exportAWS = () => {
@@ -67,27 +77,27 @@ const exportAWS = () => {
 
   it("Try to export a project without assets (Video)", () => {
     setTemplate("Video Segmentation")
-    testExportWithoutAssets("CypressTestExportAnnotationOnlyVideo")
+    testExportWithoutAssets("CypressTestExportAnnotationOnlyVideo", 1)
   })
 
   it("Try to export a project without assets (Text)", () => {
     setTemplate("Text Classification")
-    testExportWithoutAssets("CypressTestExportAnnotationOnlyText")
+    testExportWithoutAssets("CypressTestExportAnnotationOnlyText", 1)
   })
 
   it("Try to export a project without assets (PDF)", () => {
     setTemplate("Data Entry")
-    testExportWithoutAssets("CypressTestExportAnnotationOnlyPDF")
+    testExportWithoutAssets("CypressTestExportAnnotationOnlyPDF", 1)
   })
 
   it("Try to export a project without assets (Image)", () => {
     setTemplate("Image Segmentation")
-    testExportWithoutAssets("CypressTestExportAnnotationOnlyImage")
+    testExportWithoutAssets("CypressTestExportAnnotationOnlyImage", 1)
   })
 
   it("Try to export a project without assets (Audio)", () => {
     setTemplate("Audio Transcription")
-    testExportWithoutAssets("CypressTestExportAnnotationOnlyAudio")
+    testExportWithoutAssets("CypressTestExportAnnotationOnlyAudio", 1)
   })
 }
 export default exportAWS
