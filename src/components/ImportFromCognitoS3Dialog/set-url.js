@@ -1,5 +1,6 @@
 import RecognizeFileExtension from "../../utils/RecognizeFileExtension"
-const setUrl = (result, configImport) => {
+const setUrl = async (result, configImport, dm) => {
+  var text
   if (!configImport.loadAssetIsSelected) {
     if (RecognizeFileExtension(result) === "Image") {
       return { imageUrl: `${result}` }
@@ -10,8 +11,8 @@ const setUrl = (result, configImport) => {
     } else if (RecognizeFileExtension(result) === "PDF") {
       return { pdfUrl: `${result}` }
     } else if (RecognizeFileExtension(result) === "Text") {
-      //var text = await fetchTextInFile(result)
-      return { document: `Is not supported` /*${text}`*/ }
+      text = await dm.getSampleText({ txtUrl: `${result}` })
+      return { document: `${text}` }
     }
   } else {
     if (
@@ -38,8 +39,8 @@ const setUrl = (result, configImport) => {
       RecognizeFileExtension(result) === configImport.typeOfFileToLoad &&
       configImport.typeOfFileToLoad === "Text"
     ) {
-      //var text = await fetchTextInFile(result)
-      return { document: `Is not supported` /*${text}`*/ }
+      text = await dm.getSampleText({ txtUrl: `${result}` })
+      return { document: `${text}` }
     }
   }
 }

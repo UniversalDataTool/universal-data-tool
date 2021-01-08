@@ -7,6 +7,6 @@ const test = () => {
   cy.contains("Cognito").click()
   enterCredentialsUser()
   cy.get("button[id='sign-in']").click()
-  cy.get("button[id='sign-in']").should("not.be.visible", { timeout: 100000 })
+  cy.get("button[id='sign-in']", { timeout: 30000 }).should("not.be.visible")
 }
 export default test

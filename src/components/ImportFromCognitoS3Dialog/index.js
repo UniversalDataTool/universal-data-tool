@@ -176,7 +176,7 @@ export default ({ open, onClose, onAddSamples }) => {
 
   const createJsonFromUrlAWS = async (projectName, imageName) => {
     var url = await dm.getAssetUrl(imageName, projectName)
-    var json = setUrl(url, configImport)
+    var json = await setUrl(url, configImport, dm)
     if (json) json = setIn(json, ["_id"], imageName)
     if (json) json = setIn(json, ["source"], projectName)
     return json
@@ -188,8 +188,7 @@ export default ({ open, onClose, onAddSamples }) => {
     if (sources) {
       jsons = await Promise.all(
         jsons.map(async (json) => {
-          if (json.source)
-            json = await createJsonFromUrlAWS(json.source, json._id)
+          if (json.source) json = await createJsonFromUrlAWS(json)
           return json
         })
       )

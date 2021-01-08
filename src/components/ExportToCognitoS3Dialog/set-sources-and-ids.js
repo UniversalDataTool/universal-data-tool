@@ -1,7 +1,8 @@
 import RecognizeFileExtension from "../../utils/RecognizeFileExtension"
 import { setIn } from "seamless-immutable"
-const createJsonFromUrlAWS = async (projectName, imageName, dm) => {
-  var url = await dm.getAssetUrl(imageName, projectName)
+import fetchAFile from "./fetch-a-file"
+const createJsonFromUrlAWS = async (projectName, json, dm, configExport) => {
+  var url = await dm.getAssetUrl(json._id, projectName)
   var json
   if (RecognizeFileExtension(url) === "Image") {
     json = { imageUrl: `${url}` }
@@ -12,10 +13,10 @@ const createJsonFromUrlAWS = async (projectName, imageName, dm) => {
   } else if (RecognizeFileExtension(url) === "PDF") {
     json = { pdfUrl: `${url}` }
   } else if (RecognizeFileExtension(url) === "Text") {
-    //var text = await fetchTextInFile(url)
-    json = { document: `Is not supported` /*${text}`*/ }
+    var text = await dm.getSampleText({ txtUrl: `${url}` })
+    json = { document: `${text}` }
   }
-  if (json) json = setIn(json, ["_id"], imageName)
+  if (json) json = setIn(json, ["_id"], json._id)
   if (json) json = setIn(json, ["source"], projectName)
   return json
 }
@@ -23,13 +24,10 @@ const createJsonFromUrlAWS = async (projectName, imageName, dm) => {
 const setSourcesAndIds = async (projectName, jsons, dm) => {
   jsons = await Promise.all(
     jsons.map(async (json) => {
-      json = await createJsonFromUrlAWS(projectName, json._id, dm)
-
-      console.log(json)
+      json = await createJsonFromUrlAWS(projectName, json, dm)
       return json
     })
   )
-  console.log(jsons)
   return jsons
 }
 export default setSourcesAndIds

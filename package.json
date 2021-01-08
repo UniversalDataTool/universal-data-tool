@@ -32,7 +32,7 @@
     "test:lint": "eslint src --max-warnings=0",
     "test:integration:dev": "./node_modules/cypress/bin/cypress open",
     "test:integration": "./node_modules/cypress/bin/cypress run --env failOnSnapshotDiff=false",
-    "test:devBrowser": "concurrently \"dotenv -- yarn run cypress open\" \"npm run build:watch\""
+    "test:devBrowser": "concurrently \"dotenv -- yarn run cypress open\" \"yarn run build:watch\""
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -45,9 +45,9 @@ const configImport = () => {
     cy.contains("Close").click()
   })
 
-  it("Check if disable non compatible type of file", () => {
+  it("Check if disable non compatible type of file (Empty)", () => {
     goToImportPage()
-    cy.log("For Empty",{timeout: 2000})
+    cy.log("For Empty", { timeout: 2000 })
     cy.contains("Import from S3 (Cognito)").click()
     cy.get("svg[id='SettingIcon']").click()
 
@@ -70,7 +70,7 @@ const configImport = () => {
     cy.contains("Close").click()
   })
 
-  it("Check if disable non compatible type of file", () => {
+  it("Check if disable non compatible type of file (Image)", () => {
     goToImportPage("Image Segmentation")
     cy.log("For Image")
     cy.contains("Import from S3 (Cognito)").click()
@@ -95,7 +95,7 @@ const configImport = () => {
     cy.contains("Close").click()
   })
 
-  it("Check if disable non compatible type of file", () => {
+  it("Check if disable non compatible type of file (Audio)", () => {
     goToImportPage("Audio Transcription")
     cy.log("For Audio")
     cy.contains("Import from S3 (Cognito)").click()
@@ -120,7 +120,7 @@ const configImport = () => {
     cy.contains("Close").click()
   })
 
-  it("Check if disable non compatible type of file", () => {
+  it("Check if disable non compatible type of file (Video)", () => {
     goToImportPage("Video Segmentation")
     cy.log("For Video")
     cy.contains("Import from S3 (Cognito)").click()
@@ -145,7 +145,7 @@ const configImport = () => {
     cy.contains("Close").click()
   })
 
-  it("Check if disable non compatible type of file", () => {
+  it("Check if disable non compatible type of file (Text)", () => {
     goToImportPage("Text Classification")
     cy.log("For Text")
     cy.contains("Import from S3 (Cognito)").click()
@@ -170,7 +170,7 @@ const configImport = () => {
     cy.contains("Close").click()
   })
 
-  it("Check if disable non compatible type of file", () => {
+  it("Check if disable non compatible type of file (PDF)", () => {
     goToImportPage("Data Entry")
     cy.log("For PDF")
     cy.contains("Import from S3 (Cognito)").click()
@@ -195,7 +195,7 @@ const configImport = () => {
     cy.contains("Close").click()
   })
 
-  it("Check if disable non compatible type of file", () => {
+  it("Check if disable non compatible type of file (Time)", () => {
     goToImportPage("Time Series")
     cy.log("For Time")
     cy.contains("Import from S3 (Cognito)").click()

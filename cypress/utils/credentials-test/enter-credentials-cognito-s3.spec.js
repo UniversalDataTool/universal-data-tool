@@ -25,7 +25,7 @@ const enterCredentialsCognitoS3 = () => {
     .type(Cypress.env().COGNITO_USER_PASS_LENGTH)
   if (Cypress.env().COGNITO_USER_PASS_REQUIRE_LOWERCASE === "TRUE") {
     cy.get(
-      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
+      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fodVxV iltTAv']"
     )
       .eq(0)
       .click()
@@ -33,7 +33,7 @@ const enterCredentialsCognitoS3 = () => {
       .blur()
   } else {
     cy.get(
-      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
+      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fodVxV iltTAv']"
     )
       .eq(1)
       .click()
@@ -42,7 +42,7 @@ const enterCredentialsCognitoS3 = () => {
   }
   if (Cypress.env().COGNITO_USER_PASS_REQUIRE_UPPERCASE === "TRUE") {
     cy.get(
-      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
+      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fodVxV iltTAv']"
     )
       .eq(2)
       .click()
@@ -50,7 +50,7 @@ const enterCredentialsCognitoS3 = () => {
       .blur()
   } else {
     cy.get(
-      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
+      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fodVxV iltTAv']"
     )
       .eq(3)
       .click()
@@ -59,7 +59,7 @@ const enterCredentialsCognitoS3 = () => {
   }
   if (Cypress.env().COGNITO_USER_PASS_REQUIRE_NUMBER === "TRUE") {
     cy.get(
-      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
+      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fodVxV iltTAv']"
     )
       .eq(4)
       .click()
@@ -67,7 +67,7 @@ const enterCredentialsCognitoS3 = () => {
       .blur()
   } else {
     cy.get(
-      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
+      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fodVxV iltTAv']"
     )
       .eq(5)
       .click()
@@ -76,7 +76,7 @@ const enterCredentialsCognitoS3 = () => {
   }
   if (Cypress.env().COGNITO_USER_PASS_REQUIRE_SYMBOL === "TRUE") {
     cy.get(
-      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
+      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fodVxV iltTAv']"
     )
       .eq(6)
       .click()
@@ -84,7 +84,7 @@ const enterCredentialsCognitoS3 = () => {
       .blur()
   } else {
     cy.get(
-      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
+      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fodVxV iltTAv']"
     )
       .eq(7)
       .click()

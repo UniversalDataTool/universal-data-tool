@@ -66,7 +66,7 @@ export const getSampleWithName = (dataset, sampleName) => {
   const { samples } = dataset
   for (var i = 0; i < samples.length; i++) {
     if (!isEmpty(samples[i])) {
-      const nameToSearch = getSampleNameFromURL(samples[i])
+      const nameToSearch = getSampleNameFromURL(samples[i])[1]
       if (typeof samples[i].sampleName !== "undefined") {
         nameToSearch[1] = samples[i].sampleName
       }
@@ -94,7 +94,7 @@ export const addNamesToSamples = (dataset) => {
         "txt",
       ]
     } else {
-      sampleName = getSampleNameFromURL(oldsample)
+      sampleName = getSampleNameFromURL(oldsample)[1]
       sampleName = renameSampleFromUrl(dataset.samples, oldsample, sampleName)
     }
     oldsample = setIn(oldsample, ["sampleName"], sampleName[1])
