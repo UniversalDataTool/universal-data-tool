@@ -1,21 +1,32 @@
-import React, { useState, styled } from "react"
+import React, { useState, useMemo, styled } from "react"
+import { useRecoilValue } from "recoil"
 import { Box, colors } from "@material-ui/core"
 import Title from "./Title"
 import TeamTable from "./TeamTable"
 import QualityContent from "./QualityContent"
 import SimpleSidebar from "./SimpleSidebar"
-
-const sidebarItems = [
-  {
-    name: "Team",
-  },
-  {
-    name: "Quality",
-  },
-]
+import AdminSettings from "./AdminSettings"
+import { userAtom } from "udt-review-hooks"
 
 export const Settings = () => {
-  const [selectedItem, setSelectedItem] = useState("Team")
+  const user = useRecoilValue(userAtom)
+
+  const sidebarItems = useMemo(
+    () =>
+      [
+        user.role.toLowerCase() === "admin" && {
+          name: "Admin",
+        },
+        {
+          name: "Team",
+        },
+        {
+          name: "Quality",
+        },
+      ].filter(Boolean),
+    []
+  )
+  const [selectedItem, setSelectedItem] = useState(sidebarItems[0].name)
 
   return (
     <SimpleSidebar
@@ -24,6 +35,7 @@ export const Settings = () => {
       selectedItem={selectedItem}
     >
       <Title>{selectedItem}</Title>
+      {selectedItem === "Admin" && <AdminSettings />}
       {selectedItem === "Team" && <TeamTable />}
       {selectedItem === "Quality" && <QualityContent />}
     </SimpleSidebar>

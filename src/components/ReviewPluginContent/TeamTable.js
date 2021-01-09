@@ -12,25 +12,11 @@ import {
 import EditIcon from "@material-ui/icons/Edit"
 import moment from "moment"
 import AddUserDialog from "./AddUserDialog"
-
-const people = [
-  { name: "Billy Acosta", email: "billyaacoasta@rhyta.com", role: "Admin" },
-  {
-    name: "Michael Reynolds",
-    email: "MichaelCReynolds@rhyta.com",
-    role: "Reviewer",
-  },
-  { name: "Mary Pack", email: "marypack@rhyta.com", role: "Labeler" },
-  { name: "William Pierce", email: "willp@rhyta.com", role: "Labeler" },
-  { name: "Micheal Myers", email: "mmyers@rhyta.com", role: "Labeler" },
-  { name: "Micheal Lyons", email: "mikelyons@rhyta.com", role: "Labeler" },
-].map((a, i) => ({
-  ...a,
-  lastActivity: Date.now() - (i / 16) ** 2 * 3 * 1000 * 60 * 60 * 48,
-}))
+import { useTeam } from "udt-premium-api-hook-lib"
 
 export const TeamTable = () => {
   const [openAddUserDialog, setOpenAddUserDialog] = useState(false)
+  const { team } = useTeam()
   return (
     <>
       <Table>
@@ -43,19 +29,20 @@ export const TeamTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {people.map((p, i) => (
-            <TableRow key={i}>
-              <TableCell>{p.name}</TableCell>
-              <TableCell>{p.email}</TableCell>
-              <TableCell>
-                <Box display="flex" alignItems="center">
-                  <Box width={74}>{p.role}</Box>
-                  <EditIcon style={{ width: 14, height: 14, opacity: 0.5 }} />
-                </Box>
-              </TableCell>
-              <TableCell>{moment(p.lastActivity).fromNow()}</TableCell>
-            </TableRow>
-          ))}
+          {team &&
+            team.map((p, i) => (
+              <TableRow key={i}>
+                <TableCell>{p.name}</TableCell>
+                <TableCell>{p.email}</TableCell>
+                <TableCell>
+                  <Box display="flex" alignItems="center">
+                    <Box width={74}>{p.role}</Box>
+                    <EditIcon style={{ width: 14, height: 14, opacity: 0.5 }} />
+                  </Box>
+                </TableCell>
+                <TableCell>{moment(p.last_activity).fromNow()}</TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
       <Box padding={2} textAlign="right">

@@ -1,5 +1,12 @@
 import React, { useEffect } from "react"
-import { styled, colors, TextField, Button, Box } from "@material-ui/core"
+import {
+  styled,
+  colors,
+  TextField,
+  Button,
+  Box,
+  CircularProgress,
+} from "@material-ui/core"
 import { useRecoilState, useSetRecoilState, atom } from "recoil"
 import useActiveDatasetManager from "../../hooks/use-active-dataset-manager"
 import LocalStorageDatasetManager from "udt-dataset-managers/dist/LocalStorageDatasetManager"
@@ -29,13 +36,6 @@ const StyledTextField = styled(TextField)({
 
 const StyledButton = styled(Button)({
   color: colors.grey[500],
-})
-
-const loginState = atom({
-  key: "loginState",
-  default: {
-    loggedIn: false,
-  },
 })
 
 const DatasetRow = styled("div")({
@@ -68,10 +68,29 @@ const DatasetCol = styled("div")({
 export const PremiumWelcomeSidebarElement = () => {
   const [email, setEmail] = React.useState("")
   const [password, setPassword] = React.useState("")
-  const { login, loginError, isLoggedIn } = useLogin()
+  const {
+    login,
+    logout,
+    loginError,
+    isLoggedIn,
+    loading: loginLoading,
+  } = useLogin()
   const { datasets } = useDatasets()
   const setActiveDataset = useSetRecoilState(activeDatasetAtom)
   const [, setActiveDatasetManager] = useActiveDatasetManager()
+
+  if (loginLoading)
+    return (
+      <Box
+        width="100%"
+        paddingTop="32px"
+        justifyContent="center"
+        alignItems="center"
+        display="flex"
+      >
+        <CircularProgress size={50} color="primary" />
+      </Box>
+    )
 
   if (!isLoggedIn) {
     return (
@@ -123,6 +142,11 @@ export const PremiumWelcomeSidebarElement = () => {
             <DatasetCol>{ds.last_activity}</DatasetCol>
           </DatasetRow>
         ))}
+      </Box>
+      <Box display="flex" justifyContent="flex-end" marginTop="12px">
+        <StyledButton onClick={() => logout()} variant="filled">
+          Sign Out
+        </StyledButton>
       </Box>
     </Box>
   )

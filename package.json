@@ -119,6 +119,7 @@
     "react-select": "^3.0.8",
     "react-time-series": "^1.0.20",
     "recoil": "^0.0.13",
+    "recoil-persist": "^0.8.0",
     "rfc6902": "^3.0.4",
     "seamless-immutable": "^7.1.4",
     "seamless-immutable-patch": "^1.0.4",

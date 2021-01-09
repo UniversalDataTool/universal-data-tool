@@ -8,15 +8,16 @@ import { AuthProvider } from "./utils/auth-handlers/use-auth.js"
 import { LabelHelpProvider } from "./components/LabelHelpView"
 import { HotkeyStorageProvider } from "./components/HotkeyStorage"
 import "./App.css"
-
+import recoilPersist from "recoil-persist"
 import Loading from "./components/Loading"
-
-// Importing Internalization file
 import "./i18n"
+
+const { RecoilPersist, updateState } = recoilPersist()
 
 export const AppWithContexts = () => {
   return (
-    <RecoilRoot>
+    <RecoilRoot initializeState={updateState}>
+      <RecoilPersist />
       <Suspense fallback={Loading}>
         <Theme>
           <AppConfigProvider>
