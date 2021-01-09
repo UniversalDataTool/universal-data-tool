@@ -10,11 +10,7 @@ import {
 import { useRecoilState, useSetRecoilState, atom } from "recoil"
 import useActiveDatasetManager from "../../hooks/use-active-dataset-manager"
 import LocalStorageDatasetManager from "udt-dataset-managers/dist/LocalStorageDatasetManager"
-import {
-  useLogin,
-  useDatasets,
-  activeDatasetAtom,
-} from "udt-premium-api-hook-lib"
+import { useLogin, useDatasets, activeDatasetAtom } from "udt-review-hooks"
 
 const Title = styled("div")({
   marginTop: 24,

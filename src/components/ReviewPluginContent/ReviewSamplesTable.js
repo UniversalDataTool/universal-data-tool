@@ -18,65 +18,18 @@ import SearchIcon from "@material-ui/icons/Search"
 import moment from "moment"
 import { useSampleSearch } from "udt-review-hooks"
 
-// const samples = [
-//   {
-//     worksSubmitted: 3,
-//     worksNeeded: 3,
-//     confidence: 100,
-//     reviewed: true,
-//   },
-//   {
-//     worksSubmitted: 2,
-//     worksNeeded: 3,
-//     confidence: 94.4,
-//     reviewed: false,
-//   },
-//   {
-//     worksSubmitted: 2,
-//     worksNeeded: 3,
-//     confidence: 100,
-//     reviewed: true,
-//   },
-//   {
-//     worksSubmitted: 1,
-//     worksNeeded: 3,
-//     confidence: 70.3,
-//     reviewed: false,
-//   },
-//   {
-//     worksSubmitted: 1,
-//     worksNeeded: 1,
-//     confidence: 91.3,
-//   },
-//   {
-//     worksSubmitted: 0,
-//     worksNeeded: 1,
-//     confidence: 0,
-//   },
-//   {
-//     worksSubmitted: 0,
-//     worksNeeded: 1,
-//     confidence: 0,
-//   },
-//   {
-//     worksSubmitted: 0,
-//     worksNeeded: 3,
-//     confidence: 0,
-//   },
-//   {
-//     worksSubmitted: 0,
-//     worksNeeded: 3,
-//     confidence: 0,
-//   },
-// ].map((a, i) => ({
-//   ...a,
-//   index: i,
-//   lastActivity: Date.now() - (i / 16) ** 2 * 3 * 1000 * 60 * 60 * 48,
-// }))
-
 export const ReviewSamplesTable = ({ selectedItem, onClickSample }) => {
-  const { samples } = useSampleSearch()
-  console.log({ samples })
+  const { samples } = useSampleSearch({
+    filter:
+      selectedItem === "Needs Review"
+        ? "needs-review"
+        : selectedItem === "asd"
+        ? "reviewed"
+        : "",
+    // order_by: "last_activity"
+    // sort_order: "desc"
+  })
+  const [searchText, setSearchText] = React.useState("")
 
   return (
     <>
@@ -86,6 +39,7 @@ export const ReviewSamplesTable = ({ selectedItem, onClickSample }) => {
           fullWidth
           variant="outlined"
           label="Search by sample number or labeler"
+          onChange={(e) => setSearchText(e.target.value)}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
