@@ -5,7 +5,10 @@ import SimpleSidebar from "./SimpleSidebar"
 export const Analytics = () => {
   return (
     <SimpleSidebar
-      sidebarItems={[{ name: "Performance Table" }]}
+      sidebarItems={[
+        { name: "Performance Table" },
+        { name: "Rejected Labels" },
+      ]}
       selectedItem="Performance Table"
     >
       <TeamPerformanceTable />

@@ -1,6 +1,7 @@
 // @flow
 
 import React, { useState, useEffect, useMemo } from "react"
+import Recoil from "recoil"
 import { makeStyles } from "@material-ui/core/styles"
 
 import { HeaderWithContainer } from "../Header"
@@ -20,6 +21,7 @@ import useInterface from "../../hooks/use-interface"
 import useSummary from "../../hooks/use-summary"
 import useRemoveSamples from "../../hooks/use-remove-samples"
 import ReviewPluginContent from "../ReviewPluginContent"
+import { activeDatasetAtom } from "udt-review-hooks"
 
 import "brace/mode/javascript"
 import "brace/theme/github"
@@ -58,7 +60,10 @@ export default ({
   const labelOnlyMode = useIsLabelOnlyMode()
   const c = useStyles()
   const { addToast } = useToasts()
-  const [mode, changeMode] = useState(labelOnlyMode ? "label" : initialMode)
+  const isReviewMode = Boolean(Recoil.useRecoilValue(activeDatasetAtom))
+  const [mode, changeMode] = useState(
+    isReviewMode ? "review" : labelOnlyMode ? "label" : initialMode
+  )
   const { ipcRenderer } = useElectron() || {}
   const posthog = usePosthog()
   const { iface } = useInterface()
@@ -67,7 +72,11 @@ export default ({
 
   const [sampleIndex, setSampleIndex] = useState(null)
 
-  const headerTabs = labelOnlyMode ? ["Label"] : ["Setup", "Samples", "Label"]
+  const headerTabs = isReviewMode
+    ? ["Review"]
+    : labelOnlyMode
+    ? ["Label"]
+    : ["Setup", "Samples", "Label"]
 
   const [
     sampleTimeToComplete,

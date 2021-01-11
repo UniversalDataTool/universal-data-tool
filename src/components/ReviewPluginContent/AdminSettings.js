@@ -22,9 +22,16 @@ export const AdminSettings = () => {
             Your dataset is loaded.
           </Box>
           <Box mt={4}>
-            <Button variant="outlined" color="primary">
+            <Button
+              variant="outlined"
+              color="primary"
+              target="_blank"
+              href={`/api/dataset/download?dataset_id=${activeDataset.dataset_id}`}
+              style={{ marginRight: 8 }}
+            >
               Download Dataset
             </Button>
+            <Button variant="outlined">Delete Dataset</Button>
           </Box>
         </Box>
       ) : (

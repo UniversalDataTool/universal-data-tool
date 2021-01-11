@@ -27,12 +27,13 @@ const sidebarItems = [
     name: "Needs Review",
   },
   {
-    name: "Complete",
+    name: "Reviewed",
   },
 ]
 
 export const Review = () => {
   const [selectedItem, setSelectedItem] = useState("All Samples")
+  const [selectedSampleId, setSelectedSampleId] = useState(null)
   return (
     <SimpleSidebar
       sidebarItems={sidebarItems.concat(
@@ -49,11 +50,14 @@ export const Review = () => {
         <ReviewSamplesTable
           selectedItem={selectedItem}
           onClickSample={(sample) => {
-            setSelectedItem(`Sample ${sample.index}`)
+            setSelectedItem(`Sample ${sample.sample_index}`)
+            setSelectedSampleId(sample.sample_id)
           }}
         />
       )}
-      {selectedItem.startsWith("Sample ") && <ReviewSampleContent />}
+      {selectedItem.startsWith("Sample ") && (
+        <ReviewSampleContent sampleId={selectedSampleId} />
+      )}
     </SimpleSidebar>
   )
 }

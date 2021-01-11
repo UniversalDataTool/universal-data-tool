@@ -19,16 +19,19 @@ import moment from "moment"
 import { useSampleSearch } from "udt-review-hooks"
 
 export const ReviewSamplesTable = ({ selectedItem, onClickSample }) => {
-  const { samples } = useSampleSearch({
-    filter:
-      selectedItem === "Needs Review"
-        ? "needs-review"
-        : selectedItem === "asd"
-        ? "reviewed"
-        : "",
-    // order_by: "last_activity"
-    // sort_order: "desc"
-  })
+  const searchOptions = React.useMemo(
+    () => ({
+      limit: 1000,
+      filter:
+        selectedItem === "Needs Review"
+          ? "needs-review"
+          : selectedItem === "Reviewed"
+          ? "reviewed"
+          : "",
+    }),
+    [selectedItem]
+  )
+  const { samples } = useSampleSearch(searchOptions)
   const [searchText, setSearchText] = React.useState("")
 
   return (
@@ -37,6 +40,8 @@ export const ReviewSamplesTable = ({ selectedItem, onClickSample }) => {
       <Box display="flex" padding={2}>
         <TextField
           fullWidth
+          disabled
+          placeholder="Not Working Yet"
           variant="outlined"
           label="Search by sample number or labeler"
           onChange={(e) => setSearchText(e.target.value)}
@@ -65,9 +70,9 @@ export const ReviewSamplesTable = ({ selectedItem, onClickSample }) => {
             samples
               .filter((s) =>
                 selectedItem === "Needs Review"
-                  ? !s.reviewed
+                  ? !s.is_reviewed
                   : selectedItem === "Complete"
-                  ? s.worksSubmitted >= s.worksNeeded
+                  ? s.number_of_works >= s.number_of_times_to_be_labeled
                   : true
               )
               .map((s, i) => (

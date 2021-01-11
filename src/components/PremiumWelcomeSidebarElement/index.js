@@ -11,6 +11,7 @@ import { useRecoilState, useSetRecoilState, atom } from "recoil"
 import useActiveDatasetManager from "../../hooks/use-active-dataset-manager"
 import LocalStorageDatasetManager from "udt-dataset-managers/dist/LocalStorageDatasetManager"
 import { useLogin, useDatasets, activeDatasetAtom } from "udt-review-hooks"
+import moment from "moment"
 
 const Title = styled("div")({
   marginTop: 24,
@@ -134,8 +135,8 @@ export const PremiumWelcomeSidebarElement = () => {
             key={ds.dataset_id}
           >
             <DatasetCol>{ds.display_name}</DatasetCol>
-            <DatasetCol>{ds.num_samples} Samples</DatasetCol>
-            <DatasetCol>{ds.last_activity}</DatasetCol>
+            <DatasetCol>{ds.number_of_samples} Samples</DatasetCol>
+            <DatasetCol>{moment(ds.last_activity).fromNow()}</DatasetCol>
           </DatasetRow>
         ))}
       </Box>

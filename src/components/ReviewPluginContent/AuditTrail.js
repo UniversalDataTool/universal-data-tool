@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, styled, colors } from "@material-ui/core"
+import { CircularProgress, Box, styled, colors } from "@material-ui/core"
 import EditIcon from "@material-ui/icons/Edit"
 import ComputerIcon from "@material-ui/icons/Computer"
 import SettingsApplicationsIcon from "@material-ui/icons/SettingsApplications"
@@ -30,23 +30,10 @@ const ItemContainer = styled("div")({
 
 const ItemText = styled("div")({})
 
-const items = [
-  {
-    text: "Billy Acosta labeled this item with 4 bounding boxes.",
-    type: "label",
-  },
-  { text: "System has selected Billy Acosta's labels", type: "system" },
-  { text: "Michael Reynolds labeled this item no labels.", type: "label" },
-  {
-    text: "System has selected Michael Reynolds's labels (91.4% > 87.7%)",
-    type: "system",
-  },
-  { text: "Mary Pack has confirmed Michael Reynold's labels.", type: "review" },
-]
-
 const getIcon = (type) => {
   switch (type) {
-    case "label": {
+    case "label":
+    case "work": {
       return <EditIcon className="icon" style={{ color: colors.blue[500] }} />
     }
     case "system": {
@@ -57,6 +44,7 @@ const getIcon = (type) => {
         />
       )
     }
+    case "work_review":
     case "review": {
       return (
         <SupervisedUserCircleIcon
@@ -70,13 +58,32 @@ const getIcon = (type) => {
   }
 }
 
-export const AuditTrail = () => {
+export const AuditTrail = ({ selectedItem, items, onSelectItem }) => {
+  if (!items)
+    return (
+      <Box textAlign="center" p="32px">
+        <CircularProgress size={20} />
+      </Box>
+    )
   return (
     <Box>
       {items.map((item, i) => (
-        <ItemContainer key={i} className={i === items.length - 1 && "selected"}>
+        <ItemContainer
+          onClick={() => onSelectItem(item)}
+          key={i}
+          className={selectedItem === item && "selected"}
+        >
           {getIcon(item.type)}
-          <ItemText>{item.text}</ItemText>
+          {item.type === "work" && (
+            <ItemText>{item.worker_name} submitted labels</ItemText>
+          )}
+          {item.type === "work_review" && (
+            <ItemText>
+              {item.reviewer_name} {item.accept_work ? "accepted" : "rejected"}{" "}
+              labels from {item.worker_name}
+            </ItemText>
+          )}
+          {item.type === "system" && <ItemText>{item.message}</ItemText>}
         </ItemContainer>
       ))}
     </Box>

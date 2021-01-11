@@ -22,6 +22,8 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import DownloadButton from "../DownloadButton"
 import PowerIcon from "@material-ui/icons/Power"
 import RateReviewIcon from "@material-ui/icons/RateReview"
+import Recoil from "recoil"
+import { activeDatasetAtom } from "udt-review-hooks"
 
 const capitalize = (s) => {
   return s.charAt(0).toUpperCase() + s.slice(1)
@@ -141,6 +143,7 @@ const HeaderToolbar = ({
   const c = useStyles()
   const { authProvider, isLoggedIn, logout } = useAuth()
   const { t } = useTranslation()
+  const isReviewMode = Boolean(Recoil.useRecoilValue(activeDatasetAtom))
 
   return (
     <>
@@ -167,40 +170,30 @@ const HeaderToolbar = ({
                   value={name.toLowerCase()}
                 />
               ))}
-              <Tab
-                id={`tab-review`}
-                key="review"
-                classes={{ root: c.fullHeightTab, wrapper: c.tabWrapper }}
-                className={c.tab}
-                icon={
-                  <Tooltip title={"review"} placement="right">
-                    {getIcon("Review")}
-                  </Tooltip>
-                }
-                value={"review".toLowerCase()}
-              />
             </Tabs>
           )}
         </div>
         <div className={c.belowTabButtons}>
-          {fileOpen && <InfoButton />}
-          <CollaborateButton
-            sessionBoxOpen={sessionBoxOpen}
-            changeSessionBoxOpen={changeSessionBoxOpen}
-            fileOpen={fileOpen}
-            inSession={inSession}
-            onCreateSession={onCreateSession}
-            onLeaveSession={onLeaveSession}
-            onJoinSession={onJoinSession}
-            error={collaborateError}
-          />
-          {!isDesktop && fileOpen && (
+          {!isReviewMode && fileOpen && <InfoButton />}
+          {!isReviewMode && (
+            <CollaborateButton
+              sessionBoxOpen={sessionBoxOpen}
+              changeSessionBoxOpen={changeSessionBoxOpen}
+              fileOpen={fileOpen}
+              inSession={inSession}
+              onCreateSession={onCreateSession}
+              onLeaveSession={onLeaveSession}
+              onJoinSession={onJoinSession}
+              error={collaborateError}
+            />
+          )}
+          {!isReviewMode && !isDesktop && fileOpen && (
             <DownloadButton
               interfaceType={interfaceType}
               onDownload={onDownload}
             />
           )}
-          {fileOpen && (
+          {!isReviewMode && fileOpen && (
             <BrushButton
               selectedBrush={selectedBrush}
               onChangeSelectedBrush={onChangeSelectedBrush}
