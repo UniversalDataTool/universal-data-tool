@@ -13,7 +13,7 @@ const createJsonFromUrlAWS = async (projectName, json, dm, configExport) => {
   } else if (RecognizeFileExtension(url) === "PDF") {
     json = { pdfUrl: `${url}` }
   } else if (RecognizeFileExtension(url) === "Text") {
-    var text = await dm.getSampleText({ txtUrl: `${url}` })
+    var text = await dm.getAssetText({ txtUrl: `${url}` })
     json = { document: `${text}` }
   }
   if (json) json = setIn(json, ["_id"], json._id)

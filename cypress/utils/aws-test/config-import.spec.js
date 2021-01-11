@@ -66,6 +66,9 @@ const configImport = () => {
     cy.get("input[value='Text']").should("not.be.checked")
     cy.get("input[value='Text']").should("not.be.disabled")
 
+    cy.get("input[value='Time']").should("not.be.checked")
+    cy.get("input[value='Time']").should("not.be.disabled")
+
     cy.get("svg[id='StorageIcon']").click()
     cy.contains("Close").click()
   })
@@ -90,6 +93,9 @@ const configImport = () => {
 
     cy.get("input[value='Text']").should("not.be.checked")
     cy.get("input[value='Text']").should("be.disabled")
+
+    cy.get("input[value='Time']").should("not.be.checked")
+    cy.get("input[value='Time']").should("be.disabled")
 
     cy.get("svg[id='StorageIcon']").click()
     cy.contains("Close").click()
@@ -116,6 +122,9 @@ const configImport = () => {
     cy.get("input[value='Text']").should("not.be.checked")
     cy.get("input[value='Text']").should("be.disabled")
 
+    cy.get("input[value='Time']").should("not.be.checked")
+    cy.get("input[value='Time']").should("be.disabled")
+
     cy.get("svg[id='StorageIcon']").click()
     cy.contains("Close").click()
   })
@@ -140,6 +149,9 @@ const configImport = () => {
 
     cy.get("input[value='Text']").should("not.be.checked")
     cy.get("input[value='Text']").should("be.disabled")
+
+    cy.get("input[value='Time']").should("not.be.checked")
+    cy.get("input[value='Time']").should("be.disabled")
 
     cy.get("svg[id='StorageIcon']").click()
     cy.contains("Close").click()
@@ -166,6 +178,9 @@ const configImport = () => {
     cy.get("input[value='Text']").should("be.checked")
     cy.get("input[value='Text']").should("not.be.disabled")
 
+    cy.get("input[value='Time']").should("not.be.checked")
+    cy.get("input[value='Time']").should("be.disabled")
+
     cy.get("svg[id='StorageIcon']").click()
     cy.contains("Close").click()
   })
@@ -191,6 +206,9 @@ const configImport = () => {
     cy.get("input[value='Text']").should("not.be.checked")
     cy.get("input[value='Text']").should("be.disabled")
 
+    cy.get("input[value='Time']").should("not.be.checked")
+    cy.get("input[value='Time']").should("be.disabled")
+
     cy.get("svg[id='StorageIcon']").click()
     cy.contains("Close").click()
   })
@@ -215,6 +233,9 @@ const configImport = () => {
 
     cy.get("input[value='Text']").should("not.be.checked")
     cy.get("input[value='Text']").should("be.disabled")
+
+    cy.get("input[value='Time']").should("be.checked")
+    cy.get("input[value='Time']").should("not.be.disabled")
 
     cy.get("svg[id='StorageIcon']").click()
     cy.contains("Close").click()

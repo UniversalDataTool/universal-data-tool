@@ -23,8 +23,7 @@ const testExportAssets = (name, lineToExpand, extensionToFind) => {
   cy.contains('Make sure the project has "data" folder').should(
     "not.be.visible"
   )
-  if(extensionToFind)
-  cy.contains(extensionToFind)
+  if (extensionToFind) cy.contains(extensionToFind)
   cy.contains("Load Annotations").click()
   cy.contains('Make sure the project has "samples" folder').should(
     "not.be.visible"
@@ -40,7 +39,7 @@ const testExportWithoutAssets = (nameProject, lineToExpand) => {
   cy.contains("Create project").click()
 
   cy.log("Check if project created/list updated")
-  cy.contains("Import from S3 (Cognito)", { timeout: 20000 }).click()
+  cy.contains("Import from S3 (Cognito)", { timeout: 40000 }).click()
   cy.contains(nameProject, { timeout: 20000 })
   cy.get("button[data-testid='expander-button-" + lineToExpand + "']").click()
   cy.contains('Make sure the project has "data" folder').should("be.visible")
@@ -56,9 +55,14 @@ const exportAWS = () => {
     testExportAssets("CypressTestExportAssetsVideo", 1, "mp4")
   })
 
-  it("Try to export with assets (Time)", () => {
+  it("Try to export with assets (Time:DataTime)", () => {
+    setTemplate("Time Series 2")
+    testExportAssets("CypressTestExportAssetsTime2", 1, "json")
+  })
+
+  it("Try to export with assets (Time:AudioUrl)", () => {
     setTemplate("Time Series")
-    testExportAssets("CypressTestExportAssetsTime", 1)
+    testExportAssets("CypressTestExportAssetsTime", 1, "mp3")
   })
 
   it("Try to export with assets (Text)", () => {

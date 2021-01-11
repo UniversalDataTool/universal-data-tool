@@ -12,6 +12,7 @@ export default (typeAuthorize, file) => {
     if (type === "data_entry") return "PDF"
     if (type === "text_entity_recognition" || type === "text_classification")
       return "Text"
+    if (type === "time_series") return "Time"
     if (isEmpty(type)) return "Empty"
     return "File"
   }
@@ -23,6 +24,7 @@ export default (typeAuthorize, file) => {
     if (!isEmpty(assets[0].audioUrl)) return "Audio"
     if (!isEmpty(assets[0].pdfUrl)) return "PDF"
     if (!isEmpty(assets[0].document)) return "Text"
+    if (!isEmpty(assets[0].timeData)) return "Time"
     return "File"
   }
 

@@ -452,6 +452,32 @@ export const templates = [
     },
   },
   {
+    name: "Time Series 2",
+    Icon: TimelineIcon,
+    dataset: {
+      interface: {
+        type: "time_series",
+        timeFormat: "dates",
+        enabledTools: ["create-durations", "label-durations"],
+        durationLabels: ["@seveibar is speaking"],
+      },
+      samples: [
+        {
+          timeData: [
+            { time: 0, value: 0 },
+            { time: 500, value: 0.75 },
+            { time: 1000, value: 1 },
+          ],
+          annotation: {
+            durations: [
+              { start: 500, end: 2000, label: "@seveibar is speaking" },
+            ],
+          },
+        },
+      ],
+    },
+  },
+  {
     name: "3D Bounding Box",
     Icon: ThreeDRotation,
     dataset: {

@@ -18,6 +18,8 @@ export default (configImport, dataset) => {
         ? "PDF"
         : checkInterfaceAndAssets(["Text", "Empty"], dataset)
         ? "Text"
+        : checkInterfaceAndAssets(["Time", "Empty"], dataset)
+        ? "Time"
         : "None",
     typeOfFileToDisable: {
       Image: checkInterfaceAndAssets(["Image", "Empty"], dataset)
@@ -31,6 +33,7 @@ export default (configImport, dataset) => {
         : true,
       PDF: checkInterfaceAndAssets(["PDF", "Empty"], dataset) ? false : true,
       Text: checkInterfaceAndAssets(["Text", "Empty"], dataset) ? false : true,
+      Time: checkInterfaceAndAssets(["Time", "Empty"], dataset) ? false : true,
     },
   }
 }

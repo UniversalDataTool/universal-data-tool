@@ -15,8 +15,11 @@ const fetchAFile = async (element, configExport, dm) => {
       const blob = await response.blob()
       return blob
     }
-  } else if ((await dm.getSampleText(element)) !== undefined) {
-    return await dm.getSampleText(element)
+  } else {
+    var text = await dm.getAssetText(element)
+    if (text) return text
+    var time = await dm.getAssetTime(element)
+    if (time) return time
   }
 }
 export default fetchAFile

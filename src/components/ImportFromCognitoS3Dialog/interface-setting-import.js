@@ -89,6 +89,13 @@ const setting = ({ configImport, setConfigImport, tableStyle }) => {
               disabled={configImport.typeOfFileToDisable.Text}
               checked={configImport.typeOfFileToLoad === "Text"}
             />
+            <FormControlLabel
+              value="Time"
+              control={<Radio />}
+              label="Load time file"
+              disabled={configImport.typeOfFileToDisable.Time}
+              checked={configImport.typeOfFileToLoad === "Time"}
+            />
           </RadioGroup>
         </FormControl>
       )}

@@ -1,7 +1,7 @@
 import datasetManagerCognito from "udt-dataset-managers/dist/CognitoDatasetManager"
 
 const removeAWSFile = async (name) => {
-  cy.log("Remove test files")
+  cy.log("Remove test files : " + name)
   cy.then({ timeout: 10000 }, () => {
     cy.then({ timeout: 10000 }, async () => {
       var credentials = Cypress.env()

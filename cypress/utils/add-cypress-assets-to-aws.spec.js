@@ -1,13 +1,22 @@
 import datasetManagerCognito from "udt-dataset-managers/dist/CognitoDatasetManager"
-
+import mime from "mime-types"
 const addAWSAssets = (nameProject, nameAsset) => {
   var credentials = Cypress.env()
-  cy.log("Add test files")
+  cy.log("Add test files : " + nameAsset)
   cy.then({ timeout: 100000 }, () => {
     cy.fixture("assets-dummies/" + nameAsset, "base64").then(
       { timeout: 100000 },
       async (asset) => {
-        const blob = await Cypress.Blob.base64StringToBlob(asset, "image/jpg")
+        var blob
+        if (nameAsset.match(".*\\.json")) {
+          blob = asset
+          console.log(asset)
+        } else {
+          blob = await Cypress.Blob.base64StringToBlob(
+            asset,
+            mime.lookup(nameAsset)
+          )
+        }
         const authConfig = {
           Auth: {
             identityPoolId: credentials.AWS_IDENTITY_POOL_ID,

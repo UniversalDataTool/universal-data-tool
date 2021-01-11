@@ -1,6 +1,7 @@
 import RecognizeFileExtension from "../../utils/RecognizeFileExtension"
 const setUrl = async (result, configImport, dm) => {
   var text
+  var json
   if (!configImport.loadAssetIsSelected) {
     if (RecognizeFileExtension(result) === "Image") {
       return { imageUrl: `${result}` }
@@ -11,8 +12,11 @@ const setUrl = async (result, configImport, dm) => {
     } else if (RecognizeFileExtension(result) === "PDF") {
       return { pdfUrl: `${result}` }
     } else if (RecognizeFileExtension(result) === "Text") {
-      text = await dm.getSampleText({ txtUrl: `${result}` })
+      text = await dm.getAssetText({ txtUrl: `${result}` })
       return { document: `${text}` }
+    } else if (configImport.typeOfFileToLoad === "Time") {
+      json = await dm.getAssetTime({ timeUrl: `${result}` })
+      return json
     }
   } else {
     if (
@@ -39,8 +43,14 @@ const setUrl = async (result, configImport, dm) => {
       RecognizeFileExtension(result) === configImport.typeOfFileToLoad &&
       configImport.typeOfFileToLoad === "Text"
     ) {
-      text = await dm.getSampleText({ txtUrl: `${result}` })
+      text = await dm.getAssetText({ txtUrl: `${result}` })
       return { document: `${text}` }
+    } else if (
+      RecognizeFileExtension(result) === configImport.typeOfFileToLoad &&
+      configImport.typeOfFileToLoad === "Time"
+    ) {
+      json = await dm.getJSON(result)
+      return json
     }
   }
 }

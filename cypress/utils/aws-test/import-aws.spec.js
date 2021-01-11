@@ -69,9 +69,11 @@ const importAWS = () => {
     importFromAssets("Text Classification", "Text Classification", 3, 5)
   })
 
+  it("Try to import a project Time from assets(DataUrl)", () => {
+    importFromAssets("Time Series", "Time Series", 1, 6)
+  })
 
-  //Uncomment when the assets for time samples will managed
-  /*it("Try to import a project from assets(Time)", () => {
+  /*it("Try to import a project Time from assets(AudioUrl)", () => {
     importFromAssets("Time Series", "Time Series", 1, 6)
   })*/
 }

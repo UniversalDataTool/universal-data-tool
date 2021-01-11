@@ -12,6 +12,8 @@ export default (dataset) => {
       ? "PDF"
       : checkInterfaceAndsamples(["Text", "Empty"], dataset)
       ? "Text"
+      : checkInterfaceAndsamples(["Time", "Empty"], dataset)
+      ? "Time"
       : "None",
     typeOfFileToDisable: {
       Image: checkInterfaceAndsamples(["Image", "Empty"], dataset)
@@ -25,6 +27,7 @@ export default (dataset) => {
         : true,
       PDF: checkInterfaceAndsamples(["PDF", "Empty"], dataset) ? false : true,
       Text: checkInterfaceAndsamples(["Text", "Empty"], dataset) ? false : true,
+      Time: checkInterfaceAndsamples(["Time", "Empty"], dataset) ? false : true,
     },
     loadAssetsIsSelected: true,
     contentDialogBoxIsSetting: false,
