@@ -34,6 +34,7 @@ const sidebarItems = [
 export const Review = () => {
   const [selectedItem, setSelectedItem] = useState("All Samples")
   const [selectedSampleId, setSelectedSampleId] = useState(null)
+  const [sampleQueue, setSampleQueue] = useState(null)
   return (
     <SimpleSidebar
       sidebarItems={sidebarItems.concat(
@@ -43,20 +44,36 @@ export const Review = () => {
           },
         ].filter(Boolean)
       )}
-      onSelectItem={setSelectedItem}
+      onSelectItem={(selectedItem) => setSelectedItem(selectedItem)}
       selectedItem={selectedItem}
     >
       {!selectedItem.startsWith("Sample ") && (
         <ReviewSamplesTable
           selectedItem={selectedItem}
-          onClickSample={(sample) => {
+          onClickSample={(sample, sampleQueue) => {
             setSelectedItem(`Sample ${sample.sample_index}`)
             setSelectedSampleId(sample.sample_id)
+            setSampleQueue(sampleQueue)
           }}
         />
       )}
       {selectedItem.startsWith("Sample ") && (
-        <ReviewSampleContent sampleId={selectedSampleId} />
+        <ReviewSampleContent
+          sampleId={selectedSampleId}
+          onBack={() => {
+            setSelectedItem("Needs Review")
+          }}
+          onNext={() => {
+            if (sampleQueue.length === 0) {
+              setSelectedItem("Needs Review")
+              return
+            }
+            const nextSample = sampleQueue[0]
+            setSelectedItem(`Sample ${nextSample.sample_index}`)
+            setSelectedSampleId(nextSample.sample_id)
+            setSampleQueue(sampleQueue.slice(1))
+          }}
+        />
       )}
     </SimpleSidebar>
   )

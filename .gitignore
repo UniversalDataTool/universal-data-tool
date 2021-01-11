@@ -43,3 +43,5 @@ cypress/snapshots
 
 .idea
 *.db
+
+.vercel

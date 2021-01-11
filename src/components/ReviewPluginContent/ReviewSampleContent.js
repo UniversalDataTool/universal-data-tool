@@ -10,16 +10,22 @@ import AuditTrail from "./AuditTrail.js"
 import UniversalSampleEditor from "../UniversalSampleEditor"
 import { useSample, useReviewWork } from "udt-review-hooks"
 
-export const ReviewSampleContent = ({ sampleId }) => {
+export const ReviewSampleContent = ({ sampleId, onBack, onNext }) => {
   const [mode, setMode] = React.useState("view-best") // correct, view-audit-item
   const [selectedAuditItem, setSelectedAuditItem] = React.useState()
-  const { sample, auditTrail, loading, reloadSample } = useSample({
+  const {
+    sample,
+    auditTrail,
+    loading,
+    reloadSample,
+    submitAnnotation,
+  } = useSample({
     sampleId,
     withAuditTrail: true,
   })
-  const { reviewWork } = useReviewWork(
+  const work_id =
     mode === "view-best" ? sample?.best_work_id : selectedAuditItem?.work_id
-  )
+  const { reviewWork } = useReviewWork(work_id)
 
   const sampleBeingViewed = React.useMemo(
     () => ({
@@ -40,11 +46,24 @@ export const ReviewSampleContent = ({ sampleId }) => {
     <Box display="flex">
       <Box flexGrow={1}>
         <Box display="flex" padding={1} paddingBottom={2}>
-          <Button variant="outlined">Back</Button>
+          <Button onClick={onBack} variant="outlined">
+            Back
+          </Button>
           <Box flexGrow={1} />
           <Button
             variant="outlined"
             style={{ color: colors.red[600], borderColor: colors.red[300] }}
+            onClick={async () => {
+              if (!work_id) {
+                window.alert("There is no work to review.")
+                return
+              }
+              await reviewWork({
+                reject: true,
+                message: window.prompt("Leave a rejection message?"),
+              })
+              await reloadSample()
+            }}
           >
             Reject
           </Button>
@@ -56,16 +75,17 @@ export const ReviewSampleContent = ({ sampleId }) => {
               borderColor: colors.green[600],
             }}
             onClick={async () => {
-              await reviewWork({
-                accept: true,
-                message: window.prompt("Leave a message?"),
-              })
+              if (!work_id) {
+                window.alert("There is no work to review.")
+                return
+              }
+              await reviewWork({ accept: true })
               await reloadSample()
             }}
           >
             Approve
           </Button>
-          <Button style={{ marginLeft: 8 }} variant="outlined">
+          <Button onClick={onNext} style={{ marginLeft: 8 }} variant="outlined">
             Next
           </Button>
         </Box>
@@ -80,6 +100,9 @@ export const ReviewSampleContent = ({ sampleId }) => {
             sampleIndex={sample.sample_index}
             sample={sampleBeingViewed}
             interface={sample.interface}
+            onModifySample={async (sample) => {
+              await submitAnnotation(sample.annotation)
+            }}
           />
         )}
       </Box>

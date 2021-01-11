@@ -21,7 +21,7 @@ import { useSampleSearch } from "udt-review-hooks"
 export const ReviewSamplesTable = ({ selectedItem, onClickSample }) => {
   const searchOptions = React.useMemo(
     () => ({
-      limit: 1000,
+      limit: 20,
       filter:
         selectedItem === "Needs Review"
           ? "needs-review"
@@ -91,7 +91,13 @@ export const ReviewSamplesTable = ({ selectedItem, onClickSample }) => {
                     {!s.last_activity ? "" : moment(s.last_activity).fromNow()}
                   </TableCell>
                   <TableCell>
-                    <Button onClick={() => onClickSample(s)}>View</Button>
+                    <Button
+                      onClick={() => {
+                        onClickSample(s, samples.slice(i + 1))
+                      }}
+                    >
+                      View
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
