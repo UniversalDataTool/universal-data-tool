@@ -82,6 +82,10 @@ const Title = styled("div")({
 })
 
 const languageSelectionFormStyle = {
+  input: (base) => ({
+    ...base,
+    color: "#e0e0e0",
+  }),
   control: (base, state) => ({
     ...base,
     border: "1px solid #9e9e9e",
