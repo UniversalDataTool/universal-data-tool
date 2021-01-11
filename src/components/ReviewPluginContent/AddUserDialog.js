@@ -29,9 +29,13 @@ export const AddUserDialog = (props) => {
   const onSubmit = async () => {
     setLoading(true)
     setError(null)
-    await addUser(userData).catch((err) => setError(err.toString()))
+    try {
+      await addUser(userData)
+      onClose()
+    } catch (e) {
+      setError(e.toString())
+    }
     setLoading(false)
-    onClose()
   }
 
   const onInputChange = (event) => {
@@ -51,6 +55,13 @@ export const AddUserDialog = (props) => {
           </Box>
         ) : (
           <Grid container spacing={1}>
+            {error && (
+              <Grid item xs={12}>
+                <Box color="red" fontSize={18}>
+                  {error}
+                </Box>
+              </Grid>
+            )}
             <Grid item xs={12}>
               <TextField
                 required

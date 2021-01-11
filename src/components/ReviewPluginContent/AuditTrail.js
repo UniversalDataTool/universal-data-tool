@@ -30,7 +30,7 @@ const ItemContainer = styled("div")({
 
 const ItemText = styled("div")({})
 
-const getIcon = (type) => {
+const getIcon = (type, item) => {
   switch (type) {
     case "label":
     case "work": {
@@ -49,7 +49,9 @@ const getIcon = (type) => {
       return (
         <SupervisedUserCircleIcon
           className="icon"
-          style={{ color: colors.green[500] }}
+          style={{
+            color: item.accept_work ? colors.green[500] : colors.red[500],
+          }}
         />
       )
     }
@@ -73,7 +75,7 @@ export const AuditTrail = ({ selectedItem, items, onSelectItem }) => {
           key={i}
           className={selectedItem === item && "selected"}
         >
-          {getIcon(item.type)}
+          {getIcon(item.type, item)}
           {item.type === "work" && (
             <ItemText>{item.worker_name} submitted labels</ItemText>
           )}

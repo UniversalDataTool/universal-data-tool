@@ -16,7 +16,7 @@ import { useTeam } from "udt-review-hooks"
 
 export const TeamTable = () => {
   const [openAddUserDialog, setOpenAddUserDialog] = useState(false)
-  const { team } = useTeam()
+  const { team, reloadTeam } = useTeam()
   return (
     <>
       <Table>
@@ -53,20 +53,13 @@ export const TeamTable = () => {
         >
           Add Team Member
         </Button>
-        <Button
-          style={{
-            borderColor: colors.red[200],
-            color: colors.red[300],
-            marginLeft: 16,
-          }}
-          variant="outlined"
-        >
-          Remove Team Member
-        </Button>
       </Box>
       <AddUserDialog
         open={openAddUserDialog}
-        onClose={() => setOpenAddUserDialog(false)}
+        onClose={() => {
+          setOpenAddUserDialog(false)
+          reloadTeam()
+        }}
       />
     </>
   )
