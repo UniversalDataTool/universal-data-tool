@@ -12,7 +12,7 @@ import {
 import EditIcon from "@material-ui/icons/Edit"
 import moment from "moment"
 import AddUserDialog from "./AddUserDialog"
-import { useTeam } from "udt-premium-api-hook-lib"
+import { useTeam } from "udt-review-hooks"
 
 export const TeamTable = () => {
   const [openAddUserDialog, setOpenAddUserDialog] = useState(false)
