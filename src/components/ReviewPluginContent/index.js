@@ -14,10 +14,10 @@ import AdminSettings from "./AdminSettings"
 import { activeDatasetAtom, userAtom } from "udt-review-hooks"
 
 const tabs = [
-  { name: "Settings", roles: ['admin'] },
-  { name: "Review", roles: ['admin', 'reviewer'] },
-  { name: "Label", roles: ['admin', 'reviewer', 'labeler'] },
-  { name: "Analytics", roles: ['admin', 'reviewer', 'labeler'] },
+  { name: "Settings", roles: ["admin"] },
+  { name: "Review", roles: ["admin", "reviewer"] },
+  { name: "Label", roles: ["admin", "reviewer", "labeler"] },
+  { name: "Analytics", roles: ["admin", "reviewer", "labeler"] },
 ]
 
 const getIcon = (s) => {
@@ -53,14 +53,16 @@ export const ReviewPluginContent = () => {
   return (
     <Box>
       <Tabs variant="fullWidth" onChange={onChangeTab} value={tab}>
-        {tabs.filter(tab => tab.roles.includes(user.role.toLowerCase())).map((tab) => (
-          <Tab
-            key={tab.name}
-            icon={getIcon(tab.name)}
-            label={tab.name}
-            value={tab.name.toLowerCase()}
-          />
-        ))}
+        {tabs
+          .filter((tab) => tab.roles.includes(user.role.toLowerCase()))
+          .map((tab) => (
+            <Tab
+              key={tab.name}
+              icon={getIcon(tab.name)}
+              label={tab.name}
+              value={tab.name.toLowerCase()}
+            />
+          ))}
       </Tabs>
       {tab === "settings" && <Settings />}
       {tab === "review" && <Review />}
