@@ -76,7 +76,7 @@ export default ({
     ? ["Review"]
     : labelOnlyMode
     ? ["Label"]
-    : ["Setup", "Samples", "Label"]
+    : ["Setup", "Samples", "Label", "Review"]
 
   const [
     sampleTimeToComplete,

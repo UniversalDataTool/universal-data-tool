@@ -55,7 +55,9 @@ export const AdminSettings = () => {
                   udt_dataset: ds,
                   display_name,
                 })
+                console.log({ cloudDS })
                 setActiveDataset(cloudDS)
+
                 setLoading(false)
               }}
               variant="outlined"
