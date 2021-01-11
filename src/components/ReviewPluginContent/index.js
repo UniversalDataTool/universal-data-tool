@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import Recoil from "recoil"
+import Recoil, { useRecoilValue } from "recoil"
 import useEventCallback from "use-event-callback"
 import { Tabs, Tab, Box, colors, styled } from "@material-ui/core"
 import SettingsIcon from "@material-ui/icons/Settings"
@@ -11,13 +11,13 @@ import Analytics from "./Analytics"
 import Review from "./Review"
 import Label from "./Label"
 import AdminSettings from "./AdminSettings"
-import { activeDatasetAtom } from "udt-review-hooks"
+import { activeDatasetAtom, userAtom } from "udt-review-hooks"
 
 const tabs = [
-  { name: "Settings" },
-  { name: "Review" },
-  { name: "Label" },
-  { name: "Analytics" },
+  { name: "Settings", roles: ["admin"] },
+  { name: "Review", roles: ["admin", "reviewer"] },
+  { name: "Label", roles: ["admin", "reviewer", "labeler"] },
+  { name: "Analytics", roles: ["admin", "reviewer", "labeler"] },
 ]
 
 const getIcon = (s) => {
@@ -41,6 +41,7 @@ const getIcon = (s) => {
 }
 
 export const ReviewPluginContent = () => {
+  const user = useRecoilValue(userAtom)
   const [tab, setTab] = useState("review")
   const onChangeTab = useEventCallback((e, newTab) => {
     setTab(newTab)
@@ -52,14 +53,16 @@ export const ReviewPluginContent = () => {
   return (
     <Box>
       <Tabs variant="fullWidth" onChange={onChangeTab} value={tab}>
-        {tabs.map((tab) => (
-          <Tab
-            key={tab.name}
-            icon={getIcon(tab.name)}
-            label={tab.name}
-            value={tab.name.toLowerCase()}
-          />
-        ))}
+        {tabs
+          .filter((tab) => tab.roles.includes(user.role.toLowerCase()))
+          .map((tab) => (
+            <Tab
+              key={tab.name}
+              icon={getIcon(tab.name)}
+              label={tab.name}
+              value={tab.name.toLowerCase()}
+            />
+          ))}
       </Tabs>
       {tab === "settings" && <Settings />}
       {tab === "review" && <Review />}
