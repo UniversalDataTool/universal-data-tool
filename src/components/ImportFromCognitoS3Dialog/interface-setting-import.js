@@ -33,12 +33,14 @@ const setting = ({ configImport, setConfigImport, tableStyle }) => {
               control={<Radio />}
               label="Keep incoming annotations"
               checked={configImport.annotationToKeep === "incoming"}
+              disabled={true}
             />
             <FormControlLabel
               value="current"
               control={<Radio />}
               label="Keep current annotations"
               checked={configImport.annotationToKeep === "current"}
+              disabled={true}
             />
           </RadioGroup>
         </FormControl>

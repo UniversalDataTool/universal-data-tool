@@ -46,12 +46,14 @@ describe("Import aws test", () => {
     addAssetsToAWS("Text Classification", "text1.txt")
     addAssetsToAWS("Text Classification", "text2.txt")
     addAssetsToAWS("Text Classification", "text3.txt")
-    addAssetsToAWS("Time Series", "timeSeries.json")
+    addAssetsToAWS("Time Series", "audio.mp3")
+    addAssetsToAWS("Time Series 2", "timeSeries.json")
     addFileToAWS("Empty.json")
     addFileToAWS("AudioTranscription.json")
     addFileToAWS("VideoSegmentation.json")
     addFileToAWS("TextClassification.json")
-    addFileToAWS("TimeSeriesDataUrl.json")
+    addFileToAWS("TimeSeriesTimeData.json")
+    addFileToAWS("TimeSeriesAudioUrl.json")
     addFileToAWS("DataEntry.json")
     addFileToAWS("NotSupported.json")
     removeAWSFile("CypressTestExportAnnotationOnlyTime")
@@ -79,12 +81,14 @@ describe("Import aws test", () => {
   configExport()
   exportAWS() //Always the last test aws change after this
 
-  afterEach("Check if project imported", () => {
+  //Comment below when debugging 1 test
+  afterEach("Return to home page", () => {
     cy.get("button[title='Exit to Welcome Page']").click({ force: true })
   })
 
+  //Comment below when debugging aws
   after("Clean AWS", () => {
-    removeAWSFile("Image Classification")
+    /*removeAWSFile("Image Classification")
     removeAWSFile("CypressTestExportAssetsImage")
     removeAWSFile("CypressTestExportAssetsVideo")
     removeAWSFile("CypressTestExportAssetsPDF")
@@ -94,6 +98,7 @@ describe("Import aws test", () => {
     removeAWSFile("CypressTestExportAssetsTime2")
     removeAWSFile("Not Supported")
     removeAWSFile("Time Series")
+    removeAWSFile("Time Series 2")
     removeAWSFile("Data Entry")
     removeAWSFile("Text Classification")
     removeAWSFile("Video Segmentation")
@@ -104,6 +109,6 @@ describe("Import aws test", () => {
     removeAWSFile("CypressTestExportAnnotationOnlyVideo")
     removeAWSFile("CypressTestExportAnnotationOnlyPDF")
     removeAWSFile("CypressTestExportAnnotationOnlyAudio")
-    removeAWSFile("CypressTestExportAnnotationOnlyText")
+    removeAWSFile("CypressTestExportAnnotationOnlyText")*/
   })
 })

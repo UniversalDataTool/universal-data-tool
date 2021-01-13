@@ -37,7 +37,7 @@ const importAWS = () => {
     importFromAnnotation("Image Classification", "Image Classification", 2, 3)
   })
   it("Try to import a project from annotations(Video)", () => {
-    importFromAnnotation("Video Segmentation", "Video Segmentation", 1, 7)
+    importFromAnnotation("Video Segmentation", "Video Segmentation", 1, 8)
   })
   it("Try to import a project from annotations(Audio)", () => {
     importFromAnnotation("Audio Transcription", "Audio Transcription", 1, 0)
@@ -48,9 +48,11 @@ const importAWS = () => {
   it("Try to import a project from annotations(Text)", () => {
     importFromAnnotation("Text Classification", "Text Classification", 3, 5)
   })
-
-  it("Try to import a project from annotations(Time)", () => {
-    importFromAnnotation("Time Series", "Time Series", 1, 6)
+  it("Try to import a project from annotations(Time:DataTime)", () => {
+    importFromAnnotation("Time Series 2", "Time Series", 1, 6)
+  })
+  it("Try to import a project from annotations(Time:AudioUrl)", () => {
+    importFromAnnotation("Time Series", "Time Series", 1, 7)
   })
 
   it("Try to import a project from assets(Image)", () => {
@@ -68,13 +70,11 @@ const importAWS = () => {
   it("Try to import a project from assets(Text)", () => {
     importFromAssets("Text Classification", "Text Classification", 3, 5)
   })
-
-  it("Try to import a project Time from assets(DataUrl)", () => {
-    importFromAssets("Time Series", "Time Series", 1, 6)
+  it("Try to import a project from assets(Time:DataTime)", () => {
+    importFromAssets("Time Series 2", "Time Series", 1, 6)
   })
-
-  /*it("Try to import a project Time from assets(AudioUrl)", () => {
-    importFromAssets("Time Series", "Time Series", 1, 6)
-  })*/
+  it("Try to import a project from assets(Time:AudioUrl)", () => {
+    importFromAssets("Time Series", "Time Series", 1, 7)
+  })
 }
 export default importAWS

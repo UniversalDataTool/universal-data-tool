@@ -1,5 +1,5 @@
 import isEmpty from "lodash/isEmpty"
-export default (typeAuthorize, file) => {
+export default (typeAuthorizeInterface, typeAuthorizeAssets, file) => {
   const interfaceFileType = (type) => {
     if (
       type === "image_classification" ||
@@ -32,7 +32,10 @@ export default (typeAuthorize, file) => {
   if (isEmpty(file)) return false
   result[0] = interfaceFileType(file.interface.type)
   result[1] = typeAssetsFromSample(file.samples)
-  if (typeAuthorize.includes(result[0]) && typeAuthorize.includes(result[1]))
+  if (
+    typeAuthorizeInterface.includes(result[0]) &&
+    typeAuthorizeAssets.includes(result[1])
+  )
     return true
   return false
 }

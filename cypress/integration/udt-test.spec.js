@@ -10,6 +10,7 @@ import textEntityClassification from "../utils/test/text-entity-classification.s
 import setLanguage from "../utils/set-language.spec"
 import defaultTemplate from "../utils/test/default-template.spec"
 import setTemplate from "../utils/set-template.spec"
+import templateNonVisible from "../utils/test/template-non-visble.spec"
 Cypress.config("defaultCommandTimeout", 3000)
 describe("Udt test", () => {
   beforeEach("Prepare test", () => {
@@ -17,6 +18,7 @@ describe("Udt test", () => {
     setLanguage()
     setTemplate("Empty")
   })
+  templateNonVisible()
   defaultTemplate()
   createNewFile()
   imageClassification()

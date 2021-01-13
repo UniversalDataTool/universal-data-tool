@@ -1,5 +1,5 @@
 {
-  "name": "Time Series",
+  "name": "Time Series 2",
   "interface": {
     "type": "time_series",
     "timeFormat": "dates",
