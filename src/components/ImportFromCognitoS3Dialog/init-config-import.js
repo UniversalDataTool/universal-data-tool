@@ -1,27 +1,32 @@
 import checkInterfaceAndsamples from "./check-interface-and-sample-type"
-export default (file) => {
+import isEmpty from "lodash/isEmpty"
+export default (dataset) => {
   return {
     annotationToKeep: "both",
-    typeOfFileToLoad: checkInterfaceAndsamples(["Image", "Empty"], file)
+    typeOfFileToLoad: checkInterfaceAndsamples(["Image", "Empty"], dataset)
       ? "Image"
-      : checkInterfaceAndsamples(["Video", "Empty"], file)
+      : checkInterfaceAndsamples(["Video", "Empty"], dataset)
       ? "Video"
-      : checkInterfaceAndsamples(["Audio", "Empty"], file)
+      : checkInterfaceAndsamples(["Audio", "Empty"], dataset)
       ? "Audio"
-      : checkInterfaceAndsamples(["PDF", "Empty"], file)
+      : checkInterfaceAndsamples(["PDF", "Empty"], dataset)
       ? "PDF"
-      : checkInterfaceAndsamples(["Texte", "Empty"], file)
+      : checkInterfaceAndsamples(["Texte", "Empty"], dataset)
       ? "Texte"
       : "None",
     typeOfFileToDisable: {
-      Image: checkInterfaceAndsamples(["Image", "Empty"], file) ? false : true,
-      Video: checkInterfaceAndsamples(["Video", "Empty"], file) ? false : true,
-      Audio: checkInterfaceAndsamples(["Audio", "Empty"], file) ? false : true,
-      PDF: checkInterfaceAndsamples(["PDF", "Empty"], file) ? false : true,
-      Texte: checkInterfaceAndsamples(["Texte", "Empty"], file) ? false : true,
+      Image: !checkInterfaceAndsamples(["Image", "Empty"], dataset),
+      Video: !checkInterfaceAndsamples(["Video", "Empty"], dataset),
+      Audio: !checkInterfaceAndsamples(["Audio", "Empty"], dataset),
+      PDF: !checkInterfaceAndsamples(["PDF", "Empty"], dataset),
+      Texte: !checkInterfaceAndsamples(["Texte", "Empty"], dataset),
     },
-    loadProjectIsSelected: true,
+    loadAssetsIsSelected: true,
     contentDialogBoxIsSetting: false,
-    projectStarted: false,
+    projectStarted:
+      isEmpty(dataset) ||
+      (isEmpty(dataset.interface) && isEmpty(dataset.samples))
+        ? false
+        : true,
   }
 }
