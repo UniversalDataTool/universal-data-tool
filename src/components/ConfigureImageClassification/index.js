@@ -32,9 +32,9 @@ export default ({ iface, onChange }) => {
     () => ({
       multiple: iface.multiple ? iface.multiple : false,
       labels:
-        (iface.labels || []).map((a) =>
-          typeof a === "string" ? { id: a, description: a } : a
-        ) || [],
+        (iface.labels || []).map((a) => {
+          return typeof a === "string" ? { id: a, description: a } : a
+        }) || [],
     }),
     [iface.labels, iface.multiple]
   )
@@ -43,7 +43,14 @@ export default ({ iface, onChange }) => {
       noActions
       variant="flat"
       defaultAnswers={defaultAnswers}
-      onQuestionChange={(questionId, newValue, answers) => {
+      onQuestionChange={(questionId, newValue) => {
+        var arrayId = []
+        if (Array.isArray(newValue))
+          newValue = newValue.filter((json) => {
+            if (arrayId.includes(json.id)) return false
+            arrayId.push(json.id)
+            return true
+          })
         onChange(setIn(iface, [questionId], newValue))
       }}
       form={form}
