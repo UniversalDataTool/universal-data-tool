@@ -88,7 +88,7 @@ describe("Import aws test", () => {
 
   //Comment below when debugging aws
   after("Clean AWS", () => {
-    /*removeAWSFile("Image Classification")
+    removeAWSFile("Image Classification")
     removeAWSFile("CypressTestExportAssetsImage")
     removeAWSFile("CypressTestExportAssetsVideo")
     removeAWSFile("CypressTestExportAssetsPDF")
@@ -109,6 +109,6 @@ describe("Import aws test", () => {
     removeAWSFile("CypressTestExportAnnotationOnlyVideo")
     removeAWSFile("CypressTestExportAnnotationOnlyPDF")
     removeAWSFile("CypressTestExportAnnotationOnlyAudio")
-    removeAWSFile("CypressTestExportAnnotationOnlyText")*/
+    removeAWSFile("CypressTestExportAnnotationOnlyText")
   })
 })

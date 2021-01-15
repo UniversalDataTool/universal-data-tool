@@ -1,6 +1,6 @@
 import goToImportPage from "../go-to-import-page.spec"
 const warningHeader = () => {
-  it.only("Warning project name not set", () => {
+  it("Warning project name not set", () => {
     goToImportPage("Image Segmentation")
     cy.contains("Export to S3 (Cognito)").click()
     cy.contains("Warning : Please enter a project name.")

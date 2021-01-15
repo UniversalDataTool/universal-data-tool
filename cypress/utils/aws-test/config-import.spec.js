@@ -51,7 +51,7 @@ const configImport = () => {
     cy.contains("Import from S3 (Cognito)").click()
     cy.get("svg[id='SettingIcon']").click()
 
-    cy.get("input[value='Image']").should("be.checked")
+    cy.get("input[value='Image']").should("not.be.checked")
     cy.get("input[value='Image']").should("not.be.disabled")
 
     cy.get("input[value='Video']").should("not.be.checked")
@@ -226,7 +226,7 @@ const configImport = () => {
     cy.get("input[value='Video']").should("be.disabled")
 
     cy.get("input[value='Audio']").should("not.be.checked")
-    cy.get("input[value='Audio']").should("be.disabled")
+    cy.get("input[value='Audio']").should("not.be.disabled")
 
     cy.get("input[value='PDF']").should("not.be.checked")
     cy.get("input[value='PDF']").should("be.disabled")
