@@ -1,9 +1,9 @@
 import datasetManagerCognito from "udt-dataset-managers/dist/CognitoDatasetManager"
 import mime from "mime-types"
-const addAWSAssets = (nameProject, nameAsset) => {
-  var credentials = Cypress.env()
-  cy.log("Add test files : " + nameAsset)
-  cy.then({ timeout: 100000 }, () => {
+const command = () => {
+  Cypress.Commands.add("addAssetToAwsProject", (nameProject, nameAsset) => {
+    var credentials = Cypress.env()
+    cy.log("Add test files : " + nameAsset)
     cy.fixture("assets-dummies/" + nameAsset, "base64").then(
       { timeout: 100000 },
       async (asset) => {
@@ -40,4 +40,4 @@ const addAWSAssets = (nameProject, nameAsset) => {
     )
   })
 }
-export default addAWSAssets
+export default command

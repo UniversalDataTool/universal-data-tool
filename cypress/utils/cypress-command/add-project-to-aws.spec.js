@@ -1,9 +1,8 @@
 import datasetManagerCognito from "udt-dataset-managers/dist/CognitoDatasetManager"
-
-const addAWSFile = (nameDummies) => {
-  var credentials = Cypress.env()
-  cy.log("Add test files : " + nameDummies)
-  cy.then({ timeout: 100000 }, () => {
+const command = () => {
+  Cypress.Commands.add("addProjectToAws", (nameDummies) => {
+    var credentials = Cypress.env()
+    cy.log("Add test files : " + nameDummies)
     cy.fixture("samples-dummies/" + nameDummies).then(
       { timeout: 100000 },
       async (dummies) => {
@@ -29,4 +28,4 @@ const addAWSFile = (nameDummies) => {
     )
   })
 }
-export default addAWSFile
+export default command

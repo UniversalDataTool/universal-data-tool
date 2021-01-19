@@ -171,20 +171,20 @@ export default ({ open, onClose, onAddSamples }) => {
         )
       })
     )
-    onAddSamples(jsons)
+    return jsons
   }
 
   const createJsonFromUrlAWS = async (projectName, imageName) => {
     var url = await dm.getAssetUrl(imageName, projectName)
     var json = await setUrl(url, configImport, dm)
-    if (json) json = setIn(json, ["_id"], imageName)
-    if (json) json = setIn(json, ["source"], projectName)
+    if (json) json = await setIn(json, ["_id"], imageName)
+    if (json) json = await setIn(json, ["source"], projectName)
     return json
   }
 
   const createJsonFromAnnotation = async () => {
     var jsons = await dm.readJSONAllSamples(projectToFetch.rowAnnotationsUrl)
-    var sources = getSources(jsons)
+    var sources = await getSources(jsons)
     if (sources) {
       jsons = await Promise.all(
         jsons.map(async (json) => {
@@ -193,16 +193,33 @@ export default ({ open, onClose, onAddSamples }) => {
         })
       )
     }
-    onAddSamples(jsons)
+    return jsons
   }
+
+  const checkIfJsonsContainsDouble = () => {}
 
   const handleAddSample = async () => {
     if (!dm) return
+    var jsons
     if (configImport.loadAssetsIsSelected) {
-      createJsonFromAsset()
+      jsons = await createJsonFromAsset()
     } else {
-      createJsonFromAnnotation()
+      jsons = await createJsonFromAnnotation()
     }
+    checkIfJsonsContainsDouble()
+
+    onAddSamples(await preventFatalErrorOnAddSamples(jsons))
+  }
+
+  const preventFatalErrorOnAddSamples = async (jsons) => {
+    return await Promise.resolve(jsons)
+      .then((jsons) => {
+        if (Array.isArray(jsons)) return jsons
+        return []
+      })
+      .catch(() => {
+        return []
+      })
   }
 
   return (

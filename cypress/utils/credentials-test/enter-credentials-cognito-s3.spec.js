@@ -94,11 +94,13 @@ const enterCredentialsCognitoS3 = () => {
 }
 
 const test = () => {
-  cy.log("should be able to set s3 config")
-  cy.contains("Add Authentification").click()
-  cy.contains("AWS - Cognito").click()
-  enterCredentialsCognitoS3()
-  cy.contains("Complete").click()
+  it("Enter credentials cognito-s3", () => {
+    cy.log("should be able to set s3 config")
+    cy.contains("Add Authentification").click()
+    cy.contains("AWS - Cognito").click()
+    enterCredentialsCognitoS3()
+    cy.contains("Complete").click()
+  })
 }
 
 export default test
