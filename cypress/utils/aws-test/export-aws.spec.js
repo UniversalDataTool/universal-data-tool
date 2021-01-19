@@ -1,5 +1,5 @@
 import goToImportPage from "../go-to-import-page.spec"
-import setTemplate from "../set-template.spec"
+import commandSetTemplate from "../cypress-command/set-template.spec"
 const testExportAssets = (name, lineToExpand, extensionToFind) => {
   goToImportPage()
   cy.log("Create project")
@@ -52,68 +52,69 @@ const testExportWithoutAssets = (nameProject, lineToExpand) => {
   cy.contains("Close").click()
 }
 const exportAWS = () => {
+  commandSetTemplate()
   it("Try to export with assets (Video)", () => {
-    setTemplate("Video Segmentation")
+    cy.setTemplate("Video Segmentation")
     testExportAssets("CypressTestExportAssetsVideo", 0, "mp4")
   })
 
   it("Try to export with assets (Time:DataTime)", () => {
-    setTemplate("Time Series 2")
+    cy.setTemplate("Time Series 2")
     testExportAssets("CypressTestExportAssetsTime2", 0, "json")
   })
 
   it("Try to export with assets (Time:AudioUrl)", () => {
-    setTemplate("Time Series")
+    cy.setTemplate("Time Series")
     testExportAssets("CypressTestExportAssetsTime", 0, "mp3")
   })
 
   it("Try to export with assets (Text)", () => {
-    setTemplate("Text Classification")
+    cy.setTemplate("Text Classification")
     testExportAssets("CypressTestExportAssetsText", 0, "txt")
   })
 
   it("Try to export with assets (PDF)", () => {
-    setTemplate("Data Entry")
+    cy.setTemplate("Data Entry")
     testExportAssets("CypressTestExportAssetsPDF", 0, "pdf")
   })
 
   it("Try to export with assets (Image)", () => {
-    setTemplate("Image Classification")
+    cy.setTemplate("Image Classification")
     testExportAssets("CypressTestExportAssetsImage", 0, "jpg")
   })
 
   it("Try to export with assets (Audio)", () => {
-    setTemplate("Audio Transcription")
+    cy.setTemplate("Audio Transcription")
     testExportAssets("CypressTestExportAssetsAudio", 0, "mp3")
   })
 
   it("Try to export a project without assets (Video)", () => {
-    setTemplate("Video Segmentation")
+    cy.setTemplate("Video Segmentation")
     testExportWithoutAssets("CypressTestExportAnnotationOnlyVideo", 0)
   })
 
   it("Try to export a project without assets (Time)", () => {
-    setTemplate("Time Series")
+    cy.setTemplate("Time Series")
     testExportWithoutAssets("CypressTestExportAnnotationOnlyTime", 0)
   })
 
   it("Try to export a project without assets (Text)", () => {
-    setTemplate("Text Classification")
+    cy.setTemplate("Text Classification")
     testExportWithoutAssets("CypressTestExportAnnotationOnlyText", 0)
   })
 
   it("Try to export a project without assets (PDF)", () => {
-    setTemplate("Data Entry")
+    cy.setTemplate("Data Entry")
     testExportWithoutAssets("CypressTestExportAnnotationOnlyPDF", 0)
   })
 
   it("Try to export a project without assets (Image)", () => {
-    setTemplate("Image Segmentation")
+    cy.setTemplate("Image Segmentation")
     testExportWithoutAssets("CypressTestExportAnnotationOnlyImage", 0)
   })
 
   it("Try to export a project without assets (Audio)", () => {
-    setTemplate("Audio Transcription")
+    cy.setTemplate("Audio Transcription")
     testExportWithoutAssets("CypressTestExportAnnotationOnlyAudio", 0)
   })
 }

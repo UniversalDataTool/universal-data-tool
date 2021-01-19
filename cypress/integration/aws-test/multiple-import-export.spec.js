@@ -1,5 +1,3 @@
-import setLanguage from "../../utils/set-language.spec"
-
 import multipleImport from "../../utils/aws-test/multiple-import-export.spec"
 
 import commandLocalStorage from "../../utils/cypress-command/local-storage.spec"
@@ -7,6 +5,7 @@ import commandAddAssetToAwsProject from "../../utils/cypress-command/add-asset-t
 import commandCredentialsAws from "../../utils/cypress-command/credentials-aws.spec"
 import commandAddProjectToAws from "../../utils/cypress-command/add-project-to-aws.spec"
 import commandCleanAws from "../../utils/cypress-command/clean-aws.spec"
+import commandSetLanguage from "../../utils/cypress-command/set-language.spec"
 
 import "regenerator-runtime/runtime"
 
@@ -15,13 +14,14 @@ commandCredentialsAws()
 commandAddAssetToAwsProject()
 commandAddProjectToAws()
 commandCleanAws()
+commandSetLanguage()
 
 Cypress.config("defaultCommandTimeout", 3000)
 describe("Combination of import and export aws test", () => {
   before("Prepare tests", () => {
     cy.log("should be able to join the web site")
     cy.visit(`http://localhost:6001`)
-    setLanguage()
+    cy.setLanguage("en")
     //the following are very long processus try to keep them here so they execute only once
     cy.createCredentialsAws()
     cy.saveLocalStorage()
