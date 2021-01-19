@@ -1,9 +1,8 @@
-import setLanguage from "../../utils/set-language.spec"
-
 import warningHeader from "../../utils/aws-test/warning-header-export.spec"
 import exportAWS from "../../utils/aws-test/export-aws.spec"
 import configExport from "../../utils/aws-test/config-export.spec"
 
+import commandSetLanguage from "../../utils/cypress-command/set-language.spec"
 import commandLocalStorage from "../../utils/cypress-command/local-storage.spec"
 import commandAddAssetToAwsProject from "../../utils/cypress-command/add-asset-to-aws-project.spec"
 import commandCredentialsAws from "../../utils/cypress-command/credentials-aws.spec"
@@ -17,6 +16,7 @@ commandCredentialsAws()
 commandAddAssetToAwsProject()
 commandAddProjectToAws()
 commandCleanAws()
+commandSetLanguage()
 
 Cypress.config("defaultCommandTimeout", 3000)
 describe("Export aws test", () => {
@@ -24,7 +24,7 @@ describe("Export aws test", () => {
     cy.log("should be able to join the web site")
     cy.visit(`http://localhost:6001`)
     cy.createCredentialsAws()
-    setLanguage()
+    cy.setLanguage("en")
     cy.saveLocalStorage()
     cy.cleanAws()
     cy.addProjectToAws("ImageClassification.json")
