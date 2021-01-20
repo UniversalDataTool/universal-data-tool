@@ -22,7 +22,7 @@ const test = () => {
     setLanguage("Chinese", "cn")
   })
   it("Should be able to set portugese language from text", () => {
-    setLanguage("Portugese", "pt")
+    setLanguage("Portuguese", "pt")
   })
   it("Should be able to set dutch language from text", () => {
     setLanguage("Dutch", "nl")
