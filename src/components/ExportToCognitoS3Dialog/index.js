@@ -163,13 +163,11 @@ export default ({ open, onClose }) => {
   }
 
   const renameAllSamples = async (dataset) => {
-    console.log(dataset)
     var samples = await Promise.all(
       await dataset.samples.map(async (sample, index, samples) => {
         return await dm.addNamesToSample(sample, index, samples)
       })
     )
-    console.log(samples)
     return (dataset = await setIn(dataset, ["samples"], samples))
   }
 

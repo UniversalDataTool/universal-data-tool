@@ -29,6 +29,9 @@ describe("Combination of import and export aws test", () => {
     cy.saveLocalStorage()
     cy.cleanAws()
     cy.addProjectToAws("ImageClassification.json")
+    cy.addProjectToAws("ImageSegmentation.json")
+    cy.addAssetToAwsProject("Image Segmentation", "image1.jpg")
+    cy.addAssetToAwsProject("Image Segmentation", "image2.jpg")
     cy.addAssetToAwsProject("Image Classification", "image1.jpg")
     cy.addAssetToAwsProject("Image Classification", "image2.jpg")
   })
@@ -47,6 +50,6 @@ describe("Combination of import and export aws test", () => {
 
   //Comment below when debugging aws
   after("Clean AWS", () => {
-    //cy.cleanAws()
+    cy.cleanAws()
   })
 })

@@ -16,7 +16,6 @@ const test = () => {
     importFromAnnotation("Image Classification", 2, 0)
   })
 
-  /* It don't use the same url so it fail
   it("Double import from Annotations then Assets only (should prevent duplicas)", () => {
     importFromAnnotation("Image Classification", 2, 0)
     cy.contains("Import").click()
@@ -27,20 +26,20 @@ const test = () => {
     importFromAssets("Image Classification", 2, 0)
     cy.contains("Import").click()
     importFromAnnotation("Image Classification", 2, 0)
-  })*/
+  })
   //End of the concerning test of the comment above
 
   //Check if rename
-  it.only("Rename test", () => {
+  it("Rename test", () => {
     importFromAssets("Image Classification", 2, 0)
     cy.contains("Import").click()
-    importFromAnnotation("Image Classification", 4, 0)
+    importFromAnnotation("Image Segmentation", 4, 1)
     cy.contains("Import").click()
-    exportWithAsset("Rename Test", 0, "jpg")
+    exportWithAsset("Rename Test", 2, "jpg")
     cy.log("Vérif rename")
     cy.contains("Import from S3 (Cognito)").click()
     cy.contains("Rename Test")
-    cy.get("button[data-testid='expander-button-" + 1 + "']").click()
+    cy.get("button[data-testid='expander-button-" + 2 + "']").click()
     cy.contains("Load Assets").click()
     cy.contains("(1)")
   })

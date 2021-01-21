@@ -104,12 +104,8 @@ export default ({ open, onClose, onAddSamples }) => {
       dataFolder.map(async (obj, index) => {
         const folder = obj
         var isSelected = false
-        const rowAnnotationsContent = await dm.getListSamples({
-          projectName: obj,
-        })
-        const rowAssetsContent = await dm.getListAssets({
-          projectName: obj,
-        })
+        const rowAnnotationsContent = await dm.getListSamples(obj)
+        const rowAssetsContent = await dm.getListAssets(obj)
         if (projectToFetch && projectToFetch.folder === folder)
           isSelected = true
         return {
@@ -199,6 +195,7 @@ export default ({ open, onClose, onAddSamples }) => {
       if (url) return url.match("(http.*)\\?|(http.*)$")[1]
       return url
     })
+
     newJsons = jsons.filter((json) => {
       var url = dm.getSampleUrl(json)
       if (url && oldUrl.includes(url.match("(http.*)\\?|(http.*)$")[1]))
@@ -217,7 +214,7 @@ export default ({ open, onClose, onAddSamples }) => {
     } else {
       jsons = await createJsonFromAnnotation()
     }
-    jsons = checkIfJsonsContainsDouble(jsons)
+    jsons = await checkIfJsonsContainsDouble(jsons)
 
     onAddSamples(await preventFatalErrorOnAddSamples(jsons))
   }

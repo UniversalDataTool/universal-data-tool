@@ -44,6 +44,6 @@ describe("Import aws test", () => {
 
   //Comment below when debugging aws
   after("Clean AWS", () => {
-    //cy.cleanAws()
+    cy.cleanAws()
   })
 })
