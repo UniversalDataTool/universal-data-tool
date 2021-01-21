@@ -10,6 +10,7 @@ import WarningHeader from "./warning-header"
 import initConfigExport from "./init-config-export"
 import SettingDialog from "./interface-setting-export.js"
 import createAssets from "./create-assets"
+import { setIn } from "seamless-immutable"
 import {
   Settings as SettingsIcon,
   Storage as StorageIcon,
@@ -146,22 +147,30 @@ export default ({ open, onClose }) => {
   const handleCreateProject = async () => {
     if (!currentDataset) return
     var dataset = currentDataset
-    dataset = dataset.setIn(["name"], nameProjectToCreate)
+
+    dataset = await dataset.setIn(["name"], nameProjectToCreate)
+
     if (nameProjectExist) await dm.removeSamplesFolder(nameProjectToCreate)
     if (nameProjectExist && configExport.typeAssetExport === "withProxy")
       await dm.removeAssetsFolder(nameProjectToCreate)
     if (configExport.typeAssetExport === "withProxy") {
+      dataset = await renameAllSamples(dataset)
       await createAssets(dataset, configExport, dm)
-      /*dataset = setIn(
-        dataset,
-        ["samples"],
-        await setSourcesAndIds(nameProjectToCreate, dataset.samples, dm, configExport)
-      )*/
     }
     await dm.setDataset(dataset)
     await activeDatasetManager.setDataset(dataset)
-    await getProjects()
     onClose()
+  }
+
+  const renameAllSamples = async (dataset) => {
+    console.log(dataset)
+    var samples = await Promise.all(
+      await dataset.samples.map(async (sample, index, samples) => {
+        return await dm.addNamesToSample(sample, index, samples)
+      })
+    )
+    console.log(samples)
+    return (dataset = await setIn(dataset, ["samples"], samples))
   }
 
   return (

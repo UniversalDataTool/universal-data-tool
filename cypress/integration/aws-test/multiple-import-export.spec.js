@@ -1,3 +1,5 @@
+import goToImportPage from "../../utils/go-to-import-page.spec"
+
 import multipleImport from "../../utils/aws-test/multiple-import-export.spec"
 
 import commandLocalStorage from "../../utils/cypress-command/local-storage.spec"
@@ -33,6 +35,7 @@ describe("Combination of import and export aws test", () => {
 
   beforeEach("Go to import page", () => {
     cy.restoreLocalStorage()
+    goToImportPage("Image Classification")
   })
 
   multipleImport()
@@ -44,6 +47,6 @@ describe("Combination of import and export aws test", () => {
 
   //Comment below when debugging aws
   after("Clean AWS", () => {
-    cy.cleanAws()
+    //cy.cleanAws()
   })
 })
