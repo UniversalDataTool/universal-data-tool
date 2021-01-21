@@ -1,11 +1,4 @@
-import goToImportPage from "./go-to-import-page.spec"
-const importFromAnnotation = (
-  nomProject,
-  typeProject,
-  numberSamples,
-  numberRowToSelect
-) => {
-  goToImportPage(typeProject)
+const importFromAnnotation = (nomProject, numberSamples, numberRowToSelect) => {
   cy.log("Import project")
   cy.contains("Import from S3 (Cognito)").click()
   cy.contains(nomProject, { timeout: 5000 }).click()

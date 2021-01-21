@@ -16,7 +16,6 @@ import HeaderTableImport from "./header-table-import"
 import { Radio, Grid } from "@material-ui/core/"
 import importConfigIsReady from "./config-import-is-ready"
 import WarningHeader from "./warning-header"
-import getSources from "./get-sources"
 
 const columns = [{ name: "Projects", selector: "folder", sortable: true }]
 
@@ -25,7 +24,7 @@ export default ({ open, onClose, onAddSamples }) => {
   const [oldData] = useDataset()
   const { authConfig } = useAuth()
   const [projects, setProjects] = useState()
-  const [projectToFetch, setProjectToFetch] = useState("")
+  const [projectToFetch, setProjectToFetch] = useState()
   const [configImport, setConfigImport] = useState({})
   const lastObjectRef = useRef({})
 
@@ -105,12 +104,8 @@ export default ({ open, onClose, onAddSamples }) => {
       dataFolder.map(async (obj, index) => {
         const folder = obj
         var isSelected = false
-        const rowAnnotationsContent = await dm.getListSamples({
-          projectName: obj,
-        })
-        const rowAssetsContent = await dm.getListAssets({
-          projectName: obj,
-        })
+        const rowAnnotationsContent = await dm.getListSamples(obj)
+        const rowAssetsContent = await dm.getListAssets(obj)
         if (projectToFetch && projectToFetch.folder === folder)
           isSelected = true
         return {
@@ -177,26 +172,39 @@ export default ({ open, onClose, onAddSamples }) => {
   const createJsonFromUrlAWS = async (projectName, imageName) => {
     var url = await dm.getAssetUrl(imageName, projectName)
     var json = await setUrl(url, configImport, dm)
-    if (json) json = await setIn(json, ["_id"], imageName)
+    if (json)
+      json = await setIn(
+        json,
+        ["_id"],
+        "s" + Math.random().toString(36).slice(-8)
+      )
+    if (json) json = await setIn(json, ["sampleName"], imageName)
     if (json) json = await setIn(json, ["source"], projectName)
     return json
   }
 
   const createJsonFromAnnotation = async () => {
     var jsons = await dm.readJSONAllSamples(projectToFetch.rowAnnotationsUrl)
-    var sources = await getSources(jsons)
-    if (sources) {
-      jsons = await Promise.all(
-        jsons.map(async (json) => {
-          if (json.source) json = await createJsonFromUrlAWS(json)
-          return json
-        })
-      )
-    }
     return jsons
   }
 
-  const checkIfJsonsContainsDouble = () => {}
+  const checkIfJsonsContainsDouble = (jsons) => {
+    var newJsons = []
+    var oldUrl = oldData.samples.map((json) => {
+      var url = dm.getSampleUrl(json)
+      if (url) return url.match("(http.*)\\?|(http.*)$")[1]
+      return url
+    })
+
+    newJsons = jsons.filter((json) => {
+      var url = dm.getSampleUrl(json)
+      if (url && oldUrl.includes(url.match("(http.*)\\?|(http.*)$")[1]))
+        return false
+      return true
+    })
+
+    return newJsons
+  }
 
   const handleAddSample = async () => {
     if (!dm) return
@@ -206,7 +214,7 @@ export default ({ open, onClose, onAddSamples }) => {
     } else {
       jsons = await createJsonFromAnnotation()
     }
-    checkIfJsonsContainsDouble()
+    jsons = await checkIfJsonsContainsDouble(jsons)
 
     onAddSamples(await preventFatalErrorOnAddSamples(jsons))
   }

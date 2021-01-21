@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core"
 const settingDialog = ({ configExport, setConfigExport }) => {
   return (
-    <Grid container spacing={0}>
+    <Grid container xs={12} spacing={0}>
       <Grid container item xs={12} spacing={1} justify="center" direction="row">
         <Grid xs={6}>
           <FormControl component="fieldset">

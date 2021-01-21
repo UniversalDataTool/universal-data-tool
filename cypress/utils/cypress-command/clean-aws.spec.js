@@ -4,6 +4,7 @@ const command = () => {
   Cypress.Commands.add("cleanAws", () => {
     cy.removeAwsProject("Not Supported")
     cy.removeAwsProject("Image Classification")
+    cy.removeAwsProject("Image Segmentation")
     cy.removeAwsProject("Time Series")
     cy.removeAwsProject("Time Series 2")
     cy.removeAwsProject("Data Entry")
@@ -11,6 +12,7 @@ const command = () => {
     cy.removeAwsProject("Video Segmentation")
     cy.removeAwsProject("Audio Transcription")
     cy.removeAwsProject("Empty")
+    cy.removeAwsProject("Rename test")
     cy.removeAwsProject("CypressTestExportAnnotationOnlyTime")
     cy.removeAwsProject("CypressTestExportAnnotationOnlyImage")
     cy.removeAwsProject("CypressTestExportAnnotationOnlyVideo")

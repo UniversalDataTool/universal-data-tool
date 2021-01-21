@@ -10,7 +10,6 @@ const command = () => {
         var blob
         if (nameAsset.match(".*\\.json")) {
           blob = asset
-          console.log(asset)
         } else {
           blob = await Cypress.Blob.base64StringToBlob(
             asset,

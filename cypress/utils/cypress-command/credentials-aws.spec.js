@@ -2,7 +2,7 @@ import Amplify, { Auth } from "aws-amplify"
 
 const command = () => {
   Cypress.Commands.add("createCredentialsAws", () => {
-    cy.then(async () => {
+    cy.then({ timeout: 10000 }, async () => {
       const app_config = {
         "auth.cognito.identityPoolId": Cypress.env().AWS_IDENTITY_POOL_ID,
         "auth.cognito.region": Cypress.env().AWS_AUTH_REGION,
