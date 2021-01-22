@@ -9,6 +9,9 @@ const setUrl = (result, configImport) => {
       return { audioUrl: `${result}` }
     } else if (RecognizeFileExtension(result) === "PDF") {
       return { pdfUrl: `${result}` }
+    } else if (RecognizeFileExtension(result) === "Texte") {
+      //var texte = await fetchTextInFile(result)
+      return { document: `Is not supported` /*${texte}`*/ }
     }
   } else {
     if (
