@@ -16,48 +16,45 @@ export default ({ configImport, setConfigImport }) => {
       loadAssetsIsSelected: !configImport.loadAssetsIsSelected,
     })
   }
+
   return (
-    <tr>
-      <th>
-        {configImport.loadAssetsIsSelected ? (
-          <Button
-            style={selectedStyle}
-            onClick={loadAssetsOrAnnotations}
-            disabled
-          >
-            {t("load-assets")}
-          </Button>
-        ) : (
-          <Button onClick={loadAssetsOrAnnotations}>{t("load-assets")}</Button>
-        )}
-        {configImport.loadAssetsIsSelected ? (
-          <Button onClick={loadAssetsOrAnnotations}>
-            {t("load-annotations")}
-          </Button>
-        ) : (
-          <Button
-            style={selectedStyle}
-            onClick={loadAssetsOrAnnotations}
-            disabled
-          >
-            {t("load-annotations")}
-          </Button>
-        )}
-        <IconButton
-          onClick={() => {
-            setConfigImport({
-              ...configImport,
-              contentDialogBoxIsSetting: !configImport.contentDialogBoxIsSetting,
-            })
-          }}
+    <div>
+      {configImport.loadAssetsIsSelected ? (
+        <Button
+          style={selectedStyle}
+          onClick={loadAssetsOrAnnotations}
+          disabled
         >
-          {configImport.contentDialogBoxIsSetting ? (
-            <StorageIcon></StorageIcon>
-          ) : (
-            <SettingsIcon></SettingsIcon>
-          )}
-        </IconButton>
-      </th>
-    </tr>
+          {t("load-assets")}
+        </Button>
+      ) : (
+        <Button onClick={loadAssetsOrAnnotations}>{t("load-assets")}</Button>
+      )}
+      {configImport.loadAssetsIsSelected ? (
+        <Button onClick={loadAssetsOrAnnotations}>{t("load-annotations")}</Button>
+      ) : (
+        <Button
+          style={selectedStyle}
+          onClick={loadAssetsOrAnnotations}
+          disabled
+        >
+          {t("load-annotations")}
+        </Button>
+      )}
+      <IconButton
+        onClick={() => {
+          setConfigImport({
+            ...configImport,
+            contentDialogBoxIsSetting: !configImport.contentDialogBoxIsSetting,
+          })
+        }}
+      >
+        {configImport.contentDialogBoxIsSetting ? (
+          <StorageIcon></StorageIcon>
+        ) : (
+          <SettingsIcon></SettingsIcon>
+        )}
+      </IconButton>
+    </div>
   )
 }

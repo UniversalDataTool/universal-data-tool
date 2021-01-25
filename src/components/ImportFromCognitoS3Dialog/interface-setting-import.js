@@ -5,13 +5,13 @@ import {
   FormControl,
   FormControlLabel,
   FormLabel,
+  Grid,
 } from "@material-ui/core/"
 import { useTranslation } from "react-i18next"
 export default ({ configImport, setConfigImport }) => {
   const { t } = useTranslation()
   return (
-    <tr>
-      <th>
+    <Grid container item xs={12} spacing={0} justify="center">
         {!configImport.loadAssetsIsSelected ? (
           <FormControl component="fieldset">
             <FormLabel component="legend">
@@ -96,7 +96,6 @@ export default ({ configImport, setConfigImport }) => {
             </RadioGroup>
           </FormControl>
         )}
-      </th>
-    </tr>
+      </Grid>
   )
 }

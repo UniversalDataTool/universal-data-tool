@@ -16,6 +16,7 @@
     "build:babel": "cross-env NODE_ENV=production babel ./src --out-dir=./lib --copy-files && cp ./package.json ./lib/package.json && cp ./README.md ./lib/README.md && node ./lib/lib/fix-deps.js",
     "build:vanilla": "parcel build -d ./lib -o vanilla.js ./src/vanilla/index.js",
     "build:vanilla:dev": "parcel ./src/vanilla/index.js",
+    "build:watch": "babel --watch src --out-dir dist",
     "build:web": "rimraf build && react-scripts build && cp -r build ./build-copy && mv build-copy build/app",
     "build:desktop": "cross-env REACT_APP_DESKTOP=true PUBLIC_URL=./ react-scripts build && electron-builder build && cp ./desktop/entitlements.mac.plist ./build/entitlements.mac.plist",
     "postinstall:desktop": "electron-builder install-app-deps",
@@ -30,7 +31,8 @@
     "test:prettier": "prettier --check \"src/**/*.js\"",
     "test:lint": "eslint src --max-warnings=0",
     "test:integration:dev": "./node_modules/cypress/bin/cypress open",
-    "test:integration": "./node_modules/cypress/bin/cypress run --env failOnSnapshotDiff=false"
+    "test:integration": "./node_modules/cypress/bin/cypress run --env failOnSnapshotDiff=false",
+    "test:devBrowser": "concurrently \"dotenv -- yarn run cypress open\" \"yarn run build:watch\""
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -91,6 +93,7 @@
     "bent": "^7.1.0",
     "brace": "^0.11.1",
     "detect-browser": "^5.0.0",
+    "dotenv-cli": "^4.0.0",
     "download-file": "^0.1.5",
     "duration": "^0.2.2",
     "fast-json-patch": "^3.0.0-1",

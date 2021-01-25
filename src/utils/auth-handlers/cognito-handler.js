@@ -30,7 +30,7 @@ class CognitoHandler {
   }
   checkIfLoggedIn = async () => {
     Amplify.configure(this.authConfig)
-    const userHandle = await Auth.currentAuthenticatedUser()
+    const userHandle = await Auth.currentAuthenticatedUser().catch(() => {})
     if (userHandle) {
       this.user = userHandle
       this.isLoggedIn = true

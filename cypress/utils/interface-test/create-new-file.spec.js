@@ -2,6 +2,7 @@ const createNewFile = () => {
   it("Should be able to select all the interfaces", () => {
     cy.contains("New File").click()
     cy.contains("Image Segmentation").click()
+    cy.wait(200)
     cy.matchImageSnapshot("image_segmentation", {
       failureThresholdType: "percent",
     })
