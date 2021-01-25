@@ -8,7 +8,7 @@ const createAndVisitCollaborativeSession = () => {
     cy.contains("Elon Musk Tweets").siblings("td").eq(2).click()
 
     cy.log("should be able to create new session")
-    cy.get("div[title='collaborate-icon']").click()
+    cy.get("div[title='collaborate-icon']", { timeout: 10000 }).click()
     cy.contains("Create New Session", { timeout: 5000 }).click()
     cy.contains("Leave Session", { timeout: 20000 })
     cy.get("div[title='collaborate-icon']").trigger("mouseleave")

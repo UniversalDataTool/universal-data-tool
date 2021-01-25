@@ -3,7 +3,7 @@ const testExportWithoutAssets = (nameProject, lineToExpand) => {
   cy.contains("Export to S3 (Cognito)").click()
   cy.get("input[id='ProjectName']").clear().type(nameProject).type("{enter}")
   cy.contains("Create project").click()
-  cy.contains("Create project", { timeout: 120000 }).should("not.be.visible")
+  cy.contains("Create project", { timeout: 120000 }).should("not.exist")
 
   cy.log("Check if project created/list updated")
   cy.contains("Import from S3 (Cognito)").click()
@@ -11,9 +11,7 @@ const testExportWithoutAssets = (nameProject, lineToExpand) => {
   cy.get("button[data-testid='expander-button-" + lineToExpand + "']").click()
   cy.contains('Make sure the project has "data" folder').should("be.visible")
   cy.contains("Load Annotations").click()
-  cy.contains('Make sure the project has "samples" folder').should(
-    "not.be.visible"
-  )
+  cy.contains('Make sure the project has "samples" folder').should("not.exist")
   cy.contains("Close").click()
 }
 export default testExportWithoutAssets
