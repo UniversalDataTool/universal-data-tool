@@ -1,3 +1,4 @@
+require("cypress-xpath")
 const enterCredentialsCognitoS3 = () => {
   cy.get('input[placeholder="XX-XXXX-X:XXXXXXXX-XXXX-1234-abcd-1234567890ab"]')
     .focus()
@@ -24,69 +25,61 @@ const enterCredentialsCognitoS3 = () => {
     .focus()
     .type(Cypress.env().COGNITO_USER_PASS_LENGTH)
   if (Cypress.env().COGNITO_USER_PASS_REQUIRE_LOWERCASE === "TRUE") {
-    cy.get(
-      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
+    cy.xpath(
+      "./html/body/div[3]/div[3]/div/div[2]/div/div[2]/div[8]/div[3]/div/button[1]/span[1]/span/span[1]/input"
     )
-      .eq(0)
       .click()
       .focus()
       .blur()
   } else {
-    cy.get(
-      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
+    cy.xpath(
+      "./html/body/div[3]/div[3]/div/div[2]/div/div[2]/div[8]/div[3]/div/button[2]/span[1]/span/span[1]/input"
     )
-      .eq(1)
       .click()
       .focus()
       .blur()
   }
   if (Cypress.env().COGNITO_USER_PASS_REQUIRE_UPPERCASE === "TRUE") {
-    cy.get(
-      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
+    cy.xpath(
+      "./html/body/div[3]/div[3]/div/div[2]/div/div[2]/div[9]/div[3]/div/button[1]/span[1]/span/span[1]/input"
     )
-      .eq(2)
       .click()
       .focus()
       .blur()
   } else {
-    cy.get(
-      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
+    cy.xpath(
+      "./html/body/div[3]/div[3]/div/div[2]/div/div[2]/div[9]/div[3]/div/button[2]/span[1]/span/span[1]/input"
     )
-      .eq(3)
       .click()
       .focus()
       .blur()
   }
   if (Cypress.env().COGNITO_USER_PASS_REQUIRE_NUMBER === "TRUE") {
-    cy.get(
-      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
+    cy.xpath(
+      "./html/body/div[3]/div[3]/div/div[2]/div/div[2]/div[10]/div[3]/div/button[1]/span[1]/span/span[1]/input"
     )
-      .eq(4)
       .click()
       .focus()
       .blur()
   } else {
-    cy.get(
-      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
+    cy.xpath(
+      "./html/body/div[3]/div[3]/div/div[2]/div/div[2]/div[10]/div[3]/div/button[2]/span[1]/span/span[1]/input"
     )
-      .eq(5)
       .click()
       .focus()
       .blur()
   }
   if (Cypress.env().COGNITO_USER_PASS_REQUIRE_SYMBOL === "TRUE") {
-    cy.get(
-      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
+    cy.xpath(
+      "./html/body/div[3]/div[3]/div/div[2]/div/div[2]/div[11]/div[3]/div/button[1]/span[1]/span/span[1]/input"
     )
-      .eq(6)
       .click()
       .focus()
       .blur()
   } else {
-    cy.get(
-      "button[class='MuiButtonBase-root MuiButton-root MuiButton-text sc-fzqNJr fsRsUD']"
+    cy.xpath(
+      "./html/body/div[3]/div[3]/div/div[2]/div/div[2]/div[11]/div[3]/div/button[2]/span[1]/span/span[1]/input"
     )
-      .eq(7)
       .click()
       .focus()
       .blur()
