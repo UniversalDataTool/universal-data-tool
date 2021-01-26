@@ -2,6 +2,7 @@ import commandRemoveAwsProject from "../../utils/cypress-command/remove-aws-proj
 const command = () => {
   commandRemoveAwsProject()
   Cypress.Commands.add("cleanAws", () => {
+    cy.log("Start cleaning aws")
     cy.removeAwsProject("Not Supported")
     cy.removeAwsProject("Image Classification")
     cy.removeAwsProject("Image Segmentation")
@@ -12,7 +13,7 @@ const command = () => {
     cy.removeAwsProject("Video Segmentation")
     cy.removeAwsProject("Audio Transcription")
     cy.removeAwsProject("Empty")
-    cy.removeAwsProject("Rename test")
+    cy.removeAwsProject("Rename Test")
     cy.removeAwsProject("CypressTestExportAnnotationOnlyTime")
     cy.removeAwsProject("CypressTestExportAnnotationOnlyImage")
     cy.removeAwsProject("CypressTestExportAnnotationOnlyVideo")
@@ -26,6 +27,7 @@ const command = () => {
     cy.removeAwsProject("CypressTestExportAssetsPDF")
     cy.removeAwsProject("CypressTestExportAssetsAudio")
     cy.removeAwsProject("CypressTestExportAssetsText")
+    cy.log("End cleaning aws")
   })
 }
 export default command
