@@ -8,21 +8,22 @@ commandLocalStorage()
 commandSetLanguage()
 
 Cypress.config("defaultCommandTimeout", 3000)
-describe("Credentials test", () => {
-  before("Prepare tests", () => {
-    cy.log("should be able to join the web site")
-    cy.visit(`http://localhost:6001`)
-    cy.setLanguage("en")
-  })
+if (Cypress.env().AWS_IDENTITY_POOL_ID)
+  describe("Credentials test", () => {
+    before("Prepare tests", () => {
+      cy.log("should be able to join the web site")
+      cy.visit(`http://localhost:6001`)
+      cy.setLanguage("en")
+    })
 
-  beforeEach("Restore local storage", () => {
-    cy.restoreLocalStorage()
-  })
+    beforeEach("Restore local storage", () => {
+      cy.restoreLocalStorage()
+    })
 
-  enterCredentialsCognitoS3()
-  enterCredentialsUser()
+    enterCredentialsCognitoS3()
+    enterCredentialsUser()
 
-  afterEach("Save local storage", () => {
-    cy.saveLocalStorage()
+    afterEach("Save local storage", () => {
+      cy.saveLocalStorage()
+    })
   })
-})
