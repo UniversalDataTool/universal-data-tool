@@ -23,7 +23,7 @@ if (Cypress.env().AWS_IDENTITY_POOL_ID)
         .clear()
         .type("CypressTest1")
         .type("{enter}")
-      cy.contains("Create project").click()
+      cy.contains("Create Project").click()
 
       cy.log("should be able to see the new project")
       cy.wait(2000)

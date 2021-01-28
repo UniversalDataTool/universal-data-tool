@@ -31,7 +31,9 @@ export default ({ configImport, setConfigImport }) => {
         <Button onClick={loadAssetsOrAnnotations}>{t("load-assets")}</Button>
       )}
       {configImport.loadAssetsIsSelected ? (
-        <Button onClick={loadAssetsOrAnnotations}>{t("load-annotations")}</Button>
+        <Button onClick={loadAssetsOrAnnotations}>
+          {t("load-annotations")}
+        </Button>
       ) : (
         <Button
           style={selectedStyle}
