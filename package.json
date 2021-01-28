@@ -26,7 +26,7 @@
     "storybook": "start-storybook -p 6002 -s public",
     "build-storybook": "build-storybook -s public",
     "gh-pages": "npm run build:web && npm run build:vanilla && cp lib/vanilla.js build/vanilla.js && cp ./CNAME ./build/CNAME && gh-pages -d build",
-    "prettier": "prettier --write \"src/**/*.js\"",
+    "prettier": "prettier --write .",
     "test:prettier": "prettier --check \"src/**/*.js\"",
     "test:lint": "eslint src --max-warnings=0",
     "test:integration:dev": "./node_modules/cypress/bin/cypress open",
