@@ -118,7 +118,8 @@ export default ({
         )
 
   const allowedArea = useMemo(() => {
-    if (!iface.allowedArea && !sample?.allowedArea) return undefined
+    if (!iface.allowedArea && !sample?.allowedArea)
+      return { x: 0, y: 0, w: 1, h: 1 }
     const { x, y, width: w, height: h } =
       sample?.allowedArea || iface?.allowedArea
     return { x, y, w, h }
