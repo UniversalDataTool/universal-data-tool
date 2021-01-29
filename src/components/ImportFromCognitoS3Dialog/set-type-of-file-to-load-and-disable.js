@@ -16,8 +16,8 @@ export default (configImport, dataset) => {
         ? "Audio"
         : checkInterfaceAndAssets(["PDF", "Empty"], dataset)
         ? "PDF"
-        : checkInterfaceAndAssets(["Texte", "Empty"], dataset)
-        ? "Texte"
+        : checkInterfaceAndAssets(["Text", "Empty"], dataset)
+        ? "Text"
         : "None",
     typeOfFileToDisable: {
       Image: checkInterfaceAndAssets(["Image", "Empty"], dataset)
@@ -30,9 +30,7 @@ export default (configImport, dataset) => {
         ? false
         : true,
       PDF: checkInterfaceAndAssets(["PDF", "Empty"], dataset) ? false : true,
-      Texte: checkInterfaceAndAssets(["Texte", "Empty"], dataset)
-        ? false
-        : true,
+      Text: checkInterfaceAndAssets(["Text", "Empty"], dataset) ? false : true,
     },
   }
 }

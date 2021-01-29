@@ -1,15 +1,6 @@
 import React from "react"
 import DataTable from "react-data-table-component"
-
-const expandedAssetsColumns = [
-  { name: "Assets", selector: "assets", sortable: true },
-  { name: "Last Modified", selector: "lastModified", sortable: true },
-]
-
-const expandedAnnotationsColumns = [
-  { name: "Annotations", selector: "annotation" },
-  { name: "Last Modified", selector: "lastModified", sortable: true },
-]
+import { useTranslation } from "react-i18next"
 
 const customStyles = {
   headCells: {
@@ -26,7 +17,17 @@ const customStyles = {
 }
 
 const ExpandedRow = ({ data, loadAssetIsSelected }) => {
+  const { t } = useTranslation()
   const { rowAssets, rowAnnotations } = data
+  const expandedAssetsColumns = [
+    { name: t("assets"), selector: "assets", sortable: true },
+    { name: t("last-modified"), selector: "lastModified", sortable: true },
+  ]
+
+  const expandedAnnotationsColumns = [
+    { name: t("annotations"), selector: "annotation" },
+    { name: t("last-modified"), selector: "lastModified", sortable: true },
+  ]
   return (
     <>
       {!loadAssetIsSelected ? (
@@ -41,7 +42,7 @@ const ExpandedRow = ({ data, loadAssetIsSelected }) => {
           noHeader
           columns={expandedAnnotationsColumns}
           data={rowAnnotations}
-          noDataComponent='Make sure the project has "samples" folder'
+          noDataComponent={t("has-samples-folder")}
           pagination={rowAnnotations.length > 10}
           paginationPerPage={10}
           paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
@@ -59,7 +60,7 @@ const ExpandedRow = ({ data, loadAssetIsSelected }) => {
           noHeader
           columns={expandedAssetsColumns}
           data={rowAssets}
-          noDataComponent={'Make sure the project has "data" folder'}
+          noDataComponent={t("has-data-folder")}
           pagination={rowAssets.length > 10}
           paginationPerPage={10}
           paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}

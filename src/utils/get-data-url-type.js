@@ -12,6 +12,6 @@ export default (UrlOfAFile) => {
   if (mime.lookup(fileExtension).match("video\\/.*")) typeOfFile = "Video"
   if (mime.lookup(fileExtension).match("audio\\/.*")) typeOfFile = "Audio"
   if (mime.lookup(fileExtension).match("application\\/pdf")) typeOfFile = "PDF"
-  if (mime.lookup(fileExtension).match("text\\/.*")) typeOfFile = "Texte"
+  if (mime.lookup(fileExtension).match("text\\/.*")) typeOfFile = "Text"
   return typeOfFile
 }

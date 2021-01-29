@@ -6,14 +6,8 @@ import isEmpty from "lodash/isEmpty"
 import datasetManagerCognito from "udt-dataset-managers/dist/CognitoDatasetManager"
 import useAuth from "../../utils/auth-handlers/use-auth"
 import { Grid, TextField } from "@material-ui/core"
+import { useTranslation } from "react-i18next"
 const redText = { color: "orange" }
-
-const expandedAnnotationsColumns = [
-  { name: "Annotations", selector: "annotation" },
-  { name: "Last Modified", selector: "lastModified", sortable: true },
-]
-
-const columns = [{ name: "Projects", selector: "folder", sortable: true }]
 
 const customStyles = {
   headCells: {
@@ -29,31 +23,6 @@ const customStyles = {
   },
 }
 
-const ExpandedRow = ({ data }) => {
-  const { rowAnnotations } = data
-  return (
-    <>
-      <DataTable
-        style={{
-          boxSizing: "border-box",
-          paddingLeft: "50px",
-          paddingRight: "10px",
-        }}
-        dense
-        striped
-        noHeader
-        columns={expandedAnnotationsColumns}
-        data={rowAnnotations}
-        noDataComponent='Make sure the project has "samples" folder'
-        pagination={rowAnnotations.length > 10}
-        paginationPerPage={10}
-        paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
-        customStyles={customStyles}
-      />
-    </>
-  )
-}
-
 export default ({ open, onClose }) => {
   const [dm, setDm] = useState()
   const { authConfig } = useAuth()
@@ -62,6 +31,36 @@ export default ({ open, onClose }) => {
   const [nameProjectToCreate, setNameProjectToCreate] = useState("")
   const [nameProjectExist, setNameProjectExist] = useState(false)
   const [currentDataset, setCurrentDataset] = useState()
+  const { t } = useTranslation()
+  const columns = [{ name: t("projects"), selector: "folder", sortable: true }]
+  const expandedAnnotationsColumns = [
+    { name: t("annotations"), selector: "annotation" },
+    { name: t("last-modified"), selector: "lastModified", sortable: true },
+  ]
+  const ExpandedRow = ({ data }) => {
+    const { rowAnnotations } = data
+    return (
+      <>
+        <DataTable
+          style={{
+            boxSizing: "border-box",
+            paddingLeft: "50px",
+            paddingRight: "10px",
+          }}
+          dense
+          striped
+          noHeader
+          columns={expandedAnnotationsColumns}
+          data={rowAnnotations}
+          noDataComponent={t("has-samples-folder")}
+          pagination={rowAnnotations.length > 10}
+          paginationPerPage={10}
+          paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
+          customStyles={customStyles}
+        />
+      </>
+    )
+  }
 
   const getCurrentDataset = async () => {
     if (currentDataset) return currentDataset
@@ -143,12 +142,12 @@ export default ({ open, onClose }) => {
 
   return (
     <SimpleDialog
-      title="Export Project"
+      title={t("export-project")}
       open={open}
       onClose={onClose}
       actions={[
         {
-          text: "Create project",
+          text: t("create-project"),
           onClick: () => {
             handleCreateProject()
           },
@@ -159,10 +158,7 @@ export default ({ open, onClose }) => {
         <Grid container spacing={0}>
           <Grid container item xs={12} spacing={0} justify="center">
             {nameProjectExist ? (
-              <p style={redText}>
-                Warning : This project name already exist. If you continue the
-                existing project with the same name will be replaced
-              </p>
+              <p style={redText}>{t("warning-project-exist")}</p>
             ) : (
               <p></p>
             )}
@@ -170,7 +166,7 @@ export default ({ open, onClose }) => {
           <Grid container item xs={12} spacing={0} justify="center">
             <TextField
               id="ProjectName"
-              label="Project Name"
+              label={t("project-name")}
               variant="outlined"
               onChange={(event) => {
                 setNameProjectToCreate(event.target.value)
