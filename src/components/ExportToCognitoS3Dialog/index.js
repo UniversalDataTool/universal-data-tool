@@ -7,7 +7,7 @@ import datasetManagerCognito from "udt-dataset-managers/dist/CognitoDatasetManag
 import useAuth from "../../utils/auth-handlers/use-auth"
 import { Grid, TextField } from "@material-ui/core"
 import { useTranslation } from "react-i18next"
-const redText = { color: "orange" }
+const orangeText = { color: "orange" }
 
 const customStyles = {
   headCells: {
@@ -61,10 +61,12 @@ export default ({ open, onClose }) => {
       </>
     )
   }
+  const [refreshInterface, setRefreshInterface] = useState(false)
 
   const getCurrentDataset = async () => {
     if (currentDataset) return currentDataset
     setCurrentDataset(await activeDatasetManager.getDataset())
+    setRefreshInterface(true)
     return currentDataset
   }
 
@@ -114,7 +116,7 @@ export default ({ open, onClose }) => {
     getCurrentDataset()
     getProjectName()
     // eslint-disable-next-line
-  }, [open, activeDatasetManager])
+  }, [open, refreshInterface])
 
   useEffect(() => {
     if (!open) return
@@ -131,7 +133,8 @@ export default ({ open, onClose }) => {
   }, [nameProjectToCreate, projects])
 
   const handleCreateProject = async () => {
-    var dataset = await activeDatasetManager.getDataset()
+    if (!currentDataset) return
+    var dataset = currentDataset
     dataset = dataset.setIn(["name"], nameProjectToCreate)
     if (nameProjectExist) await dm.removeSamplesFolder(nameProjectToCreate)
     await dm.setDataset(dataset)
@@ -158,7 +161,7 @@ export default ({ open, onClose }) => {
         <Grid container spacing={0}>
           <Grid container item xs={12} spacing={0} justify="center">
             {nameProjectExist ? (
-              <p style={redText}>{t("warning-project-exist")}</p>
+              <p style={orangeText}>{t("warning-project-exist")}</p>
             ) : (
               <p></p>
             )}

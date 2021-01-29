@@ -14,6 +14,8 @@ import ExpandedRow from "./table-expanded-row"
 import SettingImport from "./interface-setting-import"
 import HeaderTableImport from "./header-table-import"
 import { Radio, Grid } from "@material-ui/core/"
+import importConfigIsReady from "./config-import-is-ready"
+import WarningHeader from "./warning-header"
 import getSources from "./get-sources"
 import { useTranslation } from "react-i18next"
 
@@ -21,9 +23,9 @@ export default ({ open, onClose, onAddSamples }) => {
   const [dm, setDm] = useState(null)
   const [oldData] = useDataset()
   const { authConfig } = useAuth()
-  const [projects, setProjects] = useState(null)
+  const [projects, setProjects] = useState()
   const [projectToFetch, setProjectToFetch] = useState("")
-  const [configImport, setConfigImport] = useState(initConfigImport(oldData))
+  const [configImport, setConfigImport] = useState({})
   const lastObjectRef = useRef({})
   const { t } = useTranslation()
   const columns = [{ name: t("projects"), selector: "folder", sortable: true }]
@@ -39,18 +41,41 @@ export default ({ open, onClose, onAddSamples }) => {
   }, [oldData, open])
 
   useEffect(() => {
-    if (oldData === lastObjectRef.current) return
+    if (!open) return
     var configToSet = configImport
-    const changes = datasetHasChanged(lastObjectRef.current, oldData)
-    if (changes.interface.type || changes.samples) {
-      configToSet = setTypeOfFileToLoadAndDisable(configToSet, oldData)
+
+    var hasChanged = false
+    if (oldData === lastObjectRef.current) {
+      const changes = datasetHasChanged(lastObjectRef.current, oldData)
+      if (changes.interface.type || changes.samples) {
+        configToSet = setTypeOfFileToLoadAndDisable(configToSet, oldData)
+        hasChanged = true
+      }
     }
-    setConfigImport({
-      ...configToSet,
-      projectStarted: hasProjectStarted(),
-    })
-    lastObjectRef.current = oldData
-  }, [oldData, configImport, setConfigImport, hasProjectStarted])
+    if (
+      importConfigIsReady(projectToFetch, configImport) !== configImport.isReady
+    ) {
+      configToSet = {
+        ...configToSet,
+        isReady: importConfigIsReady(projectToFetch, configImport),
+      }
+      hasChanged = true
+    }
+    if (hasChanged) {
+      setConfigImport({
+        ...configToSet,
+        projectStarted: hasProjectStarted(),
+      })
+      lastObjectRef.current = oldData
+    }
+  }, [
+    oldData,
+    configImport,
+    setConfigImport,
+    hasProjectStarted,
+    projectToFetch,
+    open,
+  ])
 
   const handleRowSelected = (whatsChanging) => {
     if (!open) return
@@ -126,8 +151,11 @@ export default ({ open, onClose, onAddSamples }) => {
   useEffect(() => {
     if (!open) return
     if (!authConfig) return
-    if (!dm) setDm(new datasetManagerCognito({ authConfig }))
-  }, [open, authConfig, dm])
+    if (!dm) {
+      setDm(new datasetManagerCognito({ authConfig }))
+      setConfigImport(initConfigImport(oldData))
+    }
+  }, [open, authConfig, dm, oldData])
 
   useEffect(() => {
     if (!open) return
@@ -139,7 +167,7 @@ export default ({ open, onClose, onAddSamples }) => {
     if (!open) return
     setProject()
     // eslint-disable-next-line
-  }, [projectToFetch, open])
+  }, [projectToFetch])
 
   const createJsonFromAsset = async () => {
     var jsons = await Promise.all(
@@ -177,7 +205,6 @@ export default ({ open, onClose, onAddSamples }) => {
   }
 
   const handleAddSample = async () => {
-    if (!projectToFetch) return
     if (configImport.loadAssetsIsSelected) {
       createJsonFromAsset()
     } else {
@@ -196,11 +223,17 @@ export default ({ open, onClose, onAddSamples }) => {
           onClick: () => {
             handleAddSample()
           },
-          disabled: configImport.contentDialogBoxIsSetting,
+          disabled: !configImport.isReady,
         },
       ]}
     >
       <Grid container spacing={0}>
+        <Grid container item xs={12} spacing={0} justify="center">
+          <WarningHeader
+            configImport={configImport}
+            projectToFetch={projectToFetch}
+          />
+        </Grid>
         <Grid container item xs={12} spacing={0} justify="center">
           <HeaderTableImport
             configImport={configImport}
@@ -236,12 +269,10 @@ export default ({ open, onClose, onAddSamples }) => {
             </Grid>
           )
         ) : (
-          <Grid container item xs={12} spacing={0} justify="center">
-            <SettingImport
-              configImport={configImport}
-              setConfigImport={setConfigImport}
-            />
-          </Grid>
+          <SettingImport
+            configImport={configImport}
+            setConfigImport={setConfigImport}
+          />
         )}
       </Grid>
     </SimpleDialog>

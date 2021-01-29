@@ -1,5 +1,4 @@
 import checkInterfaceAndsamples from "./check-interface-and-sample-type"
-import isEmpty from "lodash/isEmpty"
 export default (dataset) => {
   return {
     annotationToKeep: "both",
@@ -23,10 +22,7 @@ export default (dataset) => {
     },
     loadAssetsIsSelected: true,
     contentDialogBoxIsSetting: false,
-    projectStarted:
-      isEmpty(dataset) ||
-      (isEmpty(dataset.interface) && isEmpty(dataset.samples))
-        ? false
-        : true,
+    projectStarted: false,
+    isReady: false,
   }
 }
