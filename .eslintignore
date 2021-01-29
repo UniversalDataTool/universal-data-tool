@@ -1,2 +1,4 @@
 cypress/integration/*
 cypress/utils/*
+logs/*
+cypress/screenshots/*

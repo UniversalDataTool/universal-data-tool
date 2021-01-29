@@ -13,7 +13,7 @@ jobs:
         with:
           node-version: 12
       - name: Run Prettier Test
-        run: npx prettier --check "src/**/*.js"
+        run: npx prettier --check .
       - name: Run Lint Test
         run: |
           # TODO this takes 1-2 mins to install, run eslint w/o installing
@@ -38,3 +38,18 @@ jobs:
           record: true
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          CYPRESS_AWS_IDENTITY_POOL_ID: ${{ secrets.CYPRESS_AWS_IDENTITY_POOL_ID }}
+          CYPRESS_AWS_AUTH_REGION: ${{ secrets.CYPRESS_AWS_AUTH_REGION }}
+          CYPRESS_AWS_USER_POOL_ID: ${{ secrets.CYPRESS_AWS_USER_POOL_ID }}
+          CYPRESS_AWS_USER_POOL_WEB_CLIENT_ID: ${{ secrets.CYPRESS_AWS_USER_POOL_WEB_CLIENT_ID }}
+          CYPRESS_AWS_MANDATORY_SIGN_IN: ${{ secrets.CYPRESS_AWS_MANDATORY_SIGN_IN }}
+          CYPRESS_AWS_AUTHENTICATION_FLOW_TYPE: ${{ secrets.CYPRESS_AWS_AUTHENTICATION_FLOW_TYPE }}
+          CYPRESS_AWS_STORAGE_BUCKET: ${{ secrets.CYPRESS_AWS_STORAGE_BUCKET }}
+          CYPRESS_AWS_STORAGE_REGION: ${{ secrets.CYPRESS_AWS_STORAGE_REGION }}
+          CYPRESS_COGNITO_USER_NAME: ${{ secrets.CYPRESS_COGNITO_USER_NAME }}
+          CYPRESS_COGNITO_USER_PASS: ${{ secrets.CYPRESS_COGNITO_USER_PASS }}
+          CYPRESS_COGNITO_USER_PASS_LENGTH: ${{ secrets.CYPRESS_COGNITO_USER_PASS_LENGTH }}
+          CYPRESS_COGNITO_USER_PASS_REQUIRE_LOWERCASE: ${{ secrets.CYPRESS_COGNITO_USER_PASS_REQUIRE_LOWERCASE }}
+          CYPRESS_COGNITO_USER_PASS_REQUIRE_UPPERCASE: ${{ secrets.CYPRESS_COGNITO_USER_PASS_REQUIRE_UPPERCASE }}
+          CYPRESS_COGNITO_USER_PASS_REQUIRE_NUMBER: ${{ secrets.CYPRESS_COGNITO_USER_PASS_REQUIRE_NUMBER }}
+          CYPRESS_COGNITO_USER_PASS_REQUIRE_SYMBOL: ${{ secrets.CYPRESS_COGNITO_USER_PASS_REQUIRE_SYMBOL }}
