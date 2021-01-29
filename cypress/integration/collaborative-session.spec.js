@@ -8,7 +8,7 @@ describe("Create and Visit Collaborative Session", () => {
       .focus()
       .type("English")
       .type("{enter}")
-    cy.contains("New File").click()
+    cy.contains("New File", { timeout: 50000 }).click()
   })
   createAndVisitCollaborativeSession()
   clickOn100SamplesInACollaborativeSession()

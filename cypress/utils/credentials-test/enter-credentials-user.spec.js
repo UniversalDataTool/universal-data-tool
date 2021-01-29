@@ -10,6 +10,5 @@ const test = () => {
   cy.get(
     'button[class="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-submit-68 MuiButton-containedPrimary MuiButton-fullWidth"]'
   ).click()
-  cy.wait(2000)
 }
 export default test
