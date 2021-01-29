@@ -18,7 +18,7 @@ const getDataUrlTypeTest = () => {
       "PDF"
     )
     expect(getDataUrlType("https://arxiv.org/pdf/1908.07069.txt")).to.equal(
-      "Texte"
+      "Text"
     )
     expect(getDataUrlType("https://arxiv.org/pdf/1908.07069.js")).to.equal(
       "File"

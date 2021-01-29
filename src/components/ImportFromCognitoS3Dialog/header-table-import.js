@@ -3,12 +3,13 @@ import {
   Settings as SettingsIcon,
   Storage as StorageIcon,
 } from "@material-ui/icons/"
-
+import { useTranslation } from "react-i18next"
 import { Button, IconButton } from "@material-ui/core/"
 
 const selectedStyle = { color: "DodgerBlue" }
 
-const headerTable = ({ configImport, setConfigImport }) => {
+export default ({ configImport, setConfigImport }) => {
+  const { t } = useTranslation()
   const loadAssetsOrAnnotations = () => {
     setConfigImport({
       ...configImport,
@@ -24,20 +25,22 @@ const headerTable = ({ configImport, setConfigImport }) => {
             onClick={loadAssetsOrAnnotations}
             disabled
           >
-            Load Assets
+            {t("load-assets")}
           </Button>
         ) : (
-          <Button onClick={loadAssetsOrAnnotations}>Load Assets</Button>
+          <Button onClick={loadAssetsOrAnnotations}>{t("load-assets")}</Button>
         )}
         {configImport.loadAssetsIsSelected ? (
-          <Button onClick={loadAssetsOrAnnotations}>Load Annotations</Button>
+          <Button onClick={loadAssetsOrAnnotations}>
+            {t("load-annotations")}
+          </Button>
         ) : (
           <Button
             style={selectedStyle}
             onClick={loadAssetsOrAnnotations}
             disabled
           >
-            Load Annotations
+            {t("load-annotations")}
           </Button>
         )}
         <IconButton
@@ -58,4 +61,3 @@ const headerTable = ({ configImport, setConfigImport }) => {
     </tr>
   )
 }
-export default headerTable

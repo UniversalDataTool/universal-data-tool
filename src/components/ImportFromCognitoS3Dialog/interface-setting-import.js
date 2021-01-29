@@ -6,13 +6,17 @@ import {
   FormControlLabel,
   FormLabel,
 } from "@material-ui/core/"
-const setting = ({ configImport, setConfigImport }) => {
+import { useTranslation } from "react-i18next"
+export default ({ configImport, setConfigImport }) => {
+  const { t } = useTranslation()
   return (
     <tr>
       <th>
         {!configImport.loadAssetsIsSelected ? (
           <FormControl component="fieldset">
-            <FormLabel component="legend">Annotation processing</FormLabel>
+            <FormLabel component="legend">
+              {t("annotation-processing")}
+            </FormLabel>
             <RadioGroup
               aria-label="option1"
               onChange={(event) => {
@@ -25,26 +29,26 @@ const setting = ({ configImport, setConfigImport }) => {
               <FormControlLabel
                 value="both"
                 control={<Radio />}
-                label="Keep both annotations"
+                label={t("keep-both-annotations")}
                 checked={configImport.annotationToKeep === "both"}
               />
               <FormControlLabel
                 value="incoming"
                 control={<Radio />}
-                label="Keep incoming annotations"
+                label={t("keep-incoming-annotations")}
                 checked={configImport.annotationToKeep === "incoming"}
               />
               <FormControlLabel
                 value="current"
                 control={<Radio />}
-                label="Keep current annotations"
+                label={t("keep-current-annotations")}
                 checked={configImport.annotationToKeep === "current"}
               />
             </RadioGroup>
           </FormControl>
         ) : (
           <FormControl component="fieldset">
-            <FormLabel component="legend">Choose file type</FormLabel>
+            <FormLabel component="legend">{t("choose-file-type")}</FormLabel>
             <RadioGroup
               aria-label="option2"
               onChange={(event) => {
@@ -57,37 +61,37 @@ const setting = ({ configImport, setConfigImport }) => {
               <FormControlLabel
                 value="Image"
                 control={<Radio />}
-                label="Load image file"
+                label={t("load-image-file")}
                 disabled={configImport.typeOfFileToDisable.Image}
                 checked={configImport.typeOfFileToLoad === "Image"}
               />
               <FormControlLabel
                 value="Video"
                 control={<Radio />}
-                label="Load video file"
+                label={t("load-video-file")}
                 disabled={configImport.typeOfFileToDisable.Video}
                 checked={configImport.typeOfFileToLoad === "Video"}
               />
               <FormControlLabel
                 value="Audio"
                 control={<Radio />}
-                label="Load audio file"
+                label={t("load-audio-file")}
                 disabled={configImport.typeOfFileToDisable.Audio}
                 checked={configImport.typeOfFileToLoad === "Audio"}
               />
               <FormControlLabel
                 value="PDF"
                 control={<Radio />}
-                label="Load PDF file"
+                label={t("load-pdf-file")}
                 disabled={configImport.typeOfFileToDisable.PDF}
                 checked={configImport.typeOfFileToLoad === "PDF"}
               />
               <FormControlLabel
-                value="Texte"
+                value="Text"
                 control={<Radio />}
-                label="Load texte file"
-                disabled={configImport.typeOfFileToDisable.Texte}
-                checked={configImport.typeOfFileToLoad === "Texte"}
+                label={t("load-text-file")}
+                disabled={configImport.typeOfFileToDisable.Text}
+                checked={configImport.typeOfFileToLoad === "Text"}
               />
             </RadioGroup>
           </FormControl>
@@ -96,4 +100,3 @@ const setting = ({ configImport, setConfigImport }) => {
     </tr>
   )
 }
-export default setting

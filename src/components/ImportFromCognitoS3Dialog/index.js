@@ -15,8 +15,7 @@ import SettingImport from "./interface-setting-import"
 import HeaderTableImport from "./header-table-import"
 import { Radio, Grid } from "@material-ui/core/"
 import getSources from "./get-sources"
-
-const columns = [{ name: "Projects", selector: "folder", sortable: true }]
+import { useTranslation } from "react-i18next"
 
 export default ({ open, onClose, onAddSamples }) => {
   const [dm, setDm] = useState(null)
@@ -26,6 +25,8 @@ export default ({ open, onClose, onAddSamples }) => {
   const [projectToFetch, setProjectToFetch] = useState("")
   const [configImport, setConfigImport] = useState(initConfigImport(oldData))
   const lastObjectRef = useRef({})
+  const { t } = useTranslation()
+  const columns = [{ name: t("projects"), selector: "folder", sortable: true }]
 
   const hasProjectStarted = useCallback(() => {
     if (!open) return
@@ -186,12 +187,12 @@ export default ({ open, onClose, onAddSamples }) => {
 
   return (
     <SimpleDialog
-      title="Select Project"
+      title={t("select-project")}
       open={open}
       onClose={onClose}
       actions={[
         {
-          text: "Take samples from project",
+          text: t("take-samples-from-project"),
           onClick: () => {
             handleAddSample()
           },
