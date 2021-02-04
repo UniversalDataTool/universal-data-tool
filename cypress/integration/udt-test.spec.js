@@ -1,12 +1,12 @@
-import createNewFile from "../utils/interface-test/create-new-file.spec"
-import imageClassification from "../utils/interface-test/image-classification.spec"
-import imageSegmentation from "../utils/interface-test/image-segmentation.spec"
-import keyboardShortcuts from "../utils/interface-test/keyboard-shortcuts.spec"
-import labelHelp from "../utils/interface-test/label-help.spec"
-import namedEntityRecognition from "../utils/interface-test/named-entity-recognition.spec"
-import pasteImageUrlsWithCSV from "../utils/interface-test/paste-image-urls-with-csv.spec"
-import pasteImageUrls from "../utils/interface-test/paste-image-urls.spec"
-import textEntityClassification from "../utils/interface-test/text-entity-classification.spec"
+import createNewFile from "./utils/interface-test/create-new-file"
+import imageClassification from "./utils/interface-test/image-classification"
+import imageSegmentation from "./utils/interface-test/image-segmentation"
+import keyboardShortcuts from "./utils/interface-test/keyboard-shortcuts"
+import labelHelp from "./utils/interface-test/label-help"
+import namedEntityRecognition from "./utils/interface-test/named-entity-recognition"
+import pasteImageUrlsWithCSV from "./utils/interface-test/paste-image-urls-with-csv"
+import pasteImageUrls from "./utils/interface-test/paste-image-urls"
+import textEntityClassification from "./utils/interface-test/text-entity-classification"
 
 Cypress.config("defaultCommandTimeout", 3000)
 describe("Udt test", () => {

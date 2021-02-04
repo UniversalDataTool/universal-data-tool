@@ -1,4 +1,5 @@
 {
+  "testFiles": ["**/*.spec.js"],
   "projectId": "w62sqq",
   "pageLoadTimeout": 60000,
   "defaultCommandTimeout": 4000,
