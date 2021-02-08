@@ -16,7 +16,6 @@
     "build:babel": "cross-env NODE_ENV=production babel ./src --out-dir=./lib --copy-files && cp ./package.json ./lib/package.json && cp ./README.md ./lib/README.md && node ./lib/lib/fix-deps.js",
     "build:vanilla": "parcel build -d ./lib -o vanilla.js ./src/vanilla/index.js",
     "build:vanilla:dev": "parcel ./src/vanilla/index.js",
-    "build:watch": "babel --watch src --out-dir dist",
     "build:web": "rimraf build && react-scripts build && cp -r build ./build-copy && mv build-copy build/app",
     "build:desktop": "cross-env REACT_APP_DESKTOP=true PUBLIC_URL=./ react-scripts build && electron-builder build && cp ./desktop/entitlements.mac.plist ./build/entitlements.mac.plist",
     "postinstall:desktop": "electron-builder install-app-deps",
@@ -32,7 +31,7 @@
     "test:lint": "eslint src --max-warnings=0",
     "test:integration:dev": "./node_modules/cypress/bin/cypress open",
     "test:integration": "./node_modules/cypress/bin/cypress run --env failOnSnapshotDiff=false",
-    "test:devBrowser": "concurrently \"dotenv -- cross-env BABEL_ENV=development NODE_ENV=development yarn run cypress open\" \"yarn run build:watch\""
+    "test:devBrowser": "dotenv yarn run cypress open"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -52,7 +51,7 @@
   "devDependencies": {
     "@babel/cli": "^7.5.0",
     "@babel/core": "^7.5.4",
-    "@babel/plugin-proposal-optional-chaining": "^7.10.1",
+    "@cypress/react": "^4.16.4",
     "@material-ui/core": "^4.9.5",
     "@material-ui/icons": "^4.9.1",
     "@storybook/addon-actions": "^5.3.19",
@@ -64,7 +63,7 @@
     "chroma-js": "^2.0.4",
     "concurrently": "^5.2.0",
     "cross-env": "^7.0.0",
-    "cypress": "^6.3.0",
+    "cypress": "^6.4.0",
     "cypress-file-upload": "^4.0.6",
     "cypress-image-snapshot": "^3.1.1",
     "electron": "^8.0.0",

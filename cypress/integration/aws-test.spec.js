@@ -1,8 +1,8 @@
-import enterCredentialsCognitoS3 from "../utils/credentials-test/enter-credentials-cognito-s3.spec"
-import enterCredentialsUser from "../utils/credentials-test/enter-credentials-user.spec"
-import setLanguage from "../utils/set-language.spec"
-import goToImportPage from "../utils/go-to-import-page.spec"
-import removeAWSFile from "../utils/remove-cypress-file-in-aws.spec"
+import enterCredentialsCognitoS3 from "./utils/credentials-test/enter-credentials-cognito-s3"
+import enterCredentialsUser from "./utils/credentials-test/enter-credentials-user"
+import setLanguage from "./utils/set-language"
+import goToImportPage from "./utils/go-to-import-page"
+import removeAWSFile from "./utils/remove-cypress-file-in-aws"
 import "regenerator-runtime/runtime"
 if (Cypress.env().AWS_IDENTITY_POOL_ID)
   describe("aws test", () => {
