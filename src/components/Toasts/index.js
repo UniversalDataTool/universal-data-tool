@@ -5,17 +5,24 @@ import * as colors from "@material-ui/core/colors"
 import Collapse from "@material-ui/core/Collapse"
 import Fade from "@material-ui/core/Fade"
 import classNames from "classnames"
+import {
+  CheckCircle as SuccessIcon,
+  Close as CloseIcon,
+  Error as ErrorIcon,
+  Info as InfoIcon,
+  Warning as WarningIcon,
+} from "@material-ui/icons"
+import Typography from "@material-ui/core/Typography"
+import IconButton from "@material-ui/core/IconButton"
 
 const useStyles = makeStyles({
   root: {
     position: "fixed",
     display: "flex",
     flexDirection: "column",
-    bottom: 0,
-    left: 0,
-    right: 0,
+    bottom: 16,
+    right: 16,
     alignItems: "flex-start",
-    pointerEvents: "none",
   },
   msgBox: {
     display: "flex",
@@ -30,6 +37,35 @@ const useStyles = makeStyles({
     },
     "&.error": {
       backgroundColor: colors.red[700],
+    },
+  },
+  notificationPaper: {
+    display: "flex",
+    borderRadius: 10,
+    padding: 12,
+    boxShadow: `0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+                0 6.7px 5.3px rgba(0, 0, 0, 0.048);`,
+    backgroundColor: "#FFF",
+    margin: 6,
+  },
+  icon: {
+    borderLeft: `3px solid ${colors.blue[700]}`,
+    color: colors.blue[700],
+    "&.warning": {
+      borderLeft: `3px solid ${colors.orange[700]}`,
+      color: colors.orange[700],
+    },
+    "&.error": {
+      borderLeft: `3px solid ${colors.red[700]}`,
+      color: colors.red[700],
+    },
+    "&.info": {
+      borderLeft: `3px solid ${colors.blue[700]}`,
+      color: colors.blue[700],
+    },
+    "&.success": {
+      borderLeft: `3px solid ${colors.green[700]}`,
+      color: colors.green[700],
     },
   },
 })
@@ -70,6 +106,13 @@ export const ToastProvider = ({ children }) => {
           life: msg.life - REFRESH_INTERVAL,
         }))
         .filter((msg) => msg.life > 0)
+    } else if (action.type === "remove") {
+      return state
+        .map((msg) => ({
+          ...msg,
+          life: msg.life - REFRESH_INTERVAL,
+        }))
+        .filter((msg) => msg.id !== action.id)
     }
     return state
   }, [])
@@ -95,13 +138,59 @@ export const ToastProvider = ({ children }) => {
         {toasts.map((msg) => (
           <Collapse key={msg.id} in={msg.life < msg.fullLife}>
             <Fade in={msg.life > 600}>
-              <div className={classNames(c.msgBox, msg.type)}>
-                {msg.message}
-              </div>
+              <Notification
+                type={msg.type}
+                message={msg.message}
+                onClose={() => changeToasts({ type: "remove", id: msg.id })}
+              />
             </Fade>
           </Collapse>
         ))}
       </div>
     </>
+  )
+}
+
+export const Notification = ({ type, message, onClose }) => {
+  const classes = useStyles()
+  let Icon = null
+  switch (type) {
+    case "success":
+      Icon = SuccessIcon
+      break
+    case "warning":
+      Icon = WarningIcon
+      break
+    case "error":
+      Icon = ErrorIcon
+      break
+    default:
+      Icon = InfoIcon
+  }
+  return (
+    <paper
+      className={classes.notificationPaper}
+      style={{ position: "relative" }}
+    >
+      <div className={classNames(classes.icon, type)}>
+        <Icon fontSize="large" style={{ padding: 12 }} />
+      </div>
+      <div style={{ margin: "auto 0" }}>
+        <Typography variant="body1">{message}</Typography>
+      </div>
+      <div
+        style={{
+          position: "absolute",
+          top: -10,
+          right: -10,
+          backgroundColor: "#FFF",
+          borderRadius: 100,
+        }}
+      >
+        <IconButton color="action" size="small">
+          <CloseIcon onClick={onClose} />
+        </IconButton>
+      </div>
+    </paper>
   )
 }
