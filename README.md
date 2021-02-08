@@ -76,7 +76,7 @@ The Universal Data Tool is a web/desktop app for editing and annotating images, 
 
 [![wao.ai sponsorship image](https://user-images.githubusercontent.com/1910070/107271376-20fbd100-6a1a-11eb-9f82-2d10607591ba.png)](https://wao.ai)
 [![momentum image](https://user-images.githubusercontent.com/1910070/107270943-8bf8d800-6a19-11eb-97c2-895b0280aa8a.png)](https://momentum-tech.ca/)
-[![enabled intelligence image](https://user-images.githubusercontent.com/1910070/107270939-8ac7ab00-6a19-11eb-9ed7-9a71df6b508e.png)](https://www.enabledintelligence.net/)
+[![enabled intelligence image](https://user-images.githubusercontent.com/1910070/107271756-aaab9e80-6a1a-11eb-887c-6f5d009f0fd2.png)](https://www.enabledintelligence.net/)
 
 ## Installation
 
