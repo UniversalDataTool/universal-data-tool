@@ -32,9 +32,6 @@
     "test:integration:dev": "dotenv cypress open",
     "test:integration": "dotenv cypress run failOnSnapshotDiff=false"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -64,6 +61,7 @@
     "@storybook/react": "^5.3.19",
     "@testing-library/react-hooks": "^3.2.1",
     "ava": "^3.7.0",
+    "babel-eslint": "^10.1.0",
     "chroma-js": "^2.0.4",
     "concurrently": "^5.3.0",
     "cypress": "^6.4.0",
@@ -73,6 +71,7 @@
     "electron": "^11.2.3",
     "electron-builder": "^22.8.0",
     "electron-builder-notarize": "^1.2.0",
+    "eslint-plugin-cypress": "^2.11.2",
     "gh-pages": "^2.1.1",
     "material-survey": "^1.0.40",
     "parcel": "^1.12.4",
@@ -109,7 +108,7 @@
     "in-browser-download": "^2.0.0",
     "jac-format": "^1.1.3",
     "js-md5": "^0.7.3",
-    "mime-types": "^2.1.27",
+    "mime-types": "^2.1.28",
     "moment": "^2.24.0",
     "nan": "^2.14.1",
     "posthog-js": "^1.0.4",
@@ -125,7 +124,7 @@
     "react-material-workspace-layout": "^1.0.9",
     "react-scripts": "^3.4.1",
     "react-select": "^3.0.8",
-    "react-time-series": "^1.0.20",
+    "react-time-series": "^1.0.21",
     "recoil": "^0.0.13",
     "rfc6902": "^3.0.4",
     "seamless-immutable": "^7.1.4",
@@ -135,8 +134,8 @@
     "serve": "^11.3.2",
     "styled-components": "^5.0.0",
     "udt-collaboration-server": "^1.0.8",
-    "udt-dataset-managers": "^1.0.15",
-    "udt-format": "0.0.1",
+    "udt-dataset-managers": "^1.0.16",
+    "udt-format": "^0.0.1",
     "use-async-effect": "^2.2.2",
     "use-event-callback": "^0.1.0",
     "wavesurfer.js": "^3.3.3",
