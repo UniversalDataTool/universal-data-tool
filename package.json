@@ -30,7 +30,7 @@
     "test:prettier": "prettier --check \"src/**/*.js\"",
     "test:lint": "eslint src --max-warnings=0",
     "test:integration:dev": "dotenv cypress open",
-    "test:integration": "cypress run failOnSnapshotDiff=false --env"
+    "test:integration": "./node_modules/cypress/bin/cypress run failOnSnapshotDiff=false --env"
   },
   "eslintConfig": {
     "extends": "react-app"
