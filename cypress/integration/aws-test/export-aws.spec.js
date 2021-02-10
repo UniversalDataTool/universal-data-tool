@@ -8,7 +8,7 @@ describe("aws test", () => {
     cy.log("should be able to join the web site")
     cy.visit(`http://localhost:6001`)
     cy.wait(400)
-
+    cy.log(Cypress.env())
     setLanguage()
     enterCredentialsCognitoS3()
     enterCredentialsUser()

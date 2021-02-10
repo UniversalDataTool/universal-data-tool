@@ -126,7 +126,6 @@
     "react-select": "^3.0.8",
     "react-time-series": "^1.0.20",
     "recoil": "^0.0.13",
-    "regenerator-runtime": "^0.13.7",
     "rfc6902": "^3.0.4",
     "seamless-immutable": "^7.1.4",
     "seamless-immutable-patch": "^1.0.4",
