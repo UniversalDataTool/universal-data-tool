@@ -24,6 +24,8 @@ jobs:
     name: Cypress Integration Tests (Browser Tests)
     needs: iscodeclean
     runs-on: ubuntu-16.04
+    environment:
+      name: cypress_test
     steps:
       - name: Checkout
         uses: actions/checkout@v1
