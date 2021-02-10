@@ -1,0 +1,46 @@
+{
+  "cypress\\integration\\aws-test\\export-aws.spec.js": {
+    "Try to export a natif project to aws": [
+      {
+        "type": "cy:log",
+        "severity": "success",
+        "message": "COGNITO_USER_PASS_REQUIRE_NUMBER"
+      },
+      {
+        "type": "cy:log",
+        "severity": "success",
+        "message": "TRUE"
+      },
+      {
+        "type": "cy:log",
+        "severity": "success",
+        "message": "CYPRESS_COGNITO_USER_PASS_REQUIRE_NUMBER"
+      },
+      {
+        "type": "cy:log",
+        "severity": "success",
+        "message": ""
+      },
+      {
+        "type": "cy:log",
+        "severity": "success",
+        "message": "should be able to use export project"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "wait\t200"
+      },
+      {
+        "type": "cy:command",
+        "severity": "error",
+        "message": "contains\tExport to S3 (Cognito)"
+      },
+      {
+        "type": "cy:command",
+        "severity": "error",
+        "message": "then\tfunction(){}, {timeout: 10000}"
+      }
+    ]
+  }
+}

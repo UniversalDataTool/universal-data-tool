@@ -8,14 +8,17 @@ describe("aws test", () => {
     cy.log("should be able to join the web site")
     cy.visit(`http://localhost:6001`)
     cy.wait(400)
-    cy.log(Cypress.env())
-    setLanguage()
+    /*setLanguage()
     enterCredentialsCognitoS3()
     enterCredentialsUser()
-    goToImportPage()
+    goToImportPage()*/
   })
 
   it("Try to export a natif project to aws", () => {
+    cy.log("COGNITO_USER_PASS_REQUIRE_NUMBER")
+    cy.log(Cypress.env("COGNITO_USER_PASS_REQUIRE_NUMBER"))
+    cy.log("CYPRESS_COGNITO_USER_PASS_REQUIRE_NUMBER")
+    cy.log(Cypress.env("CYPRESS_COGNITO_USER_PASS_REQUIRE_NUMBER"))
     cy.log("should be able to use export project")
     cy.wait(200)
     cy.contains("Export to S3 (Cognito)").click()
