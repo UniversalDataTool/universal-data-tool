@@ -6,8 +6,8 @@ jobs:
     name: Code Cleanliness
     runs-on: ubuntu-18.04
     defaults:
-            run:
-                working-directory: universal-data-tools
+      run:
+        working-directory: universal-data-tools
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -48,7 +48,7 @@ jobs:
       CYPRESS_COGNITO_USER_PASS_REQUIRE_SYMBOL: ${{ secrets.CYPRESS_COGNITO_USER_PASS_REQUIRE_SYMBOL }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v1
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
