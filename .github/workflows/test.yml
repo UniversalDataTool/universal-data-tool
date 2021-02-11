@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-18.04
     defaults:
       run:
-        working-directory: universal-data-tools
+        working-directory: universal-data-tool
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: 12
       - name: Run Prettier Test
-        run: npx prettier --check .
+        run: npx prettier --check "src/**/*.js"
       - name: Run Lint Test
         run: |
           # TODO this takes 1-2 mins to install, run eslint w/o installing
