@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: 12
       - name: Run Prettier Test
-        run: npx prettier --check "src/**/*.js"
+        run: npx prettier --check .
       - name: Run Lint Test
         run: |
           # TODO this takes 1-2 mins to install, run eslint w/o installing
