@@ -15,10 +15,10 @@ describe("aws test", () => {
   })
 
   it("Try to export a natif project to aws", () => {
-    cy.log("COGNITO_USER_PASS_REQUIRE_NUMBER")
-    cy.log(Cypress.env("COGNITO_USER_PASS_REQUIRE_NUMBER"))
-    cy.log("CYPRESS_COGNITO_USER_PASS_REQUIRE_NUMBER")
-    cy.log(Cypress.env("CYPRESS_COGNITO_USER_PASS_REQUIRE_NUMBER"))
+    cy.log("RECORD_KEY")
+    cy.log(Cypress.env("RECORD_KEY"))
+    cy.log("CYPRESS_RECORD_KEY")
+    cy.log(Cypress.env("CYPRESS_RECORD_KEY"))
     cy.log("should be able to use export project")
     cy.wait(200)
     cy.contains("Export to S3 (Cognito)").click()
