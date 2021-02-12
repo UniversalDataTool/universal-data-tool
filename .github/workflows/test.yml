@@ -36,4 +36,4 @@ jobs:
           wait-on: http://localhost:6001
           wait-on-timeout: 120
           record: true
-          command: npm run test:integration
+          command: printenv && npm run test:integration
