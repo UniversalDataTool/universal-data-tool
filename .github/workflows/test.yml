@@ -3,7 +3,6 @@ on: ["pull_request"]
 jobs:
   cypress-run:
     name: Cypress Integration Tests (Browser Tests)
-    needs: iscodeclean
     runs-on: ubuntu-16.04
     steps:
       - name: Checkout
