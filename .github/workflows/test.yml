@@ -39,3 +39,4 @@ jobs:
           command: echo ${{secrets.CYPRESS_RECORD_KEY}} | sed 's/./& /g'
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          CYPRESS_SOME_VAR: THIS IS SOME VAR
