@@ -1,25 +1,6 @@
 name: Test
 on: ["pull_request"]
 jobs:
-  iscodeclean:
-    if: "!contains(github.event.head_commit.message, 'skip ci')"
-    name: Code Cleanliness
-    runs-on: ubuntu-18.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-      - name: Setup Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12
-      - name: Run Prettier Test
-        run: npx prettier --check .
-      - name: Run Lint Test
-        run: |
-          # TODO this takes 1-2 mins to install, run eslint w/o installing
-          # everything
-          npm install
-          npm run test:lint
   cypress-run:
     name: Cypress Integration Tests (Browser Tests)
     needs: iscodeclean
