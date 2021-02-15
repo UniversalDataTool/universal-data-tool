@@ -36,6 +36,7 @@ jobs:
           wait-on: http://localhost:6001
           wait-on-timeout: 120
           record: true
+          repository: UniversalDataTool/universal-data-tool
           command: printenv
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
