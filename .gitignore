@@ -31,15 +31,15 @@ dist
 desktop/node_modules
 
 /lib
-
 src/components/WebApp/myAWSconfig.js
 package-lock.json
 src/components/WebApp/myAWSconfig.js
 .env
 .cache
-
+logs
 # eventually we'll commit these
 cypress/snapshots
+cypress/screenshots
 
 .idea
 *.db
