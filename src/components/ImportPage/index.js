@@ -290,8 +290,7 @@ export default ({ isDesktop, authConfig, user }) => {
           <ImportFromCOCODialog
             open={selectedDialog === "import-from-coco"}
             onClose={closeDialog}
-            // dataset={dataset}
-            // onChangeDataset={onChangeDataset}
+            onAddSamples={onAddSamples}
           />
         ) : selectedDialog === "import-text-snippets" ? (
           <ImportTextSnippetsDialog

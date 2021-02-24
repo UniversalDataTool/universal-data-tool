@@ -8,7 +8,6 @@ import FormGroup from "@material-ui/core/FormGroup"
 import Box from "@material-ui/core/Box"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import Checkbox from "@material-ui/core/Checkbox"
-import { setIn } from "seamless-immutable"
 
 const Image = styled("img")({
   width: 100,
@@ -25,12 +24,7 @@ const TermsOfUse = styled("div")({
   },
 })
 
-export const ImportFromCOCODialog = ({
-  open,
-  onClose,
-  onChangeDataset,
-  dataset,
-}) => {
+export const ImportFromCOCODialog = ({ open, onClose, onAddSamples }) => {
   const [labelsSelected, setLabelsSelected] = useState([])
   const [exclusive, setExclusive] = useState()
   const [shouldReplaceInterface, setShouldReplaceInterface] = useState()
@@ -59,13 +53,7 @@ export const ImportFromCOCODialog = ({
           text: "Add Samples",
           disabled: !importedDataset,
           onClick: () => {
-            onChangeDataset(
-              setIn(
-                dataset,
-                ["samples"],
-                dataset.samples.concat(importedDataset.samples)
-              ).setIn(["interface"], importedDataset.interface)
-            )
+            onAddSamples(importedDataset.samples)
             onClose()
           },
         },
