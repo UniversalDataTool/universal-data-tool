@@ -2,7 +2,6 @@ import createNewFile from "./utils/interface-test/create-new-file"
 import imageClassification from "./utils/interface-test/image-classification"
 import imageSegmentation from "./utils/interface-test/image-segmentation"
 import keyboardShortcuts from "./utils/interface-test/keyboard-shortcuts"
-import labelHelp from "./utils/interface-test/label-help"
 import namedEntityRecognition from "./utils/interface-test/named-entity-recognition"
 import pasteImageUrlsWithCSV from "./utils/interface-test/paste-image-urls-with-csv"
 import pasteImageUrls from "./utils/interface-test/paste-image-urls"
@@ -21,7 +20,6 @@ describe("Udt test", () => {
   imageClassification()
   imageSegmentation()
   keyboardShortcuts()
-  labelHelp()
   namedEntityRecognition()
   pasteImageUrlsWithCSV()
   pasteImageUrls()
