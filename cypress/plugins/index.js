@@ -19,9 +19,18 @@
 const { addMatchImageSnapshotPlugin } = require("cypress-image-snapshot/plugin")
 
 module.exports = (on, config) => {
+  const options = {
+    outputRoot: config.projectRoot + "/logs/",
+    outputTarget: {
+      "out.txt": "txt",
+      "out.json": "json",
+    },
+    printLogsToConsole: "never",
+  }
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
   addMatchImageSnapshotPlugin(on, config),
     require("@cypress/react/plugins/react-scripts")(on, config)
+  require("cypress-terminal-report/src/installLogsPrinter")(on, options)
   return config
 }

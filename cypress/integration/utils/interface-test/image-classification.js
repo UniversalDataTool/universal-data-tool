@@ -25,7 +25,7 @@ const imageClassification = () => {
       .type("not ai generated")
 
     cy.log("should be able to see samples")
-    cy.get("#tab-samples").click()
+    cy.get("#tab-samples", { timeout: 5000 }).click()
 
     cy.log("should be able to open 21st sample")
     cy.contains("21").click()

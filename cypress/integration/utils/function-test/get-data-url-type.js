@@ -1,4 +1,4 @@
-import getDataUrlType from "../../../src/utils/get-data-url-type"
+import getDataUrlType from "../../../dist/utils/get-data-url-type"
 const getDataUrlTypeTest = () => {
   it("Check getDataUrlType", () => {
     expect(
