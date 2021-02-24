@@ -7,7 +7,7 @@
   "proxy": "http://localhost:3000",
   "scripts": {
     "start": "cross-env PORT=6001 react-scripts start",
-    "start:desktop": "cross-env BROWSER=none USE_DEV_SERVER=yes concurrently 'start' 'electron http://http://localhost:6001/app'",
+    "start:desktop": "cross-env BROWSER=none USE_DEV_SERVER=yes concurrently 'start' 'electron ./desktop'",
     "start:desktop:static": "electron ./desktop",
     "start:web:static": "concurrently 'node ./add-preloaded-app-config.js && serve -s build -p 3000' 'udt-collaboration-server --port 3001'",
     "build": "npm run build:web",

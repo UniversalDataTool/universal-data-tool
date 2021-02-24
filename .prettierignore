@@ -10,5 +10,4 @@ yarn-error.log
 cypress/snapshots/*
 cypress/videos/*
 cypress/screenshots/*
-cypress/screenshots/*
 yarn.lock

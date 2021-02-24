@@ -25,7 +25,7 @@ module.exports = (on, config) => {
       "out.txt": "txt",
       "out.json": "json",
     },
-    printLogsToConsole: "always",
+    printLogsToConsole: "never",
   }
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
