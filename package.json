@@ -10,7 +10,7 @@
     "start:desktop": "cross-env BROWSER=none USE_DEV_SERVER=yes concurrently 'start' 'electron ./desktop'",
     "start:desktop:static": "electron ./desktop",
     "start:web:static": "concurrently 'node ./add-preloaded-app-config.js && serve -s build -p 3000' 'udt-collaboration-server --port 3001'",
-    "build": "npm run build:web",
+    "build": "yarn run build:web",
     "build:all": "npm run build:babel && npm run build:vanilla && npm run build:desktop",
     "build:lib": "npm run build:babel && npm run build:vanilla",
     "build:babel": "cross-env NODE_ENV=production babel ./src --out-dir=./lib --copy-files && cp ./package.json ./lib/package.json && cp ./README.md ./lib/README.md && node ./lib/lib/fix-deps.js",
