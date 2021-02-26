@@ -1,57 +1,99 @@
+require("cypress-xpath")
 const enterCredentialsCognitoS3 = () => {
-  var credentials = Cypress.env()
   cy.get('input[placeholder="XX-XXXX-X:XXXXXXXX-XXXX-1234-abcd-1234567890ab"]')
     .focus()
-    .type(credentials.AWS_IDENTITY_POOL_ID)
+    .type(Cypress.env().AWS_IDENTITY_POOL_ID)
   cy.get('input[placeholder="XX-XXXX-X"]')
     .first()
     .focus()
-    .type(credentials.AWS_AUTH_REGION)
+    .type(Cypress.env().AWS_AUTH_REGION)
   cy.get('input[placeholder="XX-XXXX-X_12ab34cd9"]')
     .focus()
-    .type(credentials.AWS_USER_POOL_ID)
+    .type(Cypress.env().AWS_USER_POOL_ID)
   cy.get('input[placeholder="26-char alphanumeric string"]')
     .focus()
-    .type(credentials.AWS_USER_POOL_WEB_CLIENT_ID)
+    .type(Cypress.env().AWS_USER_POOL_WEB_CLIENT_ID)
   cy.get('input[placeholder="Name of the bucket"]')
     .focus()
-    .type(credentials.AWS_STORAGE_BUCKET)
+    .type(Cypress.env().AWS_STORAGE_BUCKET)
   cy.get('input[placeholder="XX-XXXX-X"]')
     .last()
     .focus()
-    .type(credentials.AWS_STORAGE_REGION)
+    .type(Cypress.env().AWS_STORAGE_REGION)
   cy.get('input[class="MuiInputBase-input MuiInput-input"]')
     .last()
     .focus()
-    .type(credentials.COGNITO_USER_PASS_LENGTH)
-  if (credentials.COGNITO_USER_PASS_REQUIRE_LOWERCASE == "TRUE") {
-    cy.get('input[class="PrivateSwitchBase-input-63"]').eq(0).click()
+    .type(Cypress.env().COGNITO_USER_PASS_LENGTH)
+  if (Cypress.env().COGNITO_USER_PASS_REQUIRE_LOWERCASE === "TRUE") {
+    cy.xpath(
+      "./html/body/div[3]/div[3]/div/div[2]/div/div[2]/div[8]/div[3]/div/button[1]/span[1]/span/span[1]/input"
+    )
+      .click()
+      .focus()
+      .blur()
   } else {
-    cy.get('input[class="PrivateSwitchBase-input-63"]').eq(1).click()
+    cy.xpath(
+      "./html/body/div[3]/div[3]/div/div[2]/div/div[2]/div[8]/div[3]/div/button[2]/span[1]/span/span[1]/input"
+    )
+      .click()
+      .focus()
+      .blur()
   }
-  if (credentials.COGNITO_USER_PASS_REQUIRE_UPPERCASE == "TRUE") {
-    cy.get('input[class="PrivateSwitchBase-input-63"]').eq(2).click()
+  if (Cypress.env().COGNITO_USER_PASS_REQUIRE_UPPERCASE === "TRUE") {
+    cy.xpath(
+      "./html/body/div[3]/div[3]/div/div[2]/div/div[2]/div[9]/div[3]/div/button[1]/span[1]/span/span[1]/input"
+    )
+      .click()
+      .focus()
+      .blur()
   } else {
-    cy.get('input[class="PrivateSwitchBase-input-63"]').eq(3).click()
+    cy.xpath(
+      "./html/body/div[3]/div[3]/div/div[2]/div/div[2]/div[9]/div[3]/div/button[2]/span[1]/span/span[1]/input"
+    )
+      .click()
+      .focus()
+      .blur()
   }
-  if (credentials.COGNITO_USER_PASS_REQUIRE_NUMBER == "TRUE") {
-    cy.get('input[class="PrivateSwitchBase-input-63"]').eq(4).click()
+  if (Cypress.env().COGNITO_USER_PASS_REQUIRE_NUMBER === "TRUE") {
+    cy.xpath(
+      "./html/body/div[3]/div[3]/div/div[2]/div/div[2]/div[10]/div[3]/div/button[1]/span[1]/span/span[1]/input"
+    )
+      .click()
+      .focus()
+      .blur()
   } else {
-    cy.get('input[class="PrivateSwitchBase-input-63"]').eq(5).click()
+    cy.xpath(
+      "./html/body/div[3]/div[3]/div/div[2]/div/div[2]/div[10]/div[3]/div/button[2]/span[1]/span/span[1]/input"
+    )
+      .click()
+      .focus()
+      .blur()
   }
-  if (credentials.COGNITO_USER_PASS_REQUIRE_SYMBOL == "TRUE") {
-    cy.get('input[class="PrivateSwitchBase-input-63"]').eq(6).click()
+  if (Cypress.env().COGNITO_USER_PASS_REQUIRE_SYMBOL === "TRUE") {
+    cy.xpath(
+      "./html/body/div[3]/div[3]/div/div[2]/div/div[2]/div[11]/div[3]/div/button[1]/span[1]/span/span[1]/input"
+    )
+      .click()
+      .focus()
+      .blur()
   } else {
-    cy.get('input[class="PrivateSwitchBase-input-63"]').eq(7).click()
+    cy.xpath(
+      "./html/body/div[3]/div[3]/div/div[2]/div/div[2]/div[11]/div[3]/div/button[2]/span[1]/span/span[1]/input"
+    )
+      .click()
+      .focus()
+      .blur()
   }
 }
 
 const test = () => {
-  cy.log("should be able to set s3 config")
-  cy.contains("Add Authentification").click()
-  cy.contains("AWS - Cognito").click()
-  enterCredentialsCognitoS3()
-  cy.contains("Complete").click()
+  it("Enter credentials cognito-s3", () => {
+    cy.log("should be able to set s3 config")
+    cy.contains("Add Authentification").click()
+    cy.contains("AWS - Cognito").click()
+    enterCredentialsCognitoS3()
+    cy.contains("Complete").click()
+  })
 }
 
 export default test

@@ -1,0 +1,127 @@
+{
+  "name": "Image Landmark",
+  "interface": {
+    "type": "image_landmark_annotation",
+    "keypointDefinitions": {
+      "human": {
+        "landmarks": {
+          "nose": {
+            "label": "Nose",
+            "color": "#f00",
+            "defaultPosition": [0, 0]
+          },
+          "leftEye": {
+            "label": "Left Eye",
+            "color": "#00f",
+            "defaultPosition": [-0.05, -0.05]
+          },
+          "leftEar": {
+            "label": "Left Ear",
+            "color": "#0ff",
+            "defaultPosition": [-0.1, -0.05]
+          },
+          "rightEye": {
+            "label": "Left Eye",
+            "color": "#f0f",
+            "defaultPosition": [0.05, -0.05]
+          },
+          "rightEar": {
+            "label": "Left Ear",
+            "color": "#00f",
+            "defaultPosition": [0.1, -0.05]
+          },
+          "sternum": {
+            "label": "Sternum",
+            "color": "#0f0",
+            "defaultPosition": [0, 0.1]
+          },
+          "leftShoulder": {
+            "label": "Left Shoulder",
+            "color": "#0ff",
+            "defaultPosition": [-0.2, 0.1]
+          },
+          "rightShoulder": {
+            "label": "Right Shoulder",
+            "color": "#00f",
+            "defaultPosition": [0.2, 0.1]
+          },
+          "leftElbow": {
+            "label": "Left Elbow",
+            "color": "#0f0",
+            "defaultPosition": [-0.2, 0.2]
+          },
+          "rightElbow": {
+            "label": "Right Elbow",
+            "color": "#f00",
+            "defaultPosition": [0.2, 0.2]
+          },
+          "leftHand": {
+            "label": "Left Hand",
+            "color": "#00f",
+            "defaultPosition": [-0.2, 0.3]
+          },
+          "rightHand": {
+            "label": "Right Hand",
+            "color": "#f0f",
+            "defaultPosition": [0.2, 0.3]
+          },
+          "leftThigh": {
+            "label": "Left Thigh",
+            "color": "#f00",
+            "defaultPosition": [-0.1, 0.35]
+          },
+          "rightThigh": {
+            "label": "Right Thigh",
+            "color": "#0ff",
+            "defaultPosition": [0.1, 0.35]
+          },
+          "leftKnee": {
+            "label": "Left Thigh",
+            "color": "#ff0",
+            "defaultPosition": [-0.15, 0.45]
+          },
+          "rightKnee": {
+            "label": "Right Thigh",
+            "color": "#0f0",
+            "defaultPosition": [0.15, 0.45]
+          },
+          "leftFoot": {
+            "label": "Left Foot",
+            "color": "#00f",
+            "defaultPosition": [-0.15, 0.55]
+          },
+          "rightFoot": {
+            "label": "Right Foot",
+            "color": "#f00",
+            "defaultPosition": [0.15, 0.55]
+          }
+        },
+        "connections": [
+          ["sternum", "nose"],
+          ["nose", "leftEye"],
+          ["leftEye", "leftEar"],
+          ["nose", "rightEye"],
+          ["rightEye", "rightEar"],
+          ["sternum", "leftShoulder"],
+          ["leftShoulder", "leftElbow"],
+          ["leftElbow", "leftHand"],
+          ["sternum", "leftThigh"],
+          ["leftThigh", "leftKnee"],
+          ["leftKnee", "leftFoot"],
+          ["sternum", "rightShoulder"],
+          ["rightShoulder", "rightElbow"],
+          ["rightElbow", "rightHand"],
+          ["sternum", "rightThigh"],
+          ["rightThigh", "rightKnee"],
+          ["rightKnee", "rightFoot"]
+        ]
+      }
+    }
+  },
+  "samples": [
+    {
+      "_id": "sdgi7veio",
+      "imageUrl": "https://media.istockphoto.com/photos/businesswoman-picture-id918002786"
+    }
+  ]
+}

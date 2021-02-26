@@ -1,0 +1,14 @@
+{
+  "name": "Video Segmentation",
+  "interface": {
+    "type": "video_segmentation",
+    "labels": ["valid", "invalid"],
+    "regionTypesAllowed": ["bounding-box", "polygon", "point"]
+  },
+  "samples": [
+    {
+      "_id": "sprtlkb6r",
+      "videoUrl": "https://s3.amazonaws.com/asset.workaround.online/SampleVideo_1280x720_1mb.mp4"
+    }
+  ]
+}

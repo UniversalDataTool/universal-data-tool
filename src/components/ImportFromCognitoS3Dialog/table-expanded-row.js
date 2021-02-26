@@ -2,6 +2,7 @@ import React from "react"
 import DataTable from "react-data-table-component"
 import { useTranslation } from "react-i18next"
 
+
 const customStyles = {
   headCells: {
     style: {

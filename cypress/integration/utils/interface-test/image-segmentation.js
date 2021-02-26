@@ -1,5 +1,5 @@
 const imageSegmentation = () => {
-  it("Should be able to use image segmentation", () => {
+  it.only("Should be able to use image segmentation", () => {
     cy.contains("New File").click()
     cy.log("should be able to import cat images dataset")
     cy.get("#tab-samples").click()

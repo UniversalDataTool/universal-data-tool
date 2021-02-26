@@ -49,7 +49,7 @@ export const BigInterfaceSelect = ({ onChange, currentInterfaceType }) => {
     <Container className="emptyState">
       <div className="bigText">Choose an Interface:</div>
       {templates
-        .filter((t) => t.name !== "Empty")
+        .filter((t) => t.name !== "Empty" && t.name !== "Time Series 2")
         .map((template) => (
           <BigButton
             key={template.name}

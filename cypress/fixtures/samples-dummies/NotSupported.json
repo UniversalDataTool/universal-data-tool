@@ -1,0 +1,17 @@
+{
+  "name": "Not Supported",
+  "interface": {
+    "type": "audio_transcription",
+    "description": "# Markdown description here"
+  },
+  "samples": [
+    {
+      "_id": "sww95cyio",
+      "imageUrl": "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg"
+    },
+    {
+      "_id": "sprtlkb6r",
+      "videoUrl": "https://s3.amazonaws.com/asset.workaround.online/SampleVideo_1280x720_1mb.mp4"
+    }
+  ]
+}

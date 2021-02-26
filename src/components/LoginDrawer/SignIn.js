@@ -134,6 +134,7 @@ export default ({ onRequireCompleteSignUp }) => {
           variant="contained"
           color="primary"
           className={classes.submit}
+          id="sign-in"
         >
           {t("sign-in")}
         </Button>

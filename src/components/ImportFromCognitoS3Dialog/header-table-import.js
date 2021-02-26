@@ -8,7 +8,7 @@ import { Button, IconButton } from "@material-ui/core/"
 
 const selectedStyle = { color: "DodgerBlue" }
 
-export default ({ configImport, setConfigImport }) => {
+const HeaderTable = ({ configImport, setConfigImport }) => {
   const { t } = useTranslation()
   const loadAssetsOrAnnotations = () => {
     setConfigImport({
@@ -52,11 +52,12 @@ export default ({ configImport, setConfigImport }) => {
         }}
       >
         {configImport.contentDialogBoxIsSetting ? (
-          <StorageIcon></StorageIcon>
+          <StorageIcon id="StorageIcon" />
         ) : (
-          <SettingsIcon></SettingsIcon>
+          <SettingsIcon id="SettingIcon" />
         )}
       </IconButton>
     </div>
   )
 }
+export default HeaderTable

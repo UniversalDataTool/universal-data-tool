@@ -18,8 +18,10 @@ export default (file) => {
     }).catch((error) => {
       console.log("Looks like there was a problem: \n", error)
     })
-    const blob = await response.blob()
-    return blob
+    if (response) {
+      const blob = await response.blob()
+      return blob
+    }
   }
 
   function fileNameExist(file) {

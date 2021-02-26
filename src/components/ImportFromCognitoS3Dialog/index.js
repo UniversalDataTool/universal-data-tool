@@ -7,7 +7,6 @@ import datasetManagerCognito from "udt-dataset-managers/dist/CognitoDatasetManag
 import useAuth from "../../utils/auth-handlers/use-auth"
 import setTypeOfFileToLoadAndDisable from "./set-type-of-file-to-load-and-disable"
 import initConfigImport from "./init-config-import"
-import datasetHasChanged from "../../utils//dataset-helper/get-files-differences"
 import setUrl from "./set-url"
 import { setIn } from "seamless-immutable"
 import ExpandedRow from "./table-expanded-row"
@@ -16,7 +15,6 @@ import HeaderTableImport from "./header-table-import"
 import { Radio, Grid } from "@material-ui/core/"
 import importConfigIsReady from "./config-import-is-ready"
 import WarningHeader from "./warning-header"
-import getSources from "./get-sources"
 import { useTranslation } from "react-i18next"
 
 export default ({ open, onClose, onAddSamples }) => {
@@ -43,14 +41,10 @@ export default ({ open, onClose, onAddSamples }) => {
   useEffect(() => {
     if (!open) return
     var configToSet = configImport
-
     var hasChanged = false
-    if (oldData === lastObjectRef.current) {
-      const changes = datasetHasChanged(lastObjectRef.current, oldData)
-      if (changes.interface.type || changes.samples) {
-        configToSet = setTypeOfFileToLoadAndDisable(configToSet, oldData)
-        hasChanged = true
-      }
+    if (JSON.stringify(oldData) !== JSON.stringify(lastObjectRef.current)) {
+      configToSet = setTypeOfFileToLoadAndDisable(configToSet, oldData)
+      hasChanged = true
     }
     if (
       importConfigIsReady(projectToFetch, configImport) !== configImport.isReady
@@ -61,6 +55,7 @@ export default ({ open, onClose, onAddSamples }) => {
       }
       hasChanged = true
     }
+    console.log(hasChanged)
     if (hasChanged) {
       setConfigImport({
         ...configToSet,
@@ -112,12 +107,8 @@ export default ({ open, onClose, onAddSamples }) => {
       dataFolder.map(async (obj, index) => {
         const folder = obj
         var isSelected = false
-        const rowAnnotationsContent = await dm.getListSamples({
-          projectName: obj,
-        })
-        const rowAssetsContent = await dm.getListAssets({
-          projectName: obj,
-        })
+        const rowAnnotationsContent = await dm.getListSamples(obj)
+        const rowAssetsContent = await dm.getListAssets(obj)
         if (projectToFetch && projectToFetch.folder === folder)
           isSelected = true
         return {
@@ -178,38 +169,68 @@ export default ({ open, onClose, onAddSamples }) => {
         )
       })
     )
-    onAddSamples(jsons)
+    return jsons
   }
 
   const createJsonFromUrlAWS = async (projectName, imageName) => {
     var url = await dm.getAssetUrl(imageName, projectName)
-    var json = setUrl(url, configImport)
-    if (json) json = setIn(json, ["_id"], imageName)
-    if (json) json = setIn(json, ["source"], projectName)
+    var json = await setUrl(url, configImport, dm)
+    if (json)
+      json = await setIn(
+        json,
+        ["_id"],
+        "s" + Math.random().toString(36).slice(-8)
+      )
+    if (json) json = await setIn(json, ["sampleName"], imageName)
+    if (json) json = await setIn(json, ["source"], projectName)
     return json
   }
 
   const createJsonFromAnnotation = async () => {
     var jsons = await dm.readJSONAllSamples(projectToFetch.rowAnnotationsUrl)
-    var sources = getSources(jsons)
-    if (sources) {
-      jsons = await Promise.all(
-        jsons.map(async (json) => {
-          if (json.source)
-            json = await createJsonFromUrlAWS(json.source, json._id)
-          return json
-        })
-      )
-    }
-    onAddSamples(jsons)
+    return jsons
+  }
+
+  const checkIfJsonsContainsDouble = (jsons) => {
+    var newJsons = []
+    var oldUrl = oldData.samples.map((json) => {
+      var url = dm.getSampleUrl(json)
+      if (url) return url.match("(http.*)\\?|(http.*)$")[1]
+      return url
+    })
+
+    newJsons = jsons.filter((json) => {
+      var url = dm.getSampleUrl(json)
+      if (url && oldUrl.includes(url.match("(http.*)\\?|(http.*)$")[1]))
+        return false
+      return true
+    })
+
+    return newJsons
   }
 
   const handleAddSample = async () => {
+    if (!dm) return
+    var jsons
     if (configImport.loadAssetsIsSelected) {
-      createJsonFromAsset()
+      jsons = await createJsonFromAsset()
     } else {
-      createJsonFromAnnotation()
+      jsons = await createJsonFromAnnotation()
     }
+    jsons = await checkIfJsonsContainsDouble(jsons)
+
+    onAddSamples(await preventFatalErrorOnAddSamples(jsons))
+  }
+
+  const preventFatalErrorOnAddSamples = async (jsons) => {
+    return await Promise.resolve(jsons)
+      .then((jsons) => {
+        if (Array.isArray(jsons)) return jsons
+        return []
+      })
+      .catch(() => {
+        return []
+      })
   }
 
   return (
