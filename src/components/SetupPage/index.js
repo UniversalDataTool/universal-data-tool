@@ -31,16 +31,15 @@ export default ({ onClearLabelData }) => {
   return (
     <div>
       <Box padding="8px" paddingBottom="0px">
-        <Tabs value={currentTab} onChange={(e, newTab) => {
-          addToast(
-            "Couldn't load plugin: ",
-            "error",
-            () => {
-              console.log('passed click')
-            }
-          )
-          setTab(newTab)
-        }}>
+        <Tabs
+          value={currentTab}
+          onChange={(e, newTab) => {
+            addToast("Couldn't load plugin: ", "error", () => {
+              console.log("passed click")
+            })
+            setTab(newTab)
+          }}
+        >
           <Tab icon={<CategoryIcon />} label="Data Type" value="datatype" />
           <Tab
             disabled={!iface?.type}

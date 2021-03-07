@@ -127,8 +127,11 @@ export const ToastProvider = ({ children }) => {
     return () => clearInterval(interval)
   }, [toasts])
 
-  const addToast = (message: string, messageType: string = "info", onClick: function = null) =>
-    changeToasts({ type: "add", message, messageType, onClick })
+  const addToast = (
+    message: string,
+    messageType: string = "info",
+    onClick: function = null
+  ) => changeToasts({ type: "add", message, messageType, onClick })
 
   return (
     <>
@@ -172,7 +175,7 @@ export const Notification = ({ type, message, onClick, onClose }) => {
   return (
     <paper
       className={classes.notificationPaper}
-      style={{ position: "relative", cursor: 'pointer' }}
+      style={{ position: "relative", cursor: "pointer" }}
       onClick={() => {
         if (onClick) {
           onClick()
