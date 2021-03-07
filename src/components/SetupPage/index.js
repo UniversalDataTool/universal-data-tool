@@ -18,19 +18,29 @@ import DatasetJSONEditor from "../DatasetJSONEditor"
 import useInterface from "../../hooks/use-interface"
 import useSample from "../../hooks/use-sample"
 import Protip from "./Protip"
+import { useToasts } from "../Toasts"
 
 const noop = () => {}
 
 export default ({ onClearLabelData }) => {
   const { iface, updateInterface } = useInterface()
   const { sample } = useSample(0)
-
+  const { addToast } = useToasts()
   const [currentTab, setTab] = useState(iface?.type ? "configure" : "datatype")
 
   return (
     <div>
       <Box padding="8px" paddingBottom="0px">
-        <Tabs value={currentTab} onChange={(e, newTab) => setTab(newTab)}>
+        <Tabs value={currentTab} onChange={(e, newTab) => {
+          addToast(
+            "Couldn't load plugin: ",
+            "error",
+            () => {
+              console.log('passed click')
+            }
+          )
+          setTab(newTab)
+        }}>
           <Tab icon={<CategoryIcon />} label="Data Type" value="datatype" />
           <Tab
             disabled={!iface?.type}
