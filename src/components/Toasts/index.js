@@ -130,7 +130,7 @@ export const ToastProvider = ({ children }) => {
   const addToast = (
     message: string,
     messageType: string = "info",
-    onClick: function = null
+    onClick: function
   ) => changeToasts({ type: "add", message, messageType, onClick })
 
   return (
@@ -176,11 +176,7 @@ export const Notification = ({ type, message, onClick, onClose }) => {
     <paper
       className={classes.notificationPaper}
       style={{ position: "relative", cursor: "pointer" }}
-      onClick={() => {
-        if (onClick) {
-          onClick()
-        }
-      }}
+      onClick={onClick}
     >
       <div className={classNames(classes.icon, type)}>
         <Icon fontSize="large" style={{ padding: 12 }} />
