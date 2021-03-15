@@ -2,13 +2,13 @@ const createAndVisitCollaborativeSession = () => {
   let collaborationUrl
   it("Should be able to create and visit collaborative session", () => {
     cy.log("should be able to import Elon Musk Tweets dataset")
-    cy.get("#tab-samples", { timeout: 5000 }).click()
+    cy.get("#tab-samples", { timeout: 10000 }).click()
     cy.contains("Import").click()
     cy.contains("Import Toy Dataset").click()
     cy.contains("Elon Musk Tweets").siblings("td").eq(2).click()
 
     cy.log("should be able to create new session")
-    cy.get("div[title='collaborate-icon']").click()
+    cy.get("div[title='collaborate-icon']", { timeout: 10000 }).click()
     cy.contains("Create New Session", { timeout: 5000 }).click()
     cy.contains("Leave Session", { timeout: 20000 })
     cy.get("div[title='collaborate-icon']").trigger("mouseleave")
@@ -25,7 +25,7 @@ const createAndVisitCollaborativeSession = () => {
         cy.visit(collaborationUrl)
 
         cy.log("should be able to navigate to samples")
-        cy.get("#tab-samples").click()
+        cy.get("#tab-samples", { timeout: 20000 }).click()
       })
   })
 }
