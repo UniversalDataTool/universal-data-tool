@@ -1,0 +1,17 @@
+{
+  "name": "Image Classification",
+  "interface": {
+    "type": "image_classification",
+    "labels": ["valid", "invalid"]
+  },
+  "samples": [
+    {
+      "_id": "sww95cyio",
+      "imageUrl": "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg"
+    },
+    {
+      "_id": "strmmwo1g",
+      "imageUrl": "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg"
+    }
+  ]
+}

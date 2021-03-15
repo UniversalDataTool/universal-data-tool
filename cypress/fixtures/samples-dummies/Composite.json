@@ -1,0 +1,42 @@
+{
+  "name": "Composite",
+  "interface": {
+    "type": "composite",
+    "fields": [
+      {
+        "fieldName": "textInfo",
+        "interface": {
+          "type": "data_entry",
+          "surveyjs": {
+            "questions": [
+              {
+                "type": "text",
+                "name": "group_letter",
+                "title": "Letter of Group"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "fieldName": "segmentation",
+        "interface": {
+          "type": "image_segmentation",
+          "labels": ["group text"],
+          "regionTypesAllowed": ["bounding-box"]
+        }
+      }
+    ]
+  },
+  "description": "# Markdown description here",
+  "samples": [
+    {
+      "_id": "s2y1li73c",
+      "imageUrl": "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image1.jpg"
+    },
+    {
+      "_id": "snodnb8eb",
+      "imageUrl": "https://s3.amazonaws.com/asset.workaround.online/example-jobs/sticky-notes/image2.jpg"
+    }
+  ]
+}
