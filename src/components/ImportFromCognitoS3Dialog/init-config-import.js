@@ -2,23 +2,75 @@ import checkInterfaceAndsamples from "./check-interface-and-sample-type"
 export default (dataset) => {
   return {
     annotationToKeep: "both",
-    typeOfFileToLoad: checkInterfaceAndsamples(["Image", "Empty"], dataset)
+    typeOfFileToLoad: checkInterfaceAndsamples(["Empty"], ["Empty"], dataset)
+      ? "None"
+      : checkInterfaceAndsamples(
+          ["Image", "Empty"],
+          ["Image", "Empty"],
+          dataset
+        )
       ? "Image"
-      : checkInterfaceAndsamples(["Video", "Empty"], dataset)
+      : checkInterfaceAndsamples(
+          ["Video", "Empty"],
+          ["Video", "Empty"],
+          dataset
+        )
       ? "Video"
-      : checkInterfaceAndsamples(["Audio", "Empty"], dataset)
+      : checkInterfaceAndsamples(
+          ["Audio", "Empty"],
+          ["Audio", "Empty"],
+          dataset
+        )
       ? "Audio"
-      : checkInterfaceAndsamples(["PDF", "Empty"], dataset)
+      : checkInterfaceAndsamples(["PDF", "Empty"], ["PDF", "Empty"], dataset)
       ? "PDF"
-      : checkInterfaceAndsamples(["Text", "Empty"], dataset)
+      : checkInterfaceAndsamples(["Text", "Empty"], ["Text", "Empty"], dataset)
       ? "Text"
+      : checkInterfaceAndsamples(
+          ["Time", "Empty"],
+          ["Time", "Empty", "Audio"],
+          dataset
+        )
+      ? "Time"
       : "None",
     typeOfFileToDisable: {
-      Image: !checkInterfaceAndsamples(["Image", "Empty"], dataset),
-      Video: !checkInterfaceAndsamples(["Video", "Empty"], dataset),
-      Audio: !checkInterfaceAndsamples(["Audio", "Empty"], dataset),
-      PDF: !checkInterfaceAndsamples(["PDF", "Empty"], dataset),
-      Text: !checkInterfaceAndsamples(["Text", "Empty"], dataset),
+      Image: !checkInterfaceAndsamples(
+        ["Image", "Empty"],
+        ["Image", "Empty"],
+        dataset
+      ),
+      Video: !checkInterfaceAndsamples(
+        ["Video", "Empty"],
+        ["Video", "Empty"],
+        dataset
+      ),
+      Audio: !(
+        checkInterfaceAndsamples(
+          ["Time", "Empty"],
+          ["Time", "Audio", "Empty"],
+          dataset
+        ) ||
+        checkInterfaceAndsamples(
+          ["Audio", "Empty"],
+          ["Audio", "Empty"],
+          dataset
+        )
+      ),
+      PDF: !checkInterfaceAndsamples(
+        ["PDF", "Empty"],
+        ["PDF", "Empty"],
+        dataset
+      ),
+      Text: !checkInterfaceAndsamples(
+        ["Text", "Empty"],
+        ["Text", "Empty"],
+        dataset
+      ),
+      Time: !checkInterfaceAndsamples(
+        ["Time", "Empty"],
+        ["Time", "Empty", "Audio"],
+        dataset
+      ),
     },
     loadAssetsIsSelected: true,
     contentDialogBoxIsSetting: false,
