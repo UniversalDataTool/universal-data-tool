@@ -1,36 +1,84 @@
 import isEmpty from "lodash/isEmpty"
-import checkInterfaceAndAssets from "./check-interface-and-sample-type"
+import checkInterfaceAndsamples from "./check-interface-and-sample-type"
 export default (configImport, dataset) => {
   return {
     ...configImport,
     typeOfFileToLoad:
       !isEmpty(configImport) &&
       !isEmpty(configImport.typeOfFileToLoad) &&
-      checkInterfaceAndAssets([configImport.typeOfFileToLoad, "Empty"], dataset)
-        ? configImport.typeOfFileToLoad
-        : checkInterfaceAndAssets(["Image", "Empty"], dataset)
+      checkInterfaceAndsamples(["Empty"], ["Empty"], dataset)
+        ? "None"
+        : checkInterfaceAndsamples(
+            ["Image", "Empty"],
+            ["Image", "Empty"],
+            dataset
+          )
         ? "Image"
-        : checkInterfaceAndAssets(["Video", "Empty"], dataset)
+        : checkInterfaceAndsamples(
+            ["Video", "Empty"],
+            ["Video", "Empty"],
+            dataset
+          )
         ? "Video"
-        : checkInterfaceAndAssets(["Audio", "Empty"], dataset)
+        : checkInterfaceAndsamples(
+            ["Audio", "Empty"],
+            ["Audio", "Empty"],
+            dataset
+          )
         ? "Audio"
-        : checkInterfaceAndAssets(["PDF", "Empty"], dataset)
+        : checkInterfaceAndsamples(["PDF", "Empty"], ["PDF", "Empty"], dataset)
         ? "PDF"
-        : checkInterfaceAndAssets(["Text", "Empty"], dataset)
+        : checkInterfaceAndsamples(
+            ["Text", "Empty"],
+            ["Text", "Empty"],
+            dataset
+          )
         ? "Text"
+        : checkInterfaceAndsamples(
+            ["Time", "Empty"],
+            ["Time", "Empty", "Audio"],
+            dataset
+          )
+        ? "Time"
         : "None",
     typeOfFileToDisable: {
-      Image: checkInterfaceAndAssets(["Image", "Empty"], dataset)
-        ? false
-        : true,
-      Video: checkInterfaceAndAssets(["Video", "Empty"], dataset)
-        ? false
-        : true,
-      Audio: checkInterfaceAndAssets(["Audio", "Empty"], dataset)
-        ? false
-        : true,
-      PDF: checkInterfaceAndAssets(["PDF", "Empty"], dataset) ? false : true,
-      Text: checkInterfaceAndAssets(["Text", "Empty"], dataset) ? false : true,
+      Image: !checkInterfaceAndsamples(
+        ["Image", "Empty"],
+        ["Image", "Empty"],
+        dataset
+      ),
+      Video: !checkInterfaceAndsamples(
+        ["Video", "Empty"],
+        ["Video", "Empty"],
+        dataset
+      ),
+      Audio: !(
+        checkInterfaceAndsamples(
+          ["Time", "Empty"],
+          ["Time", "Audio", "Empty"],
+          dataset
+        ) ||
+        checkInterfaceAndsamples(
+          ["Audio", "Empty"],
+          ["Audio", "Empty"],
+          dataset
+        )
+      ),
+      PDF: !checkInterfaceAndsamples(
+        ["PDF", "Empty"],
+        ["PDF", "Empty"],
+        dataset
+      ),
+      Text: !checkInterfaceAndsamples(
+        ["Text", "Empty"],
+        ["Text", "Empty"],
+        dataset
+      ),
+      Time: !checkInterfaceAndsamples(
+        ["Time", "Empty"],
+        ["Time", "Empty", "Audio"],
+        dataset
+      ),
     },
   }
 }
