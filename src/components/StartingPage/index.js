@@ -141,10 +141,10 @@ const BottomSpacer = styled("div")({ height: 100 })
 
 const languageOptions = [
   { label: "English", value: "en" },
-  { label: "French", value: "fr" },
-  { label: "Chinese", value: "cn" },
-  { label: "Portuguese", value: "pt" },
-  { label: "Dutch", value: "nl" },
+  { label: "Français", value: "fr" },
+  { label: "汉语", value: "cn" },
+  { label: "Português", value: "pt" },
+  { label: "Néerlandais", value: "nl" },
 ]
 
 export default ({
