@@ -24,7 +24,6 @@ const noop = () => {}
 export default ({ onClearLabelData }) => {
   const { iface, updateInterface } = useInterface()
   const { sample } = useSample(0)
-
   const [currentTab, setTab] = useState(iface?.type ? "configure" : "datatype")
 
   return (

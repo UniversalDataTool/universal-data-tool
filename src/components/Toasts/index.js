@@ -95,6 +95,7 @@ export const ToastProvider = ({ children }) => {
           id: Math.random().toString().split(".")[1],
           message: action.message,
           type: action.messageType,
+          onClick: action.onClick || null,
           life: fullLife,
           fullLife,
         },
@@ -126,8 +127,11 @@ export const ToastProvider = ({ children }) => {
     return () => clearInterval(interval)
   }, [toasts])
 
-  const addToast = (message: string, messageType: string = "info") =>
-    changeToasts({ type: "add", message, messageType })
+  const addToast = (
+    message: string,
+    messageType: string = "info",
+    onClick: function
+  ) => changeToasts({ type: "add", message, messageType, onClick })
 
   return (
     <>
@@ -141,6 +145,7 @@ export const ToastProvider = ({ children }) => {
               <Notification
                 type={msg.type}
                 message={msg.message}
+                onClick={msg.onClick}
                 onClose={() => changeToasts({ type: "remove", id: msg.id })}
               />
             </Fade>
@@ -151,7 +156,7 @@ export const ToastProvider = ({ children }) => {
   )
 }
 
-export const Notification = ({ type, message, onClose }) => {
+export const Notification = ({ type, message, onClick, onClose }) => {
   const classes = useStyles()
   let Icon = null
   switch (type) {
@@ -170,7 +175,8 @@ export const Notification = ({ type, message, onClose }) => {
   return (
     <paper
       className={classes.notificationPaper}
-      style={{ position: "relative" }}
+      style={{ position: "relative", cursor: "pointer" }}
+      onClick={onClick}
     >
       <div className={classNames(classes.icon, type)}>
         <Icon fontSize="large" style={{ padding: 12 }} />
