@@ -7,7 +7,6 @@ import datasetManagerCognito from "udt-dataset-managers/dist/CognitoDatasetManag
 import useAuth from "../../utils/auth-handlers/use-auth"
 import setTypeOfFileToLoadAndDisable from "./set-type-of-file-to-load-and-disable"
 import initConfigImport from "./init-config-import"
-import datasetHasChanged from "../../utils//dataset-helper/get-files-differences"
 import setUrl from "./set-url"
 import { setIn } from "seamless-immutable"
 import ExpandedRow from "./table-expanded-row"
@@ -43,14 +42,10 @@ export default ({ open, onClose, onAddSamples }) => {
   useEffect(() => {
     if (!open) return
     var configToSet = configImport
-
     var hasChanged = false
-    if (oldData === lastObjectRef.current) {
-      const changes = datasetHasChanged(lastObjectRef.current, oldData)
-      if (changes.interface.type || changes.samples) {
-        configToSet = setTypeOfFileToLoadAndDisable(configToSet, oldData)
-        hasChanged = true
-      }
+    if (JSON.stringify(oldData) !== JSON.stringify(lastObjectRef.current)) {
+      configToSet = setTypeOfFileToLoadAndDisable(configToSet, oldData)
+      hasChanged = true
     }
     if (
       importConfigIsReady(projectToFetch, configImport) !== configImport.isReady
