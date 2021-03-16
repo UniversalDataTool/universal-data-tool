@@ -1,0 +1,7 @@
+{
+  "timeData": [
+    { "time": 0, "value": 0 },
+    { "time": 500, "value": 0.75 },
+    { "time": 1000, "value": 1 }
+  ]
+}

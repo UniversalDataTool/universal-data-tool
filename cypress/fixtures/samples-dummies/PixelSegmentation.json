@@ -1,0 +1,22 @@
+{
+  "name": "Pixel Segmentation",
+  "interface": {
+    "type": "image_pixel_segmentation",
+    "labels": ["hair", "mouth", "nose", "eyes"],
+    "description": "These are AI-generated faces, not real people."
+  },
+  "samples": [
+    {
+      "_id": "s67fjg4xn",
+      "imageUrl": "https://s3.amazonaws.com/datasets.workaround.online/faces/010041.jpg"
+    },
+    {
+      "_id": "sya6a14y5",
+      "imageUrl": "https://s3.amazonaws.com/datasets.workaround.online/faces/010026.jpg"
+    },
+    {
+      "_id": "s4ldv4ltg",
+      "imageUrl": "https://s3.amazonaws.com/datasets.workaround.online/faces/010025.jpg"
+    }
+  ]
+}

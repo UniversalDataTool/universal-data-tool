@@ -1,0 +1,13 @@
+{
+  "name": "Audio Transcription",
+  "interface": {
+    "type": "audio_transcription",
+    "description": "# Markdown description here"
+  },
+  "samples": [
+    {
+      "_id": "s5tghce7k",
+      "audioUrl": "https://html5tutorial.info/media/vincent.mp3"
+    }
+  ]
+}

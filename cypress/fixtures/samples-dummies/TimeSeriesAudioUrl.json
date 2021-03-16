@@ -1,0 +1,19 @@
+{
+  "name": "Time Series",
+  "interface": {
+    "type": "time_series",
+    "timeFormat": "dates",
+    "enabledTools": ["create-durations", "label-durations"],
+    "durationLabels": ["@seveibar is speaking"]
+  },
+  "samples": [
+    {
+      "audioUrl": "https://s3.amazonaws.com/datasets.workaround.online/voice-samples/001/voice.mp3",
+      "annotation": {
+        "durations": [
+          { "start": 500, "end": 2000, "label": "@seveibar is speaking" }
+        ]
+      }
+    }
+  ]
+}

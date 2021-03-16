@@ -1,0 +1,20 @@
+{
+  "name": "Data Entry",
+  "interface": {
+    "type": "data_entry",
+    "description": "# Markdown description here",
+    "surveyjs": {
+      "questions": [
+        {
+          "type": "text",
+          "name": "document_title",
+          "title": "Title of Document"
+        }
+      ]
+    }
+  },
+  "samples": [
+    { "_id": "sj2skbtg3", "pdfUrl": "https://arxiv.org/pdf/1906.01969.pdf" },
+    { "_id": "skszdkkb9", "pdfUrl": "https://arxiv.org/pdf/1908.07069.pdf" }
+  ]
+}
