@@ -178,7 +178,7 @@ export default ({ open, onClose, onAddSamples }) => {
 
   const createJsonFromUrlAWS = async (projectName, imageName) => {
     var url = await dm.getAssetUrl(imageName, projectName)
-    var json = setUrl(url, configImport)
+    var json = await setUrl(url, configImport, dm)
     if (json) json = setIn(json, ["_id"], imageName)
     if (json) json = setIn(json, ["source"], projectName)
     return json
