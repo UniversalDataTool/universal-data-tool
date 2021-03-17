@@ -1,4 +1,5 @@
 import React from "react"
+import { useTranslation } from "react-i18next"
 import {
   Radio,
   RadioGroup,
@@ -7,8 +8,7 @@ import {
   FormLabel,
   Grid,
 } from "@material-ui/core/"
-import { useTranslation } from "react-i18next"
-export default ({ configImport, setConfigImport }) => {
+const Setting = ({ configImport, setConfigImport, tableStyle }) => {
   const { t } = useTranslation()
   return (
     <Grid container item xs={12} spacing={0} justify="center">
@@ -35,12 +35,14 @@ export default ({ configImport, setConfigImport }) => {
               control={<Radio />}
               label={t("keep-incoming-annotations")}
               checked={configImport.annotationToKeep === "incoming"}
+              disabled={true}
             />
             <FormControlLabel
               value="current"
               control={<Radio />}
               label={t("keep-current-annotations")}
               checked={configImport.annotationToKeep === "current"}
+              disabled={true}
             />
           </RadioGroup>
         </FormControl>
@@ -91,9 +93,17 @@ export default ({ configImport, setConfigImport }) => {
               disabled={configImport.typeOfFileToDisable.Text}
               checked={configImport.typeOfFileToLoad === "Text"}
             />
+            <FormControlLabel
+              value="Time"
+              control={<Radio />}
+              label="Load time file"
+              disabled={configImport.typeOfFileToDisable.Time}
+              checked={configImport.typeOfFileToLoad === "Time"}
+            />
           </RadioGroup>
         </FormControl>
       )}
     </Grid>
   )
 }
+export default Setting
