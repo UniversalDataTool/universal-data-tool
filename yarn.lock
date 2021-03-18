@@ -14240,10 +14240,21 @@ matcher@^3.0.0:
   dependencies:
     escape-string-regexp "^4.0.0"
 
-material-survey@^1.0.34, material-survey@^1.0.40:
+material-survey@^1.0.34:
   version "1.0.40"
   resolved "https://registry.yarnpkg.com/material-survey/-/material-survey-1.0.40.tgz#35c650826fe94d69a6c40e08a120abb51a40d03c"
   integrity sha512-im5elNvoetmsRaafw/92YAyBXalQKXAjBwJDnJiwV23z6GBZ4dcjdMrUkIGXxZRsFrdy2/yrap0haB6mfNUzSg==
+  dependencies:
+    k-choice-sort "^1.0.9"
+    lodash "^4.17.11"
+    react-dropzone "^8.0.1"
+    react-select "^3.0.8"
+    surveyjs-expression-eval "^1.0.2"
+
+material-survey@^1.0.41:
+  version "1.0.41"
+  resolved "https://registry.yarnpkg.com/material-survey/-/material-survey-1.0.41.tgz#6e9db6601aa991bda1175ea2e47b3692be925bd9"
+  integrity sha512-WlfMw2twMpZ9THevzPMaDsiTMrzA2SRK8ferhobRL1XHqwtG9MlMHpLzRxe2df54vJUMTk98JFASOO3sTNkCmg==
   dependencies:
     k-choice-sort "^1.0.9"
     lodash "^4.17.11"
