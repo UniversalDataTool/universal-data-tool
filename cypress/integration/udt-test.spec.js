@@ -6,6 +6,8 @@ import namedEntityRecognition from "./utils/interface-test/named-entity-recognit
 import pasteImageUrlsWithCSV from "./utils/interface-test/paste-image-urls-with-csv"
 import pasteImageUrls from "./utils/interface-test/paste-image-urls"
 import textEntityClassification from "./utils/interface-test/text-entity-classification"
+import defaultTemplate from "./utils/interface-test/default-template"
+import templateNonVisible from "./utils/interface-test/template-non-visble"
 import commandSetLanguage from "./utils/cypress-command/set-language"
 
 commandSetLanguage()
@@ -16,6 +18,8 @@ describe("Udt test", () => {
     cy.visit(`http://localhost:6001`)
     cy.setLanguage("en")
   })
+  templateNonVisible()
+  defaultTemplate()
   createNewFile()
   imageClassification()
   imageSegmentation()

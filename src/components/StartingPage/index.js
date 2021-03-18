@@ -248,7 +248,20 @@ export default ({
                   <ActionTitle>{t("start")}</ActionTitle>
                   <Action
                     onClick={() => {
-                      onOpenTemplate(templates.find((t) => t.name === "Empty"))
+                      var appConfig = JSON.parse(
+                        localStorage.getItem("app_config")
+                      )
+                      if (appConfig.defaultTemplate) {
+                        onOpenTemplate(
+                          templates.find(
+                            (t) => t.name === appConfig.defaultTemplate
+                          )
+                        )
+                      } else {
+                        onOpenTemplate(
+                          templates.find((t) => t.name === "Empty")
+                        )
+                      }
                     }}
                   >
                     {t("new-file")}
