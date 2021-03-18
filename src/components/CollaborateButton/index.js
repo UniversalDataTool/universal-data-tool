@@ -13,7 +13,6 @@ import InputAdornment from "@material-ui/core/InputAdornment"
 import AddBoxTwoTone from "@material-ui/icons/AddBoxTwoTone"
 import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import CircularProgress from "@material-ui/core/CircularProgress"
-import usePosthog from "../../hooks/use-posthog"
 import HeaderPopupBox from "../HeaderPopupBox"
 import useActiveDatasetManager from "../../hooks/use-active-dataset-manager"
 
@@ -59,7 +58,6 @@ export default ({
   const [loadingSession, changeLoadingSession] = useState(false)
   const [sessionUrl, changeSessionUrl] = useState("")
   const [userName, changeUserName] = useLocalStorage("userName", "anonymous")
-  const posthog = usePosthog()
 
   // internalization hook
   const { t } = useTranslation()
@@ -106,7 +104,6 @@ export default ({
                     <IconButton
                       color="primary"
                       onClick={() => {
-                        posthog.capture("join_collaborative_session")
                         onJoinSession(sessionUrl)
                       }}
                       disabled={!sessionUrl}
@@ -122,7 +119,6 @@ export default ({
               fullWidth
               disabled={!fileOpen || loadingSession || error}
               onClick={() => {
-                posthog.capture("create_collaborative_session")
                 onCreateSession()
                 changeLoadingSession(true)
               }}

@@ -2,7 +2,7 @@ const createAndVisitCollaborativeSession = () => {
   let collaborationUrl
   it("Should be able to create and visit collaborative session", () => {
     cy.log("should be able to import Elon Musk Tweets dataset")
-    cy.get("#tab-samples", { timeout: 5000 }).click()
+    cy.get("#tab-samples", { timeout: 10000 }).click()
     cy.contains("Import").click()
     cy.contains("Import Toy Dataset").click()
     cy.contains("Elon Musk Tweets").siblings("td").eq(2).click()

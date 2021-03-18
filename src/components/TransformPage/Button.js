@@ -2,7 +2,6 @@ import React from "react"
 import { styled } from "@material-ui/core/styles"
 import MuiButton from "@material-ui/core/Button"
 import * as colors from "@material-ui/core/colors"
-import usePosthog from "../../hooks/use-posthog"
 import useIsDesktop from "../../hooks/use-is-desktop"
 import { useTranslation } from "react-i18next"
 import classnames from "classnames"
@@ -48,7 +47,6 @@ export const Button = ({
   onClick,
 }) => {
   const isDesktop = useIsDesktop()
-  const posthog = usePosthog()
   const { t } = useTranslation()
 
   disabled =
@@ -59,9 +57,6 @@ export const Button = ({
         return (
           <ButtonBase
             onClick={() => {
-              posthog.capture("transform_button_clicked", {
-                transform_button: dialog || children,
-              })
               if (onClick) return onClick()
               onChangeDialog(dialog)
             }}

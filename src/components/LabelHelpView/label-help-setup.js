@@ -7,7 +7,6 @@ import TableCell from "@material-ui/core/TableCell"
 import TableHead from "@material-ui/core/TableHead"
 import TableRow from "@material-ui/core/TableRow"
 import useLabelHelp from "./use-label-help"
-import usePosthog from "../../hooks/use-posthog"
 import CircularProgress from "@material-ui/core/CircularProgress"
 import { useAppConfig } from "../AppConfig"
 import useDataset from "../../hooks/use-dataset"
@@ -37,8 +36,6 @@ export const LabelHelpSetup = ({ onChangeActiveStep, onError }) => {
     formulaFunc = () => 0,
     myCredits = () => 0,
   } = useLabelHelp()
-
-  const posthog = usePosthog()
 
   const [isCreating, setIsCreating] = useState(false)
 
@@ -81,8 +78,6 @@ export const LabelHelpSetup = ({ onChangeActiveStep, onError }) => {
     )
 
     onChangeActiveStep("running")
-
-    posthog.capture("start_label_help_button_clicked")
   })
 
   return (
@@ -151,7 +146,6 @@ export const LabelHelpSetup = ({ onChangeActiveStep, onError }) => {
         <Button
           onClick={() => {
             setInConfig("labelhelp.apikey", null)
-            posthog.capture("api_key_button_clicked")
           }}
           variant="outlined"
         >
@@ -162,9 +156,6 @@ export const LabelHelpSetup = ({ onChangeActiveStep, onError }) => {
           style={{ marginLeft: 12 }}
           variant="outlined"
           href="https://labelhelp.universaldatatool.com#addcredits"
-          onClick={() => {
-            posthog.capture("add_credits_button_clicked")
-          }}
         >
           Add Credits
         </Button>

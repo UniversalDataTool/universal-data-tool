@@ -11,7 +11,6 @@ import AppErrorBoundary from "../AppErrorBoundary"
 import useEventCallback from "use-event-callback"
 import usePreventNavigation from "../../hooks/use-prevent-navigation"
 import { FileContext } from "../FileContext"
-import usePosthog from "../../hooks/use-posthog"
 import ManagePluginsDialog from "../ManagePluginsDialog"
 import usePluginProvider from "../PluginProvider"
 import download from "in-browser-download"
@@ -28,7 +27,6 @@ export default () => {
   const [datasetManager, setDatasetManager] = useActiveDatasetManager()
   usePreventNavigation(Boolean(datasetManager))
 
-  const posthog = usePosthog()
   const [errors] = useErrors()
 
   const [managePluginsDialogOpen, setManagePluginsDialogOpen] = useState(false)
@@ -60,7 +58,6 @@ export default () => {
     setManagePluginsDialogOpen(true)
   )
   const onDownload = useEventCallback(async (format) => {
-    posthog.capture("download_file", { file_type: format })
     const ds = await datasetManager.getDataset()
     const userProvidedFileName = (
       datasetManager.sessionId ||

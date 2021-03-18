@@ -15,7 +15,7 @@ const namedEntityRecognition = () => {
     cy.contains("Elon Musk Tweets").siblings("td").eq(2).click()
 
     cy.log("should be able to setup Named Entity Recognition")
-    cy.get("#tab-setup").click()
+    cy.get("#tab-setup", { timeout: 5000 }).click()
     cy.contains("Named Entity Recognition").click()
     cy.get("input[value=food]").focus().clear().type("mars")
     cy.get("input[value=Food]").focus().clear().type("About Mars")

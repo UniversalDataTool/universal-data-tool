@@ -26,7 +26,6 @@ import ImportToyDataset from "../ImportToyDatasetDialog"
 import ImportFromYoutubeUrls from "../ImportFromYoutubeUrls"
 import ImportFromCOCODialog from "../ImportFromCOCODialog"
 import { FaGoogleDrive, FaYoutube } from "react-icons/fa"
-import usePosthog from "../../hooks/use-posthog"
 import promptAndGetSamplesFromLocalDirectory from "./prompt-and-get-samples-from-local-directory.js"
 import { useTranslation } from "react-i18next"
 import useAuth from "../../utils/auth-handlers/use-auth.js"
@@ -79,8 +78,6 @@ const Button = ({
   onlySupportType,
   type,
 }) => {
-  const posthog = usePosthog()
-
   const { isLoggedIn, authConfig } = useAuth()
 
   const isDisabled = () => {
@@ -112,9 +109,6 @@ const Button = ({
         return (
           <ButtonBase
             onClick={() => {
-              posthog.capture("import_button_clicked", {
-                import_button: dialog,
-              })
               onChangeDialog(dialog)
             }}
             className={classnames({ disabled })}
