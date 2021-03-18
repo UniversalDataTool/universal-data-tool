@@ -5,9 +5,17 @@ import useActiveDatasetManager from "../../hooks/use-active-dataset-manager"
 import isEmpty from "lodash/isEmpty"
 import datasetManagerCognito from "udt-dataset-managers/dist/CognitoDatasetManager"
 import useAuth from "../../utils/auth-handlers/use-auth"
-import { Grid, TextField } from "@material-ui/core"
 import { useTranslation } from "react-i18next"
-const orangeText = { color: "orange" }
+import { TextField, Grid, IconButton } from "@material-ui/core"
+import WarningHeader from "./warning-header"
+import initConfigExport from "./init-config-export"
+import SettingDialog from "./interface-setting-export.js"
+import createAssets from "./create-assets"
+import { setIn } from "seamless-immutable"
+import {
+  Settings as SettingsIcon,
+  Storage as StorageIcon,
+} from "@material-ui/icons/"
 
 const customStyles = {
   headCells: {
@@ -62,6 +70,7 @@ export default ({ open, onClose }) => {
     )
   }
   const [refreshInterface, setRefreshInterface] = useState(false)
+  const [configExport, setConfigExport] = useState(initConfigExport)
 
   const getCurrentDataset = async () => {
     if (currentDataset) return currentDataset
@@ -73,6 +82,10 @@ export default ({ open, onClose }) => {
   const getProjectName = () => {
     if (!currentDataset) return
     if (!currentDataset.name) return
+    if (currentDataset.name === "New undefined Dataset") {
+      setNameProjectToCreate("")
+      return ""
+    }
     setNameProjectToCreate(currentDataset.name)
     return currentDataset.name
   }
@@ -135,12 +148,28 @@ export default ({ open, onClose }) => {
   const handleCreateProject = async () => {
     if (!currentDataset) return
     var dataset = currentDataset
-    dataset = dataset.setIn(["name"], nameProjectToCreate)
+
+    dataset = await dataset.setIn(["name"], nameProjectToCreate)
+
     if (nameProjectExist) await dm.removeSamplesFolder(nameProjectToCreate)
+    if (nameProjectExist && configExport.typeAssetExport === "withProxy")
+      await dm.removeAssetsFolder(nameProjectToCreate)
+    if (configExport.typeAssetExport === "withProxy") {
+      dataset = await renameAllSamples(dataset)
+      await createAssets(dataset, configExport, dm)
+    }
     await dm.setDataset(dataset)
     await activeDatasetManager.setDataset(dataset)
-    await getProjects()
     onClose()
+  }
+
+  const renameAllSamples = async (dataset) => {
+    var samples = await Promise.all(
+      await dataset.samples.map(async (sample, index, samples) => {
+        return await dm.addNamesToSample(sample, index, samples)
+      })
+    )
+    return (dataset = await setIn(dataset, ["samples"], samples))
   }
 
   return (
@@ -158,13 +187,12 @@ export default ({ open, onClose }) => {
       ]}
     >
       {
-        <Grid container spacing={0}>
+        <Grid container spacing={1}>
           <Grid container item xs={12} spacing={0} justify="center">
-            {nameProjectExist ? (
-              <p style={orangeText}>{t("warning-project-exist")}</p>
-            ) : (
-              <p></p>
-            )}
+            <WarningHeader
+              nameProjectToCreate={nameProjectToCreate}
+              nameProjectExist={nameProjectExist}
+            />
           </Grid>
           <Grid container item xs={12} spacing={0} justify="center">
             <TextField
@@ -176,21 +204,42 @@ export default ({ open, onClose }) => {
               }}
               value={nameProjectToCreate}
             />
+            <IconButton
+              onClick={() => {
+                setConfigExport({
+                  ...configExport,
+                  contentDialogBoxIsSetting: !configExport.contentDialogBoxIsSetting,
+                })
+              }}
+            >
+              {configExport.contentDialogBoxIsSetting ? (
+                <StorageIcon id="StorageIcon" />
+              ) : (
+                <SettingsIcon id="SettingIcon" />
+              )}
+            </IconButton>
           </Grid>
           <Grid container item xs={12} spacing={0} justify="center">
-            {!isEmpty(projects) && (
-              <DataTable
-                expandableRows
-                expandableRowsComponent={<ExpandedRow />}
-                dense
-                noHeader
-                noTableHead
-                columns={columns}
-                selectableRowSelected={(row) => row.isSelected}
-                data={projects}
-                pagination={projects.length > 10}
-                paginationPerPage={10}
-                paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
+            {!configExport.contentDialogBoxIsSetting ? (
+              !isEmpty(projects) && (
+                <DataTable
+                  expandableRows
+                  expandableRowsComponent={<ExpandedRow />}
+                  dense
+                  noHeader
+                  noTableHead
+                  columns={columns}
+                  selectableRowSelected={(row) => row.isSelected}
+                  data={projects}
+                  pagination={projects.length > 10}
+                  paginationPerPage={10}
+                  paginationRowsPerPageOptions={[10, 20, 25, 50, 100, 200]}
+                />
+              )
+            ) : (
+              <SettingDialog
+                configExport={configExport}
+                setConfigExport={setConfigExport}
               />
             )}
           </Grid>
