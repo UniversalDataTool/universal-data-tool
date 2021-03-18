@@ -1,4 +1,3 @@
-require("cypress-xpath")
 const enterCredentialsCognitoS3 = () => {
   cy.get('input[placeholder="XX-XXXX-X:XXXXXXXX-XXXX-1234-abcd-1234567890ab"]')
     .focus()
@@ -25,64 +24,24 @@ const enterCredentialsCognitoS3 = () => {
     .focus()
     .type(Cypress.env().COGNITO_USER_PASS_LENGTH)
   if (Cypress.env().COGNITO_USER_PASS_REQUIRE_LOWERCASE === "TRUE") {
-    cy.xpath(
-      "./html/body/div[3]/div[3]/div/div[2]/div/div[2]/div[8]/div[3]/div/button[1]/span[1]/span/span[1]/input"
-    )
-      .click()
-      .focus()
-      .blur()
+    cy.get('input[id="RequireLowercaseYes"]').click().focus().blur()
   } else {
-    cy.xpath(
-      "./html/body/div[3]/div[3]/div/div[2]/div/div[2]/div[8]/div[3]/div/button[2]/span[1]/span/span[1]/input"
-    )
-      .click()
-      .focus()
-      .blur()
+    cy.get('input[id="RequireLowercaseNo"]').click().focus().blur()
   }
   if (Cypress.env().COGNITO_USER_PASS_REQUIRE_UPPERCASE === "TRUE") {
-    cy.xpath(
-      "./html/body/div[3]/div[3]/div/div[2]/div/div[2]/div[9]/div[3]/div/button[1]/span[1]/span/span[1]/input"
-    )
-      .click()
-      .focus()
-      .blur()
+    cy.get('input[id="RequireUppercaseYes"]').click().focus().blur()
   } else {
-    cy.xpath(
-      "./html/body/div[3]/div[3]/div/div[2]/div/div[2]/div[9]/div[3]/div/button[2]/span[1]/span/span[1]/input"
-    )
-      .click()
-      .focus()
-      .blur()
+    cy.get('input[id="RequireUppercaseNo"]').click().focus().blur()
   }
   if (Cypress.env().COGNITO_USER_PASS_REQUIRE_NUMBER === "TRUE") {
-    cy.xpath(
-      "./html/body/div[3]/div[3]/div/div[2]/div/div[2]/div[10]/div[3]/div/button[1]/span[1]/span/span[1]/input"
-    )
-      .click()
-      .focus()
-      .blur()
+    cy.get('input[id="RequireNumberYes"]').click().focus().blur()
   } else {
-    cy.xpath(
-      "./html/body/div[3]/div[3]/div/div[2]/div/div[2]/div[10]/div[3]/div/button[2]/span[1]/span/span[1]/input"
-    )
-      .click()
-      .focus()
-      .blur()
+    cy.get('input[id="RequireNumberNo"]').click().focus().blur()
   }
   if (Cypress.env().COGNITO_USER_PASS_REQUIRE_SYMBOL === "TRUE") {
-    cy.xpath(
-      "./html/body/div[3]/div[3]/div/div[2]/div/div[2]/div[11]/div[3]/div/button[1]/span[1]/span/span[1]/input"
-    )
-      .click()
-      .focus()
-      .blur()
+    cy.get('input[id="RequireSymbolYes"]').click().focus().blur()
   } else {
-    cy.xpath(
-      "./html/body/div[3]/div[3]/div/div[2]/div/div[2]/div[11]/div[3]/div/button[2]/span[1]/span/span[1]/input"
-    )
-      .click()
-      .focus()
-      .blur()
+    cy.get('input[id="RequireSymbolNo"]').click().focus().blur()
   }
 }
 

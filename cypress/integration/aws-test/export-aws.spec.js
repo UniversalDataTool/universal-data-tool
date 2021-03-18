@@ -1,10 +1,10 @@
-import enterCredentialsCognitoS3 from "../utils/credentials-test/enter-credentials-cognito-s3"
-import enterCredentialsUser from "../utils/credentials-test/enter-credentials-user"
 import commandSetLanguage from "../utils/cypress-command/set-language"
+import commandCredentialsAws from "../utils/cypress-command/credentials-aws"
 import goToImportPage from "../utils/go-to-import-page"
 import removeAWSFile from "../utils/remove-cypress-file-in-aws"
 
 commandSetLanguage()
+commandCredentialsAws()
 
 if (Cypress.env().AWS_IDENTITY_POOL_ID)
   describe("aws test", () => {
@@ -13,8 +13,7 @@ if (Cypress.env().AWS_IDENTITY_POOL_ID)
       cy.visit(`http://localhost:6001`)
       cy.wait(400)
       cy.setLanguage()
-      enterCredentialsCognitoS3()
-      enterCredentialsUser()
+      cy.createCredentialsAws()
       goToImportPage()
     })
 
