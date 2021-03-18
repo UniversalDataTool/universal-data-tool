@@ -10,7 +10,6 @@ import { useDropzone } from "react-dropzone"
 import CreateFromTemplateDialog from "../CreateFromTemplateDialog"
 import AddAuthFromTemplateDialog from "../AddAuthFromTemplateDialog"
 import { styled } from "@material-ui/core/styles"
-import usePosthog from "../../hooks/use-posthog"
 import packageInfo from "../../../package.json"
 import useEventCallback from "use-event-callback"
 import Box from "@material-ui/core/Box"
@@ -156,7 +155,6 @@ export default ({
   onClickOpenSession,
 }) => {
   const c = useStyles()
-  const posthog = usePosthog()
 
   // internalization hook
   const { t, i18n } = useTranslation()
@@ -250,9 +248,6 @@ export default ({
                   <ActionTitle>{t("start")}</ActionTitle>
                   <Action
                     onClick={() => {
-                      posthog.capture("template_clicked", {
-                        clicked_template: "empty",
-                      })
                       onOpenTemplate(templates.find((t) => t.name === "Empty"))
                     }}
                   >
@@ -385,9 +380,6 @@ export default ({
       <CreateFromTemplateDialog
         open={createFromTemplateDialogOpen}
         onSelect={(template) => {
-          posthog.capture("template_clicked", {
-            clicked_template: template.name,
-          })
           onOpenTemplate(template)
         }}
         onClose={() => changeCreateFromTemplateDialogOpen(false)}

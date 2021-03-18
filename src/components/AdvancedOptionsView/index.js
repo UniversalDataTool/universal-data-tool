@@ -1,9 +1,7 @@
 import React, { useState } from "react"
 import Box from "@material-ui/core/Box"
 import MuiButton from "@material-ui/core/Button"
-import { useUpdate } from "react-use"
 import { styled } from "@material-ui/core/styles"
-import usePosthog from "../../hooks/use-posthog"
 import { useAppConfig } from "../AppConfig"
 import { useHotkeyStorage } from "../HotkeyStorage"
 import KeyboardShortcutManagerDialog from "../KeyboardShortcutManagerDialog"
@@ -15,8 +13,6 @@ const Button = styled(MuiButton)({
 })
 
 export const AdvancedOptionsView = ({ onClickEditJSON, onClearLabelData }) => {
-  const forceUpdate = useUpdate()
-  const posthog = usePosthog()
   const { fromConfig, setInConfig } = useAppConfig()
   const { hotkeys, changeHotkey, clearHotkeys } = useHotkeyStorage()
   const [hotkeyDialogOpen, setHotkeyDialogOpen] = useState(false)
@@ -39,20 +35,6 @@ export const AdvancedOptionsView = ({ onClickEditJSON, onClearLabelData }) => {
         variant="outlined"
       >
         {t("clear-labels")}
-      </Button>
-      <Button
-        variant="outlined"
-        onClick={() => {
-          if (posthog.has_opted_out_capturing()) {
-            posthog.opt_in_capturing()
-          } else {
-            posthog.opt_out_capturing()
-          }
-          forceUpdate()
-        }}
-      >
-        {posthog.has_opted_out_capturing() ? "Enable" : "Disable"}{" "}
-        {t("telemetry")}
       </Button>
       <Button
         variant="outlined"

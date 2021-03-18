@@ -10,7 +10,6 @@ import useElectron from "../../hooks/use-electron"
 import useTimeToCompleteSample from "../../hooks/use-time-to-complete-sample.js"
 import { useToasts } from "../Toasts"
 import useEventCallback from "use-event-callback"
-import usePosthog from "../../hooks/use-posthog"
 import classnames from "classnames"
 import LabelView from "../LabelView"
 import useIsLabelOnlyMode from "../../hooks/use-is-label-only-mode"
@@ -59,7 +58,6 @@ export default ({
   const { addToast } = useToasts()
   const [mode, changeMode] = useState(labelOnlyMode ? "label" : initialMode)
   const { ipcRenderer } = useElectron() || {}
-  const posthog = usePosthog()
   const { iface } = useInterface()
   const { summary } = useSummary()
   const removeSamples = useRemoveSamples()
@@ -89,15 +87,8 @@ export default ({
   }, [ipcRenderer])
 
   useEffect(() => {
-    posthog.people.set({
-      average_time_to_complete_sample: sampleTimeToComplete,
-    })
-  }, [sampleTimeToComplete, posthog.people])
-
-  useEffect(() => {
     if (mode !== "label") setSampleIndex(null)
-    posthog.capture("open_editor_tab", { tab: mode })
-  }, [mode, posthog])
+  }, [mode])
 
   const onChangeTab = useEventCallback((tab) => changeMode(tab.toLowerCase()))
 
@@ -147,9 +138,6 @@ export default ({
               <SamplesView
                 openSampleLabelEditor={(sampleIndex) => {
                   setSampleIndex(sampleIndex)
-                  posthog.capture("open_sample", {
-                    interface_type: iface?.type,
-                  })
                   changeMode("label")
                 }}
                 user={user}

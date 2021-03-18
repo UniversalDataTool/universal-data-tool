@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import LabelErrorBoundary from "../LabelErrorBoundary"
 // import UniversalDataViewer from "../UniversalDataViewer"
 import UniversalSampleEditor from "../UniversalSampleEditor"
 import Stats from "../Stats"
 import SampleGrid from "../SampleGrid"
 import Box from "@material-ui/core/Box"
-import usePosthog from "../../hooks/use-posthog"
 import duration from "duration"
 import { styled } from "@material-ui/core/styles"
 import Tabs from "@material-ui/core/Tabs"
@@ -20,7 +19,6 @@ import useSummary from "../../hooks/use-summary"
 import useSample from "../../hooks/use-sample"
 import useRemoveSamples from "../../hooks/use-remove-samples"
 import useInterface from "../../hooks/use-interface"
-import useAppConfig from "../../hooks/use-app-config"
 
 const OverviewContainer = styled("div")({
   padding: 8,
@@ -40,16 +38,12 @@ export default ({
   sampleTimeToComplete,
 }) => {
   const [currentTab, setTab] = useState("label")
-  const posthog = usePosthog()
   const labelOnlyMode = useIsLabelOnlyMode()
-  const { fromConfig } = useAppConfig()
   const [annotationStartTime, setAnnotationStartTime] = useState(null)
   const { summary } = useSummary()
   const removeSamples = useRemoveSamples()
   const { sample, updateSample, sampleLoading } = useSample(sampleIndex)
   const { iface } = useInterface()
-
-  const labelHelpEnabled = !fromConfig("labelhelp.disabled")
   const isInOverview = sampleIndex === null
 
   let percentComplete = 0
@@ -58,18 +52,6 @@ export default ({
       summary.samples.filter((s) => s?.hasAnnotation).length /
       summary.samples.length
   }
-
-  useEffect(() => {
-    if (labelHelpEnabled) {
-      posthog.capture("label_help_showed")
-    }
-  }, [labelHelpEnabled, posthog])
-
-  useEffect(() => {
-    if (currentTab === "labelhelp") {
-      posthog.capture("label_help_clicked")
-    }
-  }, [currentTab, posthog])
 
   return !isInOverview ? (
     <LabelErrorBoundary>
@@ -94,9 +76,6 @@ export default ({
           switch (nextAction) {
             case "go-to-next":
               if (sampleIndex !== summary.samples.length - 1) {
-                posthog.capture("next_sample", {
-                  interface_type: iface?.type,
-                })
                 // TODO reset start time
                 onChangeSampleIndex(sampleIndex + 1)
                 setAnnotationStartTime(Date.now())
@@ -175,9 +154,6 @@ export default ({
             tablePaginationPadding={6}
             samples={summary?.samples || []}
             onClick={(selectedSampleIndex) => {
-              posthog.capture("open_sample", {
-                interface_type: iface?.type,
-              })
               onChangeSampleIndex(selectedSampleIndex)
             }}
           />
