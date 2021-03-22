@@ -5,7 +5,6 @@
   "main": "desktop/main.js",
   "homepage": "https://universaldatatool.com/app/",
   "proxy": "http://localhost:3000",
-  "type": "module",
   "scripts": {
     "start": "cross-env PORT=6001 react-scripts start",
     "start:desktop": "cross-env BROWSER=none USE_DEV_SERVER=yes concurrently 'start' 'electron ./desktop'",
