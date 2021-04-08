@@ -74,7 +74,7 @@ export const SamplesTable = ({ onClickSample }) => {
             selector: key,
             cell: (row) =>
               typeof row[key] !== "object"
-                ? row[key].toString()
+                ? row[key]?.toString()
                 : JSON.stringify(row[key]).slice(0, 30) + "...",
           })
           knownKeys.add(key)
