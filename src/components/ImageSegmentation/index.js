@@ -13,6 +13,7 @@ const regionTypeToTool = {
   "bounding-box": "create-box",
   polygon: ["create-polygon", "create-expanding-line"],
   point: "create-point",
+  "ordered-point": "create-ordered-point",
   "allowed-area": "modify-allowed-area",
 }
 

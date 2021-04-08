@@ -13,6 +13,7 @@ const regionTypeToTool = {
   polygon: "create-polygon",
   "full-segmentation": "create-polygon",
   point: "create-point",
+  "ordered-point": "create-ordered-point",
 }
 
 const emptyObj = {}

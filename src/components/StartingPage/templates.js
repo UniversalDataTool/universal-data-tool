@@ -35,6 +35,7 @@ export const templates = [
           "polygon",
           // "full-segmentation",
           "point",
+          "ordered-point",
           // "pixel-mask"
         ],
       },
@@ -77,7 +78,12 @@ export const templates = [
       interface: {
         type: "video_segmentation",
         labels: ["valid", "invalid"],
-        regionTypesAllowed: ["bounding-box", "polygon", "point"],
+        regionTypesAllowed: [
+          "bounding-box",
+          "polygon",
+          "point",
+          "ordered-point",
+        ],
       },
       samples: [
         {

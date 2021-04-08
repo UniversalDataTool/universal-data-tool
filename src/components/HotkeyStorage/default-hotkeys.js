@@ -29,6 +29,10 @@ export const defaultHotkeys = [
     description: "Create a point",
   },
   {
+    id: "create_ordered_point",
+    description: "Create an ordered point",
+  },
+  {
     id: "create_bounding_box",
     description: "Create a bounding box",
     binding: "b",

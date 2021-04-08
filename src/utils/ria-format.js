@@ -33,6 +33,7 @@ export const convertToRIARegionFmt = (region) => {
         h: region.height,
       }
     }
+    case "ordered-point":
     case "point": {
       return {
         id: region.id || rid(),
@@ -74,6 +75,7 @@ export const convertToRIARegionFmt = (region) => {
 
 export const convertFromRIARegionFmt = (riaRegion) => {
   switch (riaRegion.type) {
+    case "ordered-point":
     case "point": {
       return {
         regionType: "point",
