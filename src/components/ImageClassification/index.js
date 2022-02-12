@@ -41,6 +41,7 @@ const ImageContainer = styled("div")({
   position: "relative",
   display: "flex",
   flexGrow: 1,
+  minHeight: '20vh',
 })
 
 const Image = styled("img")({
