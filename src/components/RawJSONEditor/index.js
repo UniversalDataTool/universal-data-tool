@@ -21,6 +21,7 @@ export const RawJSONEditor = ({ content, onSave }) => {
         theme="github"
         mode="javascript"
         width="100%"
+        height="calc(100vh - 80px)"
         value={jsonText}
         editorProps={{ $blockScrolling: Infinity }}
         onChange={(t) => setJSONText(t)}

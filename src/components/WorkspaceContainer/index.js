@@ -64,7 +64,7 @@ export default ({
       iconSidebarItems={[]}
       rightSidebarItems={[]}
     >
-      <Box padding={2} style={{ width: "100%" }}>
+      <Box padding={2, 0} style={{ width: "100%" }}>
         {children}
       </Box>
     </Workspace>
