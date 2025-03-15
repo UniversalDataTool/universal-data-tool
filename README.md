@@ -10,7 +10,7 @@
 
 Try it out at [udt.dev](https://udt.dev), [download the desktop app](https://github.com/UniversalDataTool/universal-data-tool/releases) or [run on-premise](https://docs.universaldatatool.com/running-on-premise).
 
-> [NOTE]
+> [!NOTE]
 > If you think Universal Data Tool is cool, check out my new project for [creating electronics with React](https://docs.tscircuit.com)
 
 <p align="center">
